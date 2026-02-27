@@ -11,4 +11,7 @@ def root():
 @app.get("/risk")
 def calculate_risk(amount: float):
     score = amount * 0.42
-    return {"amount": amount, "risk_score": score}
+    return {
+        "amount": amount,
+        "risk_score": score
+    }

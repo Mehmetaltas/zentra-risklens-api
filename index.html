@@ -1,307 +1,119 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zentra RiskLens — Modular Risk Infrastructure</title>
-  <meta name="description" content="AI-powered modular risk intelligence infrastructure. Real-time risk scoring API built for fintech platforms." />
-
-  <style>
-    :root{
-      --bg:#071427;
-      --bg2:#081a32;
-      --card:#0c2444;
-      --text:#eaf1ff;
-      --muted:#a8b6d8;
-      --accent:#2f80ff;
-      --line:rgba(255,255,255,.08);
-      --ok:#28c76f;
-      --warn:#ffb020;
-      --bad:#ff4d4f;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background: radial-gradient(1200px 600px at 20% 0%, #0b2b57 0%, var(--bg) 55%) , linear-gradient(180deg,var(--bg2),var(--bg));
-    }
-    a{color:inherit}
-    .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 60px}
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:10px 0 22px;border-bottom:1px solid var(--line);
-      gap:12px;flex-wrap:wrap;
-    }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
-    .logo{
-      width:34px;height:34px;border-radius:10px;
-      background: linear-gradient(135deg,#2f80ff,#7aa8ff);
-      box-shadow: 0 10px 30px rgba(47,128,255,.25);
-    }
-    .navlinks{display:flex;gap:10px;flex-wrap:wrap}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 12px;border:1px solid var(--line);border-radius:999px;
-      color:var(--muted);text-decoration:none;font-weight:700;font-size:13px;
-      background: rgba(255,255,255,.03);
-    }
-    .pill:hover{border-color:rgba(47,128,255,.55);color:var(--text)}
-    .hero{padding:42px 0 26px}
-    .kicker{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border-radius:999px;
-      background: rgba(40,199,111,.12);
-      border:1px solid rgba(40,199,111,.25);
-      color:#bff2d4;font-weight:800;font-size:12px;
-    }
-    .dot{width:8px;height:8px;border-radius:99px;background:var(--ok);box-shadow:0 0 0 6px rgba(40,199,111,.14)}
-    h1{margin:16px 0 10px;font-size:44px;line-height:1.06;letter-spacing:-.8px}
-    .sub{max-width:760px;color:var(--muted);font-size:16px;line-height:1.6}
-    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 14px;border-radius:12px;border:1px solid var(--line);
-      text-decoration:none;font-weight:900;font-size:14px;
-      background: rgba(255,255,255,.03);
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn.primary{background: linear-gradient(135deg,#2f80ff,#4ea0ff);border-color:rgba(47,128,255,.65)}
-    .btn:hover{transform: translateY(-1px)}
-    .grid{
-      display:grid;gap:14px;
-      grid-template-columns: repeat(12, 1fr);
-      margin-top:22px;
-    }
-    .card{
-      grid-column: span 12;
-      background: rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      box-shadow: 0 16px 40px rgba(0,0,0,.25);
-    }
-    @media(min-width:900px){
-      .card.half{grid-column: span 6;}
-      .card.third{grid-column: span 4;}
-    }
-    .card h3{margin:0 0 8px;font-size:16px}
-    .meta{color:var(--muted);font-size:13px;line-height:1.55}
-    .kv{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .kv b{color:var(--text)}
-    .kv span{
-      padding:8px 10px;border-radius:12px;border:1px solid var(--line);
-      background: rgba(255,255,255,.02);color:var(--muted);font-weight:800;font-size:13px;
-    }
-    pre{
-      margin:12px 0 0;
-      padding:14px;border-radius:14px;
-      background: rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.08);
-      overflow:auto;
-      color:#d6e4ff;
-      font-size:12.5px;line-height:1.55
-    }
-    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace}
-    .sectionTitle{margin:26px 0 10px;font-size:18px}
-    ul{margin:8px 0 0;padding-left:18px;color:var(--muted);line-height:1.7}
-
-    /* Demo console */
-    .form{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:12px;
-      margin-top:10px;
-    }
-    .field{grid-column: span 12}
-    @media(min-width:900px){
-      .field.sm6{grid-column: span 6}
-      .field.sm4{grid-column: span 4}
-      .field.sm3{grid-column: span 3}
-    }
-    label{display:block;color:var(--muted);font-weight:800;font-size:12px;margin:0 0 6px}
-    input, select{
-      width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.22);
-      color:var(--text);
-      outline:none;
-      font-weight:800;
-    }
-    input::placeholder{color:rgba(168,182,216,.7)}
-    .rowActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .statusline{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
-      color:var(--muted);
-      font-weight:800;
-      font-size:12.5px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;font-weight:900;font-size:12px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--muted);
-    }
-    .badge.ok{border-color:rgba(40,199,111,.35);background:rgba(40,199,111,.12);color:#bff2d4}
-    .badge.warn{border-color:rgba(255,176,32,.35);background:rgba(255,176,32,.12);color:#ffe2b3}
-    .badge.bad{border-color:rgba(255,77,79,.35);background:rgba(255,77,79,.12);color:#ffd0d0}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace}
-    .footer{
-      margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
-      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;
-      color:var(--muted);font-size:13px
-    }
-    .smalllinks{display:flex;gap:12px;flex-wrap:wrap}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zentra RiskLens</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+}
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:60px 20px;
+  text-align:center;
+}
+h1{font-size:42px;margin-bottom:20px;}
+p{opacity:0.85;font-size:18px;line-height:1.6;}
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:25px;
+  border-radius:14px;
+  margin:25px 0;
+}
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin:5px;
+}
+.lang-switch{
+  position:fixed;
+  top:20px;
+  right:20px;
+}
+.primary-btn{
+  background:#00ffcc;
+  color:#000;
+  font-weight:bold;
+}
+.secondary-btn{
+  background:#ffffff20;
+  color:#fff;
+}
+.footer{
+  margin-top:60px;
+  opacity:0.6;
+  font-size:14px;
+}
+</style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>Zentra RiskLens</div>
-      </div>
-      <div class="navlinks">
-        <a class="pill" href="https://api.zentrarisk.com/docs" target="_blank" rel="noreferrer">API Docs</a>
-        <a class="pill" href="https://api.zentrarisk.com/openapi.json" target="_blank" rel="noreferrer">OpenAPI</a>
-        <a class="pill" href="https://api.zentrarisk.com/health" target="_blank" rel="noreferrer">Health</a>
-      </div>
-    </div>
 
-    <div class="hero">
-      <div class="kicker"><span class="dot"></span> Production Environment Active</div>
-      <h1>Modüler Risk Altyapısı<br/>Fintech İçin</h1>
-      <p class="sub">
-        RiskLens, decisioning pipeline’larına takılan API-first bir risk skorlama katmanı sağlar.
-        İşlem bağlamını gönder, açıklanabilir risk skoru + faktör kırılımı al.
-      </p>
+<div class="lang-switch">
+  <button onclick="setLang('en')">EN</button>
+  <button onclick="setLang('tr')">TR</button>
+</div>
 
-      <div class="cta">
-        <a class="btn primary" href="https://api.zentrarisk.com/docs" target="_blank" rel="noreferrer">Dokümantasyon</a>
-        <a class="btn" href="https://api.zentrarisk.com" target="_blank" rel="noreferrer">API Base URL</a>
-        <a class="btn" href="mailto:hello@zentrarisk.com">API Access İste</a>
-      </div>
+<div class="container">
 
-      <div class="grid">
-        <div class="card half">
-          <h3>Service Status</h3>
-          <div class="kv">
-            <span><b>Status:</b> LIVE</span>
-            <span><b>Version:</b> 1.2</span>
-            <span><b>Endpoint:</b> POST /v1/risk</span>
-          </div>
-          <pre><code>Base URL: https://api.zentrarisk.com</code></pre>
-        </div>
+<h1 id="title"></h1>
+<p id="subtitle"></p>
 
-        <div class="card half">
-          <h3>Quick Test (cURL)</h3>
-          <div class="meta">Header: <b>X-API-Key</b> (demo key aşağıda).</div>
-          <pre><code>curl -X POST "https://api.zentrarisk.com/v1/risk" \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: zentra-demo-key" \
-  -d '{
-    "amount": 1000,
-    "sector": "retail",
-    "sector_risk_level": 3,
-    "payment_delay_days": 10,
-    "customer_score": 78,
-    "exposure_ratio": 0.4
-  }'</code></pre>
-        </div>
+<div class="card">
+  <h3 id="statusTitle"></h3>
+  <p id="statusText"></p>
+</div>
 
-        <!-- DEMO CONSOLE -->
-        <div class="card">
-          <h3>Try it now (Demo Console)</h3>
-          <div class="meta">
-            Bu sayfa doğrudan <span class="mono">https://api.zentrarisk.com/v1/risk</span> endpoint’ine istek atar.
-            Eğer hata görürsen çoğu zaman sebep: <b>API key</b> veya <b>body formatı</b>.
-          </div>
+<div class="card">
+  <h3>API</h3>
+  <p>POST /v1/risk</p>
+  <p>https://api.zentrarisk.com</p>
+</div>
 
-          <div class="form" id="demoForm">
-            <div class="field sm3">
-              <label for="apiKey">X-API-Key</label>
-              <input id="apiKey" placeholder="zentra-demo-key" value="zentra-demo-key" />
-            </div>
-            <div class="field sm3">
-              <label for="amount">Amount</label>
-              <input id="amount" type="number" step="0.01" value="1000" />
-            </div>
-            <div class="field sm3">
-              <label for="sector">Sector</label>
-              <input id="sector" placeholder="retail" value="retail" />
-            </div>
-            <div class="field sm3">
-              <label for="sectorRisk">Sector risk level (1–5)</label>
-              <select id="sectorRisk">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
+<a href="https://api.zentrarisk.com/docs">
+  <button class="primary-btn" id="docsBtn"></button>
+</a>
 
-            <div class="field sm4">
-              <label for="delay">Payment delay days</label>
-              <input id="delay" type="number" value="10" />
-            </div>
-            <div class="field sm4">
-              <label for="customerScore">Customer score (0–100)</label>
-              <input id="customerScore" type="number" value="78" />
-            </div>
-            <div class="field sm4">
-              <label for="exposure">Exposure ratio (0–1)</label>
-              <input id="exposure" type="number" step="0.01" value="0.4" />
-            </div>
-          </div>
+<div class="footer">
+  © 2026 Zentra RiskLens — Global AI Risk Infrastructure
+</div>
 
-          <div class="rowActions">
-            <button class="btn primary" id="sendBtn" type="button">Send Request</button>
-            <button class="btn" id="fillSampleBtn" type="button">Load Sample</button>
-            <button class="btn" id="clearBtn" type="button">Clear Output</button>
-          </div>
+</div>
 
-          <div class="statusline" id="statusLine">
-            <span class="badge warn" id="stateBadge">Ready</span>
-            <span>URL: <span class="mono">https://api.zentrarisk.com/v1/risk</span></span>
-          </div>
+<script>
+const content = {
+  en: {
+    title: "AI Risk Infrastructure for Modern Finance",
+    subtitle: "Modular, API-first, explainable risk scoring engine built for digital lenders and fintech platforms worldwide.",
+    statusTitle: "Production Environment",
+    statusText: "Live • Version 1.2",
+    docsBtn: "View API Documentation"
+  },
+  tr: {
+    title: "Modern Finans İçin Yapay Zeka Risk Altyapısı",
+    subtitle: "Dijital kredi ve fintech platformları için modüler, API-first ve açıklanabilir risk skorlama altyapısı.",
+    statusTitle: "Üretim Ortamı",
+    statusText: "Canlı • Versiyon 1.2",
+    docsBtn: "API Dokümantasyonunu Görüntüle"
+  }
+};
 
-          <pre id="output"><code>// Response will appear here...</code></pre>
-        </div>
+function setLang(lang){
+  document.getElementById("title").innerText = content[lang].title;
+  document.getElementById("subtitle").innerText = content[lang].subtitle;
+  document.getElementById("statusTitle").innerText = content[lang].statusTitle;
+  document.getElementById("statusText").innerText = content[lang].statusText;
+  document.getElementById("docsBtn").innerText = content[lang].docsBtn;
+}
 
-        <div class="card third">
-          <h3>Real-time scoring</h3>
-          <div class="meta">Decisioning için düşük gecikme.</div>
-          <ul>
-            <li>Risk score (0–100)</li>
-            <li>Low / Medium / High</li>
-            <li>Faktör kırılımı</li>
-          </ul>
-        </div>
+setLang("en");
+</script>
 
-        <div class="card third">
-          <h3>API-first</h3>
-          <div class="meta">Net sözleşme, hızlı entegrasyon.</div>
-          <ul>
-            <li>FastAPI + OpenAPI</li>
-            <li>Versioned endpoints</li>
-            <li>/health monitoring</li>
-          </ul>
-        </div>
-
-        <div class="card third">
-          <h3>Built for fintech</h3>
-          <div
+</body>
+</html>

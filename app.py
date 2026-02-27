@@ -1,12 +1,64 @@
-# Risk Engine v1.1
+from fastapi import FastAPI, Header, HTTPException
+from pydantic import BaseModel
+import uuid
+import datetime
+
+app = FastAPI(
+    title="Zentra RiskLens API",
+    version="1.1",
+    description="AI-powered modular risk scoring infrastructure"
+)
+
+# =========================
+# API KEY SYSTEM
+# =========================
+
+VALID_API_KEYS = {
+    "zentra-demo-key",
+    "zentra-partner-key"
+}
+
+# =========================
+# REQUEST MODEL
+# =========================
+
+class RiskRequest(BaseModel):
+    amount: float
+    sector: str
+    sector_risk_level: int      # 1–5
+    payment_delay_days: int
+    customer_score: int         # 0–100
+    exposure_ratio: float       # 0–1
+
+# =========================
+# HEALTH CHECK
+# =========================
+
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "service": "zentra-risklens",
+        "timestamp": datetime.datetime.utcnow()
+    }
+
+# =========================
+# RISK ENGINE v1.1
+# =========================
+
 @app.post("/v1/risk")
 def calculate_risk(
     request: RiskRequest,
     x_api_key: str = Header(None)
 ):
 
-    if x_api_key != API_KEY:
+    # API KEY VALIDATION
+    if x_api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API Key")
+
+    # -------------------------
+    # RISK WEIGHTS CALCULATION
+    # -------------------------
 
     amount_weight = min((request.amount / 50000) * 25, 25)
     sector_weight = (request.sector_risk_level / 5) * 20
@@ -22,12 +74,20 @@ def calculate_risk(
         exposure_weight
     )
 
+    # -------------------------
+    # RISK LEVEL CLASSIFICATION
+    # -------------------------
+
     if risk_score < 30:
         level = "Low"
     elif risk_score < 60:
         level = "Medium"
     else:
         level = "High"
+
+    # -------------------------
+    # RESPONSE
+    # -------------------------
 
     return {
         "request_id": str(uuid.uuid4()),

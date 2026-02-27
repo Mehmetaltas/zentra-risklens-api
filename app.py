@@ -1,52 +1,46 @@
-from fastapi import FastAPI, Header, HTTPException
-from pydantic import BaseModel
-from datetime import datetime
+# Risk Engine v1.1
+@app.post("/v1/risk")
+def calculate_risk(
+    request: RiskRequest,
+    x_api_key: str = Header(None)
+):
 
-app = FastAPI(
-    title="Zentra RiskLens API",
-    description="AI-powered modular credit risk infrastructure for modern finance platforms.",
-    version="1.1"
-)
-
-API_KEY = "zentra-secure-key"
-
-
-class RiskInput(BaseModel):
-    income: float
-    debt: float
-    transaction_amount: float
-    credit_score: int
-
-
-@app.get("/")
-def root():
-    return {"status": "Zentra RiskLens API is live"}
-
-
-@app.post("/risk")
-def calculate_risk(data: RiskInput, x_api_key: str = Header(None)):
     if x_api_key != API_KEY:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+        raise HTTPException(status_code=401, detail="Invalid API Key")
 
-    debt_ratio = data.debt / data.income
-    exposure = data.transaction_amount / data.income
+    amount_weight = min((request.amount / 50000) * 25, 25)
+    sector_weight = (request.sector_risk_level / 5) * 20
+    delay_weight = min((request.payment_delay_days / 60) * 25, 25)
+    behavior_weight = ((100 - request.customer_score) / 100) * 20
+    exposure_weight = request.exposure_ratio * 10
 
-    score = (
-        debt_ratio * 40 +
-        exposure * 30 +
-        (700 - data.credit_score) * 0.05
+    risk_score = (
+        amount_weight +
+        sector_weight +
+        delay_weight +
+        behavior_weight +
+        exposure_weight
     )
 
-    risk_level = (
-        "LOW" if score < 30 else
-        "MEDIUM" if score < 60 else
-        "HIGH"
-    )
+    if risk_score < 30:
+        level = "Low"
+    elif risk_score < 60:
+        level = "Medium"
+    else:
+        level = "High"
 
     return {
+        "request_id": str(uuid.uuid4()),
         "model_version": "1.1",
-        "risk_score": round(score, 2),
-        "risk_level": risk_level,
-        "confidence": 0.87,
-        "timestamp": datetime.utcnow().isoformat()
+        "risk_score": round(risk_score, 2),
+        "risk_level": level,
+        "risk_factors": {
+            "amount_weight": round(amount_weight, 2),
+            "sector_weight": round(sector_weight, 2),
+            "delay_weight": round(delay_weight, 2),
+            "behavior_weight": round(behavior_weight, 2),
+            "exposure_weight": round(exposure_weight, 2)
+        },
+        "confidence": 0.91,
+        "timestamp": datetime.datetime.utcnow()
     }

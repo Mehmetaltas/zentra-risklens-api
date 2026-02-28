@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zentra | Behavioral Financial Infrastructure</title>
-<meta name="description" content="Zentra is a modular behavioral financial infrastructure layer providing risk intelligence and institutional API engines.">
 
 <style>
 body{
@@ -63,6 +62,14 @@ body{
     border-radius:50%;
 }
 
+/* LANGUAGE */
+.lang-toggle{
+    cursor:pointer;
+    margin-left:20px;
+    font-size:13px;
+    opacity:0.7;
+}
+
 /* HERO */
 .hero{
     padding:80px 40px;
@@ -70,8 +77,7 @@ body{
 }
 
 .hero h2{
-    font-size:38px;
-    margin-bottom:20px;
+    font-size:36px;
 }
 
 .hero p{
@@ -80,28 +86,21 @@ body{
     opacity:0.8;
 }
 
-/* SECTION */
+/* SECTIONS */
 .section{
     padding:60px 40px;
 }
 
 .section h3{
-    font-size:28px;
-    margin-bottom:30px;
+    font-size:26px;
 }
 
-/* RISK LENS FULL PANEL */
+/* CORE */
 .core-panel{
     background:#111a2c;
     padding:40px;
     border-radius:12px;
     margin-bottom:40px;
-    border:1px solid rgba(255,255,255,0.06);
-}
-
-.core-panel h4{
-    margin-top:0;
-    font-size:26px;
 }
 
 .button{
@@ -129,12 +128,8 @@ body{
     border:1px solid rgba(255,255,255,0.05);
 }
 
-.active{
-    border:1px solid #00ff88;
-}
-
 .locked{
-    opacity:0.6;
+    opacity:0.7;
 }
 
 /* FOOTER */
@@ -158,39 +153,40 @@ body{
         <img src="zentra-logo.png" alt="Zentra Logo" class="logo">
         <div class="brand-text">
             <h1>ZENTRA</h1>
-            <span>Behavioral Financial Infrastructure</span>
+            <span id="tagline">Behavioral Financial Infrastructure</span>
         </div>
     </div>
-    <div class="status-badge">
-        <span class="dot"></span>
-        Production Live
+
+    <div>
+        <span class="status-badge">
+            <span class="dot"></span>
+            Production Live
+        </span>
+        <span class="lang-toggle" onclick="toggleLang()">TR / EN</span>
     </div>
 </header>
 
 <section class="hero">
-    <h2>Behavioral Financial Infrastructure Layer</h2>
-    <p>
-        Zentra is a modular risk intelligence architecture built for banks, participation finance institutions, 
-        and embedded financial ecosystems.
+    <h2 id="heroTitle">Behavioral Financial Infrastructure Layer</h2>
+    <p id="heroDesc">
+        Zentra is a modular behavioral risk architecture designed for banks and regulated financial institutions.
     </p>
 </section>
 
 <section class="section">
-    <h3>Core Infrastructure</h3>
+    <h3 id="coreTitle">Core Infrastructure</h3>
 
-    <div class="core-panel active">
+    <div class="core-panel">
         <h4>RiskLens</h4>
-        <p>
-            Behavioral Risk Core Engine delivering Financial Stress Index, Liquidity Breakpoint Detection, 
-            and Scenario-Based Future Simulation.
+        <p id="riskDesc">
+            Behavioral Risk Core Engine delivering Financial Stress Index and Scenario-Based Simulation.
         </p>
-        <a href="/risklens" class="button">Enter RiskLens</a>
     </div>
 
-    <div class="lens-card active">
+    <div class="lens-card">
         <h4>Credit Stress Engine</h4>
-        <p>
-            Installment & repayment stress modeling engine with behavioral risk classification.
+        <p id="creditDesc">
+            Installment & repayment stress modeling engine integrated into RiskLens core.
         </p>
         <a href="https://zentrarisk.com/docs" class="button">API Docs</a>
     </div>
@@ -201,25 +197,52 @@ body{
 
     <div class="lens-grid">
 
-        <div class="lens-card locked"><h4>CFO Lens</h4></div>
-        <div class="lens-card locked"><h4>SME Risk Lens</h4></div>
-        <div class="lens-card locked"><h4>Family Office Lens</h4></div>
-        <div class="lens-card locked"><h4>Macro Shock Lens</h4></div>
-        <div class="lens-card locked"><h4>Cognitive Finance Lens</h4></div>
-        <div class="lens-card locked"><h4>Participation Finance Lens</h4></div>
-        <div class="lens-card locked"><h4>Embedded Finance Lens</h4></div>
-        <div class="lens-card locked"><h4>Certifica</h4></div>
+        <div class="lens-card locked">
+            <h4>CFO Lens</h4>
+            <p>Enterprise cash-flow rupture prediction module.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>SME Risk Lens</h4>
+            <p>Runway detection and liquidity monitoring engine.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>Family Office Lens</h4>
+            <p>Wealth erosion & generational risk modeling.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>Macro Shock Lens</h4>
+            <p>Inflation, FX and geopolitical stress simulator.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>Cognitive Finance Lens</h4>
+            <p>Behavioral psychometric risk anticipation engine.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>Participation Finance Lens</h4>
+            <p>Sharia-compliant financing risk modeling module.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>Embedded Finance Lens</h4>
+            <p>API-based embedded credit risk layer.</p>
+        </div>
+
+        <div class="lens-card locked">
+            <h4>Certifica</h4>
+            <p>Biometric-secured financial authorization layer.</p>
+        </div>
 
     </div>
 </section>
 
 <section class="section">
     <h3>Global Deployment Strategy</h3>
-    <p>
-        Primary Hub: UAE (Dubai) <br>
-        Expansion: EU | United States <br>
-        API-first, multi-region, regulatory-ready architecture.
-    </p>
+    <p>Primary Hub: UAE (Dubai) | Expansion: EU & United States</p>
 </section>
 
 <footer class="footer">
@@ -231,10 +254,33 @@ body{
 
     <div>
         Infrastructure Status: Production Live<br>
-        API Access: Institutional Licensing<br>
-        Deployment: UAE | EU | US
+        API Access: Institutional Licensing
     </div>
 </footer>
+
+<script>
+let isTR = false;
+
+function toggleLang(){
+    isTR = !isTR;
+
+    if(isTR){
+        document.getElementById("heroTitle").innerText = "Davranışsal Finansal Altyapı Katmanı";
+        document.getElementById("heroDesc").innerText = "Zentra, bankalar ve regüle finans kurumları için tasarlanmış modüler bir risk mimarisidir.";
+        document.getElementById("coreTitle").innerText = "Çekirdek Altyapı";
+        document.getElementById("riskDesc").innerText = "Finansal Stres Endeksi ve Senaryo Simülasyonu üreten Davranışsal Risk Motoru.";
+        document.getElementById("creditDesc").innerText = "RiskLens altyapısına entegre taksit ve geri ödeme stres modelleme motoru.";
+        document.getElementById("tagline").innerText = "Davranışsal Finansal Altyapı";
+    } else {
+        document.getElementById("heroTitle").innerText = "Behavioral Financial Infrastructure Layer";
+        document.getElementById("heroDesc").innerText = "Zentra is a modular behavioral risk architecture designed for banks and regulated financial institutions.";
+        document.getElementById("coreTitle").innerText = "Core Infrastructure";
+        document.getElementById("riskDesc").innerText = "Behavioral Risk Core Engine delivering Financial Stress Index and Scenario-Based Simulation.";
+        document.getElementById("creditDesc").innerText = "Installment & repayment stress modeling engine integrated into RiskLens core.";
+        document.getElementById("tagline").innerText = "Behavioral Financial Infrastructure";
+    }
+}
+</script>
 
 </body>
 </html>

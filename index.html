@@ -12,8 +12,6 @@ body{
     background:#0b1220;
     color:#ffffff;
 }
-
-/* HEADER */
 .header{
     display:flex;
     justify-content:space-between;
@@ -21,28 +19,23 @@ body{
     padding:20px 40px;
     border-bottom:1px solid rgba(255,255,255,0.08);
 }
-
 .brand{
     display:flex;
     align-items:center;
     gap:15px;
 }
-
 .logo{
-    width:64px;
+    width:52px;
 }
-
 .brand-text h1{
     margin:0;
     letter-spacing:2px;
     font-size:22px;
 }
-
 .brand-text span{
     font-size:13px;
     opacity:0.7;
 }
-
 .status-badge{
     display:inline-flex;
     align-items:center;
@@ -54,55 +47,42 @@ body{
     border:1px solid rgba(0,255,120,0.3);
     color:#00ff88;
 }
-
 .status-badge .dot{
     width:8px;
     height:8px;
     background:#00ff88;
     border-radius:50%;
 }
-
-/* LANGUAGE */
 .lang-toggle{
     cursor:pointer;
     margin-left:20px;
     font-size:13px;
     opacity:0.7;
 }
-
-/* HERO */
 .hero{
     padding:80px 40px;
     text-align:center;
 }
-
 .hero h2{
     font-size:36px;
 }
-
 .hero p{
     max-width:800px;
     margin:auto;
     opacity:0.8;
 }
-
-/* SECTIONS */
 .section{
     padding:60px 40px;
 }
-
 .section h3{
     font-size:26px;
 }
-
-/* CORE */
 .core-panel{
     background:#111a2c;
     padding:40px;
     border-radius:12px;
-    margin-bottom:40px;
+    margin-bottom:30px;
 }
-
 .button{
     display:inline-block;
     padding:12px 20px;
@@ -113,26 +93,20 @@ body{
     text-decoration:none;
     font-weight:bold;
 }
-
-/* GRID */
 .lens-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
 }
-
 .lens-card{
     background:#111a2c;
     padding:20px;
     border-radius:10px;
     border:1px solid rgba(255,255,255,0.05);
 }
-
 .locked{
-    opacity:0.7;
+    opacity:0.6;
 }
-
-/* FOOTER */
 .footer{
     margin-top:80px;
     padding:40px;
@@ -150,7 +124,6 @@ body{
 
 <header class="header">
     <div class="brand">
-        <img src="zentra-logo.png" alt="Zentra Logo" class="logo">
         <div class="brand-text">
             <h1>ZENTRA</h1>
             <span id="tagline">Behavioral Financial Infrastructure</span>
@@ -169,26 +142,27 @@ body{
 <section class="hero">
     <h2 id="heroTitle">Behavioral Financial Infrastructure Layer</h2>
     <p id="heroDesc">
-        Zentra is a modular behavioral risk architecture designed for banks and regulated financial institutions.
+        API-first modular behavioral risk architecture designed for banks and regulated financial institutions.
     </p>
 </section>
 
 <section class="section">
-    <h3 id="coreTitle">Core Infrastructure</h3>
+    <h3 id="coreTitle">Active Infrastructure</h3>
 
     <div class="core-panel">
-        <h4>RiskLens</h4>
+        <h4>RiskLens Core</h4>
         <p id="riskDesc">
-            Behavioral Risk Core Engine delivering Financial Stress Index and Scenario-Based Simulation.
+            Behavioral risk scoring engine delivering Financial Stress Index and scenario-based simulations.
         </p>
+        <a href="https://api.zentrarisk.com/docs" class="button">API Documentation</a>
     </div>
 
-    <div class="lens-card">
+    <div class="core-panel">
         <h4>Credit Stress Engine</h4>
         <p id="creditDesc">
-            Installment & repayment stress modeling engine integrated into RiskLens core.
+            Installment and repayment stress modeling module integrated into RiskLens infrastructure.
         </p>
-        <a href="https://zentrarisk.com/docs" class="button">API Docs</a>
+        <a href="https://api.zentrarisk.com/docs" class="button">View API</a>
     </div>
 </section>
 
@@ -199,22 +173,22 @@ body{
 
         <div class="lens-card locked">
             <h4>CFO Lens</h4>
-            <p>Enterprise cash-flow rupture prediction module.</p>
+            <p>Enterprise-level cash flow rupture and FX sensitivity modeling.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>SME Risk Lens</h4>
-            <p>Runway detection and liquidity monitoring engine.</p>
+            <p>Runway detection and liquidity early-warning engine.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Family Office Lens</h4>
-            <p>Wealth erosion & generational risk modeling.</p>
+            <p>Wealth erosion and generational risk simulator.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Macro Shock Lens</h4>
-            <p>Inflation, FX and geopolitical stress simulator.</p>
+            <p>Inflation, FX and geopolitical stress scenario modeling.</p>
         </div>
 
         <div class="lens-card locked">
@@ -229,12 +203,12 @@ body{
 
         <div class="lens-card locked">
             <h4>Embedded Finance Lens</h4>
-            <p>API-based embedded credit risk layer.</p>
+            <p>API-based embedded credit risk infrastructure layer.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Certifica</h4>
-            <p>Biometric-secured financial authorization layer.</p>
+            <p>Biometric-secured financial authorization infrastructure.</p>
         </div>
 
     </div>
@@ -242,7 +216,7 @@ body{
 
 <section class="section">
     <h3>Global Deployment Strategy</h3>
-    <p>Primary Hub: UAE (Dubai) | Expansion: EU & United States</p>
+    <p>Primary Hub: Dubai (UAE) | Expansion: EU & United States</p>
 </section>
 
 <footer class="footer">
@@ -253,8 +227,8 @@ body{
     </div>
 
     <div>
-        Infrastructure Status: Production Live<br>
-        API Access: Institutional Licensing
+        API Access: Institutional Licensing<br>
+        Infrastructure Status: Production Live
     </div>
 </footer>
 
@@ -266,17 +240,17 @@ function toggleLang(){
 
     if(isTR){
         document.getElementById("heroTitle").innerText = "Davranışsal Finansal Altyapı Katmanı";
-        document.getElementById("heroDesc").innerText = "Zentra, bankalar ve regüle finans kurumları için tasarlanmış modüler bir risk mimarisidir.";
-        document.getElementById("coreTitle").innerText = "Çekirdek Altyapı";
-        document.getElementById("riskDesc").innerText = "Finansal Stres Endeksi ve Senaryo Simülasyonu üreten Davranışsal Risk Motoru.";
+        document.getElementById("heroDesc").innerText = "Bankalar ve regüle finans kurumları için tasarlanmış API-first modüler risk mimarisi.";
+        document.getElementById("coreTitle").innerText = "Aktif Altyapı";
+        document.getElementById("riskDesc").innerText = "Finansal Stres Endeksi ve senaryo bazlı risk simülasyonu üreten çekirdek motor.";
         document.getElementById("creditDesc").innerText = "RiskLens altyapısına entegre taksit ve geri ödeme stres modelleme motoru.";
         document.getElementById("tagline").innerText = "Davranışsal Finansal Altyapı";
     } else {
         document.getElementById("heroTitle").innerText = "Behavioral Financial Infrastructure Layer";
-        document.getElementById("heroDesc").innerText = "Zentra is a modular behavioral risk architecture designed for banks and regulated financial institutions.";
-        document.getElementById("coreTitle").innerText = "Core Infrastructure";
-        document.getElementById("riskDesc").innerText = "Behavioral Risk Core Engine delivering Financial Stress Index and Scenario-Based Simulation.";
-        document.getElementById("creditDesc").innerText = "Installment & repayment stress modeling engine integrated into RiskLens core.";
+        document.getElementById("heroDesc").innerText = "API-first modular behavioral risk architecture designed for banks and regulated financial institutions.";
+        document.getElementById("coreTitle").innerText = "Active Infrastructure";
+        document.getElementById("riskDesc").innerText = "Behavioral risk scoring engine delivering Financial Stress Index and scenario-based simulations.";
+        document.getElementById("creditDesc").innerText = "Installment and repayment stress modeling module integrated into RiskLens infrastructure.";
         document.getElementById("tagline").innerText = "Behavioral Financial Infrastructure";
     }
 }

@@ -19,14 +19,6 @@ body{
     padding:20px 40px;
     border-bottom:1px solid rgba(255,255,255,0.08);
 }
-.brand{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-.logo{
-    width:52px;
-}
 .brand-text h1{
     margin:0;
     letter-spacing:2px;
@@ -123,11 +115,9 @@ body{
 <body>
 
 <header class="header">
-    <div class="brand">
-        <div class="brand-text">
-            <h1>ZENTRA</h1>
-            <span id="tagline">Behavioral Financial Infrastructure</span>
-        </div>
+    <div class="brand-text">
+        <h1>ZENTRA</h1>
+        <span id="tagline">Behavioral Financial Infrastructure</span>
     </div>
 
     <div>
@@ -173,42 +163,42 @@ body{
 
         <div class="lens-card locked">
             <h4>CFO Lens</h4>
-            <p>Enterprise-level cash flow rupture and FX sensitivity modeling.</p>
+            <p id="cfoDesc">Enterprise-level cash flow rupture and FX sensitivity modeling.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>SME Risk Lens</h4>
-            <p>Runway detection and liquidity early-warning engine.</p>
+            <p id="smeDesc">Runway detection and liquidity early-warning engine.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Family Office Lens</h4>
-            <p>Wealth erosion and generational risk simulator.</p>
+            <p id="familyDesc">Wealth erosion and generational risk simulator.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Macro Shock Lens</h4>
-            <p>Inflation, FX and geopolitical stress scenario modeling.</p>
+            <p id="macroDesc">Inflation, FX and geopolitical stress scenario modeling.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Cognitive Finance Lens</h4>
-            <p>Behavioral psychometric risk anticipation engine.</p>
+            <p id="cognitiveDesc">Behavioral psychometric risk anticipation engine.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Participation Finance Lens</h4>
-            <p>Sharia-compliant financing risk modeling module.</p>
+            <p id="participationDesc">Sharia-compliant financing risk modeling module.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Embedded Finance Lens</h4>
-            <p>API-based embedded credit risk infrastructure layer.</p>
+            <p id="embeddedDesc">API-based embedded credit risk infrastructure layer.</p>
         </div>
 
         <div class="lens-card locked">
             <h4>Certifica</h4>
-            <p>Biometric-secured financial authorization infrastructure.</p>
+            <p id="certificaDesc">Biometric-secured financial authorization infrastructure.</p>
         </div>
 
     </div>
@@ -216,7 +206,7 @@ body{
 
 <section class="section">
     <h3>Global Deployment Strategy</h3>
-    <p>Primary Hub: Dubai (UAE) | Expansion: EU & United States</p>
+    <p id="deployDesc">Primary Hub: Dubai (UAE) | Expansion: EU & United States</p>
 </section>
 
 <footer class="footer">
@@ -244,6 +234,16 @@ function toggleLang(){
         document.getElementById("coreTitle").innerText = "Aktif Altyapı";
         document.getElementById("riskDesc").innerText = "Finansal Stres Endeksi ve senaryo bazlı risk simülasyonu üreten çekirdek motor.";
         document.getElementById("creditDesc").innerText = "RiskLens altyapısına entegre taksit ve geri ödeme stres modelleme motoru.";
+        document.getElementById("deployDesc").innerText = "Merkez: Dubai (BAE) | Genişleme: AB ve Amerika";
+
+        document.getElementById("cfoDesc").innerText = "Kurumsal nakit akışı kırılma ve döviz hassasiyet analizi.";
+        document.getElementById("smeDesc").innerText = "KOBİ’ler için runway tespiti ve likidite erken uyarı motoru.";
+        document.getElementById("familyDesc").innerText = "Servet erozyonu ve nesiller arası risk simülasyonu.";
+        document.getElementById("macroDesc").innerText = "Enflasyon, kur ve jeopolitik stres senaryosu modeli.";
+        document.getElementById("cognitiveDesc").innerText = "Davranışsal psikometrik risk öngörü altyapısı.";
+        document.getElementById("participationDesc").innerText = "Katılım finans prensiplerine uygun risk modelleme modülü.";
+        document.getElementById("embeddedDesc").innerText = "API tabanlı gömülü finans risk altyapısı.";
+        document.getElementById("certificaDesc").innerText = "Biyometrik güvenlik ile finansal yetkilendirme katmanı.";
         document.getElementById("tagline").innerText = "Davranışsal Finansal Altyapı";
     } else {
         document.getElementById("heroTitle").innerText = "Behavioral Financial Infrastructure Layer";
@@ -251,6 +251,16 @@ function toggleLang(){
         document.getElementById("coreTitle").innerText = "Active Infrastructure";
         document.getElementById("riskDesc").innerText = "Behavioral risk scoring engine delivering Financial Stress Index and scenario-based simulations.";
         document.getElementById("creditDesc").innerText = "Installment and repayment stress modeling module integrated into RiskLens infrastructure.";
+        document.getElementById("deployDesc").innerText = "Primary Hub: Dubai (UAE) | Expansion: EU & United States";
+
+        document.getElementById("cfoDesc").innerText = "Enterprise-level cash flow rupture and FX sensitivity modeling.";
+        document.getElementById("smeDesc").innerText = "Runway detection and liquidity early-warning engine.";
+        document.getElementById("familyDesc").innerText = "Wealth erosion and generational risk simulator.";
+        document.getElementById("macroDesc").innerText = "Inflation, FX and geopolitical stress scenario modeling.";
+        document.getElementById("cognitiveDesc").innerText = "Behavioral psychometric risk anticipation engine.";
+        document.getElementById("participationDesc").innerText = "Sharia-compliant financing risk modeling module.";
+        document.getElementById("embeddedDesc").innerText = "API-based embedded credit risk infrastructure layer.";
+        document.getElementById("certificaDesc").innerText = "Biometric-secured financial authorization infrastructure.";
         document.getElementById("tagline").innerText = "Behavioral Financial Infrastructure";
     }
 }

@@ -1,669 +1,240 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ZENTRA — Risk Infrastructure Marketplace</title>
-  <meta name="description" content="ZENTRA is a licensable risk infrastructure company. Live: RiskLens + Credit Stress API. Designed for banks & Islamic finance." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zentra | Behavioral Financial Infrastructure</title>
+<meta name="description" content="Zentra is a modular behavioral financial infrastructure layer providing risk intelligence and institutional API engines.">
 
-  <style>
-    :root{
-      --bg:#0b0f17;
-      --card:#0f1726;
-      --card2:#101a2b;
-      --text:#e7eefc;
-      --muted:#b8c6e6;
-      --line:rgba(255,255,255,.10);
-      --brand:#7aa2ff;
-      --ok:#22c55e;
-      --warn:#fbbf24;
-      --bad:#ef4444;
-      --off:#94a3b8;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --r:16px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
-      color:var(--text);
-      background:
-        radial-gradient(900px 600px at 20% -10%, rgba(122,162,255,.22), transparent 60%),
-        radial-gradient(900px 600px at 80% 0%, rgba(34,197,94,.12), transparent 55%),
-        var(--bg);
-      line-height:1.5;
-    }
-    a{color:inherit}
-    .wrap{max-width:1120px;margin:0 auto;padding:22px}
-    header{
-      position:sticky;top:0;z-index:10;
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 0;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(to bottom, rgba(11,15,23,.78), rgba(11,15,23,.30));
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .brand{
-      display:flex;align-items:center;gap:12px;min-width:240px;
-    }
-    .brand img{
-      height:60px;width:auto;border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      padding:6px
-    }
-    .brand .txt{display:flex;flex-direction:column;gap:2px}
-    .brand .txt strong{letter-spacing:.6px}
-    .brand .txt span{font-size:12px;color:var(--muted)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      text-decoration:none;font-size:13px;cursor:pointer;
-    }
-    .pill:hover{background:rgba(255,255,255,.07)}
-    .dot{width:10px;height:10px;border-radius:50%}
-    .dot.ok{background:var(--ok);box-shadow:0 0 0 4px rgba(34,197,94,.18)}
-    .dot.warn{background:var(--warn);box-shadow:0 0 0 4px rgba(251,191,36,.15)}
-    .dot.bad{background:var(--bad);box-shadow:0 0 0 4px rgba(239,68,68,.12)}
-    .hero{
-      margin-top:18px;
-      display:grid;grid-template-columns: 1.15fr .85fr;gap:14px;
-    }
-    @media (max-width: 920px){.hero{grid-template-columns:1fr}.brand img{height:56px}}
-    .card{
-      background: linear-gradient(180deg, rgba(16,26,43,.85), rgba(15,23,38,.85));
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--r);
-      box-shadow:var(--shadow);
-      padding:18px;
-      position:relative;
-      overflow:hidden;
-    }
-    .card:before{
-      content:"";
-      position:absolute;inset:-1px;
-      background:
-        radial-gradient(700px 320px at 0% 0%, rgba(122,162,255,.16), transparent 55%),
-        radial-gradient(700px 320px at 100% 10%, rgba(34,197,94,.11), transparent 55%);
-      pointer-events:none;
-    }
-    .card > *{position:relative}
-    h1{margin:0 0 10px;font-size:34px;line-height:1.15}
-    .sub{margin:0 0 12px;color:var(--muted);font-size:14px}
-    .live{
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;border-radius:14px;
-      border:1px solid rgba(34,197,94,.35);
-      background: rgba(34,197,94,.10);
-      font-weight:900;
-      margin:10px 0 14px;
-    }
-    .live .dot{width:12px;height:12px}
-    .badges{display:flex;gap:10px;flex-wrap:wrap}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      font-size:13px;
-    }
-    .badge.live{border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.08)}
-    .badge.lock{border-color: rgba(148,163,184,.25); background: rgba(148,163,184,.07); color: var(--muted)}
-    .badge.off{border-color: rgba(239,68,68,.25); background: rgba(239,68,68,.06); color: #f8c9c9}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .cta{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:10px 12px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(122,162,255,.15);
-      text-decoration:none;font-weight:800;font-size:13px;
-    }
-    .cta:hover{background: rgba(122,162,255,.22)}
-    .cta.secondary{background: rgba(255,255,255,.05);font-weight:750}
-    .mini{font-size:12px;color:var(--muted);border-top:1px solid rgba(255,255,255,.08);margin-top:12px;padding-top:12px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
-    @media (max-width: 980px){.grid{grid-template-columns:1fr}}
-    .item{
-      background: rgba(16,26,43,.72);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--r);
-      box-shadow:var(--shadow);
-      padding:16px;
-    }
-    .item h3{margin:0 0 6px;font-size:16px}
-    .item p{margin:0 0 10px;color:var(--muted);font-size:13px}
-    .logos{
-      display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap
-    }
-    .logos img{
-      height:52px;width:auto;border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      padding:6px
-    }
-    section{margin-top:18px}
-    .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .section-title h2{margin:0;font-size:18px}
-    .foot{
-      margin:26px 0 10px;
-      color:var(--muted);
-      font-size:12px;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:16px;
-    }
-    .hint{font-size:12px;color:var(--muted)}
-    .sep{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
-    code{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      padding:2px 6px;border-radius:8px;
-    }
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0b1220;
+    color:#ffffff;
+}
 
-    /* --- FIX: overlap / iç içe görünme --- */
-    .grid { align-items: stretch; }
-    .item { position: relative; overflow: hidden; }
-    .item h3, .item p { word-break: break-word; overflow-wrap: anywhere; }
-    .row { align-items: flex-start; }
-    .badges { align-items: center; }
-    .logos { align-items: center; }
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 40px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
 
-    /* Roadmap strategy block */
-    .strategy{
-      margin:14px 0 18px; padding:16px; border-radius:16px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-    }
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
 
-    /* Status label */
-    .statusline{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .statuspill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      font-size:13px;
-    }
-  </style>
+.logo{
+    width:64px;
+}
+
+.brand-text h1{
+    margin:0;
+    letter-spacing:2px;
+    font-size:22px;
+}
+
+.brand-text span{
+    font-size:13px;
+    opacity:0.7;
+}
+
+.status-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 14px;
+    font-size:12px;
+    border-radius:20px;
+    background:rgba(0,255,120,0.08);
+    border:1px solid rgba(0,255,120,0.3);
+    color:#00ff88;
+}
+
+.status-badge .dot{
+    width:8px;
+    height:8px;
+    background:#00ff88;
+    border-radius:50%;
+}
+
+/* HERO */
+.hero{
+    padding:80px 40px;
+    text-align:center;
+}
+
+.hero h2{
+    font-size:38px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:800px;
+    margin:auto;
+    opacity:0.8;
+}
+
+/* SECTION */
+.section{
+    padding:60px 40px;
+}
+
+.section h3{
+    font-size:28px;
+    margin-bottom:30px;
+}
+
+/* RISK LENS FULL PANEL */
+.core-panel{
+    background:#111a2c;
+    padding:40px;
+    border-radius:12px;
+    margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.core-panel h4{
+    margin-top:0;
+    font-size:26px;
+}
+
+.button{
+    display:inline-block;
+    padding:12px 20px;
+    margin-top:20px;
+    background:#00ff88;
+    color:#000;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* GRID */
+.lens-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.lens-card{
+    background:#111a2c;
+    padding:20px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.active{
+    border:1px solid #00ff88;
+}
+
+.locked{
+    opacity:0.6;
+}
+
+/* FOOTER */
+.footer{
+    margin-top:80px;
+    padding:40px;
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    font-size:14px;
+    opacity:0.85;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
 
-    <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <!-- Repo root'a koy: zentra-logo.png -->
-        <img src="zentra-logo.png" alt="Zentra Logo" />
-        <div class="txt">
-          <strong>ZENTRA</strong>
-          <span data-tr="Risk Infrastructure Marketplace" data-en="Risk Infrastructure Marketplace">Risk Infrastructure Marketplace</span>
+<header class="header">
+    <div class="brand">
+        <img src="zentra-logo.png" alt="Zentra Logo" class="logo">
+        <div class="brand-text">
+            <h1>ZENTRA</h1>
+            <span>Behavioral Financial Infrastructure</span>
         </div>
-      </div>
+    </div>
+    <div class="status-badge">
+        <span class="dot"></span>
+        Production Live
+    </div>
+</header>
 
-      <div class="actions">
-        <button class="pill" id="langBtn" type="button" title="TR / EN">
-          <span class="dot warn"></span>
-          <span id="langLabel">TR</span>
-        </button>
+<section class="hero">
+    <h2>Behavioral Financial Infrastructure Layer</h2>
+    <p>
+        Zentra is a modular risk intelligence architecture built for banks, participation finance institutions, 
+        and embedded financial ecosystems.
+    </p>
+</section>
 
-        <a class="pill" href="#live">
-          <span class="dot ok"></span>
-          <span data-tr="Canlı Ürünler" data-en="Live Products">Canlı Ürünler</span>
-        </a>
+<section class="section">
+    <h3>Core Infrastructure</h3>
 
-        <a class="pill" href="#roadmap">
-          <span class="dot warn"></span>
-          <span data-tr="Lens Yol Haritası" data-en="Lens Roadmap">Lens Yol Haritası</span>
-        </a>
-
-        <a class="pill" href="mailto:42mehmetaltas@gmail.com">
-          <span data-tr="İletişim" data-en="Contact">İletişim</span> · 42mehmetaltas@gmail.com
-        </a>
-      </div>
-    </header>
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="card">
-        <h1
-          data-tr="Banka ve Katılım Finans için Modüler Risk Zekâsı Altyapısı"
-          data-en="Modular Risk Intelligence Infrastructure for Banks & Islamic Finance">
-          Banka ve Katılım Finans için Modüler Risk Zekâsı Altyapısı
-        </h1>
-
-        <p class="sub"
-          data-tr="ZENTRA; risk motorları, doğrulama katmanları ve skorlama API’leriyle finansal kararları hızlandıran, lisanslanabilir bir altyapı şirketidir. Merkez hedef: Dubai."
-          data-en="ZENTRA is a licensable infrastructure company delivering risk engines, verification layers, and scoring APIs to accelerate financial decisions. Target HQ: Dubai.">
-          ZENTRA; risk motorları, doğrulama katmanları ve skorlama API’leriyle finansal kararları hızlandıran, lisanslanabilir bir altyapı şirketidir. Merkez hedef: Dubai.
+    <div class="core-panel active">
+        <h4>RiskLens</h4>
+        <p>
+            Behavioral Risk Core Engine delivering Financial Stress Index, Liquidity Breakpoint Detection, 
+            and Scenario-Based Future Simulation.
         </p>
-
-        <!-- Global positioning block (TR/EN uyumlu) -->
-        <div style="margin:14px 0 10px; padding:14px; border-radius:14px;
-        border:1px solid rgba(122,162,255,.35);
-        background:rgba(122,162,255,.08);
-        font-weight:900;">
-
-          <div data-tr="ZENTRA bir finans uygulaması değildir."
-               data-en="ZENTRA is not a finance app.">
-            ZENTRA bir finans uygulaması değildir.
-          </div>
-
-          <div style="margin-top:6px"
-               data-tr="ZENTRA, bankalar ve katılım finans kurumları için lisanslanabilir davranışsal risk altyapısıdır."
-               data-en="ZENTRA is a licensable behavioral risk infrastructure layer for banks and Islamic finance institutions.">
-            ZENTRA, bankalar ve katılım finans kurumları için lisanslanabilir davranışsal risk altyapısıdır.
-          </div>
-
-          <div style="margin-top:6px"
-               data-tr="Kredi vermez. Fatura ödemez. Para dağıtmaz. Sadece karar katmanını güçlendirir."
-               data-en="It does not lend. It does not fund invoices. It powers the decision layer.">
-            Kredi vermez. Fatura ödemez. Para dağıtmaz. Sadece karar katmanını güçlendirir.
-          </div>
-
-        </div>
-
-        <div class="live" id="live">
-          <span class="dot ok"></span>
-          <span
-            data-tr="LIVE: RiskLens + Credit Stress API çalışıyor (Demo / Prototype)"
-            data-en="LIVE: RiskLens + Credit Stress API is running (Demo / Prototype)">
-            LIVE: RiskLens + Credit Stress API çalışıyor (Demo / Prototype)
-          </span>
-        </div>
-
-        <div class="badges">
-          <div class="badge live"><span class="dot ok"></span><span data-tr="API-first" data-en="API-first">API-first</span></div>
-          <div class="badge live"><span class="dot ok"></span><span data-tr="Lisanslanabilir Model" data-en="Licensable Model">Lisanslanabilir Model</span></div>
-          <div class="badge live"><span class="dot ok"></span><span data-tr="Katılım Finans Uyumlu (Uyarlanabilir)" data-en="Islamic Finance-ready (Adaptable)">Katılım Finans Uyumlu (Uyarlanabilir)</span></div>
-          <div class="badge lock"><span class="dot warn"></span><span data-tr="Diğer Lensler: Kapalı" data-en="Other Lenses: Locked">Diğer Lensler: Kapalı</span></div>
-        </div>
-
-        <div class="logos">
-          <!-- Repo root'a koy: risklens-logo.png -->
-          <img src="risklens-logo.png" alt="RiskLens Logo" />
-          <div class="hint"
-            data-tr="Alt marka: RiskLens (ilk ürün). Diğer lensler roadmap’te görünür ama kapalı."
-            data-en="Sub-brand: RiskLens (first product). Other lenses are visible in roadmap but locked.">
-            Alt marka: RiskLens (ilk ürün). Diğer lensler roadmap’te görünür ama kapalı.
-          </div>
-        </div>
-
-        <div class="sep"></div>
-
-        <!-- Separate product buttons -->
-        <div class="row">
-          <a class="cta" href="https://mehmetaltas.github.io/invoice-risklens/" target="_blank" rel="noopener"
-             data-tr="RiskLens (Ayrı) — Demo" data-en="RiskLens (Separate) — Demo">RiskLens (Ayrı) — Demo</a>
-
-          <a class="cta secondary" href="https://zentra-credit-stress-api.onrender.com/docs" target="_blank" rel="noopener"
-             data-tr="Credit Stress (Ayrı) — API Docs" data-en="Credit Stress (Separate) — API Docs">Credit Stress (Ayrı) — API Docs</a>
-
-          <a class="cta secondary" href="mailto:42mehmetaltas@gmail.com"
-             data-tr="Yatırım / Pilot Görüşme" data-en="Investment / Pilot Call">Yatırım / Pilot Görüşme</a>
-        </div>
-
-        <!-- Live checks -->
-        <div class="statusline">
-          <div class="statuspill" id="risklensStatus">
-            <span class="dot warn" id="risklensDot"></span>
-            <span data-tr="RiskLens durumu: kontrol ediliyor…" data-en="RiskLens status: checking…" id="risklensText">RiskLens durumu: kontrol ediliyor…</span>
-          </div>
-          <div class="statuspill" id="stressStatus">
-            <span class="dot warn" id="stressDot"></span>
-            <span data-tr="Credit Stress API durumu: kontrol ediliyor…" data-en="Credit Stress API status: checking…" id="stressText">Credit Stress API durumu: kontrol ediliyor…</span>
-          </div>
-        </div>
-
-        <div class="mini"
-          data-tr="Not: ZENTRA para vermez / kredi vermez. ZENTRA sadece risk analizi, doğrulama ve karar destek sağlar. Ödemeyi banka/faktoring/fon/finans kurumu yapar."
-          data-en="Note: ZENTRA does not lend or pay invoices. ZENTRA provides scoring, verification, and decision support. Funding is executed by banks/factoring/funds/financial institutions.">
-          Not: ZENTRA para vermez / kredi vermez. ZENTRA sadece risk analizi, doğrulama ve karar destek sağlar. Ödemeyi banka/faktoring/fon/finans kurumu yapar.
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">
-          <h2 data-tr="Yatırımcıya 1 cümle" data-en="One-line investor positioning">Yatırımcıya 1 cümle</h2>
-          <div class="badges">
-            <div class="badge live"><span class="dot ok"></span><span data-tr="B2B" data-en="B2B">B2B</span></div>
-            <div class="badge live"><span class="dot ok"></span><span data-tr="Lisans + API" data-en="License + API">Lisans + API</span></div>
-          </div>
-        </div>
-
-        <p class="sub"
-          data-tr="ZENTRA, bankalar için davranış + doğrulama + risk skorlama katmanını lisanslayan bir altyapı şirketidir."
-          data-en="ZENTRA is an infrastructure company licensing a behavioral + verification + risk scoring layer for banks.">
-          ZENTRA, bankalar için davranış + doğrulama + risk skorlama katmanını lisanslayan bir altyapı şirketidir.
-        </p>
-
-        <div class="sep"></div>
-
-        <h3 style="margin:0 0 6px;font-size:16px" data-tr="İlk odak" data-en="Initial focus">İlk odak</h3>
-        <ul class="hint" style="margin:0;padding-left:18px">
-          <li data-tr="RiskLens: fatura/vade/risk analizi + sahtecilik sinyalleri"
-              data-en="RiskLens: invoice/term/risk analysis + fraud signals">
-            RiskLens: fatura/vade/risk analizi + sahtecilik sinyalleri
-          </li>
-          <li data-tr="Credit Stress API: stres skoru simülasyonu (LIVE)"
-              data-en="Credit Stress API: stress score simulation (LIVE)">
-            Credit Stress API: stres skoru simülasyonu (LIVE)
-          </li>
-          <li data-tr="Katılım finans için uyarlanabilir süreç: faiz yerine kâr payı / murabaha modelleme"
-              data-en="Adaptable layer for Islamic finance: profit-share / murabaha-style modeling">
-            Katılım finans için uyarlanabilir süreç: faiz yerine kâr payı / murabaha modelleme
-          </li>
-        </ul>
-
-        <div class="sep"></div>
-
-        <div class="row">
-          <a class="pill" href="mailto:42mehmetaltas@gmail.com">
-            <span data-tr="Tek e-posta" data-en="Single email">Tek e-posta</span>: 42mehmetaltas@gmail.com
-          </a>
-          <span class="hint" data-tr="Tüm iletişim tek noktadan." data-en="All communication from a single point.">
-            Tüm iletişim tek noktadan.
-          </span>
-        </div>
-      </div>
+        <a href="/risklens" class="button">Enter RiskLens</a>
     </div>
 
-    <!-- LIVE PRODUCTS -->
-    <section>
-      <div class="section-title">
-        <h2 data-tr="Canlı Ürünler (Live)" data-en="Live Products">Canlı Ürünler (Live)</h2>
-        <div class="badges">
-          <div class="badge live"><span class="dot ok"></span><span data-tr="Çalışıyor" data-en="Running">Çalışıyor</span></div>
-          <div class="badge live"><span class="dot ok"></span><span data-tr="Demo/Prototype" data-en="Demo/Prototype">Demo/Prototype</span></div>
-        </div>
-      </div>
-
-      <div class="grid">
-        <div class="item">
-          <div class="row">
-            <h3>RiskLens</h3>
-            <div class="badge live"><span class="dot ok"></span><span>LIVE</span></div>
-          </div>
-
-          <p style="font-size:12px;color:#b8c6e6;margin:6px 0 10px;"
-             data-tr="İlk Aktif Modül — Fatura / Vade / Risk Motoru"
-             data-en="First Active Module — Invoice / Term / Risk Engine">
-            İlk Aktif Modül — Fatura / Vade / Risk Motoru
-          </p>
-
-          <p
-            data-tr="Fatura / vade odaklı risk analizi + doğrulama + karar destek."
-            data-en="Invoice/term-focused risk analysis + verification + decision support.">
-            Fatura / vade odaklı risk analizi + doğrulama + karar destek.
-          </p>
-          <div class="row">
-            <a class="cta" href="https://mehmetaltas.github.io/invoice-risklens/" target="_blank" rel="noopener"
-               data-tr="Demo’yu Aç" data-en="Open Demo">Demo’yu Aç</a>
-            <a class="cta secondary" href="mailto:42mehmetaltas@gmail.com"
-               data-tr="Pilot Görüşme" data-en="Pilot Call">Pilot Görüşme</a>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <h3>Credit Stress API</h3>
-            <div class="badge live"><span class="dot ok"></span><span>LIVE</span></div>
-          </div>
-
-          <p
-            data-tr="Kredi stres skoru simülasyonu: aylık ödeme, ödeme/gelir oranı, risk bandı."
-            data-en="Credit stress scoring simulation: monthly payment, payment-to-income ratio, risk band.">
-            Kredi stres skoru simülasyonu: aylık ödeme, ödeme/gelir oranı, risk bandı.
-          </p>
-          <div class="row">
-            <a class="cta" href="https://zentra-credit-stress-api.onrender.com/docs" target="_blank" rel="noopener">API Docs</a>
-            <a class="cta secondary" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank" rel="noopener">/health</a>
-          </div>
-          <div class="mini" data-tr="İpucu: API canlıysa /health JSON döner." data-en="Tip: If API is live, /health returns JSON.">
-            İpucu: API canlıysa /health JSON döner.
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="Tek Dosya Pitch" data-en="Single File Pitch">Tek Dosya Pitch</h3>
-            <div class="badge live"><span class="dot ok"></span><span data-tr="Hazır" data-en="Ready">Hazır</span></div>
-          </div>
-          <p
-            data-tr="Yatırımcı dosyaları ve linkler tek noktada. İstersen bu sayfaya PDF linkini de ekleriz."
-            data-en="Investor files and links in one place. We can also embed the PDF link here.">
-            Yatırımcı dosyaları ve linkler tek noktada. İstersen bu sayfaya PDF linkini de ekleriz.
-          </p>
-          <div class="row">
-            <a class="cta secondary" href="mailto:42mehmetaltas@gmail.com"
-               data-tr="PDF iste" data-en="Request PDF">PDF iste</a>
-            <a class="cta" href="#roadmap"
-               data-tr="Roadmap’e Git" data-en="Go to Roadmap">Roadmap’e Git</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ROADMAP / LOCKED LENSES -->
-    <section id="roadmap">
-      <div class="section-title">
-        <h2 data-tr="Kapalı Lensler (Roadmap)" data-en="Locked Lenses (Roadmap)">Kapalı Lensler (Roadmap)</h2>
-        <div class="badges">
-          <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          <div class="badge lock"><span class="dot warn"></span><span data-tr="Sırayla Açılacak" data-en="Unlocked Step-by-step">Sırayla Açılacak</span></div>
-        </div>
-      </div>
-
-      <!-- Growth Strategy block -->
-      <div class="strategy">
-        <h3 style="margin:0 0 10px;font-size:16px;"
-            data-tr="Büyüme Stratejisi"
-            data-en="Growth Strategy">
-          Büyüme Stratejisi
-        </h3>
-
-        <p class="sub"
-           data-tr="ZENTRA tüm lensleri aynı anda açmaz. İlk 18 ay tek bir şeyi mükemmel yapar: Behavioral Risk Scoring."
-           data-en="ZENTRA does not launch all lenses at once. The first 18 months focus on mastering Behavioral Risk Scoring.">
-          ZENTRA tüm lensleri aynı anda açmaz. İlk 18 ay tek bir şeyi mükemmel yapar: Behavioral Risk Scoring.
+    <div class="lens-card active">
+        <h4>Credit Stress Engine</h4>
+        <p>
+            Installment & repayment stress modeling engine with behavioral risk classification.
         </p>
+        <a href="https://zentrarisk.com/docs" class="button">API Docs</a>
+    </div>
+</section>
 
-        <ul class="hint" style="margin:0;padding-left:18px">
-          <li data-tr="Faz 1: RiskLens + Credit Stress API (Kanıt & Referans Üretimi)"
-              data-en="Phase 1: RiskLens + Credit Stress API (Proof & References)">
-            Faz 1: RiskLens + Credit Stress API (Kanıt & Referans Üretimi)
-          </li>
-          <li data-tr="Faz 2: KOBİ & CFO Lens (Kurumsal Lisanslama)"
-              data-en="Phase 2: SME & CFO Lens (Enterprise Licensing)">
-            Faz 2: KOBİ & CFO Lens (Kurumsal Lisanslama)
-          </li>
-          <li data-tr="Faz 3: Family Office & Macro Lens (Yüksek Marj Katmanı)"
-              data-en="Phase 3: Family Office & Macro Lens (High Margin Layer)">
-            Faz 3: Family Office & Macro Lens (Yüksek Marj Katmanı)
-          </li>
-          <li data-tr="Faz 4: Cognitive Finance Layer (Patentlenebilir Katman)"
-              data-en="Phase 4: Cognitive Finance Layer (Patentable Layer)">
-            Faz 4: Cognitive Finance Layer (Patentlenebilir Katman)
-          </li>
-        </ul>
+<section class="section">
+    <h3>Modular Lens Architecture</h3>
 
-        <div style="margin-top:10px;font-size:12px;color:#b8c6e6;"
-             data-tr="Her lens lisans ile açılır. Platform mimarisi baştan modüler tasarlanmıştır."
-             data-en="Each lens unlocks via licensing. The platform is modular by design.">
-          Her lens lisans ile açılır. Platform mimarisi baştan modüler tasarlanmıştır.
-        </div>
-      </div>
+    <div class="lens-grid">
 
-      <div class="grid">
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="KOBİ Risk Lens (SME)" data-en="SME Risk Lens">KOBİ Risk Lens (SME)</h3>
-            <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          </div>
-          <p data-tr="KOBİ nakit akışı, vade ve ödeme davranışı için risk motoru."
-             data-en="Risk engine for SME cashflow, terms, and payment behavior.">
-            KOBİ nakit akışı, vade ve ödeme davranışı için risk motoru.
-          </p>
-        </div>
+        <div class="lens-card locked"><h4>CFO Lens</h4></div>
+        <div class="lens-card locked"><h4>SME Risk Lens</h4></div>
+        <div class="lens-card locked"><h4>Family Office Lens</h4></div>
+        <div class="lens-card locked"><h4>Macro Shock Lens</h4></div>
+        <div class="lens-card locked"><h4>Cognitive Finance Lens</h4></div>
+        <div class="lens-card locked"><h4>Participation Finance Lens</h4></div>
+        <div class="lens-card locked"><h4>Embedded Finance Lens</h4></div>
+        <div class="lens-card locked"><h4>Certifica</h4></div>
 
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="CFO Lens (Kurumsal)" data-en="CFO Lens (Enterprise)">CFO Lens (Kurumsal)</h3>
-            <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          </div>
-          <p data-tr="Kurumsal nakit akış kırılma tahmini + senaryo simülasyonu."
-             data-en="Enterprise cashflow breakpoint prediction + scenario simulation.">
-            Kurumsal nakit akış kırılma tahmini + senaryo simülasyonu.
-          </p>
-        </div>
+    </div>
+</section>
 
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="Family Office Lens" data-en="Family Office Lens">Family Office Lens</h3>
-            <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          </div>
-          <p data-tr="Servet erozyonu, varlık konsantrasyon riski, nesil transfer simülasyonu."
-             data-en="Wealth erosion, concentration risk, generational transfer simulation.">
-            Servet erozyonu, varlık konsantrasyon riski, nesil transfer simülasyonu.
-          </p>
-        </div>
+<section class="section">
+    <h3>Global Deployment Strategy</h3>
+    <p>
+        Primary Hub: UAE (Dubai) <br>
+        Expansion: EU | United States <br>
+        API-first, multi-region, regulatory-ready architecture.
+    </p>
+</section>
 
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="Vakıf Risk Lens" data-en="Foundation / Waqf Risk Lens">Vakıf Risk Lens</h3>
-            <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          </div>
-          <p data-tr="Vakıf/kurumsal fonlar için risk + şeffaflık + sürdürülebilirlik kontrol panelleri."
-             data-en="Risk + transparency + sustainability dashboards for foundations and institutional funds.">
-            Vakıf/kurumsal fonlar için risk + şeffaflık + sürdürülebilirlik kontrol panelleri.
-          </p>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="Certification Lens" data-en="Certification Lens">Certification Lens</h3>
-            <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          </div>
-          <p data-tr="Sertifikasyon ve doğrulama raporları (lisanslı)."
-             data-en="Certification & verification reports (licensed).">
-            Sertifikasyon ve doğrulama raporları (lisanslı).
-          </p>
-        </div>
-
-        <div class="item">
-          <div class="row">
-            <h3 data-tr="NFC / Biometric Pay Lens" data-en="NFC / Biometric Pay Lens">NFC / Biometric Pay Lens</h3>
-            <div class="badge lock"><span class="dot warn"></span><span data-tr="Kapalı" data-en="Locked">Kapalı</span></div>
-          </div>
-          <p data-tr="Parmak izi ile ödeme vizyonu (regülasyon + donanım sonrası)."
-             data-en="Fingerprint payment vision (post-regulatory & hardware readiness).">
-            Parmak izi ile ödeme vizyonu (regülasyon + donanım sonrası).
-          </p>
-        </div>
-      </div>
-
-      <div class="mini"
-        data-tr="Not: Lensler aynı anda açılmayacak. Platformda görünür ama kapalı kalacak. Önce RiskLens + Credit Stress ile kanıt, sonra sırayla lisanslama."
-        data-en="Note: Lenses will not launch simultaneously. Visible but locked. First prove with RiskLens + Credit Stress, then unlock & license step-by-step.">
-        Not: Lensler aynı anda açılmayacak. Platformda görünür ama kapalı kalacak. Önce RiskLens + Credit Stress ile kanıt, sonra sırayla lisanslama.
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <div class="foot">
-      <div class="row" style="align-items:flex-start">
-        <div>
-          <strong>ZENTRA</strong> — <span data-tr="Global risk altyapısı" data-en="Global risk infrastructure">Global risk altyapısı</span><br/>
-          <span class="hint"
-            data-tr="Target HQ: Dubai (UAE). Model: License + API + enterprise modules."
-            data-en="Target HQ: Dubai (UAE). Model: License + API + enterprise modules.">
-            Target HQ: Dubai (UAE). Model: License + API + enterprise modules.
-          </span>
-        </div>
-        <div>
-          <span data-tr="E-posta:" data-en="Email:">E-posta:</span>
-          <a href="mailto:42mehmetaltas@gmail.com">42mehmetaltas@gmail.com</a>
-        </div>
-      </div>
-
-      <div style="margin-top:10px;opacity:.9">© <span id="year"></span> ZENTRA — RiskLens & Lens platform.</div>
-
-      <div class="mini">
-        <span data-tr="Logo dosyaları repo root’ta olmalı:" data-en="Logo files must be in repo root:">Logo dosyaları repo root’ta olmalı:</span>
-        <code>zentra-logo.png</code> <code>risklens-logo.png</code>
-      </div>
+<footer class="footer">
+    <div>
+        <strong>ZENTRA</strong><br>
+        Licensed Financial Infrastructure Layer<br>
+        © 2026 Zentra
     </div>
 
-  </div>
+    <div>
+        Infrastructure Status: Production Live<br>
+        API Access: Institutional Licensing<br>
+        Deployment: UAE | EU | US
+    </div>
+</footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // --- Language toggle (data-tr / data-en) ---
-    let lang = "tr";
-    const langBtn = document.getElementById("langBtn");
-    const langLabel = document.getElementById("langLabel");
-
-    function applyLang(){
-      document.querySelectorAll("[data-tr]").forEach(el=>{
-        el.textContent = (lang==="tr") ? el.getAttribute("data-tr") : el.getAttribute("data-en");
-      });
-      langLabel.textContent = (lang==="tr") ? "TR" : "EN";
-    }
-    langBtn.addEventListener("click", ()=>{
-      lang = (lang==="tr") ? "en" : "tr";
-      applyLang();
-    });
-    applyLang();
-
-    // --- Live checks (RiskLens page + Credit Stress /health) ---
-    async function ping(url, timeoutMs=6000){
-      const controller = new AbortController();
-      const t = setTimeout(()=>controller.abort(), timeoutMs);
-      try{
-        const res = await fetch(url, {signal: controller.signal, mode:"cors"});
-        clearTimeout(t);
-        return res.ok;
-      }catch(e){
-        clearTimeout(t);
-        return false;
-      }
-    }
-
-    // RiskLens is static page; we just check if it responds
-    (async ()=>{
-      const risklensOk = await ping("https://mehmetaltas.github.io/invoice-risklens/");
-      const stressOk = await ping("https://zentra-credit-stress-api.onrender.com/health");
-
-      const rd = document.getElementById("risklensDot");
-      const rt = document.getElementById("risklensText");
-      if(risklensOk){
-        rd.className = "dot ok";
-        rt.setAttribute("data-tr","RiskLens durumu: LIVE");
-        rt.setAttribute("data-en","RiskLens status: LIVE");
-      }else{
-        rd.className = "dot bad";
-        rt.setAttribute("data-tr","RiskLens durumu: Offline / kontrol edin");
-        rt.setAttribute("data-en","RiskLens status: Offline / please check");
-      }
-
-      const sd = document.getElementById("stressDot");
-      const st = document.getElementById("stressText");
-      if(stressOk){
-        sd.className = "dot ok";
-        st.setAttribute("data-tr","Credit Stress API durumu: LIVE");
-        st.setAttribute("data-en","Credit Stress API status: LIVE");
-      }else{
-        sd.className = "dot bad";
-        st.setAttribute("data-tr","Credit Stress API durumu: Offline / kontrol edin");
-        st.setAttribute("data-en","Credit Stress API status: Offline / please check");
-      }
-
-      // re-apply current language so labels show correct text immediately
-      applyLang();
-    })();
-  </script>
 </body>
-                                                                                                                                                                   </html>
+</html>

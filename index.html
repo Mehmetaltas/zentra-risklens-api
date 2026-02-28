@@ -1,333 +1,752 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZENTRA | Risk Infrastructure Marketplace</title>
-  <meta name="description" content="ZENTRA: Banks & regulated finance for modular risk intelligence infrastructure. RiskLens + Credit Stress live demos." />
-  <style>
-    :root{
-      --bg:#0b1220; --card:#111a2c; --card2:#0f172a; --text:#ffffff; --muted:rgba(255,255,255,.72);
-      --line:rgba(255,255,255,.08); --green:#00ff88; --blue:#3b82f6; --shadow:0 16px 50px rgba(0,0,0,.45);
-      --radius:16px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1100px;margin:0 auto;padding:26px 18px 80px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 6px;border-bottom:1px solid var(--line)}
-    .brand{display:flex;align-items:center;gap:14px;min-width:240px}
-    .logo{width:56px;height:56px;object-fit:contain;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);padding:6px}
-    .brand h1{margin:0;font-size:18px;letter-spacing:2px}
-    .brand .tag{margin-top:2px;font-size:12px;color:var(--muted)}
-    .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.28);color:var(--green);font-weight:700;font-size:12px}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(0,255,136,.55)}
-    .toggle{cursor:pointer;user-select:none;font-size:12px;color:var(--muted);padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
-    .hero{padding:54px 6px 24px;text-align:left}
-    .hero h2{margin:0 0 10px;font-size:42px;line-height:1.05;letter-spacing:-.4px}
-    .hero p{margin:0;color:var(--muted);max-width:860px;line-height:1.6}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:22px}
-    .panel{grid-column:span 12;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .panel .in{padding:18px}
-    .kpis{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-    .kpi{grid-column:span 6;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:16px}
-    .kpi .k{font-size:12px;color:var(--muted);margin-bottom:8px}
-    .kpi .v{font-size:20px;font-weight:800}
-    @media (max-width:820px){.kpi{grid-column:span 12}.hero h2{font-size:34px}}
-    .section{margin-top:26px}
-    .section h3{margin:0 0 10px;font-size:20px}
-    .cards{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-    .card{grid-column:span 6;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .card .in{padding:18px}
-    .card h4{margin:0 0 8px;font-size:16px}
-    .card p{margin:0;color:var(--muted);line-height:1.55}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800;font-size:13px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#dbeafe}
-    .btn.primary{background:rgba(0,255,136,.12);border-color:rgba(0,255,136,.28);color:var(--green)}
-    .btn.blue{background:rgba(59,130,246,.14);border-color:rgba(59,130,246,.28);color:#bfdbfe}
-    .btn:hover{filter:brightness(1.1)}
-    .locked{opacity:.82}
-    .locked .taglock{display:inline-block;margin-top:10px;font-size:11px;color:rgba(255,255,255,.7);border:1px dashed rgba(255,255,255,.18);padding:6px 10px;border-radius:999px}
-    .lensgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-    .lens{grid-column:span 4;background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
-    .lens h5{margin:0 0 8px;font-size:14px}
-    .lens p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}
-    @media (max-width:980px){.card{grid-column:span 12}.lens{grid-column:span 6}}
-    @media (max-width:560px){.lens{grid-column:span 12}}
-    footer{margin-top:34px;border-top:1px solid var(--line);padding:18px 6px;color:var(--muted);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
-    .small{font-size:12px}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New";font-size:12px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08);padding:12px;border-radius:14px;overflow:auto}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zentra | Behavioral Financial Infrastructure</title>
+<meta name="description" content="Zentra is an AI-powered behavioral risk infrastructure layer for banks, participation (Islamic) finance, and regulated fintech platforms." />
+<style>
+  :root{
+    --bg:#0b1220;
+    --panel:#111a2c;
+    --panel2:#0f1a30;
+    --border:rgba(255,255,255,0.08);
+    --text:#ffffff;
+    --muted:rgba(255,255,255,0.75);
+    --muted2:rgba(255,255,255,0.65);
+    --accent:#00ff88;
+    --accent2:#3b82f6;
+    --warn:#fbbf24;
+    --danger:#fb7185;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
+    background: radial-gradient(900px 500px at 50% 0%, #132044, var(--bg));
+    color:var(--text);
+  }
+  a{color:inherit; text-decoration:none}
+  .container{max-width:1100px; margin:0 auto; padding:0 18px;}
+  .header{
+    position:sticky; top:0; z-index:10;
+    background: rgba(11,18,32,0.8);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 0;
+    gap:14px;
+  }
+  .brand{display:flex; align-items:center; gap:14px; min-width:260px;}
+  .logo{
+    width:56px; height:56px;
+    border-radius:14px;
+    object-fit:contain;
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:8px;
+  }
+  .logo-fallback{
+    width:56px;height:56px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    background: rgba(0,255,136,0.10);
+    border:1px solid rgba(0,255,136,0.25);
+    font-weight:900;
+    letter-spacing:1px;
+  }
+  .brand-text h1{
+    margin:0;
+    letter-spacing:2px;
+    font-size:20px;
+    line-height:1.1;
+  }
+  .brand-text span{
+    font-size:12.5px;
+    opacity:0.78;
+  }
+  .right{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    font-size:12px;
+    border-radius:999px;
+    background: rgba(0,255,120,0.08);
+    border:1px solid rgba(0,255,120,0.28);
+    color: var(--accent);
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background: var(--accent);
+    box-shadow: 0 0 16px rgba(0,255,136,0.45);
+  }
+  .lang-toggle{
+    cursor:pointer;
+    user-select:none;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    font-size:12px;
+    opacity:0.9;
+    white-space:nowrap;
+  }
+  .lang-toggle:hover{border-color: rgba(255,255,255,0.22)}
+  .nav{
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  }
+  .nav a{
+    font-size:13px;
+    opacity:0.85;
+    padding:8px 10px;
+    border-radius:10px;
+    border:1px solid transparent;
+  }
+  .nav a:hover{
+    opacity:1;
+    border-color: rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* HERO */
+  .hero{
+    padding:56px 0 10px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap:18px;
+    align-items:stretch;
+  }
+  @media (max-width: 900px){
+    .hero-grid{grid-template-columns: 1fr; }
+  }
+  .hero-card{
+    background: rgba(17,26,44,0.70);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:26px;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+  }
+  .kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:12px;
+    padding:7px 10px;
+    border-radius:999px;
+    background: rgba(59,130,246,0.10);
+    border:1px solid rgba(59,130,246,0.22);
+    color:#cfe4ff;
+    font-weight:800;
+    letter-spacing:0.2px;
+  }
+  .hero h2{
+    margin:14px 0 10px;
+    font-size:36px;
+    letter-spacing:-0.4px;
+    line-height:1.12;
+  }
+  .hero p{
+    margin:0;
+    max-width:820px;
+    opacity:0.82;
+    font-size:15.5px;
+    line-height:1.55;
+  }
+  .cta-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:18px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.04);
+    font-weight:900;
+    font-size:13.5px;
+    letter-spacing:0.2px;
+    transition: transform .05s ease, border-color .2s ease, background .2s ease;
+  }
+  .btn:hover{border-color: rgba(255,255,255,0.20); background: rgba(255,255,255,0.06)}
+  .btn:active{transform: translateY(1px)}
+  .btn-primary{
+    background: rgba(0,255,136,0.18);
+    border-color: rgba(0,255,136,0.30);
+    color: #d7ffe9;
+  }
+  .btn-primary:hover{
+    background: rgba(0,255,136,0.22);
+    border-color: rgba(0,255,136,0.40);
+  }
+  .btn-blue{
+    background: rgba(59,130,246,0.15);
+    border-color: rgba(59,130,246,0.30);
+    color:#dbeafe;
+  }
+  .btn-blue:hover{
+    background: rgba(59,130,246,0.20);
+    border-color: rgba(59,130,246,0.40);
+  }
+
+  /* SIDECARD */
+  .side-card{
+    background: rgba(15,26,48,0.70);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+  }
+  .side-title{
+    margin:0 0 10px;
+    font-size:14px;
+    letter-spacing:0.2px;
+    opacity:0.95;
+    font-weight:900;
+  }
+  .stat{
+    background: rgba(0,0,0,0.22);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px;
+    padding:14px;
+    margin:10px 0;
+  }
+  .stat .label{font-size:12px; color: var(--muted2)}
+  .stat .value{font-size:15px; font-weight:900; margin-top:6px}
+  .mini{
+    font-size:12.5px;
+    color: var(--muted2);
+    line-height:1.45;
+    margin-top:10px;
+  }
+
+  /* SECTIONS */
+  .section{padding:34px 0;}
+  .section h3{
+    margin:0 0 14px;
+    font-size:22px;
+    letter-spacing:-0.2px;
+  }
+  .section p{
+    margin:0 0 14px;
+    opacity:0.82;
+    line-height:1.55;
+    font-size:14.8px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap:14px;
+  }
+  .card{
+    grid-column: span 6;
+    background: rgba(17,26,44,0.70);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+  }
+  @media (max-width: 900px){
+    .card{grid-column: span 12;}
+  }
+  .card h4{
+    margin:0 0 8px;
+    font-size:15px;
+    font-weight:1000;
+    letter-spacing:0.1px;
+  }
+  .card p{margin:0; font-size:13.8px; opacity:0.80; line-height:1.5}
+  .card .chip-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .chip{
+    font-size:12px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.04);
+    opacity:0.92;
+    white-space:nowrap;
+  }
+  .chip.live{
+    border-color: rgba(0,255,136,0.35);
+    background: rgba(0,255,136,0.12);
+    color:#d7ffe9;
+  }
+  .chip.locked{
+    border-color: rgba(251,191,36,0.35);
+    background: rgba(251,191,36,0.10);
+    color:#ffe6b3;
+  }
+
+  /* PRODUCTS */
+  .product{
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .product-actions{
+    display:flex; gap:10px; flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .smallnote{
+    font-size:12.5px;
+    opacity:0.75;
+    margin-top:10px;
+    line-height:1.45;
+  }
+
+  /* LENS GRID */
+  .lens-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap:14px;
+    margin-top:10px;
+  }
+  .lens{
+    background: rgba(17,26,44,0.60);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:16px;
+  }
+  .lens.locked{opacity:0.78}
+  .lens .top{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  }
+  .lens h4{margin:0; font-size:14.5px; font-weight:1000}
+  .pill{
+    font-size:11px; font-weight:900;
+    padding:6px 10px; border-radius:999px;
+    border:1px solid rgba(251,191,36,0.35);
+    background: rgba(251,191,36,0.10);
+    color:#ffe6b3;
+    white-space:nowrap;
+  }
+  .lens p{margin:10px 0 0; font-size:13px; opacity:0.82; line-height:1.45}
+
+  /* FOOTER */
+  .footer{
+    margin-top:40px;
+    padding:26px 0 46px;
+    border-top:1px solid var(--border);
+    opacity:0.88;
+    font-size:13.5px;
+  }
+  .footer-grid{
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  }
+  .muted{opacity:0.75}
+  .mono{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New";
+    font-size:12px;
+    opacity:0.85;
+  }
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <!-- LOGO: GitHub Pages'te aynı klasöre "zentra-logo.png" koy -->
-        <img src="zentra-logo.png" class="logo" alt="Zentra Logo" />
-        <div>
-          <h1>ZENTRA</h1>
-          <div class="tag" id="tagline">Behavioral Financial Infrastructure</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="brand">
+      <img src="zentra-logo.png" alt="Zentra Logo" class="logo" onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';" />
+      <div id="logoFallback" class="logo-fallback" style="display:none;">Z</div>
+      <div class="brand-text">
+        <h1>ZENTRA</h1>
+        <span id="tagline">Behavioral Financial Infrastructure</span>
+      </div>
+    </div>
+
+    <div class="right">
+      <span class="badge"><span class="dot"></span><span id="liveText">Production Live</span></span>
+      <span class="lang-toggle" onclick="toggleLang()">TR / EN</span>
+      <nav class="nav">
+        <a href="#products" id="navProducts">Products</a>
+        <a href="#architecture" id="navArchitecture">Architecture</a>
+        <a href="#roadmap" id="navRoadmap">Roadmap</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-card">
+        <div class="kicker" id="kicker">Enterprise-grade • API-first • Regulated Finance</div>
+        <h2 id="heroTitle">Behavioral Financial Infrastructure Layer</h2>
+        <p id="heroDesc">
+          Zentra is a modular risk intelligence architecture designed for banks, participation (Islamic) finance, and regulated fintech platforms.
+          We build infrastructure that produces actionable risk signals (stress, behavior, anomalies) to support safer underwriting and decision-making.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#products" id="ctaExplore">Explore Live Products</a>
+          <a class="btn btn-blue" href="mailto:42mehmetaltas@gmail.com" id="ctaEmail">Contact: 42mehmetaltas@gmail.com</a>
+        </div>
+
+        <div class="smallnote" id="noteNoApiOnSite">
+          Note: ZentraRisk.com is a presentation website (static). Live API endpoints run on Render services.
         </div>
       </div>
 
-      <div class="right">
-        <span class="badge"><span class="dot"></span><span id="liveText">Production Live</span></span>
-        <span class="toggle" onclick="toggleLang()">TR / EN</span>
+      <div class="side-card">
+        <div class="side-title" id="sideTitle">Live Status Snapshot</div>
+
+        <div class="stat">
+          <div class="label" id="stat1Label">Live Product</div>
+          <div class="value" id="stat1Value">Credit Stress Engine</div>
+        </div>
+
+        <div class="stat">
+          <div class="label" id="stat2Label">Primary Use</div>
+          <div class="value" id="stat2Value">Installment & repayment stress scoring</div>
+        </div>
+
+        <div class="stat">
+          <div class="label" id="stat3Label">Target</div>
+          <div class="value" id="stat3Value">Banks • Participation finance • Regulated fintech</div>
+        </div>
+
+        <div class="mini" id="miniInfo">
+          Next: RiskLens behavioral risk scoring API will be deployed as a separate service (Phase 2) to avoid mixing website and API routing.
+        </div>
       </div>
-    </header>
+    </div>
+  </section>
 
-    <section class="hero" id="top">
-      <h2 id="heroTitle">Banka ve Katılım Finans için Modüler Risk Zekâsı Altyapısı</h2>
-      <p id="heroDesc">
-        ZENTRA; risk motorları, doğrulama katmanları ve skorlama API’leriyle finansal kararları hızlandıran lisanslanabilir bir altyapı katmanıdır.
-        Odak: regülasyon yoğun pazarlar (finance, AML, Islamic compliance). Merkez hedef: Dubai.
-      </p>
 
-      <div class="grid">
-        <div class="panel">
-          <div class="in">
-            <div class="kpis">
-              <div class="kpi">
-                <div class="k" id="kStatus">Status</div>
-                <div class="v" id="vStatus">LIVE</div>
-              </div>
-              <div class="kpi">
-                <div class="k" id="kModel">Model</div>
-                <div class="v" id="vModel">Licensable Infrastructure</div>
-              </div>
-              <div class="kpi">
-                <div class="k" id="kFocus">Primary Focus</div>
-                <div class="v" id="vFocus">Behavioral Risk Scoring</div>
-              </div>
-              <div class="kpi">
-                <div class="k" id="kHub">Global Hub</div>
-                <div class="v" id="vHub">UAE / Dubai</div>
-              </div>
-            </div>
-          </div>
+  <!-- PRODUCTS -->
+  <section class="section" id="products">
+    <h3 id="productsTitle">Products</h3>
+    <p id="productsDesc">
+      We ship modular infrastructure products. Live components are accessible below. Other lenses are visible but currently locked (planned releases).
+    </p>
+
+    <div class="grid">
+      <!-- Credit Stress LIVE -->
+      <div class="card product">
+        <div class="top">
+          <h4 id="creditTitle">Credit Stress Engine (LIVE)</h4>
+        </div>
+        <p id="creditText">
+          Installment & repayment stress modeling engine. Calculates payment-to-income stress ratio and produces a risk band for underwriting decisions.
+        </p>
+
+        <div class="chip-row">
+          <span class="chip live" id="chipLive">LIVE</span>
+          <span class="chip" id="chipApiFirst">API-first</span>
+          <span class="chip" id="chipRegulated">Regulated Finance Ready</span>
+        </div>
+
+        <div class="product-actions">
+          <a class="btn btn-primary" href="https://zentra-credit-stress-api.onrender.com/docs" target="_blank" rel="noopener" id="btnDocs">
+            API Docs
+          </a>
+          <a class="btn" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank" rel="noopener" id="btnHealth">
+            Health
+          </a>
+          <a class="btn" href="https://zentra-credit-stress-api.onrender.com/openapi.json" target="_blank" rel="noopener" id="btnOpenApi">
+            OpenAPI JSON
+          </a>
+          <a class="btn btn-blue" href="https://mehmetaltas.github.io/zentra-credit-stress-api/" target="_blank" rel="noopener" id="btnWebDemo">
+            Web Demo
+          </a>
+        </div>
+
+        <div class="smallnote" id="creditNote">
+          Investor note: This is a live proof of execution. RiskLens expands this into behavioral + invoice + fraud intelligence modules.
         </div>
       </div>
 
-      <div class="section">
-        <h3 id="coreTitle">Aktif Ürünler (Live)</h3>
+      <!-- RiskLens (Locked for API, but web demo can exist) -->
+      <div class="card product">
+        <h4 id="risklensTitle">RiskLens Core (Coming Soon)</h4>
+        <p id="risklensText">
+          Behavioral Risk Core Engine delivering Financial Stress Index, behavioral signals, and scenario simulation. Planned as a separate API service to keep routing clean.
+        </p>
 
-        <div class="cards" id="products">
-          <!-- RISK LENS -->
-          <div class="card">
-            <div class="in">
-              <h4 id="riskTitle">RiskLens API</h4>
-              <p id="riskDesc">
-                AI destekli modüler risk skorlama altyapısı. Bankalar / neobankalar / embedded finance için API-first risk motoru.
-              </p>
-              <div class="actions">
-                <!-- ŞU AN: Render domainin net değilse GitHub Pages'e götür -->
-                <a class="btn primary" href="https://zentrarisk.com/" id="riskOpen">Open RiskLens</a>
-                <a class="btn blue" href="https://zentrarisk.com/openapi.json" id="riskOpenapi">OpenAPI JSON</a>
-                <a class="btn" href="https://zentrarisk.com/health" id="riskHealth">Health</a>
-              </div>
+        <div class="chip-row">
+          <span class="chip locked" id="chipLocked">LOCKED</span>
+          <span class="chip" id="chipBehavioral">Behavioral Risk</span>
+          <span class="chip" id="chipLicensing">Licensing Model</span>
+        </div>
 
-              <div class="mono" style="margin-top:14px" id="riskCurl">
-curl -X POST "https://zentrarisk.com/v1/risk" \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: zentra-demo-key" \
-  -d '{"amount":1000,"sector":"retail","sector_risk_level":2,"payment_delay_days":10,"customer_score":78,"exposure_ratio":0.25}'
-              </div>
-              <p class="small" style="margin-top:10px" id="riskNote">
-                Not: “risk.zentrarisk.com” DNS hazır olduğunda bu butonlar oraya yönlenecek.
-              </p>
-            </div>
-          </div>
+        <div class="product-actions">
+          <a class="btn btn-blue" href="https://mehmetaltas.github.io/zentra-risklens-api/" target="_blank" rel="noopener" id="btnRiskWeb">
+            RiskLens Web Demo
+          </a>
+          <span class="btn" style="opacity:.55; cursor:not-allowed;" id="btnRiskApi">
+            RiskLens API (Phase 2)
+          </span>
+        </div>
 
-          <!-- CREDIT STRESS -->
-          <div class="card">
-            <div class="in">
-              <h4 id="creditTitle">Credit Stress Engine</h4>
-              <p id="creditDesc">
-                Taksit/geri ödeme baskısı, gelir oranı, stres skoru ve risk bandı. RiskLens’e entegre edilebilir demo modülü.
-              </p>
-              <div class="actions">
-                <!-- Render docs çalışıyorsa en iyi gösterim: -->
-                <a class="btn primary" href="https://zentra-credit-stress-api.onrender.com/docs" id="creditDocs">API Docs</a>
-                <a class="btn blue" href="https://zentra-credit-stress-api.onrender.com/openapi.json" id="creditOpenapi">OpenAPI JSON</a>
-                <a class="btn" href="https://zentra-credit-stress-api.onrender.com/health" id="creditHealth">Health</a>
-                <!-- GitHub Pages demo sayfan -->
-                <a class="btn" href="https://mehmetaltas.github.io/zentra-credit-stress-api/" id="creditWeb">Web Demo</a>
-              </div>
-
-              <div class="mono" style="margin-top:14px" id="creditCurl">
-curl -X POST "https://zentra-credit-stress-api.onrender.com/v1/credit-stress" \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: zentra-demo-key" \
-  -d '{"principal":100000,"interest_rate":2.5,"term_months":24,"monthly_income":45000,"payment_delay_days":10,"customer_score":78,"exposure_ratio":0.25}'
-              </div>
-              <p class="small" style="margin-top:10px" id="creditNote">
-                Not: “api.zentrarisk.com” DNS hazır olduğunda docs/openapi/health oraya taşınacak.
-              </p>
-            </div>
-          </div>
+        <div class="smallnote" id="riskNote">
+          Phase 2 target: deploy RiskLens API on Render with its own subdomain (example: risk.zentrarisk.com).
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- ROADMAP / LENSES -->
-      <div class="section" id="roadmap">
-        <h3 id="lensTitle">Kapalı Lensler (Roadmap)</h3>
-        <div class="lensgrid">
-          <div class="lens locked">
-            <h5 id="l1t">CFO Lens</h5>
-            <p id="l1d">Kurumsal cash-flow kırılma tahmini, FX/ faiz hassasiyet analizi ve senaryo simülasyonu.</p>
-            <span class="taglock" id="locked1">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l2t">SME Risk Lens</h5>
-            <p id="l2d">Runway hesaplama, vergi yükü etkisi, nakit akış uyarı sistemi ve erken uyarı risk modeli.</p>
-            <span class="taglock" id="locked2">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l3t">Family Office Lens</h5>
-            <p id="l3d">Servet erozyonu, varlık konsantrasyon riski, nesil transfer simülasyonu, makro şok etkileri.</p>
-            <span class="taglock" id="locked3">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l4t">Macro Shock Lens</h5>
-            <p id="l4d">Enflasyon/kur/faiz artışı/jeopolitik şok senaryoları ile ülke bazlı stres etkisi.</p>
-            <span class="taglock" id="locked4">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l5t">Cognitive Finance Lens</h5>
-            <p id="l5d">AI + psikometri + davranış: risk toleransı, erteleme eğilimi, kriz tepkisi ve aşırı güven analizi.</p>
-            <span class="taglock" id="locked5">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l6t">Participation Finance Lens</h5>
-            <p id="l6d">Katılım/İslami finans uyumlu risk modelleme: fatura, vade, tahsilat ve uyum kontrol katmanı.</p>
-            <span class="taglock" id="locked6">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l7t">Embedded Finance Lens</h5>
-            <p id="l7d">Platformlara gömülü finans için API tabanlı risk katmanı, ortak gelir modeli için hazır mimari.</p>
-            <span class="taglock" id="locked7">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l8t">Certifica</h5>
-            <p id="l8d">Biyometrik doğrulama + sertifikasyon: kurumsal yetkilendirme ve işlem güvenliği katmanı.</p>
-            <span class="taglock" id="locked8">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l9t">NFC / Biometric Card Security</h5>
-            <p id="l9d">Telefon/donanım üzerinden parmak izi ile ödeme: kart taşıma ve fraud riskini azaltan güvenlik katmanı.</p>
-            <span class="taglock" id="locked9">Locked • Coming soon</span>
-          </div>
-          <div class="lens locked">
-            <h5 id="l10t">Foundation / Vakıf Lens</h5>
-            <p id="l10d">Vakıflar için fon akışı, şeffaflık ve risk takibi: denetim uyumlu raporlama katmanı.</p>
-            <span class="taglock" id="locked10">Locked • Coming soon</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="section">
-        <h3 id="deployTitle">Global Deployment</h3>
-        <p id="deployDesc" style="color:var(--muted);margin:0;line-height:1.6">
-          <b>Primary hub:</b> UAE (Dubai) • <b>Expansion:</b> EU & United States • <b>Strategy:</b> API-first, multi-region deploy, on-prem option.
+  <!-- ARCHITECTURE -->
+  <section class="section" id="architecture">
+    <h3 id="archTitle">Architecture</h3>
+    <p id="archDesc">
+      Zentra is designed as an API-first modular infrastructure. Each lens can be licensed independently or bundled into enterprise deployments.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h4 id="arch1Title">Why this matters</h4>
+        <p id="arch1Text">
+          Most systems show dashboards. Zentra produces risk intelligence that integrates into underwriting, fraud prevention, and compliance decision flows.
+          This creates long-term lock-in through measurable default reduction and better risk selection.
         </p>
       </div>
-    </section>
+      <div class="card">
+        <h4 id="arch2Title">Participation (Islamic) Finance ready</h4>
+        <p id="arch2Text">
+          Zentra can support participation finance institutions by enabling compliant risk modeling, invoice verification, and fund-based workflows
+          without positioning Zentra as the lender. Banks/funds remain the financing party; Zentra provides decision infrastructure.
+        </p>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <div>
-        <b>ZENTRA</b><br/>
-        <span class="small" id="foot1">Licensed Behavioral Financial Infrastructure Layer</span><br/>
-        <span class="small">© 2026</span>
+
+  <!-- ROADMAP / LENSES -->
+  <section class="section" id="roadmap">
+    <h3 id="roadTitle">Modular Lens Roadmap (Visible, Locked)</h3>
+    <p id="roadDesc">
+      We will not launch these simultaneously. They remain visible for clarity, but will be released one by one (licensable modules).
+    </p>
+
+    <div class="lens-grid">
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l1Title">CFO Lens</h4>
+          <span class="pill" id="pillLocked1">Locked</span>
+        </div>
+        <p id="l1Text">Enterprise cash-flow rupture prediction, FX/interest sensitivity, scenario simulation for treasury and CFO teams.</p>
       </div>
-      <div class="small" id="foot2">
-        Contact: <span style="opacity:.9">info@zentrarisk.com</span><br/>
-        Status: Production Live
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l2Title">SME Risk Lens</h4>
+          <span class="pill" id="pillLocked2">Locked</span>
+        </div>
+        <p id="l2Text">Runway detection, liquidity monitoring, tax & repayment simulation for global SME financial blind spots.</p>
       </div>
-    </footer>
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l3Title">Family Office Lens</h4>
+          <span class="pill" id="pillLocked3">Locked</span>
+        </div>
+        <p id="l3Text">Wealth erosion modeling, concentration risk, generational transfer simulation and macro shock impact.</p>
+      </div>
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l4Title">Macro Shock Lens</h4>
+          <span class="pill" id="pillLocked4">Locked</span>
+        </div>
+        <p id="l4Text">Inflation, FX crisis, rate hikes and geopolitical risk simulation for stress testing portfolios.</p>
+      </div>
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l5Title">Cognitive Finance Lens</h4>
+          <span class="pill" id="pillLocked5">Locked</span>
+        </div>
+        <p id="l5Text">Psychometric + behavioral signals to anticipate default behavior before traditional credit scores detect it.</p>
+      </div>
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l6Title">Participation Finance Lens</h4>
+          <span class="pill" id="pillLocked6">Locked</span>
+        </div>
+        <p id="l6Text">Sharia-compliant financing risk modeling, invoice-based workflows, fund structures, and governance reporting.</p>
+      </div>
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l7Title">Embedded Finance Lens</h4>
+          <span class="pill" id="pillLocked7">Locked</span>
+        </div>
+        <p id="l7Text">API-based embedded risk layer for marketplaces and platforms offering B2B/B2C credit products.</p>
+      </div>
+
+      <div class="lens locked">
+        <div class="top">
+          <h4 id="l8Title">Certifica</h4>
+          <span class="pill" id="pillLocked8">Locked</span>
+        </div>
+        <p id="l8Text">Biometric-secured financial authorization layer (certificate-based identity & approval for high-risk actions).</p>
+      </div>
+    </div>
+
+    <p class="smallnote" id="roadNote">
+      Strategy: In the first 18 months, focus on one module excellence: the Behavioral Risk Scoring API. Then unlock lenses sequentially.
+    </p>
+  </section>
+
+
+  <section class="section" id="global">
+    <h3 id="globalTitle">Global Deployment</h3>
+    <p id="globalText">
+      Primary hub: UAE (Dubai). Multi-region strategy: EU + UAE + US with compliance readiness (GDPR/KVKK/CCPA) and optional on-prem deployments for banks.
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>ZENTRA</strong><br />
+      <span class="muted" id="foot1">Behavioral Financial Infrastructure Layer</span><br />
+      <span class="muted">© 2026 Zentra</span>
+    </div>
+
+    <div>
+      <span class="muted" id="foot2">Live Component:</span> <span id="foot2v">Credit Stress Engine</span><br />
+      <span class="muted" id="foot3">Contact:</span> <a href="mailto:42mehmetaltas@gmail.com">42mehmetaltas@gmail.com</a>
+    </div>
+
+    <div class="mono">
+      Credit Docs: zentra-credit-stress-api.onrender.com/docs<br />
+      Credit Web: mehmetaltas.github.io/zentra-credit-stress-api/
+    </div>
   </div>
+</footer>
 
-  <script>
-    let isTR = true;
+<script>
+  let isTR = false;
 
-    function toggleLang(){
-      isTR = !isTR;
+  function toggleLang(){
+    isTR = !isTR;
 
-      const T = (id, tr, en) => document.getElementById(id).innerText = (isTR ? tr : en);
+    // Header
+    document.getElementById("tagline").innerText = isTR ? "Davranışsal Finansal Altyapı" : "Behavioral Financial Infrastructure";
+    document.getElementById("liveText").innerText = isTR ? "Canlı (Prod)" : "Production Live";
+    document.getElementById("navProducts").innerText = isTR ? "Ürünler" : "Products";
+    document.getElementById("navArchitecture").innerText = isTR ? "Mimari" : "Architecture";
+    document.getElementById("navRoadmap").innerText = isTR ? "Yol Haritası" : "Roadmap";
 
-      T("tagline", "Davranışsal Finansal Altyapı", "Behavioral Financial Infrastructure");
-      T("liveText", "Canlı (Production)", "Production Live");
+    // Hero
+    document.getElementById("kicker").innerText = isTR ? "Kurumsal seviye • API-first • Regüle Finans" : "Enterprise-grade • API-first • Regulated Finance";
+    document.getElementById("heroTitle").innerText = isTR ? "Davranışsal Finansal Altyapı Katmanı" : "Behavioral Financial Infrastructure Layer";
+    document.getElementById("heroDesc").innerText = isTR
+      ? "Zentra; bankalar, katılım (İslami) finans ve regüle fintech platformları için tasarlanmış modüler bir risk zekâsı mimarisidir. Amaç: stres, davranış ve anomali sinyalleri üreterek daha güvenli karar altyapısı sağlamaktır."
+      : "Zentra is a modular risk intelligence architecture designed for banks, participation (Islamic) finance, and regulated fintech platforms. We build infrastructure that produces actionable risk signals (stress, behavior, anomalies) to support safer underwriting and decision-making.";
+    document.getElementById("ctaExplore").innerText = isTR ? "Canlı Ürünleri Gör" : "Explore Live Products";
+    document.getElementById("ctaEmail").innerText = isTR ? "İletişim: 42mehmetaltas@gmail.com" : "Contact: 42mehmetaltas@gmail.com";
+    document.getElementById("noteNoApiOnSite").innerText = isTR
+      ? "Not: ZentraRisk.com bir tanıtım sitesidir (statik). Canlı API uçları Render servislerinde çalışır."
+      : "Note: ZentraRisk.com is a presentation website (static). Live API endpoints run on Render services.";
 
-      T("heroTitle",
-        "Banka ve Katılım Finans için Modüler Risk Zekâsı Altyapısı",
-        "Modular Risk Intelligence Infrastructure for Banks & Regulated Finance"
-      );
-      T("heroDesc",
-        "ZENTRA; risk motorları, doğrulama katmanları ve skorlama API’leriyle finansal kararları hızlandıran lisanslanabilir bir altyapı katmanıdır. Odak: regülasyon yoğun pazarlar (finance, AML, Islamic compliance). Merkez hedef: Dubai.",
-        "ZENTRA is a licensable infrastructure layer that accelerates financial decisions through risk engines, verification layers, and scoring APIs. Focus: regulated markets (finance, AML, Islamic compliance). Primary hub: Dubai."
-      );
+    // Side
+    document.getElementById("sideTitle").innerText = isTR ? "Canlı Durum Özeti" : "Live Status Snapshot";
+    document.getElementById("stat1Label").innerText = isTR ? "Canlı Ürün" : "Live Product";
+    document.getElementById("stat2Label").innerText = isTR ? "Ana Kullanım" : "Primary Use";
+    document.getElementById("stat2Value").innerText = isTR ? "Taksit & geri ödeme stres skoru" : "Installment & repayment stress scoring";
+    document.getElementById("stat3Label").innerText = isTR ? "Hedef" : "Target";
+    document.getElementById("stat3Value").innerText = isTR ? "Bankalar • Katılım finans • Regüle fintech" : "Banks • Participation finance • Regulated fintech";
+    document.getElementById("miniInfo").innerText = isTR
+      ? "Sıradaki adım: RiskLens davranışsal risk skorlama API’si ayrı bir servis olarak (Faz 2) deploy edilecek; web site ile API routing karışmayacak."
+      : "Next: RiskLens behavioral risk scoring API will be deployed as a separate service (Phase 2) to avoid mixing website and API routing.";
 
-      T("kStatus","Durum","Status");
-      T("kModel","Model","Model");
-      T("kFocus","Ana Odak","Primary Focus");
-      T("kHub","Merkez","Hub");
+    // Products
+    document.getElementById("productsTitle").innerText = isTR ? "Ürünler" : "Products";
+    document.getElementById("productsDesc").innerText = isTR
+      ? "Modüler altyapı ürünleri geliştiriyoruz. Canlı bileşenler aşağıda. Diğer lensler görünür ama kilitli (planlanan sürümler)."
+      : "We ship modular infrastructure products. Live components are accessible below. Other lenses are visible but currently locked (planned releases).";
 
-      T("vStatus","LIVE","LIVE");
-      T("vModel","Lisanslanabilir Altyapı","Licensable Infrastructure");
-      T("vFocus","Davranışsal Risk Skorlama","Behavioral Risk Scoring");
-      T("vHub","BAE / Dubai","UAE / Dubai");
+    document.getElementById("creditTitle").innerText = isTR ? "Credit Stress Engine (CANLI)" : "Credit Stress Engine (LIVE)";
+    document.getElementById("creditText").innerText = isTR
+      ? "Taksit ve geri ödeme stres modelleme motoru. Gelire göre ödeme stresi oranını hesaplar ve underwriting için risk bandı üretir."
+      : "Installment & repayment stress modeling engine. Calculates payment-to-income stress ratio and produces a risk band for underwriting decisions.";
+    document.getElementById("chipApiFirst").innerText = isTR ? "API-first" : "API-first";
+    document.getElementById("chipRegulated").innerText = isTR ? "Regüle finans uyumlu" : "Regulated Finance Ready";
 
-      T("coreTitle","Aktif Ürünler (Live)","Live Products");
-      T("riskDesc",
-        "AI destekli modüler risk skorlama altyapısı. Bankalar / neobankalar / embedded finance için API-first risk motoru.",
-        "AI-powered modular risk scoring infrastructure. API-first engine for banks, neobanks and embedded finance platforms."
-      );
-      T("riskNote",
-        "Not: “risk.zentrarisk.com” DNS hazır olduğunda bu butonlar oraya yönlenecek.",
-        "Note: Once DNS is ready, these buttons will point to “risk.zentrarisk.com”."
-      );
+    document.getElementById("btnDocs").innerText = isTR ? "API Doküman" : "API Docs";
+    document.getElementById("btnHealth").innerText = isTR ? "Sağlık" : "Health";
+    document.getElementById("btnOpenApi").innerText = isTR ? "OpenAPI JSON" : "OpenAPI JSON";
+    document.getElementById("btnWebDemo").innerText = isTR ? "Web Demo" : "Web Demo";
 
-      T("creditDesc",
-        "Taksit/geri ödeme baskısı, gelir oranı, stres skoru ve risk bandı. RiskLens’e entegre edilebilir demo modülü.",
-        "Installment & repayment pressure, income ratio, stress score and risk band. A demo module that can be integrated into RiskLens."
-      );
-      T("creditNote",
-        "Not: “api.zentrarisk.com” DNS hazır olduğunda docs/openapi/health oraya taşınacak.",
-        "Note: Once DNS is ready, docs/openapi/health will move to “api.zentrarisk.com”."
-      );
+    document.getElementById("creditNote").innerText = isTR
+      ? "Yatırımcı notu: Bu bölüm canlı ‘execution’ kanıtıdır. RiskLens; bunu davranış + fatura + sahtecilik zekâsına genişletir."
+      : "Investor note: This is a live proof of execution. RiskLens expands this into behavioral + invoice + fraud intelligence modules.";
 
-      T("lensTitle","Kapalı Lensler (Roadmap)","Locked Lenses (Roadmap)");
+    document.getElementById("risklensTitle").innerText = isTR ? "RiskLens Core (Yakında)" : "RiskLens Core (Coming Soon)";
+    document.getElementById("risklensText").innerText = isTR
+      ? "Finansal stres endeksi, davranış sinyalleri ve senaryo simülasyonu üreten çekirdek risk motoru. Routing karışmasın diye ayrı API servisi olarak planlanır."
+      : "Behavioral Risk Core Engine delivering Financial Stress Index, behavioral signals, and scenario simulation. Planned as a separate API service to keep routing clean.";
+    document.getElementById("chipBehavioral").innerText = isTR ? "Davranışsal risk" : "Behavioral Risk";
+    document.getElementById("chipLicensing").innerText = isTR ? "Lisans modeli" : "Licensing Model";
+    document.getElementById("btnRiskWeb").innerText = isTR ? "RiskLens Web Demo" : "RiskLens Web Demo";
+    document.getElementById("btnRiskApi").innerText = isTR ? "RiskLens API (Faz 2)" : "RiskLens API (Phase 2)";
+    document.getElementById("riskNote").innerText = isTR
+      ? "Faz 2 hedefi: RiskLens API Render’da ayrı servis + ayrı subdomain (örn: risk.zentrarisk.com)."
+      : "Phase 2 target: deploy RiskLens API on Render with its own subdomain (example: risk.zentrarisk.com).";
 
-      // Locked tag text
-      const tag = isTR ? "Kilitli • Yakında" : "Locked • Coming soon";
-      ["locked1","locked2","locked3","locked4","locked5","locked6","locked7","locked8","locked9","locked10"].forEach(id=>{
-        document.getElementById(id).innerText = tag;
-      });
+    // Architecture
+    document.getElementById("archTitle").innerText = isTR ? "Mimari" : "Architecture";
+    document.getElementById("archDesc").innerText = isTR
+      ? "Zentra API-first modüler altyapı olarak tasarlanır. Her lens ayrı lisanslanabilir veya kurumsal pakette birleştirilebilir."
+      : "Zentra is designed as an API-first modular infrastructure. Each lens can be licensed independently or bundled into enterprise deployments.";
+    document.getElementById("arch1Title").innerText = isTR ? "Neden önemli?" : "Why this matters";
+    document.getElementById("arch1Text").innerText = isTR
+      ? "Pek çok sistem dashboard gösterir. Zentra underwriting, fraud önleme ve uyum karar akışlarına entegre risk zekâsı üretir. Default azalması ve daha iyi risk seçimi ile uzun vadeli kilitlenme sağlar."
+      : "Most systems show dashboards. Zentra produces risk intelligence that integrates into underwriting, fraud prevention, and compliance decision flows. This creates long-term lock-in through measurable default reduction and better risk selection.";
+    document.getElementById("arch2Title").innerText = isTR ? "Katılım (İslami) finans uyumu" : "Participation (Islamic) Finance ready";
+    document.getElementById("arch2Text").innerText = isTR
+      ? "Zentra, katılım finans kurumları için uyumlu risk modelleme, fatura doğrulama ve fon tabanlı iş akışlarını destekleyebilir. Zentra finansör değildir; bankalar/fonlar finansör kalır, Zentra karar altyapısı sağlar."
+      : "Zentra can support participation finance institutions by enabling compliant risk modeling, invoice verification, and fund-based workflows without positioning Zentra as the lender. Banks/funds remain the financing party; Zentra provides decision infrastructure.";
 
-      // Locked lens descriptions TR/EN
-      T("l1d","Kurumsal cash-flow kırılma tahmini, FX/ faiz hassasiyet analizi ve senaryo simülasyonu.","Enterprise cash-flow rupture prediction, FX/interest sensitivity and scenario simulation.");
-      T("l2d","Runway hesaplama, vergi yükü etkisi, nakit akış uyarı sistemi ve erken uyarı risk modeli.","Runway calculation, tax impact, cash-flow alerts and early-warning risk model.");
-      T("l3d","Servet erozyonu, varlık konsantrasyon riski, nesil transfer simülasyonu, makro şok etkileri.","Wealth erosion, concentration risk, generational transfer simulation and macro shock effects.");
-      T("l4d","Enflasyon/kur/faiz artışı/jeopolitik şok senaryoları ile ülke bazlı stres etkisi.","Country-level stress impact with inflation/FX/interest/geopolitical shock scenarios.");
-      T("l5d","AI + psikometri + davranış: risk toleransı, erteleme eğilimi, kriz tepkisi ve aşırı güven analizi.","AI + psychometrics + behavior: risk tolerance, procrastination tendency, crisis response, overconfidence.");
-      T("l6d","Katılım/İslami finans uyumlu risk modelleme: fatura, vade, tahsilat ve uyum kontrol katmanı.","Participation/Islamic finance risk modeling: invoice, maturity, collections and compliance control layer.");
-      T("l7d","Platformlara gömülü finans için API tabanlı risk katmanı, ortak gelir modeli için hazır mimari.","API-based risk layer for embedded finance platforms, ready for revenue-share models.");
-      T("l8d","Biyometrik doğrulama + sertifikasyon: kurumsal yetkilendirme ve işlem güvenliği katmanı.","Biometric verification + certification: enterprise authorization and transaction security layer.");
-      T("l9d","Telefon/donanım üzerinden parmak izi ile ödeme: kart taşıma ve fraud riskini azaltan güvenlik katmanı.","Fingerprint-based payments via phone/hardware: security layer reducing card carrying and fraud.");
-      T("l10d","Vakıflar için fon akışı, şeffaflık ve risk takibi: denetim uyumlu raporlama katmanı.","Fund flow, transparency and risk monitoring for foundations: audit-compliant reporting layer.");
+    // Roadmap
+    document.getElementById("roadTitle").innerText = isTR ? "Modüler Lens Yol Haritası (Görünür, Kilitli)" : "Modular Lens Roadmap (Visible, Locked)";
+    document.getElementById("roadDesc").innerText = isTR
+      ? "Hepsini aynı anda açmayacağız. Dağılmamak için görünür kalır ama sırayla (lisanslanabilir modüller) açılır."
+      : "We will not launch these simultaneously. They remain visible for clarity, but will be released one by one (licensable modules).";
+    document.getElementById("l1Text").innerText = isTR ? "Kurumsal nakit akışı kırılma tahmini, döviz/faiz hassasiyeti ve senaryo simülasyonu (CFO/treasury)." : "Enterprise cash-flow rupture prediction, FX/interest sensitivity, scenario simulation for treasury and CFO teams.";
+    document.getElementById("l2Text").innerText = isTR ? "Runway tespiti, likidite izleme, vergi & geri ödeme simülasyonu (KOBİ pazarı)." : "Runway detection, liquidity monitoring, tax & repayment simulation for global SME financial blind spots.";
+    document.getElementById("l3Text").innerText = isTR ? "Servet erozyonu, konsantrasyon riski, nesil transfer simülasyonu ve makro şok etkisi." : "Wealth erosion modeling, concentration risk, generational transfer simulation and macro shock impact.";
+    document.getElementById("l4Text").innerText = isTR ? "Enflasyon, kur krizi, faiz artışı ve jeopolitik risk stres simülatörü." : "Inflation, FX crisis, rate hikes and geopolitical risk simulation for stress testing portfolios.";
+    document.getElementById("l5Text").innerText = isTR ? "Psikometrik + davranış sinyalleriyle geleneksel skordan önce default davranışını yakalama." : "Psychometric + behavioral signals to anticipate default behavior before traditional credit scores detect it.";
+    document.getElementById("l6Text").innerText = isTR ? "Şeriat uyumlu risk modelleme, fatura bazlı iş akışları, fon yapıları ve yönetişim raporları." : "Sharia-compliant financing risk modeling, invoice-based workflows, fund structures, and governance reporting.";
+    document.getElementById("l7Text").innerText = isTR ? "Pazar yerleri ve platformlar için embedded kredi ürünlerinde API tabanlı risk katmanı." : "API-based embedded risk layer for marketplaces and platforms offering B2B/B2C credit products.";
+    document.getElementById("l8Text").innerText = isTR ? "Biyometrik güvenli finansal yetkilendirme (yüksek riskli işlemler için sertifika tabanlı onay)." : "Biometric-secured financial authorization layer (certificate-based identity & approval for high-risk actions).";
+    document.getElementById("roadNote").innerText = isTR
+      ? "Strateji: İlk 18 ay tek şeye odak — Davranışsal Risk Skorlama API’sini mükemmel yap. Sonra lensleri sırayla aç."
+      : "Strategy: In the first 18 months, focus on one module excellence: the Behavioral Risk Scoring API. Then unlock lenses sequentially.";
 
-      T("deployTitle","Global Deployment","Global Deployment");
-      T("deployDesc",
-        "Primary hub: UAE (Dubai) • Expansion: EU & United States • Strategy: API-first, multi-region deploy, on-prem option.",
-        "Primary hub: UAE (Dubai) • Expansion: EU & United States • Strategy: API-first, multi-region deploy, on-prem option."
-      );
+    // Global
+    document.getElementById("globalTitle").innerText = isTR ? "Global Kurulum" : "Global Deployment";
+    document.getElementById("globalText").innerText = isTR
+      ? "Birincil merkez: BAE (Dubai). Çok bölge stratejisi: AB + BAE + ABD. GDPR/KVKK/CCPA uyumu ve bankalar için on-prem opsiyonu."
+      : "Primary hub: UAE (Dubai). Multi-region strategy: EU + UAE + US with compliance readiness (GDPR/KVKK/CCPA) and optional on-prem deployments for banks.";
 
-      T("foot1","Lisanslı Davranışsal Finansal Altyapı Katmanı","Licensed Behavioral Financial Infrastructure Layer");
-      T("foot2","İletişim: info@zentrarisk.com\nDurum: Production Live","Contact: info@zentrarisk.com\nStatus: Production Live");
-    }
+    // Footer
+    document.getElementById("foot1").innerText = isTR ? "Davranışsal Finansal Altyapı Katmanı" : "Behavioral Financial Infrastructure Layer";
+    document.getElementById("foot2").innerText = isTR ? "Canlı Bileşen:" : "Live Component:";
+    document.getElementById("foot3").innerText = isTR ? "İletişim:" : "Contact:";
+  }
 
-    // default TR
-    toggleLang(); toggleLang();
-  </script>
+  // Optional: default to TR if you want:
+  // toggleLang();
+</script>
+
 </body>
-                                                                                                                 </html>
+</html>

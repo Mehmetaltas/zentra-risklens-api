@@ -1,390 +1,275 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="theme-color" content="#0b1220"/>
-  <title>ZENTRA Demo Console</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>ZENTRA | Behavioral Financial Infrastructure</title>
+  <meta name="description" content="ZENTRA: Licensable Behavioral Risk Infrastructure. RiskLens API + Credit Stress Engine + Modular Lens roadmap." />
+
   <style>
     :root{
-      --bg:#0b1220; --panel:#0f1a2e; --stroke:rgba(255,255,255,.08);
-      --text:#eaf1ff; --muted:rgba(234,241,255,.72);
-      --green:#00ff88; --blue:#3b82f6; --amber:#fbbf24; --red:#fb7185;
-      --radius:16px; --shadow:0 14px 40px rgba(0,0,0,.35);
-      --max:1100px;
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --panel2:#0d1729;
+      --stroke:rgba(255,255,255,.08);
+      --stroke2:rgba(255,255,255,.06);
+      --text:#eaf1ff;
+      --muted:rgba(234,241,255,.72);
+      --muted2:rgba(234,241,255,.60);
+      --green:#00ff88;
+      --blue:#3b82f6;
+      --amber:#fbbf24;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --radius:16px;
+      --radius2:12px;
+      --max:1150px;
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; color:var(--text);
+      margin:0;
       font-family: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      color:var(--text);
       background:
         radial-gradient(900px 500px at 25% -10%, rgba(59,130,246,.22), transparent 60%),
         radial-gradient(900px 500px at 85% 0%, rgba(0,255,136,.12), transparent 60%),
         var(--bg);
     }
-    .wrap{width:min(var(--max),100%); margin:0 auto; padding:22px 18px 60px}
-    .top{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      border:1px solid var(--stroke); background:rgba(15,26,46,.70);
-      border-radius:18px; padding:14px 16px; box-shadow:var(--shadow);
-      position:sticky; top:12px; backdrop-filter:blur(10px); z-index:10;
+    a{color:inherit}
+    .wrap{width:min(var(--max), 100%); margin:0 auto; padding:22px 18px 56px}
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 18px;
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg, rgba(15,26,46,.82), rgba(13,23,41,.78));
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position:sticky; top:12px; z-index:5;
     }
-    .brand{display:flex; align-items:center; gap:12px}
-    .logoBox{
-      width:44px; height:44px; border-radius:12px; padding:8px;
-      border:1px solid var(--stroke); background:rgba(255,255,255,.04);
-      display:grid; place-items:center;
+    .brand{display:flex; align-items:center; gap:12px; min-width:260px}
+    .logo{
+      width:48px; height:48px; border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--stroke2);
+      object-fit:contain; padding:8px;
     }
-    .brand b{letter-spacing:2px}
-    .tag{font-size:12px; color:var(--muted); margin-top:2px}
-    .right{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-    .btn{
-      cursor:pointer; user-select:none; border-radius:999px;
-      border:1px solid var(--stroke); background:rgba(255,255,255,.03);
-      padding:9px 12px; color:var(--text); font-weight:800; font-size:12px;
-      text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    .logoFallback{
+      width:48px;height:48px;border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--stroke2);
+      display:grid;place-items:center;
+      font-weight:1000; letter-spacing:1px;
+      color:rgba(234,241,255,.85);
     }
-    .btn:hover{background:rgba(255,255,255,.06)}
-    .pill{
+    .brand h1{margin:0; font-size:18px; letter-spacing:2px}
+    .brand .tag{margin-top:2px; font-size:12px; color:var(--muted)}
+
+    .nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+    .nav a{
+      text-decoration:none;
+      font-size:13px;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:var(--stroke);
+      background:rgba(255,255,255,.04);
+    }
+
+    .right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .badge{
       display:inline-flex; align-items:center; gap:8px;
-      border-radius:999px; padding:8px 12px; font-size:12px; font-weight:900;
-      border:1px solid rgba(0,255,136,.28); background:rgba(0,255,136,.08); color:var(--green);
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,255,136,.08);
+      border:1px solid rgba(0,255,136,.28);
+      color:var(--green);
+      font-weight:900;
+      font-size:12px;
+      white-space:nowrap;
     }
     .dot{width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 14px rgba(0,255,136,.55)}
-    h1{margin:22px 0 8px; font-size:30px; letter-spacing:-.4px}
-    p{margin:0; color:var(--muted); line-height:1.6}
-    .card{
-      border:1px solid var(--stroke); border-radius:var(--radius);
-      background:rgba(15,26,46,.58); box-shadow:var(--shadow);
-      padding:14px;
-    }
-    .grid{margin-top:12px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
-    @media(max-width:980px){.grid{grid-template-columns:1fr}}
-    .card h2{margin:0 0 6px; font-size:16px}
-    .sub{font-size:12px; color:var(--muted); margin-bottom:12px}
-    label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px}
-    input, select{
-      width:100%; padding:10px 10px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.25);
-      color:var(--text); outline:none;
-    }
-    input:focus, select:focus{border-color:rgba(59,130,246,.55)}
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    @media(max-width:980px){.row{grid-template-columns:1fr}}
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .run{
-      border-radius:12px; padding:10px 12px; font-weight:900; font-size:13px;
-      border:1px solid rgba(0,255,136,.35); background:rgba(0,255,136,.12);
-      color:#d6ffe9; cursor:pointer;
-    }
-    .run:hover{background:rgba(0,255,136,.16)}
-    pre{
-      margin:12px 0 0; padding:12px; border-radius:14px;
-      border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.28);
-      overflow:auto; font-size:12px; line-height:1.5; color:#e5e7eb;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New";
-      min-height:140px;
-    }
-    .foot{
-      margin-top:14px; border:1px solid var(--stroke); border-radius:18px;
-      background:rgba(15,26,46,.55); padding:14px; color:var(--muted);
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    .langbtn{
+      cursor:pointer;
+      user-select:none;
       font-size:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      white-space:nowrap;
     }
-    .errBox{
+    .langbtn:hover{color:var(--text); background:rgba(255,255,255,.05)}
+
+    .hero{padding:54px 4px 22px; text-align:center}
+    .hero h2{margin:0 0 10px; font-size:40px; letter-spacing:-.7px}
+    .hero p{margin:0 auto; max-width:930px; color:var(--muted); line-height:1.6; font-size:15px}
+
+    .hero .cta{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius: 12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      font-weight:900;
+      font-size:13px;
+    }
+    .btn:hover{background: rgba(255,255,255,.06)}
+    .btn.primary{
+      border-color: rgba(0,255,136,.35);
+      background: rgba(0,255,136,.12);
+      color: #d6ffe9;
+    }
+    .btn.primary:hover{background: rgba(0,255,136,.16)}
+
+    .hero .kpi{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+    }
+    .kpi .card{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: rgba(15,26,46,.58);
+      padding:14px 14px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+      text-align:left;
+      min-height:84px;
+    }
+    .card .k{font-size:12px; color:var(--muted2)}
+    .card .v{margin-top:6px; font-size:16px; font-weight:1000}
+    .card .v small{font-weight:800; color:var(--muted); font-size:12px}
+
+    @media (max-width: 860px){
+      .hero h2{font-size:30px}
+      .hero .kpi{grid-template-columns: repeat(2, minmax(0,1fr))}
+      .brand{min-width:unset}
+      .nav{display:none}
+    }
+
+    section{margin-top:26px}
+    .section-title{display:flex; align-items:flex-end; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .section-title h3{margin:0; font-size:20px}
+    .section-title p{margin:0; color:var(--muted); font-size:13px}
+
+    .panel{
       margin-top:12px;
-      border:1px solid rgba(251,113,133,.30);
-      background: rgba(251,113,133,.08);
-      border-radius:14px;
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: rgba(15,26,46,.55);
+      padding:18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Products */
+    .products{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 980px){
+      .products{grid-template-columns: 1fr}
+    }
+    .product{
+      border:1px solid var(--stroke2);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,23,41,.82), rgba(15,26,46,.62));
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .product:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 240px at 20% 0%, rgba(59,130,246,.22), transparent 55%),
+                  radial-gradient(600px 240px at 80% 20%, rgba(0,255,136,.12), transparent 55%);
+      pointer-events:none;
+    }
+    .product > *{position:relative}
+    .prod-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      font-size:12px; font-weight:1000;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .pill.live{border-color: rgba(0,255,136,.28); background: rgba(0,255,136,.08); color: var(--green)}
+    .prod-title{margin:10px 0 6px; font-size:18px; font-weight:1100}
+    .prod-desc{margin:0; color:var(--muted); line-height:1.6; font-size:14px}
+    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
+    .codebox{
+      margin-top:14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.28);
       padding:12px;
-      display:none;
-      color:rgba(255,255,255,.9);
+      overflow:auto;
+      color:#e5e7eb;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New";
+      font-size:12px;
+      line-height:1.5;
     }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="logoBox" aria-label="Zentra logo">
-          <!-- Inline SVG: dosya gerekmez -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M4 7.5L12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="rgba(234,241,255,.85)" stroke-width="1.6"/>
-            <path d="M7.2 9.2h9.6L9.2 17h7.6" stroke="rgba(0,255,136,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <div><b>ZENTRA</b> • Demo Console</div>
-          <div class="tag" id="tag">Tek ekranda 3 demo: RiskLens + Credit Stress + Fatura/Katılım</div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="pill"><span class="dot"></span><span id="liveTxt">LIVE</span></div>
-        <button class="btn" id="langBtn" onclick="toggleLang()">TR / EN</button>
-        <a class="btn" href="/">← zentrarisk.com</a>
-      </div>
-    </div>
-
-    <h1 id="title">Tek Ekran Demo</h1>
-    <p id="desc">API key gir, senaryo seç, “Run” de. Sonuç JSON olarak aşağıya düşer.</p>
-
-    <div class="errBox" id="errBox"></div>
-
-    <div class="card" style="margin-top:14px">
-      <div class="row">
-        <div>
-          <label id="apiKeyLbl">X-API-Key</label>
-          <input id="apiKey" value="zentra-demo-key" />
-        </div>
-        <div>
-          <label id="modeLbl">Çalışma modu</label>
-          <select id="mode">
-            <option value="risk">RiskLens (Risk Score)</option>
-            <option value="credit">Credit Stress (Installment Stress)</option>
-            <option value="invoice">Invoice/Katılım (Invoice Risk)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="run" onclick="runDemo()" id="runBtn">Run</button>
-        <a class="btn" id="riskOpenapi" target="_blank" rel="noopener">RiskLens OpenAPI</a>
-        <a class="btn" id="riskHealth" target="_blank" rel="noopener">RiskLens Health</a>
-        <a class="btn" id="creditDocs" target="_blank" rel="noopener">Credit Swagger</a>
-      </div>
-
-      <pre id="out">{ "ready": true }</pre>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>RiskLens API</h2>
-        <div class="sub" id="riskSub">Davranışsal risk skoru (demo)</div>
-        <div class="row">
-          <div><label>amount</label><input id="r_amount" type="number" value="1000"/></div>
-          <div><label>sector</label><input id="r_sector" value="retail"/></div>
-        </div>
-        <div class="row">
-          <div><label>sector_risk_level (1-5)</label><input id="r_sector_level" type="number" value="2"/></div>
-          <div><label>payment_delay_days</label><input id="r_delay" type="number" value="10"/></div>
-        </div>
-        <div class="row">
-          <div><label>customer_score (0-100)</label><input id="r_customer" type="number" value="78"/></div>
-          <div><label>exposure_ratio (0-1)</label><input id="r_exposure" type="number" step="0.01" value="0.25"/></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Credit Stress Engine</h2>
-        <div class="sub" id="creditSub">Taksit & ödeme stresi (demo)</div>
-        <div class="row">
-          <div><label>principal</label><input id="c_principal" type="number" value="250000"/></div>
-          <div><label>interest_rate (%)</label><input id="c_rate" type="number" step="0.1" value="3.2"/></div>
-        </div>
-        <div class="row">
-          <div><label>term_months</label><input id="c_term" type="number" value="36"/></div>
-          <div><label>monthly_income</label><input id="c_income" type="number" value="45000"/></div>
-        </div>
-        <div class="row">
-          <div><label>payment_delay_days</label><input id="c_delay" type="number" value="15"/></div>
-          <div><label>exposure_ratio (0-2 demo)</label><input id="c_exposure" type="number" step="0.01" value="0.45"/></div>
-        </div>
-        <div class="row">
-          <div><label>customer_score</label><input id="c_customer" type="number" value="72"/></div>
-          <div><label>sector_risk_level</label><input id="c_sector_level" type="number" value="3"/></div>
-        </div>
-        <label>sector</label><input id="c_sector" value="retail"/>
-      </div>
-
-      <div class="card">
-        <h2>Invoice / Katılım</h2>
-        <div class="sub" id="invoiceSub">Fatura riski + vade + kâr payı (demo)</div>
-        <div class="row">
-          <div><label>invoice_amount</label><input id="i_amount" type="number" value="120000"/></div>
-          <div><label>term_days</label><input id="i_term" type="number" value="60"/></div>
-        </div>
-        <div class="row">
-          <div><label>monthly_income</label><input id="i_income" type="number" value="45000"/></div>
-          <div><label>profit_rate (%)</label><input id="i_profit" type="number" step="0.1" value="2.0"/></div>
-        </div>
-        <div class="row">
-          <div><label>payer_score (0-100)</label><input id="i_payer" type="number" value="70"/></div>
-          <div><label>delay_history_days</label><input id="i_delay" type="number" value="0"/></div>
-        </div>
-        <div class="row">
-          <div><label>sector</label><input id="i_sector" value="general"/></div>
-          <div><label>sector_risk_level (1-5)</label><input id="i_sector_level" type="number" value="3"/></div>
-        </div>
-        <div class="row">
-          <div><label>exposure_ratio (0-1)</label><input id="i_exposure" type="number" step="0.01" value="0.2"/></div>
-          <div>
-            <label>is_participation</label>
-            <select id="i_part"><option value="true">true</option><option value="false">false</option></select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="foot">
-      <div><b>Working Bases</b><br/>
-        RiskLens: <span id="riskBase"></span><br/>
-        Credit: <span id="creditBase"></span>
-      </div>
-      <div>
-        <b>Note</b><br/>
-        Free plan SSL yüzünden risk.zentrarisk.com çalışmayabilir. Bu sayfada “onrender” linkleri sabit.
-      </div>
-    </div>
-  </div>
-
-<script>
-(function(){
-  // ---- BASE URLS (şu an çalışan linkler) ----
-  const RISK_BASE = "https://zentra-risklens-api-2.onrender.com";
-  const CREDIT_BASE = "https://zentra-credit-stress-api.onrender.com";
-
-  // UI links
-  document.getElementById("riskOpenapi").href = RISK_BASE + "/openapi.json";
-  document.getElementById("riskHealth").href = RISK_BASE + "/health";
-  document.getElementById("creditDocs").href = CREDIT_BASE + "/docs";
-  document.getElementById("riskBase").innerText = RISK_BASE;
-  document.getElementById("creditBase").innerText = CREDIT_BASE;
-
-  let lang = "tr";
-  const I18N = {
-    tr:{
-      tag:"Tek ekranda 3 demo: RiskLens + Credit Stress + Fatura/Katılım",
-      title:"Tek Ekran Demo",
-      desc:"API key gir, senaryo seç, “Run” de. Sonuç JSON olarak aşağıya düşer.",
-      apiKeyLbl:"X-API-Key",
-      modeLbl:"Çalışma modu",
-      runBtn:"Run",
-      riskSub:"Davranışsal risk skoru (demo)",
-      creditSub:"Taksit & ödeme stresi (demo)",
-      invoiceSub:"Fatura riski + vade + kâr payı (demo)"
-    },
-    en:{
-      tag:"3 demos on one screen: RiskLens + Credit Stress + Invoice/Participation",
-      title:"Single-Screen Demo",
-      desc:"Enter API key, select scenario, press Run. Output JSON appears below.",
-      apiKeyLbl:"X-API-Key",
-      modeLbl:"Mode",
-      runBtn:"Run",
-      riskSub:"Behavioral-style risk score (demo)",
-      creditSub:"Installment & repayment stress (demo)",
-      invoiceSub:"Invoice risk + term + profit rate (demo)"
+    .note{
+      margin-top:12px;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(251,191,36,.28);
+      background: rgba(251,191,36,.08);
+      color: rgba(255,255,255,.86);
+      font-size:13px;
+      line-height:1.55;
     }
-  };
 
-  window.toggleLang = function(){
-    lang = (lang === "tr") ? "en" : "tr";
-    const t = I18N[lang];
-    document.getElementById("tag").innerText = t.tag;
-    document.getElementById("title").innerText = t.title;
-    document.getElementById("desc").innerText = t.desc;
-    document.getElementById("apiKeyLbl").innerText = t.apiKeyLbl;
-    document.getElementById("modeLbl").innerText = t.modeLbl;
-    document.getElementById("runBtn").innerText = t.runBtn;
-    document.getElementById("riskSub").innerText = t.riskSub;
-    document.getElementById("creditSub").innerText = t.creditSub;
-    document.getElementById("invoiceSub").innerText = t.invoiceSub;
-  };
-
-  function pretty(x){ return JSON.stringify(x, null, 2); }
-  function showErr(msg){
-    const box = document.getElementById("errBox");
-    box.style.display = "block";
-    box.textContent = msg;
-  }
-  function clearErr(){
-    const box = document.getElementById("errBox");
-    box.style.display = "none";
-    box.textContent = "";
-  }
-
-  async function postJSON(url, apiKey, payload){
-    const res = await fetch(url, {
-      method:"POST",
-      headers:{ "Content-Type":"application/json", "X-API-Key": apiKey },
-      body: JSON.stringify(payload)
-    });
-    const text = await res.text();
-    let data;
-    try{ data = JSON.parse(text); } catch(e){ data = { raw: text }; }
-    return { ok: res.ok, status: res.status, data };
-  }
-
-  window.runDemo = async function(){
-    clearErr();
-    const apiKey = document.getElementById("apiKey").value.trim();
-    const mode = document.getElementById("mode").value;
-    const out = document.getElementById("out");
-    out.textContent = '{ "running": true }';
-
-    try{
-      let url="", payload={};
-
-      if(mode==="risk"){
-        url = RISK_BASE + "/v1/risk";
-        payload = {
-          amount: Number(document.getElementById("r_amount").value),
-          sector: document.getElementById("r_sector").value,
-          sector_risk_level: Number(document.getElementById("r_sector_level").value),
-          payment_delay_days: Number(document.getElementById("r_delay").value),
-          customer_score: Number(document.getElementById("r_customer").value),
-          exposure_ratio: Number(document.getElementById("r_exposure").value)
-        };
-      } else if(mode==="credit"){
-        url = CREDIT_BASE + "/v1/credit-stress";
-        payload = {
-          principal: Number(document.getElementById("c_principal").value),
-          interest_rate: Number(document.getElementById("c_rate").value),
-          term_months: Number(document.getElementById("c_term").value),
-          monthly_income: Number(document.getElementById("c_income").value),
-          sector: document.getElementById("c_sector").value,
-          sector_risk_level: Number(document.getElementById("c_sector_level").value),
-          payment_delay_days: Number(document.getElementById("c_delay").value),
-          customer_score: Number(document.getElementById("c_customer").value),
-          exposure_ratio: Number(document.getElementById("c_exposure").value)
-        };
-      } else {
-        url = RISK_BASE + "/v1/invoice-risk";
-        payload = {
-          invoice_amount: Number(document.getElementById("i_amount").value),
-          term_days: Number(document.getElementById("i_term").value),
-          monthly_income: Number(document.getElementById("i_income").value),
-          profit_rate: Number(document.getElementById("i_profit").value),
-          payer_score: Number(document.getElementById("i_payer").value),
-          delay_history_days: Number(document.getElementById("i_delay").value),
-          sector: document.getElementById("i_sector").value,
-          sector_risk_level: Number(document.getElementById("i_sector_level").value),
-          exposure_ratio: Number(document.getElementById("i_exposure").value),
-          is_participation: (document.getElementById("i_part").value === "true")
-        };
-      }
-
-      const result = await postJSON(url, apiKey, payload);
-      out.textContent = pretty({
-        request:{url, payload},
-        response:{ok: result.ok, http: result.status},
-        data: result.data
-      });
-
-      // Invoice endpoint henüz yoksa bunu net söyle
-      if(mode==="invoice" && result.status===404){
-        showErr("Invoice/Katılım endpoint 404 dönüyor. RiskLens API içine /v1/invoice-risk endpointi eklenmemiş veya deploy edilmemiş.");
-      }
-      if(result.status===401){
-        showErr("401: x-api-key hatalı/eksik. X-API-Key alanına 'zentra-demo-key' yazılı olmalı.");
-      }
-
-    } catch(e){
-      out.textContent = pretty({ status:"ERROR", message:String(e) });
-      showErr("Tarayıcı hata verdi: " + String(e));
+    /* Demo Console */
+    .demoGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:12px;
     }
-  };
-})();
-</script>
-</body>
-</html>
+    @media (max-width: 980px){
+      .demoGrid{grid-template-columns: 1fr}
+    }
+    .formCard{
+      border:1px solid var(--stroke2);
+      border-radius: var(--radius);
+      background: rgba(15,26,46,.55);
+      padding:16px;
+    }
+    .formCard h4{margin:0 0 6px; font-size:15px}
+    .formCard p{margin:0 0 12px; color:var(--muted); font-size:13px; line-height:1.55}
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 520px){
+      .grid2{grid-template-columns: 1fr}
+    }
+    label{display:block; font-size:12px; color:var(--muted2); margin-bottom:6px}
+    input, select{
+      width:

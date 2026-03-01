@@ -1,0 +1,1385 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="ZENTRA — Behavioral Financial Infrastructure (Investor + Demo + Charts) / Davranışsal Finansal Altyapı" />
+  <title>ZENTRA — Investor + Demo</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ZENTRA — Behavioral Financial Infrastructure" />
+  <meta property="og:description" content="RiskLens + Credit Stress • Investor page + Live demo + Charts (TR/EN)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/screenshot-landing.png" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#070A12;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.04);
+      --border:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.56);
+      --accent:#7C5CFF;
+      --accent2:#00D4FF;
+      --ok:#29d18b;
+      --bad:#ff5c7a;
+      --warn:#ffcc66;
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius:18px;
+      --radius2:26px;
+      --max:1140px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(0,212,255,.18), transparent 55%),
+        radial-gradient(1100px 800px at 50% 120%, rgba(255,92,122,.10), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ width:100%; max-width:var(--max); margin:0 auto; padding:28px 18px 60px; }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(7,10,18,.55);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .topbar .inner{
+      max-width:var(--max); margin:0 auto;
+      padding:12px 18px;
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      min-width: 240px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(124,92,255,1), rgba(0,212,255,1));
+      box-shadow: 0 12px 30px rgba(124,92,255,.18);
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,.14);
+      overflow:hidden;
+    }
+    .logo img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .brand .name{ font-weight:800; letter-spacing:.6px; }
+    .brand .tag{ font-size:12px; color:var(--muted2); margin-top:2px; }
+
+    .nav{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:center;
+    }
+    .nav a{
+      font-size:13px; color:var(--muted);
+      padding:8px 10px; border-radius:12px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color:rgba(255,255,255,.88);
+    }
+
+    .tools{
+      display:flex; gap:10px; align-items:center; justify-content:flex-end;
+      min-width: 240px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color:rgba(255,255,255,.86);
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .pill:hover{ background: rgba(255,255,255,.06); }
+    .pill small{ color:var(--muted2); font-size:12px; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:11px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(0,212,255,.70));
+      color:white;
+      font-weight:700;
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      cursor:pointer;
+    }
+    .btn:hover{ filter:brightness(1.06); }
+    .btn.secondary{
+      background: rgba(255,255,255,.04);
+      box-shadow:none;
+      font-weight:700;
+    }
+
+    /* Hero */
+    .hero{
+      padding:28px 0 10px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .hero{ grid-template-columns:1fr; }
+      .brand{ min-width:auto; }
+      .tools{ min-width:auto; }
+      .nav{ display:none; }
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card .pad{ padding:20px; }
+    .h-eyebrow{
+      display:inline-flex; gap:10px; align-items:center;
+      font-size:12px; color:rgba(255,255,255,.70);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      padding:7px 10px;
+      background: rgba(255,255,255,.04);
+      margin-bottom:12px;
+      width:fit-content;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--ok);
+      box-shadow: 0 0 0 4px rgba(41,209,139,.12);
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:42px;
+      line-height:1.07;
+      letter-spacing:-.8px;
+    }
+    @media (max-width: 520px){
+      h1{ font-size:34px; }
+    }
+    .lead{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.6;
+      max-width: 62ch;
+    }
+    .row{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    @media (max-width: 520px){
+      .kpis{ grid-template-columns:1fr; }
+    }
+    .kpi{
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .kpi .v{ font-size:20px; font-weight:800; }
+    .kpi .t{ font-size:12px; color:var(--muted2); margin-top:4px; line-height:1.35; }
+
+    /* Sidebar hero card */
+    .mini{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .mini .line{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .ico{
+      width:34px; height:34px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+    }
+    .mini .line b{ display:block; }
+    .mini .line span{ display:block; font-size:12px; color:var(--muted2); margin-top:3px; line-height:1.35; }
+    .muted{ color:var(--muted2); }
+    code.inline{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:12px; color:rgba(255,255,255,.84);
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      padding:2px 7px;
+      border-radius:10px;
+    }
+
+    /* Sections */
+    .section{ margin-top:18px; }
+    .section h2{
+      font-size:20px; margin:0 0 10px; letter-spacing:-.2px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    /* Demo */
+    .form{
+      display:grid; grid-template-columns: 1fr 1fr; gap:10px;
+    }
+    @media (max-width: 700px){
+      .form{ grid-template-columns:1fr; }
+    }
+    label{ font-size:12px; color:var(--muted2); display:block; margin:0 0 6px; }
+    input, select, textarea{
+      width:100%;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color:rgba(255,255,255,.92);
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.14);
+    }
+    textarea{ min-height: 108px; resize: vertical; }
+    .form .full{ grid-column: 1 / -1; }
+    .hint{ font-size:12px; color:var(--muted2); line-height:1.45; }
+    .hr{ height:1px; background: rgba(255,255,255,.08); margin:12px 0; }
+
+    .status{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:10px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      padding:7px 10px;
+      font-size:12px;
+      color:rgba(255,255,255,.80);
+    }
+    .badge .lamp{ width:8px; height:8px; border-radius:99px; background: rgba(255,255,255,.25); }
+    .badge.ok .lamp{ background: var(--ok); box-shadow: 0 0 0 4px rgba(41,209,139,.12); }
+    .badge.bad .lamp{ background: var(--bad); box-shadow: 0 0 0 4px rgba(255,92,122,.10); }
+    .badge.warn .lamp{ background: var(--warn); box-shadow: 0 0 0 4px rgba(255,204,102,.10); }
+
+    .result{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:12px;
+      color:rgba(255,255,255,.85);
+      overflow:auto;
+      max-height: 240px;
+      white-space: pre;
+    }
+
+    /* Charts */
+    .chartWrap{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 12px;
+    }
+    canvas{ width:100% !important; height: 260px !important; }
+
+    /* Screenshots */
+    .shots{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 980px){
+      .shots{ grid-template-columns:1fr; }
+    }
+    .shot{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 18px;
+      overflow:hidden;
+    }
+    .shot img{ width:100%; display:block; }
+    .shot .cap{
+      padding:10px 12px;
+      font-size:12px;
+      color:var(--muted2);
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+
+    /* Footer */
+    footer{
+      margin-top:18px;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color: var(--muted2);
+      font-size:12px;
+      display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap;
+    }
+
+    /* Language visibility */
+    [data-lang]{ display:none; }
+    body.lang-tr [data-lang="tr"]{ display:block; }
+    body.lang-en [data-lang="en"]{ display:block; }
+
+    /* Small utilities */
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; }
+    .tiny{ font-size:12px; color:var(--muted2); }
+    .right{ text-align:right; }
+  </style>
+</head>
+
+<body class="lang-tr">
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <div class="logo" aria-label="ZENTRA">
+          <!-- If you have assets/logo.png, keep this. If not, it will fallback to gradient block -->
+          <img src="assets/logo.png" alt="ZENTRA" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, rgba(124,92,255,1), rgba(0,212,255,1))';" />
+        </div>
+        <div>
+          <div class="name">ZENTRA</div>
+          <div class="tag" data-lang="tr">Davranışsal Finansal Altyapı • Investor + Demo</div>
+          <div class="tag" data-lang="en">Behavioral Financial Infrastructure • Investor + Demo</div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <a href="#investor" data-lang="tr">Yatırımcı</a>
+        <a href="#investor" data-lang="en">Investor</a>
+
+        <a href="#demo">Demo</a>
+        <a href="#charts" data-lang="tr">Grafikler</a>
+        <a href="#charts" data-lang="en">Charts</a>
+        <a href="#stack">Stack</a>
+        <a href="#shots" data-lang="tr">Görseller</a>
+        <a href="#shots" data-lang="en">Screens</a>
+      </div>
+
+      <div class="tools">
+        <div class="pill" id="langToggle" title="TR/EN">
+          <span class="mono">TR</span>
+          <small>⇄</small>
+          <span class="mono">EN</span>
+        </div>
+        <a class="btn secondary" href="#demo" data-lang="tr">Canlı Demo</a>
+        <a class="btn secondary" href="#demo" data-lang="en">Live Demo</a>
+        <a class="btn" href="#investor" data-lang="tr">Pitch</a>
+        <a class="btn" href="#investor" data-lang="en">Pitch</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="card">
+        <div class="pad">
+          <div class="h-eyebrow">
+            <span class="dot"></span>
+            <span data-lang="tr">Lisanslanabilir altyapı katmanı • Banka & regüle fintech</span>
+            <span data-lang="en">Licensable infrastructure layer • Banks & regulated fintech</span>
+          </div>
+
+          <h1 data-lang="tr">
+            Davranışsal risk + taksit stres modelleme<br/> tek altyapıda.
+          </h1>
+          <h1 data-lang="en">
+            Behavioral risk + installment stress modeling<br/> in one infrastructure.
+          </h1>
+
+          <p class="lead" data-lang="tr">
+            ZENTRA; <b>RiskLens</b> ile davranışsal risk skoru, <b>Credit Stress</b> ile taksit stres modeli üretir.
+            Kurumlar için <b>API</b> olarak lisanslanır. Demo, swagger ve investor sayfası hazır.
+          </p>
+          <p class="lead" data-lang="en">
+            ZENTRA produces <b>behavioral risk scores</b> via <b>RiskLens</b> and <b>installment stress models</b> via <b>Credit Stress</b>.
+            Licensed as an <b>API</b> for institutions. Demo, Swagger and investor page are ready.
+          </p>
+
+          <div class="row">
+            <span class="badge ok"><span class="lamp"></span><span data-lang="tr">Live APIs</span><span data-lang="en">Live APIs</span></span>
+            <span class="badge"><span class="lamp"></span><span data-lang="tr">0$ Infra (Free Tier)</span><span data-lang="en">0$ Infra (Free Tier)</span></span>
+            <span class="badge"><span class="lamp"></span><span data-lang="tr">FastAPI + Render</span><span data-lang="en">FastAPI + Render</span></span>
+            <span class="badge"><span class="lamp"></span><span data-lang="tr">GitHub Pages</span><span data-lang="en">GitHub Pages</span></span>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi">
+              <div class="v">RiskLens</div>
+              <div class="t" data-lang="tr">Davranışsal risk skorlama API</div>
+              <div class="t" data-lang="en">Behavioral risk scoring API</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Credit Stress</div>
+              <div class="t" data-lang="tr">Taksit / gelir stres modeli</div>
+              <div class="t" data-lang="en">Installment-to-income stress model</div>
+            </div>
+            <div class="kpi">
+              <div class="v">Dubai Hub</div>
+              <div class="t" data-lang="tr">Global lisans & dağıtım hedefi</div>
+              <div class="t" data-lang="en">Global licensing & distribution target</div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="row">
+            <a class="btn" href="#demo" data-lang="tr">Demo’yu Çalıştır</a>
+            <a class="btn" href="#demo" data-lang="en">Run the Demo</a>
+            <a class="btn secondary" href="#stack" data-lang="tr">Stack & Endpoint</a>
+            <a class="btn secondary" href="#stack" data-lang="en">Stack & Endpoints</a>
+            <a class="btn secondary" href="#shots" data-lang="tr">Görseller</a>
+            <a class="btn secondary" href="#shots" data-lang="en">Screens</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="pad mini">
+          <div class="line">
+            <div class="ico">🧠</div>
+            <div>
+              <b data-lang="tr">Konum</b><b data-lang="en">Position</b>
+              <span data-lang="tr">“Licensable infrastructure layer” — scoring değil, altyapı.</span>
+              <span data-lang="en">“Licensable infrastructure layer” — not a scoring app, an infrastructure.</span>
+            </div>
+          </div>
+
+          <div class="line">
+            <div class="ico">🔐</div>
+            <div>
+              <b data-lang="tr">Demo Key</b><b data-lang="en">Demo Key</b>
+              <span data-lang="tr">Header: <code class="inline">X-API-Key: zentra-demo-key</code></span>
+              <span data-lang="en">Header: <code class="inline">X-API-Key: zentra-demo-key</code></span>
+            </div>
+          </div>
+
+          <div class="line">
+            <div class="ico">⚡</div>
+            <div>
+              <b data-lang="tr">Hızlı Başlangıç</b><b data-lang="en">Quick Start</b>
+              <span data-lang="tr">Aşağıdaki demo formunda 2 endpoint’i çağır, skorları grafikte gör.</span>
+              <span data-lang="en">Use the demo form below to call both endpoints and see scores on charts.</span>
+            </div>
+          </div>
+
+          <div class="line">
+            <div class="ico">🛡</div>
+            <div>
+              <b data-lang="tr">Free Mod Dayanıklılık</b><b data-lang="en">Free-tier Resilience</b>
+              <span data-lang="tr">Render Free + GitHub Pages. Şimdilik ücret yok. Pitch hazır.</span>
+              <span data-lang="en">Render Free + GitHub Pages. No paid infra yet. Pitch-ready.</span>
+            </div>
+          </div>
+
+          <div class="line">
+            <div class="ico">📍</div>
+            <div>
+              <b data-lang="tr">Hub</b><b data-lang="en">Hub</b>
+              <span data-lang="tr">Dubai (global lisans / ortaklık merkezi).</span>
+              <span data-lang="en">Dubai (global licensing / partnerships hub).</span>
+            </div>
+          </div>
+
+          <div class="tiny">
+            <span data-lang="tr">Not: Bu tek dosya (index.html). <span class="mono">/assets</span> altına görselleri koy.</span>
+            <span data-lang="en">Note: This is a single file (index.html). Put screenshots under <span class="mono">/assets</span>.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVESTOR -->
+    <section class="section" id="investor">
+      <div class="grid">
+        <div class="card">
+          <div class="pad">
+            <h2 data-lang="tr">Yatırımcı Özeti</h2>
+            <h2 data-lang="en">Investor Summary</h2>
+
+            <p class="lead" data-lang="tr" style="margin-bottom:10px;">
+              ZENTRA, bankalar ve regüle fintech için <b>davranışsal risk altyapısı</b>dır.
+              RiskLens ile risk skoru, Credit Stress ile taksit stres skoru üretir. API olarak lisanslanır.
+            </p>
+            <p class="lead" data-lang="en" style="margin-bottom:10px;">
+              ZENTRA is a <b>behavioral risk infrastructure</b> for banks and regulated fintech.
+              It produces RiskLens scores and Credit Stress scores. Licensed as an API.
+            </p>
+
+            <div class="hr"></div>
+
+            <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+              <div class="kpi">
+                <div class="v" data-lang="tr">Ne satıyoruz?</div>
+                <div class="v" data-lang="en">What we sell</div>
+                <div class="t" data-lang="tr">B2B lisans: risk altyapı katmanı + modüler lens mimarisi</div>
+                <div class="t" data-lang="en">B2B license: infrastructure layer + modular lens architecture</div>
+              </div>
+              <div class="kpi">
+                <div class="v" data-lang="tr">Neden şimdi?</div>
+                <div class="v" data-lang="en">Why now</div>
+                <div class="t" data-lang="tr">Taksitli ekonomi + davranışsal risk ihtiyacı + regülasyon uyumu</div>
+                <div class="t" data-lang="en">Installment economies + behavioral risk + compliance pressure</div>
+              </div>
+              <div class="kpi">
+                <div class="v" data-lang="tr">Moat</div>
+                <div class="v" data-lang="en">Moat</div>
+                <div class="t" data-lang="tr">Skor değil, “altyapı + modüler lens + açıklama/narrative” yaklaşımı</div>
+                <div class="t" data-lang="en">Not just scoring: infra + modular lenses + explanation/narrative layer</div>
+              </div>
+              <div class="kpi">
+                <div class="v" data-lang="tr">GTM</div>
+                <div class="v" data-lang="en">GTM</div>
+                <div class="t" data-lang="tr">Dubai hub → bankalar, fintech’ler, regüle ödeme oyuncuları</div>
+                <div class="t" data-lang="en">Dubai hub → banks, fintechs, regulated payment players</div>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="row">
+              <span class="badge warn"><span class="lamp"></span><span data-lang="tr">Eksikler: versioning, rate limit, logging, gerçek dataset</span><span data-lang="en">Gaps: versioning, rate limit, logging, real dataset</span></span>
+            </div>
+
+            <p class="hint" data-lang="tr" style="margin-top:10px;">
+              Bu aşama: <b>MVP + Investor Ready</b>. Ücretli infra veya SLA yatırım sonrası.
+            </p>
+            <p class="hint" data-lang="en" style="margin-top:10px;">
+              Stage: <b>MVP + Investor Ready</b>. Paid infra/SLA comes post-funding.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="pad">
+            <h2 data-lang="tr">Hızlı Linkler</h2>
+            <h2 data-lang="en">Quick Links</h2>
+
+            <div class="line" style="margin-bottom:10px;">
+              <div class="ico">🧪</div>
+              <div>
+                <b>RiskLens API</b>
+                <span class="muted mono" style="display:block; margin-top:3px;">https://zentra-risklens-api-2.onrender.com</span>
+              </div>
+            </div>
+
+            <div class="line" style="margin-bottom:10px;">
+              <div class="ico">📉</div>
+              <div>
+                <b>Credit Stress API</b>
+                <span class="muted mono" style="display:block; margin-top:3px;">https://zentra-credit-stress-api.onrender.com</span>
+              </div>
+            </div>
+
+            <div class="line" style="margin-bottom:10px;">
+              <div class="ico">🔑</div>
+              <div>
+                <b data-lang="tr">API Key</b><b data-lang="en">API Key</b>
+                <span class="muted mono" style="display:block; margin-top:3px;">zentra-demo-key</span>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <h2 data-lang="tr" style="margin-top:0;">Kilitli Rebuild Manifest</h2>
+            <h2 data-lang="en" style="margin-top:0;">Locked Rebuild Manifest</h2>
+
+            <div class="result" id="manifestBox">🔐 ZENTRA REBUILD MANIFEST
+FastAPI
+Uvicorn
+POST /v1/risk
+POST /v1/credit-stress
+X-API-Key header
+stress_score
+risk_score
+payment_to_income
+modular lens architecture
+licensable infrastructure
+Dubai hub
+Behavioral risk scoring
+Installment stress modeling
+Participation invoice scoring</div>
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn secondary" id="copyManifest" type="button" data-lang="tr">Manifesti Kopyala</button>
+              <button class="btn secondary" id="copyManifest" type="button" data-lang="en">Copy Manifest</button>
+
+              <a class="btn" href="#demo" data-lang="tr">Demo’ya Git</a>
+              <a class="btn" href="#demo" data-lang="en">Go to Demo</a>
+            </div>
+
+            <p class="hint" data-lang="tr" style="margin-top:10px;">
+              Notion / txt / mail… fark etmez. Bu metin kayıpsız geri kurulum içindir.
+            </p>
+            <p class="hint" data-lang="en" style="margin-top:10px;">
+              Notion / txt / email… any place. This text is enough to rebuild the system.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section class="section" id="demo">
+      <div class="grid">
+        <div class="card">
+          <div class="pad">
+            <h2 data-lang="tr">Canlı Demo (RiskLens + Credit Stress)</h2>
+            <h2 data-lang="en">Live Demo (RiskLens + Credit Stress)</h2>
+
+            <p class="hint" data-lang="tr">
+              Bu form iki endpoint’i çağırır. Eğer backend “body schema” farklıysa sorun değil:
+              request/response’ları aşağıdaki JSON kutusunda göreceksin (gerekirse alan adlarını backend’e göre düzeltirsin).
+            </p>
+            <p class="hint" data-lang="en">
+              This form calls both endpoints. If your backend schema differs, no problem:
+              you’ll see requests/responses in the JSON box below (adjust field names to match your API).
+            </p>
+
+            <div class="hr"></div>
+
+            <div class="form" id="demoForm">
+              <div>
+                <label data-lang="tr">Ülke / Country</label>
+                <label data-lang="en">Country</label>
+                <select id="country">
+                  <option value="TR">TR</option>
+                  <option value="AE">AE</option>
+                  <option value="SA">SA</option>
+                  <option value="US">US</option>
+                  <option value="UK">UK</option>
+                </select>
+              </div>
+
+              <div>
+                <label data-lang="tr">Segment</label>
+                <label data-lang="en">Segment</label>
+                <select id="segment">
+                  <option value="retail">retail</option>
+                  <option value="sme">sme</option>
+                  <option value="affluent">affluent</option>
+                </select>
+              </div>
+
+              <div>
+                <label data-lang="tr">Aylık Gelir (TRY) / Monthly Income</label>
+                <label data-lang="en">Monthly Income (local)</label>
+                <input id="income" type="number" inputmode="decimal" value="60000" />
+              </div>
+
+              <div>
+                <label data-lang="tr">Aylık Taksit Toplamı / Total Installments</label>
+                <label data-lang="en">Total Installments</label>
+                <input id="installments" type="number" inputmode="decimal" value="18000" />
+              </div>
+
+              <div>
+                <label data-lang="tr">Borç / Debt</label>
+                <label data-lang="en">Debt</label>
+                <input id="debt" type="number" inputmode="decimal" value="220000" />
+              </div>
+
+              <div>
+                <label data-lang="tr">Yaş / Age</label>
+                <label data-lang="en">Age</label>
+                <input id="age" type="number" inputmode="numeric" value="34" />
+              </div>
+
+              <div class="full">
+                <label data-lang="tr">Davranış Notu (opsiyonel)</label>
+                <label data-lang="en">Behavior Note (optional)</label>
+                <textarea id="note" placeholder="Örn: son 3 ayda gecikme artışı; harcama volatilitesi; nakit akışı dalgalı..."></textarea>
+              </div>
+
+              <div class="full row" style="justify-content:space-between;">
+                <div class="row">
+                  <button class="btn" id="runDemo" type="button" data-lang="tr">Skorları Üret</button>
+                  <button class="btn" id="runDemo" type="button" data-lang="en">Generate Scores</button>
+
+                  <button class="btn secondary" id="resetDemo" type="button" data-lang="tr">Sıfırla</button>
+                  <button class="btn secondary" id="resetDemo" type="button" data-lang="en">Reset</button>
+                </div>
+                <div class="right tiny">
+                  <div data-lang="tr">Header: <code class="inline">X-API-Key</code></div>
+                  <div data-lang="en">Header: <code class="inline">X-API-Key</code></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="status" id="healthBadges">
+              <span class="badge" id="badgeRisk"><span class="lamp"></span>RiskLens: <span class="mono" id="riskState">unknown</span></span>
+              <span class="badge" id="badgeStress"><span class="lamp"></span>Credit Stress: <span class="mono" id="stressState">unknown</span></span>
+              <span class="badge"><span class="lamp"></span><span data-lang="tr">Demo Key:</span><span data-lang="en">Demo Key:</span> <span class="mono">zentra-demo-key</span></span>
+            </div>
+
+            <div class="hr"></div>
+
+            <h2 data-lang="tr">İstek / Yanıt (JSON)</h2>
+            <h2 data-lang="en">Request / Response (JSON)</h2>
+            <div class="result" id="jsonOut">{ }</div>
+          </div>
+        </div>
+
+        <div class="card" id="charts">
+          <div class="pad">
+            <h2 data-lang="tr">Grafikler</h2>
+            <h2 data-lang="en">Charts</h2>
+
+            <p class="hint" data-lang="tr">
+              Demo sonuçları geldikçe grafikler güncellenir. Bu sayfa tek başına pitch için yeterli görsel verir.
+            </p>
+            <p class="hint" data-lang="en">
+              Charts update after each demo run. This single page is pitch-ready with visuals.
+            </p>
+
+            <div class="chartWrap" style="margin-top:10px;">
+              <div class="tiny" style="margin-bottom:8px;" data-lang="tr">Skorlar (0–100)</div>
+              <div class="tiny" style="margin-bottom:8px;" data-lang="en">Scores (0–100)</div>
+              <canvas id="scoreChart"></canvas>
+            </div>
+
+            <div class="chartWrap" style="margin-top:12px;">
+              <div class="tiny" style="margin-bottom:8px;" data-lang="tr">Payment-to-Income (PTI)</div>
+              <div class="tiny" style="margin-bottom:8px;" data-lang="en">Payment-to-Income (PTI)</div>
+              <canvas id="ptiChart"></canvas>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="kpi">
+              <div class="v" data-lang="tr">AI Narrative (opsiyon)</div>
+              <div class="v" data-lang="en">AI Narrative (optional)</div>
+              <div class="t" data-lang="tr">
+                Skor + gerekçe metni üretmek için burada basit “narrative” generator var (rule-based).
+                Yatırım sonrası LLM/AI narrative motoru eklenebilir.
+              </div>
+              <div class="t" data-lang="en">
+                A simple rule-based narrative generator is included (score + explanation).
+                A full LLM narrative engine can be added post-funding.
+              </div>
+              <div class="hr"></div>
+              <div class="result" id="narrativeOut">—</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section class="section" id="stack">
+      <div class="grid">
+        <div class="card">
+          <div class="pad">
+            <h2 data-lang="tr">Teknik Stack</h2>
+            <h2 data-lang="en">Technical Stack</h2>
+
+            <div class="kpi">
+              <div class="t">
+                <b>Backend:</b> FastAPI<br/>
+                <b>Deploy:</b> Render (Free)<br/>
+                <b>Frontend:</b> Static HTML (GitHub Pages)<br/>
+                <b>Auth:</b> <code class="inline">X-API-Key</code>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <h2 data-lang="tr">Ana Endpointler</h2>
+            <h2 data-lang="en">Core Endpoints</h2>
+
+            <div class="kpi">
+              <div class="t">
+                <b>RiskLens</b><br/>
+                <span class="mono">POST https://zentra-risklens-api-2.onrender.com/v1/risk</span><br/>
+                <span class="tiny" data-lang="tr">Beklenen: risk_score (0–100)</span>
+                <span class="tiny" data-lang="en">Expected: risk_score (0–100)</span>
+              </div>
+            </div>
+
+            <div style="height:10px"></div>
+
+            <div class="kpi">
+              <div class="t">
+                <b>Credit Stress</b><br/>
+                <span class="mono">POST https://zentra-credit-stress-api.onrender.com/v1/credit-stress</span><br/>
+                <span class="tiny" data-lang="tr">Beklenen: stress_score, payment_to_income</span>
+                <span class="tiny" data-lang="en">Expected: stress_score, payment_to_income</span>
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <p class="hint" data-lang="tr">
+              Eğer endpoint path’lerin farklıysa: sadece JS’teki URL’leri değiştir.
+            </p>
+            <p class="hint" data-lang="en">
+              If your endpoint paths differ: just update the URLs in the JS.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="pad">
+            <h2 data-lang="tr">Gerçek Eksikler (acı ama net)</h2>
+            <h2 data-lang="en">Real Gaps (painfully honest)</h2>
+
+            <div class="kpi">
+              <div class="t">
+                ❌ Versioning netliği (v1/v2)<br/>
+                ❌ Rate limiting<br/>
+                ❌ Logging dashboard<br/>
+                ❌ Gerçek dataset ile model eğitimi<br/>
+                ❌ SLA / uptime guarantee<br/>
+                ❌ Multi-region<br/>
+                ❌ Participation gerçek backend endpoint
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="kpi">
+              <div class="v" data-lang="tr">Free Mod Dayanıklı Yapı</div>
+              <div class="v" data-lang="en">Free-tier Durable Setup</div>
+              <div class="t">
+                ✅ Render Free<br/>
+                ✅ GitHub Pages<br/>
+                ✅ No paid infra<br/>
+                ✅ Pitch-ready
+              </div>
+            </div>
+
+            <div class="hr"></div>
+
+            <div class="row">
+              <a class="btn" href="#investor" data-lang="tr">Pitch’e Dön</a>
+              <a class="btn" href="#investor" data-lang="en">Back to Pitch</a>
+              <a class="btn secondary" href="#shots" data-lang="tr">Görseller</a>
+              <a class="btn secondary" href="#shots" data-lang="en">Screens</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS -->
+    <section class="section" id="shots">
+      <div class="card">
+        <div class="pad">
+          <h2 data-lang="tr">Görseller</h2>
+          <h2 data-lang="en">Screenshots</h2>
+
+          <p class="hint" data-lang="tr">
+            Repo: <code class="inline">/assets</code> içine ekran görüntülerini koy.
+            Aşağıdaki dosya adlarını kullanırsan otomatik görünür.
+          </p>
+          <p class="hint" data-lang="en">
+            Put screenshots under <code class="inline">/assets</code>.
+            Use the filenames below to render automatically.
+          </p>
+
+          <div class="shots" style="margin-top:12px;">
+            <div class="shot">
+              <img src="assets/screenshot-landing.png" alt="Landing" onerror="this.src='assets/screenshot-demo.png';" />
+              <div class="cap" data-lang="tr">Landing / Investor giriş</div>
+              <div class="cap" data-lang="en">Landing / Investor entry</div>
+            </div>
+
+            <div class="shot">
+              <img src="assets/screenshot-demo.png" alt="Demo" onerror="this.src='assets/screenshot-swagger.png';" />
+              <div class="cap" data-lang="tr">Demo ekranı</div>
+              <div class="cap" data-lang="en">Demo screen</div>
+            </div>
+
+            <div class="shot">
+              <img src="assets/screenshot-swagger.png" alt="Swagger" onerror="this.src='assets/screenshot-roadmap.png';" />
+              <div class="cap" data-lang="tr">Swagger / OpenAPI</div>
+              <div class="cap" data-lang="en">Swagger / OpenAPI</div>
+            </div>
+
+            <div class="shot">
+              <img src="assets/screenshot-roadmap.png" alt="Roadmap" onerror="this.src='assets/screenshot-landing.png';" />
+              <div class="cap" data-lang="tr">Roadmap / Modül görünümü</div>
+              <div class="cap" data-lang="en">Roadmap / Modules view</div>
+            </div>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="hint">
+            <div data-lang="tr">
+              Placeholder’ı değiştirmek istersen:
+              <span class="mono">assets/screenshot-*.png</span> dosyalarını güncellemen yeterli.
+            </div>
+            <div data-lang="en">
+              To update placeholders:
+              just replace the <span class="mono">assets/screenshot-*.png</span> files.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <span class="mono">ZENTRA</span> • <span data-lang="tr">Behavioral Financial Infrastructure</span><span data-lang="en">Behavioral Financial Infrastructure</span>
+        <span class="tiny"> • </span>
+        <span class="tiny" data-lang="tr">Tek HTML dosya • GitHub Pages</span>
+        <span class="tiny" data-lang="en">Single HTML file • GitHub Pages</span>
+      </div>
+      <div class="tiny">
+        <span data-lang="tr">Repo: zentrarisk-site / index.html</span>
+        <span data-lang="en">Repo: zentrarisk-site / index.html</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // -----------------------------
+    // CONFIG
+    // -----------------------------
+    const API_KEY = "zentra-demo-key";
+
+    // Default paths (change if your backend differs)
+    const RISK_BASE   = "https://zentra-risklens-api-2.onrender.com";
+    const STRESS_BASE = "https://zentra-credit-stress-api.onrender.com";
+
+    const ENDPOINTS = {
+      risk:   RISK_BASE   + "/v1/risk",
+      stress: STRESS_BASE + "/v1/credit-stress",
+
+      // Optional health checks (if available on your backend)
+      riskHealth:   RISK_BASE   + "/health",
+      stressHealth: STRESS_BASE + "/health"
+    };
+
+    // -----------------------------
+    // LANG TOGGLE
+    // -----------------------------
+    const langToggle = document.getElementById("langToggle");
+    langToggle.addEventListener("click", () => {
+      document.body.classList.toggle("lang-tr");
+      document.body.classList.toggle("lang-en");
+      const isTR = document.body.classList.contains("lang-tr");
+      // Small visual hint in top pill
+      langToggle.querySelectorAll("span.mono")[0].style.opacity = isTR ? "1" : ".55";
+      langToggle.querySelectorAll("span.mono")[1].style.opacity = isTR ? ".55" : "1";
+    });
+
+    // Initialize pill emphasis
+    (function initLangPill(){
+      const isTR = document.body.classList.contains("lang-tr");
+      langToggle.querySelectorAll("span.mono")[0].style.opacity = isTR ? "1" : ".55";
+      langToggle.querySelectorAll("span.mono")[1].style.opacity = isTR ? ".55" : "1";
+    })();
+
+    // -----------------------------
+    // COPY MANIFEST
+    // -----------------------------
+    document.querySelectorAll("#copyManifest").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const text = document.getElementById("manifestBox").innerText;
+        try{
+          await navigator.clipboard.writeText(text);
+          toast("Copied ✅");
+        }catch(e){
+          toast("Copy failed — select manually");
+        }
+      });
+    });
+
+    // -----------------------------
+    // TOAST (tiny)
+    // -----------------------------
+    function toast(msg){
+      const t = document.createElement("div");
+      t.textContent = msg;
+      t.style.position="fixed";
+      t.style.left="50%";
+      t.style.bottom="22px";
+      t.style.transform="translateX(-50%)";
+      t.style.padding="10px 12px";
+      t.style.borderRadius="14px";
+      t.style.border="1px solid rgba(255,255,255,.14)";
+      t.style.background="rgba(0,0,0,.55)";
+      t.style.backdropFilter="blur(12px)";
+      t.style.color="rgba(255,255,255,.92)";
+      t.style.fontSize="13px";
+      t.style.zIndex="999";
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.style.opacity="0"; t.style.transition="opacity .25s ease"; }, 1300);
+      setTimeout(()=>{ t.remove(); }, 1650);
+    }
+
+    // -----------------------------
+    // CHARTS
+    // -----------------------------
+    let scoreChart, ptiChart;
+
+    function makeCharts(){
+      const scoreCtx = document.getElementById("scoreChart");
+      const ptiCtx   = document.getElementById("ptiChart");
+
+      scoreChart = new Chart(scoreCtx, {
+        type: "bar",
+        data: {
+          labels: ["RiskLens (risk_score)", "CreditStress (stress_score)"],
+          datasets: [{
+            label: "Score",
+            data: [0, 0],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, suggestedMax: 100 }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
+          }
+        }
+      });
+
+      ptiChart = new Chart(ptiCtx, {
+        type: "line",
+        data: {
+          labels: ["PTI"],
+          datasets: [{
+            label: "payment_to_income",
+            data: [0],
+            tension: 0.35,
+            borderWidth: 2,
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, suggestedMax: 1 }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+    makeCharts();
+
+    function updateCharts(riskScore, stressScore, pti){
+      if (Number.isFinite(riskScore)) scoreChart.data.datasets[0].data[0] = riskScore;
+      if (Number.isFinite(stressScore)) scoreChart.data.datasets[0].data[1] = stressScore;
+      scoreChart.update();
+
+      if (Number.isFinite(pti)){
+        ptiChart.data.labels = ["PTI"];
+        ptiChart.data.datasets[0].data = [pti];
+        ptiChart.options.scales.y.suggestedMax = Math.max(1, pti * 1.3);
+        ptiChart.update();
+      }
+    }
+
+    // -----------------------------
+    // HEALTH CHECK (best effort)
+    // -----------------------------
+    const badgeRisk = document.getElementById("badgeRisk");
+    const badgeStress = document.getElementById("badgeStress");
+    const riskState = document.getElementById("riskState");
+    const stressState = document.getElementById("stressState");
+
+    async function ping(url){
+      const res = await fetch(url, { method:"GET", mode:"cors" });
+      return res.ok;
+    }
+
+    async function updateHealth(){
+      // Best-effort only; if /health doesn't exist, mark unknown
+      const setBadge = (badge, stateEl, ok, label) => {
+        badge.classList.remove("ok","bad","warn");
+        if (ok === true){
+          badge.classList.add("ok");
+          stateEl.textContent = "ok";
+        } else if (ok === false){
+          badge.classList.add("bad");
+          stateEl.textContent = "down";
+        } else {
+          badge.classList.add("warn");
+          stateEl.textContent = "unknown";
+        }
+      };
+
+      let r = null, s = null;
+      try{ r = await ping(ENDPOINTS.riskHealth); }catch(e){ r = null; }
+      try{ s = await ping(ENDPOINTS.stressHealth); }catch(e){ s = null; }
+
+      setBadge(badgeRisk, riskState, r);
+      setBadge(badgeStress, stressState, s);
+    }
+    updateHealth();
+
+    // -----------------------------
+    // DEMO CALLS
+    // -----------------------------
+    const jsonOut = document.getElementById("jsonOut");
+    const narrativeOut = document.getElementById("narrativeOut");
+
+    function safeNum(v, fallback=0){
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function buildPayload(){
+      const income = safeNum(document.getElementById("income").value, 0);
+      const installments = safeNum(document.getElementById("installments").value, 0);
+      const debt = safeNum(document.getElementById("debt").value, 0);
+      const age = safeNum(document.getElementById("age").value, 0);
+      const country = document.getElementById("country").value;
+      const segment = document.getElementById("segment").value;
+      const note = document.getElementById("note").value || "";
+
+      // A generic payload that many demos accept.
+      // If your backend expects different field names, adjust here.
+      return {
+        country,
+        segment,
+        profile: {
+          age,
+          income_monthly: income,
+          total_installments_monthly: installments,
+          debt_total: debt,
+          note
+        }
+      };
+    }
+
+    async function postJson(url, payload){
+      const res = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": API_KEY
+        },
+        body: JSON.stringify(payload)
+      });
+      const text = await res.text();
+      let data = null;
+      try { data = JSON.parse(text); } catch(e){ data = { raw: text }; }
+      return { ok: res.ok, status: res.status, data };
+    }
+
+    function pickScore(obj){
+      // tries to find any plausible numeric score fields
+      if (!obj || typeof obj !== "object") return null;
+      const candidates = ["risk_score","stress_score","score","final_score","value"];
+      for (const k of candidates){
+        if (k in obj && Number.isFinite(Number(obj[k]))) return Number(obj[k]);
+      }
+      // nested common
+      if (obj.result && typeof obj.result === "object"){
+        for (const k of candidates){
+          if (k in obj.result && Number.isFinite(Number(obj.result[k]))) return Number(obj.result[k]);
+        }
+      }
+      return null;
+    }
+
+    function pickPTI(obj){
+      if (!obj || typeof obj !== "object") return null;
+      const candidates = ["payment_to_income","pti","paymentToIncome"];
+      for (const k of candidates){
+        if (k in obj && Number.isFinite(Number(obj[k]))) return Number(obj[k]);
+      }
+      if (obj.result && typeof obj.result === "object"){
+        for (const k of candidates){
+          if (k in obj.result && Number.isFinite(Number(obj.result[k]))) return Number(obj.result[k]);
+        }
+      }
+      return null;
+    }
+
+    function generateNarrative({ riskScore, stressScore, pti, income, installments, segment }){
+      const isTR = document.body.classList.contains("lang-tr");
+      const lines = [];
+
+      const ptiPct = Number.isFinite(pti) ? Math.round(pti * 100) : null;
+      const r = Number.isFinite(riskScore) ? Math.round(riskScore) : null;
+      const s = Number.isFinite(stressScore) ? Math.round(stressScore) : null;
+
+      // Simple rule-based narrative (replace later with AI narrative motor)
+      if (isTR){
+        lines.push("ZENTRA Narrative (Rule-based)");
+        lines.push("--------------------------------");
+        if (r !== null) lines.push(`RiskLens risk_score: ${r}/100`);
+        if (s !== null) lines.push(`CreditStress stress_score: ${s}/100`);
+        if (ptiPct !== null) lines.push(`PTI (taksit/gelir): %${ptiPct}`);
+
+        if (ptiPct !== null){
+          if (ptiPct < 20) lines.push("PTI düşük: taksit yükü yönetilebilir görünüyor.");
+          else if (ptiPct < 35) lines.push("PTI orta: taksit yükü izlenmeli, gelir dalgalanması kritik.");
+          else lines.push("PTI yüksek: taksit yükü agresif, stres riski artar.");
+        }
+
+        if (r !== null){
+          if (r < 30) lines.push("Davranışsal risk düşük: stabil profil sinyali.");
+          else if (r < 60) lines.push("Davranışsal risk orta: volatilite / gecikme sinyalleri olabilir.");
+          else lines.push("Davranışsal risk yüksek: limit/tenor ayarı ve yakın izleme önerilir.");
+        }
+
+        lines.push(`Segment: ${segment}`);
+        lines.push("");
+        lines.push("Not: Bu metin rule-based. Yatırım sonrası LLM narrative motoru entegre edilebilir.");
+      } else {
+        lines.push("ZENTRA Narrative (Rule-based)");
+        lines.push("--------------------------------");
+        if (r !== null) lines.push(`RiskLens risk_score: ${r}/100`);
+        if (s !== null) lines.push(`CreditStress stress_score: ${s}/100`);
+        if (ptiPct !== null) lines.push(`PTI (installments/income): ${ptiPct}%`);
+
+        if (ptiPct !== null){
+          if (ptiPct < 20) lines.push("Low PTI: installment burden appears manageable.");
+          else if (ptiPct < 35) lines.push("Medium PTI: monitor closely; income volatility matters.");
+          else lines.push("High PTI: aggressive installment burden; stress risk increases.");
+        }
+
+        if (r !== null){
+          if (r < 30) lines.push("Low behavioral risk: signals a stable profile.");
+          else if (r < 60) lines.push("Medium behavioral risk: possible volatility / delay signals.");
+          else lines.push("High behavioral risk: consider limit/tenor adjustments and tighter monitoring.");
+        }
+
+        lines.push(`Segment: ${segment}`);
+        lines.push("");
+        lines.push("Note: Rule-based narrative. A full LLM narrative engine can be integrated post-funding.");
+      }
+
+      // keep it compact & readable
+      return lines.join("\n");
+    }
+
+    document.querySelectorAll("#runDemo").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const payload = buildPayload();
+
+        // convenience values
+        const income = safeNum(document.getElementById("income").value, 0);
+        const installments = safeNum(document.getElementById("installments").value, 0);
+        const segment = document.getElementById("segment").value;
+
+        jsonOut.textContent = "Running…";
+
+        const log = {
+          config: { endpoints: ENDPOINTS, apiKeyHeader: "X-API-Key" },
+          request: payload,
+          responses: {}
+        };
+
+        // Call both endpoints (best effort)
+        let riskResp = null, stressResp = null;
+
+        try{
+          riskResp = await postJson(ENDPOINTS.risk, payload);
+          log.responses.risk = riskResp;
+        }catch(e){
+          log.responses.risk = { ok:false, error: String(e) };
+        }
+
+        try{
+          stressResp = await postJson(ENDPOINTS.stress, payload);
+          log.responses.credit_stress = stressResp;
+        }catch(e){
+          log.responses.credit_stress = { ok:false, error: String(e) };
+        }
+
+        // Extract metrics
+        const riskScore   = riskResp?.data ? pickScore(riskResp.data) : null;
+        const stressScore = stressResp?.data ? pickScore(stressResp.data) : null;
+        const pti         = stressResp?.data ? pickPTI(stressResp.data) : (income > 0 ? (installments / income) : null);
+
+        // Update charts
+        updateCharts(
+          Number.isFinite(riskScore) ? riskScore : 0,
+          Number.isFinite(stressScore) ? stressScore : 0,
+          Number.isFinite(pti) ? pti : 0
+        );
+
+        // Narrative
+        narrativeOut.textContent = generateNarrative({
+          riskScore: Number.isFinite(riskScore) ? riskScore : null,
+          stressScore: Number.isFinite(stressScore) ? stressScore : null,
+          pti: Number.isFinite(pti) ? pti : null,
+          income, installments, segment
+        });
+
+        // Print JSON
+        jsonOut.textContent = JSON.stringify(log, null, 2);
+
+        // Update health badges if endpoints responded
+        if (riskResp && typeof riskResp.ok === "boolean"){
+          badgeRisk.classList.remove("ok","bad","warn");
+          badgeRisk.classList.add(riskResp.ok ? "ok" : "bad");
+          riskState.textContent = riskResp.ok ? "ok" : ("err " + (riskResp.status || ""));
+        }
+        if (stressResp && typeof stressResp.ok === "boolean"){
+          badgeStress.classList.remove("ok","bad","warn");
+          badgeStress.classList.add(stressResp.ok ? "ok" : "bad");
+          stressState.textContent = stressResp.ok ? "ok" : ("err " + (stressResp.status || ""));
+        }
+      });
+    });
+
+    document.querySelectorAll("#resetDemo").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById("country").value = "TR";
+        document.getElementById("segment").value = "retail";
+        document.getElementById("income").value = 60000;
+        document.getElementById("installments").value = 18000;
+        document.getElementById("debt").value = 220000;
+        document.getElementById("age").value = 34;
+        document.getElementById("note").value = "";
+        jsonOut.textContent = "{ }";
+        narrativeOut.textContent = "—";
+        updateCharts(0,0,0);
+        updateHealth();
+      });
+    });
+
+    // Optional: run a silent health refresh every ~60s
+    setInterval(updateHealth, 60000);
+  </script>
+</body>
+</html>

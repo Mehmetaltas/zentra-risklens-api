@@ -1,1 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ZENTRA • Behavioral Financial Infrastructure</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
 
+<nav class="nav">
+  <div class="logo">ZENTRA</div>
+  <div class="lang">
+    <button id="trBtn" class="active">TR</button>
+    <button id="enBtn">EN</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1 id="heroTitle"></h1>
+  <p id="heroSub"></p>
+  <a href="#live" class="cta" id="heroBtn"></a>
+</section>
+
+<section id="live">
+  <h2 id="liveTitle"></h2>
+
+  <div class="cards">
+    <div class="card">
+      <div class="status" id="riskStatus">CHECKING</div>
+      <h3>RiskLens API</h3>
+      <p>Behavioral risk scoring core.</p>
+    </div>
+
+    <div class="card">
+      <div class="status" id="stressStatus">CHECKING</div>
+      <h3>Credit Stress Engine</h3>
+      <p>Installment pressure modeling.</p>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <h2>Live Demo</h2>
+  <button id="runScore">Run Risk Score</button>
+  <pre id="scoreOutput">{ }</pre>
+</section>
+
+<section id="market">
+  <h2>Lens Marketplace</h2>
+  <div class="cards">
+    <div class="card locked">CFO Lens</div>
+    <div class="card locked">SME Lens</div>
+    <div class="card locked">Family Office Lens</div>
+    <div class="card locked">Macro Shock Lens</div>
+  </div>
+</section>
+
+<footer>
+  Dubai HQ • contact@zentrarisk.com
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

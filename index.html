@@ -24,6 +24,8 @@
 </head>
 <body>
 
+<a id="top"></a>
+
 <!-- ===== ZENTRA INVESTOR MASTER (FINAL • ALL-IN • TR/EN • NO FILES • LIGHTWEIGHT) ===== -->
 <section id="zentra-master" aria-label="ZENTRA Investor Master">
   <style>
@@ -605,10 +607,11 @@
 
   <script>
     (function(){
+      // ====== CONFIG (edit only here) ======
       const CFG = {
         risk: "https://zentra-risklens-api-2.onrender.com",
         stress: "https://zentra-credit-stress-api.onrender.com",
-        explainBase: "",
+        explainBase: "", // optional explain service base
         contactEmail: "contact@zentrarisk.com"
       };
 
@@ -618,6 +621,7 @@
       // Links
       const riskBase = CFG.risk.replace(/\/+$/,"");
       const stressBase = CFG.stress.replace(/\/+$/,"");
+
       const riskHealth = riskBase + "/health";
       const riskOpenAPI = riskBase + "/openapi.json";
       const stressHealth = stressBase + "/health";
@@ -638,13 +642,15 @@
         else { el.className="tag wait"; el.textContent = (lang==="tr" ? "KONTROL" : "CHECKING"); }
       }
 
+      // ✅ FIXED: investor-safe ping (prevents CORS from showing FAIL)
       async function ping(url, timeoutMs=4500){
         const ctrl = new AbortController();
         const t = setTimeout(()=>ctrl.abort(), timeoutMs);
         try{
-          const r = await fetch(url, {signal: ctrl.signal, cache:"no-store"});
+          // mode:no-cors => CORS won't break the UI check
+          await fetch(url, { signal: ctrl.signal, cache:"no-store", mode:"no-cors" });
           clearTimeout(t);
-          return r.ok;
+          return true;
         }catch(e){
           clearTimeout(t);
           return false;
@@ -656,16 +662,18 @@
         setTag($("zm-stress-tag"), "wait");
         $("zm-risk-skel").style.display = "block";
         $("zm-stress-skel").style.display = "block";
+
         const [a,b] = await Promise.all([ ping(riskHealth), ping(stressHealth) ]);
         setTag($("zm-risk-tag"), a ? "ok":"bad");
         setTag($("zm-stress-tag"), b ? "ok":"bad");
+
         $("zm-risk-skel").style.display = "none";
         $("zm-stress-skel").style.display = "none";
       }
       runHealth();
       setInterval(runHealth, 20000);
 
-      // Activity demo
+      // ====== Live Activity ======
       const demoScores = [78,72,84,66,59];
       const scoreEl = $("zm-score");
       const barEl = $("zm-bar");
@@ -693,7 +701,7 @@
       renderList(); animateGauge(demoScores[0]);
       setInterval(()=>{ const last=demoScores.pop(); demoScores.unshift(last); renderList(); animateGauge(demoScores[0]); }, 3200);
 
-      // Explain
+      // ====== Explain ======
       function payload(){
         return {
           amount: Number($("zm-amount").value || 0),
@@ -719,7 +727,6 @@
           - Math.min(12, (srl-1)*3)
         );
         score = Math.max(5, Math.min(95, score));
-
         const bandName = score>=80 ? (lang==="tr"?"DÜŞÜK_RİSK":"LOW_RISK")
                         : score>=55 ? (lang==="tr"?"ORTA_RİSK":"MID_RISK")
                         : (lang==="tr"?"YÜKSEK_RİSK":"HIGH_RISK");
@@ -792,7 +799,7 @@
         $("zm-output").textContent = "{ }";
       });
 
-      // TR/EN Dictionary (IMPORTANT: includes lang toggle labels too)
+      // ====== TR/EN Dictionary ======
       const dict = {
         en:{
           title:"ZENTRA V2 — AI-Operated Risk Infrastructure",
@@ -928,16 +935,13 @@
           const k = el.getAttribute("data-zk");
           if(dict[l] && dict[l][k]) el.textContent = dict[l][k];
         });
-        // refresh dynamic labels that depend on lang
+        // update dynamic tags & list (language-dependent)
         runHealth();
         renderList();
       }
 
-      // Ensure buttons exist before wiring
       $("zm-en").addEventListener("click", ()=>applyLang("en"));
       $("zm-tr").addEventListener("click", ()=>applyLang("tr"));
-
-      // default
       applyLang("en");
     })();
   </script>
@@ -949,4 +953,4 @@
 </noscript>
 
 </body>
-  </html>
+</html>

@@ -1,1179 +1,186 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA — Behavioral Financial Infrastructure</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg0:#070b14;
-  --bg1:#0b1222;
-  --card:#0f172a;
-  --card2:#0c1324;
-  --line:#1f2a44;
-  --accent:#00d4ff;
-  --accent2:#7c3aed;
-  --green:#19e68c;
-  --gold:#f5b942;
-  --muted:#8a97b1;
-  --text:#eaf2ff;
-
-  --r:18px;
-}
-
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:Inter,system-ui,Segoe UI,Arial;
-  color:var(--text);
-  background:
-    radial-gradient(800px 500px at 20% -10%, rgba(0,212,255,.25), transparent 55%),
-    radial-gradient(700px 450px at 90% 10%, rgba(124,58,237,.22), transparent 55%),
-    radial-gradient(900px 600px at 60% 110%, rgba(25,230,140,.14), transparent 55%),
-    linear-gradient(180deg, var(--bg0), var(--bg1));
-  overflow-x:hidden;
-}
-
-.container{
-  width:1160px;
-  max-width:94%;
-  margin:auto;
-}
-
-/* --- Topbar --- */
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  backdrop-filter: blur(12px);
-  background:rgba(7,11,20,.55);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.topbar-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 0;
-}
-.brand{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-.logo{
-  width:34px;height:34px;border-radius:12px;
-  background:
-    radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.7), transparent 60%),
-    radial-gradient(28px 28px at 70% 60%, rgba(0,212,255,.55), transparent 60%),
-    linear-gradient(135deg, rgba(124,58,237,.85), rgba(0,212,255,.85));
-  box-shadow:0 10px 30px rgba(0,0,0,.35);
-}
-.brand b{letter-spacing:.6px}
-.nav{
-  display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
-}
-.nav a{
-  color:rgba(234,242,255,.72);
-  text-decoration:none;
-  font-size:13px;
-  padding:8px 10px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.06);
-  background:rgba(255,255,255,.02);
-  transition:.25s;
-}
-.nav a:hover{
-  color:rgba(234,242,255,.95);
-  border-color:rgba(0,212,255,.35);
-  transform:translateY(-1px);
-}
-.lang-toggle{
-  display:flex; gap:10px; align-items:center;
-  padding:8px 10px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.06);
-  background:rgba(255,255,255,.02);
-}
-.lang-toggle button{
-  cursor:pointer;
-  border:0;
-  background:transparent;
-  color:rgba(234,242,255,.75);
-  font-size:13px;
-  padding:4px 8px;
-  border-radius:10px;
-  transition:.25s;
-}
-.lang-toggle button:hover{color:rgba(234,242,255,.98); background:rgba(0,212,255,.10)}
-.lang-toggle button.active{color:#001018; background:rgba(0,212,255,.95)}
-
-/* --- Sections --- */
-section{
-  padding:78px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.section-head{
-  display:flex; align-items:flex-end; justify-content:space-between; gap:18px;
-  margin-bottom:18px;
-}
-h1,h2,h3{margin:0}
-h2{font-size:26px; letter-spacing:.2px}
-.sub{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.55;
-  max-width:720px;
-  margin:10px 0 0 0;
-}
-.p{color:var(--muted); line-height:1.65; margin:10px 0 0 0}
-
-/* --- Hero --- */
-.hero{
-  padding:86px 0 78px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.badges{
-  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
-  margin-bottom:18px;
-}
-.badge{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:7px 12px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
-}
-.dot{
-  width:8px;height:8px;border-radius:999px;
-  background:var(--green);
-  box-shadow:0 0 18px rgba(25,230,140,.55);
-  animation:pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%,100%{transform:scale(1); opacity:.8}
-  50%{transform:scale(1.55); opacity:1}
-}
-.hero-grid{
-  display:grid;
-  grid-template-columns: 1.25fr .75fr;
-  gap:26px;
-  align-items:stretch;
-}
-@media (max-width: 960px){
-  .hero-grid{grid-template-columns:1fr}
-}
-.hero-card{
-  border-radius:var(--r);
-  border:1px solid rgba(255,255,255,.08);
-  background:
-    radial-gradient(650px 260px at 10% 0%, rgba(0,212,255,.18), transparent 55%),
-    radial-gradient(500px 260px at 100% 40%, rgba(124,58,237,.18), transparent 55%),
-    rgba(255,255,255,.03);
-  padding:28px;
-  overflow:hidden;
-  position:relative;
-}
-.hero-card::after{
-  content:"";
-  position:absolute; inset:-2px;
-  background:linear-gradient(120deg, rgba(0,212,255,.22), rgba(124,58,237,.18), rgba(25,230,140,.12));
-  filter:blur(22px);
-  opacity:.35;
-  z-index:-1;
-}
-.hero h1{
-  font-size:44px;
-  font-weight:650;
-  letter-spacing:-.6px;
-  margin:0 0 10px 0;
-}
-.hero-lead{
-  font-size:16px;
-  color:rgba(234,242,255,.78);
-  line-height:1.65;
-  margin:0 0 18px 0;
-  max-width:820px;
-}
-.kpis{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:12px;
-  margin-top:18px;
-}
-@media (max-width: 560px){
-  .kpis{grid-template-columns:1fr}
-}
-.kpi{
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(10,16,30,.55);
-  padding:12px 12px;
-}
-.kpi b{font-size:13px; color:rgba(234,242,255,.92)}
-.kpi div{font-size:12px; color:var(--muted); margin-top:6px}
-
-.hero-side{
-  border-radius:var(--r);
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  padding:22px;
-  position:relative;
-  overflow:hidden;
-}
-.hero-side::before{
-  content:"";
-  position:absolute; inset:-40px;
-  background:radial-gradient(300px 180px at 30% 20%, rgba(0,212,255,.18), transparent 60%),
-             radial-gradient(260px 160px at 70% 80%, rgba(25,230,140,.12), transparent 60%);
-  opacity:.9;
-  z-index:-1;
-}
-.ctas{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
-.btn{
-  display:inline-flex; align-items:center; gap:10px;
-  padding:12px 16px;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:600;
-  border:1px solid rgba(255,255,255,.08);
-  transition:.25s;
-  background:rgba(255,255,255,.04);
-  color:rgba(234,242,255,.92);
-}
-.btn.primary{
-  background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.75));
-  color:#001018;
-  border-color:transparent;
-  box-shadow:0 16px 42px rgba(0,212,255,.18);
-}
-.btn:hover{transform:translateY(-2px)}
-.btn.primary:hover{box-shadow:0 20px 55px rgba(0,212,255,.25)}
-.btn small{opacity:.75; font-weight:500}
-
-/* --- Grids / Cards --- */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12, 1fr);
-  gap:16px;
-}
-.col-4{grid-column:span 4}
-.col-6{grid-column:span 6}
-.col-8{grid-column:span 8}
-.col-12{grid-column:span 12}
-@media (max-width: 960px){
-  .col-4,.col-6,.col-8{grid-column:span 12}
-}
-.card{
-  border-radius:var(--r);
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  padding:18px;
-  transition:.25s;
-  position:relative;
-  overflow:hidden;
-}
-.card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(0,212,255,.30);
-  box-shadow:0 18px 55px rgba(0,0,0,.35);
-}
-.card h3{font-size:16px; letter-spacing:.2px}
-.card p{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.6}
-.pill{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:7px 10px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  color:rgba(234,242,255,.78);
-}
-.pill.live{border-color:rgba(25,230,140,.30); color:rgba(25,230,140,.92); background:rgba(25,230,140,.10)}
-.pill.lock{border-color:rgba(245,185,66,.28); color:rgba(245,185,66,.95); background:rgba(245,185,66,.08)}
-.pill.dev{border-color:rgba(0,212,255,.26); color:rgba(0,212,255,.92); background:rgba(0,212,255,.08)}
-.pill.research{border-color:rgba(124,58,237,.26); color:rgba(190,160,255,.95); background:rgba(124,58,237,.10)}
-.kit{
-  display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
-}
-.mini{
-  font-size:12px;
-  color:rgba(234,242,255,.70);
-  padding:8px 10px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.02);
-  text-decoration:none;
-  transition:.25s;
-}
-.mini:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.92)}
-
-/* --- Interactive System Flow --- */
-.flow{
-  display:grid;
-  grid-template-columns:repeat(5, 1fr);
-  gap:12px;
-  margin-top:16px;
-}
-@media (max-width: 960px){
-  .flow{grid-template-columns:1fr}
-}
-.node{
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(10,16,30,.55);
-  padding:14px;
-  cursor:pointer;
-  transition:.25s;
-  position:relative;
-}
-.node:hover{border-color:rgba(0,212,255,.30); transform:translateY(-2px)}
-.node b{display:block; font-size:13px; color:rgba(234,242,255,.92)}
-.node small{display:block; margin-top:6px; color:var(--muted); font-size:12px; line-height:1.45}
-.node::after{
-  content:"";
-  position:absolute;
-  right:-10px; top:50%;
-  width:20px; height:2px;
-  background:linear-gradient(90deg, rgba(0,212,255,.55), rgba(124,58,237,.55));
-  transform:translateY(-50%);
-  opacity:.55;
-}
-.node:last-child::after{display:none}
-.flow-detail{
-  margin-top:14px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  padding:16px;
-}
-.flow-detail h3{font-size:15px; margin:0}
-.flow-detail p{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.65}
-.flow-detail code{
-  display:block;
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(10,16,30,.55);
-  color:rgba(234,242,255,.86);
-  overflow:auto;
-  font-size:12px;
-}
-
-/* --- Live Activity --- */
-.live{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.gauge{
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(10,16,30,.55);
-  padding:14px;
-}
-.gauge-top{display:flex; justify-content:space-between; align-items:center; gap:10px}
-.big{
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:-.3px;
-  color:rgba(234,242,255,.95);
-}
-.bar{
-  height:10px;
-  border-radius:999px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-  overflow:hidden;
-  margin-top:10px;
-}
-.bar > i{
-  display:block;
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg, rgba(25,230,140,.95), rgba(0,212,255,.95), rgba(124,58,237,.85));
-  border-radius:999px;
-  box-shadow:0 0 24px rgba(0,212,255,.25);
-  transition:width .9s ease;
-}
-.activity{
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  padding:14px;
-}
-.activity ul{margin:10px 0 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px}
-.row{
-  display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-  border:1px solid rgba(255,255,255,.06);
-  background:rgba(10,16,30,.45);
-  border-radius:14px;
-  padding:10px 10px;
-  font-size:12px;
-  color:rgba(234,242,255,.78);
-}
-.tag{
-  padding:5px 8px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  font-size:11px;
-}
-.tag.low{border-color:rgba(25,230,140,.35); color:rgba(25,230,140,.95); background:rgba(25,230,140,.10)}
-.tag.mid{border-color:rgba(245,185,66,.35); color:rgba(245,185,66,.95); background:rgba(245,185,66,.10)}
-.tag.high{border-color:rgba(255,77,109,.28); color:rgba(255,77,109,.92); background:rgba(255,77,109,.10)}
-
-/* --- Locked tooltips --- */
-.locked{opacity:.72}
-.locked .pill.lock{opacity:1}
-.tip{
-  position:absolute;
-  left:14px; right:14px; bottom:14px;
-  border-radius:14px;
-  border:1px dashed rgba(245,185,66,.28);
-  background:rgba(245,185,66,.06);
-  padding:10px;
-  color:rgba(245,185,66,.95);
-  font-size:12px;
-  opacity:0;
-  transform:translateY(6px);
-  transition:.2s;
-}
-.locked:hover .tip{opacity:1; transform:translateY(0)}
-.locked .tip b{color:rgba(245,185,66,1)}
-
-/* --- Table --- */
-.table{
-  border-radius:var(--r);
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.03);
-  overflow:hidden;
-}
-table{width:100%; border-collapse:collapse}
-th,td{
-  padding:14px;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  text-align:left;
-  font-size:13px;
-}
-th{background:rgba(10,16,30,.55); color:rgba(234,242,255,.85); font-weight:600}
-td{color:rgba(234,242,255,.78)}
-tr:last-child td{border-bottom:none}
-.badge2{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  border:1px solid rgba(0,212,255,.22);
-  background:rgba(0,212,255,.08);
-  color:rgba(0,212,255,.92);
-}
-
-/* --- CTA --- */
-.cta{
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.10);
-  background:
-    radial-gradient(520px 240px at 15% 30%, rgba(0,212,255,.22), transparent 60%),
-    radial-gradient(420px 220px at 85% 70%, rgba(124,58,237,.20), transparent 60%),
-    linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
-  padding:22px;
-  display:flex; justify-content:space-between; align-items:center; gap:16px;
-  flex-wrap:wrap;
-}
-.cta h2{font-size:20px}
-.cta .p{max-width:640px}
-
-/* --- Footer --- */
-.footer{
-  padding:36px 0;
-  text-align:center;
-  color:rgba(138,151,177,.9);
-  font-size:13px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="topbar">
-  <div class="container">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <b>ZENTRA</b><br>
-          <span style="font-size:12px;color:rgba(234,242,255,.55)" data-key="topline">Behavioral Financial Infrastructure</span>
-        </div>
-      </div>
-
-      <div class="nav">
-        <a href="#system" data-key="navSystem">System</a>
-        <a href="#live" data-key="navLive">Live Proof</a>
-        <a href="#lenses" data-key="navLenses">Lenses</a>
-        <a href="#wins" data-key="navWins">Why Wins</a>
-        <a href="#pricing" data-key="navPricing">Pricing</a>
-        <a href="#contact" data-key="navContact">Contact</a>
-
-        <div class="lang-toggle" aria-label="Language toggle">
-          <button id="btnEN" class="active" onclick="setLang('en')">EN</button>
-          <button id="btnTR" onclick="setLang('tr')">TR</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-
-  <!-- HERO -->
-  <section class="hero" id="top">
-    <div class="badges">
-      <div class="badge"><span class="dot"></span><span data-key="badgeLive">PRODUCTION LIVE</span></div>
-      <div class="badge"><span style="width:8px;height:8px;border-radius:999px;background:rgba(0,212,255,.9)"></span><span data-key="badgeHub">DUBAI GLOBAL HUB</span></div>
-      <div class="badge"><span style="width:8px;height:8px;border-radius:999px;background:rgba(124,58,237,.9)"></span><span data-key="badgeFocus">BEHAVIORAL RISK CORE</span></div>
-    </div>
-
-    <div class="hero-grid">
-      <div class="hero-card">
-        <h1 data-key="heroTitle">Behavioral Financial Infrastructure</h1>
-        <p class="hero-lead" data-key="heroDesc">
-          Licensable AI-powered behavioral risk scoring and stress modeling infrastructure for banks, Islamic finance, and regulated fintech.
-        </p>
-
-        <div class="ctas">
-          <a class="btn primary" href="#system" data-key="btnInfra">View Infrastructure</a>
-          <a class="btn" href="#live" data-key="btnProof">See Live Proof</a>
-          <a class="btn" href="mailto:contact@zentrarisk.com" data-key="btnContact">Contact Dubai HQ</a>
-        </div>
-
-        <div class="kpis">
-          <div class="kpi">
-            <b data-key="kpi1t">Two Live Engines</b>
-            <div data-key="kpi1d">RiskLens API + Credit Stress Engine</div>
-          </div>
-          <div class="kpi">
-            <b data-key="kpi2t">API-First Licensing</b>
-            <div data-key="kpi2d">Designed for banks & embedded finance</div>
-          </div>
-          <div class="kpi">
-            <b data-key="kpi3t">Modular Lens Roadmap</b>
-            <div data-key="kpi3d">Controlled expansion (locked visibility)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-side">
-        <div class="pill live" style="margin-bottom:12px"><span class="dot"></span><span data-key="sideLive">LIVE STATUS</span></div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap">
-          <span class="pill" data-key="sideItem1">OpenAPI</span>
-          <span class="pill" data-key="sideItem2">Health</span>
-          <span class="pill" data-key="sideItem3">Sandbox Key</span>
-          <span class="pill" data-key="sideItem4">Audit-Ready</span>
-        </div>
-
-        <div style="margin-top:14px; border-top:1px solid rgba(255,255,255,.06); padding-top:14px">
-          <div style="color:rgba(234,242,255,.88); font-weight:600" data-key="sideTitle">Investor Snapshot</div>
-          <p class="p" data-key="sideDesc">
-            ZENTRA replaces “past-only scoring” with a behavioral signal layer + stress simulation core, delivered as a licensable infrastructure.
-          </p>
-          <div class="kit">
-            <!-- Update these links when SSL custom domains are ready -->
-            <a class="mini" href="https://zentra-risklens-api-2.onrender.com/health" target="_blank" rel="noopener" data-key="sideBtn1">RiskLens Health</a>
-            <a class="mini" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank" rel="noopener" data-key="sideBtn2">Stress Health</a>
-            <a class="mini" href="https://zentra-risklens-api-2.onrender.com/openapi.json" target="_blank" rel="noopener" data-key="sideBtn3">RiskLens OpenAPI</a>
-            <a class="mini" href="https://zentra-credit-stress-api.onrender.com/openapi.json" target="_blank" rel="noopener" data-key="sideBtn4">Stress OpenAPI</a>
-          </div>
-
-          <p class="p" style="font-size:12px; margin-top:12px" data-key="sideNote">
-            Note: Buttons currently point to Render endpoints to avoid investor-facing DNS/SSL friction. Switch to risk.zentrarisk.com & api.zentrarisk.com when ready.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SYSTEM -->
-  <section id="system">
-    <div class="section-head">
+<div class="grid" style="margin-top:16px">
+  <div class="card col-12">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
       <div>
-        <h2 data-key="systemTitle">System Architecture</h2>
-        <p class="sub" data-key="systemSub">
-          Click each block to see what it does. This keeps the presentation complete without exposing sensitive internals.
-        </p>
+        <h3 data-key="assetsTitle">Screenshots</h3>
+        <p class="p" data-key="assetsSub">Embedded visuals (no files). Investor-facing UI proof for Demo, Swagger, and Roadmap.</p>
       </div>
-      <span class="badge2" data-key="systemTag">Infrastructure Flow</span>
+      <span class="pill" data-key="assetsTag">Embedded</span>
     </div>
 
-    <div class="flow" id="flow">
-      <div class="node" data-node="data">
-        <b data-key="nodeDataT">DATA</b>
-        <small data-key="nodeDataS">Transaction & exposure signals</small>
-      </div>
-      <div class="node" data-node="behavior">
-        <b data-key="nodeBehT">BEHAVIOR</b>
-        <small data-key="nodeBehS">Delay & pattern dynamics</small>
-      </div>
-      <div class="node" data-node="core">
-        <b data-key="nodeCoreT">RISK CORE</b>
-        <small data-key="nodeCoreS">Behavioral index + collapse model</small>
-      </div>
-      <div class="node" data-node="lens">
-        <b data-key="nodeLensT">LENSES</b>
-        <small data-key="nodeLensS">Modular domain overlays</small>
-      </div>
-      <div class="node" data-node="api">
-        <b data-key="nodeApiT">API OUTPUT</b>
-        <small data-key="nodeApiS">Scores, bands, stress results</small>
-      </div>
-    </div>
+    <div class="grid" style="margin-top:12px">
+      <!-- DEMO -->
+      <div class="card col-4" style="padding:0; overflow:hidden">
+        <svg viewBox="0 0 1200 800" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ZENTRA Demo Screen">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#00d4ff" stop-opacity="0.28"/>
+              <stop offset="1" stop-color="#7c3aed" stop-opacity="0.22"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#19e68c"/>
+              <stop offset="0.6" stop-color="#00d4ff"/>
+              <stop offset="1" stop-color="#7c3aed"/>
+            </linearGradient>
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.5"/>
+            </filter>
+          </defs>
 
-    <div class="flow-detail" id="flowDetail">
-      <h3 id="fdTitle">DATA Layer</h3>
-      <p id="fdText">Signals include sector risk, exposure ratio, delay days, and customer score inputs used for scoring and simulation.</p>
-      <code id="fdCode">Example inputs: amount, sector, sector_risk_level, payment_delay_days, customer_score, exposure_ratio</code>
-    </div>
-  </section>
+          <rect x="0" y="0" width="1200" height="800" fill="#0b1222"/>
+          <rect x="-100" y="-80" width="600" height="360" rx="40" fill="url(#g1)" opacity="0.9"/>
+          <rect x="720" y="440" width="560" height="360" rx="40" fill="url(#g1)" opacity="0.55"/>
 
-  <!-- LIVE PROOF -->
-  <section id="live">
-    <div class="section-head">
-      <div>
-        <h2 data-key="liveTitle">Live Proof</h2>
-        <p class="sub" data-key="liveSub">
-          Investor-facing evidence: live endpoints, live activity, and clear product boundaries.
-        </p>
-      </div>
-      <span class="badge2" data-key="liveTag">Production Live</span>
-    </div>
+          <!-- top bar -->
+          <rect x="70" y="60" width="1060" height="70" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
+          <circle cx="110" cy="95" r="12" fill="#7c3aed"/>
+          <circle cx="145" cy="95" r="12" fill="#00d4ff"/>
+          <circle cx="180" cy="95" r="12" fill="#19e68c"/>
+          <text x="230" y="103" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="22" font-weight="700">ZENTRA • Demo</text>
+          <text x="1010" y="103" fill="rgba(25,230,140,0.95)" font-family="Inter, Arial" font-size="16" font-weight="700">LIVE</text>
 
-    <div class="grid">
-      <div class="card col-4">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>RiskLens API</h3>
-          <span class="pill live" data-key="pillLive">LIVE</span>
-        </div>
-        <p data-key="riskDesc">AI-assisted behavioral risk scoring infrastructure for banks, neobanks, and embedded finance.</p>
-        <div class="kit">
-          <a class="mini" href="https://zentra-risklens-api-2.onrender.com/openapi.json" target="_blank" rel="noopener" data-key="btnOpenapi">OpenAPI JSON</a>
-          <a class="mini" href="https://zentra-risklens-api-2.onrender.com/health" target="_blank" rel="noopener" data-key="btnHealth">Health</a>
-        </div>
-      </div>
+          <!-- left panel form -->
+          <rect x="70" y="160" width="520" height="570" rx="22" fill="#0f172a" stroke="rgba(255,255,255,0.10)" filter="url(#shadow)"/>
+          <text x="105" y="210" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="18" font-weight="700">RiskLens Demo</text>
+          <text x="105" y="242" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="14">Inputs → Score + Band + Signals</text>
 
-      <div class="card col-4">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>Credit Stress Engine</h3>
-          <span class="pill live" data-key="pillLive2">LIVE</span>
-        </div>
-        <p data-key="stressDesc">Installment pressure and repayment stress modeling — optionally attachable to RiskLens as a module.</p>
-        <div class="kit">
-          <a class="mini" href="https://zentra-credit-stress-api.onrender.com/openapi.json" target="_blank" rel="noopener" data-key="btnOpenapi2">OpenAPI JSON</a>
-          <a class="mini" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank" rel="noopener" data-key="btnHealth2">Health</a>
-        </div>
-      </div>
+          <!-- input rows -->
+          <g fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.10)">
+            <rect x="105" y="280" width="450" height="55" rx="14"/>
+            <rect x="105" y="350" width="450" height="55" rx="14"/>
+            <rect x="105" y="420" width="450" height="55" rx="14"/>
+            <rect x="105" y="490" width="450" height="55" rx="14"/>
+            <rect x="105" y="560" width="450" height="55" rx="14"/>
+          </g>
+          <g font-family="Inter, Arial" font-size="13" fill="rgba(234,242,255,0.70)">
+            <text x="125" y="314">amount</text>
+            <text x="125" y="384">sector</text>
+            <text x="125" y="454">payment_delay_days</text>
+            <text x="125" y="524">customer_score</text>
+            <text x="125" y="594">exposure_ratio</text>
+          </g>
 
-      <div class="col-4 live">
-        <div class="gauge">
-          <div class="gauge-top">
-            <div>
-              <div style="font-size:12px;color:rgba(234,242,255,.70)" data-key="gaugeTitle">Live Risk Activity</div>
-              <div class="big"><span data-key="gaugeScore">Risk Score</span>: <span id="scoreVal">78</span></div>
-            </div>
-            <span class="pill dev" data-key="gaugeEnv">PRODUCTION</span>
-          </div>
-          <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
-          <div style="margin-top:10px;color:var(--muted);font-size:12px" data-key="gaugeNote">
-            Proof panel uses stable demo values by default (no investor friction). You can wire it to live endpoints later.
-          </div>
-        </div>
+          <!-- buttons -->
+          <rect x="105" y="640" width="220" height="60" rx="16" fill="#00d4ff" opacity="0.95"/>
+          <text x="170" y="678" fill="#001018" font-family="Inter, Arial" font-size="16" font-weight="800">Run</text>
+          <rect x="335" y="640" width="220" height="60" rx="16" fill="rgba(124,58,237,0.70)" stroke="rgba(255,255,255,0.12)"/>
+          <text x="385" y="678" fill="rgba(234,242,255,0.95)" font-family="Inter, Arial" font-size="16" font-weight="800">Fill Sample</text>
 
-        <div class="activity">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px">
-            <div style="font-weight:650" data-key="last5">Last 5 Scores</div>
-            <span class="pill" data-key="activityMode">Activity Log</span>
-          </div>
-          <ul id="scoreList"></ul>
-        </div>
-      </div>
-    </div>
+          <!-- right panel results -->
+          <rect x="620" y="160" width="510" height="570" rx="22" fill="#0f172a" stroke="rgba(255,255,255,0.10)" filter="url(#shadow)"/>
+          <text x="655" y="210" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="18" font-weight="700">Result</text>
+          <text x="655" y="242" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="14">Score + Band + Recent Activity</text>
 
-    <div class="grid" style="margin-top:16px">
-      <div class="card col-12">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
-          <div>
-            <h3 data-key="assetsTitle">Screenshots (Optional)</h3>
-            <p class="p" data-key="assetsSub">Place real screenshots in /assets to strengthen visual proof: demo.png, swagger.png, roadmap.png.</p>
-          </div>
-          <span class="pill" data-key="assetsTag">/assets</span>
-        </div>
-        <div class="grid" style="margin-top:12px">
-          <div class="card col-4" style="padding:0; overflow:hidden">
-            <img src="/assets/demo.png" alt="Demo" style="width:100%; display:block; opacity:.95"
-                 onerror="this.style.display='none'; this.parentElement.style.display='none';">
-          </div>
-          <div class="card col-4" style="padding:0; overflow:hidden">
-            <img src="/assets/swagger.png" alt="Swagger" style="width:100%; display:block; opacity:.95"
-                 onerror="this.style.display='none'; this.parentElement.style.display='none';">
-          </div>
-          <div class="card col-4" style="padding:0; overflow:hidden">
-            <img src="/assets/roadmap.png" alt="Roadmap" style="width:100%; display:block; opacity:.95"
-                 onerror="this.style.display='none'; this.parentElement.style.display='none';">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+          <!-- gauge -->
+          <circle cx="875" cy="360" r="120" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)" stroke-width="16"/>
+          <path d="M 755 360 A 120 120 0 0 1 995 360" fill="none" stroke="url(#g2)" stroke-width="18" stroke-linecap="round"/>
+          <text x="835" y="372" fill="rgba(234,242,255,0.95)" font-family="Inter, Arial" font-size="42" font-weight="800">78</text>
+          <text x="835" y="402" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="14">Risk Score</text>
 
-  <!-- LENSES -->
-  <section id="lenses">
-    <div class="section-head">
-      <div>
-        <h2 data-key="lensTitle">Lens Architecture</h2>
-        <p class="sub" data-key="lensSub">
-          Locked modules remain visible with short descriptions. This increases investor trust while keeping scope controlled.
-        </p>
-      </div>
-      <span class="badge2" data-key="lensTag">Controlled Expansion</span>
-    </div>
-
-    <div class="grid">
-      <div class="card col-4">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>CFO Lens</h3>
-          <span class="pill dev" data-key="dev">In Development</span>
-        </div>
-        <p data-key="cfo">Enterprise cash-flow volatility monitoring and scenario modeling.</p>
+          <!-- mini chart -->
+          <rect x="655" y="470" width="440" height="210" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+          <polyline points="675,645 740,625 805,650 870,600 935,610 1000,575 1065,590"
+                    fill="none" stroke="url(#g2)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="rgba(234,242,255,0.35)">
+            <circle cx="675" cy="645" r="5"/><circle cx="740" cy="625" r="5"/><circle cx="805" cy="650" r="5"/>
+            <circle cx="870" cy="600" r="5"/><circle cx="935" cy="610" r="5"/><circle cx="1000" cy="575" r="5"/><circle cx="1065" cy="590" r="5"/>
+          </g>
+        </svg>
       </div>
 
-      <div class="card col-4">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>SME Risk Lens</h3>
-          <span class="pill lock" data-key="planned">Planned</span>
-        </div>
-        <p data-key="sme">Small-business liquidity stress and runway forecasting engine.</p>
+      <!-- SWAGGER -->
+      <div class="card col-4" style="padding:0; overflow:hidden">
+        <svg viewBox="0 0 1200 800" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ZENTRA Swagger Screen">
+          <defs>
+            <linearGradient id="s1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#00d4ff" stop-opacity="0.20"/>
+              <stop offset="1" stop-color="#19e68c" stop-opacity="0.18"/>
+            </linearGradient>
+            <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.5"/>
+            </filter>
+          </defs>
+
+          <rect width="1200" height="800" fill="#0b1222"/>
+          <rect x="680" y="-80" width="640" height="420" rx="50" fill="url(#s1)"/>
+          <rect x="-120" y="480" width="620" height="380" rx="50" fill="url(#s1)" opacity="0.9"/>
+
+          <!-- top bar -->
+          <rect x="70" y="60" width="1060" height="70" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
+          <text x="110" y="103" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="22" font-weight="800">RiskLens API — Docs</text>
+          <text x="960" y="103" fill="rgba(0,212,255,0.95)" font-family="Inter, Arial" font-size="14" font-weight="700">OpenAPI</text>
+
+          <!-- left nav -->
+          <rect x="70" y="160" width="280" height="570" rx="22" fill="#0f172a" stroke="rgba(255,255,255,0.10)" filter="url(#shadow2)"/>
+          <text x="105" y="210" fill="rgba(234,242,255,0.90)" font-family="Inter, Arial" font-size="16" font-weight="700">Endpoints</text>
+          <g font-family="Inter, Arial" font-size="13" fill="rgba(234,242,255,0.70)">
+            <text x="105" y="260">GET /health</text>
+            <text x="105" y="295">GET /openapi.json</text>
+            <text x="105" y="330">POST /score</text>
+            <text x="105" y="365">POST /stress</text>
+            <text x="105" y="400">GET /version</text>
+          </g>
+
+          <!-- main doc panel -->
+          <rect x="370" y="160" width="760" height="570" rx="22" fill="#0f172a" stroke="rgba(255,255,255,0.10)" filter="url(#shadow2)"/>
+          <text x="405" y="210" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="16" font-weight="800">POST /score</text>
+          <text x="405" y="240" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="13">Behavioral scoring • Risk banding • Early warning flags</text>
+
+          <rect x="405" y="270" width="690" height="190" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+          <text x="430" y="305" fill="rgba(234,242,255,0.86)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+            { "amount": 1000, "sector": "retail", "sector_risk_level": 2,
+          </text>
+          <text x="430" y="330" fill="rgba(234,242,255,0.86)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+            "payment_delay_days": 10, "customer_score": 78, "exposure_ratio": 0.25 }
+          </text>
+
+          <rect x="405" y="485" width="690" height="210" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+          <text x="430" y="520" fill="rgba(25,230,140,0.95)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+            200 OK
+          </text>
+          <text x="430" y="545" fill="rgba(234,242,255,0.86)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+            { "risk_score": 78, "risk_band": "MID",
+          </text>
+          <text x="430" y="570" fill="rgba(234,242,255,0.86)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+            "early_warning_flags": ["delay_dynamics"], "model": "v0.9" }
+          </text>
+        </svg>
       </div>
 
-      <div class="card col-4 locked">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>Family Office Lens</h3>
-          <span class="pill research" data-key="research">Research</span>
-        </div>
-        <p data-key="family">Multi-asset concentration and generational wealth sustainability modeling.</p>
-        <div class="tip"><b data-key="locked">Locked</b> — <span data-key="lockedNote">Scope-controlled; unlocked after core validation.</span></div>
-      </div>
+      <!-- ROADMAP -->
+      <div class="card col-4" style="padding:0; overflow:hidden">
+        <svg viewBox="0 0 1200 800" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ZENTRA Roadmap Screen">
+          <defs>
+            <linearGradient id="r1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#7c3aed" stop-opacity="0.22"/>
+              <stop offset="1" stop-color="#00d4ff" stop-opacity="0.20"/>
+            </linearGradient>
+            <filter id="shadow3" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity="0.5"/>
+            </filter>
+          </defs>
 
-      <div class="card col-6 locked">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>Macro Shock Lens</h3>
-          <span class="pill research" data-key="research2">Research</span>
-        </div>
-        <p data-key="macro">Inflation, rate, and FX shock impact simulation layer.</p>
-        <div class="tip"><b data-key="locked2">Locked</b> — <span data-key="lockedNote2">Macro scenarios are offered as an add-on lens.</span></div>
-      </div>
+          <rect width="1200" height="800" fill="#0b1222"/>
+          <rect x="-140" y="40" width="640" height="380" rx="60" fill="url(#r1)"/>
+          <rect x="660" y="420" width="700" height="440" rx="60" fill="url(#r1)" opacity="0.9"/>
 
-      <div class="card col-6 locked">
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
-          <h3>Cognitive Finance Lens</h3>
-          <span class="pill lock" data-key="future">Future Phase</span>
-        </div>
-        <p data-key="cognitive">Behavioral decision profiling to predict default risk earlier than traditional scoring.</p>
-        <div class="tip"><b data-key="locked3">Locked</b> — <span data-key="lockedNote3">Presented in PDF, not exposed as product surface yet.</span></div>
-      </div>
+          <rect x="70" y="60" width="1060" height="70" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
+          <text x="110" y="103" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="22" font-weight="800">Roadmap</text>
+          <text x="960" y="103" fill="rgba(245,185,66,0.95)" font-family="Inter, Arial" font-size="14" font-weight="700">Locked visibility</text>
 
-      <div class="card col-12" style="padding:18px 18px">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-          <div style="font-weight:650" data-key="lensRuleT">Rule of Expansion</div>
-          <span class="pill" data-key="lensRuleTag">Discipline</span>
-        </div>
-        <p class="p" data-key="lensRuleP">
-          Expansion follows validated Risk Core performance (POC → pilots → licensing). Lenses become available when they improve measurable risk outcomes.
-        </p>
-      </div>
-    </div>
-  </section>
+          <rect x="70" y="160" width="1060" height="570" rx="22" fill="#0f172a" stroke="rgba(255,255,255,0.10)" filter="url(#shadow3)"/>
 
-  <!-- WHY WINS -->
-  <section id="wins">
-    <div class="section-head">
-      <div>
-        <h2 data-key="winsTitle">Why ZENTRA Wins</h2>
-        <p class="sub" data-key="winsSub">
-          A clear moat: behavioral signals + stress simulation + licensable infrastructure architecture.
-        </p>
-      </div>
-      <span class="badge2" data-key="winsTag">Moat</span>
-    </div>
+          <!-- timeline line -->
+          <line x1="170" y1="290" x2="1030" y2="290" stroke="rgba(255,255,255,0.12)" stroke-width="10" stroke-linecap="round"/>
+          <line x1="170" y1="290" x2="390" y2="290" stroke="#19e68c" stroke-width="10" stroke-linecap="round"/>
 
-    <div class="grid">
-      <div class="card col-4">
-        <h3 data-key="w1">Behavioral Signal Layer</h3>
-        <p data-key="w1d">Captures real-world behavior that past-only scores miss (delay dynamics, exposure patterns, volatility).</p>
-      </div>
-      <div class="card col-4">
-        <h3 data-key="w2">Stress Simulation Core</h3>
-        <p data-key="w2d">Models repayment pressure under stress to detect liquidity collapse earlier than default.</p>
-      </div>
-      <div class="card col-4">
-        <h3 data-key="w3">Licensable Lens Architecture</h3>
-        <p data-key="w3d">B2B API-first infrastructure with controlled modular expansion for regulated environments.</p>
-      </div>
+          <!-- nodes -->
+          <g>
+            <circle cx="170" cy="290" r="18" fill="#19e68c"/><circle cx="170" cy="290" r="34" fill="rgba(25,230,140,0.12)"/>
+            <circle cx="390" cy="290" r="18" fill="#00d4ff"/><circle cx="390" cy="290" r="34" fill="rgba(0,212,255,0.12)"/>
+            <circle cx="610" cy="290" r="18" fill="rgba(245,185,66,0.95)"/><circle cx="610" cy="290" r="34" fill="rgba(245,185,66,0.10)"/>
+            <circle cx="820" cy="290" r="18" fill="rgba(124,58,237,0.95)"/><circle cx="820" cy="290" r="34" fill="rgba(124,58,237,0.10)"/>
+            <circle cx="1030" cy="290" r="18" fill="rgba(255,255,255,0.22)"/><circle cx="1030" cy="290" r="34" fill="rgba(255,255,255,0.06)"/>
+          </g>
 
-      <div class="card col-12">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div style="font-weight:650" data-key="patT">Patent Domains (Short)</div>
-          <span class="pill" data-key="patTag">Protectable</span>
-        </div>
-        <div class="kit" style="margin-top:10px">
-          <span class="pill" data-key="p1">Behavioral Risk Index</span>
-          <span class="pill" data-key="p2">Liquidity Collapse Model</span>
-          <span class="pill" data-key="p3">Stress Predictor</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="section-head">
-      <div>
-        <h2 data-key="pricingTitle">Pricing & Licensing</h2>
-        <p class="sub" data-key="pricingSub">
-          Pricing shown as structure (not public numbers). Final pricing depends on scope, region, and deployment mode.
-        </p>
-      </div>
-      <span class="badge2" data-key="pricingTag">Licensing</span>
-    </div>
-
-    <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th data-key="t1">Plan</th>
-            <th data-key="t2">Target</th>
-            <th data-key="t3">Includes</th>
-            <th data-key="t4">License Model</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>API Core</b></td>
-            <td data-key="r1t">Neobank / Fintech</td>
-            <td data-key="r1i">Risk score + bands + basic monitoring</td>
-            <td data-key="r1m">Usage-based</td>
-          </tr>
-          <tr>
-            <td><b>Enterprise</b></td>
-            <td data-key="r2t">Banks / Islamic Finance</td>
-            <td data-key="r2i">Custom models + compliance + optional on-prem</td>
-            <td data-key="r2m">Annual license</td>
-          </tr>
-          <tr>
-            <td><b>Lens Add-ons</b></td>
-            <td data-key="r3t">Institutional</td>
-            <td data-key="r3i">CFO / SME / Macro / Family Office (by phase)</td>
-            <td data-key="r3m">Modular subscription</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- CONTACT CTA -->
-  <section id="contact" style="border-bottom:none">
-    <div class="cta">
-      <div>
-        <h2 data-key="ctaTitle">Dubai HQ • Strategic Partnerships • Investor Access</h2>
-        <p class="p" data-key="ctaDesc">
-          ZENTRA is positioned as a global hub in Dubai for banks and regulated fintech. Request a technical pack (PDF) and pilot scope.
-        </p>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap">
-        <a class="btn primary" href="mailto:contact@zentrarisk.com" data-key="ctaBtn">Contact Dubai HQ</a>
-        <a class="btn" href="#top" data-key="ctaTop">Back to Top</a>
-      </div>
-    </div>
-
-    <div class="footer" data-key="footer">
-      © 2026 ZENTRA — Behavioral Financial Infrastructure
-    </div>
-  </section>
-
-</div>
-
-<script>
-/* ---------- i18n ---------- */
-const T = {
-  en:{
-    topline:"Behavioral Financial Infrastructure",
-    navSystem:"System", navLive:"Live Proof", navLenses:"Lenses", navWins:"Why Wins", navPricing:"Pricing", navContact:"Contact",
-
-    badgeLive:"PRODUCTION LIVE", badgeHub:"DUBAI GLOBAL HUB", badgeFocus:"BEHAVIORAL RISK CORE",
-    heroTitle:"Behavioral Financial Infrastructure",
-    heroDesc:"Licensable AI-powered behavioral risk scoring and stress modeling infrastructure for banks, Islamic finance, and regulated fintech.",
-    btnInfra:"View Infrastructure", btnProof:"See Live Proof", btnContact:"Contact Dubai HQ",
-
-    kpi1t:"Two Live Engines", kpi1d:"RiskLens API + Credit Stress Engine",
-    kpi2t:"API-First Licensing", kpi2d:"Designed for banks & embedded finance",
-    kpi3t:"Modular Lens Roadmap", kpi3d:"Controlled expansion (locked visibility)",
-
-    sideLive:"LIVE STATUS",
-    sideItem1:"OpenAPI", sideItem2:"Health", sideItem3:"Sandbox Key", sideItem4:"Audit-Ready",
-    sideTitle:"Investor Snapshot",
-    sideDesc:"ZENTRA replaces “past-only scoring” with a behavioral signal layer + stress simulation core, delivered as a licensable infrastructure.",
-    sideBtn1:"RiskLens Health", sideBtn2:"Stress Health", sideBtn3:"RiskLens OpenAPI", sideBtn4:"Stress OpenAPI",
-    sideNote:"Note: Buttons currently point to Render endpoints to avoid investor-facing DNS/SSL friction. Switch to risk.zentrarisk.com & api.zentrarisk.com when ready.",
-
-    systemTitle:"System Architecture",
-    systemSub:"Click each block to see what it does. This keeps the presentation complete without exposing sensitive internals.",
-    systemTag:"Infrastructure Flow",
-    nodeDataT:"DATA", nodeDataS:"Transaction & exposure signals",
-    nodeBehT:"BEHAVIOR", nodeBehS:"Delay & pattern dynamics",
-    nodeCoreT:"RISK CORE", nodeCoreS:"Behavioral index + collapse model",
-    nodeLensT:"LENSES", nodeLensS:"Modular domain overlays",
-    nodeApiT:"API OUTPUT", nodeApiS:"Scores, bands, stress results",
-
-    liveTitle:"Live Proof",
-    liveSub:"Investor-facing evidence: live endpoints, live activity, and clear product boundaries.",
-    liveTag:"Production Live",
-    pillLive:"LIVE", pillLive2:"LIVE",
-    riskDesc:"AI-assisted behavioral risk scoring infrastructure for banks, neobanks, and embedded finance.",
-    stressDesc:"Installment pressure and repayment stress modeling — optionally attachable to RiskLens as a module.",
-    btnOpenapi:"OpenAPI JSON", btnHealth:"Health",
-    btnOpenapi2:"OpenAPI JSON", btnHealth2:"Health",
-
-    gaugeTitle:"Live Risk Activity", gaugeScore:"Risk Score", gaugeEnv:"PRODUCTION",
-    gaugeNote:"Proof panel uses stable demo values by default (no investor friction). You can wire it to live endpoints later.",
-    last5:"Last 5 Scores", activityMode:"Activity Log",
-
-    assetsTitle:"Screenshots (Optional)", assetsSub:"Place real screenshots in /assets to strengthen visual proof: demo.png, swagger.png, roadmap.png.", assetsTag:"/assets",
-
-    lensTitle:"Lens Architecture",
-    lensSub:"Locked modules remain visible with short descriptions. This increases investor trust while keeping scope controlled.",
-    lensTag:"Controlled Expansion",
-    dev:"In Development", planned:"Planned", research:"Research", research2:"Research", future:"Future Phase",
-    cfo:"Enterprise cash-flow volatility monitoring and scenario modeling.",
-    sme:"Small-business liquidity stress and runway forecasting engine.",
-    family:"Multi-asset concentration and generational wealth sustainability modeling.",
-    macro:"Inflation, rate, and FX shock impact simulation layer.",
-    cognitive:"Behavioral decision profiling to predict default risk earlier than traditional scoring.",
-    locked:"Locked", locked2:"Locked", locked3:"Locked",
-    lockedNote:"Scope-controlled; unlocked after core validation.",
-    lockedNote2:"Macro scenarios are offered as an add-on lens.",
-    lockedNote3:"Presented in PDF, not exposed as product surface yet.",
-    lensRuleT:"Rule of Expansion", lensRuleTag:"Discipline",
-    lensRuleP:"Expansion follows validated Risk Core performance (POC → pilots → licensing). Lenses become available when they improve measurable risk outcomes.",
-
-    winsTitle:"Why ZENTRA Wins",
-    winsSub:"A clear moat: behavioral signals + stress simulation + licensable infrastructure architecture.",
-    winsTag:"Moat",
-    w1:"Behavioral Signal Layer", w1d:"Captures real-world behavior that past-only scores miss (delay dynamics, exposure patterns, volatility).",
-    w2:"Stress Simulation Core", w2d:"Models repayment pressure under stress to detect liquidity collapse earlier than default.",
-    w3:"Licensable Lens Architecture", w3d:"B2B API-first infrastructure with controlled modular expansion for regulated environments.",
-    patT:"Patent Domains (Short)", patTag:"Protectable",
-    p1:"Behavioral Risk Index", p2:"Liquidity Collapse Model", p3:"Stress Predictor",
-
-    pricingTitle:"Pricing & Licensing",
-    pricingSub:"Pricing shown as structure (not public numbers). Final pricing depends on scope, region, and deployment mode.",
-    pricingTag:"Licensing",
-    t1:"Plan", t2:"Target", t3:"Includes", t4:"License Model",
-    r1t:"Neobank / Fintech", r1i:"Risk score + bands + basic monitoring", r1m:"Usage-based",
-    r2t:"Banks / Islamic Finance", r2i:"Custom models + compliance + optional on-prem", r2m:"Annual license",
-    r3t:"Institutional", r3i:"CFO / SME / Macro / Family Office (by phase)", r3m:"Modular subscription",
-
-    ctaTitle:"Dubai HQ • Strategic Partnerships • Investor Access",
-    ctaDesc:"ZENTRA is positioned as a global hub in Dubai for banks and regulated fintech. Request a technical pack (PDF) and pilot scope.",
-    ctaBtn:"Contact Dubai HQ",
-    ctaTop:"Back to Top",
-
-    footer:"© 2026 ZENTRA — Behavioral Financial Infrastructure"
-  },
-
-  tr:{
-    topline:"Davranışsal Finansal Altyapı",
-    navSystem:"Sistem", navLive:"Canlı Kanıt", navLenses:"Lensler", navWins:"Neden Kazanır", navPricing:"Lisans", navContact:"İletişim",
-
-    badgeLive:"PRODUCTION LIVE", badgeHub:"DUBAI GLOBAL HUB", badgeFocus:"DAVRANIŞSAL RİSK ÇEKİRDEĞİ",
-    heroTitle:"Davranışsal Finansal Altyapı",
-    heroDesc:"Bankalar, katılım finans ve regülasyon yoğun fintech’ler için lisanslanabilir; yapay zeka destekli davranışsal risk skorlama ve stres modelleme altyapısı.",
-    btnInfra:"Altyapıyı Gör", btnProof:"Canlı Kanıtı Gör", btnContact:"Dubai HQ İletişim",
-
-    kpi1t:"İki Canlı Motor", kpi1d:"RiskLens API + Credit Stress Engine",
-    kpi2t:"API-First Lisanslama", kpi2d:"Bankalar & embedded finance için",
-    kpi3t:"Modüler Lens Roadmap", kpi3d:"Kontrollü genişleme (kilitli görünür)",
-
-    sideLive:"CANLI DURUM",
-    sideItem1:"OpenAPI", sideItem2:"Health", sideItem3:"Demo Anahtarı", sideItem4:"Audit-Ready",
-    sideTitle:"Yatırımcı Özeti",
-    sideDesc:"ZENTRA, sadece geçmişe bakan skor yaklaşımını; davranış sinyali katmanı + stres simülasyonu çekirdeğiyle değiştirir ve bunu lisanslanabilir altyapı olarak sunar.",
-    sideBtn1:"RiskLens Health", sideBtn2:"Stress Health", sideBtn3:"RiskLens OpenAPI", sideBtn4:"Stress OpenAPI",
-    sideNote:"Not: DNS/SSL sürtünmesi olmasın diye butonlar şu an Render endpoint’lerine gider. Hazır olunca risk.zentrarisk.com ve api.zentrarisk.com’a geçilir.",
-
-    systemTitle:"Sistem Mimarisi",
-    systemSub:"Her bloğa tıklayıp kısa açıklamasını gör. Sunum tamamlanır; hassas iç detaylar açığa çıkmaz.",
-    systemTag:"Altyapı Akışı",
-    nodeDataT:"VERİ", nodeDataS:"İşlem & maruziyet sinyalleri",
-    nodeBehT:"DAVRANIŞ", nodeBehS:"Gecikme & pattern dinamiği",
-    nodeCoreT:"RİSK ÇEKİRDEĞİ", nodeCoreS:"Davranış endeksi + çöküş modeli",
-    nodeLensT:"LENSLER", nodeLensS:"Modüler alan katmanları",
-    nodeApiT:"API ÇIKIŞI", nodeApiS:"Skor, band, stres sonuçları",
-
-    liveTitle:"Canlı Kanıt",
-    liveSub:"Yatırımcıya dönük kanıt: canlı endpoint’ler, canlı aktivite hissi ve net ürün sınırları.",
-    liveTag:"Production Live",
-    pillLive:"LIVE", pillLive2:"LIVE",
-    riskDesc:"Bankalar, neobankalar ve embedded finance için AI destekli davranışsal risk skorlama altyapısı.",
-    stressDesc:"Taksit baskısı ve geri ödeme stres modellemesi — RiskLens’e modül olarak bağlanabilir.",
-    btnOpenapi:"OpenAPI JSON", btnHealth:"Health",
-    btnOpenapi2:"OpenAPI JSON", btnHealth2:"Health",
-
-    gaugeTitle:"Canlı Risk Aktivitesi", gaugeScore:"Risk Skoru", gaugeEnv:"PRODUCTION",
-    gaugeNote:"Bu kanıt paneli yatırımcı sürtünmesi olmasın diye stabil demo değerleriyle gelir. İstersen sonra canlı çekime bağlarız.",
-    last5:"Son 5 Skor", activityMode:"Aktivite Kaydı",
-
-    assetsTitle:"Ekran Görüntüleri (Opsiyonel)", assetsSub:"Görsel kanıtı güçlendirmek için /assets içine demo.png, swagger.png, roadmap.png koyabilirsin.", assetsTag:"/assets",
-
-    lensTitle:"Lens Mimarisi",
-    lensSub:"Kilitli modüller kısa açıklamayla görünür kalır. Bu, kapsamı büyütmeden güven artırır.",
-    lensTag:"Kontrollü Genişleme",
-    dev:"Geliştirme", planned:"Planlı", research:"Araştırma", research2:"Araştırma", future:"Gelecek Faz",
-    cfo:"Kurumsal nakit akışı volatilitesi izleme ve senaryo modelleme.",
-    sme:"KOBİ likidite stresi ve runway tahmin motoru.",
-    family:"Çoklu varlık yoğunlaşması ve nesiller arası sürdürülebilirlik modellemesi.",
-    macro:"Enflasyon, faiz ve kur şoklarının etki simülasyon katmanı.",
-    cognitive:"Geleneksel skordan önce temerrüt riskini yakalamak için davranışsal karar profilleme.",
-    locked:"Kilitli", locked2:"Kilitli", locked3:"Kilitli",
-    lockedNote:"Kapsam kontrollü; çekirdek doğrulanınca açılır.",
-    lockedNote2:"Makro senaryolar ek lens olarak sunulur.",
-    lockedNote3:"PDF’de anlatılır; ürün yüzeyi olarak açılmadı.",
-    lensRuleT:"Genişleme Kuralı", lensRuleTag:"Disiplin",
-    lensRuleP:"Genişleme, doğrulanmış Risk Çekirdeği performansını takip eder (POC → pilot → lisans). Lensler, ölçülebilir risk çıktısı ürettiğinde açılır.",
-
-    winsTitle:"ZENTRA Neden Kazanır",
-    winsSub:"Net moat: davranış sinyali + stres simülasyonu + lisanslanabilir altyapı mimarisi.",
-    winsTag:"Moat",
-    w1:"Davranış Sinyali Katmanı", w1d:"Sadece geçmişe bakan skorların kaçırdığı sinyalleri yakalar (gecikme dinamiği, maruziyet, volatilite).",
-    w2:"Stres Simülasyonu Çekirdeği", w2d:"Ödeme baskısını stres altında modelleyerek temerrütten önce likidite çöküşünü yakalar.",
-    w3:"Lisanslanabilir Lens Mimarisi", w3d:"Regülasyon yoğun ortamlarda kontrollü modüler genişlemeye uygun API-first altyapı.",
-    patT:"Patent Alanları (Kısa)", patTag:"Korunabilir",
-    p1:"Behavioral Risk Index", p2:"Liquidity Collapse Model", p3:"Stress Predictor",
-
-    pricingTitle:"Fiyatlama & Lisanslama",
-    pricingSub:"Fiyatlar public yazılmaz; yapı gösterilir. Nihai fiyat; kapsam, bölge ve deployment moduna göre belirlenir.",
-    pricingTag:"Lisans",
-    t1:"Plan", t2:"Hedef", t3:"İçerik", t4:"Lisans Modeli",
-    r1t:"Neobank / Fintech", r1i:"Risk skoru + band + temel izleme", r1m:"Kullanım bazlı",
-    r2t:"Bankalar / Katılım Finans", r2i:"Custom modeller + uyum + opsiyonel on-prem", r2m:"Yıllık lisans",
-    r3t:"Kurumsal", r3i:"CFO / KOBİ / Makro / Family Office (fazlara göre)", r3m:"Modüler abonelik",
-
-    ctaTitle:"Dubai HQ • Stratejik Ortaklık • Yatırımcı Erişimi",
-    ctaDesc:"ZENTRA Dubai’de global hub hedefiyle bankalar ve regülasyon yoğun fintech’ler için konumlanır. Teknik paket (PDF) ve pilot kapsamı için yazın.",
-    ctaBtn:"Dubai HQ İletişim",
-    ctaTop:"Yukarı Dön",
-
-    footer:"© 2026 ZENTRA — Davranışsal Finansal Altyapı"
-  }
-};
-
-function setLang(lang){
-  document.querySelectorAll("[data-key]").forEach(el=>{
-    const k = el.getAttribute("data-key");
-    if(T[lang] && T[lang][k]) el.textContent = T[lang][k];
-  });
-  document.getElementById("btnEN").classList.toggle("active", lang==="en");
-  document.getElementById("btnTR").classList.toggle("active", lang==="tr");
-}
-setLang("en");
-
-/* ---------- System flow detail ---------- */
-const FLOW = {
-  en:{
-    data:{t:"DATA Layer", d:"Signals include sector risk, exposure ratio, delay days, and customer score inputs used for scoring and simulation.", c:"Example inputs: amount, sector, sector_risk_level, payment_delay_days, customer_score, exposure_ratio"},
-    behavior:{t:"BEHAVIORAL Engine", d:"Transforms raw signals into behavioral patterns: delay dynamics, volatility, exposure behavior, and trend signals.", c:"Outputs: behavior_features, volatility_index, delay_profile, exposure_dynamics"},
-    core:{t:"RISK CORE", d:"Computes risk score and band using behavioral coupling + liquidity collapse modeling and stress predictors.", c:"Outputs: risk_score, risk_band, early_warning_flags"},
-    lens:{t:"LENS MODULES", d:"Domain overlays that extend the core without changing it: CFO, SME, Family Office, Macro, Cognitive (locked by phase).", c:"Delivery: add-on modules with controlled rollout"},
-    api:{t:"API OUTPUT", d:"API-first delivery: scoring endpoints + stress simulation endpoints + audit-ready logs (production).", c:"Endpoints: /score, /stress, /health, /openapi.json"}
-  },
-  tr:{
-    data:{t:"VERİ Katmanı", d:"Skorlama ve simülasyon için kullanılan sinyaller: sektör riski, maruziyet oranı, gecikme günleri, müşteri skoru vb.", c:"Örnek girişler: amount, sector, sector_risk_level, payment_delay_days, customer_score, exposure_ratio"},
-    behavior:{t:"DAVRANIŞ Motoru", d:"Ham sinyalleri davranış örüntülerine çevirir: gecikme dinamiği, volatilite, maruziyet davranışı, trend sinyalleri.", c:"Çıktılar: behavior_features, volatility_index, delay_profile, exposure_dynamics"},
-    core:{t:"RİSK ÇEKİRDEĞİ", d:"Davranış-finans eşlemesi + likidite çöküş modellemesi + stres öngörüleriyle risk skoru ve band üretir.", c:"Çıktılar: risk_score, risk_band, early_warning_flags"},
-    lens:{t:"LENS MODÜLLERİ", d:"Çekirdeği bozmadan genişleten alan katmanları: CFO, KOBİ, Family Office, Makro, Cognitive (fazlara göre kilitli).", c:"Teslimat: kontrollü rollout ile add-on modüller"},
-    api:{t:"API ÇIKIŞI", d:"API-first teslim: skorlama endpoint’leri + stres simülasyonu endpoint’leri + audit-ready kayıtlar (production).", c:"Endpoint’ler: /score, /stress, /health, /openapi.json"}
-  }
-};
-
-let currentLang = "en";
-const detailTitle = document.getElementById("fdTitle");
-const detailText  = document.getElementById("fdText");
-const detailCode  = document.getElementById("fdCode");
-
-document.querySelectorAll(".node").forEach(n=>{
-  n.addEventListener("click", ()=>{
-    const key = n.getAttribute("data-node");
-    const D = FLOW[currentLang][key];
-    detailTitle.textContent = D.t;
-    detailText.textContent  = D.d;
-    detailCode.textContent  = D.c;
-  });
-});
-
-const _setLang = setLang;
-setLang = (lang)=>{
-  currentLang = lang;
-  _setLang(lang);
-  // refresh flow detail to data default
-  const D = FLOW[currentLang].data;
-  detailTitle.textContent = D.t;
-  detailText.textContent  = D.d;
-  detailCode.textContent  = D.c;
-};
-
-/* ---------- Live proof “cafcaf” but controlled ---------- */
-const scoreVal = document.getElementById("scoreVal");
-const barFill = document.getElementById("barFill");
-const scoreList = document.getElementById("scoreList");
-
-function bandTag(score){
-  if(score >= 80) return {txt:"HIGH", cls:"high"};
-  if(score >= 55) return {txt:"MID", cls:"mid"};
-  return {txt:"LOW", cls:"low"};
-}
-
-// Stable demo values (investor-friendly). You can wire this later to real API.
-const demoScores = [78, 72, 84, 66, 59];
-
-function renderScores(){
-  scoreList.innerHTML = "";
-  demoScores.slice(0,5).forEach((s, idx)=>{
-    const t = bandTag(s);
-    const li = document.createElement("li");
-    li.className = "row";
-    li.innerHTML = `<span>#${idx+1} • score ${s}</span><span class="tag ${t.cls}">${t.txt}</span>`;
-    scoreList.appendChild(li);
-  });
-}
-
-function animateGauge(score){
-  scoreVal.textContent = score;
-  requestAnimationFrame(()=>{ barFill.style.width = Math.max(0, Math.min(100, score)) + "%"; });
-}
-
-renderScores();
-animateGauge(demoScores[0]);
-
-// subtle rotation of list (gives “active” feeling without lying)
-setInterval(()=>{
-  const last = demoScores.pop();
-  demoScores.unshift(last);
-  renderScores();
-  animateGauge(demoScores[0]);
-}, 3200);
-</script>
-
-</body>
-  </html>
+          <g font-family="Inter, Arial" fill

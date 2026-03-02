@@ -1,182 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZENTRA — Behavioral Financial Infrastructure</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0c1220;
-  --card:#121a2b;
-  --line:#1f2a44;
-  --accent:#00d4ff;
-  --green:#19e68c;
-  --muted:#7f8ca3;
-  --text:#e6f0ff;
+--bg:#0c1220;
+--card:#121a2b;
+--line:#1f2a44;
+--accent:#00d4ff;
+--green:#19e68c;
+--muted:#7f8ca3;
+--text:#e6f0ff;
 }
-
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Inter, sans-serif;
-  background:linear-gradient(180deg,#0c1220,#0f172a);
-  color:var(--text);
-  -webkit-font-smoothing:antialiased;
+margin:0;
+font-family:Inter,sans-serif;
+background:linear-gradient(180deg,#0c1220,#0f172a);
+color:var(--text);
 }
-
-.container{
-  width:1100px;
-  max-width:94%;
-  margin:auto;
-}
-
-section{
-  padding:80px 0;
-  border-bottom:1px solid var(--line);
-}
-
-h1,h2,h3{
-  margin:0 0 16px 0;
-}
-
-p{
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 0;
-}
-
-.lang-toggle{
-  font-size:13px;
-  cursor:pointer;
-  opacity:.7;
-}
-
-.lang-toggle span{
-  margin-left:10px;
-}
-
-.hero{
-  text-align:center;
-  padding:100px 0 80px 0;
-}
-
+.container{width:1100px;max-width:94%;margin:auto;}
+section{padding:80px 0;border-bottom:1px solid var(--line);}
+h1,h2,h3{margin:0 0 16px 0;}
+p{color:var(--muted);line-height:1.6;}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 0;}
+.lang-toggle span{cursor:pointer;margin-left:10px;opacity:.7;}
+.lang-toggle span:hover{opacity:1;}
+.hero{text-align:center;padding:100px 0 80px 0;}
 .badge{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:30px;
-  background:rgba(25,230,140,.15);
-  color:var(--green);
-  font-size:12px;
-  margin-bottom:20px;
+display:inline-block;
+padding:6px 14px;
+border-radius:30px;
+background:rgba(25,230,140,.15);
+color:var(--green);
+font-size:12px;
+margin-bottom:20px;
 }
-
-.hero h1{
-  font-size:44px;
-  font-weight:600;
-}
-
-.hero p{
-  max-width:720px;
-  margin:20px auto 30px auto;
-  font-size:17px;
-}
-
+.hero h1{font-size:44px;font-weight:600;}
+.hero p{max-width:720px;margin:20px auto 30px auto;font-size:17px;}
 .btn{
-  padding:12px 24px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:500;
-  display:inline-block;
-  margin:8px;
-  transition:.3s;
+padding:12px 24px;
+border-radius:8px;
+text-decoration:none;
+font-weight:500;
+display:inline-block;
+margin:8px;
+transition:.3s;
+background:var(--accent);
+color:#000;
 }
-
-.btn-primary{
-  background:var(--accent);
-  color:#000;
-}
-
-.btn-primary:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 25px rgba(0,212,255,.4);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:30px;
-}
-
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,212,255,.4);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
 .card{
-  background:var(--card);
-  padding:28px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  transition:.3s;
+background:var(--card);
+padding:28px;
+border-radius:14px;
+border:1px solid var(--line);
+transition:.3s;
 }
-
-.card:hover{
-  border:1px solid var(--accent);
-  transform:translateY(-5px);
-}
-
-.status{
-  font-size:12px;
-  margin-top:8px;
-  color:var(--green);
-}
-
-.locked{
-  opacity:.6;
-}
-
+.card:hover{border:1px solid var(--accent);transform:translateY(-5px);}
+.status{font-size:12px;margin-top:8px;color:var(--green);}
+.locked{opacity:.6;}
 .live-box{
-  background:#0f1a30;
-  padding:25px;
-  border-radius:12px;
-  border:1px solid var(--line);
+background:#0f1a30;
+padding:25px;
+border-radius:12px;
+border:1px solid var(--line);
 }
-
 .live-score{
-  font-size:28px;
-  font-weight:600;
-  margin-top:10px;
-  color:var(--accent);
+font-size:28px;
+font-weight:600;
+margin-top:10px;
+color:var(--accent);
 }
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:20px;
-}
-
-th, td{
-  padding:14px;
-  border:1px solid var(--line);
-  text-align:center;
-}
-
-th{
-  background:#0f1a30;
-}
-
-.footer{
-  text-align:center;
-  padding:40px 0;
-  font-size:14px;
-  color:var(--muted);
-}
-
-.hidden{display:none;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th,td{padding:14px;border:1px solid var(--line);text-align:center;}
+th{background:#0f1a30;}
+.footer{text-align:center;padding:40px 0;font-size:14px;color:var(--muted);}
 </style>
 </head>
 
@@ -187,92 +92,95 @@ th{
 <div class="topbar">
 <div><strong>ZENTRA</strong></div>
 <div class="lang-toggle">
-<span onclick="setLang('en')">EN</span> | 
+<span onclick="setLang('en')">EN</span> |
 <span onclick="setLang('tr')">TR</span>
 </div>
 </div>
 
 <section class="hero">
-<div class="badge">PRODUCTION LIVE • DUBAI GLOBAL HUB</div>
-<h1 data-en="Behavioral Financial Infrastructure"
-    data-tr="Davranışsal Finansal Altyapı">
-Behavioral Financial Infrastructure
-</h1>
-<p data-en="Licensable AI-powered behavioral risk scoring and stress modeling infrastructure for banks and regulated fintech."
-   data-tr="Bankalar ve regülasyon yoğun fintech'ler için lisanslanabilir yapay zeka destekli davranışsal risk skorlama ve stres modelleme altyapısı.">
+<div class="badge" data-key="badge">PRODUCTION LIVE • DUBAI GLOBAL HUB</div>
+
+<h1 data-key="heroTitle">Behavioral Financial Infrastructure</h1>
+
+<p data-key="heroDesc">
 Licensable AI-powered behavioral risk scoring and stress modeling infrastructure for banks and regulated fintech.
 </p>
 
-<a href="#system" class="btn btn-primary">View Infrastructure</a>
-<a href="mailto:contact@zentrarisk.com" class="btn btn-primary">Contact Dubai HQ</a>
+<a href="#system" class="btn" data-key="btnInfra">View Infrastructure</a>
+<a href="mailto:contact@zentrarisk.com" class="btn" data-key="btnContact">Contact Dubai HQ</a>
 </section>
 
 <section id="system">
-<h2>System Architecture</h2>
+<h2 data-key="systemTitle">System Architecture</h2>
 <div class="grid">
-<div class="card"><h3>Data Layer</h3><p>Transaction signals, exposure ratio, sector risk.</p></div>
-<div class="card"><h3>Behavioral Engine</h3><p>Spending patterns, delay behavior, volatility.</p></div>
-<div class="card"><h3>Risk Core</h3><p>Behavioral Risk Index + Liquidity Collapse Model.</p></div>
-<div class="card"><h3>Lens Modules</h3><p>Modular expansion architecture.</p></div>
-<div class="card"><h3>API Output</h3><p>Real-time risk scoring & stress simulation endpoints.</p></div>
+<div class="card"><h3 data-key="data">Data Layer</h3></div>
+<div class="card"><h3 data-key="behavior">Behavioral Engine</h3></div>
+<div class="card"><h3 data-key="riskcore">Risk Core</h3></div>
+<div class="card"><h3 data-key="lens">Lens Modules</h3></div>
+<div class="card"><h3 data-key="api">API Output</h3></div>
 </div>
 </section>
 
 <section>
-<h2>Active Products (Live)</h2>
+<h2 data-key="activeTitle">Active Products (Live)</h2>
 <div class="grid">
+
 <div class="card">
 <h3>RiskLens API</h3>
-<p>Behavioral risk scoring infrastructure.</p>
+<p data-key="riskDesc">Behavioral risk scoring infrastructure.</p>
 <div class="status">LIVE • Production Ready</div>
 </div>
 
 <div class="card">
 <h3>Credit Stress Engine</h3>
-<p>Installment and liquidity pressure modeling.</p>
+<p data-key="stressDesc">Installment and liquidity pressure modeling.</p>
 <div class="status">LIVE • Swagger Available</div>
 </div>
 
 <div class="live-box">
-<h3>Live Risk Activity</h3>
+<h3 data-key="liveActivity">Live Risk Activity</h3>
 <div class="live-score">Risk Score: 78</div>
-<p>Last Updated: Production Environment</p>
+<p data-key="liveEnv">Production Environment</p>
 </div>
+
 </div>
 </section>
 
 <section>
-<h2>Lens Architecture</h2>
-<p>Expansion follows validated Risk Core performance.</p>
+<h2 data-key="lensTitle">Lens Architecture</h2>
+<p data-key="expansion">
+Expansion follows validated Risk Core performance.
+</p>
+
 <div class="grid">
 
 <div class="card">
 <h3>CFO Lens</h3>
-<p>Enterprise cash flow volatility modeling.</p>
+<p data-key="cfo">Enterprise cash flow volatility modeling.</p>
 <div class="status">In Development</div>
 </div>
 
 <div class="card">
 <h3>SME Lens</h3>
-<p>Runway and liquidity stress forecasting.</p>
+<p data-key="sme">Runway and liquidity stress forecasting.</p>
 <div class="status">Planned</div>
 </div>
 
 <div class="card locked">
 <h3>Family Office Lens</h3>
-<p>Multi-asset concentration risk analysis.</p>
+<p data-key="family">Multi-asset concentration risk analysis.</p>
 <div class="status">Research</div>
 </div>
 
 <div class="card locked">
 <h3>Macro Shock Lens</h3>
-<p>Inflation and currency impact simulation.</p>
+<p data-key="macro">Inflation and currency impact simulation.</p>
 <div class="status">Research</div>
 </div>
 
 <div class="card locked">
 <h3>Cognitive Finance Lens</h3>
-<p>Behavioral decision profiling engine.</p>
+<p data-key="cognitive">Behavioral decision profiling engine.</p>
 <div class="status">Future Phase</div>
 </div>
 
@@ -280,64 +188,147 @@ Licensable AI-powered behavioral risk scoring and stress modeling infrastructure
 </section>
 
 <section>
-<h2>Why ZENTRA Wins</h2>
+<h2 data-key="winsTitle">Why ZENTRA Wins</h2>
 <div class="grid">
 <div class="card">
-<h3>Behavior + Finance Coupling</h3>
-<p>Traditional scoring ignores behavioral signals.</p>
+<h3 data-key="w1">Behavior + Finance Coupling</h3>
 </div>
 <div class="card">
-<h3>Real-Time Stress Simulation</h3>
-<p>Liquidity collapse detection before default.</p>
+<h3 data-key="w2">Real-Time Stress Simulation</h3>
 </div>
 <div class="card">
-<h3>Licensable Infrastructure</h3>
-<p>API-first modular deployment.</p>
+<h3 data-key="w3">Licensable Infrastructure</h3>
 </div>
 </div>
 </section>
 
 <section>
-<h2>Business Model</h2>
+<h2 data-key="businessTitle">Business Model</h2>
 <table>
 <tr>
-<th>Model</th>
-<th>Target</th>
-<th>Structure</th>
+<th data-key="model">Model</th>
+<th data-key="target">Target</th>
+<th data-key="structure">Structure</th>
 </tr>
 <tr>
 <td>API Usage</td>
 <td>Neobank / Fintech</td>
-<td>Usage Based</td>
+<td data-key="usage">Usage Based</td>
 </tr>
 <tr>
 <td>Enterprise License</td>
 <td>Banks</td>
-<td>Annual Contract</td>
+<td data-key="annual">Annual Contract</td>
 </tr>
 <tr>
 <td>Lens Add-On</td>
 <td>Institutional</td>
-<td>Modular Subscription</td>
+<td data-key="addon">Modular Subscription</td>
 </tr>
 </table>
 </section>
 
 <section>
-<h2>Global Positioning</h2>
-<p>Dubai HQ • EU Regulatory Ready • US Compliance Compatible</p>
+<h2 data-key="globalTitle">Global Positioning</h2>
+<p data-key="globalDesc">
+Dubai HQ • EU Regulatory Ready • US Compliance Compatible
+</p>
 </section>
 
-<div class="footer">
+<div class="footer" data-key="footer">
 © 2026 ZENTRA — Behavioral Financial Infrastructure
 </div>
 
 </div>
 
 <script>
+const translations = {
+en:{
+badge:"PRODUCTION LIVE • DUBAI GLOBAL HUB",
+heroTitle:"Behavioral Financial Infrastructure",
+heroDesc:"Licensable AI-powered behavioral risk scoring and stress modeling infrastructure for banks and regulated fintech.",
+btnInfra:"View Infrastructure",
+btnContact:"Contact Dubai HQ",
+systemTitle:"System Architecture",
+data:"Data Layer",
+behavior:"Behavioral Engine",
+riskcore:"Risk Core",
+lens:"Lens Modules",
+api:"API Output",
+activeTitle:"Active Products (Live)",
+riskDesc:"Behavioral risk scoring infrastructure.",
+stressDesc:"Installment and liquidity pressure modeling.",
+liveActivity:"Live Risk Activity",
+liveEnv:"Production Environment",
+lensTitle:"Lens Architecture",
+expansion:"Expansion follows validated Risk Core performance.",
+cfo:"Enterprise cash flow volatility modeling.",
+sme:"Runway and liquidity stress forecasting.",
+family:"Multi-asset concentration risk analysis.",
+macro:"Inflation and currency impact simulation.",
+cognitive:"Behavioral decision profiling engine.",
+winsTitle:"Why ZENTRA Wins",
+w1:"Behavior + Finance Coupling",
+w2:"Real-Time Stress Simulation",
+w3:"Licensable Infrastructure",
+businessTitle:"Business Model",
+model:"Model",
+target:"Target",
+structure:"Structure",
+usage:"Usage Based",
+annual:"Annual Contract",
+addon:"Modular Subscription",
+globalTitle:"Global Positioning",
+globalDesc:"Dubai HQ • EU Regulatory Ready • US Compliance Compatible",
+footer:"© 2026 ZENTRA — Behavioral Financial Infrastructure"
+},
+tr:{
+badge:"PRODUCTION LIVE • DUBAI GLOBAL HUB",
+heroTitle:"Davranışsal Finansal Altyapı",
+heroDesc:"Bankalar ve regülasyon yoğun fintech'ler için lisanslanabilir yapay zeka destekli davranışsal risk skorlama ve stres modelleme altyapısı.",
+btnInfra:"Altyapıyı Gör",
+btnContact:"Dubai HQ İletişim",
+systemTitle:"Sistem Mimarisi",
+data:"Veri Katmanı",
+behavior:"Davranış Motoru",
+riskcore:"Risk Çekirdeği",
+lens:"Lens Modülleri",
+api:"API Çıktısı",
+activeTitle:"Aktif Ürünler (Canlı)",
+riskDesc:"Davranışsal risk skorlama altyapısı.",
+stressDesc:"Taksit ve likidite baskısı modellemesi.",
+liveActivity:"Canlı Risk Aktivitesi",
+liveEnv:"Production Ortamı",
+lensTitle:"Lens Mimarisi",
+expansion:"Genişleme doğrulanmış Risk Çekirdeği performansını takip eder.",
+cfo:"Kurumsal nakit akışı volatilite modellemesi.",
+sme:"KOBİ likidite ve runway tahmini.",
+family:"Çoklu varlık yoğunlaşma risk analizi.",
+macro:"Enflasyon ve kur etkisi simülasyonu.",
+cognitive:"Davranışsal karar profilleme motoru.",
+winsTitle:"ZENTRA Neden Kazanır",
+w1:"Davranış + Finans Entegrasyonu",
+w2:"Gerçek Zamanlı Stres Simülasyonu",
+w3:"Lisanslanabilir Altyapı Modeli",
+businessTitle:"İş Modeli",
+model:"Model",
+target:"Hedef",
+structure:"Yapı",
+usage:"Kullanım Bazlı",
+annual:"Yıllık Sözleşme",
+addon:"Modüler Abonelik",
+globalTitle:"Global Konumlandırma",
+globalDesc:"Dubai Merkez • AB Regülasyon Uyumlu • ABD Uyumlu",
+footer:"© 2026 ZENTRA — Davranışsal Finansal Altyapı"
+}
+};
+
 function setLang(lang){
-document.querySelectorAll('[data-en]').forEach(el=>{
-el.innerText = el.getAttribute('data-'+lang);
+document.querySelectorAll("[data-key]").forEach(el=>{
+const key=el.getAttribute("data-key");
+if(translations[lang][key]){
+el.innerText=translations[lang][key];
+}
 });
 }
 </script>

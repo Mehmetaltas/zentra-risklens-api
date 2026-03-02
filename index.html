@@ -37,6 +37,12 @@ margin-left:18px;
 text-decoration:none;
 font-size:13px;
 }
+.toggle{
+margin-left:20px;
+cursor:pointer;
+font-size:12px;
+color:var(--accent);
+}
 .hero{
 margin-top:40px;
 padding:40px;
@@ -44,8 +50,8 @@ background:var(--card);
 border-radius:var(--radius);
 border:1px solid var(--stroke);
 }
-.hero h1{margin:0 0 14px;font-size:34px}
-.hero p{color:var(--muted);max-width:750px}
+.hero h1{margin:0 0 14px;font-size:32px}
+.hero p{color:var(--muted);max-width:760px}
 .section{
 margin-top:50px;
 padding:28px;
@@ -53,7 +59,7 @@ background:var(--card);
 border-radius:var(--radius);
 border:1px solid var(--stroke);
 }
-.section h2{margin:0 0 16px;font-size:18px}
+.section h2{margin:0 0 18px;font-size:18px}
 .grid{display:grid;gap:18px}
 .grid-2{grid-template-columns:1fr 1fr}
 .grid-3{grid-template-columns:1fr 1fr 1fr}
@@ -65,6 +71,13 @@ border-radius:14px;
 }
 .card h3{margin:0 0 10px;font-size:15px}
 .card p{margin:0;color:var(--muted);font-size:13px}
+.card a{
+display:inline-block;
+margin-top:10px;
+font-size:12px;
+color:var(--accent);
+text-decoration:none;
+}
 .badge{
 display:inline-block;
 font-size:11px;
@@ -92,6 +105,14 @@ border-radius:10px;
 background:rgba(255,255,255,.03);
 border:1px solid var(--stroke);
 }
+.demo{
+font-family:monospace;
+font-size:13px;
+background:#0f162e;
+padding:12px;
+border-radius:8px;
+border:1px solid var(--stroke);
+}
 footer{
 margin-top:60px;
 text-align:center;
@@ -101,7 +122,7 @@ font-size:12px;
 @media(max-width:900px){
 .grid-2,.grid-3{grid-template-columns:1fr}
 .lens{grid-template-columns:1fr 1fr}
-.hero h1{font-size:26px}
+.hero h1{font-size:24px}
 }
 </style>
 </head>
@@ -111,17 +132,21 @@ font-size:12px;
 
 <header>
 <div class="logo">ZENTRA</div>
-<nav>
+<div>
+<nav style="display:inline;">
 <a href="#products">Products</a>
+<a href="#api">API</a>
 <a href="#lens">Lens</a>
 <a href="#contact">Contact</a>
 </nav>
+<span class="toggle" onclick="toggleLang()">TR / EN</span>
+</div>
 </header>
 
 <section class="hero">
 <div class="badge">LIVE • API Infrastructure</div>
-<h1>Behavioral Risk Infrastructure for Regulated Finance</h1>
-<p>
+<h1 id="title">Behavioral Risk Infrastructure for Regulated Finance</h1>
+<p id="subtitle">
 ZENTRA delivers licensable behavioral risk scoring and stress modeling
 for banks and regulated fintechs. Built as modular lens architecture.
 Global hub target: Dubai.
@@ -134,11 +159,22 @@ Global hub target: Dubai.
 <div class="card">
 <h3>RiskLens API</h3>
 <p>Behavioral risk scoring engine for underwriting and early default detection.</p>
+<a href="https://zentra-risklens-api-2.onrender.com/docs" target="_blank">Docs</a>
+<a href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">Health</a>
 </div>
 <div class="card">
 <h3>Credit Stress Engine</h3>
 <p>Installment pressure modeling and repayment capacity simulation.</p>
+<a href="https://zentra-credit-stress-api.onrender.com/docs" target="_blank">Docs</a>
+<a href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">Health</a>
 </div>
+</div>
+</section>
+
+<section class="section" id="api">
+<h2>Live API Access</h2>
+<div class="demo">
+Demo Key: zentra-demo-key
 </div>
 </section>
 
@@ -156,18 +192,18 @@ Global hub target: Dubai.
 </section>
 
 <section class="section" id="lens">
-<h2>Lens Architecture (10 Locked Modules)</h2>
+<h2>10 Locked Lens Modules</h2>
 <div class="lens">
-<div>RiskLens Core<br><span style="color:var(--muted)">Behavioral Score</span></div>
-<div>Credit Stress<br><span style="color:var(--muted)">Repayment Model</span></div>
-<div>CFO Lens<br><span style="color:var(--muted)">Cash Flow Risk</span></div>
-<div>KOBİ Lens<br><span style="color:var(--muted)">SME Stability</span></div>
-<div>Family Office<br><span style="color:var(--muted)">Wealth Stress</span></div>
-<div>Vakıf Lens<br><span style="color:var(--muted)">Fund Sustainability</span></div>
-<div>Macro Shock<br><span style="color:var(--muted)">Systemic Risk</span></div>
-<div>Liquidity Lens<br><span style="color:var(--muted)">Collapse Detection</span></div>
-<div>Delay Mapping<br><span style="color:var(--muted)">Behavior Signal</span></div>
-<div>Cognitive Finance<br><span style="color:var(--muted)">AI Behavioral Model</span></div>
+<div>RiskLens Core</div>
+<div>Credit Stress</div>
+<div>CFO Lens</div>
+<div>KOBİ Lens</div>
+<div>Family Office</div>
+<div>Vakıf Lens</div>
+<div>Macro Shock</div>
+<div>Liquidity Lens</div>
+<div>Delay Mapping</div>
+<div>Cognitive Finance</div>
 </div>
 </section>
 
@@ -181,5 +217,21 @@ Global hub target: Dubai.
 </footer>
 
 </div>
+
+<script>
+let lang="tr";
+function toggleLang(){
+if(lang==="tr"){
+document.getElementById("title").innerText="Behavioral Risk Infrastructure for Regulated Finance";
+document.getElementById("subtitle").innerText="ZENTRA delivers licensable behavioral risk scoring and stress modeling for banks and regulated fintechs. Built as modular lens architecture. Global hub target: Dubai.";
+lang="en";
+}else{
+document.getElementById("title").innerText="Regüle Finans için Davranışsal Risk Altyapısı";
+document.getElementById("subtitle").innerText="ZENTRA; bankalar ve regülasyon yoğun fintech’ler için lisanslanabilir davranışsal risk altyapısı sunar. Modüler lens mimarisi üzerine kuruludur. Global merkez hedefi: Dubai.";
+lang="tr";
+}
+}
+</script>
+
 </body>
 </html>

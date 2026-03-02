@@ -4,246 +4,238 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="dark"/>
-  <title>ZENTRA • Behavioral Financial Infrastructure</title>
+  <title>ZENTRA — Behavioral Financial Infrastructure</title>
   <meta name="description" content="ZENTRA is a licensable behavioral risk infrastructure for banks, Islamic finance and regulated fintechs. Live APIs: RiskLens & Credit Stress."/>
   <style>
     :root{
       --bg:#050814;
+      --panel:rgba(255,255,255,.04);
+      --panel2:rgba(10,16,30,.55);
+      --stroke:rgba(255,255,255,.10);
+      --stroke2:rgba(255,255,255,.07);
       --text:#eaf2ff;
       --muted:#8a97b1;
       --cyan:#00d4ff;
       --violet:#7c3aed;
       --green:#19e68c;
       --gold:#f5b942;
-      --red:#ff4d6d;
-      --card:rgba(255,255,255,.03);
-      --stroke:rgba(255,255,255,.10);
-      --stroke2:rgba(255,255,255,.08);
-      --r:18px;
-      --r2:24px;
-      --shadow:0 18px 55px rgba(0,0,0,.35);
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --r:22px;
+      --r2:18px;
+      --max:1180px;
     }
+    *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       background:
-        radial-gradient(1200px 700px at 10% 0%, rgba(0,212,255,.12), transparent 60%),
-        radial-gradient(900px 600px at 90% 10%, rgba(124,58,237,.12), transparent 60%),
-        radial-gradient(1100px 700px at 50% 110%, rgba(25,230,140,.08), transparent 60%),
+        radial-gradient(1200px 700px at 10% -10%, rgba(0,212,255,.18), transparent 60%),
+        radial-gradient(1000px 650px at 90% 0%, rgba(124,58,237,.18), transparent 60%),
+        radial-gradient(1100px 700px at 50% 115%, rgba(25,230,140,.10), transparent 60%),
         var(--bg);
       color:var(--text);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      overflow-x:hidden;
     }
 
-    /* page shell */
-    .wrap{width:1160px; max-width:94%; margin:0 auto; padding:16px 0 50px;}
-    .shell{
-      border-radius:var(--r2);
+    /* ===== Premium particle canvas ===== */
+    #fx{
+      position:fixed; inset:0;
+      z-index:0;
+      pointer-events:none;
+      opacity:.9;
+      filter: saturate(1.1);
+    }
+
+    /* ===== Layout ===== */
+    .wrap{width:var(--max); max-width:92%; margin:0 auto; position:relative; z-index:1;}
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(5,8,20,.75), rgba(5,8,20,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:240px;
+    }
+
+    /* ===== Ultimate Logo (SVG) ===== */
+    .logo{
+      width:46px; height:46px; flex:0 0 auto;
+      border-radius:16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      transform: translateZ(0);
+    }
+    .brandName{
+      font-weight:950; letter-spacing:.6px;
+      background:linear-gradient(90deg, var(--cyan), var(--green), var(--violet));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      font-size:15px; line-height:1.1;
+    }
+    .brandSub{font-size:11.5px; color:rgba(234,242,255,.62); margin-top:2px}
+
+    .navlinks{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .navlinks a{
+      color:rgba(234,242,255,.72);
+      text-decoration:none;
+      font-weight:850;
+      font-size:12px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      transition:.25s;
+      white-space:nowrap;
+    }
+    .navlinks a:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.35); color:rgba(234,242,255,.92)}
+    .navlinks a.primary{
+      border-color:transparent;
+      color:#001018;
+      background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.75));
+      box-shadow: 0 18px 55px rgba(0,212,255,.18);
+    }
+    .navlinks a.primary:hover{box-shadow: 0 22px 70px rgba(0,212,255,.25)}
+
+    .lang{
+      display:inline-flex; gap:6px; align-items:center;
+      padding:6px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.02);
+      margin-left:6px;
+    }
+    .lang button{
+      cursor:pointer; border:0; background:transparent;
+      color:rgba(234,242,255,.70);
+      font-weight:950; font-size:11.5px;
+      padding:7px 10px; border-radius:999px;
+      transition:.2s;
+    }
+    .lang button.active{background:rgba(0,212,255,.95); color:#001018}
+    .lang button:hover{background:rgba(0,212,255,.12); color:rgba(234,242,255,.92)}
+
+    /* ===== Hero (Deck vibe) ===== */
+    .hero{padding:46px 0 26px; position:relative}
+    .heroGrid{
+      display:grid; grid-template-columns: 1.15fr .85fr; gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .heroGrid{grid-template-columns:1fr} }
+    .heroCard{
       border:1px solid var(--stroke);
       background:
         radial-gradient(900px 460px at 10% -20%, rgba(0,212,255,.18), transparent 55%),
         radial-gradient(820px 460px at 95% 10%, rgba(124,58,237,.18), transparent 55%),
         radial-gradient(980px 620px at 60% 110%, rgba(25,230,140,.12), transparent 60%),
-        var(--card);
+        rgba(255,255,255,.03);
+      border-radius: 26px;
+      padding:22px;
+      box-shadow: var(--shadow);
       overflow:hidden;
-      box-shadow:0 10px 40px rgba(0,0,0,.25);
+      transform-style:preserve-3d;
     }
 
-    /* top header */
-    .top{
-      padding:18px 18px 12px;
-      display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(10px);
+    .kicker{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      font-size:12px; font-weight:950;
+      color:rgba(234,242,255,.80);
     }
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{
-      width:38px;height:38px;border-radius:14px;
-      background:
-        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.7), transparent 60%),
-        radial-gradient(28px 28px at 70% 60%, rgba(0,212,255,.55), transparent 60%),
-        linear-gradient(135deg, rgba(124,58,237,.85), rgba(0,212,255,.85));
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      flex:0 0 auto;
-    }
-    h1{margin:0; font-size:16px; letter-spacing:.2px; line-height:1.2}
-    .sub{margin:7px 0 0; color:var(--muted); font-size:13px; line-height:1.55; max-width:820px}
-
-    .right{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
-    .lang{
-      display:flex; gap:8px; align-items:center;
-      padding:6px 8px; border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.02);
-      user-select:none;
-    }
-    .lang button{
-      cursor:pointer; border:0; background:transparent;
-      color:rgba(234,242,255,.72); font-size:12px; font-weight:900;
-      padding:6px 10px; border-radius:12px; transition:.2s;
-    }
-    .lang button:hover{background:rgba(0,212,255,.10); color:rgba(234,242,255,.92)}
-    .lang button.active{background:rgba(0,212,255,.95); color:#001018}
-
-    .pills{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
     .pill{
       display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px; border-radius:999px; font-size:12px;
+      padding:8px 10px; border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.03);
-      color:rgba(234,242,255,.78);
-      user-select:none;
+      color:rgba(234,242,255,.76);
       white-space:nowrap;
-    }
-    .pill.lock{border-color:rgba(245,185,66,.28); color:rgba(245,185,66,.95); background:rgba(245,185,66,.08)}
-    .pill.dev{border-color:rgba(0,212,255,.24); color:rgba(0,212,255,.95); background:rgba(0,212,255,.08)}
-    .liveBadge{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px; border-radius:999px;
-      border:1px solid rgba(25,230,140,.35);
-      background:rgba(25,230,140,.10);
-      color:rgba(25,230,140,.95);
-      font-size:12px; font-weight:900;
       user-select:none;
     }
-    .liveDot{
+    .pill.live{border-color:rgba(25,230,140,.35); color:rgba(25,230,140,.95); background:rgba(25,230,140,.10)}
+    .dot{
       width:10px;height:10px;border-radius:999px;background:var(--green);
       box-shadow:0 0 18px rgba(25,230,140,.65);
       position:relative;
     }
-    .liveDot::after{
+    .dot::after{
       content:""; position:absolute; inset:-10px;
       border-radius:999px;
       border:1px solid rgba(25,230,140,.28);
-      animation:ping 1.4s ease-out infinite;
+      animation: ping 1.4s ease-out infinite;
     }
     @keyframes ping{0%{transform:scale(.25);opacity:0}20%{opacity:.7}100%{transform:scale(1.15);opacity:0}}
 
-    /* nav */
-    .nav{
-      display:flex; flex-wrap:wrap; gap:10px;
-      padding:12px 18px 16px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+    h1{
+      margin:16px 0 0 0;
+      font-size:44px;
+      letter-spacing:-.6px;
+      line-height:1.05;
     }
-    .nav a{
+    @media (max-width:560px){ h1{font-size:36px} }
+    .grad{
+      background:linear-gradient(90deg, var(--cyan), var(--green), var(--violet));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .lead{
+      margin:14px 0 0 0;
+      color:rgba(138,151,177,.95);
+      font-size:15.5px;
+      line-height:1.65;
+      max-width:760px;
+    }
+    .ctaRow{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:9px;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:950; font-size:12px;
       text-decoration:none;
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 11px; border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.02);
-      color:rgba(234,242,255,.85);
-      font-size:12px; font-weight:900;
+      background:rgba(255,255,255,.03);
+      color:rgba(234,242,255,.88);
       transition:.25s;
       white-space:nowrap;
     }
-    .nav a:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.95)}
-    .nav a.primary{
+    .btn:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.30); color:rgba(234,242,255,.98)}
+    .btn.primary{
       border-color:transparent;
       color:#001018;
       background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.75));
-      box-shadow:0 16px 42px rgba(0,212,255,.18);
+      box-shadow: 0 16px 42px rgba(0,212,255,.18);
     }
-    .nav a.primary:hover{box-shadow:0 20px 55px rgba(0,212,255,.25)}
-
-    /* sections */
-    .secHead{
-      display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap;
-      padding:16px 18px 0;
-    }
-    .secHead h2{margin:0; font-size:16px; letter-spacing:.2px;}
-    .secHead p{margin:8px 0 0; color:var(--muted); font-size:12.5px; line-height:1.55; max-width:920px;}
-
-    /* grid */
-    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:14px; padding:14px 18px 18px;}
-    .col-4{grid-column:span 4}
-    .col-6{grid-column:span 6}
-    .col-8{grid-column:span 8}
-    .col-12{grid-column:span 12}
-    @media (max-width: 960px){
-      .col-4,.col-6,.col-8{grid-column:span 12}
-      .nav{padding-bottom:12px}
+    .btn.primary:hover{box-shadow: 0 20px 55px rgba(0,212,255,.25)}
+    .micro{
+      margin-top:10px;
+      color:rgba(138,151,177,.9);
+      font-size:12.2px;
+      line-height:1.6;
     }
 
-    .card{
-      border-radius:var(--r);
-      border:1px solid var(--stroke2);
-      background:var(--card);
-      padding:14px;
-      position:relative; overflow:hidden;
-      transition:.25s;
+    /* ===== Right hero: animated wave proof ===== */
+    .proofCard{
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      border-radius: 26px;
+      padding:18px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
     }
-    .card:hover{
-      transform:translateY(-3px);
-      border-color:rgba(0,212,255,.28);
-      box-shadow:var(--shadow);
-    }
-    .row{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-    .card h3{margin:0; font-size:14px}
-    .card p{margin:8px 0 0; color:var(--muted); font-size:12.5px; line-height:1.6}
-
-    /* buttons */
-    .btns{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-    a.btn, button.btn{
-      cursor:pointer;
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 11px; border-radius:12px;
-      text-decoration:none; font-size:12px; font-weight:900;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.02);
-      color:rgba(234,242,255,.85);
-      transition:.25s;
-      white-space:nowrap;
-    }
-    a.btn:hover, button.btn:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.95)}
-    a.btn.primary, button.btn.primary{
-      border-color:transparent;
-      color:#001018;
-      background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.75));
-      box-shadow:0 16px 42px rgba(0,212,255,.18);
-    }
-    a.btn.primary:hover, button.btn.primary:hover{box-shadow:0 20px 55px rgba(0,212,255,.25)}
-    button.btn{font-family:inherit}
-
-    /* tags */
-    .tag{
-      padding:5px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03); font-size:11px; user-select:none;
-      white-space:nowrap;
-    }
-    .tag.ok{border-color:rgba(25,230,140,.35); color:rgba(25,230,140,.95); background:rgba(25,230,140,.10)}
-    .tag.bad{border-color:rgba(255,77,109,.35); color:rgba(255,77,109,.92); background:rgba(255,77,109,.10)}
-    .tag.wait{border-color:rgba(245,185,66,.30); color:rgba(245,185,66,.95); background:rgba(245,185,66,.10)}
-
-    /* status row */
-    .srow{
-      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
-      border:1px solid rgba(255,255,255,.06);
-      background:rgba(10,16,30,.45);
-      border-radius:14px; padding:10px; margin-top:10px;
-      font-size:12px; color:rgba(234,242,255,.78);
-    }
-    .skeleton{
-      border-radius:16px;border:1px solid rgba(255,255,255,0.08);
-      background:rgba(10,16,30,.55);
-      overflow:hidden; position:relative; height:56px; margin-top:10px;
-    }
-    .skeleton::before{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,212,255,0.10), rgba(255,255,255,0.02));
-      transform:translateX(-100%);
-      animation:shimmer 1.1s linear infinite;
-    }
-    @keyframes shimmer{to{transform:translateX(100%);}}
-
-    /* gauge */
-    .gauge{
-      border-radius:16px;border:1px solid rgba(255,255,255,.08);
+    .proofTitle{font-weight:950; font-size:13px; margin:0; color:rgba(234,242,255,.90)}
+    .proofSub{margin:8px 0 0 0; color:rgba(138,151,177,.95); font-size:12.5px; line-height:1.6}
+    .meter{
+      margin-top:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
       background:rgba(10,16,30,.55);
       padding:14px;
     }
-    .big{font-size:28px;font-weight:950;letter-spacing:-.2px}
+    .big{font-size:30px; font-weight:950; letter-spacing:-.3px}
     .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);overflow:hidden;margin-top:10px;}
     .bar i{
       display:block;height:100%;width:0%;
@@ -252,1055 +244,604 @@
       box-shadow:0 0 24px rgba(0,212,255,.25);
       transition:width .9s ease;
     }
-    ul.list{margin:10px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
-
-    /* form + output */
-    .form{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
-    @media (max-width: 560px){.form{grid-template-columns:1fr}}
-    .f{display:flex; flex-direction:column; gap:6px}
-    label{font-size:11px;color:rgba(234,242,255,.70)}
-    input, select{
-      border-radius:12px; border:1px solid rgba(255,255,255,.10);
+    .list{margin:12px 0 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+    .srow{
+      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+      border:1px solid rgba(255,255,255,.06);
       background:rgba(10,16,30,.45);
-      color:rgba(234,242,255,.90);
-      padding:10px; font-size:12px; outline:none;
+      border-radius:14px; padding:10px;
+      font-size:12px; color:rgba(234,242,255,.78);
     }
-    input:focus, select:focus{border-color:rgba(0,212,255,.35)}
-    .mono{
+    .tag{padding:5px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);font-size:11px;user-select:none;white-space:nowrap;}
+    .tag.ok{border-color:rgba(25,230,140,.35); color:rgba(25,230,140,.95); background:rgba(25,230,140,.10)}
+    .tag.wait{border-color:rgba(245,185,66,.30); color:rgba(245,185,66,.95); background:rgba(245,185,66,.10)}
+    .tag.bad{border-color:rgba(255,77,109,.35); color:rgba(255,77,109,.92); background:rgba(255,77,109,.10)}
+
+    /* ===== Sections ===== */
+    .section{padding:26px 0 0}
+    .secHead{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:14px; flex-wrap:wrap;
       margin-top:10px;
-      border-radius:14px; border:1px solid rgba(255,255,255,.08);
-      background:rgba(10,16,30,.55);
-      padding:12px;
-      color:rgba(234,242,255,.86);
-      font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size:12px;
-      white-space:pre-wrap;
-      overflow:auto;
-      min-height:120px;
     }
-
-    /* locked tooltip */
-    .lockedTip{
-      position:absolute; left:12px; right:12px; bottom:12px;
-      border-radius:14px; border:1px dashed rgba(245,185,66,.28);
-      background:rgba(245,185,66,.06);
-      padding:10px; color:rgba(245,185,66,.95); font-size:12px;
-      opacity:0; transform:translateY(6px); transition:.2s;
+    .secHead h2{margin:0; font-size:16px; letter-spacing:.2px}
+    .secHead p{margin:8px 0 0 0; color:rgba(138,151,177,.95); font-size:12.7px; line-height:1.6; max-width:860px}
+    .grid{
+      display:grid; grid-template-columns:repeat(12,1fr); gap:14px; margin-top:14px;
     }
-    .locked:hover .lockedTip{opacity:1; transform:translateY(0)}
-
-    /* table */
-    .table{
-      border-radius:18px; border:1px solid rgba(255,255,255,.08);
+    .col4{grid-column:span 4}
+    .col6{grid-column:span 6}
+    .col8{grid-column:span 8}
+    .col12{grid-column:span 12}
+    @media (max-width:980px){
+      .col4,.col6,.col8{grid-column:span 12}
+    }
+    .card{
+      border-radius:var(--r);
+      border:1px solid var(--stroke2);
       background:rgba(255,255,255,.03);
+      padding:16px;
+      transition:.25s;
+      position:relative;
       overflow:hidden;
     }
-    table{width:100%; border-collapse:collapse;}
-    th, td{
-      padding:12px; border-bottom:1px solid rgba(255,255,255,.06);
-      text-align:left; font-size:12.5px; color:rgba(234,242,255,.78);
-      vertical-align:top;
-    }
-    th{
+    .card:hover{transform:translateY(-3px); border-color:rgba(0,212,255,.30); box-shadow: 0 18px 55px rgba(0,0,0,.35)}
+    .card h3{margin:0; font-size:14px}
+    .card p{margin:10px 0 0; color:rgba(138,151,177,.95); font-size:12.7px; line-height:1.6}
+    .chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+
+    /* ===== Embedded “screenshots” (SVG) ===== */
+    .shot{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
       background:rgba(10,16,30,.55);
-      color:rgba(234,242,255,.88);
-      font-weight:900;
-      letter-spacing:.2px;
+      overflow:hidden;
+      padding:12px;
     }
-    tr:last-child td{border-bottom:none}
+    .shot svg{width:100%; height:auto; display:block; pointer-events:none; user-select:none}
 
-    /* CTA bar */
-    .cta{
-      border-radius:22px; border:1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(520px 240px at 15% 30%, rgba(0,212,255,.22), transparent 60%),
-        radial-gradient(420px 220px at 85% 70%, rgba(124,58,237,.20), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
-      padding:16px;
-      display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+    /* ===== Reveal animation ===== */
+    .reveal{
+      opacity:0;
+      transform: translateY(12px) scale(.98);
+      transition: opacity .7s ease, transform .7s ease;
+      will-change: transform, opacity;
     }
-    .cta h2{margin:0; font-size:14px; font-weight:950}
-    .cta p{margin:6px 0 0; color:var(--muted); font-size:12.5px; line-height:1.55; max-width:820px}
-
-    /* embedded svg */
-    .embedded, .embedded *{-webkit-user-select:none; user-select:none}
-    .embedded{pointer-events:none}
-
-    /* footer note */
-    .note{
-      padding:0 18px 18px;
-      color:rgba(234,242,255,.62);
-      font-size:12px;
-      line-height:1.55;
+    .reveal.in{
+      opacity:1;
+      transform: translateY(0) scale(1);
     }
-    .note b{color:rgba(234,242,255,.86)}
+
+    /* ===== Footer ===== */
+    footer{
+      margin:34px 0 0;
+      padding:22px 0 28px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(138,151,177,.85);
+      font-size:12.5px;
+      line-height:1.6;
+    }
+    .footRow{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap}
+    .footRow a{color:rgba(234,242,255,.75); text-decoration:none}
+    .footRow a:hover{color:#fff}
+
+    /* ===== Reduce Motion ===== */
+    @media (prefers-reduced-motion: reduce){
+      #fx{display:none}
+      .reveal{opacity:1; transform:none}
+      .dot::after{animation:none}
+    }
   </style>
 </head>
-
 <body>
-<a id="top"></a>
+<canvas id="fx"></canvas>
 
-<div class="wrap">
-  <div class="shell">
-
-    <!-- HEADER -->
-    <div class="top">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1 data-i18n="title">ZENTRA — Behavioral Financial Infrastructure</h1>
-          <p class="sub" data-i18n="subtitle">
-            Licensable risk infrastructure for banks, Islamic finance and regulated fintechs. V1 live proof + V2 investor demo in one page.
-          </p>
-        </div>
-      </div>
-
-      <div class="right">
-        <div class="lang" aria-label="Language toggle">
-          <button id="lang-en" class="active" type="button">EN</button>
-          <button id="lang-tr" type="button">TR</button>
-        </div>
-        <div class="pills">
-          <span class="liveBadge"><span class="liveDot"></span><span data-i18n="live">LIVE</span></span>
-          <span class="pill">API-first</span>
-          <span class="pill">Audit-ready</span>
-          <span class="pill lock" data-i18n="lockedvis">Locked modules visible</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- NAV -->
+<div class="topbar">
+  <div class="wrap">
     <div class="nav">
-      <a class="primary" href="#v2" data-i18n="navV2">V2 Investor Demo</a>
-      <a href="#live" data-i18n="navLive">Live Proof</a>
-      <a href="#v1" data-i18n="navV1">V1 Status</a>
-      <a href="#screens" data-i18n="navScreens">Embedded Screens</a>
-      <a href="#pricing" data-i18n="navPricing">Pricing</a>
-      <a href="#contact" data-i18n="navContact">Dubai HQ</a>
-      <a href="#top" data-i18n="navTop">Top</a>
-    </div>
-
-    <!-- HERO WAVE (RWAIM) -->
-    <div class="grid" style="padding-top:12px">
-      <div class="card col-12" style="padding:12px">
-        <svg class="embedded" viewBox="0 0 1200 190" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RWAIM Risk Wave">
+      <div class="brand">
+        <!-- Ultimate animated logo -->
+        <svg class="logo" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-label="ZENTRA logo">
           <defs>
-            <linearGradient id="rwZ" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#19e68c" stop-opacity="0.9"/>
-              <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.9"/>
-              <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
+            <linearGradient id="zg1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00d4ff"/>
+              <stop offset="50%" stop-color="#19e68c"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
             </linearGradient>
-            <filter id="glowZ" x="-20%" y="-60%" width="140%" height="220%">
+            <filter id="zgGlow" x="-60%" y="-60%" width="220%" height="220%">
               <feGaussianBlur stdDeviation="6" result="b"/>
               <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
+            <path id="orbit" d="M80,20 A60,60 0 1,1 79.9,20" />
           </defs>
-
-          <rect width="1200" height="190" rx="22" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
-          <g filter="url(#glowZ)">
-            <path id="waveZ" d="M0,115 C120,55 240,175 360,115 C480,55 600,175 720,115 C840,55 960,175 1080,115 C1140,95 1170,85 1200,95"
-                  fill="none" stroke="url(#rwZ)" stroke-width="7" stroke-linecap="round"/>
-            <circle r="8" fill="#00d4ff">
-              <animateMotion dur="2.6s" repeatCount="indefinite" rotate="auto">
-                <mpath href="#waveZ"/>
-              </animateMotion>
-            </circle>
-            <circle r="6" fill="#19e68c" opacity="0.85">
-              <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto">
-                <mpath href="#waveZ"/>
-              </animateMotion>
-            </circle>
-          </g>
-
-          <text x="28" y="52" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="18" font-weight="950">
-            RWAIM — Real-time Wave AI Monitor
-          </text>
-          <text x="28" y="80" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="13" data-i18n="rwaim">
-            Live behavioral drift • early warning • investor-safe visualization (no GIF / no files)
-          </text>
+          <circle cx="80" cy="80" r="70" fill="none" stroke="url(#zg1)" stroke-width="1.5" opacity=".22">
+            <animate attributeName="opacity" values=".18;.36;.18" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="80" cy="80" r="42" fill="url(#zg1)" filter="url(#zgGlow)">
+            <animateTransform attributeName="transform" type="rotate" from="0 80 80" to="360 80 80" dur="18s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="80" cy="80" r="48" fill="none" stroke="#00d4ff" stroke-width="2" opacity=".25">
+            <animate attributeName="r" values="42;60;42" dur="3.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values=".28;0;.28" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="#00d4ff">
+            <animateMotion dur="5s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#orbit"/>
+            </animateMotion>
+          </circle>
+          <text x="80" y="94" text-anchor="middle" font-family="Inter, Arial" font-size="38" font-weight="900" fill="#050814">Z</text>
         </svg>
+
+        <div>
+          <div class="brandName">ZENTRA</div>
+          <div class="brandSub" data-i18n="tagline">Behavioral Financial Infrastructure</div>
+        </div>
+      </div>
+
+      <div class="navlinks">
+        <a href="products.html" data-i18n="navProducts">Products</a>
+        <a href="market.html" data-i18n="navMarket">Market</a>
+        <a href="investor.html" data-i18n="navInvestor">Investor</a>
+        <a href="contact.html" class="primary" data-i18n="navDubai">Dubai HQ</a>
+        <span class="lang" aria-label="Language toggle">
+          <button id="lg-en" class="active" type="button">EN</button>
+          <button id="lg-tr" type="button">TR</button>
+        </span>
       </div>
     </div>
-
-    <!-- LIVE -->
-    <a id="live"></a>
-    <div class="secHead">
-      <div>
-        <h2 data-i18n="liveTitle">Live Proof</h2>
-        <p data-i18n="liveSub">
-          Production evidence: Health + OpenAPI + verifiable endpoints. Status check is investor-safe (won’t falsely show FAIL due to CORS).
-        </p>
-      </div>
-      <span class="pill dev" data-i18n="prodTag">Production Live</span>
-    </div>
-
-    <div class="grid">
-      <!-- RiskLens -->
-      <div class="card col-4">
-        <div class="row">
-          <h3>RiskLens API</h3>
-          <span class="tag wait" id="risk-tag" data-i18n="checking">CHECKING</span>
-        </div>
-        <p data-i18n="riskDesc">Behavioral risk scoring core. Health and OpenAPI are the public proof.</p>
-        <div class="btns">
-          <a class="btn" id="risk-health" target="_blank" rel="noopener">Health</a>
-          <a class="btn" id="risk-openapi" target="_blank" rel="noopener">OpenAPI</a>
-          <a class="btn" id="risk-home" target="_blank" rel="noopener">Root</a>
-        </div>
-        <div class="skeleton" id="risk-skel"></div>
-        <div class="srow">
-          <span data-i18n="endpoint">Endpoint</span>
-          <span class="tag" id="risk-url">—</span>
-        </div>
-        <div class="srow">
-          <span data-i18n="proofNoteL">Investor proof</span>
-          <span class="tag ok" data-i18n="proofNoteR">Tap Health/OpenAPI to verify</span>
-        </div>
-      </div>
-
-      <!-- Stress -->
-      <div class="card col-4">
-        <div class="row">
-          <h3>Credit Stress Engine</h3>
-          <span class="tag wait" id="stress-tag" data-i18n="checking2">CHECKING</span>
-        </div>
-        <p data-i18n="stressDesc">Installment pressure & repayment stress modeling (attachable module).</p>
-        <div class="btns">
-          <a class="btn" id="stress-health" target="_blank" rel="noopener">Health</a>
-          <a class="btn" id="stress-openapi" target="_blank" rel="noopener">OpenAPI</a>
-          <a class="btn" id="stress-home" target="_blank" rel="noopener">Root</a>
-        </div>
-        <div class="skeleton" id="stress-skel"></div>
-        <div class="srow">
-          <span data-i18n="endpoint2">Endpoint</span>
-          <span class="tag" id="stress-url">—</span>
-        </div>
-        <div class="srow">
-          <span data-i18n="proofNoteL">Investor proof</span>
-          <span class="tag ok" data-i18n="proofNoteR">Tap Health/OpenAPI to verify</span>
-        </div>
-      </div>
-
-      <!-- Activity -->
-      <div class="card col-4">
-        <div class="gauge">
-          <div class="row">
-            <div>
-              <div style="font-size:12px;color:rgba(234,242,255,.70)" data-i18n="activityTitle">Live Risk Activity (stable demo)</div>
-              <div class="big"><span data-i18n="score">Score</span>: <span id="score">78</span></div>
-            </div>
-            <span class="pill dev" data-i18n="auto">AUTO</span>
-          </div>
-          <div class="bar" aria-hidden="true"><i id="bar"></i></div>
-          <ul class="list" id="last5"></ul>
-          <div style="margin-top:8px;color:var(--muted);font-size:12px" data-i18n="activityNote">
-            Investor-safe: stable animation by default. Can be wired to live scoring later.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- V1 -->
-    <a id="v1"></a>
-    <div class="secHead">
-      <div>
-        <h2 data-i18n="v1Title">V1 — Current Live Stack</h2>
-        <p data-i18n="v1Sub">
-          Minimal, verifiable and production-live. This is the “proof layer” while V2 expands to platform lenses.
-        </p>
-      </div>
-      <span class="pill" data-i18n="v1Tag">LIVE CORE</span>
-    </div>
-
-    <div class="grid">
-      <div class="card col-6">
-        <div class="row">
-          <h3 data-i18n="v1A">RiskLens API (Behavioral Scoring)</h3>
-          <span class="tag ok" data-i18n="live2">LIVE</span>
-        </div>
-        <p data-i18n="v1Ad">
-          AI-assisted modular risk scoring for banks, neobanks and embedded finance. Public proof via /health and /openapi.json.
-        </p>
-        <div class="btns">
-          <a class="btn primary" id="v1-risk-doc" target="_blank" rel="noopener" data-i18n="openDocs">Open Docs</a>
-          <a class="btn" id="v1-risk-health" target="_blank" rel="noopener">/health</a>
-          <a class="btn" id="v1-risk-openapi" target="_blank" rel="noopener">/openapi.json</a>
-        </div>
-      </div>
-
-      <div class="card col-6">
-        <div class="row">
-          <h3 data-i18n="v1B">Credit Stress Engine (Installment Stress)</h3>
-          <span class="tag ok" data-i18n="live2">LIVE</span>
-        </div>
-        <p data-i18n="v1Bd">
-          Installment/repayment pressure simulation: income ratio, stress score and risk band. Can attach to RiskLens as a module.
-        </p>
-        <div class="btns">
-          <a class="btn primary" id="v1-stress-doc" target="_blank" rel="noopener" data-i18n="openDocs">Open Docs</a>
-          <a class="btn" id="v1-stress-health" target="_blank" rel="noopener">/health</a>
-          <a class="btn" id="v1-stress-openapi" target="_blank" rel="noopener">/openapi.json</a>
-        </div>
-      </div>
-
-      <div class="card col-12">
-        <div class="row">
-          <h3 data-i18n="v1NoteT">V1 investor note</h3>
-          <span class="pill lock" data-i18n="v1NoteTag">SAFE</span>
-        </div>
-        <p data-i18n="v1NoteD">
-          This page intentionally avoids sensitive implementation details. The internal model architecture, data contracts and security controls are delivered in a private PDF pack after NDA.
-        </p>
-      </div>
-    </div>
-
-    <!-- V2 -->
-    <a id="v2"></a>
-    <div class="secHead">
-      <div>
-        <h2 data-i18n="v2Title">V2 — Investor Demo (All-in)</h2>
-        <p data-i18n="v2Sub">
-          Full story: Live proof + explain layer + locked lenses + moat + pricing + Dubai HQ CTA. Designed to stand alone without a Zoom call.
-        </p>
-      </div>
-      <span class="pill dev" data-i18n="v2Tag">INVESTOR READY</span>
-    </div>
-
-    <div class="grid">
-      <!-- Explain -->
-      <div class="card col-8">
-        <div class="row">
-          <h3 data-i18n="exTitle">Explain Layer (ADEST / AV Assisted)</h3>
-          <span class="pill" id="explain-mode">MODE: AUTO</span>
-        </div>
-        <p data-i18n="exDesc">
-          Produces a short “why + action + compliance note” for a score. If /explain exists, it will call it. Otherwise it uses a deterministic template (no paid model required).
-        </p>
-
-        <div class="form">
-          <div class="f"><label>amount</label><input id="amount" type="number" value="1000" min="0" step="1"></div>
-          <div class="f">
-            <label>sector</label>
-            <select id="sector">
-              <option value="retail" selected>retail</option>
-              <option value="services">services</option>
-              <option value="construction">construction</option>
-              <option value="manufacturing">manufacturing</option>
-              <option value="logistics">logistics</option>
-            </select>
-          </div>
-          <div class="f"><label>payment_delay_days</label><input id="delay" type="number" value="10" min="0" step="1"></div>
-          <div class="f"><label>exposure_ratio (0-1)</label><input id="exposure" type="number" value="0.25" min="0" max="1" step="0.01"></div>
-          <div class="f"><label>customer_score (0-100)</label><input id="cscore" type="number" value="78" min="0" max="100" step="1"></div>
-          <div class="f"><label>sector_risk_level (1-5)</label><input id="srl" type="number" value="2" min="1" max="5" step="1"></div>
-        </div>
-
-        <div class="btns">
-          <button class="btn primary" id="run-explain" type="button" data-i18n="exBtn">Explain This Score</button>
-          <button class="btn" id="fill" type="button" data-i18n="sample">Fill Sample</button>
-        </div>
-
-        <div class="mono" id="output">{ }</div>
-      </div>
-
-      <!-- Lens Roadmap -->
-      <div class="card col-4">
-        <div class="row">
-          <h3 data-i18n="lensTitle">Lens Roadmap</h3>
-          <span class="pill lock" data-i18n="locked">Locked visibility</span>
-        </div>
-        <p data-i18n="lensDesc">Investors see the full vision without exposing internal model details.</p>
-
-        <div class="srow"><span>RiskLens API</span><span class="tag ok" data-i18n="live2">LIVE</span></div>
-        <div class="srow"><span>Credit Stress</span><span class="tag ok" data-i18n="live2">LIVE</span></div>
-        <div class="srow"><span>CFO Lens</span><span class="tag wait" data-i18n="dev">DEV</span></div>
-        <div class="srow"><span>SME Lens</span><span class="tag wait" data-i18n="planned">PLANNED</span></div>
-
-        <div class="card locked" style="margin-top:12px">
-          <div class="row"><h3 style="font-size:13px;margin:0">Family Office Lens</h3><span class="pill lock" data-i18n="lock">LOCKED</span></div>
-          <p data-i18n="family">Concentration risk, liquidity runway, intergenerational sustainability modeling.</p>
-          <div class="lockedTip"><b data-i18n="lock2">Locked</b> — <span data-i18n="pdf">Detailed architecture is presented in the private PDF pack.</span></div>
-        </div>
-
-        <div class="card locked" style="margin-top:12px">
-          <div class="row"><h3 style="font-size:13px;margin:0">Macro Shock Lens</h3><span class="pill lock" data-i18n="lock3">LOCKED</span></div>
-          <p data-i18n="macro">FX / rate / inflation shock simulations for institutional portfolios.</p>
-          <div class="lockedTip"><b data-i18n="lock4">Locked</b> — <span data-i18n="addon">Released as an add-on after core validation.</span></div>
-        </div>
-
-        <div class="card locked" style="margin-top:12px">
-          <div class="row"><h3 style="font-size:13px;margin:0">Cognitive Finance Lens</h3><span class="pill lock" data-i18n="lock5">LOCKED</span></div>
-          <p data-i18n="cognitive">Behavioral decision profiling → earlier default detection than past-only scores.</p>
-          <div class="lockedTip"><b data-i18n="lock6">Locked</b> — <span data-i18n="demoonly">Demo only; product surface not exposed publicly.</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WHY WINS -->
-    <div class="secHead">
-      <div>
-        <h2 data-i18n="winsTitle">Why ZENTRA Wins</h2>
-        <p data-i18n="winsSub">Moat: behavioral signals + stress simulation + licensable lens architecture. Built for regulated institutions.</p>
-      </div>
-      <span class="pill" data-i18n="moat">Moat</span>
-    </div>
-
-    <div class="grid">
-      <div class="card col-4">
-        <div class="row"><h3 data-i18n="w1">Behavioral Signal Layer</h3><span class="pill dev">CORE</span></div>
-        <p data-i18n="w1d">Captures real behavior (delay dynamics, exposure drift, volatility) that past-only scores miss.</p>
-      </div>
-      <div class="card col-4">
-        <div class="row"><h3 data-i18n="w2">Stress Simulation Core</h3><span class="pill dev">CORE</span></div>
-        <p data-i18n="w2d">Models repayment pressure under stress to detect liquidity collapse earlier than default.</p>
-      </div>
-      <div class="card col-4">
-        <div class="row"><h3 data-i18n="w3">Licensable Lens Architecture</h3><span class="pill dev">PLATFORM</span></div>
-        <p data-i18n="w3d">API-first modular rollout with locked visibility. Scales globally without exposing internals.</p>
-      </div>
-
-      <div class="card col-12">
-        <div class="row"><h3 data-i18n="patT">Protectable Domains (short)</h3><span class="pill" data-i18n="patTag">Protectable</span></div>
-        <div class="btns" style="margin-top:10px">
-          <span class="pill">Behavioral Risk Index</span>
-          <span class="pill">Liquidity Collapse Model</span>
-          <span class="pill">Stress Predictor</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- SCREENS (embedded) -->
-    <a id="screens"></a>
-    <div class="secHead">
-      <div>
-        <h2 data-i18n="screensTitle">Screenshots (Embedded • No Files)</h2>
-        <p data-i18n="screensSub">
-          Investor-facing visual proof: Demo UI, Swagger-style docs, Roadmap locked visibility. Lightweight embedded SVGs.
-        </p>
-      </div>
-      <span class="pill lock" data-i18n="screensTag">NO FILES</span>
-    </div>
-
-    <div class="grid">
-      <!-- Demo shot -->
-      <div class="card col-4" style="padding:12px">
-        <div class="row">
-          <h3>ZENTRA • Demo</h3>
-          <span class="tag ok" data-i18n="live2">LIVE</span>
-        </div>
-        <p data-i18n="shotDemo">Inputs → Score + Band + Signals. Investor sees a working surface without internal leakage.</p>
-        <svg class="embedded" viewBox="0 0 520 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" aria-label="Demo UI">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#00d4ff" stop-opacity="0.22"/>
-              <stop offset="1" stop-color="#7c3aed" stop-opacity="0.18"/>
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="520" height="360" rx="20" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-          <rect x="16" y="16" width="488" height="42" rx="14" fill="url(#g1)" stroke="rgba(255,255,255,0.10)"/>
-          <text x="32" y="44" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="14" font-weight="900">RiskLens Demo</text>
-
-          <rect x="16" y="72" width="310" height="272" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-          <text x="32" y="98" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="11">Inputs</text>
-
-          <!-- input lines -->
-          <g fill="rgba(234,242,255,0.78)" font-family="Inter, Arial" font-size="11">
-            <text x="32" y="128">amount</text><rect x="150" y="116" width="160" height="20" rx="8" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-            <text x="32" y="160">sector</text><rect x="150" y="148" width="160" height="20" rx="8" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-            <text x="32" y="192">payment_delay_days</text><rect x="150" y="180" width="160" height="20" rx="8" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-            <text x="32" y="224">customer_score</text><rect x="150" y="212" width="160" height="20" rx="8" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-            <text x="32" y="256">exposure_ratio</text><rect x="150" y="244" width="160" height="20" rx="8" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-          </g>
-
-          <!-- run button -->
-          <rect x="32" y="286" width="120" height="28" rx="12" fill="rgba(0,212,255,0.18)" stroke="rgba(0,212,255,0.35)"/>
-          <text x="64" y="305" fill="rgba(0,212,255,0.95)" font-family="Inter, Arial" font-size="12" font-weight="900">Run</text>
-
-          <!-- Result -->
-          <rect x="336" y="72" width="168" height="272" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-          <text x="352" y="98" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="11">Result</text>
-          <text x="352" y="142" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="34" font-weight="950">78</text>
-          <rect x="352" y="158" width="76" height="20" rx="10" fill="rgba(245,185,66,0.10)" stroke="rgba(245,185,66,0.30)"/>
-          <text x="372" y="173" fill="rgba(245,185,66,0.95)" font-family="Inter, Arial" font-size="11" font-weight="900">MID</text>
-          <rect x="352" y="204" width="136" height="18" rx="9" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-          <text x="360" y="217" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="10">early_warning: delay_dynamics</text>
-        </svg>
-      </div>
-
-      <!-- Swagger shot -->
-      <div class="card col-4" style="padding:12px">
-        <div class="row">
-          <h3>RiskLens API — Docs</h3>
-          <span class="pill dev">OpenAPI</span>
-        </div>
-        <p data-i18n="shotSwagger">Swagger-like endpoint proof: /health, /openapi.json, /score, /stress.</p>
-        <svg class="embedded" viewBox="0 0 520 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" aria-label="Swagger UI">
-          <rect x="0" y="0" width="520" height="360" rx="20" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-          <rect x="16" y="16" width="488" height="42" rx="14" fill="rgba(0,212,255,0.10)" stroke="rgba(0,212,255,0.25)"/>
-          <text x="32" y="44" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="14" font-weight="900">OpenAPI</text>
-
-          <g font-family="Inter, Arial" font-size="11">
-            <rect x="16" y="72" width="488" height="44" rx="14" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-            <text x="32" y="99" fill="rgba(25,230,140,0.95)" font-weight="900">GET</text>
-            <text x="76" y="99" fill="rgba(234,242,255,0.86)">/health</text>
-
-            <rect x="16" y="124" width="488" height="44" rx="14" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-            <text x="32" y="151" fill="rgba(25,230,140,0.95)" font-weight="900">GET</text>
-            <text x="76" y="151" fill="rgba(234,242,255,0.86)">/openapi.json</text>
-
-            <rect x="16" y="176" width="488" height="44" rx="14" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-            <text x="32" y="203" fill="rgba(0,212,255,0.95)" font-weight="900">POST</text>
-            <text x="76" y="203" fill="rgba(234,242,255,0.86)">/score</text>
-
-            <rect x="16" y="228" width="488" height="44" rx="14" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
-            <text x="32" y="255" fill="rgba(0,212,255,0.95)" font-weight="900">POST</text>
-            <text x="76" y="255" fill="rgba(234,242,255,0.86)">/stress</text>
-
-            <rect x="16" y="280" width="488" height="64" rx="14" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.08)"/>
-            <text x="32" y="304" fill="rgba(138,151,177,0.95)">Example request</text>
-            <text x="32" y="326" fill="rgba(234,242,255,0.82)" font-family="ui-monospace, Menlo, monospace" font-size="10">
-              { "amount":1000, "sector":"retail", "payment_delay_days":10, "customer_score":78, "exposure_ratio":0.25 }
-            </text>
-          </g>
-        </svg>
-      </div>
-
-      <!-- Roadmap shot -->
-      <div class="card col-4" style="padding:12px">
-        <div class="row">
-          <h3>Roadmap</h3>
-          <span class="pill lock" data-i18n="locked">Locked visibility</span>
-        </div>
-        <p data-i18n="shotRoadmap">Locked modules shown with short explanations. Builds trust while protecting internals.</p>
-        <svg class="embedded" viewBox="0 0 520 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" aria-label="Roadmap">
-          <rect x="0" y="0" width="520" height="360" rx="20" fill="rgba(10,16,30,0.55)" stroke="rgba(255,255,255,0.10)"/>
-          <rect x="16" y="16" width="488" height="42" rx="14" fill="rgba(245,185,66,0.08)" stroke="rgba(245,185,66,0.25)"/>
-          <text x="32" y="44" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="14" font-weight="900">Lens Roadmap</text>
-
-          <g font-family="Inter, Arial" font-size="11">
-            <rect x="16" y="72" width="488" height="44" rx="14" fill="rgba(25,230,140,0.08)" stroke="rgba(25,230,140,0.25)"/>
-            <text x="32" y="100" fill="rgba(25,230,140,0.95)" font-weight="900">LIVE</text>
-            <text x="86" y="100" fill="rgba(234,242,255,0.86)">RiskLens API</text>
-
-            <rect x="16" y="124" width="488" height="44" rx="14" fill="rgba(25,230,140,0.08)" stroke="rgba(25,230,140,0.25)"/>
-            <text x="32" y="152" fill="rgba(25,230,140,0.95)" font-weight="900">LIVE</text>
-            <text x="86" y="152" fill="rgba(234,242,255,0.86)">Credit Stress Engine</text>
-
-            <rect x="16" y="176" width="488" height="44" rx="14" fill="rgba(0,212,255,0.06)" stroke="rgba(0,212,255,0.20)"/>
-            <text x="32" y="204" fill="rgba(0,212,255,0.95)" font-weight="900">DEV</text>
-            <text x="86" y="204" fill="rgba(234,242,255,0.86)">CFO Lens</text>
-
-            <rect x="16" y="228" width="488" height="44" rx="14" fill="rgba(245,185,66,0.06)" stroke="rgba(245,185,66,0.22)"/>
-            <text x="32" y="256" fill="rgba(245,185,66,0.95)" font-weight="900">LOCKED</text>
-            <text x="104" y="256" fill="rgba(234,242,255,0.86)">Family Office Lens</text>
-
-            <rect x="16" y="280" width="488" height="44" rx="14" fill="rgba(245,185,66,0.06)" stroke="rgba(245,185,66,0.22)"/>
-            <text x="32" y="308" fill="rgba(245,185,66,0.95)" font-weight="900">LOCKED</text>
-            <text x="104" y="308" fill="rgba(234,242,255,0.86)">Macro Shock • Cognitive Finance</text>
-          </g>
-        </svg>
-      </div>
-    </div>
-
-    <!-- PRICING -->
-    <a id="pricing"></a>
-    <div class="secHead">
-      <div>
-        <h2 data-i18n="pricingTitle">Pricing & Licensing</h2>
-        <p data-i18n="pricingSub">Structure shown publicly; commercial terms depend on region, scope, deployment mode and SLA.</p>
-      </div>
-      <span class="pill" data-i18n="lic">Licensing</span>
-    </div>
-
-    <div class="grid">
-      <div class="card col-12">
-        <div class="table">
-          <table>
-            <thead>
-              <tr>
-                <th data-i18n="t1">Plan</th>
-                <th data-i18n="t2">Target</th>
-                <th data-i18n="t3">Includes</th>
-                <th data-i18n="t4">License Model</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>API Core</b></td>
-                <td data-i18n="r1t">Neobank / Fintech</td>
-                <td data-i18n="r1i">Risk score + band + explain layer + monitoring</td>
-                <td data-i18n="r1m">Usage-based + minimum commitment</td>
-              </tr>
-              <tr>
-                <td><b>Enterprise</b></td>
-                <td data-i18n="r2t">Banks / Islamic Finance</td>
-                <td data-i18n="r2i">Custom models + compliance pack + optional on-prem / VPC</td>
-                <td data-i18n="r2m">Annual license + SLA</td>
-              </tr>
-              <tr>
-                <td><b>Lens Add-ons</b></td>
-                <td data-i18n="r3t">Institutional</td>
-                <td data-i18n="r3i">CFO / SME / Macro / Family Office (by phase)</td>
-                <td data-i18n="r3m">Modular subscription</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="margin:10px 0 0; color:var(--muted); font-size:12.5px; line-height:1.55" data-i18n="priceNote">
-          Note: This page intentionally avoids sensitive implementation details. Full technical pack is shared privately after NDA.
-        </p>
-      </div>
-    </div>
-
-    <!-- CONTACT / CTA -->
-    <a id="contact"></a>
-    <div class="grid" style="padding-top:0">
-      <div class="card col-12" style="padding:14px">
-        <div class="cta">
-          <div>
-            <h2 data-i18n="ctaTitle">Dubai HQ • Strategic Partnerships • Investor Access</h2>
-            <p data-i18n="ctaDesc">Request the private PDF technical pack and a pilot scope. This site is designed to stand alone without a Zoom call.</p>
-          </div>
-          <div class="btns" style="margin-top:0">
-            <a class="btn primary" id="cta-mail" href="mailto:contact@zentrarisk.com" data-i18n="ctaBtn">Contact Dubai HQ</a>
-            <a class="btn" href="#top" data-i18n="ctaTop">Back to Top</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="note">
-      <b data-i18n="footerBold">Investor-safe note:</b>
-      <span data-i18n="footerText">
-        Status checks avoid false failures caused by browser CORS restrictions. Health/OpenAPI links are the source of truth for verification.
-      </span>
-    </div>
-
   </div>
 </div>
 
-<noscript style="display:block; width:1160px; max-width:94%; margin:0 auto; padding:16px; color:rgba(234,242,255,.75);">
-  This site requires JavaScript for live demos.
-</noscript>
+<main class="wrap">
+  <section class="hero">
+    <div class="heroGrid">
+      <div class="heroCard" id="parallaxCard">
+        <div class="kicker">
+          <span class="pill live"><span class="dot"></span><span data-i18n="live">LIVE</span></span>
+          <span class="pill">API-first</span>
+          <span class="pill">Audit-ready</span>
+          <span class="pill" data-i18n="noPii">No PII required (demo)</span>
+        </div>
+
+        <h1>
+          <span data-i18n="hero1">AI-Operated</span>
+          <span class="grad" data-i18n="hero2">Risk Infrastructure</span><br/>
+          <span data-i18n="hero3">for Banks & Regulated Fintech</span>
+        </h1>
+
+        <p class="lead" data-i18n="lead">
+          ZENTRA combines behavioral risk scoring, stress simulation, and a licensable “Lens” marketplace.
+          Built to stand alone for investors — proof + product + platform in one place.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="products.html" data-i18n="ctaProducts">Explore Live Products</a>
+          <a class="btn" href="investor.html" data-i18n="ctaInvestor">Investor Overview</a>
+          <a class="btn" href="market.html" data-i18n="ctaMarket">Lens Marketplace</a>
+        </div>
+
+        <div class="micro" data-i18n="micro">
+          Dubai HQ strategy • NDA technical pack available • Global rollout-ready architecture
+        </div>
+      </div>
+
+      <div class="proofCard reveal">
+        <p class="proofTitle" data-i18n="proofTitle">RWAIM — Real-time Wave AI Monitor</p>
+        <p class="proofSub" data-i18n="proofSub">Investor-safe motion visualization. Demonstrates live drift monitoring without files or heavy UI.</p>
+
+        <div class="shot" style="margin-top:12px">
+          <svg viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Risk wave">
+            <defs>
+              <linearGradient id="rw" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#19e68c" stop-opacity="0.95"/>
+                <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.95"/>
+                <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
+              </linearGradient>
+              <filter id="glow" x="-20%" y="-60%" width="140%" height="220%">
+                <feGaussianBlur stdDeviation="6" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <rect width="1200" height="220" rx="22" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+            <g filter="url(#glow)">
+              <path id="wave" d="M0,130 C120,65 240,195 360,130 C480,65 600,195 720,130 C840,65 960,195 1080,130 C1140,110 1170,98 1200,110"
+                    fill="none" stroke="url(#rw)" stroke-width="7" stroke-linecap="round"/>
+              <circle r="8" fill="#00d4ff">
+                <animateMotion dur="2.6s" repeatCount="indefinite" rotate="auto"><mpath href="#wave"/></animateMotion>
+              </circle>
+              <circle r="6" fill="#19e68c" opacity="0.85">
+                <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto"><mpath href="#wave"/></animateMotion>
+              </circle>
+            </g>
+            <text x="28" y="60" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="18" font-weight="950">RWAIM</text>
+            <text x="28" y="88" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="13" data-i18n="rwaimLine">
+              Live behavioral drift • early warning • investor-safe visualization
+            </text>
+          </svg>
+        </div>
+
+        <div class="meter" style="margin-top:12px">
+          <div class="srow">
+            <span data-i18n="activity">Live Risk Activity</span>
+            <span class="tag wait" id="bandTag">MID</span>
+          </div>
+          <div class="big"><span data-i18n="score">Score</span>: <span id="score">78</span></div>
+          <div class="bar"><i id="bar"></i></div>
+          <ul class="list" id="last5"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="secHead reveal">
+      <div>
+        <h2 data-i18n="wins">Why ZENTRA Wins</h2>
+        <p data-i18n="winsSub">Moat = behavioral signals + stress simulation + licensable modular lenses. Built for regulation-heavy institutions.</p>
+      </div>
+      <span class="pill" data-i18n="platform">Platform</span>
+    </div>
+
+    <div class="grid">
+      <div class="card col4 reveal">
+        <h3 data-i18n="w1">Behavioral Signal Layer</h3>
+        <p data-i18n="w1d">Captures delay dynamics, exposure drift, and volatility that past-only scores miss.</p>
+        <div class="chips">
+          <span class="pill">Delay Dynamics</span><span class="pill">Exposure Drift</span><span class="pill">Drift Alerts</span>
+        </div>
+      </div>
+      <div class="card col4 reveal">
+        <h3 data-i18n="w2">Stress Simulation Core</h3>
+        <p data-i18n="w2d">Models repayment pressure under stress to detect liquidity collapse earlier than default.</p>
+        <div class="chips">
+          <span class="pill">Installment Stress</span><span class="pill">Runway</span><span class="pill">Shock Scenarios</span>
+        </div>
+      </div>
+      <div class="card col4 reveal">
+        <h3 data-i18n="w3">Licensable Lens Marketplace</h3>
+        <p data-i18n="w3d">A modular product surface with locked visibility for investors; unlocks under NDA/pilot/enterprise.</p>
+        <div class="chips">
+          <span class="pill">CFO Lens</span><span class="pill">SME Lens</span><span class="pill">Macro Lens</span>
+        </div>
+      </div>
+
+      <div class="card col12 reveal">
+        <h3 data-i18n="proofShots">Embedded Screenshots (No Files)</h3>
+        <p data-i18n="proofShotsSub">Investor-facing UI proof: Demo, Swagger/OpenAPI, and Roadmap — rendered as lightweight SVG.</p>
+        <div class="grid" style="margin-top:12px">
+          <div class="shot col4">
+            <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" aria-label="Demo screenshot">
+              <defs>
+                <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#00d4ff" stop-opacity=".9"/>
+                  <stop offset="1" stop-color="#7c3aed" stop-opacity=".8"/>
+                </linearGradient>
+              </defs>
+              <rect width="520" height="320" rx="18" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.10)"/>
+              <text x="18" y="34" fill="rgba(234,242,255,.92)" font-family="Inter" font-size="14" font-weight="900">ZENTRA • Demo</text>
+              <text x="18" y="56" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">Inputs → Score + Band + Signals</text>
+              <rect x="18" y="78" width="300" height="30" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="18" y="118" width="300" height="30" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="18" y="158" width="300" height="30" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="18" y="208" width="140" height="34" rx="12" fill="url(#gA)"/>
+              <text x="48" y="230" fill="#001018" font-family="Inter" font-size="12" font-weight="900">Run</text>
+              <rect x="330" y="78" width="172" height="164" rx="14" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <text x="346" y="112" fill="rgba(234,242,255,.92)" font-family="Inter" font-size="28" font-weight="950">78</text>
+              <text x="346" y="138" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">Risk Score</text>
+              <rect x="346" y="154" width="120" height="10" rx="999" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="346" y="154" width="88" height="10" rx="999" fill="url(#gA)"/>
+              <text x="346" y="190" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">Band: MID</text>
+              <text x="346" y="210" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">Flags: delay_dynamics</text>
+            </svg>
+          </div>
+
+          <div class="shot col4">
+            <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" aria-label="OpenAPI screenshot">
+              <rect width="520" height="320" rx="18" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.10)"/>
+              <text x="18" y="34" fill="rgba(234,242,255,.92)" font-family="Inter" font-size="14" font-weight="900">RiskLens API — Docs</text>
+              <text x="18" y="56" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">OpenAPI • Endpoints</text>
+              <rect x="18" y="78" width="484" height="28" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <text x="28" y="96" fill="rgba(234,242,255,.75)" font-family="ui-monospace, Menlo" font-size="11">GET /health</text>
+              <rect x="18" y="114" width="484" height="28" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <text x="28" y="132" fill="rgba(234,242,255,.75)" font-family="ui-monospace, Menlo" font-size="11">GET /openapi.json</text>
+              <rect x="18" y="150" width="484" height="28" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <text x="28" y="168" fill="rgba(234,242,255,.75)" font-family="ui-monospace, Menlo" font-size="11">POST /score</text>
+              <rect x="18" y="186" width="484" height="28" rx="10" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <text x="28" y="204" fill="rgba(234,242,255,.75)" font-family="ui-monospace, Menlo" font-size="11">POST /stress</text>
+              <rect x="18" y="230" width="484" height="72" rx="14" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <text x="28" y="254" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">Behavioral scoring • risk banding • early warning flags</text>
+              <text x="28" y="278" fill="rgba(234,242,255,.75)" font-family="ui-monospace, Menlo" font-size="10">
+                { "risk_score": 78, "risk_band": "MID", "flags": ["delay_dynamics"] }
+              </text>
+            </svg>
+          </div>
+
+          <div class="shot col4">
+            <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" aria-label="Roadmap screenshot">
+              <defs>
+                <linearGradient id="gB" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#19e68c" stop-opacity=".9"/>
+                  <stop offset="1" stop-color="#00d4ff" stop-opacity=".85"/>
+                </linearGradient>
+              </defs>
+              <rect width="520" height="320" rx="18" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.10)"/>
+              <text x="18" y="34" fill="rgba(234,242,255,.92)" font-family="Inter" font-size="14" font-weight="900">Roadmap</text>
+              <text x="18" y="56" fill="rgba(138,151,177,.95)" font-family="Inter" font-size="11">Locked visibility (investor-safe)</text>
+
+              <rect x="18" y="78" width="484" height="44" rx="14" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="28" y="92" width="76" height="18" rx="999" fill="rgba(25,230,140,.14)" stroke="rgba(25,230,140,.35)"/>
+              <text x="40" y="105" fill="rgba(25,230,140,.95)" font-family="Inter" font-size="10" font-weight="900">LIVE</text>
+              <text x="120" y="105" fill="rgba(234,242,255,.82)" font-family="Inter" font-size="12" font-weight="900">RiskLens API</text>
+
+              <rect x="18" y="132" width="484" height="44" rx="14" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="28" y="146" width="76" height="18" rx="999" fill="rgba(25,230,140,.14)" stroke="rgba(25,230,140,.35)"/>
+              <text x="40" y="159" fill="rgba(25,230,140,.95)" font-family="Inter" font-size="10" font-weight="900">LIVE</text>
+              <text x="120" y="159" fill="rgba(234,242,255,.82)" font-family="Inter" font-size="12" font-weight="900">Credit Stress Engine</text>
+
+              <rect x="18" y="186" width="484" height="44" rx="14" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="28" y="200" width="86" height="18" rx="999" fill="rgba(245,185,66,.12)" stroke="rgba(245,185,66,.30)"/>
+              <text x="40" y="213" fill="rgba(245,185,66,.95)" font-family="Inter" font-size="10" font-weight="900">LOCKED</text>
+              <text x="130" y="213" fill="rgba(234,242,255,.82)" font-family="Inter" font-size="12" font-weight="900">Family Office Lens</text>
+
+              <rect x="18" y="240" width="484" height="44" rx="14" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
+              <rect x="28" y="254" width="86" height="18" rx="999" fill="rgba(245,185,66,.12)" stroke="rgba(245,185,66,.30)"/>
+              <text x="40" y="267" fill="rgba(245,185,66,.95)" font-family="Inter" font-size="10" font-weight="900">LOCKED</text>
+              <text x="130" y="267" fill="rgba(234,242,255,.82)" font-family="Inter" font-size="12" font-weight="900">Macro Shock Lens</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footRow">
+      <div>© 2026 ZENTRA • <span data-i18n="foot">Dubai HQ • Confidential architecture under NDA</span></div>
+      <div>
+        <a href="investor.html" data-i18n="footInvestor">Investor</a> •
+        <a href="products.html" data-i18n="footProducts">Products</a> •
+        <a href="market.html" data-i18n="footMarket">Market</a> •
+        <a href="contact.html" data-i18n="footContact">Contact</a>
+      </div>
+    </div>
+  </footer>
+</main>
 
 <script>
+/* =============================
+   LANGUAGE (global, persisted)
+============================= */
 (function(){
-  // ====== CONFIG (edit only here) ======
-  const CFG = {
-    risk: "https://zentra-risklens-api-2.onrender.com",
-    stress: "https://zentra-credit-stress-api.onrender.com",
-    explainBase: "", // optional explain service base; default = risk base
-    contactEmail: "contact@zentrarisk.com"
+  const dict = {
+    en:{
+      tagline:"Behavioral Financial Infrastructure",
+      navProducts:"Products", navMarket:"Market", navInvestor:"Investor", navDubai:"Dubai HQ",
+      live:"LIVE", noPii:"No PII required (demo)",
+      hero1:"AI-Operated", hero2:"Risk Infrastructure", hero3:"for Banks & Regulated Fintech",
+      lead:"ZENTRA combines behavioral risk scoring, stress simulation, and a licensable “Lens” marketplace. Built to stand alone for investors — proof + product + platform in one place.",
+      ctaProducts:"Explore Live Products", ctaInvestor:"Investor Overview", ctaMarket:"Lens Marketplace",
+      micro:"Dubai HQ strategy • NDA technical pack available • Global rollout-ready architecture",
+      proofTitle:"RWAIM — Real-time Wave AI Monitor",
+      proofSub:"Investor-safe motion visualization. Demonstrates live drift monitoring without files or heavy UI.",
+      rwaimLine:"Live behavioral drift • early warning • investor-safe visualization",
+      activity:"Live Risk Activity", score:"Score",
+      wins:"Why ZENTRA Wins",
+      winsSub:"Moat = behavioral signals + stress simulation + licensable modular lenses. Built for regulation-heavy institutions.",
+      platform:"Platform",
+      w1:"Behavioral Signal Layer",
+      w1d:"Captures delay dynamics, exposure drift, and volatility that past-only scores miss.",
+      w2:"Stress Simulation Core",
+      w2d:"Models repayment pressure under stress to detect liquidity collapse earlier than default.",
+      w3:"Licensable Lens Marketplace",
+      w3d:"A modular product surface with locked visibility for investors; unlocks under NDA/pilot/enterprise.",
+      proofShots:"Embedded Screenshots (No Files)",
+      proofShotsSub:"Investor-facing UI proof: Demo, Swagger/OpenAPI, and Roadmap — rendered as lightweight SVG.",
+      foot:"Dubai HQ • Confidential architecture under NDA",
+      footInvestor:"Investor", footProducts:"Products", footMarket:"Market", footContact:"Contact"
+    },
+    tr:{
+      tagline:"Davranışsal Finansal Altyapı",
+      navProducts:"Ürünler", navMarket:"Market", navInvestor:"Yatırımcı", navDubai:"Dubai HQ",
+      live:"CANLI", noPii:"PII gerektirmez (demo)",
+      hero1:"AI-Operated", hero2:"Risk Altyapısı", hero3:"Bankalar & Regüle Fintech için",
+      lead:"ZENTRA; davranışsal risk skorlama, stres simülasyonu ve lisanslanabilir “Lens” marketini birleştirir. Yatırımcı için tek başına yeterli: kanıt + ürün + platform tek yerde.",
+      ctaProducts:"Canlı Ürünleri Gör", ctaInvestor:"Yatırımcı Özeti", ctaMarket:"Lens Market",
+      micro:"Dubai HQ stratejisi • NDA teknik paket mevcut • Global rollout’a hazır mimari",
+      proofTitle:"RWAIM — Real-time Wave AI Monitor",
+      proofSub:"Yatırımcı-güvenli motion görselleştirme. Dosya/kütüphane olmadan drift izleme anlatımı.",
+      rwaimLine:"Davranışsal sürüklenme • erken uyarı • yatırımcı-güvenli görselleştirme",
+      activity:"Canlı Risk Aktivitesi", score:"Skor",
+      wins:"ZENTRA Neden Kazanır",
+      winsSub:"Moat = davranış sinyali + stres simülasyonu + lisanslanabilir modüler lensler. Regülasyon yoğun kurumlar için.",
+      platform:"Platform",
+      w1:"Davranış Sinyali Katmanı",
+      w1d:"Gecikme dinamiği, maruziyet sapması ve volatiliteyi geçmiş-odaklı skorların yakalayamadığı yerde yakalar.",
+      w2:"Stres Simülasyonu Çekirdeği",
+      w2d:"Ödeme baskısını stres altında modelleyerek temerrütten önce likidite çöküşünü yakalar.",
+      w3:"Lisanslanabilir Lens Marketi",
+      w3d:"Yatırımcıya kilitli görünürlükle gösterilen modüler ürün yüzeyi; NDA/pilot/enterprise ile açılır.",
+      proofShots:"Gömülü Ekranlar (Dosyasız)",
+      proofShotsSub:"Demo, Swagger/OpenAPI ve Roadmap kanıtı — hafif SVG ile.",
+      foot:"Dubai HQ • Gizli mimari NDA altında",
+      footInvestor:"Yatırımcı", footProducts:"Ürünler", footMarket:"Market", footContact:"İletişim"
+    }
   };
 
-  const $ = (id)=>document.getElementById(id);
-  let lang = (localStorage.getItem("zentra_lang") || "en");
+  const els = ()=>document.querySelectorAll("[data-i18n]");
+  const enBtn = document.getElementById("lg-en");
+  const trBtn = document.getElementById("lg-tr");
+  let lang = localStorage.getItem("zentra_lang") || "en";
 
-  // Links
-  const riskBase = CFG.risk.replace(/\/+$/,"");
-  const stressBase = CFG.stress.replace(/\/+$/,"");
-
-  const riskHealth = riskBase + "/health";
-  const riskOpenAPI = riskBase + "/openapi.json";
-  const stressHealth = stressBase + "/health";
-  const stressOpenAPI = stressBase + "/openapi.json";
-
-  $("risk-health").href = riskHealth;
-  $("risk-openapi").href = riskOpenAPI;
-  $("risk-home").href = riskBase;
-
-  $("stress-health").href = stressHealth;
-  $("stress-openapi").href = stressOpenAPI;
-  $("stress-home").href = stressBase;
-
-  $("risk-url").textContent = riskBase.replace("https://","").replace("http://","");
-  $("stress-url").textContent = stressBase.replace("https://","").replace("http://","");
-  $("cta-mail").href = "mailto:" + CFG.contactEmail;
-
-  // V1 links
-  $("v1-risk-doc").href = riskOpenAPI;
-  $("v1-risk-health").href = riskHealth;
-  $("v1-risk-openapi").href = riskOpenAPI;
-
-  $("v1-stress-doc").href = stressOpenAPI;
-  $("v1-stress-health").href = stressHealth;
-  $("v1-stress-openapi").href = stressOpenAPI;
-
-  function setTag(el, state){
-    if(state==="ok"){ el.className="tag ok"; el.textContent = (lang==="tr" ? "TAMAM" : "OK"); }
-    else if(state==="bad"){ el.className="tag bad"; el.textContent = (lang==="tr" ? "HATA" : "FAIL"); }
-    else { el.className="tag wait"; el.textContent = (lang==="tr" ? "KONTROL" : "CHECKING"); }
+  function apply(l){
+    lang=l;
+    localStorage.setItem("zentra_lang", l);
+    enBtn.classList.toggle("active", l==="en");
+    trBtn.classList.toggle("active", l==="tr");
+    els().forEach(el=>{
+      const k = el.getAttribute("data-i18n");
+      if(dict[l] && dict[l][k]) el.textContent = dict[l][k];
+    });
+    // update band label in activity
+    renderActivity();
   }
 
-  // ✅ Investor-safe ping: avoids false FAIL due to CORS.
-  // It only fails on real network/timeout issues.
-  async function ping(url, timeoutMs=4500){
-    const ctrl = new AbortController();
-    const t = setTimeout(()=>ctrl.abort(), timeoutMs);
-    try{
-      await fetch(url, { signal: ctrl.signal, cache:"no-store", mode:"no-cors" });
-      clearTimeout(t);
-      return true;
-    }catch(e){
-      clearTimeout(t);
-      return false;
-    }
-  }
+  enBtn.addEventListener("click", ()=>apply("en"));
+  trBtn.addEventListener("click", ()=>apply("tr"));
+  window.__zentraLang = ()=>lang;
+  apply(lang);
 
-  async function runHealth(){
-    setTag($("risk-tag"), "wait");
-    setTag($("stress-tag"), "wait");
-    $("risk-skel").style.display = "block";
-    $("stress-skel").style.display = "block";
-
-    const [a,b] = await Promise.all([ ping(riskHealth), ping(stressHealth) ]);
-    setTag($("risk-tag"), a ? "ok":"bad");
-    setTag($("stress-tag"), b ? "ok":"bad");
-
-    $("risk-skel").style.display = "none";
-    $("stress-skel").style.display = "none";
-  }
-  runHealth();
-  setInterval(runHealth, 20000);
-
-  // ====== Live Activity (stable) ======
+  /* =============================
+     ACTIVITY (deck vibe)
+  ============================= */
   const demoScores = [78,72,84,66,59];
-  const scoreEl = $("score");
-  const barEl = $("bar");
-  const listEl = $("last5");
+  const scoreEl = document.getElementById("score");
+  const barEl   = document.getElementById("bar");
+  const listEl  = document.getElementById("last5");
+  const bandEl  = document.getElementById("bandTag");
 
   function band(score){
-    if(score>=80) return {t: (lang==="tr"?"YÜKSEK":"HIGH"), cls:"bad"};
-    if(score>=55) return {t: (lang==="tr"?"ORTA":"MID"), cls:"wait"};
-    return {t: (lang==="tr"?"DÜŞÜK":"LOW"), cls:"ok"};
+    const l = window.__zentraLang();
+    if(score>=80) return {t: (l==="tr"?"YÜKSEK":"HIGH"), cls:"bad"};
+    if(score>=55) return {t: (l==="tr"?"ORTA":"MID"), cls:"wait"};
+    return {t: (l==="tr"?"DÜŞÜK":"LOW"), cls:"ok"};
   }
-  function renderList(){
+
+  function renderActivity(){
+    const b = band(demoScores[0]);
+    bandEl.className = "tag " + b.cls;
+    bandEl.textContent = b.t;
+
+    scoreEl.textContent = String(demoScores[0]);
+    requestAnimationFrame(()=>{ barEl.style.width = Math.max(0,Math.min(100,demoScores[0])) + "%"; });
+
     listEl.innerHTML="";
     demoScores.slice(0,5).forEach((s,i)=>{
-      const b=band(s);
+      const bb=band(s);
       const li=document.createElement("li");
       li.className="srow";
-      li.innerHTML = `<span>#${i+1} • ${lang==="tr"?"skor":"score"} ${s}</span><span class="tag ${b.cls}">${b.t}</span>`;
+      li.innerHTML = `<span>#${i+1} • ${window.__zentraLang()==="tr"?"skor":"score"} ${s}</span><span class="tag ${bb.cls}">${bb.t}</span>`;
       listEl.appendChild(li);
     });
   }
-  function animateGauge(score){
-    scoreEl.textContent = String(score);
-    requestAnimationFrame(()=>{ barEl.style.width = Math.max(0,Math.min(100,score)) + "%"; });
-  }
-  renderList(); animateGauge(demoScores[0]);
-  setInterval(()=>{ const last=demoScores.pop(); demoScores.unshift(last); renderList(); animateGauge(demoScores[0]); }, 3200);
 
-  // ====== Explain ======
-  function payload(){
-    return {
-      amount: Number($("amount").value || 0),
-      sector: String($("sector").value || "retail"),
-      sector_risk_level: Number($("srl").value || 2),
-      payment_delay_days: Number($("delay").value || 0),
-      customer_score: Number($("cscore").value || 0),
-      exposure_ratio: Number($("exposure").value || 0)
-    };
-  }
+  window.renderActivity = renderActivity;
+  renderActivity();
+  setInterval(()=>{
+    const last=demoScores.pop(); demoScores.unshift(last);
+    renderActivity();
+  }, 3200);
+})();
 
-  function tmplExplain(p){
-    const delay = p.payment_delay_days;
-    const exp = p.exposure_ratio;
-    const cs = p.customer_score;
-    const srl = p.sector_risk_level;
+/* =============================
+   REVEAL ON SCROLL
+============================= */
+(function(){
+  const items = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("in"); });
+  }, {threshold: .14});
+  items.forEach(i=>io.observe(i));
+})();
 
-    let score = Math.round(
-      100
-      - Math.min(40, delay*1.4)
-      - Math.min(30, exp*60)
-      + Math.min(18, (cs-50)*0.36)
-      - Math.min(12, (srl-1)*3)
-    );
-    score = Math.max(5, Math.min(95, score));
-    const bandName = score>=80 ? (lang==="tr"?"DÜŞÜK_RİSK":"LOW_RISK")
-                  : score>=55 ? (lang==="tr"?"ORTA_RİSK":"MID_RISK")
-                  : (lang==="tr"?"YÜKSEK_RİSK":"HIGH_RISK");
-
-    const reasons = [];
-    if(delay>0) reasons.push(lang==="tr" ? `Gecikme tespit edildi (${delay} gün) → kısa vadeli temerrüt olasılığı artar.` : `Payment delay detected (${delay} days) → increases short-term default probability.`);
-    if(exp>=0.35) reasons.push(lang==="tr" ? `Maruziyet oranı yüksek (${exp.toFixed(2)}) → likidite tamponu azalır.` : `Exposure ratio is elevated (${exp.toFixed(2)}) → reduces liquidity buffer.`);
-    if(cs<70) reasons.push(lang==="tr" ? `Müşteri skoru orta (${cs}) → stres altında dayanıklılık zayıflar.` : `Customer score is moderate (${cs}) → weaker resilience under stress.`);
-    if(srl>=4) reasons.push(lang==="tr" ? `Sektör riski yüksek (${srl}/5) → makro hassasiyet artar.` : `Sector risk level is high (${srl}/5) → increases macro sensitivity.`);
-    if(reasons.length===0) reasons.push(lang==="tr" ? "Sinyaller stabil; bu kesitte belirgin negatif sürücü yok." : "Signals are stable; no major negative drivers detected in this snapshot.");
-
-    const actions = [];
-    if(score<55){
-      actions.push(lang==="tr" ? "Limit düşür / vade-şartları sıkılaştır" : "Reduce limit / tighten installment terms");
-      actions.push(lang==="tr" ? "Erken uyarı izlemeyi tetikle (haftalık)" : "Trigger early-warning monitoring (weekly)");
-      actions.push(lang==="tr" ? "Güncel nakit akışı kanıtı iste" : "Request updated cash-flow proof");
-    } else if(score<80){
-      actions.push(lang==="tr" ? "Koruyucu şartlarla limiti koru" : "Maintain limit with protective covenants");
-      actions.push(lang==="tr" ? "Gecikme dinamiğini izle (2 haftada 1)" : "Monitor delay dynamics (bi-weekly)");
-      actions.push(lang==="tr" ? "Stres senaryosunda yeniden yapılandırma seçeneği sun" : "Offer restructuring option under stress scenarios");
-    } else {
-      actions.push(lang==="tr" ? "Mevcut şartları koru" : "Maintain current terms");
-      actions.push(lang==="tr" ? "Sinyal sapması için otomatik alarm aç" : "Enable automated alerts for signal drift");
-      actions.push(lang==="tr" ? "Güçlü davranışta fiyat/limit iyileştirmesi öner" : "Offer upsell via improved pricing on strong behavior");
-    }
-
-    return {
-      mode: (lang==="tr" ? "ŞABLON (ücretli model yok)" : "TEMPLATE (no paid model)"),
-      risk_score: score,
-      risk_band: bandName,
-      why: reasons.slice(0,3),
-      recommended_actions: actions.slice(0,3),
-      compliance_note: (lang==="tr"
-        ? "Çıktılar karar-destek sinyalleridir; nihai karar regüle kurumundur. Bu demo PII gerektirmez."
-        : "Outputs are decision-support signals; final credit decision remains with the regulated institution. No PII required for this demo."
-      )
-    };
-  }
-
-  async function callExplain(p){
-    const base = (CFG.explainBase || riskBase).replace(/\/+$/,"");
-    const url = base + "/explain";
-    $("explain-mode").textContent = (lang==="tr" ? "MOD: AUTO (/explain deneniyor)" : "MODE: AUTO (trying /explain)");
-    try{
-      const r = await fetch(url, {method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(p)});
-      if(!r.ok) throw new Error("HTTP " + r.status);
-      const j = await r.json();
-      $("explain-mode").textContent = (lang==="tr" ? "MOD: API (/explain)" : "MODE: API (/explain)");
-      return { mode:"API (/explain)", ...j };
-    }catch(e){
-      $("explain-mode").textContent = (lang==="tr" ? "MOD: ŞABLON (fallback)" : "MODE: TEMPLATE (fallback)");
-      return tmplExplain(p);
-    }
-  }
-
-  $("run-explain").addEventListener("click", async ()=>{
-    const p = payload();
-    $("output").textContent = (lang==="tr" ? "Çalıştırılıyor…" : "Running…");
-    const out = await callExplain(p);
-    $("output").textContent = JSON.stringify(out, null, 2);
-  });
-
-  $("fill").addEventListener("click", ()=>{
-    $("amount").value = 1000;
-    $("sector").value = "retail";
-    $("delay").value = 10;
-    $("exposure").value = 0.25;
-    $("cscore").value = 78;
-    $("srl").value = 2;
-    $("output").textContent = "{ }";
-  });
-
-  // ====== TR/EN Dictionary (GLOBAL) ======
-  const dict = {
-    en:{
-      title:"ZENTRA — Behavioral Financial Infrastructure",
-      subtitle:"Licensable risk infrastructure for banks, Islamic finance and regulated fintechs. V1 live proof + V2 investor demo in one page.",
-      live:"LIVE",
-      lockedvis:"Locked modules visible",
-      navV2:"V2 Investor Demo",
-      navLive:"Live Proof",
-      navV1:"V1 Status",
-      navScreens:"Embedded Screens",
-      navPricing:"Pricing",
-      navContact:"Dubai HQ",
-      navTop:"Top",
-      rwaim:"Live behavioral drift • early warning • investor-safe visualization (no GIF / no files)",
-      liveTitle:"Live Proof",
-      liveSub:"Production evidence: Health + OpenAPI + verifiable endpoints. Status check is investor-safe (won’t falsely show FAIL due to CORS).",
-      prodTag:"Production Live",
-      checking:"CHECKING", checking2:"CHECKING",
-      riskDesc:"Behavioral risk scoring core. Health and OpenAPI are the public proof.",
-      stressDesc:"Installment pressure & repayment stress modeling (attachable module).",
-      endpoint:"Endpoint", endpoint2:"Endpoint",
-      proofNoteL:"Investor proof",
-      proofNoteR:"Tap Health/OpenAPI to verify",
-      activityTitle:"Live Risk Activity (stable demo)",
-      score:"Score",
-      auto:"AUTO",
-      activityNote:"Investor-safe: stable animation by default. Can be wired to live scoring later.",
-      v1Title:"V1 — Current Live Stack",
-      v1Sub:"Minimal, verifiable and production-live. This is the “proof layer” while V2 expands to platform lenses.",
-      v1Tag:"LIVE CORE",
-      v1A:"RiskLens API (Behavioral Scoring)",
-      v1Ad:"AI-assisted modular risk scoring for banks, neobanks and embedded finance. Public proof via /health and /openapi.json.",
-      v1B:"Credit Stress Engine (Installment Stress)",
-      v1Bd:"Installment/repayment pressure simulation: income ratio, stress score and risk band. Can attach to RiskLens as a module.",
-      openDocs:"Open Docs",
-      v1NoteT:"V1 investor note",
-      v1NoteTag:"SAFE",
-      v1NoteD:"This page intentionally avoids sensitive implementation details. The internal model architecture, data contracts and security controls are delivered in a private PDF pack after NDA.",
-      v2Title:"V2 — Investor Demo (All-in)",
-      v2Sub:"Full story: Live proof + explain layer + locked lenses + moat + pricing + Dubai HQ CTA. Designed to stand alone without a Zoom call.",
-      v2Tag:"INVESTOR READY",
-      exTitle:"Explain Layer (ADEST / AV Assisted)",
-      exDesc:"Produces a short “why + action + compliance note” for a score. If /explain exists, it will call it. Otherwise it uses a deterministic template (no paid model required).",
-      exBtn:"Explain This Score",
-      sample:"Fill Sample",
-      lensTitle:"Lens Roadmap",
-      locked:"Locked visibility",
-      lensDesc:"Investors see the full vision without exposing internal model details.",
-      live2:"LIVE",
-      dev:"DEV",
-      planned:"PLANNED",
-      lock:"LOCKED", lock2:"Locked", pdf:"Detailed architecture is presented in the private PDF pack.",
-      lock3:"LOCKED", lock4:"Locked", addon:"Released as an add-on after core validation.",
-      lock5:"LOCKED", lock6:"Locked", demoonly:"Demo only; product surface not exposed publicly.",
-      family:"Concentration risk, liquidity runway, intergenerational sustainability modeling.",
-      macro:"FX / rate / inflation shock simulations for institutional portfolios.",
-      cognitive:"Behavioral decision profiling → earlier default detection than past-only scores.",
-      winsTitle:"Why ZENTRA Wins",
-      winsSub:"Moat: behavioral signals + stress simulation + licensable lens architecture. Built for regulated institutions.",
-      moat:"Moat",
-      w1:"Behavioral Signal Layer",
-      w1d:"Captures real behavior (delay dynamics, exposure drift, volatility) that past-only scores miss.",
-      w2:"Stress Simulation Core",
-      w2d:"Models repayment pressure under stress to detect liquidity collapse earlier than default.",
-      w3:"Licensable Lens Architecture",
-      w3d:"API-first modular rollout with locked visibility. Scales globally without exposing internals.",
-      patT:"Protectable Domains (short)",
-      patTag:"Protectable",
-      screensTitle:"Screenshots (Embedded • No Files)",
-      screensSub:"Investor-facing visual proof: Demo UI, Swagger-style docs, Roadmap locked visibility. Lightweight embedded SVGs.",
-      screensTag:"NO FILES",
-      shotDemo:"Inputs → Score + Band + Signals. Investor sees a working surface without internal leakage.",
-      shotSwagger:"Swagger-like endpoint proof: /health, /openapi.json, /score, /stress.",
-      shotRoadmap:"Locked modules shown with short explanations. Builds trust while protecting internals.",
-      pricingTitle:"Pricing & Licensing",
-      pricingSub:"Structure shown publicly; commercial terms depend on region, scope, deployment mode and SLA.",
-      lic:"Licensing",
-      t1:"Plan", t2:"Target", t3:"Includes", t4:"License Model",
-      r1t:"Neobank / Fintech",
-      r1i:"Risk score + band + explain layer + monitoring",
-      r1m:"Usage-based + minimum commitment",
-      r2t:"Banks / Islamic Finance",
-      r2i:"Custom models + compliance pack + optional on-prem / VPC",
-      r2m:"Annual license + SLA",
-      r3t:"Institutional",
-      r3i:"CFO / SME / Macro / Family Office (by phase)",
-      r3m:"Modular subscription",
-      priceNote:"Note: This page intentionally avoids sensitive implementation details. Full technical pack is shared privately after NDA.",
-      ctaTitle:"Dubai HQ • Strategic Partnerships • Investor Access",
-      ctaDesc:"Request the private PDF technical pack and a pilot scope. This site is designed to stand alone without a Zoom call.",
-      ctaBtn:"Contact Dubai HQ",
-      ctaTop:"Back to Top",
-      footerBold:"Investor-safe note:",
-      footerText:"Status checks avoid false failures caused by browser CORS restrictions. Health/OpenAPI links are the source of truth for verification."
-    },
-    tr:{
-      title:"ZENTRA — Davranışsal Finansal Altyapı",
-      subtitle:"Bankalar, katılım finans ve regülasyon yoğun fintech’ler için lisanslanabilir risk altyapısı. V1 canlı kanıt + V2 yatırımcı demosu tek sayfada.",
-      live:"CANLI",
-      lockedvis:"Kilitli modüller görünür",
-      navV2:"V2 Yatırımcı Demo",
-      navLive:"Canlı Kanıt",
-      navV1:"V1 Durum",
-      navScreens:"Gömülü Görseller",
-      navPricing:"Fiyatlama",
-      navContact:"Dubai HQ",
-      navTop:"Üst",
-      rwaim:"Davranışsal sürüklenme • erken uyarı • yatırımcı-güvenli görselleştirme (GIF yok / dosya yok)",
-      liveTitle:"Canlı Kanıt",
-      liveSub:"Production kanıtı: Health + OpenAPI + doğrulanabilir endpoint’ler. Status kontrolü yatırımcı-güvenli (CORS yüzünden yanlış FAIL göstermez).",
-      prodTag:"Production Live",
-      checking:"KONTROL", checking2:"KONTROL",
-      riskDesc:"Davranışsal risk skorlama çekirdeği. Health ve OpenAPI public kanıttır.",
-      stressDesc:"Taksit baskısı & geri ödeme stres modellemesi (bağlanabilir modül).",
-      endpoint:"Endpoint", endpoint2:"Endpoint",
-      proofNoteL:"Yatırımcı kanıtı",
-      proofNoteR:"Doğrulamak için Health/OpenAPI tıkla",
-      activityTitle:"Canlı Risk Aktivitesi (stabil demo)",
-      score:"Skor",
-      auto:"OTOMATİK",
-      activityNote:"Yatırımcı-güvenli: varsayılan stabil animasyon. İstenirse canlı skora bağlanır.",
-      v1Title:"V1 — Mevcut Canlı Stack",
-      v1Sub:"Minimal, doğrulanabilir ve production-live. V2 platform lenslerine büyürken bu katman “kanıt” görevi görür.",
-      v1Tag:"CANLI ÇEKİRDEK",
-      v1A:"RiskLens API (Davranışsal Skorlama)",
-      v1Ad:"Bankalar, neobankalar ve embedded finance için AI destekli modüler risk skoru. Public kanıt: /health ve /openapi.json.",
-      v1B:"Credit Stress Engine (Taksit Stresi)",
-      v1Bd:"Taksit/geri ödeme baskısı simülasyonu: gelir oranı, stres skoru ve risk bandı. RiskLens’e modül olarak bağlanır.",
-      openDocs:"Dokümanı Aç",
-      v1NoteT:"V1 yatırımcı notu",
-      v1NoteTag:"GÜVENLİ",
-      v1NoteD:"Bu sayfa hassas implementasyon detaylarını bilinçli olarak göstermez. İç model mimarisi, data kontratları ve güvenlik kontrolleri NDA sonrası özel PDF pakette sunulur.",
-      v2Title:"V2 — Yatırımcı Demo (All-in)",
-      v2Sub:"Tam hikâye: Canlı kanıt + açıklama katmanı + kilitli lensler + moat + fiyatlama + Dubai HQ CTA. Zoom’a gerek bırakmaz.",
-      v2Tag:"YATIRIMCI HAZIR",
-      exTitle:"Açıklama Katmanı (ADEST / AV Destekli)",
-      exDesc:"Skor için kısa “neden + aksiyon + uyum notu” üretir. /explain varsa çağırır; yoksa deterministik şablonla çalışır (ücretli model gerekmez).",
-      exBtn:"Skoru Açıkla",
-      sample:"Örnek Doldur",
-      lensTitle:"Lens Yol Haritası",
-      locked:"Kilitli görünürlük",
-      lensDesc:"Yatırımcı vizyonun tamamını görür; iç model detayları açığa çıkmaz.",
-      live2:"CANLI",
-      dev:"GELİŞTİRME",
-      planned:"PLANLI",
-      lock:"KİLİTLİ", lock2:"Kilitli", pdf:"Detay mimari özel PDF pakette sunulur.",
-      lock3:"KİLİTLİ", lock4:"Kilitli", addon:"Çekirdek doğrulandıktan sonra eklenti olarak çıkar.",
-      lock5:"KİLİTLİ", lock6:"Kilitli", demoonly:"Sadece demo; ürün yüzeyi olarak public açılmadı.",
-      family:"Yoğunlaşma riski, likidite runway, nesiller arası sürdürülebilirlik modellemesi.",
-      macro:"Kur / faiz / enflasyon şok simülasyonları (kurumsal portföy).",
-      cognitive:"Davranışsal karar profili → geçmiş-odaklı skordan daha erken risk yakalama.",
-      winsTitle:"ZENTRA Neden Kazanır",
-      winsSub:"Moat: davranış sinyali + stres simülasyonu + lisanslanabilir lens mimarisi. Regülasyon yoğun kurumlar için.",
-      moat:"Moat",
-      w1:"Davranış Sinyali Katmanı",
-      w1d:"Geçmişe bakan skorların kaçırdığı gerçek davranışı yakalar (gecikme dinamiği, maruziyet sapması, volatilite).",
-      w2:"Stres Simülasyonu Çekirdeği",
-      w2d:"Ödeme baskısını stres altında modelleyerek temerrütten önce likidite çöküşünü yakalar.",
-      w3:"Lisanslanabilir Lens Mimarisi",
-      w3d:"Kilitli görünürlükle API-first modüler rollout. İç detay açmadan global ölçeklenir.",
-      patT:"Korunabilir Alanlar (kısa)",
-      patTag:"Korunabilir",
-      screensTitle:"Ekran Görüntüleri (Gömülü • Dosyasız)",
-      screensSub:"Yatırımcıya görsel kanıt: Demo UI, Swagger tarzı docs, Roadmap kilitli görünürlük. Hafif embedded SVG.",
-      screensTag:"DOSYASIZ",
-      shotDemo:"Inputs → Skor + Band + Sinyaller. İç detay sızdırmadan çalışan yüzey gösterilir.",
-      shotSwagger:"Swagger benzeri endpoint kanıtı: /health, /openapi.json, /score, /stress.",
-      shotRoadmap:"Kilitli modüller kısa açıklamalarla görünür. İçeriği korurken güven verir.",
-      pricingTitle:"Fiyatlama & Lisanslama",
-      pricingSub:"Yapı public gösterilir; ticari koşullar bölge, kapsam, kurulum tipi ve SLA’ya göre belirlenir.",
-      lic:"Lisans",
-      t1:"Plan", t2:"Hedef", t3:"İçerik", t4:"Lisans Modeli",
-      r1t:"Neobank / Fintech",
-      r1i:"Risk skoru + band + açıklama katmanı + izleme",
-      r1m:"Kullanım bazlı + minimum taahhüt",
-      r2t:"Bankalar / Katılım Finans",
-      r2i:"Custom modeller + uyum paketi + opsiyonel on-prem / VPC",
-      r2m:"Yıllık lisans + SLA",
-      r3t:"Kurumsal",
-      r3i:"CFO / KOBİ / Makro / Family Office (fazlara göre)",
-      r3m:"Modüler abonelik",
-      priceNote:"Not: Bu sayfa hassas implementasyon detaylarını bilinçli olarak göstermez. NDA sonrası teknik PDF paket paylaşılır.",
-      ctaTitle:"Dubai HQ • Stratejik Ortaklık • Yatırımcı Erişimi",
-      ctaDesc:"Özel PDF teknik paket ve pilot kapsamı için iletişime geçin. Bu site Zoom’a gerek bırakmadan anlatım yapacak şekilde tasarlandı.",
-      ctaBtn:"Dubai HQ İletişim",
-      ctaTop:"Yukarı Dön",
-      footerBold:"Yatırımcı-güvenli not:",
-      footerText:"Status kontrolü tarayıcı CORS kısıtları yüzünden yanlış FAIL üretmez. Doğrulama için Health/OpenAPI linkleri esas kaynaktır."
-    }
-  };
-
-  function applyLang(next){
-    lang = next;
-    localStorage.setItem("zentra_lang", lang);
-    $("lang-en").classList.toggle("active", lang==="en");
-    $("lang-tr").classList.toggle("active", lang==="tr");
-
-    document.querySelectorAll("[data-i18n]").forEach(el=>{
-      const k = el.getAttribute("data-i18n");
-      if(dict[lang] && dict[lang][k]) el.textContent = dict[lang][k];
+/* =============================
+   PARALLAX (hero card)
+============================= */
+(function(){
+  const card = document.getElementById("parallaxCard");
+  let raf=0;
+  function onMove(e){
+    if(!card) return;
+    const r = card.getBoundingClientRect();
+    const cx = r.left + r.width/2;
+    const cy = r.top  + r.height/2;
+    const dx = (e.clientX - cx) / r.width;
+    const dy = (e.clientY - cy) / r.height;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(()=>{
+      card.style.transform = `perspective(1100px) rotateX(${(-dy*6).toFixed(2)}deg) rotateY(${(dx*8).toFixed(2)}deg) translateY(-1px)`;
     });
+  }
+  function reset(){ if(card) card.style.transform="none"; }
+  if(card){
+    card.addEventListener("mousemove", onMove);
+    card.addEventListener("mouseleave", reset);
+  }
+})();
 
-    // refresh language-dependent UI
-    renderList();
-    runHealth();
+/* =============================
+   PARTICLES (lightweight, premium)
+============================= */
+(function(){
+  const c = document.getElementById("fx");
+  const ctx = c.getContext("2d", {alpha:true});
+  let w=0,h=0, dpr=1;
+  const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(prefersReduce){ c.style.display="none"; return; }
+
+  function resize(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = c.width  = Math.floor(innerWidth * dpr);
+    h = c.height = Math.floor(innerHeight * dpr);
+    c.style.width  = innerWidth + "px";
+    c.style.height = innerHeight + "px";
+  }
+  addEventListener("resize", resize, {passive:true});
+  resize();
+
+  const N = Math.min(140, Math.floor((innerWidth*innerHeight)/15000));
+  const pts = Array.from({length:N}).map(()=>({
+    x:Math.random()*w, y:Math.random()*h,
+    vx:(Math.random()*0.35+0.12)*dpr*(Math.random()<.5?-1:1),
+    vy:(Math.random()*0.35+0.12)*dpr*(Math.random()<.5?-1:1),
+    r:(Math.random()*1.6+0.8)*dpr,
+    t:Math.random()
+  }));
+
+  function line(a,b,alpha){
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+    ctx.stroke();
   }
 
-  $("lang-en").addEventListener("click", ()=>applyLang("en"));
-  $("lang-tr").addEventListener("click", ()=>applyLang("tr"));
-  applyLang(lang);
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+
+    // gradient stroke
+    const g = ctx.createLinearGradient(0,0,w,h);
+    g.addColorStop(0, "rgba(25,230,140,.55)");
+    g.addColorStop(.55,"rgba(0,212,255,.55)");
+    g.addColorStop(1, "rgba(124,58,237,.45)");
+    ctx.strokeStyle = g;
+
+    // dots
+    for(const p of pts){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+
+      ctx.globalAlpha = .55;
+      ctx.fillStyle = "rgba(234,242,255,.75)";
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    }
+
+    // connections
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const a=pts[i], b=pts[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        const max = 155*dpr;
+        if(dist<max){
+          const alpha = (1 - dist/max) * 0.18;
+          line(a,b,alpha);
+        }
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+  tick();
 })();
 </script>
 </body>
-</html>
+  </html>

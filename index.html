@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,131 +7,120 @@
 
 <style>
 :root{
---bg:#070B18;
---panel:rgba(255,255,255,.05);
---stroke:rgba(255,255,255,.08);
---text:rgba(255,255,255,.92);
---muted:rgba(255,255,255,.65);
---brand:#34D2FF;
---radius:18px;
+--text:#111;
+--muted:#666;
+--border:#eaeaea;
+--accent:#000;
 }
 
 *{box-sizing:border-box}
+
 body{
 margin:0;
-font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-background:radial-gradient(circle at 20% 10%,rgba(52,210,255,.15),transparent 40%),
-radial-gradient(circle at 80% 30%,rgba(124,92,255,.12),transparent 50%),var(--bg);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:#ffffff;
 color:var(--text);
 }
 
-.container{max-width:1100px;margin:auto;padding:30px 18px 80px}
+.container{
+max-width:920px;
+margin:0 auto;
+padding:70px 24px 120px;
+}
 
 header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:14px 18px;
-border:1px solid var(--stroke);
-border-radius:16px;
-background:rgba(255,255,255,.05);
+font-size:14px;
+margin-bottom:80px;
 }
 
 .logo{
 font-weight:600;
-letter-spacing:1px;
+letter-spacing:0.5px;
 }
 
-.hero{
-margin-top:30px;
-padding:28px;
-border:1px solid var(--stroke);
-border-radius:var(--radius);
-background:rgba(255,255,255,.05);
+.live{
+font-size:12px;
+border:1px solid #000;
+padding:4px 10px;
+border-radius:20px;
 }
 
-.hero h1{margin:0 0 12px;font-size:28px}
-.hero p{color:var(--muted)}
+h1{
+font-size:42px;
+font-weight:600;
+margin:0 0 24px;
+line-height:1.2;
+}
+
+.lead{
+font-size:18px;
+color:var(--muted);
+max-width:720px;
+line-height:1.6;
+}
 
 .section{
-margin-top:40px;
+margin-top:90px;
 }
 
 .section h2{
-margin-bottom:18px;
-font-size:18px;
-letter-spacing:.5px;
-}
-
-.products{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
+font-size:13px;
+letter-spacing:1.2px;
+text-transform:uppercase;
+color:#999;
+margin-bottom:20px;
 }
 
 .card{
-border:1px solid var(--stroke);
-border-radius:var(--radius);
-padding:18px;
-background:rgba(255,255,255,.05);
+border:1px solid var(--border);
+padding:28px;
+margin-bottom:22px;
 }
 
-.card h3{margin-top:0}
+.card h3{
+margin:0 0 12px;
+font-size:20px;
+font-weight:600;
+}
 
-.buttons a{
+.card p{
+margin:0 0 16px;
+color:var(--muted);
+line-height:1.6;
+}
+
+.links a{
 display:inline-block;
-margin:6px 6px 0 0;
-padding:8px 12px;
-border-radius:12px;
-border:1px solid var(--stroke);
-font-size:13px;
-color:var(--text);
-text-decoration:none;
-background:rgba(255,255,255,.04);
+margin-right:18px;
+font-size:14px;
+color:#000;
+text-decoration:underline;
 }
 
-.buttons a:hover{
-background:rgba(52,210,255,.15);
-}
-
-.screenshots{
+.grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
+grid-template-columns:1fr 1fr;
+gap:40px;
+margin-top:20px;
 }
 
-.shot{
-border:1px solid var(--stroke);
-border-radius:var(--radius);
-overflow:hidden;
-background:rgba(255,255,255,.04);
-transition:.3s;
-}
-
-.shot:hover{
-transform:translateY(-5px);
-}
-
-.shot img{
-width:100%;
-display:block;
-}
-
-.caption{
-padding:12px;
-font-size:13px;
+.small p{
+font-size:15px;
 color:var(--muted);
 }
 
 footer{
-margin-top:60px;
-font-size:12px;
-color:var(--muted);
+margin-top:120px;
+font-size:13px;
+color:#aaa;
 }
 
-@media(max-width:900px){
-.products{grid-template-columns:1fr}
-.screenshots{grid-template-columns:1fr}
+@media(max-width:800px){
+.grid{grid-template-columns:1fr}
+h1{font-size:34px}
 }
 </style>
 </head>
@@ -140,28 +129,33 @@ color:var(--muted);
 <div class="container">
 
 <header>
-<div class="logo">ZENTRA — Behavioral Financial Infrastructure</div>
-<div>LIVE • Dubai Hub</div>
+<div class="logo">ZENTRA</div>
+<div class="live">LIVE</div>
 </header>
 
-<section class="hero">
-<h1>Davranışsal Finansal Altyapı Katmanı</h1>
-<p>
-ZENTRA; bankalar, katılım finans ve regülasyon yoğun fintech’ler için
-lisanslanabilir risk altyapısı pazar yeridir.
-Odak: davranışsal risk skorlama, stres modelleme ve modüler lens mimarisi.
+<h1>Behavioral Risk Infrastructure for Regulated Finance</h1>
+
+<p class="lead">
+ZENTRA builds licensable behavioral risk infrastructure for banks,
+participation finance institutions and regulation-heavy fintechs.
 </p>
-</section>
 
-<section class="section">
-<h2>Aktif Ürünler (LIVE)</h2>
+<p class="lead">
+Core modules include Behavioral Risk Scoring and Credit Stress Modeling,
+delivered through API-first architecture.
+Global hub target: Dubai.
+</p>
 
-<div class="products">
+<div class="section">
+<h2>Live Infrastructure</h2>
 
 <div class="card">
 <h3>RiskLens API</h3>
-<p>AI destekli davranışsal risk skorlama altyapısı.</p>
-<div class="buttons">
+<p>
+AI-powered behavioral risk scoring engine.
+Designed for early default detection and real-time integration.
+</p>
+<div class="links">
 <a href="https://zentra-risklens-api-2.onrender.com/docs" target="_blank">Docs</a>
 <a href="https://zentra-risklens-api-2.onrender.com/openapi.json" target="_blank">OpenAPI</a>
 <a href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">Health</a>
@@ -170,8 +164,11 @@ Odak: davranışsal risk skorlama, stres modelleme ve modüler lens mimarisi.
 
 <div class="card">
 <h3>Credit Stress Engine</h3>
-<p>Taksit / ödeme baskısı stres modelleme modülü.</p>
-<div class="buttons">
+<p>
+Installment and repayment stress modeling module.
+Operates independently or as a RiskLens extension.
+</p>
+<div class="links">
 <a href="https://zentra-credit-stress-api.onrender.com/docs" target="_blank">Docs</a>
 <a href="https://zentra-credit-stress-api.onrender.com/openapi.json" target="_blank">OpenAPI</a>
 <a href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">Health</a>
@@ -179,39 +176,37 @@ Odak: davranışsal risk skorlama, stres modelleme ve modüler lens mimarisi.
 </div>
 
 </div>
-</section>
 
-<section class="section">
-<h2>Platform Screenshots</h2>
+<div class="section">
+<h2>Positioning</h2>
 
-<div class="screenshots">
-
-<div class="shot">
-<img src="https://chat.openai.com/c/file_000000001964720a9d10ed1b62791796" alt="Demo">
-<div class="caption">
-<strong>Demo Screen</strong><br>
-Live risk scoring & stress simulation.
-</div>
-</div>
-
-<div class="shot">
-<img src="https://chat.openai.com/c/file_00000000b8987246af0aaf2bf04a3cb2" alt="Swagger">
-<div class="caption">
-<strong>Swagger Docs</strong><br>
-Production API endpoints.
-</div>
+<div class="grid">
+<div class="small">
+<p>
+Not a consumer finance app.
+</p>
+<p>
+Not a lending marketplace.
+</p>
+<p>
+Not a dashboard company.
+</p>
 </div>
 
-<div class="shot">
-<img src="https://chat.openai.com/c/file_000000005984720aaf770e7e747f95f8" alt="Roadmap">
-<div class="caption">
-<strong>Roadmap</strong><br>
-Phase-based expansion strategy.
+<div class="small">
+<p>
+ZENTRA is a behavioral financial infrastructure layer.
+</p>
+<p>
+Built for regulated environments.
+</p>
+<p>
+Engineered for long-term institutional integration.
+</p>
 </div>
 </div>
 
 </div>
-</section>
 
 <footer>
 © 2026 ZENTRA — Behavioral Financial Infrastructure

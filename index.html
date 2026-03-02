@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ZENTRA • Behavioral Financial Infrastructure</title>
-<meta name="color-scheme" content="dark"/>
+<meta name="color-scheme" content="dark">
+
 <style>
 :root{
 --bg:#050814;
@@ -16,12 +17,33 @@
 --text:#eaf2ff;
 --muted:#8a97b1;
 }
+
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui}
-section{padding:90px 8%}
+section{padding:100px 8%}
 h1,h2,h3{margin:0}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer}
+.grid{display:grid;gap:30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-top:40px}
+
+.nav{
+position:fixed;top:0;left:0;right:0;
+display:flex;justify-content:space-between;align-items:center;
+padding:18px 8%;
+background:rgba(5,8,20,.8);
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+
+.lang button{
+background:none;border:none;
+color:var(--muted);
+font-weight:700;
+padding:6px 12px;
+border-radius:20px;
+}
+.lang button.active{background:var(--cyan);color:#001018}
 
 .hero{
 height:100vh;
@@ -34,19 +56,11 @@ background:
 radial-gradient(800px 400px at 20% 0%,rgba(0,212,255,.15),transparent 60%),
 radial-gradient(900px 500px at 80% 10%,rgba(124,58,237,.15),transparent 60%);
 }
-.hero h1{
-font-size:54px;
-font-weight:900;
-letter-spacing:-1px;
-}
-.hero p{
-max-width:800px;
-margin-top:20px;
-color:var(--muted);
-font-size:18px;
-}
 
-.glow-btn{
+.hero h1{font-size:56px;font-weight:900;letter-spacing:-1px}
+.hero p{max-width:800px;margin-top:20px;color:var(--muted);font-size:18px}
+
+.btn{
 margin-top:35px;
 padding:14px 28px;
 border-radius:40px;
@@ -55,25 +69,10 @@ background:linear-gradient(135deg,var(--cyan),var(--violet));
 color:#001018;
 font-weight:800;
 transition:.3s;
+display:inline-block;
 }
-.glow-btn:hover{transform:translateY(-4px);box-shadow:0 15px 40px rgba(0,212,255,.3)}
+.btn:hover{transform:translateY(-4px);box-shadow:0 15px 40px rgba(0,212,255,.3)}
 
-.nav{
-position:fixed;
-top:0;left:0;right:0;
-display:flex;
-justify-content:space-between;
-padding:18px 8%;
-background:rgba(5,8,20,.7);
-backdrop-filter:blur(12px);
-z-index:100;
-}
-.nav .lang button{
-background:none;border:none;color:var(--muted);font-weight:700;padding:6px 12px;border-radius:20px;
-}
-.nav .lang button.active{background:var(--cyan);color:#001018}
-
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-top:50px}
 .card{
 padding:30px;
 border-radius:20px;
@@ -94,18 +93,25 @@ margin-bottom:12px;
 .ok{background:rgba(25,230,140,.1);color:var(--green)}
 .lock{background:rgba(245,185,66,.1);color:var(--gold)}
 
-.market{
-background:linear-gradient(180deg,transparent,rgba(255,255,255,.03));
+input,select{
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.1);
+background:#0c1424;
+color:white;
 }
 
 .footer{
-padding:40px 8%;
+padding:50px 8%;
 text-align:center;
 color:var(--muted);
 border-top:1px solid rgba(255,255,255,.08);
 }
 </style>
 </head>
+
 <body>
 
 <div class="nav">
@@ -119,78 +125,73 @@ border-top:1px solid rgba(255,255,255,.08);
 <section class="hero">
 <h1 id="heroTitle">Davranışsal Finansal Altyapı</h1>
 <p id="heroSub">Bankalar ve regülasyon yoğun fintech’ler için lisanslanabilir risk altyapısı.</p>
-<a href="#products" class="glow-btn" id="heroBtn">Canlı Ürünler</a>
+<a href="#products" class="btn" id="heroBtn">Canlı Ürünler</a>
 </section>
 
 <section id="products">
-<h2 id="prodTitle">V2 • Canlı Ürünler</h2>
+<h2>V2 • Live Infrastructure</h2>
 
 <div class="cards">
 <div class="card">
-<div class="tag ok">LIVE</div>
+<div class="tag ok" id="riskStatus">LIVE</div>
 <h3>RiskLens API</h3>
-<p>Davranışsal risk skorlama altyapısı. Health & OpenAPI canlıdır.</p>
+<p>Behavioral risk scoring engine.</p>
 </div>
 
 <div class="card">
-<div class="tag ok">LIVE</div>
+<div class="tag ok" id="stressStatus">LIVE</div>
 <h3>Credit Stress Engine</h3>
-<p>Taksit ve ödeme baskısı modellemesi. Modüler entegrasyon.</p>
-</div>
-</div>
-</section>
-
-<section class="market" id="market">
-<h2 id="marketTitle">V3 • Lens Marketplace</h2>
-
-<div class="cards">
-<div class="card">
-<div class="tag lock">KİLİTLİ</div>
-<h3>CFO Lens</h3>
-<p>Kurumsal nakit akışı ve likidite modellemesi.</p>
-</div>
-
-<div class="card">
-<div class="tag lock">KİLİTLİ</div>
-<h3>SME Lens</h3>
-<p>KOBİ davranışsal kredi dayanıklılık skoru.</p>
-</div>
-
-<div class="card">
-<div class="tag lock">KİLİTLİ</div>
-<h3>Family Office Lens</h3>
-<p>Nesiller arası sürdürülebilirlik & yoğunlaşma riski.</p>
-</div>
-
-<div class="card">
-<div class="tag lock">KİLİTLİ</div>
-<h3>Macro Shock Lens</h3>
-<p>Kur / faiz / enflasyon şok simülasyonu.</p>
+<p>Installment & liquidity stress modeling.</p>
 </div>
 </div>
 </section>
 
 <section>
-<h2 id="investTitle">Neden ZENTRA?</h2>
+<h2>Interactive Risk Demo</h2>
+
 <div class="cards">
 <div class="card">
-<h3>Davranış Sinyali</h3>
-<p>Geçmiş ödeme skorunun kaçırdığı gerçek davranış dinamiklerini yakalar.</p>
-</div>
-<div class="card">
-<h3>Stres Simülasyonu</h3>
-<p>Likidite çöküşünü temerrütten önce tahmin eder.</p>
-</div>
-<div class="card">
-<h3>Lisanslanabilir Mimari</h3>
-<p>API-first modüler yapı. Global ölçeklenebilir.</p>
+<label>Amount</label>
+<input id="amount" type="number" value="1000">
+
+<label>Delay (days)</label>
+<input id="delay" type="number" value="10">
+
+<label>Exposure Ratio (0-1)</label>
+<input id="exposure" type="number" step="0.01" value="0.25">
+
+<label>Customer Score</label>
+<input id="cscore" type="number" value="78">
+
+<button class="btn" onclick="runRisk()">Calculate</button>
+
+<h3 id="riskResult">Score: 78</h3>
 </div>
 </div>
 </section>
 
 <section>
-<h2 id="contactTitle">Dubai HQ • Yatırımcı İletişim</h2>
-<a href="mailto:contact@zentrarisk.com" class="glow-btn">İletişime Geç</a>
+<h2>Lens Marketplace</h2>
+<div class="cards">
+<div class="card"><div class="tag lock">LOCKED</div><h3>CFO Lens</h3></div>
+<div class="card"><div class="tag lock">LOCKED</div><h3>SME Lens</h3></div>
+<div class="card"><div class="tag lock">LOCKED</div><h3>Family Office Lens</h3></div>
+<div class="card"><div class="tag lock">LOCKED</div><h3>Macro Shock Lens</h3></div>
+</div>
+</section>
+
+<section>
+<h2>Pricing & Licensing</h2>
+<div class="cards">
+<div class="card"><h3>API Core</h3><p>Usage-based</p></div>
+<div class="card"><h3>Enterprise</h3><p>Annual License</p></div>
+<div class="card"><h3>Lens Add-ons</h3><p>Modular Subscription</p></div>
+</div>
+</section>
+
+<section>
+<h2>Dubai HQ • Investor Contact</h2>
+<a href="mailto:contact@zentrarisk.com" class="btn">Contact</a>
 </section>
 
 <div class="footer">
@@ -198,24 +199,32 @@ border-top:1px solid rgba(255,255,255,.08);
 </div>
 
 <script>
+function runRisk(){
+let amount=parseFloat(document.getElementById("amount").value);
+let delay=parseFloat(document.getElementById("delay").value);
+let exposure=parseFloat(document.getElementById("exposure").value);
+let cscore=parseFloat(document.getElementById("cscore").value);
+
+let score=100
+-Math.min(40,delay*1.4)
+-Math.min(30,exposure*60)
++Math.min(20,(cscore-50)*0.4);
+
+score=Math.max(5,Math.min(95,Math.round(score)));
+
+document.getElementById("riskResult").innerText="Score: "+score;
+}
+
 const dict={
 tr:{
 heroTitle:"Davranışsal Finansal Altyapı",
 heroSub:"Bankalar ve regülasyon yoğun fintech’ler için lisanslanabilir risk altyapısı.",
-heroBtn:"Canlı Ürünler",
-prodTitle:"V2 • Canlı Ürünler",
-marketTitle:"V3 • Lens Marketplace",
-investTitle:"Neden ZENTRA?",
-contactTitle:"Dubai HQ • Yatırımcı İletişim"
+heroBtn:"Canlı Ürünler"
 },
 en:{
 heroTitle:"Behavioral Financial Infrastructure",
 heroSub:"Licensable risk infrastructure for banks and regulated fintechs.",
-heroBtn:"Live Products",
-prodTitle:"V2 • Live Products",
-marketTitle:"V3 • Lens Marketplace",
-investTitle:"Why ZENTRA?",
-contactTitle:"Dubai HQ • Investor Contact"
+heroBtn:"Live Products"
 }
 };
 
@@ -223,17 +232,12 @@ function applyLang(l){
 document.getElementById("heroTitle").innerText=dict[l].heroTitle;
 document.getElementById("heroSub").innerText=dict[l].heroSub;
 document.getElementById("heroBtn").innerText=dict[l].heroBtn;
-document.getElementById("prodTitle").innerText=dict[l].prodTitle;
-document.getElementById("marketTitle").innerText=dict[l].marketTitle;
-document.getElementById("investTitle").innerText=dict[l].investTitle;
-document.getElementById("contactTitle").innerText=dict[l].contactTitle;
 document.getElementById("trBtn").classList.toggle("active",l==="tr");
 document.getElementById("enBtn").classList.toggle("active",l==="en");
 }
 
 document.getElementById("trBtn").onclick=()=>applyLang("tr");
 document.getElementById("enBtn").onclick=()=>applyLang("en");
-
 applyLang("tr");
 </script>
 

@@ -1,237 +1,274 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ZENTRA — Behavioral Financial Infrastructure</title>
 
 <style>
 :root{
---bg:#0b1020;
---card:#111833;
---stroke:rgba(255,255,255,.08);
---text:#fff;
---muted:rgba(255,255,255,.65);
---accent:#4fd1ff;
---radius:16px;
+  --bg:#0b0f1a;
+  --card:#12182a;
+  --accent:#00e0ff;
+  --gold:#f5b942;
+  --green:#19e68c;
+  --danger:#ff4d6d;
+  --text:#e6f0ff;
+  --muted:#7f8ca3;
 }
+
 *{box-sizing:border-box}
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
-background:linear-gradient(180deg,#0b1020,#0e142b);
-color:var(--text);
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Arial;
+  background:linear-gradient(180deg,#0b0f1a,#0f1526);
+  color:var(--text);
 }
-.container{max-width:1100px;margin:auto;padding:30px 20px 80px}
-header{
-display:flex;justify-content:space-between;align-items:center;
-padding:14px 18px;
-background:rgba(255,255,255,.04);
-border:1px solid var(--stroke);
-border-radius:14px;
+
+.container{
+  width:1100px;
+  max-width:95%;
+  margin:auto;
 }
-.logo{font-weight:600;letter-spacing:.5px}
-nav a{
-color:var(--muted);
-margin-left:18px;
-text-decoration:none;
-font-size:13px;
-}
-.toggle{
-margin-left:20px;
-cursor:pointer;
-font-size:12px;
-color:var(--accent);
-}
-.hero{
-margin-top:40px;
-padding:40px;
-background:var(--card);
-border-radius:var(--radius);
-border:1px solid var(--stroke);
-}
-.hero h1{margin:0 0 14px;font-size:32px}
-.hero p{color:var(--muted);max-width:760px}
-.section{
-margin-top:50px;
-padding:28px;
-background:var(--card);
-border-radius:var(--radius);
-border:1px solid var(--stroke);
-}
-.section h2{margin:0 0 18px;font-size:18px}
-.grid{display:grid;gap:18px}
-.grid-2{grid-template-columns:1fr 1fr}
-.grid-3{grid-template-columns:1fr 1fr 1fr}
-.card{
-padding:20px;
-background:rgba(255,255,255,.03);
-border:1px solid var(--stroke);
-border-radius:14px;
-}
-.card h3{margin:0 0 10px;font-size:15px}
-.card p{margin:0;color:var(--muted);font-size:13px}
-.card a{
-display:inline-block;
-margin-top:10px;
-font-size:12px;
-color:var(--accent);
-text-decoration:none;
-}
+
+h1,h2,h3{margin:0 0 16px 0}
+section{padding:80px 0}
+
 .badge{
-display:inline-block;
-font-size:11px;
-padding:5px 9px;
-background:rgba(79,209,255,.15);
-border:1px solid rgba(79,209,255,.4);
-border-radius:20px;
-margin-bottom:10px;
+  display:inline-block;
+  background:rgba(25,230,140,.15);
+  color:var(--green);
+  padding:6px 14px;
+  border-radius:30px;
+  font-size:13px;
+  letter-spacing:.5px;
 }
-.screenshot img{
-width:100%;
-border-radius:14px;
-border:1px solid var(--stroke);
+
+.hero{
+  text-align:center;
+  padding:120px 0 80px 0;
 }
-.lens{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:12px;
+
+.hero h1{
+  font-size:46px;
+  font-weight:700;
 }
-.lens div{
-padding:12px;
-font-size:12px;
-text-align:center;
-border-radius:10px;
-background:rgba(255,255,255,.03);
-border:1px solid var(--stroke);
+
+.hero p{
+  color:var(--muted);
+  font-size:18px;
+  max-width:800px;
+  margin:20px auto 30px auto;
 }
-.demo{
-font-family:monospace;
-font-size:13px;
-background:#0f162e;
-padding:12px;
-border-radius:8px;
-border:1px solid var(--stroke);
+
+.btn{
+  padding:14px 28px;
+  border-radius:10px;
+  text-decoration:none;
+  display:inline-block;
+  transition:.3s;
 }
-footer{
-margin-top:60px;
-text-align:center;
-color:var(--muted);
-font-size:12px;
+
+.btn-primary{
+  background:var(--accent);
+  color:#000;
+  font-weight:600;
 }
-@media(max-width:900px){
-.grid-2,.grid-3{grid-template-columns:1fr}
-.lens{grid-template-columns:1fr 1fr}
-.hero h1{font-size:24px}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,224,255,.4);
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+
+.card{
+  background:var(--card);
+  padding:28px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.05);
+  transition:.4s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  border:1px solid rgba(0,224,255,.4);
+}
+
+.muted{color:var(--muted)}
+
+.screenshots img{
+  width:100%;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.05);
+  transition:.4s;
+}
+
+.screenshots img:hover{
+  transform:scale(1.02);
+}
+
+.pricing-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:30px;
+}
+
+.pricing-table th,
+.pricing-table td{
+  padding:16px;
+  border:1px solid rgba(255,255,255,.06);
+  text-align:center;
+}
+
+.pricing-table th{
+  background:rgba(0,224,255,.1);
+}
+
+.cta-bar{
+  background:linear-gradient(90deg,#00e0ff,#19e68c);
+  padding:30px;
+  text-align:center;
+  border-radius:18px;
+  color:#000;
+  margin-top:50px;
+}
+
+.footer{
+  text-align:center;
+  padding:40px 0;
+  color:var(--muted);
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-<header>
-<div class="logo">ZENTRA</div>
-<div>
-<nav style="display:inline;">
-<a href="#products">Products</a>
-<a href="#api">API</a>
-<a href="#lens">Lens</a>
-<a href="#contact">Contact</a>
-</nav>
-<span class="toggle" onclick="toggleLang()">TR / EN</span>
-</div>
-</header>
-
 <section class="hero">
-<div class="badge">LIVE • API Infrastructure</div>
-<h1 id="title">Behavioral Risk Infrastructure for Regulated Finance</h1>
-<p id="subtitle">
-ZENTRA delivers licensable behavioral risk scoring and stress modeling
-for banks and regulated fintechs. Built as modular lens architecture.
-Global hub target: Dubai.
+<span class="badge">PRODUCTION LIVE • GLOBAL HUB: DUBAI</span>
+<h1>Davranışsal Finansal Altyapı Katmanı</h1>
+<p>
+ZENTRA; bankalar, katılım finans ve regülasyon yoğun fintech’ler için 
+lisanslanabilir Behavioral Financial Infrastructure sağlar.
+Odak: Davranışsal Risk Skorlama + Stres Modelleme + Modüler Lens Mimarisi.
 </p>
+<a href="#contact" class="btn btn-primary">Contact Dubai HQ</a>
 </section>
 
-<section class="section" id="products">
-<h2>Active Infrastructure</h2>
-<div class="grid grid-2">
+<section>
+<h2>Neden Bu Ürün?</h2>
+<div class="grid-3">
+<div class="card">
+<h3>Davranış Bazlı Skor</h3>
+<p class="muted">Klasik kredi skorları geçmişi ölçer. RiskLens davranışı ölçer.</p>
+</div>
+<div class="card">
+<h3>Erken Default Yakalama</h3>
+<p class="muted">Likidite kırılma modellemesi ile 90 gün önceden alarm.</p>
+</div>
+<div class="card">
+<h3>API-first Altyapı</h3>
+<p class="muted">Bankalara lisanslanabilir, modüler entegrasyon yapısı.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>Aktif Ürünler (LIVE)</h2>
+<div class="grid-3">
 <div class="card">
 <h3>RiskLens API</h3>
-<p>Behavioral risk scoring engine for underwriting and early default detection.</p>
-<a href="https://zentra-risklens-api-2.onrender.com/docs" target="_blank">Docs</a>
-<a href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">Health</a>
+<p class="muted">AI destekli davranışsal risk skorlama altyapısı.</p>
 </div>
 <div class="card">
 <h3>Credit Stress Engine</h3>
-<p>Installment pressure modeling and repayment capacity simulation.</p>
-<a href="https://zentra-credit-stress-api.onrender.com/docs" target="_blank">Docs</a>
-<a href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">Health</a>
+<p class="muted">Taksit ve ödeme baskısı simülasyon motoru.</p>
+</div>
+<div class="card">
+<h3>Lens Roadmap</h3>
+<p class="muted">CFO, SME, Family Office, Macro Shock, Cognitive Finance.</p>
 </div>
 </div>
 </section>
 
-<section class="section" id="api">
-<h2>Live API Access</h2>
-<div class="demo">
-Demo Key: zentra-demo-key
+<section class="screenshots">
+<h2>Ekran Görüntüleri</h2>
+<div class="grid-3">
+<img src="https://zentrarisk.com/assets/demo.png" alt="Demo">
+<img src="https://zentrarisk.com/assets/swagger.png" alt="Swagger">
+<img src="https://zentrarisk.com/assets/roadmap.png" alt="Roadmap">
 </div>
 </section>
 
-<section class="section">
-<h2>Platform Screens</h2>
-<div class="grid grid-3 screenshot">
-
-<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nNDAwJyBoZWlnaHQ9JzI1MCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzI1MCcgZmlsbD0nIzE0MjA0MCcvPjx0ZXh0IHg9JzUwJyB5PScxMjAnIGZpbGw9JyM0ZmQxZmYnIGZvbnQtc2l6ZT0nMjAnPkRlbW8gSW50ZXJmYWNlPC90ZXh0Pjwvc3ZnPg==" />
-
-<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nNDAwJyBoZWlnaHQ9JzI1MCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzI1MCcgZmlsbD0nIzE0MjA0MCcvPjx0ZXh0IHg9JzUwJyB5PScxMjAnIGZpbGw9JyM0ZmQxZmYnIGZvbnQtc2l6ZT0nMjAnPlN3YWdnZXIgRG9jczwvdGV4dD48L3N2Zz4=" />
-
-<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nNDAwJyBoZWlnaHQ9JzI1MCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzI1MCcgZmlsbD0nIzE0MjA0MCcvPjx0ZXh0IHg9JzUwJyB5PScxMjAnIGZpbGw9JyM0ZmQxZmYnIGZvbnQtc2l6ZT0nMjAnPlJvYWRtYXA8L3RleHQ+PC9zdmc+" />
-
+<section>
+<h2>Why ZENTRA Wins</h2>
+<div class="grid-3">
+<div class="card">
+<h3>Behavior + Risk + Simulation</h3>
+<p class="muted">Bu üçlü birleşik altyapı globalde standart değil.</p>
+</div>
+<div class="card">
+<h3>Modüler Lens Architecture</h3>
+<p class="muted">Kurumsal + Bireysel entegre altyapı.</p>
+</div>
+<div class="card">
+<h3>Patent Alanları</h3>
+<p class="muted">Behavioral Risk Index • Liquidity Collapse Model • Stress Predictor</p>
+</div>
 </div>
 </section>
 
-<section class="section" id="lens">
-<h2>10 Locked Lens Modules</h2>
-<div class="lens">
-<div>RiskLens Core</div>
-<div>Credit Stress</div>
-<div>CFO Lens</div>
-<div>KOBİ Lens</div>
-<div>Family Office</div>
-<div>Vakıf Lens</div>
-<div>Macro Shock</div>
-<div>Liquidity Lens</div>
-<div>Delay Mapping</div>
-<div>Cognitive Finance</div>
+<section>
+<h2>Pricing & Licensing</h2>
+<table class="pricing-table">
+<tr>
+<th>Plan</th>
+<th>Target</th>
+<th>Features</th>
+<th>License Model</th>
+</tr>
+<tr>
+<td>API Core</td>
+<td>Neobank / Fintech</td>
+<td>Risk Score + Stress</td>
+<td>Usage Based</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>Banks</td>
+<td>Custom Models + On-Prem</td>
+<td>Annual License</td>
+</tr>
+<tr>
+<td>Premium Lens</td>
+<td>Family Office</td>
+<td>Macro + Wealth Models</td>
+<td>Subscription</td>
+</tr>
+</table>
+</section>
+
+<section id="contact">
+<div class="cta-bar">
+<h2>Global Behavioral Financial Infrastructure</h2>
+<p>Dubai HQ • EU Ready • US Compliant</p>
+<a href="mailto:contact@zentrarisk.com" class="btn btn-primary">Contact Dubai HQ</a>
 </div>
 </section>
 
-<section class="section" id="contact">
-<h2>Contact</h2>
-<p style="color:var(--muted)">hello@zentrarisk.com</p>
-</section>
-
-<footer>
+<div class="footer">
 © 2026 ZENTRA — Behavioral Financial Infrastructure
-</footer>
-
 </div>
 
-<script>
-let lang="tr";
-function toggleLang(){
-if(lang==="tr"){
-document.getElementById("title").innerText="Behavioral Risk Infrastructure for Regulated Finance";
-document.getElementById("subtitle").innerText="ZENTRA delivers licensable behavioral risk scoring and stress modeling for banks and regulated fintechs. Built as modular lens architecture. Global hub target: Dubai.";
-lang="en";
-}else{
-document.getElementById("title").innerText="Regüle Finans için Davranışsal Risk Altyapısı";
-document.getElementById("subtitle").innerText="ZENTRA; bankalar ve regülasyon yoğun fintech’ler için lisanslanabilir davranışsal risk altyapısı sunar. Modüler lens mimarisi üzerine kuruludur. Global merkez hedefi: Dubai.";
-lang="tr";
-}
-}
-</script>
+</div>
 
 </body>
 </html>

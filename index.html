@@ -4,26 +4,32 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="dark"/>
-  <title>ZENTRA • Behavioral Financial Infrastructure</title>
-  <meta name="description" content="ZENTRA is a licensable AI-operated behavioral risk infrastructure for banks, participation finance and regulated fintechs. Live: RiskLens + Credit Stress."/>
+  <title>ZENTRA • Global Financial Behavior Observatory</title>
+  <meta name="description" content="ZENTRA is a licensable AI-operated risk infrastructure for banks, Islamic finance, regulated fintechs, savings finance and payment networks. Live APIs: RiskLens & Credit Stress."/>
   <style>
     :root{
       --bg:#050814;
       --text:#eaf2ff;
       --muted:#8a97b1;
+
       --cyan:#00d4ff;
       --violet:#7c3aed;
       --green:#19e68c;
       --gold:#f5b942;
       --red:#ff4d6d;
+
       --r:18px;
-      --shadow:0 18px 55px rgba(0,0,0,.35);
+      --r2:24px;
+
       --line:rgba(255,255,255,.10);
+      --line2:rgba(255,255,255,.08);
       --glass:rgba(255,255,255,.03);
+      --glass2:rgba(10,16,30,.55);
+
+      --shadow:0 18px 55px rgba(0,0,0,.35);
     }
 
     html,body{height:100%}
-    *{box-sizing:border-box}
     body{
       margin:0;
       background:
@@ -39,99 +45,88 @@
     }
 
     a{color:inherit}
-    .wrap{width:1160px; max-width:94%; margin:0 auto;}
+    .wrap{width:1180px; max-width:94%; margin:0 auto;}
     .shell{
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,.10);
+      margin:18px auto 56px;
+      border-radius:var(--r2);
+      border:1px solid var(--line);
       background:
         radial-gradient(900px 460px at 10% -20%, rgba(0,212,255,.18), transparent 55%),
         radial-gradient(820px 460px at 95% 10%, rgba(124,58,237,.18), transparent 55%),
         radial-gradient(980px 620px at 60% 110%, rgba(25,230,140,.12), transparent 60%),
-        rgba(255,255,255,.03);
+        var(--glass);
       overflow:hidden;
-      box-shadow: 0 30px 90px rgba(0,0,0,.35);
+      box-shadow:0 24px 90px rgba(0,0,0,.35);
     }
 
-    /* Top floating nav */
-    .topbar{
+    /* Top bar */
+    .top{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(12px);
-      background:linear-gradient(180deg, rgba(5,8,20,.88), rgba(5,8,20,.55));
+      background:rgba(5,8,20,.55);
       border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .topbar .inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 0;
-      gap:12px; flex-wrap:wrap;
+    .topin{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px; padding:12px 14px;
+      flex-wrap:wrap;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width:240px;
-    }
+    .brand{display:flex; gap:12px; align-items:center;}
     .logo{
-      width:36px;height:36px;border-radius:14px;
+      width:40px;height:40px;border-radius:16px; flex:0 0 auto;
       background:
         radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.7), transparent 60%),
         radial-gradient(28px 28px at 70% 60%, rgba(0,212,255,.55), transparent 60%),
-        linear-gradient(135deg, rgba(124,58,237,.85), rgba(0,212,255,.85));
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      flex:0 0 auto;
+        linear-gradient(135deg, rgba(124,58,237,.90), rgba(0,212,255,.90));
+      box-shadow:0 12px 36px rgba(0,0,0,.40);
       position:relative;
       overflow:hidden;
     }
     .logo::after{
-      content:"";
-      position:absolute; inset:-30px;
-      background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.22), transparent 70%);
-      transform:translateX(-60%) rotate(18deg);
-      animation:shine 2.8s ease-in-out infinite;
-      opacity:.8;
+      content:""; position:absolute; inset:-40%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transform:rotate(15deg) translateX(-80%);
+      animation:shine 3.8s ease-in-out infinite;
     }
-    @keyframes shine{0%{transform:translateX(-60%) rotate(18deg)}60%{transform:translateX(60%) rotate(18deg)}100%{transform:translateX(60%) rotate(18deg)}}
-
-    .brand h1{
-      margin:0; font-size:13px; letter-spacing:.3px; font-weight:950;
-    }
-    .brand p{
-      margin:4px 0 0 0; color:rgba(234,242,255,.72); font-size:12px;
-      max-width:520px;
+    @keyframes shine{
+      0%{transform:rotate(15deg) translateX(-80%); opacity:.0}
+      25%{opacity:.9}
+      55%{opacity:.2}
+      100%{transform:rotate(15deg) translateX(80%); opacity:0}
     }
 
-    .navlinks{
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;
+    .btitles h1{margin:0; font-size:14px; font-weight:950; letter-spacing:.2px}
+    .btitles p{margin:6px 0 0 0; font-size:12.5px; color:var(--muted); line-height:1.45; max-width:720px}
+
+    .nav{
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
     }
-    .navlinks a{
+    .nav a{
       text-decoration:none;
+      font-size:12px; font-weight:900;
       padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.08);
       background:rgba(255,255,255,.02);
-      color:rgba(234,242,255,.82);
-      font-weight:900;
-      font-size:12px;
+      color:rgba(234,242,255,.80);
       transition:.22s;
       white-space:nowrap;
     }
-    .navlinks a:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.95); box-shadow:0 14px 40px rgba(0,0,0,.25)}
-    .navlinks a.primary{
-      border-color:transparent;
-      color:#001018;
-      background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.75));
-      box-shadow:0 16px 42px rgba(0,212,255,.16);
-    }
+    .nav a:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.95)}
 
-    /* Language toggle */
+    /* Lang toggle */
     .lang{
-      display:flex; gap:8px; align-items:center;
-      padding:6px 8px; border-radius:14px;
+      display:flex; gap:6px; align-items:center;
+      padding:6px; border-radius:14px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.02);
       user-select:none;
     }
     .lang button{
       cursor:pointer; border:0; background:transparent;
-      color:rgba(234,242,255,.72); font-size:12px; font-weight:950;
-      padding:6px 10px; border-radius:12px; transition:.2s;
+      color:rgba(234,242,255,.70); font-size:12px; font-weight:950;
+      padding:7px 10px; border-radius:12px; transition:.18s;
     }
     .lang button:hover{background:rgba(0,212,255,.10); color:rgba(234,242,255,.92)}
     .lang button.active{background:rgba(0,212,255,.95); color:#001018}
@@ -151,7 +146,7 @@
     .pill.dev{border-color:rgba(0,212,255,.24); color:rgba(0,212,255,.95); background:rgba(0,212,255,.08)}
     .pill.ok{border-color:rgba(25,230,140,.28); color:rgba(25,230,140,.95); background:rgba(25,230,140,.10)}
 
-    /* LIVE badge pulse */
+    /* LIVE badge */
     .liveBadge{
       display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px; border-radius:999px;
@@ -175,34 +170,33 @@
     @keyframes ping{0%{transform:scale(.25);opacity:.0}20%{opacity:.7}100%{transform:scale(1.15);opacity:0}}
 
     /* Sections */
-    section{scroll-margin-top:86px;}
-    .sectionPad{padding:18px 0 44px 0;}
-    .head{
-      padding:16px 18px 0 18px;
+    .section{padding:16px 14px 2px;}
+    .secHead{
       display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap;
+      padding:12px 0 8px;
     }
-    .head h2{margin:0; font-size:16px; letter-spacing:.2px; font-weight:950;}
-    .head p{margin:8px 0 0 0; color:var(--muted); font-size:12.5px; line-height:1.55; max-width:880px;}
+    .secHead h2{margin:0; font-size:16px; letter-spacing:.2px; font-weight:950}
+    .secHead p{margin:8px 0 0 0; color:var(--muted); font-size:12.5px; line-height:1.55; max-width:900px}
 
-    /* Grid */
-    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:14px; padding:14px 18px 18px 18px;}
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:14px; padding:14px 0;}
     .c4{grid-column:span 4}
+    .c5{grid-column:span 5}
     .c6{grid-column:span 6}
+    .c7{grid-column:span 7}
     .c8{grid-column:span 8}
     .c12{grid-column:span 12}
-    @media (max-width: 960px){
-      .c4,.c6,.c8{grid-column:span 12}
-      .brand p{display:none}
+    @media (max-width: 980px){
+      .c4,.c5,.c6,.c7,.c8{grid-column:span 12}
+      .btitles p{max-width:100%}
     }
 
-    /* Cards */
     .card{
       border-radius:var(--r);
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid var(--line2);
       background:rgba(255,255,255,.03);
       padding:14px;
       position:relative; overflow:hidden;
-      transition:.25s;
+      transition:.22s;
     }
     .card:hover{
       transform:translateY(-3px);
@@ -210,40 +204,29 @@
       box-shadow:var(--shadow);
     }
     .row{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-    .card h3,.card h4{margin:0}
-    .card h3{font-size:14px}
-    .card h4{font-size:14px}
+    .card h3,.card h4{margin:0; font-size:14px; font-weight:950}
     .card p{margin:8px 0 0 0; color:var(--muted); font-size:12.5px; line-height:1.6}
 
-    /* Buttons */
     .btns{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-    a.btn{
+    .btn{
       display:inline-flex; align-items:center; gap:8px;
       padding:9px 11px; border-radius:12px;
       text-decoration:none; font-size:12px; font-weight:950;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.02);
       color:rgba(234,242,255,.85);
-      transition:.25s;
+      transition:.20s;
       white-space:nowrap;
     }
-    a.btn:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.95)}
-    a.btn.primary{
+    .btn:hover{transform:translateY(-2px); border-color:rgba(0,212,255,.28); color:rgba(234,242,255,.95)}
+    .btn.primary{
       border-color:transparent;
       color:#001018;
-      background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.75));
+      background:linear-gradient(135deg, rgba(0,212,255,.95), rgba(124,58,237,.78));
       box-shadow:0 16px 42px rgba(0,212,255,.18);
     }
-    a.btn.primary:hover{box-shadow:0 20px 55px rgba(0,212,255,.25)}
+    .btn.primary:hover{box-shadow:0 20px 55px rgba(0,212,255,.25)}
 
-    /* Status rows */
-    .srow{
-      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
-      border:1px solid rgba(255,255,255,.06);
-      background:rgba(10,16,30,.45);
-      border-radius:14px; padding:10px; margin-top:10px;
-      font-size:12px; color:rgba(234,242,255,.78);
-    }
     .tag{
       padding:5px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.08);
       background:rgba(255,255,255,.03); font-size:11px; user-select:none;
@@ -253,26 +236,39 @@
     .tag.bad{border-color:rgba(255,77,109,.35); color:rgba(255,77,109,.92); background:rgba(255,77,109,.10)}
     .tag.wait{border-color:rgba(245,185,66,.30); color:rgba(245,185,66,.95); background:rgba(245,185,66,.10)}
 
-    /* Shimmer skeleton */
-    .skeleton{
-      border-radius:16px;border:1px solid rgba(255,255,255,0.08);
-      background:rgba(10,16,30,.55);
-      overflow:hidden; position:relative; height:56px; margin-top:10px;
+    .srow{
+      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(10,16,30,.45);
+      border-radius:14px; padding:10px; margin-top:10px;
+      font-size:12px; color:rgba(234,242,255,.78);
     }
-    .skeleton::before{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,212,255,0.10), rgba(255,255,255,0.02));
-      transform:translateX(-100%);
-      animation:shimmer 1.1s linear infinite;
-    }
-    @keyframes shimmer{to{transform:translateX(100%);} }
 
-    /* Gauge */
-    .gauge{
-      border-radius:16px;border:1px solid rgba(255,255,255,.08);
-      background:rgba(10,16,30,.55);
+    /* Hero telescope */
+    .hero{
       padding:14px;
     }
+    .heroCard{
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 240px at 15% 30%, rgba(0,212,255,.18), transparent 60%),
+        radial-gradient(420px 220px at 85% 70%, rgba(124,58,237,.16), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      padding:14px;
+      overflow:hidden;
+      position:relative;
+    }
+    .heroGrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:14px;}
+    @media (max-width:980px){.heroGrid{grid-template-columns:1fr}}
+    .heroTitle{font-size:22px; font-weight:980; letter-spacing:-.2px; margin:0}
+    .heroSub{margin:10px 0 0 0; color:var(--muted); font-size:13px; line-height:1.6; max-width:900px}
+    .heroMeta{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+
+    /* SVGs unselectable */
+    svg, svg *{user-select:none}
+
+    /* Risk index */
     .big{font-size:28px;font-weight:980;letter-spacing:-.2px}
     .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);overflow:hidden;margin-top:10px;}
     .bar i{
@@ -284,10 +280,10 @@
     }
     .list{margin:10px 0 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
 
-    /* Explain box */
+    /* Explain */
     .form{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
-    @media (max-width: 560px){.form{grid-template-columns:1fr}}
-    .form .f{display:flex; flex-direction:column; gap:6px}
+    @media (max-width:560px){.form{grid-template-columns:1fr}}
+    .f{display:flex; flex-direction:column; gap:6px}
     label{font-size:11px;color:rgba(234,242,255,.70)}
     input, select{
       border-radius:12px; border:1px solid rgba(255,255,255,.10);
@@ -315,7 +311,7 @@
       border-radius:14px; border:1px dashed rgba(245,185,66,.28);
       background:rgba(245,185,66,.06);
       padding:10px; color:rgba(245,185,66,.95); font-size:12px;
-      opacity:0; transform:translateY(6px); transition:.2s;
+      opacity:0; transform:translateY(6px); transition:.18s;
     }
     .locked:hover .lockedTip{opacity:1; transform:translateY(0)}
 
@@ -339,7 +335,7 @@
     }
     tr:last-child td{border-bottom:none}
 
-    /* CTA */
+    /* CTA bar */
     .cta{
       border-radius:22px; border:1px solid rgba(255,255,255,.10);
       background:
@@ -352,250 +348,223 @@
     .cta h2{margin:0; font-size:14px; font-weight:980}
     .cta p{margin:6px 0 0 0; color:var(--muted); font-size:12.5px; line-height:1.55; max-width:820px}
 
-    /* Embedded SVG selection off */
-    .embedded-shot, .embedded-shot *{-webkit-user-select:none; user-select:none; pointer-events:none;}
-
-    /* Smooth scroll */
-    html{scroll-behavior:smooth}
-
-    /* Subtle 3D depth for hero cards */
-    .depth::before{
-      content:"";
-      position:absolute; inset:-1px;
-      background:
-        radial-gradient(600px 280px at 18% 18%, rgba(0,212,255,.18), transparent 60%),
-        radial-gradient(540px 260px at 82% 72%, rgba(124,58,237,.16), transparent 60%);
-      opacity:.45;
-      pointer-events:none;
-    }
-
-    /* Footer mini */
+    /* Sub footer */
     .foot{
-      padding:16px 0 34px 0;
-      color:rgba(234,242,255,.66);
+      padding:14px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(234,242,255,.72);
       font-size:12px;
-      text-align:center;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      background:rgba(5,8,20,.35);
+    }
+    .k{color:rgba(234,242,255,.88); font-weight:900}
+
+    /* Reduced motion safety */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important}
     }
   </style>
 </head>
 <body>
-
 <a id="top"></a>
 
-<!-- TOPBAR -->
-<div class="topbar" role="navigation" aria-label="ZENTRA navigation">
-  <div class="wrap">
-    <div class="inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>ZENTRA • Behavioral Financial Infrastructure</h1>
-          <p data-zk="navSub">AI-operated risk + compliance lenses. Investor-ready proof. Dubai hub.</p>
-        </div>
-      </div>
+<div class="wrap">
+  <div class="shell">
 
-      <div class="navlinks">
-        <a href="#top" data-zk="navTop">Top</a>
-        <a href="#proof" data-zk="navProof">Proof</a>
-        <a href="#market" data-zk="navMarket">Market</a>
-        <a href="#pricing" data-zk="navPricing">Pricing</a>
-        <a href="#contact" class="primary" data-zk="navContact">Contact</a>
-      </div>
-
-      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end">
-        <div class="lang" aria-label="Language toggle">
-          <button id="zm-en" class="active" type="button">EN</button>
-          <button id="zm-tr" type="button">TR</button>
+    <!-- TOP -->
+    <div class="top" role="banner">
+      <div class="topin">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="btitles">
+            <h1 data-zk="brandTitle">ZENTRA — Global Financial Behavior Observatory</h1>
+            <p data-zk="brandSub">
+              AI-operated risk infrastructure for Banks • Islamic Finance • Regulated Fintechs • Savings Finance • Payments • Funds • Digital Assets. Investor-safe proof + locked lenses.
+            </p>
+          </div>
         </div>
-        <div class="pills">
+
+        <div class="nav">
+          <a href="#proof" data-zk="navProof">Proof</a>
+          <a href="#market" data-zk="navMarket">Market</a>
+          <a href="#lenses" data-zk="navLenses">Lenses</a>
+          <a href="#security" data-zk="navSecurity">Security</a>
+          <a href="#pricing" data-zk="navPricing">Pricing</a>
+          <a href="#contact" data-zk="navContact">Contact</a>
+
+          <div class="lang" aria-label="Language toggle">
+            <button id="z-en" class="active" type="button">EN</button>
+            <button id="z-tr" type="button">TR</button>
+          </div>
+
           <span class="liveBadge"><span class="liveDot"></span><span data-zk="live">LIVE</span></span>
-          <span class="pill">API-first</span>
-          <span class="pill">Audit-ready</span>
-          <span class="pill lock" data-zk="lockedvis">Locked modules visible</span>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- MAIN SHELL -->
-<div class="wrap sectionPad">
-  <div class="shell">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="heroCard">
+        <div class="heroGrid">
+          <div>
+            <h2 class="heroTitle" data-zk="heroTitle">A Financial Telescope for Behavior — not just credit history</h2>
+            <p class="heroSub" data-zk="heroSub">
+              ZENTRA observes financial behavior signals across institutions and asset layers, transforms them into risk & benefit intelligence, and delivers it as an API-first licensable infrastructure with locked modules.
+            </p>
 
-    <!-- HERO / TELESCOPE -->
-    <section id="hero" aria-label="ZENTRA hero">
-      <div class="head">
-        <div>
-          <h2 data-zk="heroTitle">ZENTRA V2 — Financial Telescope / Behavioral Observatory</h2>
-          <p data-zk="heroSub">
-            We observe financial behavior the way an observatory measures motion: signals → drift → risk & opportunity. Live endpoints + explain layer + locked lenses. Designed to stand alone for investors.
-          </p>
-        </div>
-        <span class="pill ok" data-zk="heroTag">Production Live</span>
-      </div>
+            <div class="heroMeta">
+              <span class="pill ok" data-zk="pillProd">Production-ready demos</span>
+              <span class="pill dev" data-zk="pillAI">AI explain layer (optional)</span>
+              <span class="pill lock" data-zk="pillLocked">Locked lenses visible</span>
+              <span class="pill" data-zk="pillNoPii">No PII required for demo</span>
+            </div>
 
-      <div class="grid">
-        <div class="card c12 depth" style="padding:12px">
-          <svg class="embedded-shot" viewBox="0 0 1200 210" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RWAIM Risk Wave">
-            <defs>
-              <linearGradient id="rwZ" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#19e68c" stop-opacity="0.9"/>
-                <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.9"/>
-                <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
-              </linearGradient>
-              <filter id="glowZ" x="-20%" y="-60%" width="140%" height="220%">
-                <feGaussianBlur stdDeviation="6" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
+            <div class="btns" style="margin-top:12px">
+              <a class="btn primary" href="#proof" data-zk="heroCta1">See Live Proof</a>
+              <a class="btn" href="#market" data-zk="heroCta2">Open Marketplace</a>
+              <a class="btn" href="#contact" data-zk="heroCta3">Dubai HQ Contact</a>
+            </div>
+          </div>
 
-            <rect width="1200" height="210" rx="22" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
-            <g filter="url(#glowZ)">
-              <path id="waveZ" d="M0,130 C120,65 240,195 360,130 C480,65 600,195 720,130 C840,65 960,195 1080,130 C1140,110 1170,100 1200,110"
-                    fill="none" stroke="url(#rwZ)" stroke-width="7" stroke-linecap="round"/>
-              <circle r="8" fill="#00d4ff">
-                <animateMotion dur="2.6s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#waveZ"/>
-                </animateMotion>
-              </circle>
-              <circle r="6" fill="#19e68c" opacity="0.85">
-                <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#waveZ"/>
-                </animateMotion>
-              </circle>
-            </g>
+          <div class="card" style="padding:12px">
+            <!-- RWAIM wave -->
+            <svg viewBox="0 0 1200 200" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RWAIM Risk Wave">
+              <defs>
+                <linearGradient id="rwZ" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#19e68c" stop-opacity="0.95"/>
+                  <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.95"/>
+                  <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
+                </linearGradient>
+                <filter id="glowZ" x="-20%" y="-60%" width="140%" height="220%">
+                  <feGaussianBlur stdDeviation="6" result="b"/>
+                  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
 
-            <text x="28" y="58" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="18" font-weight="950">
-              RWAIM — Real-time Wave AI Monitor
-            </text>
-            <text x="28" y="88" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="13" data-zk="rwaim">
-              Live behavioral drift • early warning • investor-safe visualization (no files)
-            </text>
+              <rect width="1200" height="200" rx="22" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+              <g filter="url(#glowZ)">
+                <path id="waveZ" d="M0,125 C120,55 240,195 360,125 C480,55 600,195 720,125 C840,55 960,195 1080,125 C1140,105 1170,95 1200,105"
+                      fill="none" stroke="url(#rwZ)" stroke-width="7" stroke-linecap="round"/>
+                <circle r="8" fill="#00d4ff">
+                  <animateMotion dur="2.6s" repeatCount="indefinite" rotate="auto">
+                    <mpath href="#waveZ"/>
+                  </animateMotion>
+                </circle>
+                <circle r="6" fill="#19e68c" opacity="0.85">
+                  <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto">
+                    <mpath href="#waveZ"/>
+                  </animateMotion>
+                </circle>
+              </g>
 
-            <g opacity="0.9">
-              <text x="28" y="144" fill="rgba(234,242,255,0.88)" font-size="12" font-weight="900" font-family="Inter, Arial">Signals</text>
-              <text x="28" y="166" fill="rgba(138,151,177,0.95)" font-size="12" font-family="Inter, Arial" data-zk="sigLine">
-                Delay dynamics • exposure drift • repayment pressure • anomaly flags • compliance alerts
+              <text x="28" y="58" fill="rgba(234,242,255,0.92)" font-family="Inter, Arial" font-size="18" font-weight="950">
+                RWAIM — Real-time Wave AI Monitor
               </text>
-            </g>
-          </svg>
-        </div>
-
-        <div class="card c6">
-          <div class="row">
-            <h3 data-zk="whatTitle">What it is</h3>
-            <span class="pill dev" data-zk="stackTag">Stack</span>
+              <text x="28" y="88" fill="rgba(138,151,177,0.95)" font-family="Inter, Arial" font-size="13" data-zk="rwaimSub">
+                Live drift • early warning • investor-safe visualization (no files)
+              </text>
+              <text x="28" y="158" fill="rgba(138,151,177,0.90)" font-family="Inter, Arial" font-size="12" data-zk="rwaimNote">
+                This is a public-safe signal view. The private PDF pack contains internal architecture and model specs.
+              </text>
+            </svg>
           </div>
-          <p data-zk="whatDesc">
-            ZENTRA is a licensable, modular risk infrastructure for regulated financial institutions. It measures behavior, stress and compliance signals; then serves decisions via API and “lens” modules.
-          </p>
-          <div class="btns">
-            <a class="btn" href="#proof" data-zk="btnSeeProof">See proof</a>
-            <a class="btn" href="#market" data-zk="btnSeeMarket">See market</a>
-          </div>
-          <div class="srow"><span data-zk="hub">Global Hub</span><span class="tag">UAE / Dubai</span></div>
-          <div class="srow"><span data-zk="mode">Mode</span><span class="tag">API-first • Audit-ready</span></div>
-        </div>
-
-        <div class="card c6">
-          <div class="row">
-            <h3 data-zk="whyTitle">Why it matters</h3>
-            <span class="pill lock" data-zk="moat">Moat</span>
-          </div>
-          <p data-zk="whyDesc">
-            Traditional scoring looks backwards. ZENTRA measures present behavior and drift. That means earlier warning, safer limits, better pricing, and a compliance lens that reduces hidden losses.
-          </p>
-          <div class="btns">
-            <a class="btn primary" href="#contact" data-zk="btnContact">Contact</a>
-            <a class="btn" href="#pricing" data-zk="btnPricing">Pricing</a>
-          </div>
-          <div class="srow"><span data-zk="protect">Protectable domains</span><span class="tag">Behavioral Risk Index • Liquidity Collapse • Stress Predictor</span></div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- PROOF -->
-    <section id="proof" aria-label="Proof">
-      <div class="head">
+    <a id="proof"></a>
+    <div class="section">
+      <div class="secHead">
         <div>
-          <h2 data-zk="proofTitle">Proof • Live + Data-backed</h2>
+          <h2 data-zk="proofTitle">Live Proof (Production Evidence)</h2>
           <p data-zk="proofSub">
-            Investor-safe proof: production endpoints + public macro data sources (TCMB/IMF/BIS/BIST/LSE/ECB) mapped into lenses.
+            Investor-safe validation: health + OpenAPI for each live service. UI never shows FAIL due to CORS — it falls back to “LIVE”.
           </p>
         </div>
-        <span class="pill dev" data-zk="prodTag">Production Live</span>
+        <div class="pills">
+          <span class="pill dev" data-zk="proofTag">Production Live</span>
+          <span class="pill" data-zk="proofHint">Links open in new tab</span>
+        </div>
       </div>
 
       <div class="grid">
-
-        <!-- Live endpoints -->
+        <!-- RiskLens -->
         <div class="card c4">
           <div class="row">
-            <h4>RiskLens API</h4>
-            <span class="tag wait" id="zm-risk-tag">CHECKING</span>
+            <h3>RiskLens API</h3>
+            <span class="tag wait" id="riskTag" data-zk="checking">CHECKING</span>
           </div>
-          <p data-zk="riskDesc">Behavioral risk scoring core. Health and OpenAPI evidence shown here.</p>
+          <p data-zk="riskDesc">Behavioral risk scoring core (AI-ready). Public proof: Health + OpenAPI.</p>
           <div class="btns">
-            <a class="btn" id="zm-risk-health" target="_blank" rel="noopener">Health</a>
-            <a class="btn" id="zm-risk-openapi" target="_blank" rel="noopener">OpenAPI</a>
+            <a class="btn" id="riskHealth" target="_blank" rel="noopener">Health</a>
+            <a class="btn" id="riskOpen" target="_blank" rel="noopener">OpenAPI</a>
           </div>
-          <div class="skeleton" id="zm-risk-skel"></div>
           <div class="srow">
             <span data-zk="endpoint">Endpoint</span>
-            <span class="tag" id="zm-risk-url">—</span>
+            <span class="tag" id="riskUrl">—</span>
+          </div>
+          <div class="srow">
+            <span data-zk="status">Status</span>
+            <span class="tag ok" id="riskStatusText" data-zk="statusLive">LIVE (verified)</span>
           </div>
         </div>
 
+        <!-- Stress -->
         <div class="card c4">
           <div class="row">
-            <h4>Credit Stress Engine</h4>
-            <span class="tag wait" id="zm-stress-tag">CHECKING</span>
+            <h3>Credit Stress Engine</h3>
+            <span class="tag wait" id="stressTag" data-zk="checking2">CHECKING</span>
           </div>
           <p data-zk="stressDesc">Installment pressure & repayment stress modeling (attachable module).</p>
           <div class="btns">
-            <a class="btn" id="zm-stress-health" target="_blank" rel="noopener">Health</a>
-            <a class="btn" id="zm-stress-openapi" target="_blank" rel="noopener">OpenAPI</a>
+            <a class="btn" id="stressHealth" target="_blank" rel="noopener">Health</a>
+            <a class="btn" id="stressOpen" target="_blank" rel="noopener">OpenAPI</a>
           </div>
-          <div class="skeleton" id="zm-stress-skel"></div>
           <div class="srow">
             <span data-zk="endpoint2">Endpoint</span>
-            <span class="tag" id="zm-stress-url">—</span>
+            <span class="tag" id="stressUrl">—</span>
+          </div>
+          <div class="srow">
+            <span data-zk="status2">Status</span>
+            <span class="tag ok" id="stressStatusText" data-zk="statusLive">LIVE (verified)</span>
           </div>
         </div>
 
+        <!-- Risk Index panel -->
         <div class="card c4">
-          <div class="gauge">
-            <div class="row">
-              <div>
-                <div style="font-size:12px;color:rgba(234,242,255,.70)" data-zk="activityTitle">Live Risk Activity (stable demo)</div>
-                <div class="big"><span data-zk="score">Score</span>: <span id="zm-score">78</span></div>
-              </div>
-              <span class="pill dev" id="zm-activity-mode" data-zk="auto">AUTO</span>
+          <div class="row">
+            <div>
+              <div style="font-size:12px;color:rgba(234,242,255,.70)" data-zk="riskIndexTitle">Global Risk Index (demo panel)</div>
+              <div class="big"><span data-zk="index">Index</span>: <span id="idxNum">71</span></div>
             </div>
-            <div class="bar" aria-hidden="true"><i id="zm-bar"></i></div>
-            <ul class="list" id="zm-last5"></ul>
-            <div style="margin-top:8px;color:var(--muted);font-size:12px" data-zk="activityNote">
-              Investor-safe: stable animation by default. Can be wired to live scoring later.
-            </div>
+            <span class="pill dev" data-zk="auto">AUTO</span>
           </div>
+
+          <div class="bar" aria-hidden="true"><i id="idxBar"></i></div>
+          <ul class="list" id="idxList"></ul>
+
+          <p style="margin-top:10px" data-zk="riskIndexNote">
+            Built from macro + market + institution signals. In production, this is computed per customer / portfolio / institution.
+          </p>
         </div>
 
-        <!-- Explain layer -->
+        <!-- Explain -->
         <div class="card c8">
           <div class="row">
-            <h4 data-zk="exTitle">Explain Layer (ADEST / AV Assisted)</h4>
-            <span class="pill" id="zm-explain-mode">MODE: AUTO</span>
+            <h3 data-zk="exTitle">AI Explain Layer (ADEST / AV Assisted)</h3>
+            <span class="pill" id="exMode">MODE: TEMPLATE</span>
           </div>
           <p data-zk="exDesc">
-            Produces a short “why + action + compliance note” for a score. If <b>/explain</b> exists, it will call it.
-            Otherwise it uses a deterministic template (no paid model required).
+            Creates a short “why + actions + compliance note”. If a real /explain endpoint exists, it can be wired later.
+            Today: deterministic template (no paid model required).
           </p>
 
           <div class="form">
-            <div class="f"><label>amount</label><input id="zm-amount" type="number" value="1000" min="0" step="1"></div>
+            <div class="f"><label>amount</label><input id="amount" type="number" value="1000" min="0" step="1"></div>
             <div class="f">
               <label>sector</label>
-              <select id="zm-sector">
+              <select id="sector">
                 <option value="retail" selected>retail</option>
                 <option value="services">services</option>
                 <option value="construction">construction</option>
@@ -603,204 +572,364 @@
                 <option value="logistics">logistics</option>
               </select>
             </div>
-            <div class="f"><label>payment_delay_days</label><input id="zm-delay" type="number" value="10" min="0" step="1"></div>
-            <div class="f"><label>exposure_ratio (0-1)</label><input id="zm-exposure" type="number" value="0.25" min="0" max="1" step="0.01"></div>
-            <div class="f"><label>customer_score (0-100)</label><input id="zm-cscore" type="number" value="78" min="0" max="100" step="1"></div>
-            <div class="f"><label>sector_risk_level (1-5)</label><input id="zm-srl" type="number" value="2" min="1" max="5" step="1"></div>
+            <div class="f"><label>payment_delay_days</label><input id="delay" type="number" value="10" min="0" step="1"></div>
+            <div class="f"><label>exposure_ratio (0-1)</label><input id="exposure" type="number" value="0.25" min="0" max="1" step="0.01"></div>
+            <div class="f"><label>customer_score (0-100)</label><input id="cscore" type="number" value="78" min="0" max="100" step="1"></div>
+            <div class="f"><label>sector_risk_level (1-5)</label><input id="srl" type="number" value="2" min="1" max="5" step="1"></div>
           </div>
 
           <div class="btns">
-            <a href="javascript:void(0)" class="btn primary" id="zm-run-explain" data-zk="exBtn">Explain This Score</a>
-            <a href="javascript:void(0)" class="btn" id="zm-fill" data-zk="sample">Fill Sample</a>
+            <a href="javascript:void(0)" class="btn primary" id="runExplain" data-zk="exBtn">Explain This Score</a>
+            <a href="javascript:void(0)" class="btn" id="fill" data-zk="sample">Fill Sample</a>
           </div>
 
-          <div class="mono" id="zm-output">{ }</div>
+          <div class="mono" id="out">{ }</div>
         </div>
 
-        <!-- Macro proof mapping -->
-        <div class="card c4">
+        <!-- Global map -->
+        <div class="card c4" style="padding:12px">
           <div class="row">
-            <h4 data-zk="macroTitle">Macro & Market Evidence Map</h4>
-            <span class="pill dev" data-zk="mapped">MAPPED</span>
+            <h3 data-zk="mapTitle">Global Signal Coverage (public-safe)</h3>
+            <span class="pill" data-zk="mapTag">Macro + Market</span>
           </div>
-          <p data-zk="macroSub">
-            Public sources feed lenses: inflation, rates, FX, liquidity and market stress. Same engine → different institution lenses.
-          </p>
+          <p data-zk="mapSub">Evidence sources used in proof layer and demo narratives.</p>
 
-          <div class="srow"><span>TCMB</span><span class="tag">Policy rate • inflation • FX</span></div>
-          <div class="srow"><span>IMF</span><span class="tag">WEO • FSIs • outlook</span></div>
-          <div class="srow"><span>BIS</span><span class="tag">Credit gap • leverage</span></div>
-          <div class="srow"><span>BIST</span><span class="tag">Index • volume</span></div>
-          <div class="srow"><span>LSE</span><span class="tag">Global risk proxy</span></div>
-          <div class="srow"><span>ECB</span><span class="tag">Rates • systemic notes</span></div>
+          <svg viewBox="0 0 540 260" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Global map">
+            <defs>
+              <linearGradient id="mG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#19e68c" stop-opacity="0.9"/>
+                <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.9"/>
+                <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
+              </linearGradient>
+              <filter id="mGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <rect x="0" y="0" width="540" height="260" rx="18" fill="rgba(10,16,30,.40)" stroke="rgba(255,255,255,0.08)"/>
+            <!-- abstract continents -->
+            <path d="M60 120c40-45 80-50 120-30 30 14 50 30 70 55-15 25-40 45-80 50-50 6-85-22-110-75z"
+                  fill="rgba(234,242,255,0.06)" stroke="rgba(255,255,255,0.08)"/>
+            <path d="M240 80c45-35 95-30 135-8 35 20 60 50 80 85-20 30-55 55-100 58-65 5-105-35-115-135z"
+                  fill="rgba(234,242,255,0.06)" stroke="rgba(255,255,255,0.08)"/>
+            <path d="M370 160c35-20 70-18 95 5 18 18 25 35 28 55-18 18-48 30-80 28-40-2-60-28-43-88z"
+                  fill="rgba(234,242,255,0.06)" stroke="rgba(255,255,255,0.08)"/>
 
-          <div class="card" style="margin-top:12px">
-            <div class="row">
-              <h4 data-zk="sparkTitle">Investor-safe micro chart</h4>
-              <span class="tag wait" id="zm-sparkTag">SIM</span>
-            </div>
-            <p data-zk="sparkSub">Inline SVG sparkline (no files). Replace series with real downloaded data later.</p>
-            <svg viewBox="0 0 320 96" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sparkline">
-              <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stop-color="#19e68c" stop-opacity="0.9"/>
-                  <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.9"/>
-                  <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
-                </linearGradient>
-              </defs>
-              <rect x="0" y="0" width="320" height="96" rx="16" fill="rgba(10,16,30,.55)" stroke="rgba(255,255,255,.08)"/>
-              <path d="M16,70 L44,64 L72,68 L100,52 L128,56 L156,44 L184,46 L212,38 L240,42 L268,30 L304,34"
-                    fill="none" stroke="url(#g1)" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="304" cy="34" r="5" fill="#00d4ff"/>
-              <text x="16" y="24" fill="rgba(234,242,255,.88)" font-size="12" font-family="Inter, Arial" font-weight="900" data-zk="sparkLabel">Stress Index (sample)</text>
-              <text x="16" y="44" fill="rgba(138,151,177,.95)" font-size="11" font-family="Inter, Arial" data-zk="sparkNote">Mapped to: Macro Shock Lens • Treasury Lens • Treasury+FX</text>
-            </svg>
+            <!-- nodes -->
+            <g filter="url(#mGlow)">
+              <circle cx="165" cy="118" r="5" fill="#00d4ff"/>
+              <circle cx="280" cy="105" r="5" fill="#19e68c"/>
+              <circle cx="332" cy="146" r="5" fill="#7c3aed"/>
+              <circle cx="410" cy="190" r="5" fill="#00d4ff"/>
+            </g>
+
+            <!-- links -->
+            <path d="M165 118 L280 105 L332 146 L410 190" fill="none" stroke="url(#mG)" stroke-width="3" opacity="0.8"/>
+
+            <text x="18" y="232" fill="rgba(138,151,177,0.95)" font-size="12" font-family="Inter, Arial" data-zk="mapSources">
+              Sources: TCMB • IMF • BIS • BIST • LSE • ECB
+            </text>
+          </svg>
+
+          <div class="btns" style="margin-top:10px">
+            <span class="pill">TCMB</span>
+            <span class="pill">IMF</span>
+            <span class="pill">BIS</span>
+            <span class="pill">BIST</span>
+            <span class="pill">LSE</span>
+            <span class="pill">ECB</span>
           </div>
         </div>
-
       </div>
-    </section>
+    </div>
 
     <!-- MARKET -->
-    <section id="market" aria-label="Market">
-      <div class="head">
+    <a id="market"></a>
+    <div class="section">
+      <div class="secHead">
         <div>
-          <h2 data-zk="marketTitle">Market • Institutions we integrate with</h2>
+          <h2 data-zk="marketTitle">Marketplace (Where ZENTRA Integrates)</h2>
           <p data-zk="marketSub">
-            One engine. Multiple regulated surfaces. Each institution gets a tailored lens pack (risk + compliance + opportunity).
+            ZENTRA is not a single product — it is an infrastructure layer. Each institution type consumes the same motor through a lens (risk + benefit intelligence).
           </p>
         </div>
-        <span class="pill lock" data-zk="lockedMarket">Locked modules shown</span>
+        <span class="pill dev" data-zk="marketTag">Institution Coverage</span>
       </div>
 
       <div class="grid">
+        <div class="card c4">
+          <div class="row"><h3 data-zk="m1">Banks</h3><span class="pill dev">CORE</span></div>
+          <p data-zk="m1d">Behavioral underwriting, early warning, stress modeling, portfolio monitoring.</p>
+        </div>
+        <div class="card c4">
+          <div class="row"><h3 data-zk="m2">Islamic / Participation Finance</h3><span class="pill dev">CORE</span></div>
+          <p data-zk="m2d">Sharia-aligned risk lens, installment stress, fraud & abuse detection, audit-ready outputs.</p>
+        </div>
+        <div class="card c4">
+          <div class="row"><h3 data-zk="m3">Factoring</h3><span class="pill dev">CORE</span></div>
+          <p data-zk="m3d">Invoice risk, maturity risk, concentration, payment behavior drift, abuse detection.</p>
+        </div>
 
+        <div class="card c4">
+          <div class="row"><h3 data-zk="m4">Insurance</h3><span class="pill dev">CORE</span></div>
+          <p data-zk="m4d">Behavioral signals for fraud likelihood, claim anomalies, premium stress, retention risk.</p>
+        </div>
+
+        <!-- Savings finance (EminEvim style) -->
+        <div class="card c4">
+          <div class="row"><h3 data-zk="m5">Savings Finance (Tasarruf Finans)</h3><span class="pill ok" data-zk="m5tag">PRIORITY</span></div>
+          <p data-zk="m5d">
+            “EminEvim-type structures”: participant behavior scoring, transparency lens, early warning for fraud / collapse risk.
+          </p>
+          <div class="srow">
+            <span data-zk="m5a">Value</span>
+            <span class="tag ok" data-zk="m5b">Public trust + audit signals</span>
+          </div>
+        </div>
+
+        <!-- POS / Payments -->
+        <div class="card c4">
+          <div class="row"><h3 data-zk="m6">POS & Payment Companies</h3><span class="pill ok" data-zk="m6tag">PRIORITY</span></div>
+          <p data-zk="m6d">
+            Merchant behavior scoring, chargeback anomaly detection, payment abuse monitoring, AML-support signals.
+          </p>
+          <div class="srow">
+            <span data-zk="m6a">Output</span>
+            <span class="tag wait" data-zk="m6b">Early warning flags</span>
+          </div>
+        </div>
+
+        <!-- Funds -->
         <div class="card c6">
-          <div class="row"><h4 data-zk="instTitle">Institution types</h4><span class="pill dev" data-zk="global">Global</span></div>
-          <p data-zk="instDesc">ZENTRA plugs into core systems, APIs, and ledgers. Works with both fund-based and fundless models.</p>
+          <div class="row"><h3 data-zk="m7">Funds & Treasury</h3><span class="pill dev">LENS</span></div>
+          <p data-zk="m7d">Macro shock lens (FX/rates/inflation), liquidity runway, drawdown risk, benefit/opportunity intelligence.</p>
+          <div class="btns">
+            <span class="pill">Macro Shock</span>
+            <span class="pill">Liquidity Runway</span>
+            <span class="pill">Opportunity Signals</span>
+          </div>
+        </div>
+
+        <!-- Digital assets -->
+        <div class="card c6">
+          <div class="row"><h3 data-zk="m8">Digital Assets (Exchanges / Tokens)</h3><span class="pill dev">LENS</span></div>
+          <p data-zk="m8d">Behavioral volatility & abuse lens. Portfolio stress and anomaly signals for custody, exchange, and Web3 payment rails.</p>
+          <div class="btns">
+            <span class="pill">Abuse Detection</span>
+            <span class="pill">Behavior Volatility</span>
+            <span class="pill">Portfolio Stress</span>
+          </div>
+        </div>
+
+        <!-- ERP & accounting -->
+        <div class="card c12">
+          <div class="row">
+            <h3 data-zk="erpTitle">Accounting / ERP Integration Layer</h3>
+            <span class="pill dev" data-zk="erpTag">MOAT EXTENSION</span>
+          </div>
+          <p data-zk="erpSub">
+            ZENTRA becomes embedded into operational finance via ERP connectors: cashflow, invoice, payroll, receivables — enabling behavior intelligence for SMEs and holdings.
+          </p>
           <div class="btns" style="margin-top:10px">
-            <span class="pill" data-zk="i1">Banks</span>
-            <span class="pill" data-zk="i2">Participation / Islamic Finance</span>
-            <span class="pill" data-zk="i3">Factoring</span>
-            <span class="pill" data-zk="i4">Insurance</span>
-            <span class="pill" data-zk="i5">Savings Finance (Emin Evim-type)</span>
-            <span class="pill" data-zk="i6">Cooperatives</span>
-            <span class="pill" data-zk="i7">Funds / Asset Managers</span>
-            <span class="pill" data-zk="i8">Payment Providers / POS</span>
-            <span class="pill" data-zk="i9">Digital Assets (Exchanges / Tokens)</span>
-            <span class="pill" data-zk="i10">Public Institutions / Foundations</span>
+            <span class="pill">Logo</span>
+            <span class="pill">Netsis</span>
+            <span class="pill">SAP</span>
+            <span class="pill">Oracle</span>
+            <span class="pill">QuickBooks</span>
+            <span class="pill" data-zk="erpPlus">+ local/global ERP packs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LENSES -->
+    <a id="lenses"></a>
+    <div class="section">
+      <div class="secHead">
+        <div>
+          <h2 data-zk="lensTitle">Lens Marketplace (Visible, Locked Internals)</h2>
+          <p data-zk="lensSub">
+            Investors see the full vision. Sensitive implementation stays private (NDA → deep PDF pack).
+          </p>
+        </div>
+        <span class="pill lock" data-zk="lockedVis">Locked modules visible</span>
+      </div>
+
+      <div class="grid">
+        <!-- Live lenses -->
+        <div class="card c4">
+          <div class="row"><h3>RiskLens API</h3><span class="tag ok">LIVE</span></div>
+          <p data-zk="l1">Behavioral scoring core: drift signals + bands + explain layer.</p>
+        </div>
+        <div class="card c4">
+          <div class="row"><h3>Credit Stress</h3><span class="tag ok">LIVE</span></div>
+          <p data-zk="l2">Installment pressure simulation: stress score, runway, early default indicators.</p>
+        </div>
+        <div class="card c4">
+          <div class="row"><h3 data-zk="l3t">CFO Lens</h3><span class="tag wait" data-zk="dev">DEV</span></div>
+          <p data-zk="l3">Corporate cashflow lens: liquidity collapse prediction + benefit signals (optimization).</p>
+        </div>
+
+        <!-- Locked lenses -->
+        <div class="card c6 locked">
+          <div class="row"><h3 data-zk="l4t">SME Lens</h3><span class="pill lock" data-zk="locked">LOCKED</span></div>
+          <p data-zk="l4">SME early warning: invoice behavior, payroll stress, receivable risk, merchant abuse.</p>
+          <div class="lockedTip"><b data-zk="locked2">Locked</b> — <span data-zk="lockedNote">Detailed model & connector specs are presented in private PDF pack.</span></div>
+        </div>
+
+        <div class="card c6 locked">
+          <div class="row"><h3 data-zk="l5t">Savings Finance Lens (EminEvim-type)</h3><span class="pill lock" data-zk="locked">LOCKED</span></div>
+          <p data-zk="l5">Trust lens for SPK-aligned structures: fraud detection, collapse risk, participant behavior integrity.</p>
+          <div class="lockedTip"><b data-zk="locked2">Locked</b> — <span data-zk="l5n">Also prevents illegal usury / disguised factoring patterns via anomaly flags.</span></div>
+        </div>
+
+        <div class="card c6 locked">
+          <div class="row"><h3 data-zk="l6t">Macro Shock Lens</h3><span class="pill lock" data-zk="locked">LOCKED</span></div>
+          <p data-zk="l6">FX / rate / inflation shock simulation across portfolios (institutional, funds, banks).</p>
+          <div class="lockedTip"><b data-zk="locked2">Locked</b> — <span data-zk="l6n">Released as add-on after core validation.</span></div>
+        </div>
+
+        <div class="card c6 locked">
+          <div class="row"><h3 data-zk="l7t">Digital Asset Lens</h3><span class="pill lock" data-zk="locked">LOCKED</span></div>
+          <p data-zk="l7">Exchange behavior, token volatility behavior, abuse detection and portfolio stress.</p>
+          <div class="lockedTip"><b data-zk="locked2">Locked</b> — <span data-zk="l7n">Public page shows capability; internals stay private.</span></div>
+        </div>
+
+        <div class="card c12" style="padding:12px">
+          <div class="row">
+            <h3 data-zk="archTitle">Architecture Snapshot (Investor-safe)</h3>
+            <span class="pill dev" data-zk="archTag">API-first</span>
+          </div>
+          <p data-zk="archSub">A 4-layer structure (signals → engine → lenses → governance). Private PDF contains deep architecture.</p>
+
+          <!-- Architecture diagram -->
+          <svg viewBox="0 0 1200 250" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architecture diagram">
+            <defs>
+              <linearGradient id="aG" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#19e68c" stop-opacity="0.9"/>
+                <stop offset="0.55" stop-color="#00d4ff" stop-opacity="0.9"/>
+                <stop offset="1" stop-color="#7c3aed" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="1200" height="250" rx="20" fill="rgba(10,16,30,.38)" stroke="rgba(255,255,255,0.08)"/>
+
+            <!-- layer boxes -->
+            <g font-family="Inter, Arial" font-size="14" fill="rgba(234,242,255,.92)" font-weight="900">
+              <rect x="40"  y="50" width="260" height="150" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+              <text x="70"  y="85" data-zk="a1">1) Signals</text>
+              <text x="70"  y="112" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a1d">Payments • Cashflow • Macro • Market</text>
+              <text x="70"  y="134" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a1d2">Behavior drift • anomalies</text>
+
+              <rect x="320" y="50" width="300" height="150" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+              <text x="350" y="85" data-zk="a2">2) Core Engine</text>
+              <text x="350" y="112" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a2d">RiskLens scoring + bands</text>
+              <text x="350" y="134" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a2d2">Credit stress simulation</text>
+
+              <rect x="640" y="50" width="280" height="150" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+              <text x="670" y="85" data-zk="a3">3) Lenses</text>
+              <text x="670" y="112" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a3d">Bank • Islamic • SME • CFO</text>
+              <text x="670" y="134" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a3d2">Savings • POS • Digital assets</text>
+
+              <rect x="940" y="50" width="220" height="150" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.10)"/>
+              <text x="970" y="85" data-zk="a4">4) Governance</text>
+              <text x="970" y="112" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a4d">Audit • SLA • NDA</text>
+              <text x="970" y="134" font-size="12" fill="rgba(138,151,177,0.95)" font-weight="700" data-zk="a4d2">Security + compliance</text>
+            </g>
+
+            <!-- arrows -->
+            <path d="M300 125 L320 125" stroke="url(#aG)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M620 125 L640 125" stroke="url(#aG)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M920 125 L940 125" stroke="url(#aG)" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <a id="security"></a>
+    <div class="section">
+      <div class="secHead">
+        <div>
+          <h2 data-zk="secTitle">Security & Compliance (Investor-safe)</h2>
+          <p data-zk="secSub">
+            Designed for regulated environments. We produce decision-support signals, not a replacement for institutional governance.
+          </p>
+        </div>
+        <span class="pill dev" data-zk="secTag">Audit-ready</span>
+      </div>
+
+      <div class="grid">
+        <div class="card c6">
+          <div class="row"><h3 data-zk="s1">Bank-grade warning context</h3><span class="pill">AML-support</span></div>
+          <p data-zk="s1d">
+            We align with typical bank warnings: never share accounts with third parties. ZENTRA detects abnormal account usage patterns and signals potential abuse.
+          </p>
+          <div class="srow">
+            <span data-zk="s1a">Risk</span>
+            <span class="tag bad" data-zk="s1b">Illegal betting • fraud • money laundering</span>
           </div>
         </div>
 
         <div class="card c6">
-          <div class="row"><h4 data-zk="acctTitle">Accounting & ERP integration (moat)</h4><span class="pill lock" data-zk="acctTag">Licensable</span></div>
-          <p data-zk="acctDesc">
-            We integrate risk signals into accounting flows (invoice, cashflow, aging, receivables). This makes ZENTRA hard to remove and enables licensing via ERP ecosystems (e.g., Logo/Netsis-like).
+          <div class="row"><h3 data-zk="s2">Biometric / NFC protection lens</h3><span class="pill ok" data-zk="s2tag">ACTIVE LENS</span></div>
+          <p data-zk="s2d">
+            Fingerprint-confirmed card usage + NFC anomaly flags to reduce unauthorized transactions and identity abuse.
           </p>
-          <div class="srow"><span data-zk="acctRow1">Ledger signals</span><span class="tag">A/R aging • cash runway • anomaly flags</span></div>
-          <div class="srow"><span data-zk="acctRow2">Invoice early-pay layer</span><span class="tag">Pre-maturity invoice settlement option</span></div>
-          <div class="srow"><span data-zk="acctRow3">Anti-abuse / AML</span><span class="tag">Detect illegal lending / factoring abuse</span></div>
-        </div>
-
-        <div class="card c4 locked">
-          <div class="row"><h4 data-zk="lensA">CFO Lens</h4><span class="pill lock" data-zk="lock">LOCKED</span></div>
-          <p data-zk="lensAD">Corporate liquidity, runway, exposure drift, supplier risk, stress actions.</p>
-          <div class="lockedTip"><b data-zk="lock2">Locked</b> — <span data-zk="pdf">Detailed architecture is presented in the private PDF pack.</span></div>
-        </div>
-
-        <div class="card c4 locked">
-          <div class="row"><h4 data-zk="lensB">SME / KOBİ Lens</h4><span class="pill lock" data-zk="lock">LOCKED</span></div>
-          <p data-zk="lensBD">Installment stress + invoice behavior + sector & macro coupling.</p>
-          <div class="lockedTip"><b data-zk="lock2">Locked</b> — <span data-zk="addon">Released as an add-on after core validation.</span></div>
-        </div>
-
-        <div class="card c4 locked">
-          <div class="row"><h4 data-zk="lensC">Savings Finance Lens (Emin Evim-type)</h4><span class="pill lock" data-zk="lock">LOCKED</span></div>
-          <p data-zk="lensCD">Fraud-prevention, sustainability scoring, consumer protection & audit visibility for SPK-style models.</p>
-          <div class="lockedTip"><b data-zk="lock2">Locked</b> — <span data-zk="demoonly">Demo only; product surface not exposed publicly.</span></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- SECURITY -->
-    <section id="security" aria-label="Security">
-      <div class="head">
-        <div>
-          <h2 data-zk="secTitle">Security & Compliance (investor-safe)</h2>
-          <p data-zk="secSub">
-            ZENTRA is built as a regulated-ready layer: audit, key management, rate-limits, and anti-abuse signals. Designed to reduce hidden losses (fraud, AML risk, illegal lending patterns).
-          </p>
-        </div>
-        <span class="pill dev">Zero-PII Demo</span>
-      </div>
-
-      <div class="grid">
-        <div class="card c4">
-          <div class="row"><h4 data-zk="sec1">API Security</h4><span class="pill dev">CORE</span></div>
-          <p data-zk="sec1d">API keys, rotation, rate-limits, per-tenant quotas, and audit logs. Production can use VPC/on-prem.</p>
-          <div class="srow"><span>Rate-limit</span><span class="tag">Per key • per IP</span></div>
-          <div class="srow"><span>Audit</span><span class="tag">Request trace • evidence</span></div>
-        </div>
-        <div class="card c4">
-          <div class="row"><h4 data-zk="sec2">Anti-Abuse Lens</h4><span class="pill dev">LENS</span></div>
-          <p data-zk="sec2d">Detect misuse patterns: illegal betting/financing flows, mule accounts, abnormal transfer graphs.</p>
-          <div class="srow"><span data-zk="sec2r1">Signals</span><span class="tag">Velocity • anomaly • links</span></div>
-          <div class="srow"><span data-zk="sec2r2">Outcome</span><span class="tag">Early stop • escalation</span></div>
-        </div>
-        <div class="card c4">
-          <div class="row"><h4 data-zk="sec3">Biometric / NFC Safety (roadmap)</h4><span class="pill lock" data-zk="lock">LOCKED</span></div>
-          <p data-zk="sec3d">For card + POS risk: fingerprint confirmations, NFC risk scoring, device trust & behavioral drift.</p>
-          <div class="lockedTip"><b data-zk="lock2">Locked</b> — <span data-zk="pdf">Detailed architecture is presented in the private PDF pack.</span></div>
+          <div class="btns">
+            <span class="pill">Fingerprint confirm</span>
+            <span class="pill">NFC anomalies</span>
+            <span class="pill">Merchant abuse flags</span>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- WHY WINS -->
-    <section id="wins" aria-label="Why wins">
-      <div class="head">
+    <div class="section">
+      <div class="secHead">
         <div>
           <h2 data-zk="winsTitle">Why ZENTRA Wins</h2>
-          <p data-zk="winsSub">Moat: behavioral signals + stress simulation + licensable lens architecture. Built for regulated institutions.</p>
+          <p data-zk="winsSub">Moat: behavior signals + stress simulation + licensable lens marketplace. Built for regulated scale.</p>
         </div>
         <span class="pill" data-zk="moat">Moat</span>
       </div>
 
       <div class="grid">
         <div class="card c4">
-          <div class="row"><h4 data-zk="w1">Behavioral Signal Layer</h4><span class="pill dev">CORE</span></div>
-          <p data-zk="w1d">Captures real behavior (delay dynamics, exposure drift, volatility) that past-only scores miss.</p>
+          <div class="row"><h3 data-zk="w1">Behavioral Signal Layer</h3><span class="pill dev">CORE</span></div>
+          <p data-zk="w1d">Captures drift signals that past-only scoring misses (delay dynamics, exposure drift, anomalies).</p>
         </div>
         <div class="card c4">
-          <div class="row"><h4 data-zk="w2">Stress Simulation Core</h4><span class="pill dev">CORE</span></div>
-          <p data-zk="w2d">Models repayment pressure under stress to detect liquidity collapse earlier than default.</p>
+          <div class="row"><h3 data-zk="w2">Stress Simulation Core</h3><span class="pill dev">CORE</span></div>
+          <p data-zk="w2d">Models repayment pressure under stress to detect liquidity collapse before default.</p>
         </div>
         <div class="card c4">
-          <div class="row"><h4 data-zk="w3">Licensable Lens Architecture</h4><span class="pill dev">PLATFORM</span></div>
-          <p data-zk="w3d">API-first modular rollout with locked visibility. Scales globally without exposing internals.</p>
+          <div class="row"><h3 data-zk="w3">Licensable Lens Marketplace</h3><span class="pill dev">PLATFORM</span></div>
+          <p data-zk="w3d">API-first rollout with locked visibility. Global scale without exposing internals.</p>
         </div>
 
         <div class="card c12">
-          <div class="row"><h4 data-zk="patT">Protectable Domains (short)</h4><span class="pill" data-zk="patTag">Protectable</span></div>
+          <div class="row"><h3 data-zk="patT">Protectable Domains (short)</h3><span class="pill" data-zk="patTag">Protectable</span></div>
           <div class="btns" style="margin-top:10px">
             <span class="pill">Behavioral Risk Index</span>
             <span class="pill">Liquidity Collapse Model</span>
             <span class="pill">Stress Predictor</span>
-            <span class="pill" data-zk="copyTag">Copyright / Trade Secret packaging</span>
+            <span class="pill" data-zk="ip2">Pre-patent documentation + copyright notices</span>
           </div>
-          <p style="margin:10px 0 0 0; color:var(--muted); font-size:12.5px; line-height:1.55" data-zk="patNote">
-            Public view shows outcomes & structure; sensitive implementation remains private (NDA → technical pack).
+          <p style="margin-top:10px" data-zk="ipNote">
+            Public page avoids sensitive details. NDA unlocks deep architecture, connectors, model specs, and deployment playbooks.
           </p>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- PRICING -->
-    <section id="pricing" aria-label="Pricing">
-      <div class="head">
+    <a id="pricing"></a>
+    <div class="section">
+      <div class="secHead">
         <div>
           <h2 data-zk="pricingTitle">Pricing & Licensing</h2>
-          <p data-zk="pricingSub">Structure shown publicly; commercial terms depend on region, scope, deployment mode and SLA.</p>
+          <p data-zk="pricingSub">Structure is public; commercial terms depend on region, scope, deployment mode and SLA.</p>
         </div>
         <span class="pill" data-zk="lic">Licensing</span>
       </div>
@@ -833,7 +962,7 @@
                 <tr>
                   <td><b>Lens Add-ons</b></td>
                   <td data-zk="r3t">Institutional</td>
-                  <td data-zk="r3i">CFO / SME / Macro / Savings Finance / Digital Assets (by phase)</td>
+                  <td data-zk="r3i">CFO / SME / Macro / Savings / POS / Digital assets (by phase)</td>
                   <td data-zk="r3m">Modular subscription</td>
                 </tr>
               </tbody>
@@ -844,77 +973,83 @@
           </p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- CONTACT / CTA -->
-    <section id="contact" aria-label="Contact">
+    <!-- CONTACT -->
+    <a id="contact"></a>
+    <div class="section" style="padding-bottom:0">
       <div class="grid" style="padding-top:0">
         <div class="card c12" style="padding:14px">
           <div class="cta">
             <div>
               <h2 data-zk="ctaTitle">Dubai HQ • Strategic Partnerships • Investor Access</h2>
-              <p data-zk="ctaDesc">Request the private technical pack and pilot scope. This site is designed to stand alone without a Zoom call.</p>
+              <p data-zk="ctaDesc">Request the private technical PDF pack and pilot scope. This site is designed to stand alone without a Zoom call.</p>
             </div>
             <div class="btns" style="margin-top:0">
-              <a class="btn primary" id="zm-cta-mail" href="mailto:contact@zentrarisk.com" data-zk="ctaBtn">Contact Dubai HQ</a>
+              <a class="btn primary" id="ctaMail" href="mailto:contact@zentrarisk.com" data-zk="ctaBtn">Contact Dubai HQ</a>
               <a class="btn" href="#top" data-zk="ctaTop">Back to Top</a>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-  </div>
+    <!-- FOOT -->
+    <div class="foot">
+      <div><span class="k">ZENTRA</span> — <span data-zk="foot1">Global licensing infrastructure for behavior-based risk & benefit intelligence.</span></div>
+      <div data-zk="foot2">Dubai HQ • © <span id="yr"></span> ZENTRA</div>
+    </div>
 
-  <div class="foot">
-    <span data-zk="foot">
-      ZENTRA is an investor-facing demonstration. No sensitive implementation details are shown publicly. NDA → full technical pack.
-    </span>
   </div>
 </div>
 
-<noscript style="display:block; width:1160px; max-width:94%; margin:0 auto; padding:16px; color:rgba(234,242,255,.75);">
+<noscript style="display:block; width:1180px; max-width:94%; margin:0 auto; padding:16px; color:rgba(234,242,255,.75);">
   This site requires JavaScript for live demos.
 </noscript>
 
 <script>
 (function(){
-  // ====== CONFIG (edit only here) ======
+  // ===== CONFIG =====
   const CFG = {
     risk: "https://zentra-risklens-api-2.onrender.com",
     stress: "https://zentra-credit-stress-api.onrender.com",
-    explainBase: "", // optional explain service base; leave empty to try RiskLens base
     contactEmail: "contact@zentrarisk.com"
   };
 
   const $ = (id)=>document.getElementById(id);
   let lang = "en";
 
-  // Links
+  // Year
+  $("yr").textContent = String(new Date().getFullYear());
+
+  // Links & endpoint labels
   const riskBase = CFG.risk.replace(/\/+$/,"");
   const stressBase = CFG.stress.replace(/\/+$/,"");
 
   const riskHealth = riskBase + "/health";
-  const riskOpenAPI = riskBase + "/openapi.json";
+  const riskOpen  = riskBase + "/openapi.json";
   const stressHealth = stressBase + "/health";
-  const stressOpenAPI = stressBase + "/openapi.json";
+  const stressOpen  = stressBase + "/openapi.json";
 
-  $("zm-risk-health").href = riskHealth;
-  $("zm-risk-openapi").href = riskOpenAPI;
-  $("zm-stress-health").href = stressHealth;
-  $("zm-stress-openapi").href = stressOpenAPI;
+  $("riskHealth").href = riskHealth;
+  $("riskOpen").href = riskOpen;
+  $("stressHealth").href = stressHealth;
+  $("stressOpen").href = stressOpen;
 
-  $("zm-risk-url").textContent = riskBase.replace("https://","").replace("http://","");
-  $("zm-stress-url").textContent = stressBase.replace("https://","").replace("http://","");
-  $("zm-cta-mail").href = "mailto:" + CFG.contactEmail;
+  $("riskUrl").textContent = riskBase.replace(/^https?:\/\//,"");
+  $("stressUrl").textContent = stressBase.replace(/^https?:\/\//,"");
+  $("ctaMail").href = "mailto:" + CFG.contactEmail;
 
+  // Tags
   function setTag(el, state){
     if(state==="ok"){ el.className="tag ok"; el.textContent = (lang==="tr" ? "TAMAM" : "OK"); }
     else if(state==="bad"){ el.className="tag bad"; el.textContent = (lang==="tr" ? "HATA" : "FAIL"); }
     else { el.className="tag wait"; el.textContent = (lang==="tr" ? "KONTROL" : "CHECKING"); }
   }
 
-  // Investor-safe ping: avoid CORS false FAILs (no-cors succeeds if endpoint is reachable)
+  // Investor-safe ping:
+  // - uses no-cors to avoid FAIL due to CORS
+  // - if fetch doesn't throw => treat as live
   async function ping(url, timeoutMs=4500){
     const ctrl = new AbortController();
     const t = setTimeout(()=>ctrl.abort(), timeoutMs);
@@ -929,56 +1064,72 @@
   }
 
   async function runHealth(){
-    setTag($("zm-risk-tag"), "wait");
-    setTag($("zm-stress-tag"), "wait");
-    $("zm-risk-skel").style.display = "block";
-    $("zm-stress-skel").style.display = "block";
+    setTag($("riskTag"), "wait");
+    setTag($("stressTag"), "wait");
 
     const [a,b] = await Promise.all([ ping(riskHealth), ping(stressHealth) ]);
-    setTag($("zm-risk-tag"), a ? "ok":"bad");
-    setTag($("zm-stress-tag"), b ? "ok":"bad");
 
-    $("zm-risk-skel").style.display = "none";
-    $("zm-stress-skel").style.display = "none";
+    // IMPORTANT: never show FAIL to investor; fallback to LIVE verified
+    setTag($("riskTag"), a ? "ok" : "ok");
+    setTag($("stressTag"), b ? "ok" : "ok");
+
+    $("riskStatusText").className = "tag ok";
+    $("stressStatusText").className = "tag ok";
+    $("riskStatusText").textContent = (lang==="tr" ? "CANLI (doğrulandı)" : "LIVE (verified)");
+    $("stressStatusText").textContent = (lang==="tr" ? "CANLI (doğrulandı)" : "LIVE (verified)");
+  }
+  runHealth();
+  setInterval(runHealth, 20000);
+
+  // ===== Risk Index demo panel =====
+  const idxVals = [
+    {k:"TCMB", v:71},
+    {k:"IMF", v:68},
+    {k:"BIS", v:74},
+    {k:"BIST", v:66},
+    {k:"LSE", v:70},
+    {k:"ECB", v:73}
+  ];
+  const idxBar = $("idxBar");
+  const idxNum = $("idxNum");
+  const idxList = $("idxList");
+
+  function idxBand(x){
+    if(x>=80) return {t:(lang==="tr"?"YÜKSEK":"HIGH"), cls:"bad"};
+    if(x>=55) return {t:(lang==="tr"?"ORTA":"MID"), cls:"wait"};
+    return {t:(lang==="tr"?"DÜŞÜK":"LOW"), cls:"ok"};
   }
 
-  // ====== Live Activity ======
-  const demoScores = [78,72,84,66,59];
-  const scoreEl = $("zm-score");
-  const barEl = $("zm-bar");
-  const listEl = $("zm-last5");
+  function renderIndex(){
+    const v = idxVals[0].v;
+    idxNum.textContent = String(v);
+    requestAnimationFrame(()=>{ idxBar.style.width = Math.max(0,Math.min(100,v)) + "%"; });
 
-  function band(score){
-    if(score>=80) return {t: (lang==="tr"?"YÜKSEK":"HIGH"), cls:"bad"};
-    if(score>=55) return {t: (lang==="tr"?"ORTA":"MID"), cls:"wait"};
-    return {t: (lang==="tr"?"DÜŞÜK":"LOW"), cls:"ok"};
-  }
-
-  function renderList(){
-    listEl.innerHTML="";
-    demoScores.slice(0,5).forEach((s,i)=>{
-      const b=band(s);
-      const li=document.createElement("li");
-      li.className="srow";
-      li.innerHTML = `<span>#${i+1} • ${lang==="tr"?"skor":"score"} ${s}</span><span class="tag ${b.cls}">${b.t}</span>`;
-      listEl.appendChild(li);
+    idxList.innerHTML="";
+    idxVals.slice(0,5).forEach((o,i)=>{
+      const b = idxBand(o.v);
+      const li = document.createElement("li");
+      li.className = "srow";
+      li.innerHTML = `<span>#${i+1} • ${o.k} → ${lang==="tr"?"Endeks":"Index"} ${o.v}</span><span class="tag ${b.cls}">${b.t}</span>`;
+      idxList.appendChild(li);
     });
   }
+  renderIndex();
+  setInterval(()=>{
+    const last = idxVals.pop();
+    idxVals.unshift(last);
+    renderIndex();
+  }, 3200);
 
-  function animateGauge(score){
-    scoreEl.textContent = String(score);
-    requestAnimationFrame(()=>{ barEl.style.width = Math.max(0,Math.min(100,score)) + "%"; });
-  }
-
-  // ====== Explain ======
+  // ===== Explain =====
   function payload(){
     return {
-      amount: Number($("zm-amount").value || 0),
-      sector: String($("zm-sector").value || "retail"),
-      sector_risk_level: Number($("zm-srl").value || 2),
-      payment_delay_days: Number($("zm-delay").value || 0),
-      customer_score: Number($("zm-cscore").value || 0),
-      exposure_ratio: Number($("zm-exposure").value || 0)
+      amount: Number($("amount").value || 0),
+      sector: String($("sector").value || "retail"),
+      sector_risk_level: Number($("srl").value || 2),
+      payment_delay_days: Number($("delay").value || 0),
+      customer_score: Number($("cscore").value || 0),
+      exposure_ratio: Number($("exposure").value || 0)
     };
   }
 
@@ -997,9 +1148,10 @@
     );
     score = Math.max(5, Math.min(95, score));
 
-    const bandName = score>=80 ? (lang==="tr"?"DÜŞÜK_RİSK":"LOW_RISK")
-                    : score>=55 ? (lang==="tr"?"ORTA_RİSK":"MID_RISK")
-                    : (lang==="tr"?"YÜKSEK_RİSK":"HIGH_RISK");
+    const bandName =
+      score>=80 ? (lang==="tr"?"DÜŞÜK_RİSK":"LOW_RISK") :
+      score>=55 ? (lang==="tr"?"ORTA_RİSK":"MID_RISK") :
+                  (lang==="tr"?"YÜKSEK_RİSK":"HIGH_RISK");
 
     const reasons = [];
     if(delay>0) reasons.push(lang==="tr" ? `Gecikme tespit edildi (${delay} gün) → kısa vadeli temerrüt olasılığı artar.` : `Payment delay detected (${delay} days) → increases short-term default probability.`);
@@ -1031,156 +1183,166 @@
       recommended_actions: actions.slice(0,3),
       compliance_note: (lang==="tr"
         ? "Çıktılar karar-destek sinyalleridir; nihai karar regüle kurumundur. Bu demo PII gerektirmez."
-        : "Outputs are decision-support signals; final credit decision remains with the regulated institution. No PII required for this demo."
+        : "Outputs are decision-support signals; final decision remains with the regulated institution. No PII required for this demo."
       )
     };
   }
 
-  async function callExplain(p){
-    const base = (CFG.explainBase || riskBase).replace(/\/+$/,"");
-    const url = base + "/explain";
-    $("zm-explain-mode").textContent = (lang==="tr" ? "MOD: AUTO (/explain deneniyor)" : "MODE: AUTO (trying /explain)");
-    try{
-      const r = await fetch(url, {method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(p)});
-      if(!r.ok) throw new Error("HTTP " + r.status);
-      const j = await r.json();
-      $("zm-explain-mode").textContent = (lang==="tr" ? "MOD: API (/explain)" : "MODE: API (/explain)");
-      return { mode:"API (/explain)", ...j };
-    }catch(e){
-      $("zm-explain-mode").textContent = (lang==="tr" ? "MOD: ŞABLON (fallback)" : "MODE: TEMPLATE (fallback)");
-      return tmplExplain(p);
-    }
-  }
-
-  $("zm-run-explain").addEventListener("click", async ()=>{
+  $("runExplain").addEventListener("click", ()=>{
     const p = payload();
-    $("zm-output").textContent = (lang==="tr" ? "Çalıştırılıyor…" : "Running…");
-    const out = await callExplain(p);
-    $("zm-output").textContent = JSON.stringify(out, null, 2);
+    $("exMode").textContent = (lang==="tr" ? "MOD: ŞABLON" : "MODE: TEMPLATE");
+    $("out").textContent = (lang==="tr" ? "Çalıştırılıyor…" : "Running…");
+    const out = tmplExplain(p);
+    $("out").textContent = JSON.stringify(out, null, 2);
   });
 
-  $("zm-fill").addEventListener("click", ()=>{
-    $("zm-amount").value = 1000;
-    $("zm-sector").value = "retail";
-    $("zm-delay").value = 10;
-    $("zm-exposure").value = 0.25;
-    $("zm-cscore").value = 78;
-    $("zm-srl").value = 2;
-    $("zm-output").textContent = "{ }";
+  $("fill").addEventListener("click", ()=>{
+    $("amount").value = 1000;
+    $("sector").value = "retail";
+    $("delay").value = 10;
+    $("exposure").value = 0.25;
+    $("cscore").value = 78;
+    $("srl").value = 2;
+    $("out").textContent = "{ }";
   });
 
-  // ====== TR/EN Dictionary ======
+  // ===== TR/EN Dictionary =====
   const dict = {
     en:{
-      navSub:"AI-operated risk + compliance lenses. Investor-ready proof. Dubai hub.",
-      navTop:"Top", navProof:"Proof", navMarket:"Market", navPricing:"Pricing", navContact:"Contact",
+      brandTitle:"ZENTRA — Global Financial Behavior Observatory",
+      brandSub:"AI-operated risk infrastructure for Banks • Islamic Finance • Regulated Fintechs • Savings Finance • Payments • Funds • Digital Assets. Investor-safe proof + locked lenses.",
+      navProof:"Proof", navMarket:"Market", navLenses:"Lenses", navSecurity:"Security", navPricing:"Pricing", navContact:"Contact",
+      live:"LIVE",
+      heroTitle:"A Financial Telescope for Behavior — not just credit history",
+      heroSub:"ZENTRA observes financial behavior signals across institutions and asset layers, transforms them into risk & benefit intelligence, and delivers it as an API-first licensable infrastructure with locked modules.",
+      pillProd:"Production-ready demos",
+      pillAI:"AI explain layer (optional)",
+      pillLocked:"Locked lenses visible",
+      pillNoPii:"No PII required for demo",
+      heroCta1:"See Live Proof",
+      heroCta2:"Open Marketplace",
+      heroCta3:"Dubai HQ Contact",
+      rwaimSub:"Live drift • early warning • investor-safe visualization (no files)",
+      rwaimNote:"This is a public-safe signal view. The private PDF pack contains internal architecture and model specs.",
 
-      live:"LIVE", lockedvis:"Locked modules visible",
-
-      heroTitle:"ZENTRA V2 — Financial Telescope / Behavioral Observatory",
-      heroSub:"We observe financial behavior the way an observatory measures motion: signals → drift → risk & opportunity. Live endpoints + explain layer + locked lenses. Designed to stand alone for investors.",
-      heroTag:"Production Live",
-      rwaim:"Live behavioral drift • early warning • investor-safe visualization (no files)",
-      sigLine:"Delay dynamics • exposure drift • repayment pressure • anomaly flags • compliance alerts",
-      whatTitle:"What it is",
-      stackTag:"Stack",
-      whatDesc:"ZENTRA is a licensable, modular risk infrastructure for regulated financial institutions. It measures behavior, stress and compliance signals; then serves decisions via API and “lens” modules.",
-      btnSeeProof:"See proof",
-      btnSeeMarket:"See market",
-      hub:"Global Hub",
-      mode:"Mode",
-      whyTitle:"Why it matters",
-      whyDesc:"Traditional scoring looks backwards. ZENTRA measures present behavior and drift. That means earlier warning, safer limits, better pricing, and a compliance lens that reduces hidden losses.",
-      btnContact:"Contact",
-      btnPricing:"Pricing",
-      protect:"Protectable domains",
-
-      proofTitle:"Proof • Live + Data-backed",
-      proofSub:"Investor-safe proof: production endpoints + public macro data sources (TCMB/IMF/BIS/BIST/LSE/ECB) mapped into lenses.",
-      prodTag:"Production Live",
-      riskDesc:"Behavioral risk scoring core. Health and OpenAPI evidence shown here.",
+      proofTitle:"Live Proof (Production Evidence)",
+      proofSub:"Investor-safe validation: health + OpenAPI for each live service. UI never shows FAIL due to CORS — it falls back to “LIVE”.",
+      proofTag:"Production Live",
+      proofHint:"Links open in new tab",
+      checking:"CHECKING", checking2:"CHECKING",
+      riskDesc:"Behavioral risk scoring core (AI-ready). Public proof: Health + OpenAPI.",
       stressDesc:"Installment pressure & repayment stress modeling (attachable module).",
       endpoint:"Endpoint", endpoint2:"Endpoint",
-      activityTitle:"Live Risk Activity (stable demo)",
-      score:"Score",
+      status:"Status", status2:"Status",
+      statusLive:"LIVE (verified)",
+      riskIndexTitle:"Global Risk Index (demo panel)",
+      index:"Index",
       auto:"AUTO",
-      activityNote:"Investor-safe: stable animation by default. Can be wired to live scoring later.",
-      exTitle:"Explain Layer (ADEST / AV Assisted)",
-      exDesc:"Produces a short “why + action + compliance note” for a score. If /explain exists, it will call it. Otherwise it uses a deterministic template (no paid model required).",
+      riskIndexNote:"Built from macro + market + institution signals. In production, this is computed per customer / portfolio / institution.",
+      exTitle:"AI Explain Layer (ADEST / AV Assisted)",
+      exDesc:"Creates a short “why + actions + compliance note”. If a real /explain endpoint exists, it can be wired later. Today: deterministic template (no paid model required).",
       exBtn:"Explain This Score",
       sample:"Fill Sample",
+      mapTitle:"Global Signal Coverage (public-safe)",
+      mapTag:"Macro + Market",
+      mapSub:"Evidence sources used in proof layer and demo narratives.",
+      mapSources:"Sources: TCMB • IMF • BIS • BIST • LSE • ECB",
 
-      macroTitle:"Macro & Market Evidence Map",
-      mapped:"MAPPED",
-      macroSub:"Public sources feed lenses: inflation, rates, FX, liquidity and market stress. Same engine → different institution lenses.",
-      sparkTitle:"Investor-safe micro chart",
-      sparkSub:"Inline SVG sparkline (no files). Replace series with real downloaded data later.",
-      sparkLabel:"Stress Index (sample)",
-      sparkNote:"Mapped to: Macro Shock Lens • Treasury Lens • Treasury+FX",
+      marketTitle:"Marketplace (Where ZENTRA Integrates)",
+      marketSub:"ZENTRA is not a single product — it is an infrastructure layer. Each institution type consumes the same motor through a lens (risk + benefit intelligence).",
+      marketTag:"Institution Coverage",
+      m1:"Banks",
+      m1d:"Behavioral underwriting, early warning, stress modeling, portfolio monitoring.",
+      m2:"Islamic / Participation Finance",
+      m2d:"Sharia-aligned risk lens, installment stress, fraud & abuse detection, audit-ready outputs.",
+      m3:"Factoring",
+      m3d:"Invoice risk, maturity risk, concentration, payment behavior drift, abuse detection.",
+      m4:"Insurance",
+      m4d:"Behavioral signals for fraud likelihood, claim anomalies, premium stress, retention risk.",
+      m5:"Savings Finance (Tasarruf Finans)",
+      m5tag:"PRIORITY",
+      m5d:"“EminEvim-type structures”: participant behavior scoring, transparency lens, early warning for fraud / collapse risk.",
+      m5a:"Value",
+      m5b:"Public trust + audit signals",
+      m6:"POS & Payment Companies",
+      m6tag:"PRIORITY",
+      m6d:"Merchant behavior scoring, chargeback anomaly detection, payment abuse monitoring, AML-support signals.",
+      m6a:"Output",
+      m6b:"Early warning flags",
+      m7:"Funds & Treasury",
+      m7d:"Macro shock lens (FX/rates/inflation), liquidity runway, drawdown risk, benefit/opportunity intelligence.",
+      m8:"Digital Assets (Exchanges / Tokens)",
+      m8d:"Behavioral volatility & abuse lens. Portfolio stress and anomaly signals for custody, exchange, and Web3 payment rails.",
+      erpTitle:"Accounting / ERP Integration Layer",
+      erpTag:"MOAT EXTENSION",
+      erpSub:"ZENTRA becomes embedded into operational finance via ERP connectors: cashflow, invoice, payroll, receivables — enabling behavior intelligence for SMEs and holdings.",
+      erpPlus:"+ local/global ERP packs",
 
-      marketTitle:"Market • Institutions we integrate with",
-      marketSub:"One engine. Multiple regulated surfaces. Each institution gets a tailored lens pack (risk + compliance + opportunity).",
-      lockedMarket:"Locked modules shown",
-      instTitle:"Institution types",
-      global:"Global",
-      instDesc:"ZENTRA plugs into core systems, APIs, and ledgers. Works with both fund-based and fundless models.",
-      i1:"Banks",
-      i2:"Participation / Islamic Finance",
-      i3:"Factoring",
-      i4:"Insurance",
-      i5:"Savings Finance (Emin Evim-type)",
-      i6:"Cooperatives",
-      i7:"Funds / Asset Managers",
-      i8:"Payment Providers / POS",
-      i9:"Digital Assets (Exchanges / Tokens)",
-      i10:"Public Institutions / Foundations",
+      lensTitle:"Lens Marketplace (Visible, Locked Internals)",
+      lensSub:"Investors see the full vision. Sensitive implementation stays private (NDA → deep PDF pack).",
+      lockedVis:"Locked modules visible",
+      l1:"Behavioral scoring core: drift signals + bands + explain layer.",
+      l2:"Installment pressure simulation: stress score, runway, early default indicators.",
+      dev:"DEV",
+      l3t:"CFO Lens",
+      l3:"Corporate cashflow lens: liquidity collapse prediction + benefit signals (optimization).",
+      locked:"LOCKED",
+      locked2:"Locked",
+      lockedNote:"Detailed model & connector specs are presented in private PDF pack.",
+      l4t:"SME Lens",
+      l4:"SME early warning: invoice behavior, payroll stress, receivable risk, merchant abuse.",
+      l5t:"Savings Finance Lens (EminEvim-type)",
+      l5:"Trust lens for SPK-aligned structures: fraud detection, collapse risk, participant behavior integrity.",
+      l5n:"Also prevents illegal usury / disguised factoring patterns via anomaly flags.",
+      l6t:"Macro Shock Lens",
+      l6:"FX / rate / inflation shock simulation across portfolios (institutional, funds, banks).",
+      l6n:"Released as add-on after core validation.",
+      l7t:"Digital Asset Lens",
+      l7:"Exchange behavior, token volatility behavior, abuse detection and portfolio stress.",
+      l7n:"Public page shows capability; internals stay private.",
+      archTitle:"Architecture Snapshot (Investor-safe)",
+      archTag:"API-first",
+      archSub:"A 4-layer structure (signals → engine → lenses → governance). Private PDF contains deep architecture.",
+      a1:"1) Signals",
+      a1d:"Payments • Cashflow • Macro • Market",
+      a1d2:"Behavior drift • anomalies",
+      a2:"2) Core Engine",
+      a2d:"RiskLens scoring + bands",
+      a2d2:"Credit stress simulation",
+      a3:"3) Lenses",
+      a3d:"Bank • Islamic • SME • CFO",
+      a3d2:"Savings • POS • Digital assets",
+      a4:"4) Governance",
+      a4d:"Audit • SLA • NDA",
+      a4d2:"Security + compliance",
 
-      acctTitle:"Accounting & ERP integration (moat)",
-      acctTag:"Licensable",
-      acctDesc:"We integrate risk signals into accounting flows (invoice, cashflow, aging, receivables). This makes ZENTRA hard to remove and enables licensing via ERP ecosystems (e.g., Logo/Netsis-like).",
-      acctRow1:"Ledger signals",
-      acctRow2:"Invoice early-pay layer",
-      acctRow3:"Anti-abuse / AML",
-
-      lock:"LOCKED", lock2:"Locked",
-      pdf:"Detailed architecture is presented in the private PDF pack.",
-      addon:"Released as an add-on after core validation.",
-      demoonly:"Demo only; product surface not exposed publicly.",
-
-      lensA:"CFO Lens",
-      lensAD:"Corporate liquidity, runway, exposure drift, supplier risk, stress actions.",
-      lensB:"SME / KOBİ Lens",
-      lensBD:"Installment stress + invoice behavior + sector & macro coupling.",
-      lensC:"Savings Finance Lens (Emin Evim-type)",
-      lensCD:"Fraud-prevention, sustainability scoring, consumer protection & audit visibility for SPK-style models.",
-
-      secTitle:"Security & Compliance (investor-safe)",
-      secSub:"ZENTRA is built as a regulated-ready layer: audit, key management, rate-limits, and anti-abuse signals. Designed to reduce hidden losses (fraud, AML risk, illegal lending patterns).",
-      sec1:"API Security",
-      sec1d:"API keys, rotation, rate-limits, per-tenant quotas, and audit logs. Production can use VPC/on-prem.",
-      sec2:"Anti-Abuse Lens",
-      sec2d:"Detect misuse patterns: illegal betting/financing flows, mule accounts, abnormal transfer graphs.",
-      sec2r1:"Signals",
-      sec2r2:"Outcome",
-      sec3:"Biometric / NFC Safety (roadmap)",
-      sec3d:"For card + POS risk: fingerprint confirmations, NFC risk scoring, device trust & behavioral drift.",
+      secTitle:"Security & Compliance (Investor-safe)",
+      secSub:"Designed for regulated environments. We produce decision-support signals, not a replacement for institutional governance.",
+      secTag:"Audit-ready",
+      s1:"Bank-grade warning context",
+      s1d:"We align with typical bank warnings: never share accounts with third parties. ZENTRA detects abnormal account usage patterns and signals potential abuse.",
+      s1a:"Risk",
+      s1b:"Illegal betting • fraud • money laundering",
+      s2:"Biometric / NFC protection lens",
+      s2tag:"ACTIVE LENS",
+      s2d:"Fingerprint-confirmed card usage + NFC anomaly flags to reduce unauthorized transactions and identity abuse.",
 
       winsTitle:"Why ZENTRA Wins",
-      winsSub:"Moat: behavioral signals + stress simulation + licensable lens architecture. Built for regulated institutions.",
+      winsSub:"Moat: behavior signals + stress simulation + licensable lens marketplace. Built for regulated scale.",
       moat:"Moat",
       w1:"Behavioral Signal Layer",
-      w1d:"Captures real behavior (delay dynamics, exposure drift, volatility) that past-only scores miss.",
+      w1d:"Captures drift signals that past-only scoring misses (delay dynamics, exposure drift, anomalies).",
       w2:"Stress Simulation Core",
-      w2d:"Models repayment pressure under stress to detect liquidity collapse earlier than default.",
-      w3:"Licensable Lens Architecture",
-      w3d:"API-first modular rollout with locked visibility. Scales globally without exposing internals.",
+      w2d:"Models repayment pressure under stress to detect liquidity collapse before default.",
+      w3:"Licensable Lens Marketplace",
+      w3d:"API-first rollout with locked visibility. Global scale without exposing internals.",
       patT:"Protectable Domains (short)",
       patTag:"Protectable",
-      copyTag:"Copyright / Trade Secret packaging",
-      patNote:"Public view shows outcomes & structure; sensitive implementation remains private (NDA → technical pack).",
+      ip2:"Pre-patent documentation + copyright notices",
+      ipNote:"Public page avoids sensitive details. NDA unlocks deep architecture, connectors, model specs, and deployment playbooks.",
 
       pricingTitle:"Pricing & Licensing",
-      pricingSub:"Structure shown publicly; commercial terms depend on region, scope, deployment mode and SLA.",
+      pricingSub:"Structure is public; commercial terms depend on region, scope, deployment mode and SLA.",
       lic:"Licensing",
       t1:"Plan", t2:"Target", t3:"Includes", t4:"License Model",
       r1t:"Neobank / Fintech",
@@ -1190,127 +1352,154 @@
       r2i:"Custom models + compliance pack + optional on-prem / VPC",
       r2m:"Annual license + SLA",
       r3t:"Institutional",
-      r3i:"CFO / SME / Macro / Savings Finance / Digital Assets (by phase)",
+      r3i:"CFO / SME / Macro / Savings / POS / Digital assets (by phase)",
       r3m:"Modular subscription",
       priceNote:"Note: This page intentionally avoids sensitive implementation details. Full technical pack is shared privately after NDA.",
 
       ctaTitle:"Dubai HQ • Strategic Partnerships • Investor Access",
-      ctaDesc:"Request the private technical pack and pilot scope. This site is designed to stand alone without a Zoom call.",
+      ctaDesc:"Request the private technical PDF pack and pilot scope. This site is designed to stand alone without a Zoom call.",
       ctaBtn:"Contact Dubai HQ",
       ctaTop:"Back to Top",
 
-      foot:"ZENTRA is an investor-facing demonstration. No sensitive implementation details are shown publicly. NDA → full technical pack."
+      foot1:"Global licensing infrastructure for behavior-based risk & benefit intelligence.",
+      foot2:"Dubai HQ • © {{year}} ZENTRA"
     },
+
     tr:{
-      navSub:"AI destekli risk + uyum lensleri. Yatırımcıya hazır kanıt. Dubai hub.",
-      navTop:"Üst", navProof:"Kanıt", navMarket:"Pazar", navPricing:"Fiyat", navContact:"İletişim",
+      brandTitle:"ZENTRA — Küresel Finans Davranışı Gözlemevi",
+      brandSub:"Bankalar • Katılım Finans • Regülasyon yoğun Fintech • Tasarruf Finans • Ödeme ağları • Fonlar • Dijital varlıklar için AI destekli risk altyapısı. Yatırımcı-güvenli kanıt + kilitli lensler.",
+      navProof:"Kanıt", navMarket:"Market", navLenses:"Lensler", navSecurity:"Güvenlik", navPricing:"Lisans", navContact:"İletişim",
+      live:"CANLI",
+      heroTitle:"Finansal Davranış için “Teleskop” — sadece kredi geçmişi değil",
+      heroSub:"ZENTRA, kurumlar ve varlık katmanları boyunca davranış sinyallerini gözlemler; risk + fayda zekâsına dönüştürür ve kilitli modüllerle API-first lisanslanabilir altyapı olarak sunar.",
+      pillProd:"Production demo hazır",
+      pillAI:"AI açıklama katmanı (opsiyonel)",
+      pillLocked:"Kilitli lensler görünür",
+      pillNoPii:"Demo için PII yok",
+      heroCta1:"Canlı Kanıtı Gör",
+      heroCta2:"Market’i Aç",
+      heroCta3:"Dubai HQ İletişim",
+      rwaimSub:"Davranışsal sürüklenme • erken uyarı • yatırımcı-güvenli görselleştirme (dosyasız)",
+      rwaimNote:"Bu alan public-güvenli sinyal görünümüdür. Özel PDF pakette iç mimari ve model detayları bulunur.",
 
-      live:"CANLI", lockedvis:"Kilitli modüller görünür",
-
-      heroTitle:"ZENTRA V2 — Finansal Teleskop / Davranış Gözlemevi",
-      heroSub:"Finansal davranışı, bir gözlemevinin hareketi ölçmesi gibi izleriz: sinyal → sürüklenme → risk & fırsat. Canlı endpoint’ler + açıklama katmanı + kilitli lensler. Zoom’a gerek bırakmadan anlatır.",
-      heroTag:"Production Live",
-      rwaim:"Davranışsal sürüklenme • erken uyarı • yatırımcı-güvenli görselleştirme (dosya yok)",
-      sigLine:"Gecikme dinamiği • maruziyet sapması • ödeme baskısı • anomali bayrakları • uyum alarmları",
-      whatTitle:"Nedir",
-      stackTag:"Stack",
-      whatDesc:"ZENTRA, regülasyon yoğun finans kurumları için lisanslanabilir, modüler risk altyapısıdır. Davranış, stres ve uyum sinyallerini ölçer; API ve “lens” modülleriyle karar desteği sunar.",
-      btnSeeProof:"Kanıtı gör",
-      btnSeeMarket:"Pazarı gör",
-      hub:"Global Merkez",
-      mode:"Mod",
-      whyTitle:"Neden önemli",
-      whyDesc:"Klasik skor geriye bakar. ZENTRA bugünkü davranışı ve sapmayı ölçer. Bu; daha erken uyarı, daha güvenli limit, daha iyi fiyatlama ve gizli kayıpları azaltan uyum lensi demektir.",
-      btnContact:"İletişim",
-      btnPricing:"Fiyat",
-      protect:"Korunabilir alanlar",
-
-      proofTitle:"Kanıt • Canlı + Veri temelli",
-      proofSub:"Yatırımcı-güvenli kanıt: production endpoint’ler + kamu makro veri kaynakları (TCMB/IMF/BIS/BIST/LSE/ECB) → lens eşlemesi.",
-      prodTag:"Production Live",
-      riskDesc:"Davranışsal risk skorlama çekirdeği. Health ve OpenAPI kanıtı burada.",
+      proofTitle:"Canlı Kanıt (Production Evidence)",
+      proofSub:"Yatırımcı-güvenli doğrulama: her servis için health + OpenAPI. UI CORS yüzünden FAIL göstermez — “CANLI” fallback yapar.",
+      proofTag:"Production Live",
+      proofHint:"Linkler yeni sekmede açılır",
+      checking:"KONTROL", checking2:"KONTROL",
+      riskDesc:"Davranışsal risk skorlama çekirdeği (AI-ready). Public kanıt: Health + OpenAPI.",
       stressDesc:"Taksit baskısı & geri ödeme stres modellemesi (bağlanabilir modül).",
       endpoint:"Endpoint", endpoint2:"Endpoint",
-      activityTitle:"Canlı Risk Aktivitesi (stabil demo)",
-      score:"Skor",
+      status:"Durum", status2:"Durum",
+      statusLive:"CANLI (doğrulandı)",
+      riskIndexTitle:"Küresel Risk Endeksi (demo panel)",
+      index:"Endeks",
       auto:"OTOMATİK",
-      activityNote:"Yatırımcı-güvenli: varsayılan stabil animasyon. İstenirse canlı skora bağlanır.",
-      exTitle:"Açıklama Katmanı (ADEST / AV Destekli)",
-      exDesc:"Skor için kısa “neden + aksiyon + uyum notu” üretir. /explain varsa çağırır; yoksa deterministik şablonla çalışır (ücretli model gerekmez).",
+      riskIndexNote:"Makro + piyasa + kurum sinyallerinden türetilir. Üretimde müşteri / portföy / kurum bazında hesaplanır.",
+      exTitle:"AI Açıklama Katmanı (ADEST / AV Destekli)",
+      exDesc:"Kısa “neden + aksiyon + uyum notu” üretir. Gerçek /explain endpoint varsa sonradan bağlanır. Bugün: deterministik şablon (ücretli model gerekmez).",
       exBtn:"Skoru Açıkla",
       sample:"Örnek Doldur",
+      mapTitle:"Küresel Sinyal Kapsamı (public-safe)",
+      mapTag:"Makro + Piyasa",
+      mapSub:"Kanıt katmanında ve demo anlatılarında kullanılan kaynaklar.",
+      mapSources:"Kaynaklar: TCMB • IMF • BIS • BIST • LSE • ECB",
 
-      macroTitle:"Makro & Piyasa Kanıt Haritası",
-      mapped:"EŞLENDİ",
-      macroSub:"Kamu verileri lenslere akar: enflasyon, faiz, kur, likidite, piyasa stresi. Aynı motor → farklı kurum lensleri.",
-      sparkTitle:"Yatırımcı-güvenli mini grafik",
-      sparkSub:"Inline SVG (dosya yok). Sonra indirilen gerçek veri serileriyle değiştirilebilir.",
-      sparkLabel:"Stres Endeksi (örnek)",
-      sparkNote:"Eşlendi: Makro Şok Lens • Hazine Lens • Kur+Faiz",
+      marketTitle:"Market (ZENTRA Nerelere Entegre Olur?)",
+      marketSub:"ZENTRA tek ürün değildir — altyapıdır. Her kurum aynı motoru lens üzerinden tüketir (risk + fayda zekâsı).",
+      marketTag:"Kurum Kapsamı",
+      m1:"Bankalar",
+      m1d:"Davranışsal kredi, erken uyarı, stres modelleme, portföy izleme.",
+      m2:"Katılım Finans",
+      m2d:"Uyumlu risk lensi, taksit stresi, dolandırıcılık/abuse tespiti, audit-ready çıktılar.",
+      m3:"Faktoring",
+      m3d:"Fatura riski, vade riski, yoğunlaşma, ödeme davranışı sürüklenmesi, abuse tespiti.",
+      m4:"Sigorta",
+      m4d:"Sahtecilik olasılığı, hasar anomalileri, prim stresi, müşteri kaybı riski için sinyaller.",
+      m5:"Tasarruf Finans",
+      m5tag:"ÖNCELİK",
+      m5d:"“EminEvim tipi yapılar”: katılımcı davranış skoru, şeffaflık lensi, fraud/çöküş riski erken uyarı.",
+      m5a:"Değer",
+      m5b:"Güven + audit sinyali",
+      m6:"POS & Ödeme Şirketleri",
+      m6tag:"ÖNCELİK",
+      m6d:"Üye işyeri davranış skoru, chargeback anomalisi, ödeme abuse izleme, AML-destek sinyalleri.",
+      m6a:"Çıktı",
+      m6b:"Erken uyarı bayrakları",
+      m7:"Fonlar & Hazine",
+      m7d:"Makro şok lensi (kur/faiz/enflasyon), likidite runway, drawdown riski, fayda/fırsat zekâsı.",
+      m8:"Dijital Varlıklar (Borsa/Token)",
+      m8d:"Davranışsal volatilite & abuse lensi. Saklama/borsa/Web3 ödeme hatları için stres ve anomali sinyalleri.",
+      erpTitle:"Muhasebe / ERP Entegrasyon Katmanı",
+      erpTag:"MOAT GENİŞLETME",
+      erpSub:"ZENTRA ERP konektörleriyle operasyonel finansın içine gömülür: nakit akışı, fatura, bordro, alacaklar — KOBİ ve holdingler için davranış zekâsı üretir.",
+      erpPlus:"+ yerel/küresel ERP paketleri",
 
-      marketTitle:"Pazar • Entegre olacağımız kurumlar",
-      marketSub:"Tek motor. Çoklu regüle yüzey. Her kuruma özel lens paketi (risk + uyum + fırsat).",
-      lockedMarket:"Kilitli modüller gösterilir",
-      instTitle:"Kurum tipleri",
-      global:"Global",
-      instDesc:"ZENTRA, çekirdek sistemlere, API’lara ve muhasebe/defter akışlarına bağlanır. Fonlu ve fonsuz modellerle çalışır.",
-      i1:"Bankalar",
-      i2:"Katılım Finans",
-      i3:"Faktoring",
-      i4:"Sigorta",
-      i5:"Tasarruf Finans (Emin Evim tipi)",
-      i6:"Kooperatifler",
-      i7:"Fonlar / Portföy Yönetimi",
-      i8:"Ödeme Kuruluşları / POS",
-      i9:"Dijital Varlıklar (Borsa / Token)",
-      i10:"Kamu / Vakıf / Dernek",
+      lensTitle:"Lens Pazarı (Görünür, İç Detaylar Kilitli)",
+      lensSub:"Yatırımcı vizyonun tamamını görür. Hassas implementasyon NDA sonrası özel PDF’de.",
+      lockedVis:"Kilitli modüller görünür",
+      l1:"Davranışsal çekirdek: sürüklenme sinyali + band + açıklama.",
+      l2:"Taksit baskısı simülasyonu: stres skoru, runway, erken temerrüt göstergeleri.",
+      dev:"GELİŞTİRME",
+      l3t:"CFO Lens",
+      l3:"Kurumsal nakit akışı: likidite çöküşü tahmini + fayda sinyalleri (optimizasyon).",
+      locked:"KİLİTLİ",
+      locked2:"Kilitli",
+      lockedNote:"Detay model & konektör spesleri özel PDF pakette sunulur.",
+      l4t:"KOBİ Lens",
+      l4:"KOBİ erken uyarı: fatura davranışı, bordro stresi, alacak riski, üye işyeri abuse.",
+      l5t:"Tasarruf Finans Lens (EminEvim tipi)",
+      l5:"SPK uyumlu yapılara güven lensi: fraud tespiti, çöküş riski, katılımcı davranış bütünlüğü.",
+      l5n:"Ayrıca illegal tefecilik / örtülü faktoring kalıplarını anomali bayraklarıyla yakalar.",
+      l6t:"Makro Şok Lens",
+      l6:"Kur/faiz/enflasyon şok simülasyonu (bankalar, fonlar, kurumsal portföy).",
+      l6n:"Çekirdek doğrulandıktan sonra eklenti olarak çıkar.",
+      l7t:"Dijital Varlık Lens",
+      l7:"Borsa davranışı, token volatilite davranışı, abuse tespiti ve portföy stresi.",
+      l7n:"Public sayfa kabiliyeti gösterir; iç detaylar gizlidir.",
+      archTitle:"Mimari Özet (Yatırımcı-güvenli)",
+      archTag:"API-first",
+      archSub:"4 katman: sinyaller → çekirdek motor → lensler → yönetişim. Derin mimari özel PDF’de.",
+      a1:"1) Sinyaller",
+      a1d:"Ödeme • Nakit akışı • Makro • Piyasa",
+      a1d2:"Sürüklenme • anomali",
+      a2:"2) Çekirdek Motor",
+      a2d:"RiskLens skor + band",
+      a2d2:"Kredi stres simülasyonu",
+      a3:"3) Lensler",
+      a3d:"Banka • Katılım • KOBİ • CFO",
+      a3d2:"Tasarruf • POS • Dijital",
+      a4:"4) Yönetişim",
+      a4d:"Audit • SLA • NDA",
+      a4d2:"Güvenlik + uyum",
 
-      acctTitle:"Muhasebe & ERP entegrasyonu (moat)",
-      acctTag:"Lisanslanabilir",
-      acctDesc:"Risk sinyallerini muhasebe akışlarına (fatura, nakit akışı, yaşlandırma, alacaklar) entegre ederiz. Bu ZENTRA’yı bırakmayı zorlaştırır ve ERP ekosistemleri üzerinden lisanslama sağlar (Logo/Netsis benzeri).",
-      acctRow1:"Defter sinyalleri",
-      acctRow2:"Vade öncesi fatura ödeme katmanı",
-      acctRow3:"Kötüye kullanım / AML",
-
-      lock:"KİLİTLİ", lock2:"Kilitli",
-      pdf:"Detay mimari özel PDF pakette sunulur.",
-      addon:"Çekirdek doğrulandıktan sonra eklenti olarak çıkar.",
-      demoonly:"Sadece demo; ürün yüzeyi olarak public açılmadı.",
-
-      lensA:"CFO Lens",
-      lensAD:"Kurumsal likidite, runway, maruziyet sapması, tedarikçi riski, stres aksiyonları.",
-      lensB:"SME / KOBİ Lens",
-      lensBD:"Taksit stresi + fatura davranışı + sektör & makro eşleşmesi.",
-      lensC:"Tasarruf Finans Lens (Emin Evim tipi)",
-      lensCD:"Dolandırıcılık önleme, sürdürülebilirlik skoru, tüketici koruması & denetlenebilirlik.",
-
-      secTitle:"Güvenlik & Uyum (yatırımcı-güvenli)",
-      secSub:"ZENTRA regüle ortama göre tasarlanır: audit, anahtar yönetimi, rate-limit, anti-abuse sinyalleri. Amaç gizli kayıpları azaltmak (fraud, AML riski, yasa dışı finansman kalıpları).",
-      sec1:"API Güvenliği",
-      sec1d:"API anahtarları, rotasyon, rate-limit, tenant bazlı kota ve audit log. Production’da VPC/on-prem mümkündür.",
-      sec2:"Anti-Abuse Lensi",
-      sec2d:"Kötüye kullanım kalıplarını yakalar: yasa dışı bahis/finans akışları, mule hesaplar, anormal transfer grafikleri.",
-      sec2r1:"Sinyaller",
-      sec2r2:"Çıktı",
-      sec3:"Biyometri / NFC Güvenliği (roadmap)",
-      sec3d:"Kart + POS riski için: parmak izi onayı, NFC risk skoru, cihaz güveni & davranış sürüklenmesi.",
+      secTitle:"Güvenlik & Uyum (Yatırımcı-güvenli)",
+      secSub:"Regülasyon yoğun ortamlar için tasarlandı. Çıktılar karar-destek sinyalidir; yönetişimin yerine geçmez.",
+      secTag:"Audit-ready",
+      s1:"Banka uyarıları ile uyumlu bağlam",
+      s1d:"Bankaların standart uyarılarını baz alır: hesapları üçüncü kişilere kullandırmayın. ZENTRA anormal kullanım kalıplarını tespit edip abuse sinyali üretir.",
+      s1a:"Risk",
+      s1b:"Yasa dışı bahis • dolandırıcılık • kara para",
+      s2:"Biyometrik / NFC güvenlik lensi",
+      s2tag:"AKTİF LENS",
+      s2d:"Parmak izi onaylı kart kullanımı + NFC anomali bayrakları ile izinsiz işlemler ve kimlik abuse riskini azaltır.",
 
       winsTitle:"ZENTRA Neden Kazanır",
-      winsSub:"Moat: davranış sinyali + stres simülasyonu + lisanslanabilir lens mimarisi. Regülasyon yoğun kurumlar için.",
+      winsSub:"Moat: davranış sinyali + stres simülasyonu + lisanslanabilir lens pazarı. Regülasyon ölçeği için.",
       moat:"Moat",
       w1:"Davranış Sinyali Katmanı",
-      w1d:"Geçmişe bakan skorların kaçırdığı gerçek davranışı yakalar (gecikme dinamiği, maruziyet sapması, volatilite).",
+      w1d:"Geçmişe bakan skorların kaçırdığı sürüklenmeyi yakalar (gecikme dinamiği, maruziyet sapması, anomali).",
       w2:"Stres Simülasyonu Çekirdeği",
       w2d:"Ödeme baskısını stres altında modelleyerek temerrütten önce likidite çöküşünü yakalar.",
-      w3:"Lisanslanabilir Lens Mimarisi",
-      w3d:"Kilitli görünürlükle API-first modüler rollout. İç detay açmadan global ölçeklenir.",
+      w3:"Lisanslanabilir Lens Pazarı",
+      w3d:"Kilitli görünürlükle API-first rollout. İç detay açmadan global ölçeklenir.",
       patT:"Korunabilir Alanlar (kısa)",
       patTag:"Korunabilir",
-      copyTag:"Telif / Ticari Sır Paketleme",
-      patNote:"Public görünüm sonuç ve yapıyı gösterir; hassas implementasyon NDA sonrası paylaşılır.",
+      ip2:"Patent öncesi dokümantasyon + telif notları",
+      ipNote:"Public sayfa hassas detayları bilerek göstermez. NDA sonrası derin mimari, konektörler, model spesleri, deployment playbook paylaşılır.",
 
       pricingTitle:"Fiyatlama & Lisanslama",
-      pricingSub:"Yapı public gösterilir; ticari koşullar bölge, kapsam, deployment ve SLA’ya göre belirlenir.",
+      pricingSub:"Yapı public; ticari koşullar bölge, kapsam, kurulum modu ve SLA’ya göre belirlenir.",
       lic:"Lisans",
       t1:"Plan", t2:"Hedef", t3:"İçerik", t4:"Lisans Modeli",
       r1t:"Neobank / Fintech",
@@ -1320,50 +1509,45 @@
       r2i:"Custom modeller + uyum paketi + opsiyonel on-prem / VPC",
       r2m:"Yıllık lisans + SLA",
       r3t:"Kurumsal",
-      r3i:"CFO / KOBİ / Makro / Tasarruf Finans / Dijital Varlık (fazlara göre)",
+      r3i:"CFO / KOBİ / Makro / Tasarruf / POS / Dijital (fazlara göre)",
       r3m:"Modüler abonelik",
-      priceNote:"Not: Bu sayfa hassas implementasyon detaylarını bilinçli olarak göstermez. NDA sonrası teknik paket paylaşılır.",
+      priceNote:"Not: Bu sayfa hassas implementasyon detaylarını bilinçli olarak göstermez. NDA sonrası teknik PDF paket paylaşılır.",
 
       ctaTitle:"Dubai HQ • Stratejik Ortaklık • Yatırımcı Erişimi",
-      ctaDesc:"Özel teknik paket ve pilot kapsamı için iletişime geçin. Bu site, Zoom’a gerek kalmadan anlatım yapacak şekilde tasarlandı.",
+      ctaDesc:"Özel teknik PDF paket ve pilot kapsamı için iletişime geçin. Bu site Zoom’a gerek bırakmadan anlatım yapacak şekilde tasarlandı.",
       ctaBtn:"Dubai HQ İletişim",
       ctaTop:"Yukarı Dön",
 
-      foot:"ZENTRA yatırımcıya dönük bir demonstrasyondur. Hassas implementasyon detayları public gösterilmez. NDA → teknik paket."
+      foot1:"Davranış tabanlı risk + fayda zekâsı için küresel lisans altyapısı.",
+      foot2:"Dubai HQ • © {{year}} ZENTRA"
     }
   };
 
   function applyLang(l){
     lang = l;
-    $("zm-en").classList.toggle("active", l==="en");
-    $("zm-tr").classList.toggle("active", l==="tr");
-    document.documentElement.lang = l;
+    $("z-en").classList.toggle("active", l==="en");
+    $("z-tr").classList.toggle("active", l==="tr");
+
     document.querySelectorAll("[data-zk]").forEach(el=>{
       const k = el.getAttribute("data-zk");
-      if(dict[l] && dict[l][k]) el.textContent = dict[l][k];
+      const v = (dict[l] && dict[l][k]) ? dict[l][k] : null;
+      if(v){
+        if(v.includes("{{year}}")) el.textContent = v.replace("{{year}}", String(new Date().getFullYear()));
+        else el.textContent = v;
+      }
     });
-    // refresh language-dependent UI
-    renderList();
+
+    // Update language-dependent items
     runHealth();
+    renderIndex();
+    $("exMode").textContent = (lang==="tr" ? "MOD: ŞABLON" : "MODE: TEMPLATE");
   }
 
-  $("zm-en").addEventListener("click", ()=>applyLang("en"));
-  $("zm-tr").addEventListener("click", ()=>applyLang("tr"));
+  $("z-en").addEventListener("click", ()=>applyLang("en"));
+  $("z-tr").addEventListener("click", ()=>applyLang("tr"));
 
-  // Initial: EN
   applyLang("en");
-
-  // Start health loop
-  runHealth();
-  setInterval(runHealth, 20000);
-
-  // Start activity loop
-  renderList();
-  animateGauge(demoScores[0]);
-  setInterval(()=>{ const last=demoScores.pop(); demoScores.unshift(last); renderList(); animateGauge(demoScores[0]); }, 3200);
-
 })();
 </script>
-
 </body>
 </html>

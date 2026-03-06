@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Privacy Policy</title>
+
+<style>
+
+:root{
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial;
+}
+
+.wrap{
+max-width:900px;
+margin:auto;
+padding:30px 20px 60px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:22px;
+margin-bottom:20px;
+}
+
+h1{
+color:var(--cyan);
+margin:0 0 10px;
+}
+
+h2{
+color:var(--green);
+margin-top:20px;
+}
+
+p{
+color:var(--muted);
+line-height:1.6;
+}
+
+.lang{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+.lang button{
+background:#08101f;
+border:1px solid var(--line);
+color:white;
+padding:6px 10px;
+margin-left:6px;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+color:#99a6c6;
+margin-top:30px;
+font-size:12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="lang">
+
+<button onclick="setLang('en')">EN</button>
+
+<button onclick="setLang('tr')">TR</button>
+
+</div>
+
+
+<div class="wrap">
+
+<div class="card">
+
+<h1 data-t="title">Privacy Policy</h1>
+
+<p data-t="intro">
+ZENTRA respects user privacy and is committed to protecting data handled through its financial intelligence infrastructure.
+</p>
+
+<h2 data-t="data">Data Collection</h2>
+
+<p data-t="dataText">
+ZENTRA may process institutional and behavioral financial signals in order to generate risk analytics and infrastructure insights.
+</p>
+
+<h2 data-t="usage">Data Usage</h2>
+
+<p data-t="usageText">
+Collected data is used strictly for financial risk modeling, behavioral analysis and infrastructure improvement.
+</p>
+
+<h2 data-t="security">Security</h2>
+
+<p data-t="securityText">
+ZENTRA implements behavioral anomaly detection, compliance monitoring and secure API infrastructure to protect system integrity.
+</p>
+
+<h2 data-t="sharing">Data Sharing</h2>
+
+<p data-t="sharingText">
+ZENTRA does not sell personal data. Data may only be shared with authorized institutions participating in infrastructure services.
+</p>
+
+<h2 data-t="contact">Contact</h2>
+
+<p>contact@zentrarisk.com</p>
+
+</div>
+
+<footer data-t="footer">
+
+ZENTRA Privacy Policy
+
+</footer>
+
+</div>
+
+
+<script>
+
+const translations={
+
+en:{
+title:"Privacy Policy",
+intro:"ZENTRA respects user privacy and is committed to protecting data handled through its financial intelligence infrastructure.",
+data:"Data Collection",
+dataText:"ZENTRA may process institutional and behavioral financial signals in order to generate risk analytics and infrastructure insights.",
+usage:"Data Usage",
+usageText:"Collected data is used strictly for financial risk modeling, behavioral analysis and infrastructure improvement.",
+security:"Security",
+securityText:"ZENTRA implements behavioral anomaly detection, compliance monitoring and secure API infrastructure to protect system integrity.",
+sharing:"Data Sharing",
+sharingText:"ZENTRA does not sell personal data. Data may only be shared with authorized institutions participating in infrastructure services.",
+contact:"Contact",
+footer:"ZENTRA Privacy Policy"
+},
+
+tr:{
+title:"Gizlilik Politikası",
+intro:"ZENTRA kullanıcı gizliliğine saygı duyar ve finansal zeka altyapısı içinde işlenen verileri korumayı taahhüt eder.",
+data:"Veri Toplama",
+dataText:"ZENTRA risk analitiği ve finansal içgörü üretmek için kurumsal ve davranışsal finans sinyallerini işleyebilir.",
+usage:"Veri Kullanımı",
+usageText:"Toplanan veriler yalnızca finansal risk modelleme, davranış analizi ve altyapı geliştirme amacıyla kullanılır.",
+security:"Güvenlik",
+securityText:"ZENTRA sistem güvenliğini korumak için davranışsal anomali tespiti, uyum izleme ve güvenli API altyapısı kullanır.",
+sharing:"Veri Paylaşımı",
+sharingText:"ZENTRA kişisel verileri satmaz. Veriler yalnızca yetkili kurumlarla altyapı hizmetleri kapsamında paylaşılabilir.",
+contact:"İletişim",
+footer:"ZENTRA Gizlilik Politikası"
+}
+
+}
+
+function setLang(lang){
+
+document.documentElement.lang=lang
+
+document.querySelectorAll("[data-t]").forEach(el=>{
+
+let key=el.getAttribute("data-t")
+
+el.innerText=translations[lang][key]
+
+})
+
+}
+
+</script>
+
+</body>
+</html>

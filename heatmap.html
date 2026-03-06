@@ -3,257 +3,276 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZENTRA Realtime Global Risk Heatmap</title>
+<title>ZENTRA Risk Heatmap</title>
+
 <style>
+
 :root{
-  --bg:#050814;
-  --card:#0c1228;
-  --line:#1e2a55;
-  --text:#eaf2ff;
-  --muted:#99a6c6;
-  --cyan:#00d4ff;
-  --green:#19e68c;
-  --gold:#f5b942;
-  --red:#ff4d6d;
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--green:#19e68c;
+--yellow:#f5b942;
+--red:#ff4d6d;
+--cyan:#00d4ff;
+--violet:#7c3aed;
 }
-*{box-sizing:border-box}
+
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif;
 }
+
 .topbar{
-  background:#060b1c;
-  border-bottom:1px solid var(--line);
-  padding:14px 20px;
+background:#060b1c;
+border-bottom:1px solid var(--line);
 }
-.topbar a{
-  color:#fff;
-  text-decoration:none;
-  margin-right:16px;
-  font-size:14px;
+
+.topin{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 20px;
+flex-wrap:wrap;
 }
+
+.logo{
+width:32px;
+height:32px;
+border-radius:10px;
+background:linear-gradient(135deg,var(--violet),var(--cyan));
+}
+
+nav{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-size:13px;
+}
+
+.lang button{
+border:1px solid var(--line);
+background:#0a1122;
+color:white;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.lang button.active{
+background:var(--cyan);
+color:black;
+}
+
 .wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:28px 20px 60px;
+max-width:1100px;
+margin:auto;
+padding:24px;
 }
+
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:22px;
-  margin-bottom:20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:20px;
+margin-bottom:20px;
 }
-h1{margin:0 0 10px;color:var(--cyan)}
-h2{margin:0 0 10px;color:var(--green)}
-p{margin:0;color:var(--muted);line-height:1.6}
+
+h1{
+color:var(--cyan);
+margin:0 0 10px 0;
+}
+
+h2{
+color:var(--green);
+margin:0 0 10px 0;
+}
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-  margin-top:14px;
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:8px;
+margin-top:16px;
 }
-.metric{
-  background:#08101f;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:18px;
-  text-align:center;
+
+.cell{
+height:60px;
+border-radius:6px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:bold;
 }
-.metric strong{
-  display:block;
-  font-size:28px;
-  color:var(--cyan);
-  margin-bottom:6px;
+
+.low{background:rgba(25,230,140,.35)}
+.mid{background:rgba(245,185,66,.45)}
+.high{background:rgba(255,77,109,.55)}
+
+.legend{
+display:flex;
+gap:14px;
+margin-top:16px;
+font-size:13px;
+color:var(--muted);
 }
-.map{
-  position:relative;
-  height:420px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(0,212,255,.06), transparent 18%),
-    radial-gradient(circle at 70% 40%, rgba(0,212,255,.04), transparent 20%),
-    radial-gradient(circle at 55% 75%, rgba(0,212,255,.04), transparent 20%),
-    #08101f;
-  overflow:hidden;
+
+.box{
+width:14px;
+height:14px;
+display:inline-block;
+margin-right:6px;
 }
-.point{
-  position:absolute;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 20px currentColor;
-  animation:pulse 2.6s infinite;
-}
-.point.low{background:var(--green);color:var(--green)}
-.point.mid{background:var(--gold);color:var(--gold)}
-.point.high{background:var(--red);color:var(--red)}
-.label{
-  position:absolute;
-  transform:translate(-50%, 14px);
-  font-size:12px;
-  color:#fff;
-  white-space:nowrap;
-}
-.table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
-}
-.table td,.table th{
-  text-align:left;
-  padding:10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-size:13px;
-}
-.table th{color:#fff}
+
 footer{
-  text-align:center;
-  color:#99a6c6;
-  font-size:12px;
-  margin-top:30px;
+text-align:center;
+margin-top:30px;
+color:#99a6c6;
+font-size:12px;
 }
-@keyframes pulse{
-  0%{transform:translate(-50%,-50%) scale(.85)}
-  50%{transform:translate(-50%,-50%) scale(1.15)}
-  100%{transform:translate(-50%,-50%) scale(.85)}
-}
+
 </style>
 </head>
+
 <body>
 
 <div class="topbar">
-  <a href="index.html">Home</a>
-  <a href="platform.html">Platform</a>
-  <a href="developer.html">Developers</a>
-  <a href="investor.html">Investor</a>
-  <a href="telescope.html">Telescope</a>
-  <a href="global-map.html">Global Map</a>
-  <a href="heatmap.html">Heatmap</a>
+<div class="topin">
+
+<div style="display:flex;align-items:center;gap:10px">
+<div class="logo"></div>
+<strong>ZENTRA</strong>
+</div>
+
+<nav>
+
+<a href="index.html" data-t="home">Home</a>
+<a href="platform.html" data-t="platform">Platform</a>
+<a href="developer.html" data-t="dev">Developers</a>
+<a href="investor.html" data-t="investor">Investor</a>
+<a href="telescope.html" data-t="tel">Telescope</a>
+
+<div class="lang">
+<button id="en" class="active">EN</button>
+<button id="tr">TR</button>
+</div>
+
+</nav>
+
+</div>
 </div>
 
 <div class="wrap">
 
-  <section class="card">
-    <h1>Realtime Global Risk Heatmap</h1>
-    <p>
-      ZENTRA visualizes region-based behavioral and systemic financial pressure through a live-style heatmap layer.
-    </p>
-  </section>
+<section class="card">
 
-  <section class="card">
-    <h2>Heatmap View</h2>
-    <div class="map" id="heatmap">
-      <div class="point mid" id="p-usa" style="left:24%;top:34%"></div>
-      <div class="label" style="left:24%;top:34%" id="l-usa">USA</div>
+<h1 data-t="title">Global Risk Heatmap</h1>
 
-      <div class="point mid" id="p-eu" style="left:49%;top:30%"></div>
-      <div class="label" style="left:49%;top:30%" id="l-eu">Europe</div>
+<p data-t="subtitle">
+Institutional and macro signals visualized across financial sectors.
+</p>
 
-      <div class="point high" id="p-tr" style="left:56%;top:38%"></div>
-      <div class="label" style="left:56%;top:38%" id="l-tr">Türkiye</div>
+<div class="grid">
 
-      <div class="point high" id="p-em" style="left:72%;top:56%"></div>
-      <div class="label" style="left:72%;top:56%" id="l-em">Emerging</div>
-    </div>
-  </section>
+<div class="cell low">Bank</div>
+<div class="cell mid">SME</div>
+<div class="cell high">Liquidity</div>
+<div class="cell mid">Payments</div>
+<div class="cell low">Insurance</div>
+<div class="cell mid">Funds</div>
 
-  <section class="card">
-    <h2>Live Systemic Indicators</h2>
-    <div class="grid">
-      <div class="metric"><strong id="globalRisk">64</strong>Global Risk</div>
-      <div class="metric"><strong id="liqStress">52</strong>Liquidity Stress</div>
-      <div class="metric"><strong id="behDrift">MEDIUM</strong>Behavior Drift</div>
-      <div class="metric"><strong id="macroState">ACTIVE</strong>Macro Feed</div>
-    </div>
-  </section>
+<div class="cell mid">Europe</div>
+<div class="cell high">Emerging</div>
+<div class="cell mid">Asia</div>
+<div class="cell low">USA</div>
+<div class="cell high">Turkey</div>
+<div class="cell mid">Africa</div>
 
-  <section class="card">
-    <h2>Regional Signal Table</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Region</th>
-          <th>Primary Signal</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>USA</td>
-          <td id="s-usa">Market Liquidity Pressure</td>
-          <td id="v-usa">MEDIUM</td>
-        </tr>
-        <tr>
-          <td>Europe</td>
-          <td id="s-eu">Credit Tightening</td>
-          <td id="v-eu">MEDIUM</td>
-        </tr>
-        <tr>
-          <td>Türkiye</td>
-          <td id="s-tr">SME Payment Drift</td>
-          <td id="v-tr">HIGH</td>
-        </tr>
-        <tr>
-          <td>Emerging Markets</td>
-          <td id="s-em">Systemic Stress</td>
-          <td id="v-em">HIGH</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+<div class="cell low">ERP</div>
+<div class="cell mid">POS</div>
+<div class="cell mid">Loans</div>
+<div class="cell high">Debt</div>
+<div class="cell mid">Markets</div>
+<div class="cell low">FX</div>
 
-  <footer>ZENTRA Realtime Global Risk Heatmap</footer>
+</div>
+
+<div class="legend">
+
+<div><span class="box low"></span> <span data-t="low">Low Risk</span></div>
+
+<div><span class="box mid"></span> <span data-t="mid">Moderate</span></div>
+
+<div><span class="box high"></span> <span data-t="high">High Risk</span></div>
+
+</div>
+
+</section>
+
+<footer data-t="footer">
+ZENTRA Risk Heatmap
+</footer>
+
 </div>
 
 <script>
-function bandClass(value){
-  if(value >= 67) return "high";
-  if(value >= 45) return "mid";
-  return "low";
-}
-function bandText(value){
-  if(value >= 67) return "HIGH";
-  if(value >= 45) return "MEDIUM";
-  return "LOW";
-}
-function rand(min,max){
-  return Math.floor(Math.random()*(max-min+1))+min;
-}
-function updateHeatmap(){
-  const usa = rand(40,70);
-  const eu = rand(38,68);
-  const tr = rand(50,84);
-  const em = rand(55,88);
 
-  const avg = Math.round((usa+eu+tr+em)/4);
-  const liq = Math.round((eu+usa)/2);
-  const drift = avg >= 67 ? "HIGH" : avg >= 45 ? "MEDIUM" : "LOW";
-
-  document.getElementById("globalRisk").textContent = avg;
-  document.getElementById("liqStress").textContent = liq;
-  document.getElementById("behDrift").textContent = drift;
-
-  const regions = [
-    ["usa", usa],
-    ["eu", eu],
-    ["tr", tr],
-    ["em", em]
-  ];
-
-  regions.forEach(([key,val])=>{
-    const point = document.getElementById("p-"+key);
-    point.className = "point " + bandClass(val);
-    document.getElementById("v-"+key).textContent = bandText(val);
-  });
+const dict={
+en:{
+home:"Home",
+platform:"Platform",
+dev:"Developers",
+investor:"Investor",
+tel:"Telescope",
+title:"Global Risk Heatmap",
+subtitle:"Institutional and macro signals visualized across financial sectors.",
+low:"Low Risk",
+mid:"Moderate",
+high:"High Risk",
+footer:"ZENTRA Risk Heatmap"
+},
+tr:{
+home:"Ana Sayfa",
+platform:"Platform",
+dev:"Geliştiriciler",
+investor:"Yatırımcı",
+tel:"Teleskop",
+title:"Küresel Risk Isı Haritası",
+subtitle:"Kurumsal ve makro finans sinyallerinin görsel haritası.",
+low:"Düşük Risk",
+mid:"Orta Risk",
+high:"Yüksek Risk",
+footer:"ZENTRA Risk Isı Haritası"
 }
-updateHeatmap();
-setInterval(updateHeatmap, 3000);
+}
+
+function setLang(lang){
+document.querySelectorAll("[data-t]").forEach(el=>{
+const key=el.getAttribute("data-t")
+if(dict[lang][key]) el.textContent=dict[lang][key]
+})
+document.getElementById("en").classList.toggle("active",lang==="en")
+document.getElementById("tr").classList.toggle("active",lang==="tr")
+}
+
+document.getElementById("en").onclick=()=>setLang("en")
+document.getElementById("tr").onclick=()=>setLang("tr")
+
+setLang("en")
+
 </script>
 
 </body>
-  </html>
+</html>

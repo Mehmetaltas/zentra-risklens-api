@@ -6,66 +6,99 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ZENTRA Infrastructure</title>
+<title>ZENTRA Platform</title>
 
 <style>
 
+:root{
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+--violet:#7c3aed;
+}
+
 body{
 margin:0;
-background:#050814;
-color:#eaf2ff;
-font-family:Arial;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif;
 }
 
 .topbar{
 background:#060b1c;
-border-bottom:1px solid #1e2a55;
-padding:14px;
+border-bottom:1px solid var(--line);
+}
+
+.topin{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 20px;
+flex-wrap:wrap;
+}
+
+.logo{
+width:32px;
+height:32px;
+border-radius:10px;
+background:linear-gradient(135deg,var(--violet),var(--cyan));
+}
+
+nav{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+align-items:center;
 }
 
 nav a{
 color:white;
 text-decoration:none;
-margin-right:16px;
+font-size:13px;
+}
+
+.lang button{
+border:1px solid var(--line);
+background:#0a1122;
+color:white;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.lang button.active{
+background:var(--cyan);
+color:black;
 }
 
 .wrap{
 max-width:1100px;
 margin:auto;
-padding:40px 20px 60px;
+padding:24px;
 }
 
 .card{
-background:#0c1228;
-border:1px solid #1e2a55;
+background:var(--card);
+border:1px solid var(--line);
 border-radius:14px;
 padding:20px;
 margin-bottom:20px;
 }
 
 h1{
-color:#00d4ff;
+color:var(--cyan);
+margin:0 0 10px 0;
 }
 
-.layer{
-background:#08101f;
-border:1px solid #1e2a55;
-border-radius:10px;
-padding:18px;
-margin-top:14px;
-}
-
-.layer strong{
-color:#19e68c;
-display:block;
-margin-bottom:6px;
-}
-
-.arrow{
-text-align:center;
-font-size:24px;
-margin:10px 0;
-color:#99a6c6;
+p{
+color:var(--muted);
+line-height:1.6;
 }
 
 footer{
@@ -73,115 +106,182 @@ text-align:center;
 color:#99a6c6;
 font-size:12px;
 margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--line);
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="topbar">
 
+<div class="topin">
+
+<div style="display:flex;align-items:center;gap:10px">
+
+<div class="logo"></div>
+
+<strong>ZENTRA</strong>
+
+</div>
+
+
 <nav>
 
-<a href="index.html">Home</a>
-<a href="platform.html">Platform</a>
-<a href="developer.html">Developers</a>
-<a href="investor.html">Investor</a>
-<a href="telescope.html">Telescope</a>
-<a href="global-map.html">Global Map</a>
-<a href="architecture.html">Architecture</a>
+<a href="index.html" data-t="home">Home</a>
+
+<a href="platform.html" data-t="platform">Platform</a>
+
+<a href="developer.html" data-t="dev">Developers</a>
+
+<a href="investor.html" data-t="investor">Investor</a>
+
+<a href="telescope.html" data-t="telescope">Telescope</a>
+
+<a href="network.html" data-t="network">Global Map</a>
+
+<a href="heatmap.html" data-t="heatmap">Heatmap</a>
+
+<a href="architecture.html" data-t="architecture">Architecture</a>
+
+<a href="trust.html" data-t="trust">Trust</a>
+
+<a href="#contact" data-t="contact">Contact</a>
+
+<div class="lang">
+
+<button id="lang-en" class="active">EN</button>
+
+<button id="lang-tr">TR</button>
+
+</div>
 
 </nav>
 
 </div>
 
+</div>
+
+
+
 <div class="wrap">
 
-<div class="card">
+<section class="card">
 
-<h1>ZENTRA Infrastructure Architecture</h1>
+<h1 data-t="title">Platform Overview</h1>
 
-<p>
+<p data-t="subtitle">
 
-ZENTRA is designed as a behavioral financial infrastructure layer connecting institutional data, risk engines and global financial signals.
+ZENTRA is a behavioral financial infrastructure that connects
+financial institutions, payment networks and macro intelligence
+into a unified risk observation system.
 
 </p>
 
-</div>
+</section>
 
 
-<div class="card">
+<section class="card">
 
-<div class="layer">
+<h1 data-t="section2">Infrastructure</h1>
 
-<strong>Data Sources</strong>
+<p data-t="section2text">
 
-Banks • ERP Systems • Payment Networks • POS Systems • Digital Assets • Macro Sources
+The platform combines behavioral analytics, risk engines,
+security monitoring and macro signals to detect financial stress
+before traditional systems react.
 
-</div>
+</p>
 
-<div class="arrow">↓</div>
-
-<div class="layer">
-
-<strong>Integration Layer</strong>
-
-API Connectors • Data Pipelines • Financial Signal Ingestion
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="layer">
-
-<strong>Engine Layer</strong>
-
-Behavior Engine • RiskLens • Credit Stress Engine • Macro Engine • Security Engine
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="layer">
-
-<strong>AI Layer</strong>
-
-Behavior Drift Detection • Predictive Risk Modeling • Anomaly Detection
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="layer">
-
-<strong>Lens Marketplace</strong>
-
-Banking Lens • SME Lens • ERP Lens • POS Lens • Insurance Lens • Fund Lens
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="layer">
-
-<strong>Intelligence Output</strong>
-
-Risk Score • Systemic Signals • Financial Telescope • Institutional Dashboards
-
-</div>
-
-</div>
+</section>
 
 
 <footer>
 
-ZENTRA Financial Infrastructure
+<span data-t="footer">
+
+ZENTRA Investor Demonstration Platform
+
+</span>
 
 </footer>
 
 </div>
+
+
+
+<script>
+
+const dict = {
+
+en:{
+home:"Home",
+platform:"Platform",
+dev:"Developers",
+investor:"Investor",
+telescope:"Telescope",
+network:"Global Map",
+heatmap:"Heatmap",
+architecture:"Architecture",
+trust:"Trust Center",
+contact:"Contact",
+title:"Platform Overview",
+subtitle:"ZENTRA is a behavioral financial infrastructure that connects financial institutions and macro signals.",
+section2:"Infrastructure",
+section2text:"Risk engines, behavior monitoring and macro intelligence combined.",
+footer:"ZENTRA Investor Demonstration Platform"
+},
+
+tr:{
+home:"Ana Sayfa",
+platform:"Platform",
+dev:"Geliştiriciler",
+investor:"Yatırımcı",
+telescope:"Teleskop",
+network:"Küresel Harita",
+heatmap:"Risk Haritası",
+architecture:"Mimari",
+trust:"Güven Merkezi",
+contact:"İletişim",
+title:"Platform Genel Bakış",
+subtitle:"ZENTRA finansal davranışı analiz eden bir finans altyapısıdır.",
+section2:"Altyapı",
+section2text:"Risk motorları, davranış analizi ve makro finans sinyalleri birleşir.",
+footer:"ZENTRA Yatırımcı Demonstrasyon Platformu"
+}
+
+}
+
+function setLang(lang){
+
+document.querySelectorAll("[data-t]").forEach(el=>{
+
+const key = el.getAttribute("data-t")
+
+if(dict[lang][key]){
+el.textContent = dict[lang][key]
+}
+
+})
+
+document.getElementById("lang-en").classList.toggle("active",lang==="en")
+document.getElementById("lang-tr").classList.toggle("active",lang==="tr")
+
+}
+
+document.getElementById("lang-en").onclick = ()=>setLang("en")
+
+document.getElementById("lang-tr").onclick = ()=>setLang("tr")
+
+setLang("en")
+
+</script>
+
 
 </body>
 </html>

@@ -6,173 +6,282 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ZENTRA Trust Center</title>
+<title>ZENTRA Platform</title>
 
 <style>
 
+:root{
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+--violet:#7c3aed;
+}
+
 body{
-font-family:Arial;
-background:#050814;
-color:#eaf2ff;
 margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif;
+}
+
+.topbar{
+background:#060b1c;
+border-bottom:1px solid var(--line);
+}
+
+.topin{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 20px;
+flex-wrap:wrap;
+}
+
+.logo{
+width:32px;
+height:32px;
+border-radius:10px;
+background:linear-gradient(135deg,var(--violet),var(--cyan));
+}
+
+nav{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-size:13px;
+}
+
+.lang button{
+border:1px solid var(--line);
+background:#0a1122;
+color:white;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.lang button.active{
+background:var(--cyan);
+color:black;
 }
 
 .wrap{
 max-width:1100px;
 margin:auto;
-padding:40px 20px;
+padding:24px;
 }
 
 .card{
-background:#0c1228;
-border:1px solid #1e2a55;
+background:var(--card);
+border:1px solid var(--line);
 border-radius:14px;
-padding:24px;
+padding:20px;
 margin-bottom:20px;
 }
 
 h1{
-color:#00d4ff;
-}
-
-h2{
-color:#19e68c;
+color:var(--cyan);
+margin:0 0 10px 0;
 }
 
 p{
-color:#99a6c6;
+color:var(--muted);
 line-height:1.6;
+}
+
+footer{
+text-align:center;
+color:#99a6c6;
+font-size:12px;
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--line);
 }
 
 </style>
 
 </head>
 
+
 <body>
+
+
+<div class="topbar">
+
+<div class="topin">
+
+<div style="display:flex;align-items:center;gap:10px">
+
+<div class="logo"></div>
+
+<strong>ZENTRA</strong>
+
+</div>
+
+
+<nav>
+
+<a href="index.html" data-t="home">Home</a>
+
+<a href="platform.html" data-t="platform">Platform</a>
+
+<a href="developer.html" data-t="dev">Developers</a>
+
+<a href="investor.html" data-t="investor">Investor</a>
+
+<a href="telescope.html" data-t="telescope">Telescope</a>
+
+<a href="network.html" data-t="network">Global Map</a>
+
+<a href="heatmap.html" data-t="heatmap">Heatmap</a>
+
+<a href="architecture.html" data-t="architecture">Architecture</a>
+
+<a href="trust.html" data-t="trust">Trust</a>
+
+<a href="#contact" data-t="contact">Contact</a>
+
+<div class="lang">
+
+<button id="lang-en" class="active">EN</button>
+
+<button id="lang-tr">TR</button>
+
+</div>
+
+</nav>
+
+</div>
+
+</div>
+
+
 
 <div class="wrap">
 
-<h1>ZENTRA Trust Center</h1>
+<section class="card">
 
-<p>
-ZENTRA is designed as a behavioral financial infrastructure
-with security, transparency, and institutional reliability
-at its core.
-</p>
+<h1 data-t="title">Platform Overview</h1>
 
+<p data-t="subtitle">
 
-<div class="card">
-
-<h2>Security</h2>
-
-<p>
-
-ZENTRA integrates behavioral security intelligence
-to detect abnormal financial activity patterns.
-
-Security monitoring includes:
-
-• Behavioral AML signals  
-• Fraud detection patterns  
-• Account misuse monitoring  
-• Transaction anomaly detection  
+ZENTRA is a behavioral financial infrastructure that connects
+financial institutions, payment networks and macro intelligence
+into a unified risk observation system.
 
 </p>
+
+</section>
+
+
+<section class="card">
+
+<h1 data-t="section2">Infrastructure</h1>
+
+<p data-t="section2text">
+
+The platform combines behavioral analytics, risk engines,
+security monitoring and macro signals to detect financial stress
+before traditional systems react.
+
+</p>
+
+</section>
+
+
+<footer>
+
+<span data-t="footer">
+
+ZENTRA Investor Demonstration Platform
+
+</span>
+
+</footer>
 
 </div>
 
 
-<div class="card">
 
-<h2>Compliance</h2>
+<script>
 
-<p>
+const dict = {
 
-ZENTRA supports regulatory environments
-by providing explainable financial intelligence.
+en:{
+home:"Home",
+platform:"Platform",
+dev:"Developers",
+investor:"Investor",
+telescope:"Telescope",
+network:"Global Map",
+heatmap:"Heatmap",
+architecture:"Architecture",
+trust:"Trust Center",
+contact:"Contact",
+title:"Platform Overview",
+subtitle:"ZENTRA is a behavioral financial infrastructure that connects financial institutions and macro signals.",
+section2:"Infrastructure",
+section2text:"Risk engines, behavior monitoring and macro intelligence combined.",
+footer:"ZENTRA Investor Demonstration Platform"
+},
 
-The system produces transparent signals
-that can assist audit and compliance processes.
+tr:{
+home:"Ana Sayfa",
+platform:"Platform",
+dev:"Geliştiriciler",
+investor:"Yatırımcı",
+telescope:"Teleskop",
+network:"Küresel Harita",
+heatmap:"Risk Haritası",
+architecture:"Mimari",
+trust:"Güven Merkezi",
+contact:"İletişim",
+title:"Platform Genel Bakış",
+subtitle:"ZENTRA finansal davranışı analiz eden bir finans altyapısıdır.",
+section2:"Altyapı",
+section2text:"Risk motorları, davranış analizi ve makro finans sinyalleri birleşir.",
+footer:"ZENTRA Yatırımcı Demonstrasyon Platformu"
+}
 
-</p>
+}
 
-</div>
+function setLang(lang){
 
+document.querySelectorAll("[data-t]").forEach(el=>{
 
-<div class="card">
+const key = el.getAttribute("data-t")
 
-<h2>Data Protection</h2>
+if(dict[lang][key]){
+el.textContent = dict[lang][key]
+}
 
-<p>
+})
 
-ZENTRA processes financial signals
-without exposing sensitive institutional data.
+document.getElementById("lang-en").classList.toggle("active",lang==="en")
+document.getElementById("lang-tr").classList.toggle("active",lang==="tr")
 
-Sensitive operational details remain private
-and are not publicly disclosed.
+}
 
-</p>
+document.getElementById("lang-en").onclick = ()=>setLang("en")
 
-</div>
+document.getElementById("lang-tr").onclick = ()=>setLang("tr")
 
+setLang("en")
 
-<div class="card">
+</script>
 
-<h2>Risk Model Transparency</h2>
-
-<p>
-
-ZENTRA evaluates behavioral financial signals
-including payment patterns, financial stress indicators,
-and macro risk conditions.
-
-Outputs include:
-
-• Behavioral risk scoring  
-• Stress pressure indicators  
-• Fraud risk signals  
-• Systemic risk monitoring  
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>Responsible AI</h2>
-
-<p>
-
-AI components within ZENTRA are used only
-for explainability and signal interpretation.
-
-ZENTRA does not perform autonomous
-financial decision making.
-
-AI outputs are intended for
-institutional decision support.
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>Contact</h2>
-
-<p>
-
-For security inquiries or responsible disclosure:
-
-contact@zentrarisk.com
-
-</p>
-
-</div>
-
-</div>
 
 </body>
 </html>

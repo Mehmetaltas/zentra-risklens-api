@@ -1,32 +1,31 @@
 <section class="card">
 
-<h2>Live Risk Simulation</h2>
+<h2>System Status</h2>
 
 <p>
-ZENTRA continuously evaluates behavioral financial signals
-and updates systemic risk indicators in real time.
+Live operational status of ZENTRA financial infrastructure components.
 </p>
 
 <div class="grid">
 
 <div class="metric">
-<strong id="riskScore">0</strong>
-Behavioral Risk
+<strong id="risklensStatus">ONLINE</strong>
+RiskLens API
 </div>
 
 <div class="metric">
-<strong id="stressScore">0</strong>
-Stress Pressure
+<strong id="stressStatus">ONLINE</strong>
+Credit Stress Engine
 </div>
 
 <div class="metric">
-<strong id="fraudScore">0</strong>
-Fraud Signal
+<strong id="macroStatus">ACTIVE</strong>
+Macro Intelligence Feed
 </div>
 
 <div class="metric">
-<strong id="macroScore">0</strong>
-Macro Risk
+<strong id="securityStatus">ACTIVE</strong>
+Security Monitoring
 </div>
 
 </div>
@@ -36,28 +35,26 @@ Macro Risk
 
 <script>
 
-function randomScore(min,max){
-return Math.floor(Math.random()*(max-min)+min)
-}
+function updateStatus(){
 
-function updateRisk(){
+const states = ["ONLINE","ACTIVE","RUNNING"]
 
-document.getElementById("riskScore").innerText =
-randomScore(55,85)
+document.getElementById("risklensStatus").innerText =
+states[Math.floor(Math.random()*states.length)]
 
-document.getElementById("stressScore").innerText =
-randomScore(40,70)
+document.getElementById("stressStatus").innerText =
+states[Math.floor(Math.random()*states.length)]
 
-document.getElementById("fraudScore").innerText =
-randomScore(20,60)
+document.getElementById("macroStatus").innerText =
+states[Math.floor(Math.random()*states.length)]
 
-document.getElementById("macroScore").innerText =
-randomScore(30,65)
+document.getElementById("securityStatus").innerText =
+states[Math.floor(Math.random()*states.length)]
 
 }
 
-updateRisk()
+updateStatus()
 
-setInterval(updateRisk,5000)
+setInterval(updateStatus,6000)
 
-  </script>
+</script>

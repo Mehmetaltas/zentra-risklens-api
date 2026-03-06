@@ -1,11 +1,168 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Financial Infrastructure</title>
+
+<style>
+
+:root{
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+--gold:#f5b942;
+}
+
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+}
+
+.topbar{
+background:#060b1c;
+border-bottom:1px solid var(--line);
+padding:14px 20px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-right:16px;
+font-size:14px;
+}
+
+.wrap{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:22px;
+margin-bottom:20px;
+}
+
+.hero h1{
+color:var(--cyan);
+margin:0 0 10px;
+}
+
+p{
+color:var(--muted);
+line-height:1.6;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+margin-top:20px;
+}
+
+.metric{
+background:#08101f;
+border:1px solid var(--line);
+border-radius:12px;
+padding:18px;
+}
+
+.metric strong{
+color:var(--cyan);
+display:block;
+font-size:18px;
+margin-bottom:8px;
+}
+
+footer{
+margin-top:60px;
+padding-top:20px;
+border-top:1px solid var(--line);
+text-align:center;
+color:#99a6c6;
+font-size:12px;
+}
+
+.btn{
+display:inline-block;
+background:var(--cyan);
+color:black;
+padding:10px 14px;
+border-radius:8px;
+text-decoration:none;
+margin-right:8px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="developer.html">Developers</a>
+<a href="architecture.html">Architecture</a>
+<a href="global-map.html">Global Map</a>
+<a href="heatmap.html">Heatmap</a>
+<a href="trust.html">Trust Center</a>
+<a href="privacy.html">Privacy</a>
+<a href="#contact">Contact</a>
+
+</nav>
+
+</div>
+
+
+<div class="wrap">
+
+<section class="card hero">
+
+<h1>Financial Telescope</h1>
+
+<p>
+
+ZENTRA observes financial behavior across institutions,
+detecting systemic risk drift and behavioral signals
+before traditional financial systems react.
+
+</p>
+
+<a class="btn" href="platform.html">Platform</a>
+<a class="btn" href="developer.html">Developer Portal</a>
+<a class="btn" href="global-map.html">Global Map</a>
+<a class="btn" href="heatmap.html">Risk Heatmap</a>
+
+</section>
+
+
 <section class="card">
 
 <h2>Financial Operating System</h2>
 
 <p>
+
 ZENTRA functions as a behavioral financial operating system.
 It observes signals, processes risk through engines,
 and distributes intelligence through institutional lenses.
+
 </p>
 
 <div class="grid">
@@ -52,18 +209,85 @@ Capital Markets
 
 </div>
 
-<div class="code">
+</section>
 
-DATA SIGNALS
-↓
-RISK ENGINES
-↓
-LENS MARKETPLACE
-↓
-FINANCIAL INTELLIGENCE
-↓
-FINANCIAL TELESCOPE
+
+<section class="card">
+
+<h2>System Status</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>RiskLens API</strong>
+ONLINE
+</div>
+
+<div class="metric">
+<strong>Credit Stress Engine</strong>
+ONLINE
+</div>
+
+<div class="metric">
+<strong>Macro Intelligence Feed</strong>
+ACTIVE
+</div>
+
+<div class="metric">
+<strong>Security Monitoring</strong>
+ACTIVE
+</div>
 
 </div>
 
 </section>
+
+
+<section class="card">
+
+<h2>Global Financial Signals</h2>
+
+<div class="grid">
+
+<div class="metric">TCMB</div>
+<div class="metric">IMF</div>
+<div class="metric">BIS</div>
+<div class="metric">ECB</div>
+<div class="metric">BIST</div>
+<div class="metric">LSE</div>
+
+</div>
+
+</section>
+
+
+<section id="contact" class="card">
+
+<h2>Contact</h2>
+
+<p>
+
+Dubai HQ — Strategic Partnerships
+
+</p>
+
+<a class="btn" href="mailto:contact@zentrarisk.com">
+
+contact@zentrarisk.com
+
+</a>
+
+</section>
+
+
+<footer>
+
+ZENTRA Behavioral Financial Infrastructure
+
+</footer>
+
+</div>
+
+</body>
+
+</html>

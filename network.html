@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZENTRA Global Financial Network</title>
+
+<style>
+:root{
+  --bg:#050814;
+  --card:#0c1228;
+  --line:#1e2a55;
+  --text:#eaf2ff;
+  --muted:#99a6c6;
+  --cyan:#00d4ff;
+  --green:#19e68c;
+  --gold:#f5b942;
+  --red:#ff4d6d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.topbar{
+  background:#060b1c;
+  border-bottom:1px solid var(--line);
+  padding:14px 20px;
+}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  margin-right:16px;
+  font-size:14px;
+}
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:36px 20px 60px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+  margin-bottom:20px;
+}
+h1{
+  color:var(--cyan);
+  margin:0 0 10px;
+}
+h2{
+  color:var(--green);
+  margin:0 0 10px;
+}
+p{
+  color:var(--muted);
+  line-height:1.6;
+  margin:0;
+}
+.lang{
+  position:fixed;
+  top:18px;
+  right:18px;
+  z-index:30;
+}
+.lang button{
+  margin-left:6px;
+  padding:7px 10px;
+  border:1px solid var(--line);
+  background:#0a1122;
+  color:#fff;
+  cursor:pointer;
+  border-radius:8px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-top:16px;
+}
+.metric{
+  background:#08101f;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px;
+  text-align:center;
+}
+.metric strong{
+  display:block;
+  font-size:24px;
+  color:var(--cyan);
+  margin-bottom:6px;
+}
+.network{
+  position:relative;
+  height:520px;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(0,212,255,.08), transparent 16%),
+    radial-gradient(circle at 48% 25%, rgba(0,212,255,.06), transparent 18%),
+    radial-gradient(circle at 56% 38%, rgba(255,77,109,.06), transparent 16%),
+    radial-gradient(circle at 72% 58%, rgba(245,185,66,.06), transparent 16%),
+    radial-gradient(circle at 36% 62%, rgba(0,212,255,.06), transparent 18%),
+    #08101f;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  margin-top:14px;
+}
+.node{
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 18px currentColor;
+  animation:pulse 2.8s infinite;
+}
+.node.bank{background:var(--cyan);color:var(--cyan)}
+.node.pay{background:var(--green);color:var(--green)}
+.node.risk{background:var(--gold);color:var(--gold)}
+.node.alert{background:var(--red);color:var(--red)}
+.label{
+  position:absolute;
+  transform:translate(-50%,14px);
+  font-size:12px;
+  color:#fff;
+  white-space:nowrap;
+}
+.line{
+  position:absolute;
+  height:2px;
+  transform-origin:left center;
+  background:linear-gradient(90deg, rgba(0,212,255,.6), rgba(0,212,255,.1));
+  box-shadow:0 0 10px rgba(0,212,255,.25);
+}
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+.table th,.table td{
+  text-align:left;
+  padding:10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+}
+.table th{color:#fff}
+footer{
+  text-align:center;
+  color:#99a6c6;
+  font-size:12px;
+  margin-top:32px;
+}
+@keyframes pulse{
+  0%{transform:translate(-50%,-50%) scale(.85)}
+  50%{transform:translate(-50%,-50%) scale(1.12)}
+  100%{transform:translate(-50%,-50%) scale(.85)}
+}
+</style>
+</head>
+<body>
+
+<div class="lang">
+  <button onclick="setLang('en')">EN</button>
+  <button onclick="setLang('tr')">TR</button>
+</div>
+
+<div class="topbar">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="platform.html">Platform</a>
+    <a href="developer.html">Developers</a>
+    <a href="investor.html">Investor</a>
+    <a href="telescope.html">Telescope</a>
+    <a href="global-map.html">Global Map</a>
+    <a href="heatmap.html">Heatmap</a>
+    <a href="network.html">Network</a>
+    <a href="privacy.html">Privacy</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <section class="card">
+    <h1 data-t="title">Global Financial Network</h1>
+    <p data-t="intro">
+      ZENTRA connects behavioral signals, institutions, payment rails and macro intelligence into a financial network layer.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2 data-t="networkMap">Network Topology</h2>
+    <div class="network" id="network">
+      <div class="node bank" style="left:22%;top:26%"></div>
+      <div class="label" style="left:22%;top:26%" data-t="n1">Banks</div>
+
+      <div class="node pay" style="left:46%;top:22%"></div>
+      <div class="label" style="left:46%;top:22%" data-t="n2">Payment Rails</div>
+
+      <div class="node risk" style="left:56%;top:36%"></div>
+      <div class="label" style="left:56%;top:36%" data-t="n3">Risk Engines</div>
+
+      <div class="node alert" style="left:72%;top:56%"></div>
+      <div class="label" style="left:72%;top:56%" data-t="n4">Financial Telescope</div>
+
+      <div class="node bank" style="left:34%;top:62%"></div>
+      <div class="label" style="left:34%;top:62%" data-t="n5">ERP / Accounting</div>
+
+      <div class="node pay" style="left:18%;top:68%"></div>
+      <div class="label" style="left:18%;top:68%" data-t="n6">Fintech</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 data-t="liveStats">Live Network Signals</h2>
+    <div class="grid">
+      <div class="metric">
+        <strong id="m1">128</strong>
+        <span data-t="m1t">Signal Paths</span>
+      </div>
+      <div class="metric">
+        <strong id="m2">42</strong>
+        <span data-t="m2t">Active Nodes</span>
+      </div>
+      <div class="metric">
+        <strong id="m3">17</strong>
+        <span data-t="m3t">Risk Alerts</span>
+      </div>
+      <div class="metric">
+        <strong id="m4">9</strong>
+        <span data-t="m4t">Macro Feeds</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 data-t="networkTable">Observed Network Layers</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th data-t="th1">Layer</th>
+          <th data-t="th2">Role</th>
+          <th data-t="th3">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-t="r1a">Institution Nodes</td>
+          <td data-t="r1b">Banks, fintech, ERP and insurance connections</td>
+          <td data-t="r1c">ACTIVE</td>
+        </tr>
+        <tr>
+          <td data-t="r2a">Signal Layer</td>
+          <td data-t="r2b">Behavioral, stress, fraud and macro signals</td>
+          <td data-t="r2c">ACTIVE</td>
+        </tr>
+        <tr>
+          <td data-t="r3a">Intelligence Layer</td>
+          <td data-t="r3b">Risk engines and lens distribution</td>
+          <td data-t="r3c">RUNNING</td>
+        </tr>
+        <tr>
+          <td data-t="r4a">Observatory Layer</td>
+          <td data-t="r4b">Financial telescope and systemic monitoring</td>
+          <td data-t="r4c">ACTIVE</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer data-t="footer">ZENTRA Global Financial Network</footer>
+</div>
+
+<script>
+const translations = {
+  en:{
+    title:"Global Financial Network",
+    intro:"ZENTRA connects behavioral signals, institutions, payment rails and macro intelligence into a financial network layer.",
+    networkMap:"Network Topology",
+    n1:"Banks",
+    n2:"Payment Rails",
+    n3:"Risk Engines",
+    n4:"Financial Telescope",
+    n5:"ERP / Accounting",
+    n6:"Fintech",
+    liveStats:"Live Network Signals",
+    m1t:"Signal Paths",
+    m2t:"Active Nodes",
+    m3t:"Risk Alerts",
+    m4t:"Macro Feeds",
+    networkTable:"Observed Network Layers",
+    th1:"Layer",
+    th2:"Role",
+    th3:"Status",
+    r1a:"Institution Nodes",
+    r1b:"Banks, fintech, ERP and insurance connections",
+    r1c:"ACTIVE",
+    r2a:"Signal Layer",
+    r2b:"Behavioral, stress, fraud and macro signals",
+    r2c:"ACTIVE",
+    r3a:"Intelligence Layer",
+    r3b:"Risk engines and lens distribution",
+    r3c:"RUNNING",
+    r4a:"Observatory Layer",
+    r4b:"Financial telescope and systemic monitoring",
+    r4c:"ACTIVE",
+    footer:"ZENTRA Global Financial Network"
+  },
+  tr:{
+    title:"Küresel Finans Ağı",
+    intro:"ZENTRA davranışsal sinyalleri, kurumları, ödeme hatlarını ve makro zekâyı finansal bir ağ katmanında birleştirir.",
+    networkMap:"Ağ Topolojisi",
+    n1:"Bankalar",
+    n2:"Ödeme Hatları",
+    n3:"Risk Motorları",
+    n4:"Finans Teleskobu",
+    n5:"ERP / Muhasebe",
+    n6:"Fintech",
+    liveStats:"Canlı Ağ Sinyalleri",
+    m1t:"Sinyal Yolu",
+    m2t:"Aktif Düğüm",
+    m3t:"Risk Uyarısı",
+    m4t:"Makro Akış",
+    networkTable:"Gözlenen Ağ Katmanları",
+    th1:"Katman",
+    th2:"Rol",
+    th3:"Durum",
+    r1a:"Kurum Düğümleri",
+    r1b:"Banka, fintech, ERP ve sigorta bağlantıları",
+    r1c:"AKTİF",
+    r2a:"Sinyal Katmanı",
+    r2b:"Davranış, stres, fraud ve makro sinyaller",
+    r2c:"AKTİF",
+    r3a:"Zekâ Katmanı",
+    r3b:"Risk motorları ve lens dağıtımı",
+    r3c:"ÇALIŞIYOR",
+    r4a:"Gözlem Katmanı",
+    r4b:"Finans teleskobu ve sistemik izleme",
+    r4c:"AKTİF",
+    footer:"ZENTRA Küresel Finans Ağı"
+  }
+};
+
+function setLang(lang){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el=>{
+    const key = el.getAttribute("data-t");
+    el.textContent = translations[lang][key];
+  });
+}
+
+function drawLine(container, x1, y1, x2, y2){
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const length = Math.sqrt(dx*dx + dy*dy);
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+  const line = document.createElement("div");
+  line.className = "line";
+  line.style.left = x1 + "%";
+  line.style.top = y1 + "%";
+  line.style.width = length + "%";
+  line.style.transform = "rotate(" + angle + "deg)";
+  container.appendChild(line);
+}
+
+const net = document.getElementById("network");
+drawLine(net, 22, 26, 46, 22);
+drawLine(net, 46, 22, 56, 36);
+drawLine(net, 56, 36, 72, 56);
+drawLine(net, 34, 62, 56, 36);
+drawLine(net, 18, 68, 34, 62);
+drawLine(net, 18, 68, 56, 36);
+
+function rnd(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
+function tick(){
+  document.getElementById("m1").textContent = rnd(120,180);
+  document.getElementById("m2").textContent = rnd(35,60);
+  document.getElementById("m3").textContent = rnd(10,28);
+  document.getElementById("m4").textContent = rnd(6,14);
+}
+tick();
+setInterval(tick, 3200);
+</script>
+
+</body>
+</html>

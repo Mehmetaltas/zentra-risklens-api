@@ -1,60 +1,69 @@
 <section class="card">
 
-<h2>System Status</h2>
+<h2>Financial Operating System</h2>
 
 <p>
-Live operational status of ZENTRA financial infrastructure components.
+ZENTRA functions as a behavioral financial operating system.
+It observes signals, processes risk through engines,
+and distributes intelligence through institutional lenses.
 </p>
 
 <div class="grid">
 
 <div class="metric">
-<strong id="risklensStatus">ONLINE</strong>
-RiskLens API
+<strong>DATA</strong>
+ERP Signals<br>
+Payment Rails<br>
+Banking Data<br>
+Macro Indicators
 </div>
 
 <div class="metric">
-<strong id="stressStatus">ONLINE</strong>
-Credit Stress Engine
+<strong>ENGINES</strong>
+Behavior Engine<br>
+Risk Engine<br>
+Stress Engine<br>
+Security Engine
 </div>
 
 <div class="metric">
-<strong id="macroStatus">ACTIVE</strong>
-Macro Intelligence Feed
+<strong>LENSES</strong>
+Banking Lens<br>
+SME Lens<br>
+Insurance Lens<br>
+Funds Lens
 </div>
 
 <div class="metric">
-<strong id="securityStatus">ACTIVE</strong>
-Security Monitoring
+<strong>DECISIONS</strong>
+Risk Score<br>
+Policy Signal<br>
+Fraud Alert<br>
+Stress Warning
 </div>
+
+<div class="metric">
+<strong>MARKET</strong>
+Financial Institutions<br>
+Fintech Platforms<br>
+Payment Networks<br>
+Capital Markets
+</div>
+
+</div>
+
+<div class="code">
+
+DATA SIGNALS
+↓
+RISK ENGINES
+↓
+LENS MARKETPLACE
+↓
+FINANCIAL INTELLIGENCE
+↓
+FINANCIAL TELESCOPE
 
 </div>
 
 </section>
-
-
-<script>
-
-function updateStatus(){
-
-const states = ["ONLINE","ACTIVE","RUNNING"]
-
-document.getElementById("risklensStatus").innerText =
-states[Math.floor(Math.random()*states.length)]
-
-document.getElementById("stressStatus").innerText =
-states[Math.floor(Math.random()*states.length)]
-
-document.getElementById("macroStatus").innerText =
-states[Math.floor(Math.random()*states.length)]
-
-document.getElementById("securityStatus").innerText =
-states[Math.floor(Math.random()*states.length)]
-
-}
-
-updateStatus()
-
-setInterval(updateStatus,6000)
-
-</script>

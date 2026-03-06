@@ -17,7 +17,6 @@
 --muted:#99a6c6;
 --cyan:#00d4ff;
 --green:#19e68c;
---gold:#f5b942;
 --red:#ff4d6d;
 }
 
@@ -42,20 +41,9 @@ padding:22px;
 margin-bottom:20px;
 }
 
-h1{
-color:var(--cyan);
-margin:0 0 10px;
-font-size:34px;
-}
-
-h2{
-color:var(--green);
-margin:0 0 10px;
-}
-
-p{
-color:var(--muted);
-}
+h1{color:var(--cyan);margin:0 0 10px;font-size:34px}
+h2{color:var(--green);margin:0 0 10px}
+p{color:var(--muted)}
 
 .grid{
 display:grid;
@@ -115,6 +103,21 @@ border-bottom:1px solid rgba(255,255,255,.08);
 font-size:13px;
 }
 
+.lang{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+.lang button{
+background:#0a1122;
+border:1px solid var(--line);
+color:white;
+padding:6px 10px;
+margin-left:6px;
+cursor:pointer;
+}
+
 footer{
 text-align:center;
 color:#99a6c6;
@@ -127,22 +130,26 @@ font-size:12px;
 
 <body>
 
+<div class="lang">
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+</div>
+
 <div class="wrap">
 
 <section class="card">
 
-<h1>Financial Telescope</h1>
+<h1 data-t="title">Financial Telescope</h1>
 
-<p>
-The ZENTRA Financial Telescope observes financial behavior across markets,
-institutions and macro signals to detect systemic risk drift.
+<p data-t="desc">
+ZENTRA observes financial behavior across markets, institutions and macro signals to detect systemic risk drift.
 </p>
 
 </section>
 
 <section class="card">
 
-<h2>Global Risk Map</h2>
+<h2 data-t="map">Global Risk Map</h2>
 
 <div class="map">
 
@@ -157,28 +164,28 @@ institutions and macro signals to detect systemic risk drift.
 
 <section class="card">
 
-<h2>Systemic Risk Signals</h2>
+<h2 data-t="signals">Systemic Risk Signals</h2>
 
 <div class="grid">
 
 <div class="metric">
 <strong id="riskScore">62</strong>
-Systemic Risk
+<span data-t="risk">Systemic Risk</span>
 </div>
 
 <div class="metric">
 <strong id="stress">54</strong>
-Liquidity Stress
+<span data-t="stress">Liquidity Stress</span>
 </div>
 
 <div class="metric">
 <strong id="drift">MEDIUM</strong>
-Behavior Drift
+<span data-t="drift">Behavior Drift</span>
 </div>
 
 <div class="metric">
 <strong id="macro">ACTIVE</strong>
-Macro Signals
+<span data-t="macro">Macro Signals</span>
 </div>
 
 </div>
@@ -187,28 +194,28 @@ Macro Signals
 
 <section class="card">
 
-<h2>Observed Regions</h2>
+<h2 data-t="regions">Observed Regions</h2>
 
 <table class="table">
 
 <tr>
 <td>USA</td>
-<td>Market Stress — Medium</td>
+<td data-t="us">Market Stress — Medium</td>
 </tr>
 
 <tr>
 <td>Europe</td>
-<td>Liquidity Risk — Moderate</td>
+<td data-t="eu">Liquidity Risk — Moderate</td>
 </tr>
 
 <tr>
 <td>Türkiye</td>
-<td>Behavior Drift — Rising</td>
+<td data-t="trr">Behavior Drift — Rising</td>
 </tr>
 
 <tr>
 <td>Emerging Markets</td>
-<td>Systemic Stress — High</td>
+<td data-t="em">Systemic Stress — High</td>
 </tr>
 
 </table>
@@ -217,29 +224,14 @@ Macro Signals
 
 <section class="card">
 
-<h2>Macro References</h2>
+<h2 data-t="macroref">Macro References</h2>
 
 <div class="grid">
 
-<div class="metric">
-<strong>IMF</strong>
-Macro Data
-</div>
-
-<div class="metric">
-<strong>BIS</strong>
-Banking Signals
-</div>
-
-<div class="metric">
-<strong>ECB</strong>
-Liquidity
-</div>
-
-<div class="metric">
-<strong>TCMB</strong>
-Regional Policy
-</div>
+<div class="metric"><strong>IMF</strong></div>
+<div class="metric"><strong>BIS</strong></div>
+<div class="metric"><strong>ECB</strong></div>
+<div class="metric"><strong>TCMB</strong></div>
 
 </div>
 
@@ -247,54 +239,82 @@ Regional Policy
 
 <section class="card">
 
-<h2>Live Risk Feed</h2>
+<h2 data-t="riskfeed">Live Risk Feed</h2>
 
 <canvas id="riskChart" height="100"></canvas>
 
 </section>
 
-<footer>
-
-ZENTRA Financial Telescope  
-Behavioral Financial Observatory
-
+<footer data-t="footer">
+ZENTRA Financial Telescope
 </footer>
 
 </div>
 
 <script>
 
-const ctx = document.getElementById('riskChart')
+const translations={
+en:{
+title:"Financial Telescope",
+desc:"ZENTRA observes financial behavior across markets, institutions and macro signals to detect systemic risk drift.",
+map:"Global Risk Map",
+signals:"Systemic Risk Signals",
+risk:"Systemic Risk",
+stress:"Liquidity Stress",
+drift:"Behavior Drift",
+macro:"Macro Signals",
+regions:"Observed Regions",
+us:"Market Stress — Medium",
+eu:"Liquidity Risk — Moderate",
+trr:"Behavior Drift — Rising",
+em:"Systemic Stress — High",
+macroref:"Macro References",
+riskfeed:"Live Risk Feed",
+footer:"ZENTRA Financial Telescope"
+},
+
+tr:{
+title:"Finans Teleskobu",
+desc:"ZENTRA finansal davranışı, kurumları ve makro sinyalleri gözlemleyerek sistemik risk sürüklenmesini tespit eder.",
+map:"Küresel Risk Haritası",
+signals:"Sistemik Risk Sinyalleri",
+risk:"Sistemik Risk",
+stress:"Likidite Baskısı",
+drift:"Davranış Sürüklenmesi",
+macro:"Makro Sinyaller",
+regions:"Gözlenen Bölgeler",
+us:"Piyasa Stresi — Orta",
+eu:"Likidite Riski — Orta",
+trr:"Davranış Sürüklenmesi — Artıyor",
+em:"Sistemik Stres — Yüksek",
+macroref:"Makro Referanslar",
+riskfeed:"Canlı Risk Akışı",
+footer:"ZENTRA Finans Teleskobu"
+}
+}
+
+function setLang(lang){
+document.documentElement.lang=lang
+document.querySelectorAll("[data-t]").forEach(el=>{
+let key=el.getAttribute("data-t")
+el.innerText=translations[lang][key]
+})
+}
+
+const ctx=document.getElementById('riskChart')
 
 new Chart(ctx,{
 type:'line',
 data:{
 labels:["Jan","Feb","Mar","Apr","May","Jun"],
 datasets:[
-{
-label:"Global Risk",
-data:[40,48,55,58,63,68],
-borderColor:"#00d4ff",
-tension:.3
-},
-{
-label:"Liquidity Stress",
-data:[30,34,39,45,49,52],
-borderColor:"#ff4d6d",
-tension:.3
-}
+{label:"Risk",data:[40,48,55,58,63,68],borderColor:"#00d4ff"},
+{label:"Stress",data:[30,34,39,45,49,52],borderColor:"#ff4d6d"}
 ]
-},
-options:{
-plugins:{legend:{labels:{color:"#eaf2ff"}}},
-scales:{
-x:{ticks:{color:"#99a6c6"}},
-y:{ticks:{color:"#99a6c6"}}
-}
 }
 })
 
 </script>
 
 </body>
-  </html>
+</html>

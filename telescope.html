@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Financial Telescope</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050814;
+color:#eaf2ff;
+}
+
+.wrap{
+max-width:1000px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:#0c1228;
+border:1px solid #1e2a55;
+border-radius:14px;
+padding:24px;
+margin-bottom:20px;
+}
+
+h1{color:#00d4ff}
+h2{color:#19e68c}
+
+p{
+color:#99a6c6;
+line-height:1.6;
+}
+
+.signal{
+background:#08101f;
+border:1px solid #1e2a55;
+border-radius:10px;
+padding:16px;
+margin-top:10px;
+}
+
+.lang{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+.lang button{
+margin-left:6px;
+padding:6px 10px;
+border:none;
+background:#00d4ff;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="lang">
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+</div>
+
+<div class="wrap">
+
+<div class="card">
+
+<h1 data-t="title">Financial Telescope</h1>
+
+<p data-t="intro">
+
+ZENTRA observes macro financial signals and behavioral drift
+across markets to detect systemic financial pressure.
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2 data-t="signals">Observed Signals</h2>
+
+<div class="signal">SME Payment Drift</div>
+
+<div class="signal">Liquidity Stress</div>
+
+<div class="signal">Credit Pressure</div>
+
+<div class="signal">Market Volatility</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 data-t="sources">Macro Sources</h2>
+
+<div class="signal">TCMB</div>
+
+<div class="signal">IMF</div>
+
+<div class="signal">BIS</div>
+
+<div class="signal">ECB</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const text = {
+
+en:{
+title:"Financial Telescope",
+intro:"ZENTRA observes macro financial signals and behavioral drift across markets to detect systemic financial pressure.",
+signals:"Observed Signals",
+sources:"Macro Sources"
+},
+
+tr:{
+title:"Finans Teleskobu",
+intro:"ZENTRA piyasalar genelinde makro finansal sinyalleri ve davranışsal sürüklenmeyi gözlemleyerek sistemik baskıyı tespit eder.",
+signals:"Gözlenen Sinyaller",
+sources:"Makro Kaynaklar"
+}
+
+}
+
+function setLang(l){
+
+document.querySelectorAll("[data-t]").forEach(el=>{
+const key = el.dataset.t
+el.innerText = text[l][key]
+})
+
+}
+
+</script>
+
+</body>
+</html>

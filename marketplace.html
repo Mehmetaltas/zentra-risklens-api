@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>ZENTRA Lens Marketplace</title>
 
+<meta name="description" content="ZENTRA modular financial intelligence marketplace">
+
 <style>
+
 :root{
 --bg:#050814;
 --card:#0c1228;
@@ -18,601 +23,350 @@
 --red:#ff4d6d;
 --violet:#7c3aed;
 }
-*{box-sizing:border-box}
+
 body{
 margin:0;
-background:
-radial-gradient(900px 500px at 10% 0%, rgba(0,212,255,.10), transparent 60%),
-radial-gradient(800px 450px at 90% 10%, rgba(124,58,237,.10), transparent 60%),
-var(--bg);
+font-family:Arial;
+background:var(--bg);
 color:var(--text);
-font-family:Arial,sans-serif;
 }
+
 .topbar{
 background:#060b1c;
 border-bottom:1px solid var(--line);
+position:sticky;
+top:0;
 }
+
 .topin{
-max-width:1180px;
+max-width:1100px;
 margin:auto;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:14px 20px;
-gap:12px;
+padding:14px;
 flex-wrap:wrap;
 }
+
 .logo{
 width:32px;
 height:32px;
 border-radius:10px;
 background:linear-gradient(135deg,var(--violet),var(--cyan));
 }
+
 nav{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
-align-items:center;
 }
+
 nav a{
-color:#fff;
+color:white;
 text-decoration:none;
 font-size:13px;
 }
-.lang button{
-border:1px solid var(--line);
-background:#0a1122;
-color:#fff;
-padding:6px 10px;
-border-radius:8px;
-cursor:pointer;
-}
-.lang button.active{
-background:var(--cyan);
-color:#000;
-}
+
 .wrap{
-max-width:1180px;
+max-width:1100px;
 margin:auto;
-padding:24px 20px 60px;
+padding:24px;
 }
+
 .card{
 background:var(--card);
 border:1px solid var(--line);
-border-radius:16px;
+border-radius:14px;
 padding:20px;
 margin-bottom:20px;
 }
-.hero{
-background:linear-gradient(180deg,#0d1430,#070b18);
-}
+
 h1{
-margin:0 0 10px;
 color:var(--cyan);
-font-size:34px;
 }
-h2{
-margin:0 0 10px;
-color:var(--green);
-}
-p{
-margin:0;
-color:var(--muted);
-line-height:1.6;
-}
-.filters{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-top:16px;
-}
-.filter-btn{
-border:1px solid var(--line);
-background:#0a1122;
-color:#fff;
-padding:8px 12px;
-border-radius:999px;
-cursor:pointer;
-font-size:12px;
-}
-.filter-btn.active{
-background:var(--cyan);
-color:#000;
-border-color:transparent;
-}
-.layout{
-display:grid;
-grid-template-columns:1.3fr .9fr;
-gap:20px;
-margin-top:18px;
-}
-.cards{
+
+.grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:16px;
-}
-.lens{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:14px;
-padding:16px;
-cursor:pointer;
-transition:.18s ease;
-}
-.lens:hover{
-transform:translateY(-2px);
-border-color:#2a4ea0;
-}
-.lens.active{
-border-color:var(--cyan);
-box-shadow:0 0 0 1px rgba(0,212,255,.25) inset;
-}
-.lens h3{
-margin:0 0 8px;
-font-size:16px;
-}
-.lens p{
-font-size:13px;
-min-height:54px;
-}
-.meta{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:8px;
-margin-top:12px;
-font-size:11px;
-color:var(--muted);
-}
-.tag{
-display:inline-block;
-padding:4px 8px;
-border-radius:999px;
-font-size:11px;
-font-weight:bold;
-}
-.live{background:rgba(25,230,140,.14);color:var(--green)}
-.locked{background:rgba(245,185,66,.14);color:var(--gold)}
-.soon{background:rgba(255,77,109,.14);color:var(--red)}
-.side{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:14px;
-padding:16px;
-height:fit-content;
-position:sticky;
-top:90px;
-}
-.side h3{
-margin:0 0 8px;
-font-size:18px;
-color:#fff;
-}
-.kv{
-display:grid;
-grid-template-columns:120px 1fr;
-gap:8px;
-font-size:12px;
-margin-top:14px;
-}
-.kv div{
-padding:8px 0;
-border-bottom:1px solid rgba(255,255,255,.06);
-}
-.code{
-background:#07101f;
-border:1px solid var(--line);
-border-radius:10px;
-padding:12px;
-font-family:monospace;
-font-size:12px;
-white-space:pre-wrap;
-margin-top:14px;
-}
-.metric-row{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px;
 margin-top:16px;
 }
+
 .metric{
-text-align:center;
-padding:16px;
 background:#08101f;
 border:1px solid var(--line);
 border-radius:12px;
+padding:18px;
+text-align:center;
 }
+
 .metric strong{
 display:block;
-font-size:24px;
-color:var(--cyan);
+font-size:20px;
+color:var(--green);
 margin-bottom:6px;
 }
+
+.tag{
+display:inline-block;
+font-size:11px;
+padding:4px 8px;
+border-radius:999px;
+margin-top:10px;
+}
+
+.live{background:rgba(25,230,140,.14);color:var(--green)}
+.lock{background:rgba(245,185,66,.14);color:var(--gold)}
+.soon{background:rgba(255,77,109,.14);color:var(--red)}
+
 footer{
 text-align:center;
 color:#99a6c6;
 font-size:12px;
 margin-top:30px;
-padding-top:18px;
-border-top:1px solid rgba(255,255,255,.08);
 }
-@media (max-width:900px){
-.layout{grid-template-columns:1fr}
-.side{position:static}
-.metric-row{grid-template-columns:repeat(2,1fr)}
-}
+
 </style>
+
 </head>
+
 <body>
 
 <div class="topbar">
-  <div class="topin">
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="logo"></div>
-      <strong>ZENTRA</strong>
-    </div>
 
-    <nav>
-      <a href="index.html" data-t="navHome">Home</a>
-      <a href="platform.html" data-t="navPlatform">Platform</a>
-      <a href="developer.html" data-t="navDev">Developers</a>
-      <a href="investor.html" data-t="navInv">Investor</a>
-      <a href="telescope.html" data-t="navTel">Telescope</a>
-      <a href="marketplace.html" data-t="navMarket">Marketplace</a>
+<div class="topin">
 
-      <div class="lang">
-        <button id="en" class="active">EN</button>
-        <button id="tr">TR</button>
-      </div>
-    </nav>
-  </div>
+<div style="display:flex;gap:10px;align-items:center">
+<div class="logo"></div>
+<strong>ZENTRA</strong>
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="developer.html">Developers</a>
+<a href="investor.html">Investor</a>
+<a href="marketplace.html">Marketplace</a>
+<a href="telescope.html">Telescope</a>
+<a href="use-cases.html">Use Cases</a>
+<a href="trust.html">Trust</a>
+
+</nav>
+
+</div>
+
 </div>
 
 <div class="wrap">
 
-  <section class="card hero">
-    <h1 data-t="title">Lens Marketplace</h1>
-    <p data-t="intro">
-      ZENTRA distributes modular financial intelligence through institution-specific lenses. Each lens packages signals, scoring logic and actionable outputs for a distinct market need.
-    </p>
+<section class="card">
 
-    <div class="metric-row">
-      <div class="metric"><strong>12</strong><span data-t="m1">Lens Modules</span></div>
-      <div class="metric"><strong>2</strong><span data-t="m2">Live Engines</span></div>
-      <div class="metric"><strong>10+</strong><span data-t="m3">Institution Types</span></div>
-      <div class="metric"><strong>API</strong><span data-t="m4">Licensable Delivery</span></div>
-    </div>
-  </section>
+<h1>Lens Marketplace</h1>
 
-  <section class="card">
-    <h2 data-t="filterTitle">Lens Categories</h2>
+<p>
 
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all" data-t="fAll">All</button>
-      <button class="filter-btn" data-filter="banking" data-t="fBank">Banking</button>
-      <button class="filter-btn" data-filter="sme" data-t="fSme">SME</button>
-      <button class="filter-btn" data-filter="erp" data-t="fErp">ERP</button>
-      <button class="filter-btn" data-filter="insurance" data-t="fIns">Insurance</button>
-      <button class="filter-btn" data-filter="funds" data-t="fFunds">Funds</button>
-      <button class="filter-btn" data-filter="macro" data-t="fMacro">Macro</button>
-    </div>
+ZENTRA distributes modular financial intelligence through institution-specific lenses.
 
-    <div class="layout">
-      <div class="cards" id="lensGrid"></div>
+Each lens analyzes behavioral signals from a different financial environment.
 
-      <aside class="side">
-        <h3 id="detailTitle">RiskLens</h3>
-        <p id="detailDesc"></p>
+</p>
 
-        <div class="kv">
-          <div data-t="dStatus">Status</div><div id="detailStatus"></div>
-          <div data-t="dCategory">Category</div><div id="detailCategory"></div>
-          <div data-t="dTarget">Target</div><div id="detailTarget"></div>
-          <div data-t="dOutput">Output</div><div id="detailOutput"></div>
-        </div>
+</section>
 
-        <div class="code" id="detailCode"></div>
-      </aside>
-    </div>
-  </section>
+<section class="card">
 
-  <footer data-t="footer">ZENTRA Lens Marketplace</footer>
+<h2>Core Lenses</h2>
+
+<div class="grid">
+
+<div class="metric">
+
+<strong>RiskLens</strong>
+
+<p>
+Behavioral financial risk scoring
+</p>
+
+<div class="tag live">
+LIVE
+</div>
 
 </div>
 
-<script>
-const lenses = [
-  {
-    id:"risklens",
-    category:"banking",
-    status:"live",
-    title_en:"RiskLens",
-    title_tr:"RiskLens",
-    desc_en:"Core behavioral risk scoring infrastructure for institutional financial analysis.",
-    desc_tr:"Kurumsal finansal analiz için çekirdek davranışsal risk skorlama altyapısı.",
-    target_en:"Banks / Fintech",
-    target_tr:"Bankalar / Fintech",
-    output_en:"Risk score, band, action",
-    output_tr:"Risk skoru, bant, aksiyon",
-    code:`{
-  "risk_score": 62,
-  "risk_band": "MID_RISK",
-  "action": "monitor"
-}`
-  },
-  {
-    id:"creditstress",
-    category:"sme",
-    status:"live",
-    title_en:"Credit Stress",
-    title_tr:"Credit Stress",
-    desc_en:"Installment pressure and liquidity stress modelling for retail and SME cases.",
-    desc_tr:"Perakende ve KOBİ senaryoları için taksit baskısı ve likidite stresi modellemesi.",
-    target_en:"Lenders / SME",
-    target_tr:"Kredi Verenler / KOBİ",
-    output_en:"Stress pressure, affordability",
-    output_tr:"Stres baskısı, karşılanabilirlik",
-    code:`{
-  "stress_score": 58,
-  "installment_pressure": "elevated",
-  "action": "tighten_terms"
-}`
-  },
-  {
-    id:"banking",
-    category:"banking",
-    status:"locked",
-    title_en:"Banking Lens",
-    title_tr:"Bankacılık Lensi",
-    desc_en:"Credit behavior and repayment monitoring for banking customers.",
-    desc_tr:"Bankacılık müşterileri için kredi davranışı ve geri ödeme izleme.",
-    target_en:"Commercial Banks",
-    target_tr:"Ticari Bankalar",
-    output_en:"Repayment drift, credit posture",
-    output_tr:"Geri ödeme sürüklenmesi, kredi duruşu",
-    code:`{
-  "repayment_drift": "low",
-  "credit_posture": "stable",
-  "portfolio_alert": false
-}`
-  },
-  {
-    id:"sme",
-    category:"sme",
-    status:"locked",
-    title_en:"SME Lens",
-    title_tr:"KOBİ Lensi",
-    desc_en:"Cashflow stress, invoice delay and working capital pressure detection.",
-    desc_tr:"Nakit akış stresi, fatura gecikmesi ve işletme sermayesi baskısı tespiti.",
-    target_en:"SME Finance",
-    target_tr:"KOBİ Finansmanı",
-    output_en:"Cashflow stress, delay signal",
-    output_tr:"Nakit akış stresi, gecikme sinyali",
-    code:`{
-  "cashflow_stress": "medium",
-  "invoice_delay": "rising",
-  "working_capital_pressure": true
-}`
-  },
-  {
-    id:"erp",
-    category:"erp",
-    status:"locked",
-    title_en:"ERP Lens",
-    title_tr:"ERP Lensi",
-    desc_en:"Payables, receivables and financial health signals inside accounting environments.",
-    desc_tr:"Muhasebe ortamları içinde borçlar, alacaklar ve finansal sağlık sinyalleri.",
-    target_en:"ERP / Accounting",
-    target_tr:"ERP / Muhasebe",
-    output_en:"Payables pressure, turnover speed",
-    output_tr:"Borç baskısı, devir hızı",
-    code:`{
-  "payables_pressure": "moderate",
-  "receivable_turnover": "slow",
-  "risk_score": 61
-}`
-  },
-  {
-    id:"insurance",
-    category:"insurance",
-    status:"soon",
-    title_en:"Insurance Lens",
-    title_tr:"Sigorta Lensi",
-    desc_en:"Claims anomaly and behavioral risk observation for insurance operations.",
-    desc_tr:"Sigorta operasyonları için hasar anomalisi ve davranışsal risk gözlemi.",
-    target_en:"Insurance",
-    target_tr:"Sigorta",
-    output_en:"Claim anomaly, misuse signal",
-    output_tr:"Hasar anomalisi, kötüye kullanım sinyali",
-    code:`{
-  "claim_anomaly": "elevated",
-  "behavior_signal": "unusual_pattern",
-  "action": "review"
-}`
-  },
-  {
-    id:"funds",
-    category:"funds",
-    status:"soon",
-    title_en:"Funds Lens",
-    title_tr:"Fon Lensi",
-    desc_en:"Portfolio stress and macro-linked exposure analytics for funds.",
-    desc_tr:"Fonlar için portföy stresi ve makro bağlantılı maruziyet analitiği.",
-    target_en:"Funds / Desks",
-    target_tr:"Fonlar / Masalar",
-    output_en:"Exposure map, macro stress",
-    output_tr:"Maruziyet haritası, makro stres",
-    code:`{
-  "macro_exposure": "elevated",
-  "portfolio_stress": "medium",
-  "hedge_attention": true
-}`
-  },
-  {
-    id:"macro",
-    category:"macro",
-    status:"soon",
-    title_en:"Macro Risk Lens",
-    title_tr:"Makro Risk Lensi",
-    desc_en:"Systemic stress, regional pressure and cross-market drift observation.",
-    desc_tr:"Sistemik stres, bölgesel baskı ve piyasalar arası sürüklenme gözlemi.",
-    target_en:"Macro Observers",
-    target_tr:"Makro Gözlemciler",
-    output_en:"Regional pressure, stress index",
-    output_tr:"Bölgesel baskı, stres endeksi",
-    code:`{
-  "regional_pressure": "rising",
-  "systemic_index": 0.67,
-  "observation_mode": "active"
-}`
-  }
-];
+<div class="metric">
 
-const ui = {
-  en:{
-    navHome:"Home",
-    navPlatform:"Platform",
-    navDev:"Developers",
-    navInv:"Investor",
-    navTel:"Telescope",
-    navMarket:"Marketplace",
-    title:"Lens Marketplace",
-    intro:"ZENTRA distributes modular financial intelligence through institution-specific lenses. Each lens packages signals, scoring logic and actionable outputs for a distinct market need.",
-    m1:"Lens Modules",
-    m2:"Live Engines",
-    m3:"Institution Types",
-    m4:"Licensable Delivery",
-    filterTitle:"Lens Categories",
-    fAll:"All",
-    fBank:"Banking",
-    fSme:"SME",
-    fErp:"ERP",
-    fIns:"Insurance",
-    fFunds:"Funds",
-    fMacro:"Macro",
-    dStatus:"Status",
-    dCategory:"Category",
-    dTarget:"Target",
-    dOutput:"Output",
-    footer:"ZENTRA Lens Marketplace",
-    status:{live:"LIVE", locked:"LOCKED", soon:"COMING SOON"},
-    category:{banking:"Banking", sme:"SME", erp:"ERP", insurance:"Insurance", funds:"Funds", macro:"Macro"}
-  },
-  tr:{
-    navHome:"Ana Sayfa",
-    navPlatform:"Platform",
-    navDev:"Geliştiriciler",
-    navInv:"Yatırımcı",
-    navTel:"Teleskop",
-    navMarket:"Marketplace",
-    title:"Lens Pazaryeri",
-    intro:"ZENTRA kuruma özel lensler üzerinden modüler finansal zekâ dağıtır. Her lens belirli bir pazar ihtiyacı için sinyalleri, skorlama mantığını ve aksiyon çıktısını paketler.",
-    m1:"Lens Modülü",
-    m2:"Canlı Motor",
-    m3:"Kurum Tipi",
-    m4:"Lisanslanabilir Dağıtım",
-    filterTitle:"Lens Kategorileri",
-    fAll:"Tümü",
-    fBank:"Bankacılık",
-    fSme:"KOBİ",
-    fErp:"ERP",
-    fIns:"Sigorta",
-    fFunds:"Fonlar",
-    fMacro:"Makro",
-    dStatus:"Durum",
-    dCategory:"Kategori",
-    dTarget:"Hedef",
-    dOutput:"Çıktı",
-    footer:"ZENTRA Lens Pazaryeri",
-    status:{live:"CANLI", locked:"KİLİTLİ", soon:"YAKINDA"},
-    category:{banking:"Bankacılık", sme:"KOBİ", erp:"ERP", insurance:"Sigorta", funds:"Fonlar", macro:"Makro"}
-  }
-};
+<strong>Credit Stress</strong>
 
-let currentLang = "en";
-let currentFilter = "all";
-let currentLensId = "risklens";
+<p>
+Installment and liquidity stress analysis
+</p>
 
-function t(path){
-  return path.split(".").reduce((o,k)=>o && o[k], ui[currentLang]);
-}
+<div class="tag live">
+LIVE
+</div>
 
-function renderLenses(){
-  const grid = document.getElementById("lensGrid");
-  grid.innerHTML = "";
+</div>
 
-  lenses
-    .filter(l => currentFilter === "all" || l.category === currentFilter)
-    .forEach(l => {
-      const el = document.createElement("div");
-      el.className = "lens" + (l.id === currentLensId ? " active" : "");
-      el.onclick = () => {
-        currentLensId = l.id;
-        renderLenses();
-        renderDetail();
-      };
+</div>
 
-      const title = currentLang === "tr" ? l.title_tr : l.title_en;
-      const desc = currentLang === "tr" ? l.desc_tr : l.desc_en;
+</section>
 
-      el.innerHTML = `
-        <h3>${title}</h3>
-        <p>${desc}</p>
-        <div class="meta">
-          <span class="tag ${l.status}">${t("status."+l.status)}</span>
-          <span>${t("category."+l.category)}</span>
-        </div>
-      `;
-      grid.appendChild(el);
-    });
+<section class="card">
 
-  if(!lenses.find(l=>l.id===currentLensId && (currentFilter==="all" || l.category===currentFilter))){
-    const first = lenses.find(l=>currentFilter==="all" || l.category===currentFilter);
-    if(first) currentLensId = first.id;
-    renderDetail();
-    renderLenses();
-  }
-}
+<h2>Institution Lenses</h2>
 
-function renderDetail(){
-  const l = lenses.find(x=>x.id===currentLensId) || lenses[0];
-  document.getElementById("detailTitle").textContent = currentLang === "tr" ? l.title_tr : l.title_en;
-  document.getElementById("detailDesc").textContent = currentLang === "tr" ? l.desc_tr : l.desc_en;
-  document.getElementById("detailStatus").textContent = t("status."+l.status);
-  document.getElementById("detailCategory").textContent = t("category."+l.category);
-  document.getElementById("detailTarget").textContent = currentLang === "tr" ? l.target_tr : l.target_en;
-  document.getElementById("detailOutput").textContent = currentLang === "tr" ? l.output_tr : l.output_en;
-  document.getElementById("detailCode").textContent = l.code;
-}
+<div class="grid">
 
-function applyLang(lang){
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-t]").forEach(el=>{
-    const key = el.getAttribute("data-t");
-    if(ui[lang][key]) el.textContent = ui[lang][key];
-  });
-  document.getElementById("en").classList.toggle("active", lang==="en");
-  document.getElementById("tr").classList.toggle("active", lang==="tr");
-  renderLenses();
-  renderDetail();
-}
+<div class="metric">
 
-document.querySelectorAll(".filter-btn").forEach(btn=>{
-  btn.onclick = ()=>{
-    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    currentFilter = btn.dataset.filter;
-    renderLenses();
-    renderDetail();
-  };
-});
+<strong>Banking Lens</strong>
 
-document.getElementById("en").onclick = ()=>applyLang("en");
-document.getElementById("tr").onclick = ()=>applyLang("tr");
+<p>
+Credit and repayment behavior monitoring
+</p>
 
-applyLang("en");
-</script>
+<div class="tag lock">
+LOCKED
+</div>
+
+</div>
+
+<div class="metric">
+
+<strong>SME Lens</strong>
+
+<p>
+Cashflow and working capital stress detection
+</p>
+
+<div class="tag lock">
+LOCKED
+</div>
+
+</div>
+
+<div class="metric">
+
+<strong>ERP Lens</strong>
+
+<p>
+Invoice, payable and receivable signal layer
+</p>
+
+<div class="tag lock">
+LOCKED
+</div>
+
+</div>
+
+<div class="metric">
+
+<strong>POS Lens</strong>
+
+<p>
+Merchant transaction behavior analysis
+</p>
+
+<div class="tag lock">
+LOCKED
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Financial Ecosystem Lenses</h2>
+
+<div class="grid">
+
+<div class="metric">
+
+<strong>Insurance Lens</strong>
+
+<p>
+Claims behavior and anomaly scoring
+</p>
+
+<div class="tag soon">
+COMING SOON
+</div>
+
+</div>
+
+<div class="metric">
+
+<strong>Funds Lens</strong>
+
+<p>
+Portfolio stress and macro exposure analysis
+</p>
+
+<div class="tag soon">
+COMING SOON
+</div>
+
+</div>
+
+<div class="metric">
+
+<strong>Factoring Lens</strong>
+
+<p>
+Invoice delay and debtor risk monitoring
+</p>
+
+<div class="tag soon">
+COMING SOON
+</div>
+
+</div>
+
+<div class="metric">
+
+<strong>Digital Asset Lens</strong>
+
+<p>
+Wallet behavior and transaction risk signals
+</p>
+
+<div class="tag soon">
+COMING SOON
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Marketplace Logic</h2>
+
+<p>
+
+Institutions connect to ZENTRA infrastructure and activate the lenses
+relevant to their financial environment.
+
+This modular architecture allows ZENTRA to scale across
+multiple sectors of the financial system.
+
+</p>
+
+</section>
+
+<footer>
+
+ZENTRA Lens Marketplace
+
+</footer>
+
+</div>
 
 </body>
-  </html>
+</html>

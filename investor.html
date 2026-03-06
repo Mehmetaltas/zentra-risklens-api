@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Investor</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050814;
+color:#eaf2ff;
+}
+
+.wrap{
+max-width:1000px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:#0c1228;
+border:1px solid #1e2a55;
+border-radius:14px;
+padding:24px;
+margin-bottom:20px;
+}
+
+h1{color:#00d4ff}
+h2{color:#19e68c}
+
+p{
+color:#99a6c6;
+line-height:1.6;
+}
+
+.metric{
+background:#08101f;
+border:1px solid #1e2a55;
+border-radius:10px;
+padding:16px;
+margin-top:10px;
+}
+
+.lang{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+.lang button{
+margin-left:6px;
+padding:6px 10px;
+border:none;
+background:#00d4ff;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="lang">
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+</div>
+
+<div class="wrap">
+
+<div class="card">
+
+<h1 data-t="title">Investor Overview</h1>
+
+<p data-t="intro">
+ZENTRA is a behavioral financial infrastructure designed
+to observe systemic financial risk signals across institutions.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2 data-t="platform">Platform Components</h2>
+
+<div class="metric">RiskLens — Behavioral Risk Engine</div>
+
+<div class="metric">Credit Stress — Financial Stress Modeling</div>
+
+<div class="metric">Lens Marketplace — Institutional Intelligence</div>
+
+<div class="metric">Financial Telescope — Macro Risk Observation</div>
+
+</div>
+
+
+<div class="card">
+
+<h2 data-t="market">Market Coverage</h2>
+
+<p data-t="marketText">
+
+Banks  
+Fintech Platforms  
+Payment Networks  
+Insurance  
+Funds  
+Savings Finance  
+Digital Assets  
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2 data-t="contact">Contact</h2>
+
+<p>
+
+contact@zentrarisk.com
+
+</p>
+
+</div>
+
+</div>
+
+
+<script>
+
+const text = {
+
+en:{
+title:"Investor Overview",
+intro:"ZENTRA is a behavioral financial infrastructure designed to observe systemic financial risk signals across institutions.",
+platform:"Platform Components",
+market:"Market Coverage",
+marketText:"Banks, Fintech Platforms, Payment Networks, Insurance, Funds, Savings Finance, Digital Assets",
+contact:"Contact"
+},
+
+tr:{
+title:"Yatırımcı Genel Bakış",
+intro:"ZENTRA kurumlar genelinde sistemik finansal risk sinyallerini gözlemleyen davranışsal finans altyapısıdır.",
+platform:"Platform Bileşenleri",
+market:"Pazar Kapsamı",
+marketText:"Bankalar, Fintech platformları, ödeme ağları, sigorta, fonlar, tasarruf finans, dijital varlıklar",
+contact:"İletişim"
+}
+
+}
+
+function setLang(l){
+
+document.querySelectorAll("[data-t]").forEach(el=>{
+const key = el.dataset.t
+el.innerText = text[l][key]
+})
+
+}
+
+</script>
+
+</body>
+</html>

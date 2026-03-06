@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZENTRA Investor Overview</title>
+
+<title>ZENTRA Financial Infrastructure</title>
 
 <style>
 
@@ -15,8 +18,6 @@
 --muted:#99a6c6;
 --cyan:#00d4ff;
 --green:#19e68c;
---gold:#f5b942;
---red:#ff4d6d;
 }
 
 body{
@@ -26,28 +27,35 @@ color:var(--text);
 font-family:Arial;
 }
 
+.topbar{
+background:#060b1c;
+border-bottom:1px solid var(--line);
+padding:14px 20px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-right:16px;
+font-size:14px;
+}
+
 .wrap{
 max-width:1100px;
 margin:auto;
-padding:30px 20px 60px;
+padding:40px 20px;
 }
 
 .card{
 background:var(--card);
 border:1px solid var(--line);
-border-radius:16px;
+border-radius:14px;
 padding:22px;
 margin-bottom:20px;
 }
 
-h1{
+.hero h1{
 color:var(--cyan);
-margin:0 0 10px;
-font-size:34px;
-}
-
-h2{
-color:var(--green);
 margin:0 0 10px;
 }
 
@@ -56,11 +64,22 @@ color:var(--muted);
 line-height:1.6;
 }
 
+.btn{
+display:inline-block;
+background:#00d4ff;
+color:black;
+padding:10px 14px;
+border-radius:8px;
+text-decoration:none;
+margin-right:8px;
+margin-top:10px;
+}
+
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:16px;
-margin-top:16px;
+margin-top:20px;
 }
 
 .metric{
@@ -73,124 +92,108 @@ text-align:center;
 
 .metric strong{
 display:block;
-font-size:28px;
+font-size:26px;
 color:var(--cyan);
-}
-
-.tag{
-font-size:11px;
-padding:4px 8px;
-border-radius:6px;
-margin-left:6px;
-}
-
-.live{background:var(--green);color:black}
-.wait{background:var(--gold);color:black}
-
-.lang{
-position:fixed;
-top:20px;
-right:20px;
-}
-
-.lang button{
-background:#0a1122;
-border:1px solid var(--line);
-color:white;
-padding:6px 10px;
-margin-left:6px;
-cursor:pointer;
-}
-
-.table{
-width:100%;
-border-collapse:collapse;
-margin-top:12px;
-}
-
-.table td{
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,.08);
-font-size:13px;
 }
 
 footer{
 text-align:center;
 color:#99a6c6;
-margin-top:30px;
 font-size:12px;
+margin-top:40px;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="lang">
-<button onclick="setLang('en')">EN</button>
-<button onclick="setLang('tr')">TR</button>
+<div class="topbar">
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="platform.html">Platform</a>
+
+<a href="developer.html">Developers</a>
+
+<a href="investor.html">Investor</a>
+
+<a href="telescope.html">Telescope</a>
+
+<a href="global-map.html">Global Map</a>
+
+<a href="heatmap.html">Heatmap</a>
+
+<a href="architecture.html">Architecture</a>
+
+<a href="privacy.html">Privacy</a>
+
+<a href="#contact">Contact</a>
+
+</nav>
+
 </div>
+
 
 <div class="wrap">
 
-<section class="card">
 
-<h1 data-t="title">Investor Overview</h1>
+<section class="card hero">
 
-<p data-t="desc">
-ZENTRA is a behavioral financial infrastructure designed to detect systemic financial risk before traditional scoring systems react.
+<h1>Financial Telescope</h1>
+
+<p>
+
+ZENTRA observes financial behavior across institutions,
+detecting systemic risk drift and behavioral signals
+before traditional financial systems react.
+
 </p>
+
+<div>
+
+<a class="btn" href="platform.html">Platform</a>
+
+<a class="btn" href="developer.html">Developer Portal</a>
+
+<a class="btn" href="investor.html">Investor</a>
+
+<a class="btn" href="heatmap.html">Risk Heatmap</a>
+
+<a class="btn" href="global-map.html">Global Map</a>
+
+</div>
 
 </section>
 
 
 <section class="card">
 
-<h2 data-t="problem">The Problem</h2>
-
-<p data-t="problemtext">
-Traditional credit scoring systems analyze past financial data.  
-They fail to detect behavioral drift and systemic stress signals across institutions.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2 data-t="solution">ZENTRA Solution</h2>
-
-<p data-t="solutiontext">
-ZENTRA combines behavioral risk signals, macro indicators and institutional data to detect financial instability early.
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2 data-t="infrastructure">Infrastructure</h2>
+<h2>Platform Overview</h2>
 
 <div class="grid">
 
 <div class="metric">
 <strong>RiskLens</strong>
-<span class="tag live">LIVE</span>
+Behavioral Risk Engine
 </div>
 
 <div class="metric">
 <strong>Credit Stress</strong>
-<span class="tag live">LIVE</span>
-</div>
-
-<div class="metric">
-<strong>Lens Marketplace</strong>
-<span class="tag wait">NEXT</span>
+Installment Stress Modeling
 </div>
 
 <div class="metric">
 <strong>Financial Telescope</strong>
-<span class="tag wait">NEXT</span>
+Macro Risk Observation
+</div>
+
+<div class="metric">
+<strong>Lens Marketplace</strong>
+Institution Intelligence Modules
 </div>
 
 </div>
@@ -200,152 +203,55 @@ ZENTRA combines behavioral risk signals, macro indicators and institutional data
 
 <section class="card">
 
-<h2 data-t="market">Market Scope</h2>
+<h2>Observed Financial Signals</h2>
 
-<table class="table">
+<div class="grid">
 
-<tr>
-<td data-t="banks">Banks</td>
-<td>Credit risk monitoring</td>
-</tr>
+<div class="metric">TCMB</div>
 
-<tr>
-<td data-t="fintech">Fintech</td>
-<td>Payment behavior analytics</td>
-</tr>
+<div class="metric">IMF</div>
 
-<tr>
-<td data-t="erp">ERP Systems</td>
-<td>Corporate financial health signals</td>
-</tr>
+<div class="metric">BIS</div>
 
-<tr>
-<td data-t="funds">Funds</td>
-<td>Macro stress and portfolio risk</td>
-</tr>
+<div class="metric">ECB</div>
 
-<tr>
-<td data-t="insurance">Insurance</td>
-<td>Claims anomaly detection</td>
-</tr>
+<div class="metric">BIST</div>
 
-</table>
+<div class="metric">LSE</div>
+
+</div>
 
 </section>
 
 
-<section class="card">
+<section id="contact" class="card">
 
-<h2 data-t="scalability">Scalability</h2>
+<h2>Contact</h2>
 
-<p data-t="scaletext">
-ZENTRA is designed as a global financial intelligence infrastructure that can integrate with banks, fintech systems, ERP environments and macro financial data providers.
+<p>
+
+Dubai HQ — Strategic Partnerships
+
 </p>
 
-</section>
+<a class="btn" href="mailto:contact@zentrarisk.com">
 
+contact@zentrarisk.com
 
-<section class="card">
-
-<h2 data-t="revenue">Revenue Model</h2>
-
-<ul>
-
-<li data-t="rev1">API Licensing for fintech and institutions</li>
-
-<li data-t="rev2">Enterprise infrastructure licensing</li>
-
-<li data-t="rev3">Lens marketplace ecosystem</li>
-
-</ul>
+</a>
 
 </section>
 
 
-<section class="card">
+<footer>
 
-<h2 data-t="contact">Investor Contact</h2>
+ZENTRA Financial Intelligence Platform
 
-<p>contact@zentrarisk.com</p>
-
-</section>
-
-
-<footer data-t="footer">
-ZENTRA Investor Overview
 </footer>
+
 
 </div>
 
-<script>
-
-const translations={
-
-en:{
-title:"Investor Overview",
-desc:"ZENTRA is a behavioral financial infrastructure designed to detect systemic financial risk before traditional scoring systems react.",
-problem:"The Problem",
-problemtext:"Traditional credit scoring systems analyze past financial data. They fail to detect behavioral drift and systemic stress signals across institutions.",
-solution:"ZENTRA Solution",
-solutiontext:"ZENTRA combines behavioral risk signals, macro indicators and institutional data to detect financial instability early.",
-infrastructure:"Infrastructure",
-market:"Market Scope",
-banks:"Banks",
-fintech:"Fintech",
-erp:"ERP Systems",
-funds:"Funds",
-insurance:"Insurance",
-scalability:"Scalability",
-scaletext:"ZENTRA is designed as a global financial intelligence infrastructure that can integrate with banks, fintech systems, ERP environments and macro financial data providers.",
-revenue:"Revenue Model",
-rev1:"API Licensing for fintech and institutions",
-rev2:"Enterprise infrastructure licensing",
-rev3:"Lens marketplace ecosystem",
-contact:"Investor Contact",
-footer:"ZENTRA Investor Overview"
-},
-
-tr:{
-title:"Yatırımcı Genel Bakış",
-desc:"ZENTRA, geleneksel finansal sistemler tepki vermeden önce sistemik finansal riski tespit etmek için tasarlanmış davranışsal finans altyapısıdır.",
-problem:"Problem",
-problemtext:"Geleneksel kredi skorlama sistemleri geçmiş finansal verileri analiz eder. Kurumlar arası davranış sürüklenmesini ve sistemik stres sinyallerini tespit edemez.",
-solution:"ZENTRA Çözümü",
-solutiontext:"ZENTRA davranışsal risk sinyallerini, makro göstergeleri ve kurumsal verileri birleştirerek finansal istikrarsızlığı erken tespit eder.",
-infrastructure:"Altyapı",
-market:"Pazar Kapsamı",
-banks:"Bankalar",
-fintech:"Fintech",
-erp:"ERP Sistemleri",
-funds:"Fonlar",
-insurance:"Sigorta",
-scalability:"Ölçeklenebilirlik",
-scaletext:"ZENTRA bankalar, fintech sistemleri, ERP ortamları ve makro finans veri sağlayıcılarıyla entegre olabilen küresel bir finansal zeka altyapısı olarak tasarlanmıştır.",
-revenue:"Gelir Modeli",
-rev1:"Fintech ve kurumlar için API lisansı",
-rev2:"Kurumsal altyapı lisansı",
-rev3:"Lens pazar ekosistemi",
-contact:"Yatırımcı İletişim",
-footer:"ZENTRA Yatırımcı Genel Bakış"
-}
-
-}
-
-function setLang(lang){
-
-document.documentElement.lang=lang
-
-document.querySelectorAll("[data-t]").forEach(el=>{
-
-let key=el.getAttribute("data-t")
-
-el.innerText=translations[lang][key]
-
-})
-
-}
-
-</script>
-
 </body>
+
 </html>

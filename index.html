@@ -3,351 +3,298 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZENTRA Investor Pitch</title>
+<title>ZENTRA Financial Telescope</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
+
 :root{
-  --bg:#050814;
-  --card:#0c1228;
-  --line:#1e2a55;
-  --text:#eaf2ff;
-  --muted:#99a6c6;
-  --cyan:#00d4ff;
-  --green:#19e68c;
-  --gold:#f5b942;
-  --red:#ff4d6d;
-  --violet:#7c3aed;
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+--gold:#f5b942;
+--red:#ff4d6d;
 }
-*{box-sizing:border-box}
+
 body{
-  margin:0;
-  background:
-    radial-gradient(1000px 500px at 10% 0%, rgba(0,212,255,.10), transparent 60%),
-    radial-gradient(900px 450px at 90% 10%, rgba(124,58,237,.10), transparent 60%),
-    var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial;
 }
+
 .wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:28px 20px 60px;
+max-width:1100px;
+margin:auto;
+padding:30px 20px 60px;
 }
+
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:22px;
-  margin-bottom:20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:22px;
+margin-bottom:20px;
 }
-.hero{
-  background:linear-gradient(180deg,#0d1430,#070b18);
-}
+
 h1{
-  margin:0 0 10px;
-  font-size:36px;
-  color:var(--cyan);
+color:var(--cyan);
+margin:0 0 10px;
+font-size:34px;
 }
+
 h2{
-  margin:0 0 10px;
-  color:var(--green);
+color:var(--green);
+margin:0 0 10px;
 }
-h3{
-  margin:0 0 8px;
-  font-size:16px;
-}
+
 p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.6;
+color:var(--muted);
 }
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:16px;
-  margin-top:14px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:16px;
+margin-top:16px;
 }
+
 .metric{
-  background:#0a1122;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:18px;
-  text-align:center;
+background:#0a1122;
+border:1px solid var(--line);
+border-radius:14px;
+padding:18px;
+text-align:center;
 }
+
 .metric strong{
-  display:block;
-  font-size:28px;
-  color:var(--cyan);
-  margin-bottom:6px;
+font-size:28px;
+display:block;
+color:var(--cyan);
 }
-.tag{
-  display:inline-block;
-  margin-top:10px;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
+
+.map{
+height:320px;
+background:#08101f;
+border:1px solid var(--line);
+border-radius:14px;
+position:relative;
+overflow:hidden;
 }
-.live{background:rgba(25,230,140,.15);color:var(--green)}
-.wait{background:rgba(245,185,66,.15);color:var(--gold)}
-.lock{background:rgba(255,77,109,.15);color:var(--red)}
-.code{
-  background:#07101f;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  font-family:monospace;
-  font-size:12px;
-  white-space:pre-wrap;
-  margin-top:12px;
+
+.point{
+position:absolute;
+width:10px;
+height:10px;
+border-radius:50%;
+background:var(--red);
+box-shadow:0 0 12px var(--red);
+animation:pulse 2s infinite;
 }
-.btn{
-  display:inline-block;
-  margin-top:12px;
-  margin-right:8px;
-  text-decoration:none;
-  color:#000;
-  background:var(--cyan);
-  padding:10px 14px;
-  border-radius:8px;
-  font-size:13px;
+
+@keyframes pulse{
+0%{transform:scale(.8)}
+50%{transform:scale(1.3)}
+100%{transform:scale(.8)}
 }
+
 .table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
+width:100%;
+border-collapse:collapse;
+margin-top:12px;
 }
-.table th,.table td{
-  text-align:left;
-  padding:10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-size:12px;
+
+.table td{
+padding:10px;
+border-bottom:1px solid rgba(255,255,255,.08);
+font-size:13px;
 }
-.table th{color:#fff}
+
 footer{
-  text-align:center;
-  color:#99a6c6;
-  font-size:12px;
-  margin-top:24px;
+text-align:center;
+color:#99a6c6;
+margin-top:30px;
+font-size:12px;
 }
+
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
 
-  <section class="card hero">
-    <h1>ZENTRA Investor Pitch</h1>
-    <p>
-      ZENTRA is a behavioral financial infrastructure designed to observe financial behavior,
-      detect systemic drift, and create licensable intelligence through modular lenses.
-    </p>
-    <span class="tag live">INVESTOR VERSION</span>
-    <div>
-      <a class="btn" href="index.html">Main Platform</a>
-      <a class="btn" href="mailto:contact@zentrarisk.com">Contact</a>
-    </div>
-  </section>
+<section class="card">
 
-  <section class="card">
-    <h2>The Problem</h2>
-    <div class="grid">
-      <div class="card" style="margin-bottom:0">
-        <h3>Reactive finance</h3>
-        <p>Most financial systems measure risk after it becomes visible.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Single-score limitation</h3>
-        <p>Traditional models compress complex behavior into weak historical scoring.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Missing behavioral layer</h3>
-        <p>Payment drift, cashflow instability and misuse patterns are rarely observed early.</p>
-      </div>
-    </div>
-  </section>
+<h1>Financial Telescope</h1>
 
-  <section class="card">
-    <h2>Why ZENTRA</h2>
-    <p>
-      ZENTRA brings together behavioral signals, modular intelligence lenses,
-      financial telescope logic and security intelligence into one infrastructure layer.
-    </p>
-    <div class="grid">
-      <div class="metric">
-        <strong>2</strong>
-        Live APIs
-      </div>
-      <div class="metric">
-        <strong>12</strong>
-        Lens modules
-      </div>
-      <div class="metric">
-        <strong>10+</strong>
-        Institution types
-      </div>
-      <div class="metric">
-        <strong>4</strong>
-        Signal layers
-      </div>
-    </div>
-  </section>
+<p>
+The ZENTRA Financial Telescope observes financial behavior across markets,
+institutions and macro signals to detect systemic risk drift.
+</p>
 
-  <section class="card">
-    <h2>What ZENTRA Is</h2>
-    <div class="grid">
-      <div class="card" style="margin-bottom:0">
-        <h3>Infrastructure</h3>
-        <p>API-driven risk and stress engines for banks, fintech, ERP and payment systems.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Platform</h3>
-        <p>Modular lens marketplace and developer ecosystem for institution-specific intelligence.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Observatory</h3>
-        <p>A financial telescope layer for global signals, sector shifts and systemic stress observation.</p>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <section class="card">
-    <h2>V1 / V2 / V3 Roadmap</h2>
-    <div class="grid">
-      <div class="card" style="margin-bottom:0">
-        <h3>V1 — Core Infrastructure</h3>
-        <p>RiskLens API, Credit Stress Engine, demo dashboard, security intelligence.</p>
-        <span class="tag live">LIVE</span>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>V2 — Platform Layer</h3>
-        <p>Lens marketplace, developer ecosystem, portal, sandbox and institution plugins.</p>
-        <span class="tag wait">ACTIVE BUILD</span>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>V3 — Global Financial Telescope</h3>
-        <p>Global observatory, macro signal intelligence and network-driven platform scale.</p>
-        <span class="tag wait">ROADMAP</span>
-      </div>
-    </div>
-  </section>
+<section class="card">
 
-  <section class="card">
-    <h2>Product Stack</h2>
-    <div class="code">DATA SOURCES
-↓
-INTEGRATION LAYER
-↓
-ENGINE LAYER
-↓
-AI LAYER
-↓
-LENS MARKETPLACE
-↓
-FINANCIAL TELESCOPE
-↓
-INSTITUTION INTELLIGENCE</div>
-  </section>
+<h2>Global Risk Map</h2>
 
-  <section class="card">
-    <h2>Revenue Model</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Layer</th>
-          <th>Model</th>
-          <th>Target</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Infrastructure</td>
-          <td>API / enterprise license</td>
-          <td>Banks, fintech, payment systems</td>
-        </tr>
-        <tr>
-          <td>Lens Marketplace</td>
-          <td>Modular licensing</td>
-          <td>Institutions and solution partners</td>
-        </tr>
-        <tr>
-          <td>Financial Telescope</td>
-          <td>Intelligence subscription</td>
-          <td>Funds, macro observers, strategic users</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+<div class="map">
 
-  <section class="card">
-    <h2>Competitive Moat</h2>
-    <div class="grid">
-      <div class="card" style="margin-bottom:0">
-        <h3>Behavioral signal layer</h3>
-        <p>Risk is read from behavioral movement, not only from static history.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Lens architecture</h3>
-        <p>Institution-specific intelligence can be packaged, expanded and licensed.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Security + finance merge</h3>
-        <p>AML, fraud, KYC and payment trust signals are part of the same platform logic.</p>
-      </div>
-      <div class="card" style="margin-bottom:0">
-        <h3>Financial telescope narrative</h3>
-        <p>ZENTRA scales from institution analytics to systemic financial observation.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Current Status</h2>
-    <div class="grid">
-      <div class="metric">
-        <strong>LIVE</strong>
-        RiskLens API
-      </div>
-      <div class="metric">
-        <strong>LIVE</strong>
-        Credit Stress API
-      </div>
-      <div class="metric">
-        <strong>READY</strong>
-        Investor-facing platform
-      </div>
-      <div class="metric">
-        <strong>NEXT</strong>
-        Pilot / partner access
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Strategic Position</h2>
-    <p>
-      ZENTRA sits at the intersection of financial infrastructure, risk intelligence,
-      security intelligence and global financial observability.
-    </p>
-    <div class="code">Financial Infrastructure
-+
-Behavioral Risk Intelligence
-+
-Security Intelligence
-+
-Financial Telescope</div>
-  </section>
-
-  <section class="card">
-    <h2>Contact</h2>
-    <p>Dubai HQ — Strategic Partnerships</p>
-    <a class="btn" href="mailto:contact@zentrarisk.com">contact@zentrarisk.com</a>
-  </section>
-
-  <footer>
-    ZENTRA Investor Pitch — Confidential summary version
-  </footer>
+<div class="point" style="top:120px;left:260px"></div>
+<div class="point" style="top:140px;left:520px"></div>
+<div class="point" style="top:150px;left:650px"></div>
+<div class="point" style="top:180px;left:760px"></div>
 
 </div>
 
+</section>
+
+<section class="card">
+
+<h2>Systemic Risk Signals</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong id="riskScore">62</strong>
+Systemic Risk
+</div>
+
+<div class="metric">
+<strong id="stress">54</strong>
+Liquidity Stress
+</div>
+
+<div class="metric">
+<strong id="drift">MEDIUM</strong>
+Behavior Drift
+</div>
+
+<div class="metric">
+<strong id="macro">ACTIVE</strong>
+Macro Signals
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Observed Regions</h2>
+
+<table class="table">
+
+<tr>
+<td>USA</td>
+<td>Market Stress — Medium</td>
+</tr>
+
+<tr>
+<td>Europe</td>
+<td>Liquidity Risk — Moderate</td>
+</tr>
+
+<tr>
+<td>Türkiye</td>
+<td>Behavior Drift — Rising</td>
+</tr>
+
+<tr>
+<td>Emerging Markets</td>
+<td>Systemic Stress — High</td>
+</tr>
+
+</table>
+
+</section>
+
+<section class="card">
+
+<h2>Macro References</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>IMF</strong>
+Macro Data
+</div>
+
+<div class="metric">
+<strong>BIS</strong>
+Banking Signals
+</div>
+
+<div class="metric">
+<strong>ECB</strong>
+Liquidity
+</div>
+
+<div class="metric">
+<strong>TCMB</strong>
+Regional Policy
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Live Risk Feed</h2>
+
+<canvas id="riskChart" height="100"></canvas>
+
+</section>
+
+<footer>
+
+ZENTRA Financial Telescope  
+Behavioral Financial Observatory
+
+</footer>
+
+</div>
+
+<script>
+
+const ctx = document.getElementById('riskChart')
+
+new Chart(ctx,{
+type:'line',
+data:{
+labels:["Jan","Feb","Mar","Apr","May","Jun"],
+datasets:[
+{
+label:"Global Risk",
+data:[40,48,55,58,63,68],
+borderColor:"#00d4ff",
+tension:.3
+},
+{
+label:"Liquidity Stress",
+data:[30,34,39,45,49,52],
+borderColor:"#ff4d6d",
+tension:.3
+}
+]
+},
+options:{
+plugins:{legend:{labels:{color:"#eaf2ff"}}},
+scales:{
+x:{ticks:{color:"#99a6c6"}},
+y:{ticks:{color:"#99a6c6"}}
+}
+}
+})
+
+</script>
+
 </body>
-</html>
+  </html>

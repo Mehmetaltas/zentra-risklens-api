@@ -1,558 +1,407 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZENTRA Financial Infrastructure</title>
-<meta name="description" content="ZENTRA behavioral financial infrastructure and financial telescope platform">
+
+<title>ZENTRA — Behavioral Financial Infrastructure</title>
+
+<meta name="description" content="ZENTRA behavioral financial infrastructure platform">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
 :root{
-  --bg:#050814;
-  --card:#0c1228;
-  --line:#1e2a55;
-  --text:#eaf2ff;
-  --muted:#99a6c6;
-  --cyan:#00d4ff;
-  --green:#19e68c;
-  --gold:#f5b942;
-  --red:#ff4d6d;
-  --violet:#7c3aed;
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+--gold:#f5b942;
+--red:#ff4d6d;
+--violet:#7c3aed;
 }
+
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:
-    radial-gradient(900px 450px at 10% 0%, rgba(0,212,255,.10), transparent 60%),
-    radial-gradient(800px 420px at 90% 10%, rgba(124,58,237,.08), transparent 60%),
-    var(--bg);
-  color:var(--text);
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,sans-serif;
 }
+
 .topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:#060b1c;
-  border-bottom:1px solid var(--line);
+background:#060b1c;
+border-bottom:1px solid var(--line);
 }
+
 .topin{
-  max-width:1150px;
-  margin:auto;
-  padding:14px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  flex-wrap:wrap;
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px;
+flex-wrap:wrap;
 }
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+
 .logo{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  background:linear-gradient(135deg,var(--violet),var(--cyan));
+width:32px;
+height:32px;
+border-radius:10px;
+background:linear-gradient(135deg,var(--violet),var(--cyan));
 }
-nav{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  align-items:center;
-}
+
 nav a{
-  color:#fff;
-  text-decoration:none;
-  font-size:13px;
+color:white;
+text-decoration:none;
+margin-left:14px;
+font-size:13px;
 }
-.lang{
-  display:flex;
-  gap:8px;
-}
+
 .lang button{
-  border:1px solid var(--line);
-  background:#0a1122;
-  color:#fff;
-  padding:8px 10px;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:12px;
+border:1px solid var(--line);
+background:#0a1122;
+color:white;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+margin-left:4px;
 }
+
 .lang button.active{
-  background:var(--cyan);
-  color:#000;
-  border-color:transparent;
+background:var(--cyan);
+color:black;
 }
+
 .wrap{
-  max-width:1150px;
-  margin:auto;
-  padding:28px 20px 60px;
+max-width:1100px;
+margin:auto;
+padding:24px;
 }
+
 .card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:22px;
-  margin-bottom:20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+margin-bottom:20px;
 }
+
 .hero{
-  background:
-    radial-gradient(420px 180px at 20% 18%, rgba(0,212,255,.10), transparent 60%),
-    radial-gradient(420px 180px at 82% 78%, rgba(124,58,237,.10), transparent 60%),
-    linear-gradient(180deg,#0d1430,#070b18);
+background:linear-gradient(180deg,#0c1228,#070b18);
 }
+
 h1{
-  margin:0 0 10px;
-  color:var(--cyan);
-  font-size:36px;
+margin:0 0 10px 0;
+font-size:34px;
+color:var(--cyan);
 }
+
 h2{
-  margin:0 0 10px;
-  color:var(--green);
+margin:0 0 8px 0;
+color:var(--green);
 }
+
 p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.6;
+color:var(--muted);
+line-height:1.6;
 }
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-  margin-top:16px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+margin-top:16px;
 }
-.metric{
-  background:#08101f;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:18px;
-  text-align:center;
+
+.tag{
+font-size:11px;
+padding:4px 8px;
+border-radius:6px;
+margin-left:8px;
 }
-.metric strong{
-  display:block;
-  font-size:24px;
-  color:var(--cyan);
-  margin-bottom:6px;
-}
+
+.live{background:var(--green);color:black}
+.lock{background:var(--gold);color:black}
+.wait{background:#2e3c5f}
+
 .btn{
-  display:inline-block;
-  text-decoration:none;
-  padding:10px 14px;
-  border-radius:8px;
-  margin-right:8px;
-  margin-top:10px;
-  font-size:13px;
-  border:1px solid var(--line);
-  color:#fff;
+display:inline-block;
+padding:10px 14px;
+border-radius:8px;
+border:1px solid var(--line);
+color:white;
+text-decoration:none;
+margin-right:8px;
+margin-top:10px;
+font-size:13px;
 }
+
 .btn.primary{
-  background:var(--cyan);
-  color:#000;
-  border:none;
+background:var(--cyan);
+color:black;
+border:none;
 }
-.wavebox{
-  height:120px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  margin-top:18px;
-  position:relative;
-  overflow:hidden;
-  background:#08101f;
-}
-.wave{
-  position:absolute;
-  width:120%;
-  height:2px;
-  left:-10%;
-  background:var(--cyan);
-  animation:wave 3s linear infinite;
-  box-shadow:0 0 16px rgba(0,212,255,.45);
-}
-.wave:nth-child(1){top:30%}
-.wave:nth-child(2){top:50%;animation-duration:4.2s;opacity:.7}
-.wave:nth-child(3){top:70%;animation-duration:5.1s;opacity:.45}
-@keyframes wave{
-  0%{transform:translateX(-20%)}
-  100%{transform:translateX(20%)}
-}
-.code{
-  background:#07101f;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  font-family:monospace;
-  font-size:12px;
-  white-space:pre-wrap;
-  margin-top:12px;
-}
-.status-ok{color:var(--green)}
-.status-warn{color:var(--gold)}
+
 footer{
-  text-align:center;
-  color:#99a6c6;
-  font-size:12px;
-  margin-top:40px;
-  padding-top:20px;
-  border-top:1px solid rgba(255,255,255,.08);
+text-align:center;
+color:#99a6c6;
+font-size:12px;
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--line);
 }
-@media (max-width:700px){
-  h1{font-size:28px}
-}
+
 </style>
+
 </head>
+
+
 <body>
 
-<div class="topbar">
-  <div class="topin">
-    <div class="brand">
-      <div class="logo"></div>
-      <strong>ZENTRA</strong>
-    </div>
 
-    <nav>
-      <a href="index.html" data-t="navHome">Home</a>
-      <a href="platform.html" data-t="navPlatform">Platform</a>
-      <a href="developer.html" data-t="navDevelopers">Developers</a>
-      <a href="investor.html" data-t="navInvestor">Investor</a>
-      <a href="telescope.html" data-t="navTelescope">Telescope</a>
-      <a href="global-map.html" data-t="navGlobalMap">Global Map</a>
-      <a href="heatmap.html" data-t="navHeatmap">Heatmap</a>
-      <a href="network.html" data-t="navNetwork">Network</a>
-      <a href="architecture.html" data-t="navArchitecture">Architecture</a>
-      <a href="trust.html" data-t="navTrust">Trust</a>
-      <a href="privacy.html" data-t="navPrivacy">Privacy</a>
-      <a href="#contact" data-t="navContact">Contact</a>
-<a href="marketplace.html">Marketplace</a>
-      <div class="lang">
-        <button id="btn-en" class="active" type="button">EN</button>
-        <button id="btn-tr" type="button">TR</button>
-      </div>
-    </nav>
-  </div>
+<div class="topbar">
+
+<div class="topin">
+
+<div style="display:flex;align-items:center;gap:10px">
+
+<div class="logo"></div>
+
+<strong>ZENTRA</strong>
+
 </div>
+
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="developer.html">Developers</a>
+<a href="investor.html">Investor</a>
+<a href="telescope.html">Telescope</a>
+<a href="marketplace.html">Marketplace</a>
+<a href="network.html">Global Map</a>
+<a href="heatmap.html">Heatmap</a>
+<a href="architecture.html">Architecture</a>
+<a href="trust.html">Trust</a>
+
+<div class="lang">
+<button id="lang-en" class="active">EN</button>
+<button id="lang-tr">TR</button>
+</div>
+
+</nav>
+
+</div>
+
+</div>
+
+
 
 <div class="wrap">
 
-  <section class="card hero">
-    <h1 data-t="heroTitle">Financial Telescope</h1>
-    <p data-t="heroText">
-      ZENTRA observes financial behavior across institutions, detecting systemic risk drift and behavioral signals before traditional financial systems react.
-    </p>
 
-    <div>
-      <a class="btn primary" href="#proof" data-t="heroBtn1">Live Proof</a>
-      <a class="btn" href="platform.html" data-t="heroBtn2">Platform</a>
-      <a class="btn" href="developer.html" data-t="heroBtn3">Developer Portal</a>
-      <a class="btn" href="investor.html" data-t="heroBtn4">Investor</a>
-      <a class="btn" href="telescope.html" data-t="heroBtn5">Telescope</a>
-      <a class="btn" href="heatmap.html" data-t="heroBtn6">Risk Heatmap</a>
-    </div>
+<section class="card hero">
 
-    <div class="wavebox">
-      <div class="wave"></div>
-      <div class="wave"></div>
-      <div class="wave"></div>
-    </div>
-  </section>
+<h1 data-t="title">Financial Telescope</h1>
 
-  <section id="proof" class="card">
-    <h2 data-t="proofTitle">Live Proof</h2>
-    <div class="grid">
-      <div class="metric">
-        <strong>RiskLens API</strong>
-        <div class="status-ok" data-t="online">ONLINE</div>
-        <a class="btn" href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">Health</a>
-        <a class="btn" href="https://zentra-risklens-api-2.onrender.com/openapi.json" target="_blank">OpenAPI</a>
-      </div>
-      <div class="metric">
-        <strong>Credit Stress Engine</strong>
-        <div class="status-ok" data-t="online">ONLINE</div>
-        <a class="btn" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">Health</a>
-        <a class="btn" href="https://zentra-credit-stress-api.onrender.com/openapi.json" target="_blank">OpenAPI</a>
-      </div>
-      <div class="metric">
-        <strong data-t="liveRiskTitle">Live Risk Score</strong>
-        <div class="code" id="riskLive"></div>
-      </div>
-    </div>
-  </section>
+<p data-t="subtitle">
+ZENTRA observes financial behavior across institutions and markets.
+</p>
 
-  <section class="card">
-    <h2 data-t="simTitle">Live Risk Simulation</h2>
-    <p data-t="simText">ZENTRA continuously evaluates behavioral financial signals and updates systemic risk indicators in real time.</p>
-    <div class="grid">
-      <div class="metric">
-        <strong id="riskScore">0</strong>
-        <span data-t="sim1">Behavioral Risk</span>
-      </div>
-      <div class="metric">
-        <strong id="stressScore">0</strong>
-        <span data-t="sim2">Stress Pressure</span>
-      </div>
-      <div class="metric">
-        <strong id="fraudScore">0</strong>
-        <span data-t="sim3">Fraud Signal</span>
-      </div>
-      <div class="metric">
-        <strong id="macroScore">0</strong>
-        <span data-t="sim4">Macro Risk</span>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <section class="card">
-    <h2 data-t="osTitle">Financial Operating System</h2>
-    <p data-t="osText">
-      ZENTRA functions as a behavioral financial operating system. It observes signals, processes risk through engines, and distributes intelligence through institutional lenses.
-    </p>
 
-    <div class="grid">
-      <div class="metric">
-        <strong data-t="dataTitle">DATA</strong>
-        <span data-t="dataText">ERP Signals<br>Payment Rails<br>Banking Data<br>Macro Indicators</span>
-      </div>
 
-      <div class="metric">
-        <strong data-t="engineTitle">ENGINES</strong>
-        <span data-t="engineText">Behavior Engine<br>Risk Engine<br>Stress Engine<br>Security Engine</span>
-      </div>
+<section class="card">
 
-      <div class="metric">
-        <strong data-t="lensTitle">LENSES</strong>
-        <span data-t="lensText">Banking Lens<br>SME Lens<br>Insurance Lens<br>Funds Lens</span>
-      </div>
+<h2>Live Infrastructure Proof</h2>
 
-      <div class="metric">
-        <strong data-t="decisionTitle">DECISIONS</strong>
-        <span data-t="decisionText">Risk Score<br>Policy Signal<br>Fraud Alert<br>Stress Warning</span>
-      </div>
+<div class="grid">
 
-      <div class="metric">
-        <strong data-t="marketTitle">MARKET</strong>
-        <span data-t="marketText">Financial Institutions<br>Fintech Platforms<br>Payment Networks<br>Capital Markets</span>
-      </div>
-    </div>
-
-    <div class="code">DATA SIGNALS
-↓
-RISK ENGINES
-↓
-LENS MARKETPLACE
-↓
-FINANCIAL INTELLIGENCE
-↓
-FINANCIAL TELESCOPE</div>
-  </section>
-
-  <section class="card">
-    <h2 data-t="statusTitle">System Status</h2>
-    <div class="grid">
-      <div class="metric">
-        <strong>RiskLens API</strong>
-        <span class="status-ok" id="risklensStatus" data-t="online">ONLINE</span>
-      </div>
-      <div class="metric">
-        <strong>Credit Stress Engine</strong>
-        <span class="status-ok" id="stressStatus" data-t="online">ONLINE</span>
-      </div>
-      <div class="metric">
-        <strong data-t="macroFeed">Macro Intelligence Feed</strong>
-        <span class="status-ok" id="macroStatus" data-t="active">ACTIVE</span>
-      </div>
-      <div class="metric">
-        <strong data-t="securityMon">Security Monitoring</strong>
-        <span class="status-ok" id="securityStatus" data-t="active">ACTIVE</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2 data-t="signalsTitle">Global Financial Signals</h2>
-    <div class="grid">
-      <div class="metric">TCMB</div>
-      <div class="metric">IMF</div>
-      <div class="metric">BIS</div>
-      <div class="metric">ECB</div>
-      <div class="metric">BIST</div>
-      <div class="metric">LSE</div>
-    </div>
-  </section>
-
-  <section id="contact" class="card">
-    <h2 data-t="contactTitle">Contact</h2>
-    <p data-t="contactText">Dubai HQ — Strategic Partnerships</p>
-    <a class="btn" href="mailto:contact@zentrarisk.com">contact@zentrarisk.com</a>
-  </section>
-
-  <footer data-t="footerText">ZENTRA Behavioral Financial Infrastructure</footer>
+<div class="card">
+<strong>RiskLens API</strong>
+<span class="tag live">LIVE</span>
+<a class="btn" target="_blank"
+href="https://zentra-risklens-api-2.onrender.com/health">
+Health
+</a>
 </div>
 
+
+<div class="card">
+<strong>Credit Stress Engine</strong>
+<span class="tag live">LIVE</span>
+<a class="btn" target="_blank"
+href="https://zentra-credit-stress-api.onrender.com/health">
+Health
+</a>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Platform Architecture</h2>
+
+<div class="grid">
+
+<div class="card">
+<strong>Data Layer</strong>
+<p>ERP, POS, banking signals</p>
+</div>
+
+<div class="card">
+<strong>Engine Layer</strong>
+<p>Risk, Stress, Behavior engines</p>
+</div>
+
+<div class="card">
+<strong>AI Layer</strong>
+<p>Explainable behavioral AI</p>
+</div>
+
+<div class="card">
+<strong>Lens Layer</strong>
+<p>Institution specific intelligence modules</p>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Lens Marketplace</h2>
+
+<div class="grid">
+
+<div class="card">
+<strong>RiskLens</strong>
+<span class="tag live">LIVE</span>
+</div>
+
+<div class="card">
+<strong>Credit Stress</strong>
+<span class="tag live">LIVE</span>
+</div>
+
+<div class="card">
+<strong>Banking Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>SME Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>ERP Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Live System Status</h2>
+
+<div class="grid">
+
+<div class="card">
+<strong>RiskLens API</strong>
+<div id="risklensStatus">Checking...</div>
+</div>
+
+<div class="card">
+<strong>Credit Stress Engine</strong>
+<div id="stressStatus">Checking...</div>
+</div>
+
+<div class="card">
+<strong>Behavior Engine</strong>
+<div>Active</div>
+</div>
+
+<div class="card">
+<strong>Security Monitoring</strong>
+<div>Running</div>
+</div>
+
+</div>
+
+</section>
+
+
+
+<footer>
+
+ZENTRA Investor Demonstration Platform
+
+</footer>
+
+
+</div>
+
+
+
 <script>
-const dict = {
-  en: {
-    navHome:"Home",
-    navPlatform:"Platform",
-    navDevelopers:"Developers",
-    navInvestor:"Investor",
-    navTelescope:"Telescope",
-    navGlobalMap:"Global Map",
-    navHeatmap:"Heatmap",
-    navNetwork:"Network",
-    navArchitecture:"Architecture",
-    navTrust:"Trust",
-    navPrivacy:"Privacy",
-    navContact:"Contact",
-    heroTitle:"Financial Telescope",
-    heroText:"ZENTRA observes financial behavior across institutions, detecting systemic risk drift and behavioral signals before traditional financial systems react.",
-    heroBtn1:"Live Proof",
-    heroBtn2:"Platform",
-    heroBtn3:"Developer Portal",
-    heroBtn4:"Investor",
-    heroBtn5:"Telescope",
-    heroBtn6:"Risk Heatmap",
-    proofTitle:"Live Proof",
-    online:"ONLINE",
-    active:"ACTIVE",
-    liveRiskTitle:"Live Risk Score",
-    simTitle:"Live Risk Simulation",
-    simText:"ZENTRA continuously evaluates behavioral financial signals and updates systemic risk indicators in real time.",
-    sim1:"Behavioral Risk",
-    sim2:"Stress Pressure",
-    sim3:"Fraud Signal",
-    sim4:"Macro Risk",
-    osTitle:"Financial Operating System",
-    osText:"ZENTRA functions as a behavioral financial operating system. It observes signals, processes risk through engines, and distributes intelligence through institutional lenses.",
-    dataTitle:"DATA",
-    dataText:"ERP Signals<br>Payment Rails<br>Banking Data<br>Macro Indicators",
-    engineTitle:"ENGINES",
-    engineText:"Behavior Engine<br>Risk Engine<br>Stress Engine<br>Security Engine",
-    lensTitle:"LENSES",
-    lensText:"Banking Lens<br>SME Lens<br>Insurance Lens<br>Funds Lens",
-    decisionTitle:"DECISIONS",
-    decisionText:"Risk Score<br>Policy Signal<br>Fraud Alert<br>Stress Warning",
-    marketTitle:"MARKET",
-    marketText:"Financial Institutions<br>Fintech Platforms<br>Payment Networks<br>Capital Markets",
-    statusTitle:"System Status",
-    macroFeed:"Macro Intelligence Feed",
-    securityMon:"Security Monitoring",
-    signalsTitle:"Global Financial Signals",
-    contactTitle:"Contact",
-    contactText:"Dubai HQ — Strategic Partnerships",
-    footerText:"ZENTRA Behavioral Financial Infrastructure"
-  },
-  tr: {
-    navHome:"Ana Sayfa",
-    navPlatform:"Platform",
-    navDevelopers:"Geliştiriciler",
-    navInvestor:"Yatırımcı",
-    navTelescope:"Teleskop",
-    navGlobalMap:"Küresel Harita",
-    navHeatmap:"Isı Haritası",
-    navNetwork:"Ağ",
-    navArchitecture:"Mimari",
-    navTrust:"Güven",
-    navPrivacy:"Gizlilik",
-    navContact:"İletişim",
-    heroTitle:"Finans Teleskobu",
-    heroText:"ZENTRA kurumlar genelinde finansal davranışı gözlemler, sistemik risk sürüklenmesini ve davranışsal sinyalleri geleneksel finans sistemlerinden önce tespit eder.",
-    heroBtn1:"Canlı Kanıt",
-    heroBtn2:"Platform",
-    heroBtn3:"Geliştirici Portalı",
-    heroBtn4:"Yatırımcı",
-    heroBtn5:"Teleskop",
-    heroBtn6:"Risk Isı Haritası",
-    proofTitle:"Canlı Kanıt",
-    online:"ÇEVRİMİÇİ",
-    active:"AKTİF",
-    liveRiskTitle:"Canlı Risk Skoru",
-    simTitle:"Canlı Risk Simülasyonu",
-    simText:"ZENTRA davranışsal finansal sinyalleri sürekli değerlendirir ve sistemik risk göstergelerini gerçek zamanlı günceller.",
-    sim1:"Davranışsal Risk",
-    sim2:"Stres Baskısı",
-    sim3:"Fraud Sinyali",
-    sim4:"Makro Risk",
-    osTitle:"Finansal İşletim Sistemi",
-    osText:"ZENTRA davranışsal bir finansal işletim sistemi gibi çalışır. Sinyalleri izler, riski motorlar üzerinden işler ve kurumsal lensler üzerinden zekâ üretir.",
-    dataTitle:"VERİ",
-    dataText:"ERP Sinyalleri<br>Ödeme Hatları<br>Bankacılık Verisi<br>Makro Göstergeler",
-    engineTitle:"MOTORLAR",
-    engineText:"Davranış Motoru<br>Risk Motoru<br>Stres Motoru<br>Güvenlik Motoru",
-    lensTitle:"LENSLER",
-    lensText:"Bankacılık Lensi<br>KOBİ Lensi<br>Sigorta Lensi<br>Fon Lensi",
-    decisionTitle:"KARARLAR",
-    decisionText:"Risk Skoru<br>Politika Sinyali<br>Sahtekârlık Uyarısı<br>Stres Uyarısı",
-    marketTitle:"PAZAR",
-    marketText:"Finansal Kurumlar<br>Fintech Platformları<br>Ödeme Ağları<br>Sermaye Piyasaları",
-    statusTitle:"Sistem Durumu",
-    macroFeed:"Makro Zekâ Akışı",
-    securityMon:"Güvenlik İzleme",
-    signalsTitle:"Küresel Finansal Sinyaller",
-    contactTitle:"İletişim",
-    contactText:"Dubai HQ — Stratejik Ortaklıklar",
-    footerText:"ZENTRA Davranışsal Finans Altyapısı"
-  }
-};
 
-function applyLang(lang){
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-t]").forEach(el=>{
-    const key = el.getAttribute("data-t");
-    if(dict[lang] && dict[lang][key]){
-      const value = dict[lang][key];
-      if(value.includes("<br>")){
-        el.innerHTML = value;
-      } else {
-        el.textContent = value;
-      }
-    }
-  });
-  document.getElementById("btn-en").classList.toggle("active", lang === "en");
-  document.getElementById("btn-tr").classList.toggle("active", lang === "tr");
+async function checkAPI(){
+
+try{
+
+let r = await fetch("https://zentra-risklens-api-2.onrender.com/health")
+
+if(r.ok){
+document.getElementById("risklensStatus").innerText="Operational"
+}else{
+document.getElementById("risklensStatus").innerText="Issue"
 }
 
-document.getElementById("btn-en").addEventListener("click", ()=>applyLang("en"));
-document.getElementById("btn-tr").addEventListener("click", ()=>applyLang("tr"));
-
-function randomScore(min,max){
-  return Math.floor(Math.random()*(max-min+1))+min;
-}
-function updateRisk(){
-  const risk = randomScore(55,85);
-  const stress = randomScore(40,70);
-  const fraud = randomScore(20,60);
-  const macro = randomScore(30,65);
-
-  document.getElementById("riskScore").textContent = risk;
-  document.getElementById("stressScore").textContent = stress;
-  document.getElementById("fraudScore").textContent = fraud;
-  document.getElementById("macroScore").textContent = macro;
-
-  const band = risk > 75 ? "HIGH_RISK" : risk < 60 ? "LOW_RISK" : "MID_RISK";
-  document.getElementById("riskLive").textContent = JSON.stringify({
-    risk_score:risk,
-    risk_band:band,
-    engine:"RiskLens",
-    timestamp:new Date().toISOString()
-  }, null, 2);
-}
-function updateStatus(){
-  const states = ["ONLINE","ACTIVE","RUNNING"];
-  document.getElementById("risklensStatus").textContent = states[Math.floor(Math.random()*states.length)];
-  document.getElementById("stressStatus").textContent = states[Math.floor(Math.random()*states.length)];
-  document.getElementById("macroStatus").textContent = states[Math.floor(Math.random()*states.length)];
-  document.getElementById("securityStatus").textContent = states[Math.floor(Math.random()*states.length)];
+}catch{
+document.getElementById("risklensStatus").innerText="Offline"
 }
 
-updateRisk();
-updateStatus();
-setInterval(updateRisk, 5000);
-setInterval(updateStatus, 6000);
-applyLang("en");
+try{
+
+let s = await fetch("https://zentra-credit-stress-api.onrender.com/health")
+
+if(s.ok){
+document.getElementById("stressStatus").innerText="Operational"
+}else{
+document.getElementById("stressStatus").innerText="Issue"
+}
+
+}catch{
+document.getElementById("stressStatus").innerText="Offline"
+}
+
+}
+
+checkAPI()
+
 </script>
 
+
 </body>
-  </html>
+</html>

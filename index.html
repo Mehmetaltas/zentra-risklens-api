@@ -28,8 +28,6 @@
 
 *{box-sizing:border-box}
 
-html{scroll-behavior:smooth}
-
 body{
 margin:0;
 background:var(--bg);
@@ -71,7 +69,7 @@ font-size:13px;
 
 .lang button{
 margin-left:6px;
-padding:6px 8px;
+padding:6px 10px;
 border-radius:6px;
 border:1px solid var(--line);
 background:#0b1429;
@@ -99,7 +97,6 @@ margin-bottom:20px;
 }
 
 h1{color:var(--cyan)}
-
 h2{color:var(--green)}
 
 p{color:var(--muted);line-height:1.6}
@@ -120,7 +117,6 @@ margin-left:8px;
 
 .live{background:var(--green);color:black}
 .lock{background:var(--gold);color:black}
-.wait{background:#2e3c5f}
 
 .btn{
 display:inline-block;
@@ -138,28 +134,6 @@ color:black;
 border:none;
 }
 
-.code{
-background:#07101f;
-border:1px solid var(--line);
-border-radius:10px;
-padding:12px;
-font-family:monospace;
-font-size:12px;
-margin-top:10px;
-}
-
-.table{
-width:100%;
-border-collapse:collapse;
-margin-top:12px;
-}
-
-.table th,.table td{
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,.08);
-font-size:12px;
-}
-
 </style>
 
 </head>
@@ -171,23 +145,20 @@ font-size:12px;
 <div class="topin">
 
 <div style="display:flex;align-items:center;gap:10px">
-
 <div class="logo"></div>
-
 <strong>ZENTRA</strong>
-
 </div>
 
 <nav>
 
-<a href="#proof">Proof</a>
-<a href="#dashboard">Dashboard</a>
-<a href="#market">Lens</a>
-<a href="#ecosystem">Ecosystem</a>
-<a href="#architecture">Architecture</a>
-<a href="#security">Security</a>
-<a href="#telescope">Telescope</a>
-<a href="#contact">Contact</a>
+<a href="#proof" data-en="Proof" data-tr="Kanıt">Proof</a>
+<a href="#dashboard" data-en="Dashboard" data-tr="Panel">Dashboard</a>
+<a href="#market" data-en="Lens" data-tr="Lens">Lens</a>
+<a href="#ecosystem" data-en="Ecosystem" data-tr="Ekosistem">Ecosystem</a>
+<a href="#architecture" data-en="Architecture" data-tr="Mimari">Architecture</a>
+<a href="#security" data-en="Security" data-tr="Güvenlik">Security</a>
+<a href="#telescope" data-en="Telescope" data-tr="Teleskop">Telescope</a>
+<a href="#contact" data-en="Contact" data-tr="İletişim">Contact</a>
 
 <span class="lang">
 
@@ -206,20 +177,35 @@ font-size:12px;
 
 <section class="card">
 
-<h1 id="heroTitle">Financial Telescope</h1>
+<h1 data-en="Financial Telescope"
+data-tr="Finans Teleskobu">
 
-<p id="heroText">
-ZENTRA observes financial behavior across institutions and markets, detecting systemic risk drift before traditional financial systems react.
+Financial Telescope
+
+</h1>
+
+<p
+data-en="ZENTRA observes financial behavior across institutions and markets, detecting systemic risk drift before traditional financial systems react."
+data-tr="ZENTRA kurumlar ve piyasalar genelinde finansal davranışı gözlemleyerek sistemik risk değişimini geleneksel sistemlerden önce tespit eder."
+>
+
+ZENTRA observes financial behavior across institutions and markets.
+
 </p>
 
-<a class="btn primary" href="#proof">Live Proof</a>
+<a class="btn primary" href="#proof"
+data-en="Live Proof"
+data-tr="Canlı Kanıt">
+
+Live Proof
+
+</a>
 
 </section>
 
-
 <section id="proof" class="card">
 
-<h2>Live Proof</h2>
+<h2 data-en="Live Proof" data-tr="Canlı Kanıt">Live Proof</h2>
 
 <div class="grid">
 
@@ -229,13 +215,15 @@ ZENTRA observes financial behavior across institutions and markets, detecting sy
 
 <span class="tag live">LIVE</span>
 
-<p>Behavioral risk scoring engine</p>
+<p
+data-en="Behavioral risk scoring engine"
+data-tr="Davranışsal risk skorlama motoru"
+>
+Behavioral risk scoring engine
+</p>
 
 <a class="btn" target="_blank"
 href="https://zentra-risklens-api-2.onrender.com/health">Health</a>
-
-<a class="btn" target="_blank"
-href="https://zentra-risklens-api-2.onrender.com/openapi.json">OpenAPI</a>
 
 </div>
 
@@ -245,229 +233,148 @@ href="https://zentra-risklens-api-2.onrender.com/openapi.json">OpenAPI</a>
 
 <span class="tag live">LIVE</span>
 
-<p>Installment stress modeling</p>
+<p
+data-en="Installment stress modeling"
+data-tr="Taksit stres modelleme motoru"
+>
+
+Installment stress modeling
+
+</p>
 
 <a class="btn" target="_blank"
 href="https://zentra-credit-stress-api.onrender.com/health">Health</a>
 
-<a class="btn" target="_blank"
-href="https://zentra-credit-stress-api.onrender.com/openapi.json">OpenAPI</a>
-
 </div>
 
 </div>
 
 </section>
-
 
 <section id="dashboard" class="card">
 
-<h2>Risk Dashboard</h2>
+<h2 data-en="Risk Dashboard" data-tr="Risk Paneli">Risk Dashboard</h2>
 
-<canvas id="riskChart" height="100"></canvas>
+<canvas id="riskChart"></canvas>
 
 </section>
 
-
 <section id="market" class="card">
 
-<h2>Lens Marketplace</h2>
+<h2 data-en="Lens Marketplace" data-tr="Lens Pazarı">Lens Marketplace</h2>
 
 <div class="grid">
 
 <div class="card"><strong>RiskLens</strong><span class="tag live">LIVE</span></div>
-
 <div class="card"><strong>Credit Stress</strong><span class="tag live">LIVE</span></div>
 
-<div class="card"><strong>Banking Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>SME Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>ERP Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>POS Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>Insurance Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>Factoring Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>Funds Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>Savings Finance Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>Digital Asset Lens</strong><span class="tag lock">LOCKED</span></div>
-
-<div class="card"><strong>Macro Risk Lens</strong><span class="tag lock">LOCKED</span></div>
+<div class="card"><strong data-en="Banking Lens" data-tr="Bankacılık Lensi">Banking Lens</strong><span class="tag lock">LOCKED</span></div>
+<div class="card"><strong data-en="SME Lens" data-tr="KOBİ Lensi">SME Lens</strong><span class="tag lock">LOCKED</span></div>
+<div class="card"><strong data-en="Insurance Lens" data-tr="Sigorta Lensi">Insurance Lens</strong><span class="tag lock">LOCKED</span></div>
+<div class="card"><strong data-en="Factoring Lens" data-tr="Faktoring Lensi">Factoring Lens</strong><span class="tag lock">LOCKED</span></div>
+<div class="card"><strong data-en="Funds Lens" data-tr="Fon Lensi">Funds Lens</strong><span class="tag lock">LOCKED</span></div>
 
 </div>
 
 </section>
-
 
 <section id="ecosystem" class="card">
 
-<h2>Developer Ecosystem</h2>
+<h2 data-en="Developer Ecosystem" data-tr="Geliştirici Ekosistemi">
 
-<p>
-ZENTRA enables developers and institutions to build intelligence lenses on top of the behavioral financial infrastructure.
+Developer Ecosystem
+
+</h2>
+
+<p
+data-en="Developers and institutions can build financial intelligence lenses on top of the ZENTRA infrastructure."
+data-tr="Geliştiriciler ve kurumlar ZENTRA altyapısı üzerinde finansal zekâ lensleri geliştirebilir."
+>
+
+Developers can build lenses.
+
 </p>
 
-<div class="grid">
-
-<div class="card">
-<strong>Lens SDK</strong>
-<p>Developers can build financial intelligence lenses using ZENTRA data signals.</p>
-</div>
-
-<div class="card">
-<strong>API Access</strong>
-<p>Secure APIs allow integration with banking, ERP and fintech systems.</p>
-</div>
-
-<div class="card">
-<strong>Institution Plugins</strong>
-<p>Financial institutions can build custom intelligence modules.</p>
-</div>
-
-<div class="card">
-<strong>Marketplace Distribution</strong>
-<p>New lenses can be distributed through the ZENTRA Lens Marketplace.</p>
-</div>
-
-</div>
-
 </section>
-
 
 <section id="architecture" class="card">
 
-<h2>ZENTRA Architecture</h2>
+<h2 data-en="ZENTRA Architecture" data-tr="ZENTRA Mimarisi">
 
-<div class="code">
+ZENTRA Architecture
 
-DATA SOURCES  
-↓  
-INTEGRATION LAYER  
-↓  
-ENGINE LAYER  
-↓  
-AI LAYER  
-↓  
-LENS LAYER  
-↓  
-FINANCIAL TELESCOPE
+</h2>
 
-</div>
+<p>
+
+DATA → INTEGRATION → ENGINE → AI → LENS → FINANCIAL TELESCOPE
+
+</p>
 
 </section>
-
 
 <section id="security" class="card">
 
-<h2>Security Intelligence</h2>
+<h2 data-en="Security Intelligence" data-tr="Güvenlik Zekâsı">
 
-<div class="grid">
+Security Intelligence
 
-<div class="card">
-<strong>Behavioral AML</strong>
-<p>Detects abnormal financial flows.</p>
-</div>
+</h2>
 
-<div class="card">
-<strong>KYC Intelligence</strong>
-<p>Behavior backed identity verification signals.</p>
-</div>
+<p
+data-en="Behavioral AML, KYC intelligence and fraud detection."
+data-tr="Davranışsal AML, KYC zekâsı ve sahtekârlık tespiti."
+>
 
-<div class="card">
-<strong>Fraud Detection</strong>
-<p>Transaction anomaly detection.</p>
-</div>
+Security layer
 
-<div class="card">
-<strong>NFC / Biometric Risk</strong>
-<p>Payment device trust and biometric confirmation analysis.</p>
-</div>
-
-</div>
+</p>
 
 </section>
-
 
 <section id="telescope" class="card">
 
-<h2>Global Risk Map</h2>
+<h2 data-en="Global Risk Map" data-tr="Küresel Risk Haritası">
 
-<canvas id="macroChart" height="100"></canvas>
+Global Risk Map
 
-</section>
+</h2>
 
-
-<section class="card">
-
-<h2>Traditional Scoring vs ZENTRA</h2>
-
-<table class="table">
-
-<tr>
-<th>Area</th>
-<th>Traditional</th>
-<th>ZENTRA</th>
-</tr>
-
-<tr>
-<td>Time Horizon</td>
-<td>Past oriented</td>
-<td>Behavior + drift + stress</td>
-</tr>
-
-<tr>
-<td>Architecture</td>
-<td>Single score</td>
-<td>Engine + lens marketplace</td>
-</tr>
-
-<tr>
-<td>Security Visibility</td>
-<td>Limited</td>
-<td>Behavioral AML + fraud intelligence</td>
-</tr>
-
-</table>
+<canvas id="macroChart"></canvas>
 
 </section>
-
-
-<section class="card">
-
-<h2>3 Phase Scale Plan</h2>
-
-<div class="grid">
-
-<div class="card"><strong>Phase 1</strong><span class="tag live">NOW</span></div>
-
-<div class="card"><strong>Phase 2</strong><span class="tag wait">NEXT</span></div>
-
-<div class="card"><strong>Phase 3</strong><span class="tag lock">SCALE</span></div>
-
-</div>
-
-</section>
-
 
 <section id="contact" class="card">
 
-<h2>Contact</h2>
+<h2 data-en="Contact" data-tr="İletişim">Contact</h2>
 
 <p>Dubai HQ — Strategic Partnerships</p>
 
-<a class="btn primary" href="mailto:contact@zentrarisk.com">Contact</a>
+<a class="btn primary" href="mailto:contact@zentrarisk.com">
+Contact
+</a>
 
 </section>
 
 </div>
 
-
 <script>
+
+function setLang(lang){
+
+document.querySelectorAll("[data-en]").forEach(el=>{
+
+el.innerText = el.getAttribute("data-"+lang)
+
+})
+
+document.getElementById("enBtn").classList.toggle("active",lang==="en")
+document.getElementById("trBtn").classList.toggle("active",lang==="tr")
+
+}
+
+document.getElementById("enBtn").onclick=()=>setLang("en")
+document.getElementById("trBtn").onclick=()=>setLang("tr")
 
 new Chart(document.getElementById('riskChart'),{
 
@@ -475,10 +382,7 @@ type:'line',
 
 data:{
 labels:['Jan','Feb','Mar','Apr','May','Jun'],
-datasets:[
-{label:'Behavioral Risk',data:[42,48,53,57,61,66],borderColor:'#00d4ff'},
-{label:'Stress Pressure',data:[35,39,44,48,52,58],borderColor:'#ff4d6d'}
-]
+datasets:[{label:'Risk',data:[42,48,53,57,61,66],borderColor:'#00d4ff'}]
 }
 
 })
@@ -488,8 +392,8 @@ new Chart(document.getElementById('macroChart'),{
 type:'bar',
 
 data:{
-labels:["USA","Europe","Turkey","Emerging"],
-datasets:[{label:"Systemic Risk",data:[42,37,55,63],backgroundColor:"#00d4ff"}]
+labels:["USA","EU","TR","EM"],
+datasets:[{label:"Risk",data:[42,37,55,63],backgroundColor:"#00d4ff"}]
 }
 
 })

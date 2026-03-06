@@ -1,49 +1,63 @@
 <section class="card">
 
-<h2>Global Financial Heatmap</h2>
+<h2>Live Risk Simulation</h2>
 
 <p>
-ZENTRA observes global financial stress signals and systemic risk intensity.
+ZENTRA continuously evaluates behavioral financial signals
+and updates systemic risk indicators in real time.
 </p>
 
-<div id="heatmap" style="height:420px;border-radius:12px;"></div>
+<div class="grid">
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<div class="metric">
+<strong id="riskScore">0</strong>
+Behavioral Risk
+</div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<div class="metric">
+<strong id="stressScore">0</strong>
+Stress Pressure
+</div>
 
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<div class="metric">
+<strong id="fraudScore">0</strong>
+Fraud Signal
+</div>
+
+<div class="metric">
+<strong id="macroScore">0</strong>
+Macro Risk
+</div>
+
+</div>
+
+</section>
+
 
 <script>
 
-var heatMap = L.map('heatmap').setView([20,10],2)
+function randomScore(min,max){
+return Math.floor(Math.random()*(max-min)+min)
+}
 
-L.tileLayer(
-'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-{maxZoom:5}
-).addTo(heatMap)
+function updateRisk(){
 
+document.getElementById("riskScore").innerText =
+randomScore(55,85)
 
-var riskPoints = [
+document.getElementById("stressScore").innerText =
+randomScore(40,70)
 
-[40.71,-74.00,0.6],  // New York
-[51.50,-0.12,0.5],   // London
-[50.11,8.68,0.4],    // Frankfurt
-[41.01,28.97,0.7],   // Istanbul
-[35.68,139.69,0.3],  // Tokyo
-[1.29,103.85,0.4],   // Singapore
-[-33.86,151.20,0.2], // Sydney
-[19.43,-99.13,0.5],  // Mexico
-[55.75,37.61,0.6],   // Moscow
-[28.61,77.20,0.6]    // India
-]
+document.getElementById("fraudScore").innerText =
+randomScore(20,60)
 
-L.heatLayer(riskPoints,{
-radius:40,
-blur:30
-}).addTo(heatMap)
+document.getElementById("macroScore").innerText =
+randomScore(30,65)
 
-</script>
+}
 
-</section>
+updateRisk()
+
+setInterval(updateRisk,5000)
+
+  </script>

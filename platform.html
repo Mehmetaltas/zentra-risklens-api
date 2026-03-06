@@ -1,8 +1,11 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>ZENTRA Platform</title>
 
 <style>
@@ -15,18 +18,12 @@
 --muted:#99a6c6;
 --cyan:#00d4ff;
 --green:#19e68c;
---gold:#f5b942;
 --violet:#7c3aed;
 }
 
-*{box-sizing:border-box}
-
 body{
 margin:0;
-background:
-radial-gradient(900px 500px at 10% 0%, rgba(0,212,255,.10), transparent 60%),
-radial-gradient(800px 450px at 90% 10%, rgba(124,58,237,.10), transparent 60%),
-var(--bg);
+background:var(--bg);
 color:var(--text);
 font-family:Arial,sans-serif;
 }
@@ -42,9 +39,8 @@ margin:auto;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:14px;
+padding:14px 20px;
 flex-wrap:wrap;
-gap:10px;
 }
 
 .logo{
@@ -90,22 +86,13 @@ padding:24px;
 .card{
 background:var(--card);
 border:1px solid var(--line);
-border-radius:16px;
+border-radius:14px;
 padding:20px;
 margin-bottom:20px;
 }
 
-.hero{
-background:linear-gradient(180deg,#0d1430,#070b18);
-}
-
 h1{
 color:var(--cyan);
-margin:0 0 10px 0;
-}
-
-h2{
-color:var(--green);
 margin:0 0 10px 0;
 }
 
@@ -114,86 +101,86 @@ color:var(--muted);
 line-height:1.6;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:16px;
-margin-top:16px;
-}
-
-.metric{
-text-align:center;
-padding:16px;
-background:#0a1122;
-border:1px solid var(--line);
-border-radius:12px;
-}
-
-.metric strong{
-display:block;
-font-size:26px;
-color:var(--cyan);
-margin-bottom:6px;
-}
-
-.code{
-background:#07101f;
-border:1px solid var(--line);
-border-radius:10px;
-padding:12px;
-font-family:monospace;
-font-size:12px;
-white-space:pre-wrap;
-margin-top:12px;
-}
-
 footer{
 text-align:center;
-font-size:12px;
 color:#99a6c6;
+font-size:12px;
 margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--line);
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="topbar">
+
 <div class="topin">
 
 <div style="display:flex;align-items:center;gap:10px">
+
 <div class="logo"></div>
+
 <strong>ZENTRA</strong>
+
 </div>
+
 
 <nav>
 
 <a href="index.html" data-t="home">Home</a>
+
+<a href="platform.html" data-t="platform">Platform</a>
+
 <a href="developer.html" data-t="dev">Developers</a>
-<a href="investor.html" data-t="inv">Investor</a>
-<a href="telescope.html" data-t="tel">Telescope</a>
-<a href="architecture.html" data-t="arch">Architecture</a>
+
+<a href="investor.html" data-t="investor">Investor</a>
+
+<a href="telescope.html" data-t="telescope">Telescope</a>
+
+<a href="network.html" data-t="network">Global Map</a>
+
+<a href="heatmap.html" data-t="heatmap">Heatmap</a>
+
+<a href="architecture.html" data-t="architecture">Architecture</a>
+
+<a href="trust.html" data-t="trust">Trust</a>
+
+<a href="#contact" data-t="contact">Contact</a>
 
 <div class="lang">
-<button id="en" class="active">EN</button>
-<button id="tr">TR</button>
+
+<button id="lang-en" class="active">EN</button>
+
+<button id="lang-tr">TR</button>
+
 </div>
 
 </nav>
 
 </div>
+
 </div>
+
+
 
 <div class="wrap">
 
-<section class="card hero">
+<section class="card">
 
-<h1 data-t="title">ZENTRA Platform</h1>
+<h1 data-t="title">Platform Overview</h1>
 
 <p data-t="subtitle">
-Behavioral financial infrastructure that connects institutions,
-signals and intelligence layers into one financial operating system.
+
+ZENTRA is a behavioral financial infrastructure that connects
+financial institutions, payment networks and macro intelligence
+into a unified risk observation system.
+
 </p>
 
 </section>
@@ -201,153 +188,100 @@ signals and intelligence layers into one financial operating system.
 
 <section class="card">
 
-<h2 data-t="infra">Infrastructure Layers</h2>
+<h1 data-t="section2">Infrastructure</h1>
 
-<div class="grid">
+<p data-t="section2text">
 
-<div class="metric">
-<strong>DATA</strong>
-<span data-t="data">ERP, Banking, Payments, Macro</span>
-</div>
+The platform combines behavioral analytics, risk engines,
+security monitoring and macro signals to detect financial stress
+before traditional systems react.
 
-<div class="metric">
-<strong>ENGINES</strong>
-<span data-t="engines">Risk Engine, Stress Engine, Behavior Engine</span>
-</div>
-
-<div class="metric">
-<strong>LENS</strong>
-<span data-t="lens">Sector Intelligence Modules</span>
-</div>
-
-<div class="metric">
-<strong>OUTPUT</strong>
-<span data-t="output">Risk Scores and Signals</span>
-</div>
-
-</div>
+</p>
 
 </section>
 
 
-<section class="card">
+<footer>
 
-<h2 data-t="flow">Platform Flow</h2>
+<span data-t="footer">
 
-<div class="code">
+ZENTRA Investor Demonstration Platform
 
-DATA SIGNALS
-↓
-ENGINE PROCESSING
-↓
-LENS MARKETPLACE
-↓
-FINANCIAL INTELLIGENCE
-↓
-ZENTRA FINANCIAL TELESCOPE
+</span>
 
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2 data-t="institutions">Institutions</h2>
-
-<div class="grid">
-
-<div class="metric">
-<strong>Banks</strong>
-</div>
-
-<div class="metric">
-<strong>Fintech</strong>
-</div>
-
-<div class="metric">
-<strong>Payments</strong>
-</div>
-
-<div class="metric">
-<strong>Insurance</strong>
-</div>
-
-<div class="metric">
-<strong>Funds</strong>
-</div>
-
-<div class="metric">
-<strong>ERP</strong>
-</div>
-
-</div>
-
-</section>
-
-
-<footer data-t="footer">
-ZENTRA Platform Overview
 </footer>
 
 </div>
 
 
+
 <script>
 
-const dict={
+const dict = {
+
 en:{
 home:"Home",
+platform:"Platform",
 dev:"Developers",
-inv:"Investor",
-tel:"Telescope",
-arch:"Architecture",
-title:"ZENTRA Platform",
-subtitle:"Behavioral financial infrastructure that connects institutions, signals and intelligence layers into one financial operating system.",
-infra:"Infrastructure Layers",
-data:"ERP, Banking, Payments, Macro",
-engines:"Risk Engine, Stress Engine, Behavior Engine",
-lens:"Sector Intelligence Modules",
-output:"Risk Scores and Signals",
-flow:"Platform Flow",
-institutions:"Institutions",
-footer:"ZENTRA Platform Overview"
+investor:"Investor",
+telescope:"Telescope",
+network:"Global Map",
+heatmap:"Heatmap",
+architecture:"Architecture",
+trust:"Trust Center",
+contact:"Contact",
+title:"Platform Overview",
+subtitle:"ZENTRA is a behavioral financial infrastructure that connects financial institutions and macro signals.",
+section2:"Infrastructure",
+section2text:"Risk engines, behavior monitoring and macro intelligence combined.",
+footer:"ZENTRA Investor Demonstration Platform"
 },
+
 tr:{
 home:"Ana Sayfa",
+platform:"Platform",
 dev:"Geliştiriciler",
-inv:"Yatırımcı",
-tel:"Teleskop",
-arch:"Mimari",
-title:"ZENTRA Platformu",
-subtitle:"Kurumları, finansal sinyalleri ve zekâ katmanlarını bir finans işletim sistemi içinde birleştiren davranışsal finans altyapısı.",
-infra:"Altyapı Katmanları",
-data:"ERP, Banka, Ödeme, Makro",
-engines:"Risk Motoru, Stres Motoru, Davranış Motoru",
-lens:"Sektörel Lens Modülleri",
-output:"Risk Skorları ve Sinyaller",
-flow:"Platform Akışı",
-institutions:"Kurumlar",
-footer:"ZENTRA Platform Genel Bakış"
+investor:"Yatırımcı",
+telescope:"Teleskop",
+network:"Küresel Harita",
+heatmap:"Risk Haritası",
+architecture:"Mimari",
+trust:"Güven Merkezi",
+contact:"İletişim",
+title:"Platform Genel Bakış",
+subtitle:"ZENTRA finansal davranışı analiz eden bir finans altyapısıdır.",
+section2:"Altyapı",
+section2text:"Risk motorları, davranış analizi ve makro finans sinyalleri birleşir.",
+footer:"ZENTRA Yatırımcı Demonstrasyon Platformu"
 }
+
 }
 
 function setLang(lang){
-document.querySelectorAll("[data-t]").forEach(el=>{
-const key=el.getAttribute("data-t")
-if(dict[lang][key]) el.textContent=dict[lang][key]
-})
 
-document.getElementById("en").classList.toggle("active",lang==="en")
-document.getElementById("tr").classList.toggle("active",lang==="tr")
+document.querySelectorAll("[data-t]").forEach(el=>{
+
+const key = el.getAttribute("data-t")
+
+if(dict[lang][key]){
+el.textContent = dict[lang][key]
 }
 
-document.getElementById("en").onclick=()=>setLang("en")
-document.getElementById("tr").onclick=()=>setLang("tr")
+})
+
+document.getElementById("lang-en").classList.toggle("active",lang==="en")
+document.getElementById("lang-tr").classList.toggle("active",lang==="tr")
+
+}
+
+document.getElementById("lang-en").onclick = ()=>setLang("en")
+
+document.getElementById("lang-tr").onclick = ()=>setLang("tr")
 
 setLang("en")
 
 </script>
+
 
 </body>
 </html>

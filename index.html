@@ -8,141 +8,34 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root{
-  --bg:#050814;
-  --card:#0c1228;
-  --line:#1e2a55;
-  --text:#eaf2ff;
-  --muted:#99a6c6;
-  --cyan:#00d4ff;
-  --green:#19e68c;
-  --gold:#f5b942;
-  --red:#ff4d6d;
-  --violet:#7c3aed;
+  --bg:#050814; --card:#0c1228; --line:#1e2a55; --text:#eaf2ff; --muted:#99a6c6;
+  --cyan:#00d4ff; --green:#19e68c; --gold:#f5b942; --red:#ff4d6d; --violet:#7c3aed;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-}
-.topbar{
-  position:sticky;
-  top:0;
-  background:#060b1c;
-  border-bottom:1px solid var(--line);
-  z-index:10;
-}
-.topin{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.logo{
-  width:32px;
-  height:32px;
-  border-radius:10px;
-  background:linear-gradient(135deg,var(--violet),var(--cyan));
-}
-nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
-nav a{
-  color:white;
-  text-decoration:none;
-  font-size:13px;
-}
-.wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:24px;
-}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:20px;
-}
-h1{
-  color:var(--cyan);
-  margin:0 0 10px 0;
-}
-h2{
-  color:var(--green);
-  margin:0 0 10px 0;
-}
-p{
-  color:var(--muted);
-  line-height:1.6;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-}
-.tag{
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:6px;
-  margin-left:8px;
-}
-.live{background:var(--green);color:black}
-.lock{background:var(--gold);color:black}
-.wait{background:#2e3c5f;color:white}
-.btn{
-  display:inline-block;
-  padding:10px 14px;
-  border-radius:8px;
-  border:1px solid var(--line);
-  color:white;
-  text-decoration:none;
-  margin-top:10px;
-  font-size:13px;
-}
-.btn.primary{
-  background:var(--cyan);
-  color:black;
-  border:none;
-}
-.code{
-  background:#07101f;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  font-family:monospace;
-  font-size:12px;
-  margin-top:10px;
-  white-space:pre-wrap;
-}
-.table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:12px;
-}
-.table th,.table td{
-  padding:10px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-size:12px;
-  text-align:left;
-}
-.table th{
-  color:white;
-}
-footer{
-  text-align:center;
-  color:#99a6c6;
-  font-size:12px;
-  margin-top:10px;
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+.topbar{position:sticky;top:0;background:#060b1c;border-bottom:1px solid var(--line);z-index:10}
+.topin{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:14px;gap:16px;flex-wrap:wrap}
+.logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--violet),var(--cyan))}
+nav{display:flex;flex-wrap:wrap;gap:12px}
+nav a{color:#fff;text-decoration:none;font-size:13px}
+.wrap{max-width:1100px;margin:auto;padding:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
+h1{color:var(--cyan);margin:0 0 10px}
+h2{color:var(--green);margin:0 0 10px}
+p{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.tag{font-size:11px;padding:4px 8px;border-radius:6px;margin-left:8px}
+.live{background:var(--green);color:#000}
+.lock{background:var(--gold);color:#000}
+.wait{background:#2e3c5f;color:#fff}
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;border:1px solid var(--line);color:#fff;text-decoration:none;margin-top:10px;font-size:13px}
+.btn.primary{background:var(--cyan);color:#000;border:none}
+.code{background:#07101f;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:monospace;font-size:12px;margin-top:10px;white-space:pre-wrap}
+.table{width:100%;border-collapse:collapse;margin-top:12px}
+.table th,.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:12px;text-align:left}
+.table th{color:#fff}
+footer{text-align:center;color:#99a6c6;font-size:12px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -153,7 +46,6 @@ footer{
       <div class="logo"></div>
       <strong>ZENTRA</strong>
     </div>
-
     <nav>
       <a href="#proof">Proof</a>
       <a href="#dashboard">Dashboard</a>
@@ -171,10 +63,7 @@ footer{
 
   <section class="card">
     <h1>Financial Telescope</h1>
-    <p>
-      ZENTRA observes financial behavior across institutions and markets,
-      detecting systemic risk drift before traditional systems react.
-    </p>
+    <p>ZENTRA observes financial behavior across institutions and markets, detecting systemic risk drift before traditional systems react.</p>
     <a class="btn primary" href="#proof">Live Proof</a>
   </section>
 
@@ -182,16 +71,13 @@ footer{
     <h2>Live Proof</h2>
     <div class="grid">
       <div class="card">
-        <strong>RiskLens API</strong>
-        <span class="tag live">LIVE</span>
+        <strong>RiskLens API</strong><span class="tag live">LIVE</span>
         <p>Behavioral risk scoring engine</p>
         <a class="btn" target="_blank" href="https://zentra-risklens-api-2.onrender.com/health">Health</a>
         <a class="btn" target="_blank" href="https://zentra-risklens-api-2.onrender.com/openapi.json">OpenAPI</a>
       </div>
-
       <div class="card">
-        <strong>Credit Stress Engine</strong>
-        <span class="tag live">LIVE</span>
+        <strong>Credit Stress Engine</strong><span class="tag live">LIVE</span>
         <p>Installment stress modeling</p>
         <a class="btn" target="_blank" href="https://zentra-credit-stress-api.onrender.com/health">Health</a>
         <a class="btn" target="_blank" href="https://zentra-credit-stress-api.onrender.com/openapi.json">OpenAPI</a>
@@ -286,33 +172,13 @@ FINANCIAL TELESCOPE</div>
     <h2>Traditional Scoring vs ZENTRA</h2>
     <table class="table">
       <thead>
-        <tr>
-          <th>Area</th>
-          <th>Traditional</th>
-          <th>ZENTRA</th>
-        </tr>
+        <tr><th>Area</th><th>Traditional</th><th>ZENTRA</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Time Horizon</td>
-          <td>Past oriented</td>
-          <td>Behavior + drift + stress</td>
-        </tr>
-        <tr>
-          <td>Architecture</td>
-          <td>Single score</td>
-          <td>Engine + lens marketplace</td>
-        </tr>
-        <tr>
-          <td>Security Visibility</td>
-          <td>Limited</td>
-          <td>Behavioral AML + fraud intelligence</td>
-        </tr>
-        <tr>
-          <td>Macro Observation</td>
-          <td>Weak</td>
-          <td>Financial Telescope</td>
-        </tr>
+        <tr><td>Time Horizon</td><td>Past oriented</td><td>Behavior + drift + stress</td></tr>
+        <tr><td>Architecture</td><td>Single score</td><td>Engine + lens marketplace</td></tr>
+        <tr><td>Security Visibility</td><td>Limited</td><td>Behavioral AML + fraud intelligence</td></tr>
+        <tr><td>Macro Observation</td><td>Weak</td><td>Financial Telescope</td></tr>
       </tbody>
     </table>
   </section>
@@ -341,10 +207,7 @@ FINANCIAL TELESCOPE</div>
     <a class="btn primary" href="mailto:contact@zentrarisk.com">Contact</a>
   </section>
 
-  <footer>
-    ZENTRA investor demonstration platform
-  </footer>
-
+  <footer>ZENTRA investor demonstration platform</footer>
 </div>
 
 <script>
@@ -353,16 +216,8 @@ new Chart(document.getElementById('riskChart'),{
   data:{
     labels:['Jan','Feb','Mar','Apr','May','Jun'],
     datasets:[
-      {
-        label:'Behavioral Risk',
-        data:[42,48,53,57,61,66],
-        borderColor:'#00d4ff'
-      },
-      {
-        label:'Stress Pressure',
-        data:[35,39,44,48,52,58],
-        borderColor:'#ff4d6d'
-      }
+      {label:'Behavioral Risk',data:[42,48,53,57,61,66],borderColor:'#00d4ff'},
+      {label:'Stress Pressure',data:[35,39,44,48,52,58],borderColor:'#ff4d6d'}
     ]
   }
 });
@@ -377,13 +232,10 @@ new Chart(document.getElementById('macroChart'),{
   type:'bar',
   data:{
     labels:["USA","Europe","Turkey","Emerging"],
-    datasets:[{
-      label:"Systemic Risk",
-      data:[42,37,55,63]
-    }]
+    datasets:[{label:"Systemic Risk",data:[42,37,55,63]}]
   }
 });
 </script>
 
 </body>
-                          </html>
+</html>

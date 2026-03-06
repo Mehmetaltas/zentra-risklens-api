@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>ZENTRA — Global Financial Telescope</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ZENTRA — Financial Telescope</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
 body{
 background:#050814;
 color:#eaf2ff;
@@ -25,7 +30,7 @@ margin-bottom:10px;
 }
 
 h2{
-margin-top:40px;
+margin-top:50px;
 }
 
 .card{
@@ -38,7 +43,7 @@ margin-top:20px;
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:20px;
 }
 
@@ -58,6 +63,7 @@ padding:4px 8px;
 border-radius:6px;
 background:#1e2a55;
 font-size:12px;
+margin-left:6px;
 }
 
 .live{
@@ -69,7 +75,13 @@ color:#000;
 background:#f5b942;
 color:#000;
 }
+
+canvas{
+max-width:100%;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -79,13 +91,19 @@ color:#000;
 <h1>ZENTRA</h1>
 <p>Behavioral Financial Infrastructure</p>
 
+
 <div class="card">
-<h2>Global Financial Telescope</h2>
+
+<h2>Financial Telescope</h2>
+
 <p>
-ZENTRA observes financial behaviour like Webb observes the universe.
+ZENTRA observes financial behaviour like a telescope observes the universe.
 Behavioral signals + stress modelling allow institutions to detect risk earlier.
 </p>
+
 </div>
+
+
 <div class="card">
 
 <h2 id="proof">Live Proof</h2>
@@ -93,21 +111,25 @@ Behavioral signals + stress modelling allow institutions to detect risk earlier.
 <div class="grid">
 
 <div class="card">
-<b>RiskLens API</b><br>
+<b>RiskLens API</b>
 <span class="tag live">LIVE</span>
 <br>
-<a class="btn" href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">Health</a>
+<a class="btn" href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">
+Health
+</a>
 </div>
 
 <div class="card">
-<b>Credit Stress Engine</b><br>
+<b>Credit Stress Engine</b>
 <span class="tag live">LIVE</span>
 <br>
-<a class="btn" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">Health</a>
+<a class="btn" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">
+Health
+</a>
 </div>
 
 <div class="card">
-<b>AI Explain Layer</b><br>
+<b>Explain AI Layer</b>
 <span class="tag">AUTO</span>
 <p>Explainable AI risk interpretation.</p>
 </div>
@@ -117,80 +139,43 @@ Behavioral signals + stress modelling allow institutions to detect risk earlier.
 </div>
 
 
+<div class="card">
+
+<h2>Risk Index Dashboard</h2>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
 
 <div class="card">
 
-<h2 id="market">Lens Platform</h2>
+<h2>Lens Marketplace</h2>
 
 <div class="grid">
 
-<div class="card">
-RiskLens
-<span class="tag live">LIVE</span>
+<div class="card">RiskLens <span class="tag live">LIVE</span></div>
+<div class="card">Credit Stress <span class="tag live">LIVE</span></div>
+
+<div class="card">CFO Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">SME Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">Savings Finance Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">Insurance Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">Factoring Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">Funds Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">Digital Asset Lens <span class="tag lock">LOCKED</span></div>
+<div class="card">ERP Accounting Lens <span class="tag lock">LOCKED</span></div>
+
 </div>
 
-<div class="card">
-Credit Stress
-<span class="tag live">LIVE</span>
 </div>
 
-<div class="card">
-CFO Lens
-<span class="tag lock">LOCKED</span>
-</div>
-
-<div class="card">
-SME Lens
-<span class="tag lock">LOCKED</span>
-</div>
 
 <div class="card">
-Savings Finance Lens
-<span class="tag lock">LOCKED</span>
-</div>
 
-<div class="card">
-Insurance Lens
-<span class="tag lock">LOCKED</span>
-</div>
+<h2>Global Financial Signals</h2>
 
-<div class="card">
-Factoring Lens
-<span class="tag lock">LOCKED</span>
-</div>
-
-<div class="card">
-Funds Lens
-<span class="tag lock">LOCKED</span>
-</div>
-
-<div class="card">
-Digital Asset Lens
-<span class="tag lock">LOCKED</span>
-</div>
-
-<div class="card">
-Accounting Integration Lens
-<span class="tag lock">LOCKED</span>
-</div>
-
-</div>
-
-</div>
-<div class="card">
-
-<h2>Global Financial Data Sources</h2>
-
-<div class="grid">
-
-<div class="card">TCMB</div>
-<div class="card">IMF</div>
-<div class="card">BIS</div>
-<div class="card">ECB</div>
-<div class="card">BIST</div>
-<div class="card">LSE</div>
-
-</div>
+<canvas id="globalMap" height="300"></canvas>
 
 </div>
 
@@ -200,8 +185,8 @@ Accounting Integration Lens
 <h2>Security Layer</h2>
 
 <p>
-ZENTRA includes behavioral AML detection, fraud pattern monitoring and
-NFC + biometric confirmation risk modelling for payment environments.
+ZENTRA includes behavioral AML detection, fraud monitoring and biometric /
+NFC payment signal detection.
 </p>
 
 </div>
@@ -212,9 +197,11 @@ NFC + biometric confirmation risk modelling for payment environments.
 <h2>Pricing</h2>
 
 <ul>
+
 <li>API Core — fintech integration</li>
 <li>Enterprise License — banks and regulated institutions</li>
 <li>Lens Marketplace — modular licensing</li>
+
 </ul>
 
 </div>
@@ -227,7 +214,9 @@ NFC + biometric confirmation risk modelling for payment environments.
 <p>Dubai HQ — Strategic Partnerships</p>
 
 <a class="btn" href="mailto:contact@zentrarisk.com">
+
 Contact
+
 </a>
 
 </div>
@@ -235,5 +224,86 @@ Contact
 
 </div>
 
+
+<script>
+
+const ctx=document.getElementById('riskChart');
+
+new Chart(ctx,{
+type:'line',
+data:{
+labels:["-5","-4","-3","-2","-1","Now"],
+datasets:[{
+label:"Behavioral Risk",
+data:[62,65,64,70,74,78],
+borderColor:"#00d4ff",
+tension:0.4
+},
+{
+label:"Stress Pressure",
+data:[40,45,47,50,54,60],
+borderColor:"#ff4d6d",
+tension:0.4
+}]
+},
+options:{
+plugins:{legend:{labels:{color:"#fff"}}},
+scales:{
+x:{ticks:{color:"#fff"}},
+y:{ticks:{color:"#fff"}}
+}
+}
+});
+
+
+const canvas=document.getElementById("globalMap");
+const ctx2=canvas.getContext("2d");
+
+canvas.width=canvas.offsetWidth;
+
+const nodes=[
+{x:120,y:180,label:"USA"},
+{x:300,y:100,label:"EU"},
+{x:500,y:180,label:"TR"},
+{x:700,y:120,label:"ASIA"},
+{x:900,y:200,label:"GLOBAL"}
+];
+
+function draw(){
+
+ctx2.clearRect(0,0,canvas.width,canvas.height);
+
+nodes.forEach(n=>{
+
+ctx2.beginPath();
+ctx2.arc(n.x,n.y,6,0,Math.PI*2);
+ctx2.fillStyle="#00d4ff";
+ctx2.fill();
+
+ctx2.fillStyle="#ffffff";
+ctx2.font="12px system-ui";
+ctx2.fillText(n.label,n.x+10,n.y+4);
+
+});
+
+ctx2.strokeStyle="#00d4ff";
+
+for(let i=0;i<nodes.length-1;i++){
+
+ctx2.beginPath();
+ctx2.moveTo(nodes[i].x,nodes[i].y);
+ctx2.lineTo(nodes[i+1].x,nodes[i+1].y);
+ctx2.stroke();
+
+}
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+</script>
+
 </body>
-</html>
+  </html>

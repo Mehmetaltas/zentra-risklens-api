@@ -1,11 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZENTRA Financial Telescope</title>
+
+<title>ZENTRA Platform</title>
 
 <style>
+
 :root{
 --bg:#050814;
 --card:#0c1228;
@@ -14,24 +18,21 @@
 --muted:#99a6c6;
 --cyan:#00d4ff;
 --green:#19e68c;
---gold:#f5b942;
---red:#ff4d6d;
 --violet:#7c3aed;
 }
-*{box-sizing:border-box}
+
 body{
 margin:0;
-background:
-radial-gradient(900px 500px at 10% 0%, rgba(0,212,255,.10), transparent 60%),
-radial-gradient(800px 450px at 90% 10%, rgba(124,58,237,.10), transparent 60%),
-var(--bg);
+background:var(--bg);
 color:var(--text);
 font-family:Arial,sans-serif;
 }
+
 .topbar{
 background:#060b1c;
 border-bottom:1px solid var(--line);
 }
+
 .topin{
 max-width:1100px;
 margin:auto;
@@ -39,403 +40,248 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:14px 20px;
-gap:12px;
 flex-wrap:wrap;
 }
+
 .logo{
 width:32px;
 height:32px;
 border-radius:10px;
 background:linear-gradient(135deg,var(--violet),var(--cyan));
 }
+
 nav{
 display:flex;
 gap:14px;
 flex-wrap:wrap;
 align-items:center;
 }
+
 nav a{
-color:#fff;
+color:white;
 text-decoration:none;
 font-size:13px;
 }
+
 .lang button{
 border:1px solid var(--line);
 background:#0a1122;
-color:#fff;
+color:white;
 padding:6px 10px;
 border-radius:8px;
 cursor:pointer;
 }
+
 .lang button.active{
 background:var(--cyan);
-color:#000;
+color:black;
 }
+
 .wrap{
 max-width:1100px;
 margin:auto;
-padding:24px 20px 60px;
+padding:24px;
 }
+
 .card{
 background:var(--card);
 border:1px solid var(--line);
-border-radius:16px;
-padding:22px;
+border-radius:14px;
+padding:20px;
 margin-bottom:20px;
 }
-.hero{
-background:linear-gradient(180deg,#0d1430,#070b18);
-}
+
 h1{
-margin:0 0 10px;
 color:var(--cyan);
-font-size:34px;
+margin:0 0 10px 0;
 }
-h2{
-margin:0 0 10px;
-color:var(--green);
-}
+
 p{
-margin:0;
 color:var(--muted);
 line-height:1.6;
 }
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:16px;
-margin-top:16px;
-}
-.metric{
-text-align:center;
-padding:18px;
-background:#08101f;
-border:1px solid var(--line);
-border-radius:12px;
-}
-.metric strong{
-display:block;
-font-size:26px;
-color:var(--cyan);
-margin-bottom:6px;
-}
-.map{
-position:relative;
-height:340px;
-background:
-radial-gradient(circle at 20% 30%, rgba(0,212,255,.08), transparent 18%),
-radial-gradient(circle at 52% 28%, rgba(0,212,255,.06), transparent 18%),
-radial-gradient(circle at 58% 42%, rgba(255,77,109,.06), transparent 16%),
-radial-gradient(circle at 72% 58%, rgba(245,185,66,.06), transparent 16%),
-#08101f;
-border:1px solid var(--line);
-border-radius:14px;
-overflow:hidden;
-margin-top:14px;
-}
-.point{
-position:absolute;
-width:14px;
-height:14px;
-border-radius:50%;
-transform:translate(-50%,-50%);
-box-shadow:0 0 18px currentColor;
-animation:pulse 2.8s infinite;
-}
-.point.low{background:var(--green);color:var(--green)}
-.point.mid{background:var(--gold);color:var(--gold)}
-.point.high{background:var(--red);color:var(--red)}
-.label{
-position:absolute;
-transform:translate(-50%,14px);
-font-size:12px;
-color:#fff;
-white-space:nowrap;
-}
-.table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-.table th,.table td{
-text-align:left;
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,.08);
-font-size:12px;
-}
-.table th{color:#fff}
-.code{
-background:#07101f;
-border:1px solid var(--line);
-border-radius:10px;
-padding:12px;
-font-family:monospace;
-font-size:12px;
-white-space:pre-wrap;
-margin-top:12px;
-}
+
 footer{
 text-align:center;
 color:#99a6c6;
 font-size:12px;
-margin-top:30px;
-padding-top:18px;
-border-top:1px solid rgba(255,255,255,.08);
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--line);
 }
-@keyframes pulse{
-0%{transform:translate(-50%,-50%) scale(.85)}
-50%{transform:translate(-50%,-50%) scale(1.12)}
-100%{transform:translate(-50%,-50%) scale(.85)}
-}
+
 </style>
+
 </head>
+
+
 <body>
 
+
 <div class="topbar">
-  <div class="topin">
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="logo"></div>
-      <strong>ZENTRA</strong>
-    </div>
 
-    <nav>
-      <a href="index.html" data-t="navHome">Home</a>
-      <a href="platform.html" data-t="navPlatform">Platform</a>
-      <a href="developer.html" data-t="navDev">Developers</a>
-      <a href="investor.html" data-t="navInv">Investor</a>
-      <a href="architecture.html" data-t="navArch">Architecture</a>
+<div class="topin">
 
-      <div class="lang">
-        <button id="en" class="active">EN</button>
-        <button id="tr">TR</button>
-      </div>
-    </nav>
-  </div>
+<div style="display:flex;align-items:center;gap:10px">
+
+<div class="logo"></div>
+
+<strong>ZENTRA</strong>
+
 </div>
+
+
+<nav>
+
+<a href="index.html" data-t="home">Home</a>
+
+<a href="platform.html" data-t="platform">Platform</a>
+
+<a href="developer.html" data-t="dev">Developers</a>
+
+<a href="investor.html" data-t="investor">Investor</a>
+
+<a href="telescope.html" data-t="telescope">Telescope</a>
+
+<a href="network.html" data-t="network">Global Map</a>
+
+<a href="heatmap.html" data-t="heatmap">Heatmap</a>
+
+<a href="architecture.html" data-t="architecture">Architecture</a>
+
+<a href="trust.html" data-t="trust">Trust</a>
+
+<a href="#contact" data-t="contact">Contact</a>
+
+<div class="lang">
+
+<button id="lang-en" class="active">EN</button>
+
+<button id="lang-tr">TR</button>
+
+</div>
+
+</nav>
+
+</div>
+
+</div>
+
+
 
 <div class="wrap">
 
-  <section class="card hero">
-    <h1 data-t="title">Financial Telescope</h1>
-    <p data-t="intro">
-      ZENTRA observes macro financial signals and behavioral drift across markets to detect systemic financial pressure.
-    </p>
-  </section>
+<section class="card">
 
-  <section class="card">
-    <h2 data-t="mapTitle">Global Risk Map</h2>
-    <div class="map">
-      <div class="point mid" style="left:24%;top:34%"></div>
-      <div class="label" style="left:24%;top:34%" data-t="usa">USA</div>
+<h1 data-t="title">Platform Overview</h1>
 
-      <div class="point mid" style="left:49%;top:30%"></div>
-      <div class="label" style="left:49%;top:30%" data-t="eu">Europe</div>
+<p data-t="subtitle">
 
-      <div class="point high" style="left:56%;top:38%"></div>
-      <div class="label" style="left:56%;top:38%" data-t="turkey">Türkiye</div>
+ZENTRA is a behavioral financial infrastructure that connects
+financial institutions, payment networks and macro intelligence
+into a unified risk observation system.
 
-      <div class="point high" style="left:72%;top:56%"></div>
-      <div class="label" style="left:72%;top:56%" data-t="em">Emerging Markets</div>
-    </div>
-  </section>
+</p>
 
-  <section class="card">
-    <h2 data-t="signalTitle">Systemic Risk Signals</h2>
-    <div class="grid">
-      <div class="metric">
-        <strong id="riskScore">62</strong>
-        <span data-t="sig1">Systemic Risk</span>
-      </div>
-      <div class="metric">
-        <strong id="stressScore">54</strong>
-        <span data-t="sig2">Liquidity Stress</span>
-      </div>
-      <div class="metric">
-        <strong id="driftScore">MEDIUM</strong>
-        <span data-t="sig3">Behavior Drift</span>
-      </div>
-      <div class="metric">
-        <strong id="macroScore">ACTIVE</strong>
-        <span data-t="sig4">Macro Signals</span>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <section class="card">
-    <h2 data-t="regionTitle">Observed Regions</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th data-t="th1">Region</th>
-          <th data-t="th2">Signal</th>
-          <th data-t="th3">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td data-t="r1a">USA</td>
-          <td data-t="r1b">Market Stress</td>
-          <td data-t="r1c">MEDIUM</td>
-        </tr>
-        <tr>
-          <td data-t="r2a">Europe</td>
-          <td data-t="r2b">Liquidity Risk</td>
-          <td data-t="r2c">MODERATE</td>
-        </tr>
-        <tr>
-          <td data-t="r3a">Türkiye</td>
-          <td data-t="r3b">Behavior Drift</td>
-          <td data-t="r3c">RISING</td>
-        </tr>
-        <tr>
-          <td data-t="r4a">Emerging Markets</td>
-          <td data-t="r4b">Systemic Stress</td>
-          <td data-t="r4c">HIGH</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
 
-  <section class="card">
-    <h2 data-t="sourceTitle">Macro Sources</h2>
-    <div class="grid">
-      <div class="metric"><strong>TCMB</strong></div>
-      <div class="metric"><strong>IMF</strong></div>
-      <div class="metric"><strong>BIS</strong></div>
-      <div class="metric"><strong>ECB</strong></div>
-    </div>
-  </section>
+<section class="card">
 
-  <section class="card">
-    <h2 data-t="logicTitle">Observatory Logic</h2>
-    <div class="code" data-t="logicCode">MARKET SIGNALS
-↓
-BEHAVIOR DRIFT
-↓
-STRESS OBSERVATION
-↓
-SYSTEMIC RISK INTELLIGENCE
-↓
-FINANCIAL TELESCOPE</div>
-  </section>
+<h1 data-t="section2">Infrastructure</h1>
 
-  <footer data-t="footer">ZENTRA Financial Telescope</footer>
+<p data-t="section2text">
+
+The platform combines behavioral analytics, risk engines,
+security monitoring and macro signals to detect financial stress
+before traditional systems react.
+
+</p>
+
+</section>
+
+
+<footer>
+
+<span data-t="footer">
+
+ZENTRA Investor Demonstration Platform
+
+</span>
+
+</footer>
 
 </div>
 
+
+
 <script>
+
 const dict = {
+
 en:{
-navHome:"Home",
-navPlatform:"Platform",
-navDev:"Developers",
-navInv:"Investor",
-navArch:"Architecture",
-title:"Financial Telescope",
-intro:"ZENTRA observes macro financial signals and behavioral drift across markets to detect systemic financial pressure.",
-mapTitle:"Global Risk Map",
-usa:"USA",
-eu:"Europe",
-turkey:"Türkiye",
-em:"Emerging Markets",
-signalTitle:"Systemic Risk Signals",
-sig1:"Systemic Risk",
-sig2:"Liquidity Stress",
-sig3:"Behavior Drift",
-sig4:"Macro Signals",
-regionTitle:"Observed Regions",
-th1:"Region",
-th2:"Signal",
-th3:"Status",
-r1a:"USA", r1b:"Market Stress", r1c:"MEDIUM",
-r2a:"Europe", r2b:"Liquidity Risk", r2c:"MODERATE",
-r3a:"Türkiye", r3b:"Behavior Drift", r3c:"RISING",
-r4a:"Emerging Markets", r4b:"Systemic Stress", r4c:"HIGH",
-sourceTitle:"Macro Sources",
-logicTitle:"Observatory Logic",
-logicCode:`MARKET SIGNALS
-↓
-BEHAVIOR DRIFT
-↓
-STRESS OBSERVATION
-↓
-SYSTEMIC RISK INTELLIGENCE
-↓
-FINANCIAL TELESCOPE`,
-footer:"ZENTRA Financial Telescope"
+home:"Home",
+platform:"Platform",
+dev:"Developers",
+investor:"Investor",
+telescope:"Telescope",
+network:"Global Map",
+heatmap:"Heatmap",
+architecture:"Architecture",
+trust:"Trust Center",
+contact:"Contact",
+title:"Platform Overview",
+subtitle:"ZENTRA is a behavioral financial infrastructure that connects financial institutions and macro signals.",
+section2:"Infrastructure",
+section2text:"Risk engines, behavior monitoring and macro intelligence combined.",
+footer:"ZENTRA Investor Demonstration Platform"
 },
+
 tr:{
-navHome:"Ana Sayfa",
-navPlatform:"Platform",
-navDev:"Geliştiriciler",
-navInv:"Yatırımcı",
-navArch:"Mimari",
-title:"Finans Teleskobu",
-intro:"ZENTRA piyasalardaki makro finansal sinyalleri ve davranış sürüklenmesini gözlemleyerek sistemik finansal baskıyı tespit eder.",
-mapTitle:"Küresel Risk Haritası",
-usa:"ABD",
-eu:"Avrupa",
-turkey:"Türkiye",
-em:"Gelişen Piyasalar",
-signalTitle:"Sistemik Risk Sinyalleri",
-sig1:"Sistemik Risk",
-sig2:"Likidite Baskısı",
-sig3:"Davranış Sürüklenmesi",
-sig4:"Makro Sinyaller",
-regionTitle:"Gözlenen Bölgeler",
-th1:"Bölge",
-th2:"Sinyal",
-th3:"Durum",
-r1a:"ABD", r1b:"Piyasa Stresi", r1c:"ORTA",
-r2a:"Avrupa", r2b:"Likidite Riski", r2c:"ORTA",
-r3a:"Türkiye", r3b:"Davranış Sürüklenmesi", r3c:"YÜKSELİYOR",
-r4a:"Gelişen Piyasalar", r4b:"Sistemik Stres", r4c:"YÜKSEK",
-sourceTitle:"Makro Kaynaklar",
-logicTitle:"Gözlem Mantığı",
-logicCode:`PİYASA SİNYALLERİ
-↓
-DAVRANIŞ SÜRÜKLENMESİ
-↓
-STRES GÖZLEMİ
-↓
-SİSTEMİK RİSK ZEKÂSI
-↓
-FİNANS TELESKOBU`,
-footer:"ZENTRA Finans Teleskobu"
+home:"Ana Sayfa",
+platform:"Platform",
+dev:"Geliştiriciler",
+investor:"Yatırımcı",
+telescope:"Teleskop",
+network:"Küresel Harita",
+heatmap:"Risk Haritası",
+architecture:"Mimari",
+trust:"Güven Merkezi",
+contact:"İletişim",
+title:"Platform Genel Bakış",
+subtitle:"ZENTRA finansal davranışı analiz eden bir finans altyapısıdır.",
+section2:"Altyapı",
+section2text:"Risk motorları, davranış analizi ve makro finans sinyalleri birleşir.",
+footer:"ZENTRA Yatırımcı Demonstrasyon Platformu"
 }
-};
+
+}
 
 function setLang(lang){
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-t]").forEach(el=>{
-    const key = el.getAttribute("data-t");
-    if(dict[lang] && dict[lang][key]){
-      el.textContent = dict[lang][key];
-    }
-  });
-  document.getElementById("en").classList.toggle("active", lang==="en");
-  document.getElementById("tr").classList.toggle("active", lang==="tr");
+
+document.querySelectorAll("[data-t]").forEach(el=>{
+
+const key = el.getAttribute("data-t")
+
+if(dict[lang][key]){
+el.textContent = dict[lang][key]
 }
 
-function randomScore(min,max){
-  return Math.floor(Math.random()*(max-min+1))+min;
-}
-function tick(){
-  const risk = randomScore(50,75);
-  const stress = randomScore(40,68);
-  const drift = risk > 65 ? "HIGH" : risk > 55 ? "MEDIUM" : "LOW";
-  document.getElementById("riskScore").textContent = risk;
-  document.getElementById("stressScore").textContent = stress;
-  document.getElementById("driftScore").textContent = drift;
-  document.getElementById("macroScore").textContent = "ACTIVE";
+})
+
+document.getElementById("lang-en").classList.toggle("active",lang==="en")
+document.getElementById("lang-tr").classList.toggle("active",lang==="tr")
+
 }
 
-document.getElementById("en").onclick=()=>setLang("en");
-document.getElementById("tr").onclick=()=>setLang("tr");
-tick();
-setInterval(tick, 4000);
-setLang("en");
+document.getElementById("lang-en").onclick = ()=>setLang("en")
+
+document.getElementById("lang-tr").onclick = ()=>setLang("tr")
+
+setLang("en")
+
 </script>
+
 
 </body>
 </html>

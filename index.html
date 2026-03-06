@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 
 <meta charset="utf-8">
@@ -80,15 +79,8 @@ padding:20px;
 margin-bottom:20px;
 }
 
-h1{
-color:var(--cyan);
-margin:0 0 10px 0;
-}
-
-h2{
-color:var(--green);
-margin:0 0 10px 0;
-}
+h1{color:var(--cyan)}
+h2{color:var(--green)}
 
 p{
 color:var(--muted);
@@ -139,22 +131,6 @@ font-size:12px;
 margin-top:10px;
 }
 
-.table{
-width:100%;
-border-collapse:collapse;
-margin-top:12px;
-}
-
-.table th,.table td{
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,.08);
-font-size:12px;
-}
-
-.table th{
-color:white;
-}
-
 </style>
 
 </head>
@@ -173,12 +149,14 @@ color:white;
 <a href="#proof">Proof</a>
 <a href="#architecture">Architecture</a>
 <a href="#market">Lens</a>
-<a href="#telescope">Telescope</a>
+<a href="#coverage">Coverage</a>
+<a href="#security">Security</a>
 <a href="#contact">Contact</a>
 </nav>
 
 </div>
 </div>
+
 
 <div class="wrap">
 
@@ -188,14 +166,13 @@ color:white;
 <h1>Financial Telescope</h1>
 
 <p>
-ZENTRA observes financial behavior across institutions and macro systems
-detecting systemic risk drift before traditional financial systems react.
+ZENTRA observes financial behavior across institutions and markets
+detecting systemic risk drift before traditional systems react.
 </p>
 
 <a class="btn primary" href="#proof">Live Proof</a>
 
 </section>
-
 
 
 <section id="proof" class="card">
@@ -335,6 +312,44 @@ FINANCIAL TELESCOPE
 
 
 
+<section id="coverage" class="card">
+
+<h2>Institution Coverage</h2>
+
+<div class="grid">
+
+<div class="card"><strong>Banks</strong></div>
+<div class="card"><strong>Fintech / Payments</strong></div>
+<div class="card"><strong>Factoring</strong></div>
+<div class="card"><strong>Insurance</strong></div>
+<div class="card"><strong>Funds</strong></div>
+<div class="card"><strong>Savings Finance</strong></div>
+<div class="card"><strong>ERP / Accounting</strong></div>
+<div class="card"><strong>Digital Assets</strong></div>
+
+</div>
+
+</section>
+
+
+
+<section id="security" class="card">
+
+<h2>Security Intelligence</h2>
+
+<div class="grid">
+
+<div class="card"><strong>Behavioral AML</strong></div>
+<div class="card"><strong>KYC Intelligence</strong></div>
+<div class="card"><strong>Fraud Detection</strong></div>
+<div class="card"><strong>Account Misuse Detection</strong></div>
+
+</div>
+
+</section>
+
+
+
 <section class="card">
 
 <h2>System Status</h2>
@@ -393,101 +408,14 @@ ZENTRA investor demonstration platform
 
 </footer>
 
-<section class="card">
 
-<h2>Institution Coverage</h2>
-
-<p>
-ZENTRA is designed for multiple financial system participants across the economy.
-</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>Banks</strong>
-<p>Commercial banks, digital banks, neobanks</p>
-</div>
-
-<div class="card">
-<strong>Fintech / Payments</strong>
-<p>Payment companies, POS networks, transaction platforms</p>
-</div>
-
-<div class="card">
-<strong>Factoring</strong>
-<p>Invoice finance, receivable monitoring, debtor risk</p>
-</div>
-
-<div class="card">
-<strong>Insurance</strong>
-<p>Claims behavior, anomaly scoring, underwriting signals</p>
-</div>
-
-<div class="card">
-<strong>Funds</strong>
-<p>Portfolio stress, macro exposure, investment behavior</p>
-</div>
-
-<div class="card">
-<strong>Savings Finance</strong>
-<p>Installment-based asset acquisition and participant discipline</p>
-</div>
-
-<div class="card">
-<strong>ERP / Accounting</strong>
-<p>Invoice, payable, receivable and cashflow intelligence</p>
-</div>
-
-<div class="card">
-<strong>Digital Assets</strong>
-<p>Wallet behavior, transfer anomaly and volatility-linked signals</p>
-</div>
-
-</div>
-
-</section>
-  <section class="card">
-
-<h2>Security Intelligence</h2>
-
-<p>
-ZENTRA extends beyond financial scoring with behavioral security and compliance monitoring.
-</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>Behavioral AML</strong>
-<p>Detects unusual fund flow, abnormal transfer speed and suspicious behavior patterns.</p>
-</div>
-
-<div class="card">
-<strong>KYC Intelligence</strong>
-<p>Supports identity confidence using behavior signals, usage patterns and risk mismatch indicators.</p>
-</div>
-
-<div class="card">
-<strong>Fraud Monitoring</strong>
-<p>Flags transaction anomalies, merchant instability and misuse signals.</p>
-</div>
-
-<div class="card">
-<strong>Account Misuse Detection</strong>
-<p>Observes identity-behavior mismatch and suspicious account activity.</p>
-</div>
-
-</div>
-
-</section>
 </div>
 
 
 
 <script>
 
-const ctx = document.getElementById('riskChart');
-
-new Chart(ctx,{
+new Chart(document.getElementById('riskChart'),{
 type:'line',
 data:{
 labels:['Jan','Feb','Mar','Apr','May','Jun'],
@@ -504,7 +432,7 @@ borderColor:'#ff4d6d'
 }
 ]
 }
-});
+})
 
 document.getElementById("riskLive").innerHTML = JSON.stringify({
 risk_score: Math.floor(Math.random()*40)+50,
@@ -512,9 +440,7 @@ risk_band: "MID_RISK",
 action: "monitor"
 },null,2)
 
-const macro = document.getElementById('macroChart')
-
-new Chart(macro,{
+new Chart(document.getElementById('macroChart'),{
 type:'bar',
 data:{
 labels:["USA","Europe","Turkey","Emerging"],
@@ -528,4 +454,4 @@ data:[42,37,55,63]
 </script>
 
 </body>
-  </html>
+</html>

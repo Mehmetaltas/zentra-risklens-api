@@ -1,8 +1,11 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>ZENTRA — Behavioral Financial Infrastructure</title>
 
 <meta name="description" content="ZENTRA behavioral financial infrastructure platform">
@@ -26,13 +29,11 @@
 
 *{box-sizing:border-box}
 
-html{scroll-behavior:smooth}
-
 body{
 margin:0;
 background:var(--bg);
 color:var(--text);
-font-family:Arial, sans-serif;
+font-family:Arial;
 }
 
 .topbar{
@@ -40,7 +41,6 @@ position:sticky;
 top:0;
 background:#060b1c;
 border-bottom:1px solid var(--line);
-z-index:10;
 }
 
 .topin{
@@ -80,19 +80,14 @@ padding:20px;
 margin-bottom:20px;
 }
 
-.hero{
-background:linear-gradient(180deg,#0c1228,#070b18);
-}
-
 h1{
-margin:0 0 10px 0;
-font-size:34px;
 color:var(--cyan);
+margin:0 0 10px 0;
 }
 
 h2{
-margin:0 0 8px 0;
 color:var(--green);
+margin:0 0 10px 0;
 }
 
 p{
@@ -104,7 +99,6 @@ line-height:1.6;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:16px;
-margin-top:16px;
 }
 
 .tag{
@@ -125,7 +119,6 @@ border-radius:8px;
 border:1px solid var(--line);
 color:white;
 text-decoration:none;
-margin-right:8px;
 margin-top:10px;
 font-size:13px;
 }
@@ -146,41 +139,24 @@ font-size:12px;
 margin-top:10px;
 }
 
-.wavebox{
-height:120px;
-border:1px solid var(--line);
-border-radius:10px;
-margin-top:16px;
-position:relative;
-overflow:hidden;
+.table{
+width:100%;
+border-collapse:collapse;
+margin-top:12px;
 }
 
-.wave{
-position:absolute;
-width:120%;
-height:2px;
-background:var(--cyan);
-top:50%;
-left:-10%;
-animation:wave 3s linear infinite;
+.table th,.table td{
+padding:10px;
+border-bottom:1px solid rgba(255,255,255,.08);
+font-size:12px;
 }
 
-.wave:nth-child(2){
-top:30%;
-animation-duration:4s;
-}
-
-.wave:nth-child(3){
-top:70%;
-animation-duration:5s;
-}
-
-@keyframes wave{
-0%{transform:translateX(-20%)}
-100%{transform:translateX(20%)}
+.table th{
+color:white;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -195,8 +171,6 @@ animation-duration:5s;
 
 <nav>
 <a href="#proof">Proof</a>
-<a href="#flow">Flow</a>
-<a href="#integrations">Integrations</a>
 <a href="#architecture">Architecture</a>
 <a href="#market">Lens</a>
 <a href="#telescope">Telescope</a>
@@ -208,33 +182,25 @@ animation-duration:5s;
 
 <div class="wrap">
 
-<section class="card hero">
+
+<section class="card">
 
 <h1>Financial Telescope</h1>
 
 <p>
-ZENTRA observes financial behavior across institutions,
-detecting systemic risk drift and behavioral signals
-before traditional financial systems react.
+ZENTRA observes financial behavior across institutions and macro systems
+detecting systemic risk drift before traditional financial systems react.
 </p>
 
 <a class="btn primary" href="#proof">Live Proof</a>
-<a class="btn" href="#architecture">Architecture</a>
-
-<div class="wavebox">
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-</div>
 
 </section>
+
 
 
 <section id="proof" class="card">
 
 <h2>Live Proof</h2>
-
-<p>Public infrastructure endpoints</p>
 
 <div class="grid">
 
@@ -277,220 +243,80 @@ OpenAPI
 
 </div>
 
-
-<div class="card">
-
-<strong>Example Output</strong>
-
-<div class="code">
-
-{
-"risk_score":78,
-"risk_band":"MID_RISK",
-"action":"monitor"
-}
-
-</div>
-
-</div>
-
 </div>
 
 </section>
-<section id="flow" class="card">
 
-<h2>Data Flow</h2>
 
-<p>From institutional signals to behavioral financial intelligence</p>
+
+<section class="card">
+
+<h2>Risk Dashboard</h2>
+
+<canvas id="riskChart" height="100"></canvas>
+
+</section>
+
+
+
+<section id="market" class="card">
+
+<h2>Lens Marketplace</h2>
 
 <div class="grid">
 
 <div class="card">
-<strong>Data Sources</strong>
-<p>
-ERP / Accounting<br>
-POS / Payments<br>
-Banking Signals<br>
-Macro Data
-</p>
+<strong>RiskLens</strong>
+<span class="tag live">LIVE</span>
 </div>
 
 <div class="card">
-<strong>ZENTRA Engines</strong>
-<p>
-Behavior Engine<br>
-Risk Engine<br>
-Stress Engine<br>
-Macro Engine<br>
-Security Engine
-</p>
+<strong>Credit Stress</strong>
+<span class="tag live">LIVE</span>
 </div>
 
 <div class="card">
-<strong>Outputs</strong>
-<p>
-Risk Score<br>
-Behavior Drift<br>
-Stress Pressure<br>
-Security Signal
-</p>
+<strong>Banking Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>SME Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>ERP Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>POS Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>Insurance Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>Digital Asset Lens</strong>
+<span class="tag lock">LOCKED</span>
 </div>
 
 </div>
 
 </section>
 
-
-<section id="integrations" class="card">
-
-<h2>Integration Layer</h2>
-
-<p>ZENTRA connects to existing institutional systems</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>ERP / Accounting</strong>
-<p>
-SAP<br>
-Logo<br>
-Netsis<br>
-Mikro<br>
-Oracle
-</p>
-</div>
-
-<div class="card">
-<strong>POS / Payment Rails</strong>
-<p>
-POS Networks<br>
-Payment Gateways<br>
-Merchant Signals<br>
-Transaction Behavior
-</p>
-</div>
-
-<div class="card">
-<strong>Bank Connectors</strong>
-<p>
-Account Behavior<br>
-Repayment Signals<br>
-Balance Movement<br>
-Credit Activity
-</p>
-</div>
-
-<div class="card">
-<strong>Macro Connectors</strong>
-<p>
-TCMB<br>
-IMF<br>
-BIS<br>
-ECB<br>
-BIST<br>
-LSE
-</p>
-</div>
-
-</div>
-
-</section>
-
-
-<section id="coverage" class="card">
-
-<h2>Institution Coverage</h2>
-
-<p>ZENTRA serves multiple financial system participants</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>Banks</strong>
-<p>Commercial banks, digital banks, neobanks</p>
-</div>
-
-<div class="card">
-<strong>Fintech / Payments</strong>
-<p>Payment institutions, POS networks, payment companies</p>
-</div>
-
-<div class="card">
-<strong>Factoring</strong>
-<p>Invoice finance and receivable risk monitoring</p>
-</div>
-
-<div class="card">
-<strong>Insurance</strong>
-<p>Claims behavior and anomaly scoring</p>
-</div>
-
-<div class="card">
-<strong>Funds</strong>
-<p>Portfolio stress and macro exposure tracking</p>
-</div>
-
-<div class="card">
-<strong>Savings Finance</strong>
-<p>Participation and installment-based asset acquisition systems</p>
-</div>
-
-<div class="card">
-<strong>ERP / Accounting</strong>
-<p>Corporate financial health through accounting environments</p>
-</div>
-
-<div class="card">
-<strong>Digital Assets</strong>
-<p>Wallet behavior and digital transaction risk signals</p>
-</div>
-
-</div>
-
-</section>
 
 
 <section id="architecture" class="card">
 
 <h2>ZENTRA Architecture</h2>
 
-<p>Multi-layer behavioral financial infrastructure</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>1. Data Layer</strong>
-<p>Institution data, ERP data, POS data, digital asset signals, macro sources</p>
-</div>
-
-<div class="card">
-<strong>2. Integration Layer</strong>
-<p>API connectors, ERP integrations, payment connectors and ingestion pipelines</p>
-</div>
-
-<div class="card">
-<strong>3. Engine Layer</strong>
-<p>Behavior, Risk, Stress, Macro and Security / Compliance engines</p>
-</div>
-
-<div class="card">
-<strong>4. AI Layer</strong>
-<p>Explain AI, Drift Detection and Predictive AI</p>
-</div>
-
-<div class="card">
-<strong>5. Lens Layer</strong>
-<p>Institution-specific intelligence via modular lenses</p>
-</div>
-
-<div class="card">
-<strong>6. Intelligence Layer</strong>
-<p>Risk score, policy insight, macro signal and telescope output</p>
-</div>
-
-</div>
-
 <div class="code">
+
 DATA SOURCES
 ↓
 INTEGRATION LAYER
@@ -501,164 +327,25 @@ AI LAYER
 ↓
 LENS LAYER
 ↓
-INTELLIGENCE OUTPUT
-↓
 FINANCIAL TELESCOPE
-↓
-DASHBOARD
+
 </div>
 
 </section>
 
 
+
 <section class="card">
 
-<h2>Risk Dashboard</h2>
-
-<p>Illustrative behavioral risk indicators and trend visibility</p>
-
-<canvas id="riskChart" height="110"></canvas>
-
-</section>
-
-
-<section id="market" class="card">
-
-<h2>Lens Marketplace</h2>
-
-<p>Core lens ecosystem for financial institutions</p>
+<h2>System Status</h2>
 
 <div class="grid">
 
-<div class="card">
-<strong>RiskLens</strong>
-<span class="tag live">LIVE</span>
-<p>Core behavioral risk scoring</p>
-</div>
-
-<div class="card">
-<strong>Credit Stress</strong>
-<span class="tag live">LIVE</span>
-<p>Installment and liquidity stress modelling</p>
-</div>
-
-<div class="card">
-<strong>Banking Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Credit and repayment behavior monitoring</p>
-</div>
-
-<div class="card">
-<strong>SME Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Cashflow and working capital stress detection</p>
-</div>
-
-<div class="card">
-<strong>ERP / Accounting Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Invoice, payable and receivable signal layer</p>
-</div>
-
-<div class="card">
-<strong>POS / Payment Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Merchant transaction and fraud behavior analysis</p>
-</div>
-
-<div class="card">
-<strong>Insurance Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Claims behavior and anomaly scoring</p>
-</div>
-
-<div class="card">
-<strong>Funds Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Portfolio stress and macro exposure analytics</p>
-</div>
-
-<div class="card">
-<strong>Factoring Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Invoice delay and debtor risk analysis</p>
-</div>
-
-<div class="card">
-<strong>Savings Finance Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Participant discipline and installment behavior analysis</p>
-</div>
-
-<div class="card">
-<strong>Digital Asset Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Wallet behavior and volatility-linked signals</p>
-</div>
-
-<div class="card">
-<strong>Macro Risk Lens</strong>
-<span class="tag lock">LOCKED</span>
-<p>Systemic stress and market pressure observation</p>
-</div>
-
-</div>
-
-</section>
-<section id="telescope" class="card">
-
-<h2>Financial Telescope</h2>
-
-<p>
-The ZENTRA Financial Telescope observes financial behavior across institutions,
-markets and macro signals to detect systemic risk drift.
-</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>Global Financial Map</strong>
-
-<div style="font-size:13px;margin-top:10px">
-
-<div>● USA — Market Stress : MEDIUM</div>
-<div>● Europe — Liquidity : MEDIUM</div>
-<div>● Türkiye — Behavior Drift : RISING</div>
-<div>● Emerging Markets — Stress : HIGH</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<strong>Systemic Signals</strong>
-
-<div style="font-size:13px;margin-top:10px">
-
-<div>SME Payment Drift ↑</div>
-<div>POS Activity Change ↓</div>
-<div>Liquidity Pressure ↑</div>
-<div>Systemic Risk Index 0.67</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<strong>Macro References</strong>
-
-<div style="font-size:13px;margin-top:10px">
-
-<div>TCMB — ACTIVE</div>
-<div>IMF — ACTIVE</div>
-<div>BIS — ACTIVE</div>
-<div>ECB — ACTIVE</div>
-
-</div>
-
-</div>
+<div class="card">RiskLens API — OPERATIONAL</div>
+<div class="card">Credit Stress Engine — OPERATIONAL</div>
+<div class="card">Behavior Engine — ACTIVE</div>
+<div class="card">Macro Intelligence Feed — ACTIVE</div>
+<div class="card">Security Monitoring — ACTIVE</div>
 
 </div>
 
@@ -668,43 +355,9 @@ markets and macro signals to detect systemic risk drift.
 
 <section class="card">
 
-<h2>Security Layer</h2>
+<h2>Live Risk Score</h2>
 
-<p>Behavioral security and compliance intelligence</p>
-
-<div class="grid">
-
-<div class="card">
-<strong>Behavioral AML</strong>
-<p>Abnormal transfer velocity and fund flow patterns</p>
-</div>
-
-<div class="card">
-<strong>Fraud Detection</strong>
-<p>Transaction anomaly and merchant instability detection</p>
-</div>
-
-<div class="card">
-<strong>Account Misuse</strong>
-<p>Identity-behavior mismatch monitoring</p>
-</div>
-
-<div class="card">
-<strong>KYC Intelligence</strong>
-<p>Behavior backed identity verification signals</p>
-</div>
-
-<div class="card">
-<strong>NFC / Biometric Risk</strong>
-<p>Payment confirmation behavior and device trust analysis</p>
-</div>
-
-<div class="card">
-<strong>Compliance Monitoring</strong>
-<p>Explainable audit-ready intelligence signals</p>
-</div>
-
-</div>
+<div class="code" id="riskLive"></div>
 
 </section>
 
@@ -712,93 +365,9 @@ markets and macro signals to detect systemic risk drift.
 
 <section class="card">
 
-<h2>Traditional Scoring vs ZENTRA</h2>
+<h2>Global Risk Map</h2>
 
-<table class="table">
-
-<thead>
-<tr>
-<th>Area</th>
-<th>Traditional</th>
-<th>ZENTRA</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Time Horizon</td>
-<td>Past oriented</td>
-<td>Behavior + drift + stress</td>
-</tr>
-
-<tr>
-<td>Architecture</td>
-<td>Single score</td>
-<td>Engine + lens marketplace</td>
-</tr>
-
-<tr>
-<td>Security Visibility</td>
-<td>Limited</td>
-<td>Behavioral AML + fraud intelligence</td>
-</tr>
-
-<tr>
-<td>Macro Observation</td>
-<td>Weak</td>
-<td>Financial Telescope</td>
-</tr>
-
-</tbody>
-
-</table>
-
-</section>
-
-
-
-<section class="card">
-
-<h2>3 Phase Scale Plan</h2>
-
-<div class="grid">
-
-<div class="card">
-<strong>Phase 1</strong>
-<span class="tag live">NOW</span>
-<p>Live APIs and infrastructure demo</p>
-</div>
-
-<div class="card">
-<strong>Phase 2</strong>
-<span class="tag wait">NEXT</span>
-<p>Lens expansion and institutional integrations</p>
-</div>
-
-<div class="card">
-<strong>Phase 3</strong>
-<span class="tag lock">SCALE</span>
-<p>Global behavioral financial intelligence network</p>
-</div>
-
-</div>
-
-</section>
-
-
-
-<section class="card">
-
-<h2>Pricing</h2>
-
-<ul>
-
-<li>API Core — fintech integration</li>
-<li>Enterprise License — institutional deployment</li>
-<li>Lens Marketplace — modular intelligence licensing</li>
-
-</ul>
+<canvas id="macroChart" height="100"></canvas>
 
 </section>
 
@@ -818,11 +387,12 @@ Contact
 
 
 
-<footer style="text-align:center;color:#99a6c6;font-size:12px;margin-top:20px">
+<footer style="text-align:center;color:#99a6c6;font-size:12px">
 
-ZENTRA is an investor facing demonstration. Sensitive implementation details remain private.
+ZENTRA investor demonstration platform
 
 </footer>
+
 
 </div>
 
@@ -840,75 +410,16 @@ datasets:[
 {
 label:'Behavioral Risk',
 data:[42,48,53,57,61,66],
-borderColor:'#00d4ff',
-tension:.3
+borderColor:'#00d4ff'
 },
 {
 label:'Stress Pressure',
 data:[35,39,44,48,52,58],
-borderColor:'#ff4d6d',
-tension:.3
+borderColor:'#ff4d6d'
 }
 ]
-},
-options:{
-plugins:{legend:{labels:{color:'#eaf2ff'}}},
-scales:{
-x:{ticks:{color:'#99a6c6'}},
-y:{ticks:{color:'#99a6c6'}}
-}
 }
 });
-
-</script>
-<!-- ZENTRA SYSTEM STATUS -->
-
-<section class="card">
-
-<h2>System Status</h2>
-
-<div class="grid">
-
-<div class="card">RiskLens API — OPERATIONAL</div>
-
-<div class="card">Credit Stress Engine — OPERATIONAL</div>
-
-<div class="card">Behavior Engine — ACTIVE</div>
-
-<div class="card">Macro Intelligence Feed — ACTIVE</div>
-
-<div class="card">Security Monitoring — ACTIVE</div>
-
-</div>
-
-</section>
-
-
-<!-- LIVE RISK SCORE -->
-
-<section class="card">
-
-<h2>Live Risk Score</h2>
-
-<div class="code" id="riskLive"></div>
-
-</section>
-
-
-<!-- MACRO RISK CHART -->
-
-<section class="card">
-
-<h2>Global Risk Map</h2>
-
-<canvas id="macroChart" height="100"></canvas>
-
-</section>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
 
 document.getElementById("riskLive").innerHTML = JSON.stringify({
 risk_score: Math.floor(Math.random()*40)+50,
@@ -918,20 +429,18 @@ action: "monitor"
 
 const macro = document.getElementById('macroChart')
 
-if(macro){
 new Chart(macro,{
 type:'bar',
 data:{
 labels:["USA","Europe","Turkey","Emerging"],
 datasets:[{
 label:"Systemic Risk",
-data:[42,37,55,63],
-backgroundColor:"#00d4ff"
+data:[42,37,55,63]
 }]
 }
 })
-}
 
 </script>
+
 </body>
-</html>
+  </html>

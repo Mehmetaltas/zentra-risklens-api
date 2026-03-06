@@ -1,235 +1,465 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>ZENTRA — Financial Telescope</title>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-
+:root{
+  --bg:#050814;
+  --card:#0c1228;
+  --line:#1e2a55;
+  --text:#eaf2ff;
+  --muted:#99a6c6;
+  --cyan:#00d4ff;
+  --green:#19e68c;
+  --gold:#f5b942;
+  --red:#ff4d6d;
+  --violet:#7c3aed;
+}
+*{box-sizing:border-box}
 body{
-background:#050814;
-color:white;
-font-family:Arial;
-margin:0;
-padding:40px;
+  margin:0;
+  background:
+    radial-gradient(1200px 700px at 10% 0%, rgba(0,212,255,.12), transparent 60%),
+    radial-gradient(900px 600px at 90% 10%, rgba(124,58,237,.12), transparent 60%),
+    radial-gradient(1100px 700px at 50% 110%, rgba(25,230,140,.08), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
-
-.container{
-max-width:1100px;
-margin:auto;
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(5,8,20,.8);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
-
+.topin{
+  max-width:1120px; margin:auto; padding:12px 20px;
+  display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:10px}
+.logo{
+  width:34px; height:34px; border-radius:12px;
+  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  box-shadow:0 0 20px rgba(0,212,255,.25);
+}
+nav{display:flex; gap:8px; flex-wrap:wrap}
+nav a,.btn{
+  display:inline-block;
+  text-decoration:none;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:bold;
+  border-radius:10px;
+  cursor:pointer;
+}
+nav a:hover,.btn:hover{border-color:var(--cyan)}
+.wrap{max-width:1120px; margin:auto; padding:24px 20px 60px}
 .card{
-background:#0c1228;
-padding:20px;
-margin-bottom:20px;
-border-radius:10px;
-border:1px solid #1e2a55;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
 }
-
-h1{
-color:#00d4ff;
+.hero{
+  background:
+    radial-gradient(520px 240px at 15% 30%, rgba(0,212,255,.14), transparent 60%),
+    radial-gradient(420px 220px at 85% 70%, rgba(124,58,237,.14), transparent 60%),
+    var(--card);
 }
-
-h2{
-color:#19e68c;
-}
-
+h1{margin:0 0 8px 0; font-size:34px; color:var(--cyan)}
+h2{margin:0 0 8px 0; color:var(--green)}
+p{margin:0; color:var(--muted); line-height:1.6}
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
+  margin-top:16px;
 }
-
-a{
-color:#00d4ff;
-text-decoration:none;
+.tag{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:bold;
+  margin-left:8px;
 }
-
+.live{background:var(--green); color:#00150c}
+.lock{background:var(--gold); color:#1e1200}
+.wait{background:#344462; color:white}
+.mini{font-size:12px; color:var(--muted); margin-top:10px}
+.btn.primary{background:var(--cyan); color:#001018; border-color:transparent}
+.code{
+  margin-top:12px;
+  background:#08101f;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  font:12px ui-monospace,monospace;
+  color:#d9e6ff;
+  white-space:pre-wrap;
+}
+.input{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#08101f;
+  color:#fff;
+  margin-top:8px;
+}
+.wavebox{
+  margin-top:16px;
+  height:140px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#08101f;
+  position:relative;
+  overflow:hidden;
+}
+.wave{
+  position:absolute;
+  left:-20%;
+  top:50%;
+  width:140%;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+  box-shadow:0 0 18px rgba(0,212,255,.55);
+  animation:moveWave 3s linear infinite;
+}
+.wave:nth-child(2){top:35%; animation-duration:4.6s; opacity:.7}
+.wave:nth-child(3){top:65%; animation-duration:5.2s; opacity:.5}
+@keyframes moveWave{
+  0%{transform:translateX(-15%)}
+  100%{transform:translateX(15%)}
+}
+footer{padding:20px 0 0 0; text-align:center; color:var(--muted); font-size:12px}
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
+<div class="topbar">
+  <div class="topin">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <strong>ZENTRA</strong><br>
+        <small style="color:#99a6c6">Behavioral Financial Infrastructure</small>
+      </div>
+    </div>
 
-<h1>ZENTRA</h1>
-<p>Behavioral Financial Infrastructure</p>
-
-<div class="card">
-
-<h2>Financial Telescope</h2>
-
-<p>
-
-ZENTRA observes financial behavior like a telescope observes distant motion.
-
-signals → drift → early warning → action
-
-</p>
-
-</div>
-<div class="card">
-
-<h2>Live APIs</h2>
-
-<p>RiskLens API</p>
-
-<a href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">
-RiskLens Health
-</a>
-
-<br><br>
-
-<p>Credit Stress Engine</p>
-
-<a href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">
-Credit Stress Health
-</a>
-
+    <nav>
+      <a href="#proof">Proof</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#simulation">Simulation</a>
+      <a href="#market">Market</a>
+      <a href="#security">Security</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
 </div>
 
+<div class="wrap">
 
+  <section class="card hero">
+    <h1>Financial Telescope</h1>
+    <p>
+      ZENTRA observes financial behavior like a telescope observes distant motion.
+      Signals → drift → early warning → action.
+    </p>
 
-<div class="card">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <a class="btn primary" href="#proof">See Live Proof</a>
+      <a class="btn" href="#simulation">Run Simulation</a>
+      <a class="btn" href="#contact">Contact Dubai HQ</a>
+    </div>
 
-<h2>Global Financial Map</h2>
+    <div class="wavebox">
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+  </section>
 
-<p>Macro financial signals monitored by ZENTRA.</p>
+  <section id="proof" class="card">
+    <h2>Live Proof</h2>
+    <p>Public production endpoints and live infrastructure visibility.</p>
 
-<div class="grid">
+    <div class="grid">
+      <div class="card" style="margin:0">
+        <strong>RiskLens API</strong><span class="tag live">LIVE</span>
+        <p class="mini">Behavioral risk scoring core.</p>
+        <a class="btn" href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">Health</a>
+        <a class="btn" href="https://zentra-risklens-api-2.onrender.com/openapi.json" target="_blank">OpenAPI</a>
+        <div class="mini">zentra-risklens-api-2.onrender.com</div>
+      </div>
 
-<div class="card">TCMB</div>
-<div class="card">IMF</div>
-<div class="card">BIS</div>
-<div class="card">ECB</div>
-<div class="card">BIST</div>
-<div class="card">LSE</div>
+      <div class="card" style="margin:0">
+        <strong>Credit Stress Engine</strong><span class="tag live">LIVE</span>
+        <p class="mini">Installment pressure and stress modelling.</p>
+        <a class="btn" href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">Health</a>
+        <a class="btn" href="https://zentra-credit-stress-api.onrender.com/openapi.json" target="_blank">OpenAPI</a>
+        <div class="mini">zentra-credit-stress-api.onrender.com</div>
+      </div>
 
+      <div class="card" style="margin:0">
+        <strong>Live Risk Score</strong><span class="tag wait">AUTO</span>
+        <div class="code" id="liveScoreBox">Loading live score preview...</div>
+      </div>
+    </div>
+  </section>
+  <section id="dashboard" class="card">
+    <h2>Risk Index Dashboard</h2>
+    <p>Illustrative behavioral risk indicators and trend visibility.</p>
+    <canvas id="riskChart" height="110"></canvas>
+  </section>
+
+  <section class="card">
+    <h2>Global Financial Map</h2>
+    <p>Macro financial sources observed by ZENTRA.</p>
+
+    <div class="grid">
+      <div class="card" style="margin:0">TCMB</div>
+      <div class="card" style="margin:0">IMF</div>
+      <div class="card" style="margin:0">BIS</div>
+      <div class="card" style="margin:0">ECB</div>
+      <div class="card" style="margin:0">BIST</div>
+      <div class="card" style="margin:0">LSE</div>
+      <div class="card" style="margin:0">Federal Reserve</div>
+      <div class="card" style="margin:0">Bank of England</div>
+    </div>
+  </section>
+
+  <section id="simulation" class="card">
+    <h2>Risk Simulation Demo</h2>
+    <p>Investor-safe interactive simulation.</p>
+
+    <div class="grid">
+      <div class="card" style="margin:0">
+        <strong>Payment Delay (days)</strong>
+        <input id="delayInput" class="input" type="number" value="10">
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>Exposure Ratio (%)</strong>
+        <input id="exposureInput" class="input" type="number" value="25">
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>Customer Score</strong>
+        <input id="customerInput" class="input" type="number" value="78">
+      </div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn primary" onclick="runSimulation()">Run Risk Simulation</button>
+    </div>
+
+    <div class="code" id="simOutput">{
+  "status": "ready"
+}</div>
+  </section>
+
+  <section id="market" class="card">
+    <h2>Lens Marketplace</h2>
+    <p>One engine, many institution-specific lenses.</p>
+
+    <div class="grid">
+      <div class="card" style="margin:0">
+        <strong>Banking Lens</strong><span class="tag live">LIVE</span>
+        <p class="mini">Behavioral credit monitoring.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>SME Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">SME liquidity stress detection.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>ERP / Accounting Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">Accounting software integration path.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>POS / Payment Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">Transaction drift and merchant risk detection.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>Insurance Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">Claim behavior analytics.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>Savings Finance Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">Participation and savings company monitoring.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>Funds Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">Investment fund risk tracking.</p>
+      </div>
+
+      <div class="card" style="margin:0">
+        <strong>Digital Asset Lens</strong><span class="tag lock">LOCKED</span>
+        <p class="mini">Crypto behavioral volatility signals.</p>
+      </div>
+    </div>
+  </section>
+  <section id="security" class="card">
+    <h2>Security Layer</h2>
+    <p>
+      ZENTRA includes behavioral AML detection, fraud monitoring,
+      account misuse detection, NFC payment risk modelling and biometric confirmation signals.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Traditional Scoring vs ZENTRA</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:12px">
+      <tr>
+        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Area</th>
+        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Traditional</th>
+        <th style="text-align:left;padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">ZENTRA</th>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Time Horizon</td>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Past-oriented</td>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Behavior + drift + stress</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Architecture</td>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Single score</td>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Engine + marketplace</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Explainability</td>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">Weak</td>
+        <td style="padding:10px;border-bottom:1px solid rgba(255,255,255,.08)">AI-assisted layer</td>
+      </tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>3-Phase Scale Plan</h2>
+    <div class="grid">
+      <div class="card" style="margin:0">
+        <strong>Phase 1</strong><span class="tag live">NOW</span>
+        <p class="mini">Live APIs + public proof + first pilots.</p>
+      </div>
+      <div class="card" style="margin:0">
+        <strong>Phase 2</strong><span class="tag wait">NEXT</span>
+        <p class="mini">Marketplace + ERP/POS/payment integrations.</p>
+      </div>
+      <div class="card" style="margin:0">
+        <strong>Phase 3</strong><span class="tag lock">SCALE</span>
+        <p class="mini">Global behavioral financial operating layer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Pricing</h2>
+    <ul class="mini">
+      <li>API Core — fintech integration</li>
+      <li>Enterprise License — banks and regulated institutions</li>
+      <li>Lens Marketplace — modular licensing</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="card">
+    <h2>Contact</h2>
+    <p>Dubai HQ — Strategic Partnerships</p>
+    <a class="btn primary" href="mailto:contact@zentrarisk.com">Contact</a>
+  </section>
+
+  <footer>
+    ZENTRA is an investor-facing demonstration. Sensitive implementation details remain private.
+  </footer>
 </div>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>Risk Index Dashboard</h2>
-
-<canvas id="riskChart"></canvas>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
-const ctx = document.getElementById('riskChart');
-
-new Chart(ctx, {
-
-type: 'line',
-
-data: {
-
-labels: ['Jan','Feb','Mar','Apr','May','Jun'],
-
-datasets: [{
-
-label: 'Behavioral Risk Index',
-
-data: [40,45,52,57,61,66],
-
-borderColor:'#00d4ff',
-
-backgroundColor:'rgba(0,212,255,0.2)',
-
-tension:0.3
-
-}]
-
-},
-
-options:{
-
-plugins:{legend:{display:false}}
-
-}
-
+const riskCtx = document.getElementById('riskChart');
+new Chart(riskCtx,{
+  type:'line',
+  data:{
+    labels:['Jan','Feb','Mar','Apr','May','Jun'],
+    datasets:[
+      {
+        label:'Behavioral Risk',
+        data:[42,48,53,57,61,66],
+        borderColor:'#00d4ff',
+        backgroundColor:'rgba(0,212,255,0.15)',
+        tension:.3
+      },
+      {
+        label:'Stress Pressure',
+        data:[35,39,44,48,52,58],
+        borderColor:'#ff4d6d',
+        backgroundColor:'rgba(255,77,109,0.10)',
+        tension:.3
+      }
+    ]
+  },
+  options:{
+    plugins:{legend:{labels:{color:'#eaf2ff'}}},
+    scales:{
+      x:{ticks:{color:'#99a6c6'}},
+      y:{ticks:{color:'#99a6c6'}}
+    }
+  }
 });
 
+function runSimulation(){
+  const delay = Number(document.getElementById('delayInput').value || 0);
+  const exposure = Number(document.getElementById('exposureInput').value || 0);
+  const customer = Number(document.getElementById('customerInput').value || 0);
+
+  let risk = 40 + (delay * 1.2) + (exposure * 0.6) - (customer * 0.35);
+  if(risk < 5) risk = 5;
+  if(risk > 95) risk = 95;
+
+  let band = 'LOW_RISK';
+  if(risk >= 65) band = 'HIGH_RISK';
+  else if(risk >= 40) band = 'MID_RISK';
+
+  const output = {
+    payment_delay_days: delay,
+    exposure_ratio_percent: exposure,
+    customer_score: customer,
+    simulated_risk_score: Math.round(risk),
+    risk_band: band,
+    action: band === 'HIGH_RISK' ? 'tighten_terms' : band === 'MID_RISK' ? 'monitor_closely' : 'maintain'
+  };
+
+  document.getElementById('simOutput').textContent = JSON.stringify(output,null,2);
+}
+
+async function loadLivePreview(){
+  const box = document.getElementById('liveScoreBox');
+  try{
+    const res = await fetch('https://zentra-risklens-api-2.onrender.com/health');
+    const data = await res.json();
+    box.textContent = JSON.stringify({
+      service: data.service || 'zentra-risklens',
+      status: data.status || 'ok',
+      note: 'live endpoint reachable'
+    }, null, 2);
+  }catch(e){
+    box.textContent = JSON.stringify({
+      status:'live-check-unavailable',
+      note:'public endpoint may be warming up'
+    }, null, 2);
+  }
+}
+loadLivePreview();
 </script>
 
-</div>
-<div class="card">
-
-<h2>Lens Marketplace</h2>
-
-<div class="grid">
-
-<div class="card">Banking Lens</div>
-
-<div class="card">SME Lens</div>
-
-<div class="card">ERP Accounting Lens</div>
-
-<div class="card">POS Payment Lens</div>
-
-<div class="card">Insurance Lens</div>
-
-<div class="card">Savings Finance Lens</div>
-
-<div class="card">Funds Lens</div>
-
-<div class="card">Digital Asset Lens</div>
-
-</div>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>Security Layer</h2>
-
-<p>
-
-Behavioral AML detection<br>
-
-Fraud monitoring<br>
-
-Account misuse detection<br>
-
-NFC payment risk modeling<br>
-
-Biometric payment confirmation
-
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>Contact</h2>
-
-<p>
-
-contact@zentrarisk.com
-
-</p>
-
-</div>
-
-
-
-</div>
-
 </body>
-
 </html>

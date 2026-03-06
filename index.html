@@ -1,107 +1,235 @@
-<section class="card">
-<h2>Global Financial Map</h2>
-<p>Macro financial signals observed across global financial centers.</p>
+<!doctype html>
+<html lang="en">
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:15px">
+<head>
 
-<div class="card">🇺🇸 Federal Reserve</div>
-<div class="card">🇪🇺 ECB</div>
-<div class="card">🇬🇧 Bank of England</div>
-<div class="card">🇹🇷 TCMB</div>
-<div class="card">🇨🇭 BIS</div>
-<div class="card">🇺🇳 IMF</div>
-<div class="card">🇬🇧 LSE</div>
-<div class="card">🇹🇷 BIST</div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ZENTRA — Financial Telescope</title>
+
+<style>
+
+body{
+background:#050814;
+color:white;
+font-family:Arial;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+.card{
+background:#0c1228;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+border:1px solid #1e2a55;
+}
+
+h1{
+color:#00d4ff;
+}
+
+h2{
+color:#19e68c;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+a{
+color:#00d4ff;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>ZENTRA</h1>
+<p>Behavioral Financial Infrastructure</p>
+
+<div class="card">
+
+<h2>Financial Telescope</h2>
+
+<p>
+
+ZENTRA observes financial behavior like a telescope observes distant motion.
+
+signals → drift → early warning → action
+
+</p>
 
 </div>
-</section>
+<div class="card">
+
+<h2>Live APIs</h2>
+
+<p>RiskLens API</p>
+
+<a href="https://zentra-risklens-api-2.onrender.com/health" target="_blank">
+RiskLens Health
+</a>
+
+<br><br>
+
+<p>Credit Stress Engine</p>
+
+<a href="https://zentra-credit-stress-api.onrender.com/health" target="_blank">
+Credit Stress Health
+</a>
+
+</div>
 
 
 
-<section class="card">
+<div class="card">
+
+<h2>Global Financial Map</h2>
+
+<p>Macro financial signals monitored by ZENTRA.</p>
+
+<div class="grid">
+
+<div class="card">TCMB</div>
+<div class="card">IMF</div>
+<div class="card">BIS</div>
+<div class="card">ECB</div>
+<div class="card">BIST</div>
+<div class="card">LSE</div>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
 <h2>Risk Index Dashboard</h2>
-<p>Illustrative behavioral risk indicators.</p>
 
-<canvas id="riskChart" height="120"></canvas>
+<canvas id="riskChart"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+
 const ctx = document.getElementById('riskChart');
 
 new Chart(ctx, {
+
 type: 'line',
+
 data: {
+
 labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+
 datasets: [{
+
 label: 'Behavioral Risk Index',
-data: [42,48,50,57,61,64],
+
+data: [40,45,52,57,61,66],
+
 borderColor:'#00d4ff',
+
 backgroundColor:'rgba(0,212,255,0.2)',
+
 tension:0.3
+
 }]
+
 },
+
 options:{
-plugins:{legend:{display:false}},
-scales:{
-x:{ticks:{color:'#99a6c6'}},
-y:{ticks:{color:'#99a6c6'}}
+
+plugins:{legend:{display:false}}
+
 }
-}
+
 });
+
 </script>
 
-</section>
-
-
-
-<section id="marketplace" class="card">
+</div>
+<div class="card">
 
 <h2>Lens Marketplace</h2>
-<p>Modular analytical lenses for financial institutions.</p>
 
 <div class="grid">
 
-<div class="card">
-<h3>Banking Lens</h3>
-<p class="mini">Behavioral credit monitoring.</p>
+<div class="card">Banking Lens</div>
+
+<div class="card">SME Lens</div>
+
+<div class="card">ERP Accounting Lens</div>
+
+<div class="card">POS Payment Lens</div>
+
+<div class="card">Insurance Lens</div>
+
+<div class="card">Savings Finance Lens</div>
+
+<div class="card">Funds Lens</div>
+
+<div class="card">Digital Asset Lens</div>
+
 </div>
+
+</div>
+
+
 
 <div class="card">
-<h3>SME Lens</h3>
-<p class="mini">SME liquidity stress detection.</p>
+
+<h2>Security Layer</h2>
+
+<p>
+
+Behavioral AML detection<br>
+
+Fraud monitoring<br>
+
+Account misuse detection<br>
+
+NFC payment risk modeling<br>
+
+Biometric payment confirmation
+
+</p>
+
 </div>
+
+
 
 <div class="card">
-<h3>ERP / Accounting Lens</h3>
-<p class="mini">Integration with accounting systems.</p>
-</div>
 
-<div class="card">
-<h3>POS / Payment Lens</h3>
-<p class="mini">Transaction drift detection.</p>
-</div>
+<h2>Contact</h2>
 
-<div class="card">
-<h3>Insurance Lens</h3>
-<p class="mini">Claim behavior analytics.</p>
-</div>
+<p>
 
-<div class="card">
-<h3>Savings Finance Lens</h3>
-<p class="mini">Participation and savings company monitoring.</p>
-</div>
+contact@zentrarisk.com
 
-<div class="card">
-<h3>Funds Lens</h3>
-<p class="mini">Investment fund risk tracking.</p>
-</div>
-
-<div class="card">
-<h3>Digital Asset Lens</h3>
-<p class="mini">Crypto behavioral volatility signals.</p>
-</div>
+</p>
 
 </div>
 
-</section>
+
+
+</div>
+
+</body>
+
+</html>

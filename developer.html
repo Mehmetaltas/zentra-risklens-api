@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Developer Portal</title>
+
+<style>
+
+body{
+margin:0;
+background:#050814;
+color:#eaf2ff;
+font-family:Arial;
+}
+
+.wrap{
+max-width:1000px;
+margin:auto;
+padding:40px 20px;
+}
+
+.card{
+background:#0c1228;
+border:1px solid #1e2a55;
+border-radius:14px;
+padding:20px;
+margin-bottom:20px;
+}
+
+h1{
+color:#00d4ff;
+}
+
+h2{
+color:#19e68c;
+}
+
+p{
+color:#99a6c6;
+line-height:1.6;
+}
+
+.code{
+background:#08101f;
+border-radius:10px;
+padding:14px;
+font-family:monospace;
+font-size:13px;
+margin-top:10px;
+}
+
+.btn{
+display:inline-block;
+background:#00d4ff;
+color:black;
+padding:10px 14px;
+border-radius:8px;
+text-decoration:none;
+margin-top:10px;
+}
+
+footer{
+text-align:center;
+color:#99a6c6;
+font-size:12px;
+margin-top:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<h1>ZENTRA Developer Portal</h1>
+
+<p>
+ZENTRA provides behavioral financial infrastructure APIs
+for institutions and fintech developers.
+</p>
+
+
+<div class="card">
+
+<h2>RiskLens API</h2>
+
+<p>Behavioral risk scoring engine.</p>
+
+<a class="btn"
+target="_blank"
+href="https://zentra-risklens-api-2.onrender.com/openapi.json">
+
+OpenAPI Documentation
+
+</a>
+
+<div class="code">
+
+GET /risk-score
+
+{
+"entity":"company",
+"signals":["payment","cashflow","macro"]
+}
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Credit Stress Engine</h2>
+
+<p>Installment pressure and liquidity stress analysis.</p>
+
+<a class="btn"
+target="_blank"
+href="https://zentra-credit-stress-api.onrender.com/openapi.json">
+
+OpenAPI Documentation
+
+</a>
+
+<div class="code">
+
+GET /credit-stress
+
+{
+"installments":12,
+"income":10000,
+"sector":"retail"
+}
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Authentication</h2>
+
+<p>API access requires developer key.</p>
+
+<div class="code">
+
+Authorization: Bearer API_KEY
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Platform Architecture</h2>
+
+<p>
+
+Data Sources → Integration Layer → Engine Layer → AI Layer → Lens Layer → Intelligence Output
+
+</p>
+
+</div>
+
+
+<footer>
+
+ZENTRA Developer Platform
+
+</footer>
+
+</div>
+
+</body>
+
+</html>

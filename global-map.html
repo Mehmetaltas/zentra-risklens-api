@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Global Financial Map</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+:root{
+--bg:#050814;
+--card:#0c1228;
+--line:#1e2a55;
+--text:#eaf2ff;
+--muted:#99a6c6;
+--cyan:#00d4ff;
+--green:#19e68c;
+--red:#ff4d6d;
+}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial;
+}
+
+.topbar{
+background:#060b1c;
+border-bottom:1px solid var(--line);
+padding:14px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-right:16px;
+font-size:14px;
+}
+
+.wrap{
+max-width:1100px;
+margin:auto;
+padding:30px 20px 60px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+margin-bottom:20px;
+}
+
+h1{
+color:var(--cyan);
+margin:0 0 10px;
+}
+
+h2{
+color:var(--green);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:16px;
+margin-top:16px;
+}
+
+.metric{
+background:#08101f;
+border:1px solid var(--line);
+border-radius:12px;
+padding:20px;
+text-align:center;
+}
+
+.metric strong{
+display:block;
+font-size:28px;
+color:var(--cyan);
+}
+
+footer{
+text-align:center;
+color:#99a6c6;
+font-size:12px;
+margin-top:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="developer.html">Developers</a>
+<a href="investor.html">Investor</a>
+<a href="telescope.html">Telescope</a>
+<a href="global-map.html">Global Map</a>
+
+</nav>
+
+</div>
+
+
+<div class="wrap">
+
+<section class="card">
+
+<h1>Global Financial Intelligence Map</h1>
+
+<p>
+
+ZENTRA observes systemic financial behavior across institutions, markets and macro indicators.
+
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>Systemic Risk Indicators</h2>
+
+<canvas id="riskChart" height="120"></canvas>
+
+</section>
+
+
+<section class="card">
+
+<h2>Regional Financial Signals</h2>
+
+<div class="grid">
+
+<div class="metric">
+
+<strong>USA</strong>
+
+<p>Market Liquidity Pressure</p>
+
+</div>
+
+<div class="metric">
+
+<strong>Europe</strong>
+
+<p>Bank Credit Tightening</p>
+
+</div>
+
+<div class="metric">
+
+<strong>Türkiye</strong>
+
+<p>SME Payment Drift</p>
+
+</div>
+
+<div class="metric">
+
+<strong>Emerging Markets</strong>
+
+<p>Macro Stress Signals</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2>Observed Macro Sources</h2>
+
+<div class="grid">
+
+<div class="metric">IMF</div>
+
+<div class="metric">BIS</div>
+
+<div class="metric">ECB</div>
+
+<div class="metric">TCMB</div>
+
+<div class="metric">BIST</div>
+
+<div class="metric">LSE</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+ZENTRA Global Financial Intelligence Platform
+
+</footer>
+
+</div>
+
+
+<script>
+
+const ctx = document.getElementById('riskChart')
+
+new Chart(ctx,{
+type:'line',
+data:{
+labels:["Jan","Feb","Mar","Apr","May","Jun"],
+datasets:[
+{
+label:"Global Risk Index",
+data:[42,48,55,60,63,68],
+borderColor:"#00d4ff",
+tension:.3
+},
+{
+label:"Liquidity Stress",
+data:[30,35,38,44,50,54],
+borderColor:"#ff4d6d",
+tension:.3
+}
+]
+},
+options:{
+plugins:{legend:{labels:{color:"#eaf2ff"}}},
+scales:{
+x:{ticks:{color:"#99a6c6"}},
+y:{ticks:{color:"#99a6c6"}}
+}
+}
+})
+
+</script>
+
+</body>
+</html>

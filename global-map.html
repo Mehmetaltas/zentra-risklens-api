@@ -6,7 +6,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ZENTRA Global Financial Map</title>
+<title>ZENTRA — Behavioral Financial Infrastructure</title>
+
+<meta name="description" content="ZENTRA behavioral financial infrastructure platform">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -20,33 +22,68 @@
 --muted:#99a6c6;
 --cyan:#00d4ff;
 --green:#19e68c;
+--gold:#f5b942;
 --red:#ff4d6d;
+--violet:#7c3aed;
 }
+
+*{box-sizing:border-box}
 
 body{
 margin:0;
 background:var(--bg);
 color:var(--text);
-font-family:Arial;
+font-family:Arial,sans-serif;
 }
 
 .topbar{
 background:#060b1c;
 border-bottom:1px solid var(--line);
+}
+
+.topin{
+max-width:1100px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
 padding:14px;
+flex-wrap:wrap;
+}
+
+.logo{
+width:32px;
+height:32px;
+border-radius:10px;
+background:linear-gradient(135deg,var(--violet),var(--cyan));
 }
 
 nav a{
 color:white;
 text-decoration:none;
-margin-right:16px;
-font-size:14px;
+margin-left:14px;
+font-size:13px;
+}
+
+.lang button{
+border:1px solid var(--line);
+background:#0a1122;
+color:white;
+padding:6px 10px;
+border-radius:8px;
+cursor:pointer;
+margin-left:4px;
+}
+
+.lang button.active{
+background:var(--cyan);
+color:black;
 }
 
 .wrap{
 max-width:1100px;
 margin:auto;
-padding:30px 20px 60px;
+padding:24px;
 }
 
 .card{
@@ -57,34 +94,60 @@ padding:20px;
 margin-bottom:20px;
 }
 
+.hero{
+background:linear-gradient(180deg,#0c1228,#070b18);
+}
+
 h1{
+margin:0 0 10px 0;
+font-size:34px;
 color:var(--cyan);
-margin:0 0 10px;
 }
 
 h2{
+margin:0 0 8px 0;
 color:var(--green);
+}
+
+p{
+color:var(--muted);
+line-height:1.6;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:16px;
 margin-top:16px;
 }
 
-.metric{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:12px;
-padding:20px;
-text-align:center;
+.tag{
+font-size:11px;
+padding:4px 8px;
+border-radius:6px;
+margin-left:8px;
 }
 
-.metric strong{
-display:block;
-font-size:28px;
-color:var(--cyan);
+.live{background:var(--green);color:black}
+.lock{background:var(--gold);color:black}
+.wait{background:#2e3c5f}
+
+.btn{
+display:inline-block;
+padding:10px 14px;
+border-radius:8px;
+border:1px solid var(--line);
+color:white;
+text-decoration:none;
+margin-right:8px;
+margin-top:10px;
+font-size:13px;
+}
+
+.btn.primary{
+background:var(--cyan);
+color:black;
+border:none;
 }
 
 footer{
@@ -92,15 +155,30 @@ text-align:center;
 color:#99a6c6;
 font-size:12px;
 margin-top:40px;
+padding-top:20px;
+border-top:1px solid var(--line);
 }
 
 </style>
 
 </head>
 
+
 <body>
 
+
 <div class="topbar">
+
+<div class="topin">
+
+<div style="display:flex;align-items:center;gap:10px">
+
+<div class="logo"></div>
+
+<strong>ZENTRA</strong>
+
+</div>
+
 
 <nav>
 
@@ -109,145 +187,221 @@ margin-top:40px;
 <a href="developer.html">Developers</a>
 <a href="investor.html">Investor</a>
 <a href="telescope.html">Telescope</a>
-<a href="global-map.html">Global Map</a>
+<a href="marketplace.html">Marketplace</a>
+<a href="network.html">Global Map</a>
+<a href="heatmap.html">Heatmap</a>
+<a href="architecture.html">Architecture</a>
+<a href="trust.html">Trust</a>
+
+<div class="lang">
+<button id="lang-en" class="active">EN</button>
+<button id="lang-tr">TR</button>
+</div>
 
 </nav>
 
 </div>
 
+</div>
+
+
 
 <div class="wrap">
 
-<section class="card">
 
-<h1>Global Financial Intelligence Map</h1>
+<section class="card hero">
 
-<p>
+<h1 data-t="title">Financial Telescope</h1>
 
-ZENTRA observes systemic financial behavior across institutions, markets and macro indicators.
-
+<p data-t="subtitle">
+ZENTRA observes financial behavior across institutions and markets.
 </p>
 
 </section>
 
 
-<section class="card">
-
-<h2>Systemic Risk Indicators</h2>
-
-<canvas id="riskChart" height="120"></canvas>
-
-</section>
-
 
 <section class="card">
 
-<h2>Regional Financial Signals</h2>
+<h2>Live Infrastructure Proof</h2>
 
 <div class="grid">
 
-<div class="metric">
-
-<strong>USA</strong>
-
-<p>Market Liquidity Pressure</p>
-
+<div class="card">
+<strong>RiskLens API</strong>
+<span class="tag live">LIVE</span>
+<a class="btn" target="_blank"
+href="https://zentra-risklens-api-2.onrender.com/health">
+Health
+</a>
 </div>
 
-<div class="metric">
 
-<strong>Europe</strong>
-
-<p>Bank Credit Tightening</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Türkiye</strong>
-
-<p>SME Payment Drift</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Emerging Markets</strong>
-
-<p>Macro Stress Signals</p>
-
+<div class="card">
+<strong>Credit Stress Engine</strong>
+<span class="tag live">LIVE</span>
+<a class="btn" target="_blank"
+href="https://zentra-credit-stress-api.onrender.com/health">
+Health
+</a>
 </div>
 
 </div>
 
 </section>
+
 
 
 <section class="card">
 
-<h2>Observed Macro Sources</h2>
+<h2>Platform Architecture</h2>
 
 <div class="grid">
 
-<div class="metric">IMF</div>
+<div class="card">
+<strong>Data Layer</strong>
+<p>ERP, POS, banking signals</p>
+</div>
 
-<div class="metric">BIS</div>
+<div class="card">
+<strong>Engine Layer</strong>
+<p>Risk, Stress, Behavior engines</p>
+</div>
 
-<div class="metric">ECB</div>
+<div class="card">
+<strong>AI Layer</strong>
+<p>Explainable behavioral AI</p>
+</div>
 
-<div class="metric">TCMB</div>
-
-<div class="metric">BIST</div>
-
-<div class="metric">LSE</div>
+<div class="card">
+<strong>Lens Layer</strong>
+<p>Institution specific intelligence modules</p>
+</div>
 
 </div>
 
 </section>
+
+
+
+<section class="card">
+
+<h2>Lens Marketplace</h2>
+
+<div class="grid">
+
+<div class="card">
+<strong>RiskLens</strong>
+<span class="tag live">LIVE</span>
+</div>
+
+<div class="card">
+<strong>Credit Stress</strong>
+<span class="tag live">LIVE</span>
+</div>
+
+<div class="card">
+<strong>Banking Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>SME Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+<div class="card">
+<strong>ERP Lens</strong>
+<span class="tag lock">LOCKED</span>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Live System Status</h2>
+
+<div class="grid">
+
+<div class="card">
+<strong>RiskLens API</strong>
+<div id="risklensStatus">Checking...</div>
+</div>
+
+<div class="card">
+<strong>Credit Stress Engine</strong>
+<div id="stressStatus">Checking...</div>
+</div>
+
+<div class="card">
+<strong>Behavior Engine</strong>
+<div>Active</div>
+</div>
+
+<div class="card">
+<strong>Security Monitoring</strong>
+<div>Running</div>
+</div>
+
+</div>
+
+</section>
+
 
 
 <footer>
 
-ZENTRA Global Financial Intelligence Platform
+ZENTRA Investor Demonstration Platform
 
 </footer>
+
 
 </div>
 
 
+
 <script>
 
-const ctx = document.getElementById('riskChart')
+async function checkAPI(){
 
-new Chart(ctx,{
-type:'line',
-data:{
-labels:["Jan","Feb","Mar","Apr","May","Jun"],
-datasets:[
-{
-label:"Global Risk Index",
-data:[42,48,55,60,63,68],
-borderColor:"#00d4ff",
-tension:.3
-},
-{
-label:"Liquidity Stress",
-data:[30,35,38,44,50,54],
-borderColor:"#ff4d6d",
-tension:.3
+try{
+
+let r = await fetch("https://zentra-risklens-api-2.onrender.com/health")
+
+if(r.ok){
+document.getElementById("risklensStatus").innerText="Operational"
+}else{
+document.getElementById("risklensStatus").innerText="Issue"
 }
-]
-},
-options:{
-plugins:{legend:{labels:{color:"#eaf2ff"}}},
-scales:{
-x:{ticks:{color:"#99a6c6"}},
-y:{ticks:{color:"#99a6c6"}}
+
+}catch{
+document.getElementById("risklensStatus").innerText="Offline"
 }
+
+try{
+
+let s = await fetch("https://zentra-credit-stress-api.onrender.com/health")
+
+if(s.ok){
+document.getElementById("stressStatus").innerText="Operational"
+}else{
+document.getElementById("stressStatus").innerText="Issue"
 }
-})
+
+}catch{
+document.getElementById("stressStatus").innerText="Offline"
+}
+
+}
+
+checkAPI()
 
 </script>
+
 
 </body>
 </html>

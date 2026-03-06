@@ -861,6 +861,77 @@ y:{ticks:{color:'#99a6c6'}}
 });
 
 </script>
+<!-- ZENTRA SYSTEM STATUS -->
 
+<section class="card">
+
+<h2>System Status</h2>
+
+<div class="grid">
+
+<div class="card">RiskLens API — OPERATIONAL</div>
+
+<div class="card">Credit Stress Engine — OPERATIONAL</div>
+
+<div class="card">Behavior Engine — ACTIVE</div>
+
+<div class="card">Macro Intelligence Feed — ACTIVE</div>
+
+<div class="card">Security Monitoring — ACTIVE</div>
+
+</div>
+
+</section>
+
+
+<!-- LIVE RISK SCORE -->
+
+<section class="card">
+
+<h2>Live Risk Score</h2>
+
+<div class="code" id="riskLive"></div>
+
+</section>
+
+
+<!-- MACRO RISK CHART -->
+
+<section class="card">
+
+<h2>Global Risk Map</h2>
+
+<canvas id="macroChart" height="100"></canvas>
+
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.getElementById("riskLive").innerHTML = JSON.stringify({
+risk_score: Math.floor(Math.random()*40)+50,
+risk_band: "MID_RISK",
+action: "monitor"
+},null,2)
+
+const macro = document.getElementById('macroChart')
+
+if(macro){
+new Chart(macro,{
+type:'bar',
+data:{
+labels:["USA","Europe","Turkey","Emerging"],
+datasets:[{
+label:"Systemic Risk",
+data:[42,37,55,63],
+backgroundColor:"#00d4ff"
+}]
+}
+})
+}
+
+</script>
 </body>
 </html>

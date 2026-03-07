@@ -1,7 +1,28 @@
 from fastapi import FastAPI
 import requests
+import sqlite3
+import datetime
 
 app = FastAPI(title="ZENTRA Core Engine")
+
+# -----------------------------
+# DATABASE (SQLite)
+# -----------------------------
+
+conn = sqlite3.connect("zentra.db", check_same_thread=False)
+cur = conn.cursor()
+
+cur.execute("""
+CREATE TABLE IF NOT EXISTS risk_history(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+timestamp TEXT,
+risk_score REAL,
+global_risk REAL,
+economic_state TEXT
+)
+""")
+
+conn.commit()
 
 # -----------------------------
 # DATA SOURCES
@@ -47,10 +68,10 @@ def simulate_business():
     }
 
 # -----------------------------
-# 1 INDICATOR ENGINE
+# INDICATOR ENGINE
 # -----------------------------
 
-def indicator_engine(macro, market):
+def indicator_engine(macro):
 
     inflation_pressure = min(macro["inflation"] / 10, 1)
 
@@ -62,13 +83,11 @@ def indicator_engine(macro, market):
     )
 
     return {
-        "inflation_pressure": inflation_pressure,
-        "volatility": volatility,
         "macro_signal": round(macro_signal, 2)
     }
 
 # -----------------------------
-# 2 ECONOMIC ENGINE
+# ECONOMIC ENGINE
 # -----------------------------
 
 def economic_engine(indicators):
@@ -88,7 +107,7 @@ def economic_engine(indicators):
     }
 
 # -----------------------------
-# 3 MARKET ENGINE
+# MARKET ENGINE
 # -----------------------------
 
 def market_engine(market):
@@ -108,18 +127,14 @@ def market_engine(market):
     }
 
 # -----------------------------
-# 4 BEHAVIOR ENGINE
+# BEHAVIOR ENGINE
 # -----------------------------
 
 def behavior_engine(business):
 
-    payment_risk = business["payment_delay"]
-
-    cashflow_risk = business["cashflow_pressure"]
-
     behavior_score = (
-        payment_risk * 0.6 +
-        cashflow_risk * 0.4
+        business["payment_delay"] * 0.6 +
+        business["cashflow_pressure"] * 0.4
     )
 
     return {
@@ -127,43 +142,18 @@ def behavior_engine(business):
     }
 
 # -----------------------------
-# 5 RISK ENGINE
+# RISK ENGINE
 # -----------------------------
 
 def risk_engine(behavior, economic):
 
-    behavior_score = behavior["behavior_score"]
-
-    macro_risk = economic["macro_risk"]
-
-    security = 0.2
-
     risk = (
-        behavior_score * 0.4 +
-        macro_risk * 0.4 +
-        security * 0.2
+        behavior["behavior_score"] * 0.4 +
+        economic["macro_risk"] * 0.4 +
+        0.2 * 0.2
     )
 
     return round(risk * 100, 2)
-
-# -----------------------------
-# 6 STRATEGY ENGINE
-# -----------------------------
-
-def strategy_engine(risk):
-
-    if risk > 75:
-        action = "reduce debt and increase liquidity"
-
-    elif risk > 50:
-        action = "monitor cashflow and control expenses"
-
-    else:
-        action = "stable condition"
-
-    return {
-        "strategy": action
-    }
 
 # -----------------------------
 # GLOBAL RISK INDEX
@@ -172,7 +162,6 @@ def strategy_engine(risk):
 def global_risk_index(economic, market_state, behavior):
 
     macro_risk = economic["macro_risk"]
-
     behavior_score = behavior["behavior_score"]
 
     if market_state["market_trend"] == "bullish":
@@ -191,24 +180,42 @@ def global_risk_index(economic, market_state, behavior):
     return round(total * 100, 2)
 
 # -----------------------------
-# RISK BAND
+# AI INSIGHT ENGINE
 # -----------------------------
 
-def risk_band(score):
+def ai_insight(risk):
 
-    if score >= 80:
-        return "critical"
+    if risk > 75:
+        reason = "high financial pressure"
+        advice = "reduce debt and increase liquidity"
 
-    elif score >= 60:
-        return "high"
+    elif risk > 50:
+        reason = "moderate economic pressure"
+        advice = "monitor cashflow and control expenses"
 
-    elif score >= 40:
-        return "medium"
+    else:
+        reason = "stable economic environment"
+        advice = "maintain financial discipline"
 
-    elif score >= 20:
-        return "low"
+    return {
+        "reason": reason,
+        "advice": advice
+    }
 
-    return "very low"
+# -----------------------------
+# SAVE HISTORY
+# -----------------------------
+
+def save_history(risk, global_risk, state):
+
+    timestamp = str(datetime.datetime.utcnow())
+
+    cur.execute("""
+    INSERT INTO risk_history(timestamp,risk_score,global_risk,economic_state)
+    VALUES(?,?,?,?)
+    """,(timestamp,risk,global_risk,state))
+
+    conn.commit()
 
 # -----------------------------
 # ROOT
@@ -226,32 +233,24 @@ def root():
 def risk():
 
     macro = get_macro_data()
-
     market = get_market_data()
-
     business = simulate_business()
 
-    indicators = indicator_engine(macro, market)
-
+    indicators = indicator_engine(macro)
     economic = economic_engine(indicators)
-
     market_state = market_engine(market)
-
     behavior = behavior_engine(business)
 
-    risk_score = risk_engine(behavior, economic)
+    risk_score = risk_engine(behavior,economic)
 
-    strategy = strategy_engine(risk_score)
+    insight = ai_insight(risk_score)
 
     return {
         "macro": macro,
         "market": market_state,
-        "business": business,
-        "indicators": indicators,
-        "economic": economic,
         "behavior": behavior,
         "risk_score": risk_score,
-        "strategy": strategy
+        "ai_insight": insight
     }
 
 # -----------------------------
@@ -262,38 +261,64 @@ def risk():
 def telescope():
 
     macro = get_macro_data()
-
     market = get_market_data()
-
     business = simulate_business()
 
-    indicators = indicator_engine(macro, market)
-
+    indicators = indicator_engine(macro)
     economic = economic_engine(indicators)
-
     market_state = market_engine(market)
-
     behavior = behavior_engine(business)
 
-    risk_score = risk_engine(behavior, economic)
+    risk_score = risk_engine(behavior,economic)
 
-    strategy = strategy_engine(risk_score)
-
-    global_score = global_risk_index(
+    global_risk = global_risk_index(
         economic,
         market_state,
         behavior
     )
 
-    band = risk_band(global_score)
+    insight = ai_insight(risk_score)
+
+    save_history(
+        risk_score,
+        global_risk,
+        economic["economic_state"]
+    )
 
     return {
         "macro": macro,
         "market": market_state,
-        "behavior": behavior,
         "risk_score": risk_score,
-        "global_risk_index": global_score,
-        "risk_band": band,
+        "global_risk_index": global_risk,
         "economic_state": economic["economic_state"],
-        "strategy": strategy
+        "ai_reason": insight["reason"],
+        "ai_advice": insight["advice"]
     }
+
+# -----------------------------
+# HISTORY ENDPOINT
+# -----------------------------
+
+@app.get("/history")
+def history():
+
+    cur.execute("""
+    SELECT timestamp,risk_score,global_risk,economic_state
+    FROM risk_history
+    ORDER BY id DESC
+    LIMIT 20
+    """)
+
+    rows = cur.fetchall()
+
+    data = []
+
+    for r in rows:
+        data.append({
+            "timestamp": r[0],
+            "risk_score": r[1],
+            "global_risk": r[2],
+            "economic_state": r[3]
+        })
+
+    return data

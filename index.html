@@ -16,19 +16,19 @@
     .wrap {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 28px 18px 40px;
+      padding: 24px 16px 40px;
     }
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     .brand h1 {
       margin: 0;
-      font-size: 32px;
+      font-size: 30px;
       color: #00d4ff;
     }
     .brand p {
@@ -50,7 +50,6 @@
       grid-template-columns: repeat(12, 1fr);
       gap: 16px;
     }
-
     .card {
       background: #0c1228;
       border: 1px solid #1c2a55;
@@ -58,7 +57,6 @@
       padding: 18px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.25);
     }
-
     .col-4 { grid-column: span 4; }
     .col-6 { grid-column: span 6; }
     .col-8 { grid-column: span 8; }
@@ -80,6 +78,7 @@
       margin-top: 10px;
       color: #b9c9e8;
       font-size: 15px;
+      line-height: 1.5;
     }
 
     .band {
@@ -92,7 +91,6 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-
     .very-low, .low {
       color: #19e68c;
       background: rgba(25,230,140,0.12);
@@ -114,7 +112,7 @@
       border: 1px solid rgba(255,77,109,0.35);
     }
 
-    .reason-box, .advice-box {
+    .reason-box, .advice-box, .error-box {
       margin-top: 10px;
       padding: 14px;
       border-radius: 12px;
@@ -123,6 +121,13 @@
       color: #d7e5ff;
       min-height: 72px;
       line-height: 1.5;
+    }
+
+    .error-box {
+      background: rgba(255,77,109,0.08);
+      border-color: rgba(255,77,109,0.35);
+      color: #ffd7de;
+      display: none;
     }
 
     .mini-list {
@@ -137,26 +142,19 @@
       height: 320px !important;
     }
 
-    .loading {
-      color: #8ea7d8;
-    }
-
     .footer-note {
       margin-top: 18px;
       color: #8ea7d8;
       font-size: 13px;
+      line-height: 1.6;
     }
 
     @media (max-width: 900px) {
       .col-4, .col-6, .col-8, .col-12 {
         grid-column: span 12;
       }
-      .value {
-        font-size: 32px;
-      }
-      canvas {
-        height: 260px !important;
-      }
+      .value { font-size: 32px; }
+      canvas { height: 260px !important; }
     }
   </style>
 </head>
@@ -165,7 +163,7 @@
     <div class="topbar">
       <div class="brand">
         <h1>ZENTRA Financial Telescope</h1>
-        <p>Live macro, risk, history and AI insight dashboard</p>
+        <p>Live dashboard · risk · history · AI insight</p>
       </div>
       <div class="status" id="systemStatus">API bağlanıyor...</div>
     </div>
@@ -201,7 +199,7 @@
           <li id="globalRiskText">Global Risk: ...</li>
           <li id="riskBandText">Band: ...</li>
         </ul>
-        <div class="footer-note">Bu panel /telescope verisi ile beslenir.</div>
+        <div class="footer-note">Veri kaynakları: <strong>/telescope</strong> ve <strong>/history</strong></div>
       </div>
 
       <div class="card col-6">
@@ -213,16 +211,19 @@
         <div class="label">AI Advice</div>
         <div class="advice-box" id="aiAdvice">Yükleniyor...</div>
       </div>
-    </div>
 
-    <div class="footer-note">
-      Live endpoints: <strong>/telescope</strong> ve <strong>/history</strong>
+      <div class="card col-12">
+        <div class="label">Connection Status</div>
+        <div class="error-box" id="errorBox"></div>
+        <div class="footer-note">
+          Eğer burada CORS hatası görünürse sorun HTML değil, API tarafındadır.
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
     const API_BASE = "https://zentra-risklens-api-2.onrender.com";
-
     let historyChartInstance = null;
 
     function setBandClass(el, band) {
@@ -231,8 +232,7 @@
     }
 
     function formatBand(band) {
-      if (!band) return "-";
-      return band.toUpperCase();
+      return band ? band.toUpperCase() : "-";
     }
 
     function safeText(value, fallback = "-") {
@@ -241,16 +241,15 @@
 
     async function fetchJson(url) {
       const res = await fetch(url);
-      if (!res.ok) {
-        throw new Error("API error: " + res.status);
-      }
+      if (!res.ok) throw new Error("HTTP " + res.status);
       return await res.json();
     }
 
     function buildHistoryChart(items) {
-      const labels = [...items].reverse().map((x, i) => `Kayıt ${i + 1}`);
-      const riskScores = [...items].reverse().map(x => x.risk_score);
-      const globalScores = [...items].reverse().map(x => x.global_risk);
+      const list = Array.isArray(items) ? items : [];
+      const labels = [...list].reverse().map((_, i) => `Kayıt ${i + 1}`);
+      const riskScores = [...list].reverse().map(x => x.risk_score);
+      const globalScores = [...list].reverse().map(x => x.global_risk);
 
       const ctx = document.getElementById("historyChart");
 
@@ -305,12 +304,21 @@
       });
     }
 
+    function showError(message) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = message;
+      document.getElementById("systemStatus").textContent = "API hatası";
+    }
+
     async function loadDashboard() {
       try {
         document.getElementById("systemStatus").textContent = "API okunuyor...";
 
-        const telescope = await fetchJson(`${API_BASE}/telescope`);
-        const history = await fetchJson(`${API_BASE}/history`);
+        const [telescope, history] = await Promise.all([
+          fetchJson(`${API_BASE}/telescope`),
+          fetchJson(`${API_BASE}/history`)
+        ]);
 
         const globalRisk = telescope.global_risk_index;
         const riskScore = telescope.risk_score;
@@ -345,15 +353,15 @@
         document.getElementById("aiAdvice").textContent =
           safeText(telescope.ai_advice, "Advice yok");
 
-        buildHistoryChart(Array.isArray(history) ? history : []);
+        buildHistoryChart(history);
 
         document.getElementById("systemStatus").textContent = "API bağlı";
       } catch (err) {
-        document.getElementById("systemStatus").textContent = "API hatası";
-        document.getElementById("globalRiskValue").textContent = "ERR";
-        document.getElementById("riskScoreValue").textContent = "ERR";
-        document.getElementById("aiReason").textContent = "API okunamadı: " + err.message;
-        document.getElementById("aiAdvice").textContent = "Endpoint, CORS veya deploy durumunu kontrol et.";
+        showError(
+          "Veri okunamadı. Büyük olasılıkla CORS veya endpoint sorunu var. " +
+          "API doğrudan açılıyor olsa bile site başka domainden veri çekerken engellenebilir. " +
+          "Hata: " + err.message
+        );
       }
     }
 

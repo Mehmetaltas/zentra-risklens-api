@@ -13,6 +13,22 @@
       background: #050814;
       color: #eaf2ff;
     }
+    nav {
+      background: #060b1c;
+      border-bottom: 1px solid #1e2a55;
+      padding: 14px 18px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: #dbe7ff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    nav a:hover {
+      color: #00d4ff;
+    }
     .wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -44,7 +60,6 @@
       color: #bcd0f7;
       font-size: 14px;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -59,9 +74,7 @@
     }
     .col-3 { grid-column: span 3; }
     .col-4 { grid-column: span 4; }
-    .col-5 { grid-column: span 5; }
     .col-6 { grid-column: span 6; }
-    .col-7 { grid-column: span 7; }
     .col-8 { grid-column: span 8; }
     .col-12 { grid-column: span 12; }
 
@@ -83,7 +96,6 @@
       font-size: 15px;
       line-height: 1.5;
     }
-
     .band {
       display: inline-block;
       margin-top: 10px;
@@ -114,8 +126,7 @@
       background: rgba(255,77,109,0.12);
       border: 1px solid rgba(255,77,109,0.35);
     }
-
-    .reason-box, .advice-box, .error-box, .chat-box, .chat-response {
+    .reason-box, .advice-box, .error-box, .chat-response {
       margin-top: 10px;
       padding: 14px;
       border-radius: 12px;
@@ -132,14 +143,12 @@
       display: none;
       min-height: auto;
     }
-
     .mini-list {
       margin: 0;
       padding-left: 18px;
       color: #d7e5ff;
       line-height: 1.7;
     }
-
     .regions {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -161,7 +170,6 @@
       font-size: 24px;
       font-weight: 700;
     }
-
     .lens-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -196,7 +204,6 @@
       font-weight: 700;
       text-transform: uppercase;
     }
-
     .chat-actions {
       display: flex;
       gap: 10px;
@@ -226,21 +233,18 @@
       background: #162445;
       color: #d7e5ff;
     }
-
     canvas {
       width: 100% !important;
       height: 300px !important;
     }
-
     .footer-note {
       margin-top: 18px;
       color: #8ea7d8;
       font-size: 13px;
       line-height: 1.6;
     }
-
     @media (max-width: 900px) {
-      .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-12 {
+      .col-3, .col-4, .col-6, .col-8, .col-12 {
         grid-column: span 12;
       }
       .lens-grid { grid-template-columns: 1fr; }
@@ -251,6 +255,18 @@
   </style>
 </head>
 <body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="platform.html">Platform</a>
+    <a href="developer.html">Developers</a>
+    <a href="investor.html">Investor</a>
+    <a href="telescope.html">Telescope</a>
+    <a href="heatmap.html">Heatmap</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="trust.html">Trust</a>
+  </nav>
+
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
@@ -312,7 +328,6 @@
             <div class="region-score" id="emRisk">...</div>
           </div>
         </div>
-        <div class="footer-note">Bu ilk sürümde blok bazlı risk haritası kullanılıyor.</div>
       </div>
 
       <div class="card col-6">
@@ -364,7 +379,7 @@
       <div class="card col-12">
         <div class="label">Connection Status</div>
         <div class="error-box" id="errorBox"></div>
-        <div class="footer-note">Burada hata görünürse sorun HTML değil, API bağlantısı veya CORS tarafındadır.</div>
+        <div class="footer-note">Burada hata görünürse sorun HTML değil, API bağlantısı veya CORS tarafıdır.</div>
       </div>
     </div>
   </div>
@@ -474,7 +489,7 @@
       const out = document.getElementById("chatResponse");
 
       if (!liveTelescopeData) {
-        out.textContent = "Canlı veri henüz gelmedi. Önce dashboard verisinin yüklenmesi gerekiyor.";
+        out.textContent = "Canlı veri henüz gelmedi.";
         return;
       }
 
@@ -535,13 +550,11 @@
 
         document.getElementById("systemStatus").textContent = "API bağlı";
       } catch (err) {
-        showError(
-          "Veri okunamadı. Aracı servis ile denenmesine rağmen bağlantı kurulamadı. Hata: " + err.message
-        );
+        showError("Veri okunamadı. Hata: " + err.message);
       }
     }
 
     loadDashboard();
   </script>
 </body>
-              </html>
+  </html>

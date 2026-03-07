@@ -3,198 +3,85 @@
 <head>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>ZENTRA Financial Telescope</title>
+<title>ZENTRA Global Telescope</title>
 
-<meta name="description" content="ZENTRA macro financial observation layer">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
-:root{
---bg:#050814;
---card:#0c1228;
---line:#1e2a55;
---text:#eaf2ff;
---muted:#99a6c6;
---cyan:#00d4ff;
---green:#19e68c;
---gold:#f5b942;
---red:#ff4d6d;
---violet:#7c3aed;
-}
-
 body{
 margin:0;
+background:#050814;
+color:#eaf2ff;
 font-family:Arial;
-background:var(--bg);
-color:var(--text);
-}
-
-.topbar{
-background:#060b1c;
-border-bottom:1px solid var(--line);
-position:sticky;
-top:0;
-}
-
-.topin{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px;
-flex-wrap:wrap;
-}
-
-.logo{
-width:32px;
-height:32px;
-border-radius:10px;
-background:linear-gradient(135deg,var(--violet),var(--cyan));
 }
 
 nav{
+background:#060b1c;
+padding:14px;
+border-bottom:1px solid #1e2a55;
 display:flex;
-gap:14px;
-flex-wrap:wrap;
+gap:20px;
 }
 
 nav a{
 color:white;
 text-decoration:none;
-font-size:13px;
+font-size:14px;
 }
 
-.wrap{
+.container{
 max-width:1100px;
 margin:auto;
-padding:24px;
+padding:30px;
 }
 
 .card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
+background:#0c1228;
+border:1px solid #1e2a55;
+border-radius:12px;
 padding:20px;
 margin-bottom:20px;
 }
 
 h1{
-color:var(--cyan);
-margin:0 0 10px 0;
+color:#00d4ff;
 }
 
 h2{
-color:var(--green);
-margin:0 0 10px 0;
-}
-
-p{
-color:var(--muted);
-line-height:1.6;
-margin:0;
+color:#19e68c;
 }
 
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:16px;
-margin-top:16px;
 }
 
 .metric{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:12px;
-padding:18px;
-text-align:center;
-}
-
-.metric strong{
-display:block;
-font-size:20px;
-color:var(--green);
-margin-bottom:6px;
-}
-
-.map{
-position:relative;
-height:360px;
-background:
-radial-gradient(circle at 20% 35%, rgba(0,212,255,.08), transparent 18%),
-radial-gradient(circle at 48% 28%, rgba(0,212,255,.06), transparent 18%),
-radial-gradient(circle at 58% 42%, rgba(255,77,109,.06), transparent 16%),
-radial-gradient(circle at 72% 58%, rgba(245,185,66,.06), transparent 16%),
-#08101f;
-border:1px solid var(--line);
-border-radius:14px;
-overflow:hidden;
-margin-top:16px;
-}
-
-.point{
-position:absolute;
-width:14px;
-height:14px;
-border-radius:50%;
-transform:translate(-50%,-50%);
-box-shadow:0 0 16px currentColor;
-animation:pulse 2.6s infinite;
-}
-
-.point.low{background:var(--green);color:var(--green)}
-.point.mid{background:var(--gold);color:var(--gold)}
-.point.high{background:var(--red);color:var(--red)}
-
-.label{
-position:absolute;
-transform:translate(-50%,14px);
-font-size:12px;
-color:#fff;
-white-space:nowrap;
-}
-
-.table{
-width:100%;
-border-collapse:collapse;
-margin-top:12px;
-}
-
-.table th,.table td{
-text-align:left;
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,.08);
-font-size:12px;
-}
-
-.table th{
-color:#fff;
-}
-
-.code{
-background:#07101f;
-border:1px solid var(--line);
-border-radius:10px;
-padding:12px;
-font-family:monospace;
-font-size:12px;
-white-space:pre-wrap;
+font-size:26px;
+color:#00d4ff;
 margin-top:10px;
 }
 
-footer{
-text-align:center;
+.map{
+height:260px;
+background:#07101f;
+border:1px solid #1e2a55;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
 color:#99a6c6;
-font-size:12px;
-margin-top:30px;
 }
 
-@keyframes pulse{
-0%{transform:translate(-50%,-50%) scale(.85)}
-50%{transform:translate(-50%,-50%) scale(1.12)}
-100%{transform:translate(-50%,-50%) scale(.85)}
+.ai{
+background:#07101f;
+padding:14px;
+border-radius:10px;
+border:1px solid #1e2a55;
 }
 
 </style>
@@ -203,224 +90,129 @@ margin-top:30px;
 
 <body>
 
-<div class="topbar">
-
-<div class="topin">
-
-<div style="display:flex;gap:10px;align-items:center">
-<div class="logo"></div>
-<strong>ZENTRA</strong>
-</div>
-
 <nav>
 
 <a href="index.html">Home</a>
+
 <a href="platform.html">Platform</a>
-<a href="developer.html">Developers</a>
-<a href="investor.html">Investor</a>
-<a href="marketplace.html">Marketplace</a>
+
+<a href="architecture.html">Architecture</a>
+
 <a href="telescope.html">Telescope</a>
-<a href="use-cases.html">Use Cases</a>
-<a href="trust.html">Trust</a>
+
+<a href="investor.html">Investor</a>
 
 </nav>
 
+<div class="container">
+
+<div class="card">
+
+<h1>GLOBAL ECONOMIC DASHBOARD</h1>
+
+<p>ZENTRA Financial Telescope observing global economic behavior.</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>Global Risk Index</h2>
+
+<div id="riskScore" class="metric">--</div>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+<div class="card">
+
+<h2>Market Signals</h2>
+
+<p>BTC Price</p>
+
+<div id="btc" class="metric">--</div>
+
+<p>Market Trend</p>
+
+<div id="trend">--</div>
+
 </div>
 
 </div>
 
-<div class="wrap">
+<div class="card">
 
-<section class="card">
-
-<h1>Financial Telescope</h1>
-
-<p>
-
-ZENTRA observes macro financial signals and behavioral drift
-across markets to detect systemic financial pressure.
-
-</p>
-
-</section>
-
-
-<section class="card">
-
-<h2>Global Risk Map</h2>
+<h2>World Risk Map</h2>
 
 <div class="map">
 
-<div class="point mid" style="left:24%;top:34%"></div>
-<div class="label" style="left:24%;top:34%">USA</div>
+Global Risk Visualization
 
-<div class="point mid" style="left:49%;top:30%"></div>
-<div class="label" style="left:49%;top:30%">Europe</div>
-
-<div class="point high" style="left:56%;top:38%"></div>
-<div class="label" style="left:56%;top:38%">Türkiye</div>
-
-<div class="point high" style="left:72%;top:56%"></div>
-<div class="label" style="left:72%;top:56%">Emerging Markets</div>
-
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2>Systemic Risk Signals</h2>
-
-<div class="grid">
-
-<div class="metric">
-<strong id="riskScore">62</strong>
-Systemic Risk
-</div>
-
-<div class="metric">
-<strong id="stressScore">54</strong>
-Liquidity Stress
-</div>
-
-<div class="metric">
-<strong id="driftScore">MEDIUM</strong>
-Behavior Drift
-</div>
-
-<div class="metric">
-<strong id="macroScore">ACTIVE</strong>
-Macro Signals
 </div>
 
 </div>
 
-</section>
+<div class="card">
 
+<h2>AI Economic Insight</h2>
 
-<section class="card">
+<div id="ai" class="ai">
 
-<h2>Observed Regions</h2>
-
-<table class="table">
-
-<thead>
-<tr>
-<th>Region</th>
-<th>Signal</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>USA</td>
-<td>Market Stress</td>
-<td>MEDIUM</td>
-</tr>
-
-<tr>
-<td>Europe</td>
-<td>Liquidity Risk</td>
-<td>MODERATE</td>
-</tr>
-
-<tr>
-<td>Türkiye</td>
-<td>Behavior Drift</td>
-<td>RISING</td>
-</tr>
-
-<tr>
-<td>Emerging Markets</td>
-<td>Systemic Stress</td>
-<td>HIGH</td>
-</tr>
-</tbody>
-
-</table>
-
-</section>
-
-
-<section class="card">
-
-<h2>Macro Sources</h2>
-
-<div class="grid">
-
-<div class="metric">
-<strong>TCMB</strong>
-Regional Policy
-</div>
-
-<div class="metric">
-<strong>IMF</strong>
-Macro Data
-</div>
-
-<div class="metric">
-<strong>BIS</strong>
-Banking Signals
-</div>
-
-<div class="metric">
-<strong>ECB</strong>
-Liquidity
-</div>
+Loading AI analysis...
 
 </div>
 
-</section>
-
-
-<section class="card">
-
-<h2>Observatory Logic</h2>
-
-<div class="code">
-MARKET SIGNALS
-↓
-BEHAVIOR DRIFT
-↓
-STRESS OBSERVATION
-↓
-SYSTEMIC RISK INTELLIGENCE
-↓
-FINANCIAL TELESCOPE
 </div>
-
-</section>
-
-
-<footer>
-
-ZENTRA Financial Telescope
-
-</footer>
 
 </div>
 
 <script>
-function randomScore(min,max){
-  return Math.floor(Math.random()*(max-min+1))+min;
+
+async function loadRisk(){
+
+try{
+
+const r = await fetch("https://zentra-risklens-api-2.onrender.com/telescope")
+
+const data = await r.json()
+
+document.getElementById("riskScore").innerText = data.risk_score
+
+document.getElementById("btc").innerText = data.market.btc_price
+
+document.getElementById("trend").innerText = data.market.market_trend
+
+document.getElementById("ai").innerText =
+data.ai_reason + " — " + data.ai_advice
+
+}catch(e){
+
+document.getElementById("ai").innerText =
+"API connection error."
+
 }
 
-function tick(){
-  const risk = randomScore(50,75);
-  const stress = randomScore(40,68);
-  const drift = risk > 65 ? "HIGH" : risk > 55 ? "MEDIUM" : "LOW";
-
-  document.getElementById("riskScore").textContent = risk;
-  document.getElementById("stressScore").textContent = stress;
-  document.getElementById("driftScore").textContent = drift;
-  document.getElementById("macroScore").textContent = "ACTIVE";
 }
 
-tick();
-setInterval(tick,4000);
+loadRisk()
+
+const ctx = document.getElementById("riskChart")
+
+new Chart(ctx,{
+type:"line",
+data:{
+labels:["1","2","3","4","5","6","7"],
+datasets:[{
+label:"Risk Trend",
+data:[52,55,58,61,63,65,67],
+borderColor:"#00d4ff"
+}]
+}
+})
+
 </script>
 
 </body>
-  </html>
+</html>

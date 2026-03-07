@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZENTRA Global Risk Map</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+
+<style>
+
+body{
+background:#050814;
+color:white;
+font-family:Arial;
+margin:0;
+}
+
+nav{
+background:#060b1c;
+padding:14px;
+border-bottom:1px solid #1e2a55;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-right:14px;
+font-size:14px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px;
+}
+
+.card{
+background:#0c1228;
+border:1px solid #1e2a55;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;
+}
+
+h1{
+color:#00d4ff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="platform.html">Platform</a>
+<a href="developer.html">Developers</a>
+<a href="investor.html">Investor</a>
+<a href="telescope.html">Telescope</a>
+<a href="worldmap.html">World Map</a>
+
+</nav>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Global Financial Risk Map</h1>
+
+<p>ZENTRA global risk observation across all countries.</p>
+
+<canvas id="worldChart"></canvas>
+
+</div>
+
+</div>
+
+<script>
+
+async function loadMap(){
+
+const world = await fetch("https://unpkg.com/world-atlas@2/countries-110m.json")
+.then(r=>r.json())
+
+const countries = ChartGeo.topojson.feature(world, world.objects.countries).features
+
+const data = countries.map(c=>({
+feature:c,
+value:Math.random()*100
+}))
+
+const ctx = document.getElementById("worldChart")
+
+new Chart(ctx,{
+type:"choropleth",
+
+data:{
+labels:countries.map(d=>d.properties.name),
+
+datasets:[{
+label:"Risk",
+data:data
+}]
+},
+
+options:{
+plugins:{
+legend:{display:false}
+},
+scales:{
+projection:{
+axis:"x",
+projection:"equalEarth"
+},
+color:{
+axis:"x",
+quantize:5,
+legend:{
+position:"bottom-right"
+}
+}
+}
+}
+})
+
+}
+
+loadMap()
+
+</script>
+
+</body>
+</html>

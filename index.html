@@ -26,10 +26,8 @@
       text-decoration: none;
       font-size: 14px;
     }
-    nav a:hover {
-      color: #00d4ff;
-      <a href="worldmap.html">World Map</a>
-    }
+    nav a:hover { color: #00d4ff; }
+
     .wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -73,7 +71,6 @@
       padding: 18px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.20);
     }
-    .col-3 { grid-column: span 3; }
     .col-4 { grid-column: span 4; }
     .col-6 { grid-column: span 6; }
     .col-8 { grid-column: span 8; }
@@ -127,7 +124,7 @@
       background: rgba(255,77,109,0.12);
       border: 1px solid rgba(255,77,109,0.35);
     }
-    .reason-box, .advice-box, .error-box, .chat-response {
+    .reason-box, .advice-box, .chat-response, .error-box {
       margin-top: 10px;
       padding: 14px;
       border-radius: 12px;
@@ -143,12 +140,6 @@
       color: #ffd7de;
       display: none;
       min-height: auto;
-    }
-    .mini-list {
-      margin: 0;
-      padding-left: 18px;
-      color: #d7e5ff;
-      line-height: 1.7;
     }
     .regions {
       display: grid;
@@ -245,7 +236,7 @@
       line-height: 1.6;
     }
     @media (max-width: 900px) {
-      .col-3, .col-4, .col-6, .col-8, .col-12 {
+      .col-4, .col-6, .col-8, .col-12 {
         grid-column: span 12;
       }
       .lens-grid { grid-template-columns: 1fr; }
@@ -264,6 +255,7 @@
     <a href="investor.html">Investor</a>
     <a href="telescope.html">Telescope</a>
     <a href="heatmap.html">Heatmap</a>
+    <a href="global-map.html">World Map</a>
     <a href="architecture.html">Architecture</a>
     <a href="trust.html">Trust</a>
   </nav>
@@ -380,15 +372,15 @@
       <div class="card col-12">
         <div class="label">Connection Status</div>
         <div class="error-box" id="errorBox"></div>
-        <div class="footer-note">Burada hata görünürse sorun HTML değil, API bağlantısı veya CORS tarafıdır.</div>
+        <div class="footer-note">Doğrudan API bağlantısı kullanılıyor.</div>
       </div>
     </div>
   </div>
 
   <script>
     const API_RAW = "https://zentra-risklens-api-2.onrender.com";
-    const TELESCOPE_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(API_RAW + "/telescope");
-    const HISTORY_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(API_RAW + "/history");
+    const TELESCOPE_URL = API_RAW + "/telescope";
+    const HISTORY_URL = API_RAW + "/history";
 
     let historyChartInstance = null;
     let liveTelescopeData = null;
@@ -419,7 +411,6 @@
       const globalScores = [...list].reverse().map(x => x.global_risk);
 
       const ctx = document.getElementById("historyChart");
-
       if (historyChartInstance) historyChartInstance.destroy();
 
       historyChartInstance = new Chart(ctx, {
@@ -558,4 +549,4 @@
     loadDashboard();
   </script>
 </body>
-  </html>
+            </html>

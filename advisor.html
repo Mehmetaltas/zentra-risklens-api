@@ -9,7 +9,7 @@
       margin:0;
       background:#050814;
       color:#eaf2ff;
-      font-family:Arial;
+      font-family:Arial, Helvetica, sans-serif;
     }
     nav{
       background:#060b1c;
@@ -36,9 +36,17 @@
       padding:20px;
       margin-bottom:20px;
     }
-    h1{ color:#00d4ff; margin-top:0; }
-    h2{ color:#19e68c; }
-    .muted{ color:#9eb3d9; line-height:1.6; }
+    h1{
+      color:#00d4ff;
+      margin-top:0;
+    }
+    h2{
+      color:#19e68c;
+    }
+    .muted{
+      color:#9eb3d9;
+      line-height:1.6;
+    }
     .input{
       width:100%;
       min-height:120px;
@@ -76,7 +84,7 @@
       border-radius:10px;
       padding:16px;
       line-height:1.7;
-      min-height:120px;
+      min-height:140px;
       white-space:pre-wrap;
     }
     .pill{
@@ -89,6 +97,43 @@
       font-size:12px;
       cursor:pointer;
     }
+    .status{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#162445;
+      color:#d7e5ff;
+      font-size:12px;
+      margin-top:10px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:16px;
+    }
+    .metric-box{
+      background:#07101f;
+      border:1px solid #1e2a55;
+      border-radius:10px;
+      padding:14px;
+    }
+    .metric-label{
+      color:#8ea7d8;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.04em;
+    }
+    .metric-value{
+      color:#00d4ff;
+      font-size:28px;
+      font-weight:700;
+      margin-top:8px;
+    }
+    @media (max-width: 800px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -99,8 +144,9 @@
   <a href="architecture.html">Architecture</a>
   <a href="telescope.html">Telescope</a>
   <a href="marketplace.html">Lens</a>
-  <a href="investor.html">Investor</a>
   <a href="advisor.html">Advisor</a>
+  <a href="investor.html">Investor</a>
+  <a href="global-map.html">World Map</a>
 </nav>
 
 <div class="container">
@@ -109,6 +155,29 @@
     <h1>ZENTRA Advisor</h1>
     <div class="muted">
       Economic AI assistant for risk, market, business and financial interpretation.
+    </div>
+    <div class="status" id="apiStatus">API bağlanıyor...</div>
+  </div>
+
+  <div class="card">
+    <h2>Live Snapshot</h2>
+    <div class="grid">
+      <div class="metric-box">
+        <div class="metric-label">Risk Score</div>
+        <div class="metric-value" id="riskScore">--</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Global Risk Index</div>
+        <div class="metric-value" id="globalRisk">--</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Economic State</div>
+        <div class="metric-value" id="economicState" style="font-size:20px;">--</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Market Trend</div>
+        <div class="metric-value" id="marketTrend" style="font-size:20px;">--</div>
+      </div>
     </div>
   </div>
 
@@ -126,6 +195,7 @@
       <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
       <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye risk görünümü</span>
       <span class="pill" onclick="setQuestion('Nakit akışımı nasıl güçlendiririm?')">Nakit akışı</span>
+      <span class="pill" onclick="setQuestion('Bu dönemde borç azaltmak mantıklı mı?')">Borç azaltma</span>
     </div>
   </div>
 
@@ -138,6 +208,7 @@
 
 <script>
   const API_BASE = "https://zentra-risklens-api-2.onrender.com";
+  let liveData = null;
 
   function setQuestion(text){
     document.getElementById("question").value = text;
@@ -148,7 +219,26 @@
     document.getElementById("answer").innerText = "Soru bekleniyor...";
   }
 
-  async function askAdvisor(){
+  async function loadLiveData(){
+    try{
+      const res = await fetch(API_BASE + "/telescope");
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const data = await res.json();
+      liveData = data;
+
+      document.getElementById("riskScore").innerText = data.risk_score ?? "--";
+      document.getElementById("globalRisk").innerText = data.global_risk_index ?? "--";
+      document.getElementById("economicState").innerText = data.economic_state ?? "--";
+      document.getElementById("marketTrend").innerText = data.market?.market_trend ?? "--";
+      document.getElementById("apiStatus").innerText = "API bağlı";
+    } catch(e){
+      document.getElementById("apiStatus").innerText = "API hatası";
+      document.getElementById("answer").innerText = "Canlı veri yüklenemedi. API bağlantısını kontrol et.";
+    }
+  }
+
+  function askAdvisor(){
     const q = document.getElementById("question").value.trim();
     const answerBox = document.getElementById("answer");
 
@@ -157,33 +247,34 @@
       return;
     }
 
-    answerBox.innerText = "Analiz ediliyor...";
+    if(!liveData){
+      answerBox.innerText = "Canlı veri henüz gelmedi.";
+      return;
+    }
 
-    try{
-      const res = await fetch(API_BASE + "/telescope");
-      const data = await res.json();
+    const risk = liveData.risk_score ?? "-";
+    const globalRisk = liveData.global_risk_index ?? "-";
+    const state = liveData.economic_state ?? "-";
+    const marketTrend = liveData.market?.market_trend ?? "-";
+    const reason = liveData.ai_reason ?? "Veri sınırlı.";
+    const advice = liveData.ai_advice ?? "Finansal disiplini koru.";
 
-      const risk = data.risk_score ?? "-";
-      const globalRisk = data.global_risk_index ?? "-";
-      const state = data.economic_state ?? "-";
-      const reason = data.ai_reason ?? "Veri sınırlı.";
-      const advice = data.ai_advice ?? "Finansal disiplini koru.";
+    let extra = "";
+    const lowerQ = q.toLowerCase();
 
-      let extra = "";
+    if(lowerQ.includes("altın") || lowerQ.includes("dolar") || lowerQ.includes("yatırım")){
+      extra = "Yatırım kararlarında tek varlığa yoğunlaşmak yerine risk dağılımı ve likidite dengesi korunmalıdır.";
+    } else if(lowerQ.includes("işletme") || lowerQ.includes("nakit") || lowerQ.includes("şirket")){
+      extra = "Kısa vadede tahsilat süresi, gider kontrolü ve kısa vadeli borç seviyesi öncelikli izlenmelidir.";
+    } else if(lowerQ.includes("türkiye") || lowerQ.includes("ülke")){
+      extra = "Ülke riskini değerlendirirken enflasyon, faiz, kur oynaklığı ve finansman koşulları birlikte okunmalıdır.";
+    } else if(lowerQ.includes("borç")){
+      extra = "Faiz ve nakit baskısı yüksek dönemlerde borç vadesi, maliyet ve tahsilat dengesi birlikte yönetilmelidir.";
+    } else {
+      extra = "Karar verirken risk seviyesi, piyasa yönü, finansman maliyeti ve likidite koşulları birlikte değerlendirilmelidir.";
+    }
 
-      const lowerQ = q.toLowerCase();
-
-      if(lowerQ.includes("altın") || lowerQ.includes("dolar") || lowerQ.includes("yatırım")){
-        extra = "Yatırım kararlarında tek varlığa yoğunlaşmak yerine risk dağılımı önemlidir.";
-      } else if(lowerQ.includes("işletme") || lowerQ.includes("nakit") || lowerQ.includes("şirket")){
-        extra = "Kısa vadede nakit akışı, tahsilat süresi ve gider kontrolü öncelikli izlenmelidir.";
-      } else if(lowerQ.includes("türkiye") || lowerQ.includes("ülke")){
-        extra = "Ülke riskini değerlendirirken enflasyon, faiz, kur oynaklığı ve finansman koşulları birlikte izlenmelidir.";
-      } else {
-        extra = "Karar verirken risk seviyesi, piyasa yönü ve likidite koşulları birlikte okunmalıdır.";
-      }
-
-      answerBox.innerText =
+    answerBox.innerText =
 `Soru:
 ${q}
 
@@ -191,6 +282,7 @@ Durum:
 Risk Score: ${risk}
 Global Risk Index: ${globalRisk}
 Economic State: ${state}
+Market Trend: ${marketTrend}
 
 Neden:
 ${reason}
@@ -200,10 +292,9 @@ ${advice}
 
 Ek Not:
 ${extra}`;
-    } catch (e) {
-      answerBox.innerText = "API bağlantı hatası. Endpoint veya bağlantıyı kontrol et.";
-    }
   }
+
+  loadLiveData();
 </script>
 
 </body>

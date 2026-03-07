@@ -3,127 +3,84 @@
 <head>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>ZENTRA Lens Marketplace</title>
 
-<meta name="description" content="ZENTRA modular financial intelligence marketplace">
-
 <style>
-
-:root{
---bg:#050814;
---card:#0c1228;
---line:#1e2a55;
---text:#eaf2ff;
---muted:#99a6c6;
---cyan:#00d4ff;
---green:#19e68c;
---gold:#f5b942;
---red:#ff4d6d;
---violet:#7c3aed;
-}
 
 body{
 margin:0;
+background:#050814;
+color:#eaf2ff;
 font-family:Arial;
-background:var(--bg);
-color:var(--text);
-}
-
-.topbar{
-background:#060b1c;
-border-bottom:1px solid var(--line);
-position:sticky;
-top:0;
-}
-
-.topin{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px;
-flex-wrap:wrap;
-}
-
-.logo{
-width:32px;
-height:32px;
-border-radius:10px;
-background:linear-gradient(135deg,var(--violet),var(--cyan));
 }
 
 nav{
+background:#060b1c;
+padding:14px;
+border-bottom:1px solid #1e2a55;
 display:flex;
-gap:14px;
-flex-wrap:wrap;
+gap:18px;
 }
 
 nav a{
 color:white;
 text-decoration:none;
-font-size:13px;
+font-size:14px;
 }
 
-.wrap{
+.container{
 max-width:1100px;
 margin:auto;
-padding:24px;
+padding:30px;
 }
 
 .card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
+background:#0c1228;
+border:1px solid #1e2a55;
+border-radius:12px;
 padding:20px;
 margin-bottom:20px;
 }
 
 h1{
-color:var(--cyan);
+color:#00d4ff;
+}
+
+h2{
+color:#19e68c;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:16px;
-margin-top:16px;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
+margin-top:20px;
 }
 
-.metric{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:12px;
-padding:18px;
-text-align:center;
-}
-
-.metric strong{
-display:block;
-font-size:20px;
-color:var(--green);
-margin-bottom:6px;
+.lens{
+background:#07101f;
+border:1px solid #1e2a55;
+border-radius:10px;
+padding:16px;
 }
 
 .tag{
 display:inline-block;
 font-size:11px;
 padding:4px 8px;
-border-radius:999px;
-margin-top:10px;
+border-radius:6px;
+margin-top:8px;
 }
 
-.live{background:rgba(25,230,140,.14);color:var(--green)}
-.lock{background:rgba(245,185,66,.14);color:var(--gold)}
-.soon{background:rgba(255,77,109,.14);color:var(--red)}
+.live{background:#19e68c;color:black}
+.lock{background:#f5b942;color:black}
 
-footer{
-text-align:center;
+.desc{
 color:#99a6c6;
-font-size:12px;
-margin-top:30px;
+font-size:13px;
+margin-top:6px;
 }
 
 </style>
@@ -132,239 +89,160 @@ margin-top:30px;
 
 <body>
 
-<div class="topbar">
-
-<div class="topin">
-
-<div style="display:flex;gap:10px;align-items:center">
-<div class="logo"></div>
-<strong>ZENTRA</strong>
-</div>
-
 <nav>
 
 <a href="index.html">Home</a>
+
 <a href="platform.html">Platform</a>
-<a href="developer.html">Developers</a>
-<a href="investor.html">Investor</a>
-<a href="marketplace.html">Marketplace</a>
+
+<a href="architecture.html">Architecture</a>
+
 <a href="telescope.html">Telescope</a>
-<a href="use-cases.html">Use Cases</a>
-<a href="trust.html">Trust</a>
+
+<a href="marketplace.html">Lens</a>
+
+<a href="investor.html">Investor</a>
 
 </nav>
 
-</div>
+<div class="container">
 
-</div>
+<div class="card">
 
-<div class="wrap">
-
-<section class="card">
-
-<h1>Lens Marketplace</h1>
+<h1>ZENTRA Lens Intelligence</h1>
 
 <p>
-
-ZENTRA distributes modular financial intelligence through institution-specific lenses.
-
-Each lens analyzes behavioral signals from a different financial environment.
-
+Lens modules extend ZENTRA intelligence across financial sectors.
+Each lens analyzes sector-specific behavioral signals.
 </p>
 
-</section>
-
-<section class="card">
-
-<h2>Core Lenses</h2>
+</div>
 
 <div class="grid">
 
-<div class="metric">
+<div class="lens">
 
-<strong>RiskLens</strong>
+<h2>Banking Lens</h2>
 
-<p>
-Behavioral financial risk scoring
-</p>
-
-<div class="tag live">
-LIVE
+<div class="desc">
+Credit behavior and repayment risk detection
 </div>
 
-</div>
-
-<div class="metric">
-
-<strong>Credit Stress</strong>
-
-<p>
-Installment and liquidity stress analysis
-</p>
-
-<div class="tag live">
-LIVE
-</div>
+<div class="tag live">ACTIVE</div>
 
 </div>
 
+<div class="lens">
+
+<h2>SME Lens</h2>
+
+<div class="desc">
+Cashflow stress and business financial health
 </div>
 
-</section>
-
-<section class="card">
-
-<h2>Institution Lenses</h2>
-
-<div class="grid">
-
-<div class="metric">
-
-<strong>Banking Lens</strong>
-
-<p>
-Credit and repayment behavior monitoring
-</p>
-
-<div class="tag lock">
-LOCKED
-</div>
+<div class="tag lock">LOCKED</div>
 
 </div>
 
-<div class="metric">
+<div class="lens">
 
-<strong>SME Lens</strong>
+<h2>Factoring Lens</h2>
 
-<p>
-Cashflow and working capital stress detection
-</p>
-
-<div class="tag lock">
-LOCKED
+<div class="desc">
+Invoice risk and debtor behavior analysis
 </div>
 
-</div>
-
-<div class="metric">
-
-<strong>ERP Lens</strong>
-
-<p>
-Invoice, payable and receivable signal layer
-</p>
-
-<div class="tag lock">
-LOCKED
-</div>
+<div class="tag live">ACTIVE</div>
 
 </div>
 
-<div class="metric">
+<div class="lens">
 
-<strong>POS Lens</strong>
+<h2>Insurance Lens</h2>
 
-<p>
-Merchant transaction behavior analysis
-</p>
-
-<div class="tag lock">
-LOCKED
+<div class="desc">
+Claims anomaly and fraud detection
 </div>
 
-</div>
+<div class="tag lock">LOCKED</div>
 
 </div>
 
-</section>
+<div class="lens">
 
-<section class="card">
+<h2>Funds Lens</h2>
 
-<h2>Financial Ecosystem Lenses</h2>
-
-<div class="grid">
-
-<div class="metric">
-
-<strong>Insurance Lens</strong>
-
-<p>
-Claims behavior and anomaly scoring
-</p>
-
-<div class="tag soon">
-COMING SOON
+<div class="desc">
+Portfolio macro stress and exposure analytics
 </div>
+
+<div class="tag lock">LOCKED</div>
 
 </div>
 
-<div class="metric">
+<div class="lens">
 
-<strong>Funds Lens</strong>
+<h2>ERP Lens</h2>
 
-<p>
-Portfolio stress and macro exposure analysis
-</p>
-
-<div class="tag soon">
-COMING SOON
+<div class="desc">
+Corporate accounting signals and risk indicators
 </div>
 
-</div>
-
-<div class="metric">
-
-<strong>Factoring Lens</strong>
-
-<p>
-Invoice delay and debtor risk monitoring
-</p>
-
-<div class="tag soon">
-COMING SOON
-</div>
+<div class="tag lock">LOCKED</div>
 
 </div>
 
-<div class="metric">
+<div class="lens">
 
-<strong>Digital Asset Lens</strong>
+<h2>POS Lens</h2>
 
-<p>
-Wallet behavior and transaction risk signals
-</p>
-
-<div class="tag soon">
-COMING SOON
+<div class="desc">
+Merchant behavior and transaction anomaly detection
 </div>
+
+<div class="tag lock">LOCKED</div>
+
+</div>
+
+<div class="lens">
+
+<h2>Crypto Lens</h2>
+
+<div class="desc">
+Wallet behavior and digital asset volatility signals
+</div>
+
+<div class="tag lock">LOCKED</div>
+
+</div>
+
+<div class="lens">
+
+<h2>Agriculture Lens</h2>
+
+<div class="desc">
+Crop economics and commodity behavior signals
+</div>
+
+<div class="tag lock">LOCKED</div>
 
 </div>
 
 </div>
 
-</section>
+<div class="card">
 
-<section class="card">
-
-<h2>Marketplace Logic</h2>
+<h2>Lens Model</h2>
 
 <p>
 
-Institutions connect to ZENTRA infrastructure and activate the lenses
-relevant to their financial environment.
+ZENTRA lenses are developed and maintained internally.
 
-This modular architecture allows ZENTRA to scale across
-multiple sectors of the financial system.
+External developers cannot modify core intelligence modules.
 
 </p>
 
-</section>
-
-<footer>
-
-ZENTRA Lens Marketplace
-
-</footer>
+</div>
 
 </div>
 

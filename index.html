@@ -1,152 +1,363 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-<meta charset="utf-8">
-<title>ZENTRA Live Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Financial Telescope</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050814;
+      color: #eaf2ff;
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #00d4ff;
+    }
+    .brand p {
+      margin: 6px 0 0;
+      color: #9eb3d9;
+      font-size: 14px;
+    }
+    .status {
+      padding: 10px 14px;
+      border: 1px solid #1e2a55;
+      border-radius: 10px;
+      background: #0c1228;
+      color: #bcd0f7;
+      font-size: 14px;
+    }
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
 
-<style>
+    .card {
+      background: #0c1228;
+      border: 1px solid #1c2a55;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    }
 
-body{
-background:#050814;
-color:white;
-font-family:Arial;
-margin:0;
-padding:40px;
-}
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
 
-h1{
-color:#00d4ff;
-}
+    .label {
+      color: #8ea7d8;
+      font-size: 13px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .value {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .sub {
+      margin-top: 10px;
+      color: #b9c9e8;
+      font-size: 15px;
+    }
 
-.card{
-background:#0c1228;
-border:1px solid #1e2a55;
-padding:20px;
-border-radius:10px;
-margin-bottom:20px;
-}
+    .band {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
 
-.risk{
-font-size:40px;
-font-weight:bold;
-}
+    .very-low, .low {
+      color: #19e68c;
+      background: rgba(25,230,140,0.12);
+      border: 1px solid rgba(25,230,140,0.35);
+    }
+    .medium {
+      color: #f5b942;
+      background: rgba(245,185,66,0.12);
+      border: 1px solid rgba(245,185,66,0.35);
+    }
+    .high {
+      color: #ff8a3d;
+      background: rgba(255,138,61,0.12);
+      border: 1px solid rgba(255,138,61,0.35);
+    }
+    .critical {
+      color: #ff4d6d;
+      background: rgba(255,77,109,0.12);
+      border: 1px solid rgba(255,77,109,0.35);
+    }
 
-.low{color:#19e68c}
-.medium{color:#f5b942}
-.high{color:#ff4d6d}
-.critical{color:#ff0000}
+    .reason-box, .advice-box {
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #09101f;
+      border: 1px solid #162445;
+      color: #d7e5ff;
+      min-height: 72px;
+      line-height: 1.5;
+    }
 
-</style>
+    .mini-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #d7e5ff;
+      line-height: 1.7;
+    }
 
+    canvas {
+      width: 100% !important;
+      height: 320px !important;
+    }
+
+    .loading {
+      color: #8ea7d8;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: #8ea7d8;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .col-4, .col-6, .col-8, .col-12 {
+        grid-column: span 12;
+      }
+      .value {
+        font-size: 32px;
+      }
+      canvas {
+        height: 260px !important;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <h1>ZENTRA Financial Telescope</h1>
+        <p>Live macro, risk, history and AI insight dashboard</p>
+      </div>
+      <div class="status" id="systemStatus">API bağlanıyor...</div>
+    </div>
 
-<h1>ZENTRA Financial Telescope</h1>
+    <div class="grid">
+      <div class="card col-4">
+        <div class="label">Global Risk Index</div>
+        <div class="value" id="globalRiskValue">...</div>
+        <div class="band" id="riskBandBadge">...</div>
+      </div>
 
-<div class="card">
+      <div class="card col-4">
+        <div class="label">Risk Score</div>
+        <div class="value" id="riskScoreValue">...</div>
+        <div class="sub" id="economicState">...</div>
+      </div>
 
-<h2>Global Risk Index</h2>
+      <div class="card col-4">
+        <div class="label">Market State</div>
+        <div class="value" id="marketTrendValue">...</div>
+        <div class="sub" id="btcValue">BTC: ...</div>
+      </div>
 
-<div id="riskScore" class="risk">loading...</div>
+      <div class="card col-8">
+        <div class="label">Risk History</div>
+        <canvas id="historyChart"></canvas>
+      </div>
 
-<div id="riskBand"></div>
+      <div class="card col-4">
+        <div class="label">Macro Snapshot</div>
+        <ul class="mini-list">
+          <li id="inflationValue">Inflation: ...</li>
+          <li id="globalRiskText">Global Risk: ...</li>
+          <li id="riskBandText">Band: ...</li>
+        </ul>
+        <div class="footer-note">Bu panel /telescope verisi ile beslenir.</div>
+      </div>
 
-</div>
+      <div class="card col-6">
+        <div class="label">AI Reason</div>
+        <div class="reason-box" id="aiReason">Yükleniyor...</div>
+      </div>
 
-<div class="card">
+      <div class="card col-6">
+        <div class="label">AI Advice</div>
+        <div class="advice-box" id="aiAdvice">Yükleniyor...</div>
+      </div>
+    </div>
 
-<h2>Economic State</h2>
+    <div class="footer-note">
+      Live endpoints: <strong>/telescope</strong> ve <strong>/history</strong>
+    </div>
+  </div>
 
-<div id="ecoState"></div>
+  <script>
+    const API_BASE = "https://zentra-risklens-api-2.onrender.com";
 
-</div>
+    let historyChartInstance = null;
 
-<div class="card">
+    function setBandClass(el, band) {
+      el.classList.remove("very-low", "low", "medium", "high", "critical");
+      el.classList.add((band || "medium").toLowerCase());
+    }
 
-<h2>Strategy</h2>
+    function formatBand(band) {
+      if (!band) return "-";
+      return band.toUpperCase();
+    }
 
-<div id="strategy"></div>
+    function safeText(value, fallback = "-") {
+      return value === undefined || value === null || value === "" ? fallback : value;
+    }
 
-</div>
+    async function fetchJson(url) {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error("API error: " + res.status);
+      }
+      return await res.json();
+    }
 
-<div class="card">
+    function buildHistoryChart(items) {
+      const labels = [...items].reverse().map((x, i) => `Kayıt ${i + 1}`);
+      const riskScores = [...items].reverse().map(x => x.risk_score);
+      const globalScores = [...items].reverse().map(x => x.global_risk);
 
-<h2>Market</h2>
+      const ctx = document.getElementById("historyChart");
 
-<div id="market"></div>
+      if (historyChartInstance) {
+        historyChartInstance.destroy();
+      }
 
-</div>
+      historyChartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Risk Score",
+              data: riskScores,
+              borderColor: "#00d4ff",
+              backgroundColor: "rgba(0,212,255,0.12)",
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: "Global Risk",
+              data: globalScores,
+              borderColor: "#ff8a3d",
+              backgroundColor: "rgba(255,138,61,0.12)",
+              tension: 0.3,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: "#d7e5ff" }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#9eb3d9" },
+              grid: { color: "rgba(255,255,255,0.05)" }
+            },
+            y: {
+              min: 0,
+              max: 100,
+              ticks: { color: "#9eb3d9" },
+              grid: { color: "rgba(255,255,255,0.05)" }
+            }
+          }
+        }
+      });
+    }
 
-<div class="card">
+    async function loadDashboard() {
+      try {
+        document.getElementById("systemStatus").textContent = "API okunuyor...";
 
-<canvas id="riskChart"></canvas>
+        const telescope = await fetchJson(`${API_BASE}/telescope`);
+        const history = await fetchJson(`${API_BASE}/history`);
 
-</div>
+        const globalRisk = telescope.global_risk_index;
+        const riskScore = telescope.risk_score;
+        const band = (telescope.risk_band || "medium").toLowerCase();
 
-<script>
+        document.getElementById("globalRiskValue").textContent = safeText(globalRisk);
+        document.getElementById("riskScoreValue").textContent = safeText(riskScore);
+        document.getElementById("riskBandBadge").textContent = formatBand(band);
+        setBandClass(document.getElementById("riskBandBadge"), band);
 
-async function loadData(){
+        document.getElementById("economicState").textContent =
+          `Economic State: ${safeText(telescope.economic_state)}`;
 
-let res = await fetch("https://zentra-risklens-api-2.onrender.com/telescope")
+        document.getElementById("marketTrendValue").textContent =
+          safeText(telescope.market?.market_trend, "-").toUpperCase();
 
-let data = await res.json()
+        document.getElementById("btcValue").textContent =
+          `BTC: ${safeText(telescope.market?.btc_price)}`;
 
-let risk = data.global_risk_index
+        document.getElementById("inflationValue").textContent =
+          `Inflation: ${safeText(telescope.macro?.inflation)}`;
 
-let band = data.risk_band
+        document.getElementById("globalRiskText").textContent =
+          `Global Risk: ${safeText(globalRisk)}`;
 
-document.getElementById("riskScore").innerHTML = risk
+        document.getElementById("riskBandText").textContent =
+          `Band: ${formatBand(band)}`;
 
-document.getElementById("riskBand").innerHTML = band
+        document.getElementById("aiReason").textContent =
+          safeText(telescope.ai_reason, "Reason yok");
 
-document.getElementById("ecoState").innerHTML = data.economic_state
+        document.getElementById("aiAdvice").textContent =
+          safeText(telescope.ai_advice, "Advice yok");
 
-document.getElementById("strategy").innerHTML = data.strategy.strategy
+        buildHistoryChart(Array.isArray(history) ? history : []);
 
-document.getElementById("market").innerHTML =
-"BTC: " + data.market.btc_price +
-" (" + data.market.market_trend + ")"
+        document.getElementById("systemStatus").textContent = "API bağlı";
+      } catch (err) {
+        document.getElementById("systemStatus").textContent = "API hatası";
+        document.getElementById("globalRiskValue").textContent = "ERR";
+        document.getElementById("riskScoreValue").textContent = "ERR";
+        document.getElementById("aiReason").textContent = "API okunamadı: " + err.message;
+        document.getElementById("aiAdvice").textContent = "Endpoint, CORS veya deploy durumunu kontrol et.";
+      }
+    }
 
-document.getElementById("riskScore").className = "risk " + band
-
-createChart(risk)
-
-}
-
-function createChart(risk){
-
-const ctx = document.getElementById('riskChart')
-
-new Chart(ctx,{
-type:'bar',
-data:{
-labels:["Global Risk"],
-datasets:[{
-data:[risk],
-backgroundColor:"#00d4ff"
-}]
-},
-options:{
-plugins:{
-legend:{display:false}
-},
-scales:{
-y:{
-min:0,
-max:100
-}
-}
-}
-})
-
-}
-
-loadData()
-
-</script>
-
+    loadDashboard();
+  </script>
 </body>
 </html>

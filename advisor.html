@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA Advisor</title>
+  <style>
+    body{
+      margin:0;
+      background:#050814;
+      color:#eaf2ff;
+      font-family:Arial;
+    }
+    nav{
+      background:#060b1c;
+      padding:14px;
+      border-bottom:1px solid #1e2a55;
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-size:14px;
+    }
+    .container{
+      max-width:1000px;
+      margin:auto;
+      padding:30px 16px 40px;
+    }
+    .card{
+      background:#0c1228;
+      border:1px solid #1e2a55;
+      border-radius:12px;
+      padding:20px;
+      margin-bottom:20px;
+    }
+    h1{ color:#00d4ff; margin-top:0; }
+    h2{ color:#19e68c; }
+    .muted{ color:#9eb3d9; line-height:1.6; }
+    .input{
+      width:100%;
+      min-height:120px;
+      background:#07101f;
+      color:#eaf2ff;
+      border:1px solid #1e2a55;
+      border-radius:10px;
+      padding:14px;
+      font-size:15px;
+      resize:vertical;
+      box-sizing:border-box;
+    }
+    .row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      background:#00d4ff;
+      color:#00131c;
+      border:none;
+      border-radius:10px;
+      padding:12px 16px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.secondary{
+      background:#162445;
+      color:#d7e5ff;
+    }
+    .answer{
+      background:#07101f;
+      border:1px solid #1e2a55;
+      border-radius:10px;
+      padding:16px;
+      line-height:1.7;
+      min-height:120px;
+      white-space:pre-wrap;
+    }
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#162445;
+      color:#d7e5ff;
+      margin:4px 6px 0 0;
+      font-size:12px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="platform.html">Platform</a>
+  <a href="architecture.html">Architecture</a>
+  <a href="telescope.html">Telescope</a>
+  <a href="marketplace.html">Lens</a>
+  <a href="investor.html">Investor</a>
+  <a href="advisor.html">Advisor</a>
+</nav>
+
+<div class="container">
+
+  <div class="card">
+    <h1>ZENTRA Advisor</h1>
+    <div class="muted">
+      Economic AI assistant for risk, market, business and financial interpretation.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ask Zentra AI</h2>
+    <textarea id="question" class="input" placeholder="Örnek: İşletmemin riski neden yükseliyor ve ne yapmalıyım?"></textarea>
+
+    <div class="row">
+      <button class="btn" onclick="askAdvisor()">Analyze</button>
+      <button class="btn secondary" onclick="clearAdvisor()">Clear</button>
+    </div>
+
+    <div style="margin-top:14px;">
+      <span class="pill" onclick="setQuestion('İşletmemin riski neden yükseliyor?')">İşletme riski</span>
+      <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
+      <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye risk görünümü</span>
+      <span class="pill" onclick="setQuestion('Nakit akışımı nasıl güçlendiririm?')">Nakit akışı</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>AI Response</h2>
+    <div id="answer" class="answer">Soru bekleniyor...</div>
+  </div>
+
+</div>
+
+<script>
+  const API_BASE = "https://zentra-risklens-api-2.onrender.com";
+
+  function setQuestion(text){
+    document.getElementById("question").value = text;
+  }
+
+  function clearAdvisor(){
+    document.getElementById("question").value = "";
+    document.getElementById("answer").innerText = "Soru bekleniyor...";
+  }
+
+  async function askAdvisor(){
+    const q = document.getElementById("question").value.trim();
+    const answerBox = document.getElementById("answer");
+
+    if(!q){
+      answerBox.innerText = "Lütfen bir soru yaz.";
+      return;
+    }
+
+    answerBox.innerText = "Analiz ediliyor...";
+
+    try{
+      const res = await fetch(API_BASE + "/telescope");
+      const data = await res.json();
+
+      const risk = data.risk_score ?? "-";
+      const globalRisk = data.global_risk_index ?? "-";
+      const state = data.economic_state ?? "-";
+      const reason = data.ai_reason ?? "Veri sınırlı.";
+      const advice = data.ai_advice ?? "Finansal disiplini koru.";
+
+      let extra = "";
+
+      const lowerQ = q.toLowerCase();
+
+      if(lowerQ.includes("altın") || lowerQ.includes("dolar") || lowerQ.includes("yatırım")){
+        extra = "Yatırım kararlarında tek varlığa yoğunlaşmak yerine risk dağılımı önemlidir.";
+      } else if(lowerQ.includes("işletme") || lowerQ.includes("nakit") || lowerQ.includes("şirket")){
+        extra = "Kısa vadede nakit akışı, tahsilat süresi ve gider kontrolü öncelikli izlenmelidir.";
+      } else if(lowerQ.includes("türkiye") || lowerQ.includes("ülke")){
+        extra = "Ülke riskini değerlendirirken enflasyon, faiz, kur oynaklığı ve finansman koşulları birlikte izlenmelidir.";
+      } else {
+        extra = "Karar verirken risk seviyesi, piyasa yönü ve likidite koşulları birlikte okunmalıdır.";
+      }
+
+      answerBox.innerText =
+`Soru:
+${q}
+
+Durum:
+Risk Score: ${risk}
+Global Risk Index: ${globalRisk}
+Economic State: ${state}
+
+Neden:
+${reason}
+
+Öneri:
+${advice}
+
+Ek Not:
+${extra}`;
+    } catch (e) {
+      answerBox.innerText = "API bağlantı hatası. Endpoint veya bağlantıyı kontrol et.";
+    }
+  }
+</script>
+
+</body>
+</html>

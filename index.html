@@ -1,149 +1,547 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Financial Telescope</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050814;
+      color: #eaf2ff;
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 30px;
+      color: #00d4ff;
+    }
+    .brand p {
+      margin: 6px 0 0;
+      color: #9eb3d9;
+      font-size: 14px;
+    }
+    .status {
+      padding: 10px 14px;
+      border: 1px solid #1e2a55;
+      border-radius: 10px;
+      background: #0c1228;
+      color: #bcd0f7;
+      font-size: 14px;
+    }
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .card {
+      background: #0c1228;
+      border: 1px solid #1c2a55;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.20);
+    }
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-5 { grid-column: span 5; }
+    .col-6 { grid-column: span 6; }
+    .col-7 { grid-column: span 7; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
 
-<title>ZENTRA Financial Telescope</title>
+    .label {
+      color: #8ea7d8;
+      font-size: 13px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .value {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .sub {
+      margin-top: 10px;
+      color: #b9c9e8;
+      font-size: 15px;
+      line-height: 1.5;
+    }
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    .band {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .very-low, .low {
+      color: #19e68c;
+      background: rgba(25,230,140,0.12);
+      border: 1px solid rgba(25,230,140,0.35);
+    }
+    .medium {
+      color: #f5b942;
+      background: rgba(245,185,66,0.12);
+      border: 1px solid rgba(245,185,66,0.35);
+    }
+    .high {
+      color: #ff8a3d;
+      background: rgba(255,138,61,0.12);
+      border: 1px solid rgba(255,138,61,0.35);
+    }
+    .critical {
+      color: #ff4d6d;
+      background: rgba(255,77,109,0.12);
+      border: 1px solid rgba(255,77,109,0.35);
+    }
 
-<style>
+    .reason-box, .advice-box, .error-box, .chat-box, .chat-response {
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #09101f;
+      border: 1px solid #162445;
+      color: #d7e5ff;
+      min-height: 72px;
+      line-height: 1.5;
+    }
+    .error-box {
+      background: rgba(255,77,109,0.08);
+      border-color: rgba(255,77,109,0.35);
+      color: #ffd7de;
+      display: none;
+      min-height: auto;
+    }
 
-body{
-background:#050814;
-color:#eaf2ff;
-font-family:Arial;
-margin:0;
-}
+    .mini-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #d7e5ff;
+      line-height: 1.7;
+    }
 
-.wrap{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
+    .regions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .region {
+      background: #09101f;
+      border: 1px solid #162445;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .region-title {
+      font-size: 14px;
+      color: #9eb3d9;
+      margin-bottom: 8px;
+    }
+    .region-score {
+      font-size: 24px;
+      font-weight: 700;
+    }
 
-.card{
-background:#0c1228;
-border:1px solid #1e2a55;
-border-radius:12px;
-padding:20px;
-margin-bottom:16px;
-}
+    .lens-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .lens {
+      background: #09101f;
+      border: 1px solid #162445;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .lens h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #ffffff;
+    }
+    .lens p {
+      margin: 0;
+      color: #9eb3d9;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .cert {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,212,255,0.35);
+      color: #00d4ff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
 
-h1{
-color:#00d4ff;
-}
+    .chat-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .chat-input {
+      width: 100%;
+      background: #07101f;
+      border: 1px solid #1a2a4a;
+      border-radius: 12px;
+      color: #eaf2ff;
+      padding: 14px;
+      font-size: 15px;
+      outline: none;
+    }
+    .btn {
+      background: #00d4ff;
+      color: #00121b;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn.secondary {
+      background: #162445;
+      color: #d7e5ff;
+    }
 
-.value{
-font-size:36px;
-margin-top:8px;
-}
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
 
-.band{
-padding:6px 10px;
-border-radius:6px;
-display:inline-block;
-margin-top:10px;
-}
+    .footer-note {
+      margin-top: 18px;
+      color: #8ea7d8;
+      font-size: 13px;
+      line-height: 1.6;
+    }
 
-.low{background:#19e68c;color:black}
-.mid{background:#f5b942;color:black}
-.high{background:#ff4d6d;color:white}
-
-canvas{
-background:#07101f;
-border-radius:10px;
-margin-top:10px;
-}
-
-</style>
-
+    @media (max-width: 900px) {
+      .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-12 {
+        grid-column: span 12;
+      }
+      .lens-grid { grid-template-columns: 1fr; }
+      .regions { grid-template-columns: 1fr; }
+      .value { font-size: 32px; }
+      canvas { height: 240px !important; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <h1>ZENTRA Financial Telescope</h1>
+        <p>Live risk dashboard · lens marketplace · AI risk chat</p>
+      </div>
+      <div class="status" id="systemStatus">API bağlanıyor...</div>
+    </div>
 
-<div class="wrap">
+    <div class="grid">
+      <div class="card col-4">
+        <div class="label">Global Risk Index</div>
+        <div class="value" id="globalRiskValue">...</div>
+        <div class="band" id="riskBandBadge">...</div>
+      </div>
 
-<h1>ZENTRA Financial Telescope</h1>
+      <div class="card col-4">
+        <div class="label">Risk Score</div>
+        <div class="value" id="riskScoreValue">...</div>
+        <div class="sub" id="economicState">...</div>
+      </div>
 
-<div class="card">
-<strong>Global Risk Index</strong>
-<div id="globalRisk" class="value">loading...</div>
-<div id="band" class="band">...</div>
-</div>
+      <div class="card col-4">
+        <div class="label">Market State</div>
+        <div class="value" id="marketTrendValue">...</div>
+        <div class="sub" id="btcValue">BTC: ...</div>
+      </div>
 
-<div class="card">
-<strong>Risk Score</strong>
-<div id="riskScore" class="value">loading...</div>
-<div id="state"></div>
-</div>
+      <div class="card col-8">
+        <div class="label">Risk History</div>
+        <canvas id="historyChart"></canvas>
+      </div>
 
-<div class="card">
-<strong>AI Reason</strong>
-<div id="reason">loading...</div>
-</div>
+      <div class="card col-4">
+        <div class="label">AI Reason</div>
+        <div class="reason-box" id="aiReason">Yükleniyor...</div>
 
-<div class="card">
-<strong>AI Advice</strong>
-<div id="advice">loading...</div>
-</div>
+        <div class="label" style="margin-top:16px;">AI Advice</div>
+        <div class="advice-box" id="aiAdvice">Yükleniyor...</div>
+      </div>
 
-<div class="card">
-<strong>Risk History</strong>
-<canvas id="chart" height="120"></canvas>
-</div>
+      <div class="card col-6">
+        <div class="label">Global Risk Map</div>
+        <div class="regions">
+          <div class="region">
+            <div class="region-title">USA</div>
+            <div class="region-score" id="usaRisk">...</div>
+          </div>
+          <div class="region">
+            <div class="region-title">Europe</div>
+            <div class="region-score" id="euRisk">...</div>
+          </div>
+          <div class="region">
+            <div class="region-title">Türkiye</div>
+            <div class="region-score" id="trRisk">...</div>
+          </div>
+          <div class="region">
+            <div class="region-title">Emerging Markets</div>
+            <div class="region-score" id="emRisk">...</div>
+          </div>
+        </div>
+        <div class="footer-note">Bu ilk sürümde blok bazlı risk haritası kullanılıyor.</div>
+      </div>
 
-</div>
+      <div class="card col-6">
+        <div class="label">Lens Marketplace</div>
+        <div class="lens-grid">
+          <div class="lens">
+            <h4>Banking Lens</h4>
+            <p>Kredi riski ve davranışsal finansal bozulma.</p>
+            <div class="cert">Certified</div>
+          </div>
+          <div class="lens">
+            <h4>SME Lens</h4>
+            <p>KOBİ risk, nakit baskısı ve faaliyet stresi.</p>
+            <div class="cert">Institution Ready</div>
+          </div>
+          <div class="lens">
+            <h4>ERP Lens</h4>
+            <p>Muhasebe, stok, alacak-borç akış analizi.</p>
+            <div class="cert">Certified</div>
+          </div>
+          <div class="lens">
+            <h4>POS Lens</h4>
+            <p>Ödeme ritmi, talep zayıflaması ve satış sinyali.</p>
+            <div class="cert">Certified</div>
+          </div>
+          <div class="lens">
+            <h4>Insurance Lens</h4>
+            <p>Hasar davranışı ve risk yoğunluğu analizi.</p>
+            <div class="cert">RegTech</div>
+          </div>
+          <div class="lens">
+            <h4>Digital Asset Lens</h4>
+            <p>Kripto oynaklığı ve cüzdan risk davranışı.</p>
+            <div class="cert">Beta</div>
+          </div>
+        </div>
+      </div>
 
-<script>
+      <div class="card col-12">
+        <div class="label">AI Risk Chat</div>
+        <textarea id="chatInput" class="chat-input" rows="4" placeholder="Örnek: İşletmemin riski neden yükseliyor?"></textarea>
+        <div class="chat-actions">
+          <button class="btn" onclick="runChat()">Ask Zentra AI</button>
+          <button class="btn secondary" onclick="fillExample()">Örnek Soru</button>
+        </div>
+        <div class="chat-response" id="chatResponse">Soru bekleniyor...</div>
+      </div>
 
-const API =
-"https://api.allorigins.win/raw?url=https://zentra-risklens-api-2.onrender.com/telescope"
+      <div class="card col-12">
+        <div class="label">Connection Status</div>
+        <div class="error-box" id="errorBox"></div>
+        <div class="footer-note">Burada hata görünürse sorun HTML değil, API bağlantısı veya CORS tarafındadır.</div>
+      </div>
+    </div>
+  </div>
 
-async function load(){
+  <script>
+    const API_RAW = "https://zentra-risklens-api-2.onrender.com";
+    const TELESCOPE_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(API_RAW + "/telescope");
+    const HISTORY_URL = "https://api.allorigins.win/raw?url=" + encodeURIComponent(API_RAW + "/history");
 
-try{
+    let historyChartInstance = null;
+    let liveTelescopeData = null;
 
-const res = await fetch(API)
-const data = await res.json()
+    function setBandClass(el, band) {
+      el.classList.remove("very-low", "low", "medium", "high", "critical");
+      el.classList.add((band || "medium").toLowerCase());
+    }
 
-document.getElementById("globalRisk").innerText =
-data.global_risk_index
+    function formatBand(band) {
+      return band ? band.toUpperCase() : "-";
+    }
 
-document.getElementById("riskScore").innerText =
-data.risk_score
+    function safeText(value, fallback = "-") {
+      return value === undefined || value === null || value === "" ? fallback : value;
+    }
 
-document.getElementById("state").innerText =
-data.economic_state
+    async function fetchJson(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return await res.json();
+    }
 
-document.getElementById("reason").innerText =
-data.ai_reason
+    function buildHistoryChart(items) {
+      const list = Array.isArray(items) ? items : [];
+      const labels = [...list].reverse().map((_, i) => `Kayıt ${i + 1}`);
+      const riskScores = [...list].reverse().map(x => x.risk_score);
+      const globalScores = [...list].reverse().map(x => x.global_risk);
 
-document.getElementById("advice").innerText =
-data.ai_advice
+      const ctx = document.getElementById("historyChart");
 
-let band="mid"
+      if (historyChartInstance) historyChartInstance.destroy();
 
-if(data.global_risk_index<40) band="low"
-if(data.global_risk_index>70) band="high"
+      historyChartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Risk Score",
+              data: riskScores,
+              borderColor: "#00d4ff",
+              backgroundColor: "rgba(0,212,255,0.12)",
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: "Global Risk",
+              data: globalScores,
+              borderColor: "#ff8a3d",
+              backgroundColor: "rgba(255,138,61,0.12)",
+              tension: 0.3,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: "#d7e5ff" } }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#9eb3d9" },
+              grid: { color: "rgba(255,255,255,0.05)" }
+            },
+            y: {
+              min: 0,
+              max: 100,
+              ticks: { color: "#9eb3d9" },
+              grid: { color: "rgba(255,255,255,0.05)" }
+            }
+          }
+        }
+      });
+    }
 
-const bandBox=document.getElementById("band")
-bandBox.className="band "+band
-bandBox.innerText=band.toUpperCase()
+    function showError(message) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = message;
+      document.getElementById("systemStatus").textContent = "API hatası";
+    }
 
-}catch(e){
+    function fillRiskMap(globalRisk) {
+      document.getElementById("usaRisk").textContent = Math.max(0, Math.round(globalRisk - 6));
+      document.getElementById("euRisk").textContent = Math.max(0, Math.round(globalRisk - 2));
+      document.getElementById("trRisk").textContent = Math.min(100, Math.round(globalRisk + 8));
+      document.getElementById("emRisk").textContent = Math.min(100, Math.round(globalRisk + 5));
+    }
 
-document.getElementById("globalRisk").innerText="API ERROR"
+    function fillExample() {
+      document.getElementById("chatInput").value = "İşletmemin riski neden yükseliyor ve ne yapmalıyım?";
+    }
 
-}
+    function runChat() {
+      const q = document.getElementById("chatInput").value.trim();
+      const out = document.getElementById("chatResponse");
 
-}
+      if (!liveTelescopeData) {
+        out.textContent = "Canlı veri henüz gelmedi. Önce dashboard verisinin yüklenmesi gerekiyor.";
+        return;
+      }
 
-load()
+      const risk = liveTelescopeData.risk_score;
+      const globalRisk = liveTelescopeData.global_risk_index;
+      const reason = liveTelescopeData.ai_reason || "Risk nedeni mevcut verilerle okunuyor.";
+      const advice = liveTelescopeData.ai_advice || "Nakit ve risk dengesini koru.";
 
-</script>
+      if (!q) {
+        out.textContent = "Lütfen bir soru yaz.";
+        return;
+      }
 
+      out.innerHTML =
+        "<strong>Soru:</strong> " + q + "<br><br>" +
+        "<strong>Durum:</strong> Risk " + risk + " / Global Risk " + globalRisk + "<br>" +
+        "<strong>Neden:</strong> " + reason + "<br>" +
+        "<strong>Öneri:</strong> " + advice;
+    }
+
+    async function loadDashboard() {
+      try {
+        document.getElementById("systemStatus").textContent = "API okunuyor...";
+
+        const [telescope, history] = await Promise.all([
+          fetchJson(TELESCOPE_URL),
+          fetchJson(HISTORY_URL)
+        ]);
+
+        liveTelescopeData = telescope;
+
+        const globalRisk = telescope.global_risk_index;
+        const riskScore = telescope.risk_score;
+        const band = (telescope.risk_band || "medium").toLowerCase();
+
+        document.getElementById("globalRiskValue").textContent = safeText(globalRisk);
+        document.getElementById("riskScoreValue").textContent = safeText(riskScore);
+        document.getElementById("riskBandBadge").textContent = formatBand(band);
+        setBandClass(document.getElementById("riskBandBadge"), band);
+
+        document.getElementById("economicState").textContent =
+          `Economic State: ${safeText(telescope.economic_state)}`;
+
+        document.getElementById("marketTrendValue").textContent =
+          safeText(telescope.market?.market_trend, "-").toUpperCase();
+
+        document.getElementById("btcValue").textContent =
+          `BTC: ${safeText(telescope.market?.btc_price)}`;
+
+        document.getElementById("aiReason").textContent =
+          safeText(telescope.ai_reason, "Reason yok");
+
+        document.getElementById("aiAdvice").textContent =
+          safeText(telescope.ai_advice, "Advice yok");
+
+        fillRiskMap(globalRisk);
+        buildHistoryChart(history);
+
+        document.getElementById("systemStatus").textContent = "API bağlı";
+      } catch (err) {
+        showError(
+          "Veri okunamadı. Aracı servis ile denenmesine rağmen bağlantı kurulamadı. Hata: " + err.message
+        );
+      }
+    }
+
+    loadDashboard();
+  </script>
 </body>
-</html>
+              </html>

@@ -1,844 +1,279 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ZENTRA — Global Economic Intelligence</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA — Economic Intelligence Platform</title>
 
 <style>
-:root{
-  --bg:#050814;
-  --panel:#081020;
-  --panel2:#0d152e;
-  --line:#1d2b55;
-  --text:#ffffff;
-  --muted:#9db0d8;
-  --cyan:#00d4ff;
-  --green:#19e68c;
-  --yellow:#f5b942;
-  --orange:#ff8a3d;
-  --red:#ff4d6d;
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#050b18;
+color:white;
 }
-*{box-sizing:border-box;min-width:0}
-html,body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
-  scroll-behavior:smooth;
+
+header{
+padding:30px;
+text-align:center;
+background:#08132a;
+border-bottom:1px solid #0f2c55;
 }
-nav{
-  position:sticky;
-  top:0;
-  z-index:30;
-  background:rgba(8,16,32,.96);
-  border-bottom:1px solid var(--line);
-  padding:14px 16px;
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-}
-nav a{
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-}
-nav a:hover{color:var(--cyan)}
-section{
-  padding:32px 16px;
-  border-bottom:1px solid var(--line);
-}
-.wrap{
-  max-width:1200px;
-  margin:0 auto;
-}
-.hero{
-  background:
-    radial-gradient(circle at top right, rgba(0,212,255,.12), transparent 28%),
-    radial-gradient(circle at left center, rgba(25,230,140,.08), transparent 26%),
-    var(--panel);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:28px;
-}
+
 h1{
-  margin:0 0 10px 0;
-  font-size:clamp(30px,4vw,42px);
-  line-height:1.1;
+margin:0;
+color:#00e0ff;
+font-size:34px;
 }
-h2{
-  margin:0 0 14px 0;
-  color:var(--cyan);
-  font-size:clamp(22px,3vw,30px);
+
+nav{
+margin-top:10px;
 }
-h3{
-  margin:0 0 10px 0;
-  font-size:18px;
+
+nav a{
+color:#7bdfff;
+margin:0 12px;
+text-decoration:none;
+font-size:14px;
 }
-p{
-  margin:0;
-  line-height:1.75;
-  color:var(--muted);
+
+section{
+padding:60px 20px;
+max-width:1100px;
+margin:auto;
 }
-.sub{
-  margin-top:8px;
-  color:var(--muted);
-  line-height:1.65;
-  font-size:14px;
+
+.hero{
+text-align:center;
+padding:80px 20px;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:16px;
+
+.hero h2{
+font-size:36px;
+color:#00e0ff;
+margin-bottom:20px;
 }
-.col-3{grid-column:span 3}
-.col-4{grid-column:span 4}
-.col-5{grid-column:span 5}
-.col-6{grid-column:span 6}
-.col-7{grid-column:span 7}
-.col-8{grid-column:span 8}
-.col-12{grid-column:span 12}
+
+.hero p{
+font-size:18px;
+color:#9edaff;
+max-width:700px;
+margin:auto;
+}
+
 .card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px;
+background:#08152c;
+padding:25px;
+border-radius:10px;
+margin-top:20px;
+border:1px solid #103865;
 }
-.panel{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
+
+input,textarea{
+width:100%;
+padding:12px;
+border-radius:6px;
+border:none;
+margin-top:10px;
+background:#0c1c35;
+color:white;
 }
-.metric-label{
-  font-size:12px;
-  text-transform:uppercase;
-  color:var(--muted);
-  letter-spacing:.05em;
-}
-.metric{
-  margin-top:8px;
-  font-size:32px;
-  color:var(--cyan);
-  font-weight:700;
-  line-height:1.15;
-}
-textarea{
-  width:100%;
-  min-height:120px;
-  resize:vertical;
-  background:var(--panel2);
-  color:#fff;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-  font:inherit;
-}
+
 button{
-  border:none;
-  border-radius:10px;
-  padding:11px 16px;
-  background:var(--cyan);
-  color:#00131c;
-  font-weight:700;
-  cursor:pointer;
+margin-top:10px;
+padding:12px 20px;
+background:#00e0ff;
+border:none;
+border-radius:6px;
+cursor:pointer;
 }
-.btn-secondary{
-  background:#162445;
-  color:#d7e5ff;
-}
-.row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-.answer{
-  margin-top:12px;
-  min-height:190px;
-  white-space:pre-wrap;
-  line-height:1.75;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-}
-.pill{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#162445;
-  color:#d7e5ff;
-  font-size:12px;
-  cursor:pointer;
-}
-.band{
-  display:inline-block;
-  margin-top:10px;
-  padding:7px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-}
-.low{color:var(--green);background:rgba(25,230,140,.14)}
-.medium{color:var(--yellow);background:rgba(245,185,66,.14)}
-.high{color:var(--orange);background:rgba(255,138,61,.14)}
-.critical{color:var(--red);background:rgba(255,77,109,.14)}
-.bar{
-  height:10px;
-  background:#16224a;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:8px;
-}
-.fill{
-  height:100%;
-  background:linear-gradient(90deg,var(--cyan),var(--green));
-  border-radius:999px;
-}
-#worldMap{
-  width:100% !important;
-  height:520px !important;
-}
+
 .footer{
-  padding:24px 16px 40px;
-  color:#7f93bd;
-  font-size:13px;
-  line-height:1.7;
+text-align:center;
+padding:30px;
+background:#08132a;
+margin-top:60px;
+font-size:14px;
+color:#6fa9d6;
 }
-.list{
-  margin:0;
-  padding-left:18px;
-  color:var(--muted);
-  line-height:1.9;
+
+.signal{
+margin-top:20px;
+padding:14px;
+border:1px solid #00e0ff;
+border-radius:10px;
+background:#08132a;
+color:#00e0ff;
 }
-.status{
-  display:inline-block;
-  margin-top:14px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:#132041;
-  color:#d7e6ff;
-  font-size:12px;
-  font-weight:700;
-}
-select,input[type="range"]{
-  width:100%;
-  max-width:420px;
-}
-pre{
-  white-space:pre-wrap;
-  margin:0;
-  font:inherit;
-  color:var(--muted);
-  line-height:1.75;
-}
-@media (max-width:900px){
-  .col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-12{grid-column:span 12}
-  #worldMap{height:380px !important}
-}
+
 </style>
 </head>
+
 <body>
 
+<header>
+
+<h1>ZENTRA</h1>
+
 <nav>
-  <a href="#home">Home</a>
-  <a href="#advisor">AI Advisor</a>
-  <a href="#map">World Map</a>
-  <a href="#sector">Sector Simulator</a>
-  <a href="#radar">Economic Radar</a>
-  <a href="#brain">Economic Brain</a>
-  <a href="#platform">Platform</a>
-  <a href="#trust">Trust</a>
-  <a href="#about">About</a>
-  <a href="#telescope">Telescope</a>
+<a href="#advisor">AI Advisor</a>
+<a href="#map">Risk Map</a>
+<a href="#brain">Economic Brain</a>
+<a href="#platform">Platform</a>
+<a href="#about">About</a>
 </nav>
 
-<section id="home">
-  <div class="wrap">
-    <div class="hero">
+</header>
 
-      <h1>ZENTRA — Global Economic Intelligence</h1>
+<section class="hero">
 
-      <p>
-        ZENTRA is a global economic intelligence platform that transforms macro signals,
-        market pressure, and behavioral finance into real-time risk insight.
-      </p>
+<h2>ZENTRA Economic OS</h2>
 
-      <p class="sub" style="margin-top:12px;">
-        Detect financial stress earlier.
-        Understand economic pressure faster.
-        Make decisions with intelligence.
-      </p>
+<p>
+Global economic intelligence platform analyzing financial systems,
+risk structures and macroeconomic signals.
+</p>
 
-      <div class="row" style="margin-top:20px;">
-        <button onclick="document.getElementById('advisor').scrollIntoView({behavior:'smooth'})">
-          Ask ZENTRA
-        </button>
-
-        <button class="btn-secondary" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">
-          Explore Global Risk
-        </button>
-      </div>
-
-      <div class="status" id="apiStatus" style="margin-top:18px">
-        System loading...
-      </div>
-
-    </div>
-
-    <div class="grid" style="margin-top:16px;">
-      <div class="card col-3">
-        <div class="metric-label">Risk Score</div>
-        <div class="metric" id="riskScore">--</div>
-        <div class="sub">Combined financial pressure signal.</div>
-      </div>
-      <div class="card col-3">
-        <div class="metric-label">Global Risk Index</div>
-        <div class="metric" id="globalRisk">--</div>
-        <div class="sub">Aggregated global economic stress.</div>
-      </div>
-      <div class="card col-3">
-        <div class="metric-label">Economic State</div>
-        <div class="metric" style="font-size:22px" id="economicState">--</div>
-        <div class="sub">Macro interpretation layer.</div>
-      </div>
-      <div class="card col-3">
-        <div class="metric-label">Market Trend</div>
-        <div class="metric" style="font-size:22px" id="marketTrend">--</div>
-        <div class="sub">Current market direction.</div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section id="advisor">
-  <div class="wrap">
-    <h2>AI Economic Advisor</h2>
-    <div class="grid">
-      <div class="card col-7">
-        <textarea id="question" placeholder="Örnek: Altın mı dolar mı daha mantıklı? / Türkiye risk görünümü nasıl? / Faiz artışı neyi tetikler?"></textarea>
 
-        <div class="row">
-          <button onclick="askAI()">Analyze</button>
-          <button class="btn-secondary" onclick="clearAI()">Clear</button>
-        </div>
+<h2>AI Advisor</h2>
 
-        <div class="row">
-          <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
-          <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye görünümü</span>
-          <span class="pill" onclick="setQuestion('Kriz geliyor mu?')">Kriz sinyali</span>
-          <span class="pill" onclick="setQuestion('Faiz artışı neyi tetikler?')">Faiz etkisi</span>
-        </div>
+<div class="card">
 
-        <div class="answer" id="aiAnswer">AI ready.</div>
-      </div>
+<textarea id="question" placeholder="Ask economic or business question..."></textarea>
 
-      <div class="card col-5">
-        <h3>Live Interpretation</h3>
-        <div class="panel">
-          <div class="metric-label">Risk Band</div>
-          <div id="riskBand" class="band medium">--</div>
-        </div>
-        <div class="panel" style="margin-top:12px;">
-          <div class="metric-label">Reason</div>
-          <div class="sub" id="aiReason">--</div>
-        </div>
-        <div class="panel" style="margin-top:12px;">
-          <div class="metric-label">Advice</div>
-          <div class="sub" id="aiAdvice">--</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<button onclick="analyze()">Analyze</button>
+
+<div id="response"></div>
+
+</div>
+
 </section>
 
 <section id="map">
-  <div class="wrap">
-    <h2>Global Risk Heatmap</h2>
-    <div class="grid">
-      <div class="col-7 card">
-        <canvas id="worldMap"></canvas>
-      </div>
-      <div class="col-5">
-        <div class="card">
-          <div class="metric-label">Selected Country</div>
-          <div class="metric" style="font-size:26px" id="countryName">None</div>
 
-          <div class="metric-label" style="margin-top:14px;">Risk Score</div>
-          <div class="metric" id="countryScore">--</div>
+<h2>ZENTRA Global Risk Signals</h2>
 
-          <div id="countryBand" class="band medium">--</div>
+<div class="card" id="signals"></div>
 
-          <div class="metric-label" style="margin-top:14px;">Interpretation</div>
-          <div class="sub" id="countryInfo">Click a country on the map to see details.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="sector">
-  <div class="wrap">
-    <h2>Sector Risk Simulator</h2>
-    <div class="card">
-      <label>Sector</label><br><br>
-      <select id="sectorType">
-        <option value="agriculture">Agriculture</option>
-        <option value="retail">Retail</option>
-        <option value="construction">Construction</option>
-        <option value="technology">Technology</option>
-        <option value="energy">Energy</option>
-      </select>
-
-      <br><br>
-      <label>Sales Trend</label>
-      <input type="range" id="sales" min="0" max="1" step="0.1" value="0.5">
-
-      <br><br>
-      <label>Cost Pressure</label>
-      <input type="range" id="cost" min="0" max="1" step="0.1" value="0.5">
-
-      <br><br>
-      <label>Demand</label>
-      <input type="range" id="demand" min="0" max="1" step="0.1" value="0.5">
-
-      <br>
-      <button onclick="simulateSector()">Calculate Risk</button>
-
-      <div class="answer" id="sectorResult">Sector risk not calculated.</div>
-    </div>
-  </div>
-</section>
-
-<section id="radar">
-  <div class="wrap">
-    <h2>Economic Radar</h2>
-    <div class="grid">
-      <div class="card col-4">
-        <div class="metric-label">Inflation Pressure</div>
-        <div class="metric" id="inflationMetric">5</div>
-      </div>
-      <div class="card col-4">
-        <div class="metric-label">Market Volatility</div>
-        <div class="metric" id="volatilityMetric">0.4</div>
-      </div>
-      <div class="card col-4">
-        <div class="metric-label">Oil Stress</div>
-        <div class="metric" id="oilMetric">72</div>
-      </div>
-      <div class="card col-12">
-        <div class="metric-label">System Stress Level</div>
-        <div class="bar"><div id="stressBar" class="fill" style="width:57%"></div></div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section id="brain">
-  <div class="wrap">
-    <h2>Global Economic Brain</h2>
-    <div class="card">
-      <pre id="brainAnalysis">Analyzing global economic system...</pre>
-    </div>
-  </div>
+
+<h2>Global Economic Brain</h2>
+
+<div class="card">
+
+<p>
+ZENTRA analyzes global economic flows, financial stress,
+trade patterns and macro risk indicators to generate
+intelligence signals.
+</p>
+
+<ul>
+
+<li>Liquidity pressure</li>
+<li>Global trade fragmentation</li>
+<li>Energy volatility</li>
+<li>Emerging market instability</li>
+<li>Debt pressure</li>
+
+</ul>
+
+</div>
+
 </section>
 
 <section id="platform">
-  <div class="wrap">
-    <h2>Platform</h2>
-    <div class="grid">
-      <div class="card col-6">
-        <h3>Core Modules</h3>
-        <ul class="list">
-          <li>Risk Engine</li>
-          <li>Global Risk Index</li>
-          <li>Sector Simulator</li>
-          <li>Economic Knowledge Engine</li>
-          <li>Economic Radar</li>
-          <li>Global Economic Brain</li>
-        </ul>
-      </div>
-      <div class="card col-6">
-        <h3>System Logic</h3>
-        <ul class="list">
-          <li>Data Sources</li>
-          <li>Signal Layer</li>
-          <li>Risk Engines</li>
-          <li>Knowledge Layer</li>
-          <li>Decision Support</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="trust">
-  <div class="wrap">
-    <h2>Trust</h2>
-    <div class="card">
-      <p>
-        ZENTRA separates direct signal outputs, model estimates and guidance. The platform is designed for economic interpretation and risk understanding, not blind automation.
-      </p>
-    </div>
-  </div>
+<h2>ZENTRA Platform Architecture</h2>
+
+<div class="card">
+
+<ul>
+
+<li>RiskLens Engine</li>
+<li>Credit Stress Engine</li>
+<li>Global Risk Radar</li>
+<li>Economic Brain</li>
+<li>AI Advisor Layer</li>
+<li>Behavioral Finance Models</li>
+
+</ul>
+
+</div>
+
 </section>
 
 <section id="about">
-  <div class="wrap">
-    <h2>About</h2>
-    <div class="card">
-      <p>
-        ZENTRA is a financial intelligence system designed to analyze economic signals, detect financial stress and support better economic decision making.
-      </p>
-    </div>
-  </div>
+
+<h2>About</h2>
+
+<div class="card">
+
+<p>
+
+ZENTRA is a behavioral financial intelligence platform designed to
+analyze economic structures, detect financial risk signals and
+generate strategic economic insights.
+
+</p>
+
+</div>
+
 </section>
 
 <div class="footer">
-  <div class="wrap">
-    ZENTRA — Behavioral Financial Infrastructure for Global Economic Intelligence
-  </div>
+
+ZENTRA — Behavioral Financial Intelligence
+
 </div>
 
 <script>
-const API = "https://zentra-risklens-api.42mehmetaltas.workers.dev";
-let live = null;
-let mapChart = null;
 
-function loadTelescope(){
-  console.log("ZENTRA Telescope Activated");
+function analyze(){
 
-  const signals = [
-    "Global liquidity tightening",
-    "Energy volatility rising",
-    "Trade fragmentation risk",
-    "Emerging market pressure",
-    "Supply chain restructuring"
-  ];
+let q=document.getElementById("question").value;
 
-  const randomSignal = signals[Math.floor(Math.random()*signals.length)];
+let resp=document.getElementById("response");
 
-  const box = document.createElement("div");
-  box.style.marginTop = "20px";
-  box.style.padding = "12px";
-  box.style.border = "1px solid #00e0ff";
-  box.style.borderRadius = "10px";
-  box.style.background = "#0c1220";
-  box.style.color = "#00e0ff";
+resp.innerHTML="<div class='signal'>AI analysis generated for: "+q+"</div>";
 
-  box.innerHTML = "<b>ZENTRA Telescope Signal:</b><br>"+randomSignal;
-
-  document.body.appendChild(box);
 }
 
-loadTelescope();  
+function loadSignals(){
 
-const fallbackCountries = [
-  {code:"USA",name:"United States",risk:42,band:"low"},
-  {code:"DEU",name:"Germany",risk:37,band:"low"},
-  {code:"CHN",name:"China",risk:39,band:"low"},
-  {code:"IND",name:"India",risk:45,band:"medium"},
-  {code:"TUR",name:"Turkey",risk:69,band:"high"},
-  {code:"BRA",name:"Brazil",risk:52,band:"medium"},
-  {code:"ZAF",name:"South Africa",risk:55,band:"medium"},
-  {code:"GBR",name:"United Kingdom",risk:41,band:"low"},
-  {code:"FRA",name:"France",risk:38,band:"low"},
-  {code:"JPN",name:"Japan",risk:28,band:"low"},
-  {code:"RUS",name:"Russia",risk:62,band:"high"},
-  {code:"AUS",name:"Australia",risk:31,band:"low"},
-  {code:"CAN",name:"Canada",risk:29,band:"low"},
-  {code:"ARE",name:"United Arab Emirates",risk:24,band:"low"},
-  {code:"ARG",name:"Argentina",risk:77,band:"critical"}
+const signals=[
+"Global liquidity tightening",
+"Energy market volatility rising",
+"Trade fragmentation risk",
+"Emerging market debt pressure",
+"Supply chain restructuring",
+"Central bank policy divergence"
 ];
 
-function setQuestion(text){
-  document.getElementById("question").value = text;
+const box=document.getElementById("signals");
+
+signals.forEach(s=>{
+
+let d=document.createElement("div");
+
+d.className="signal";
+
+d.innerText=s;
+
+box.appendChild(d);
+
+});
+
 }
 
-function clearAI(){
-  document.getElementById("question").value = "";
-  document.getElementById("aiAnswer").innerText = "AI ready.";
-}
+loadSignals();
 
-function knowledgeEngine(question){
-  let q = question.toLowerCase();
+</script>
 
-  if(q.includes("enflasyon") || q.includes("inflation") || q.includes("faiz") || q.includes("interest")){
-    return `
-Macro Economy Analysis
-
-Inflation pressure usually leads to interest rate tightening.
-Central banks increase interest rates to reduce demand.
-
-Current Environment:
-High inflation → credit contraction → slower economic growth.
-
-Strategic Response:
-• protect liquidity
-• reduce leverage
-• avoid speculative debt`;
-  }
-
-  if(q.includes("altın") || q.includes("gold") || q.includes("dolar") || q.includes("bitcoin") || q.includes("yatırım")){
-    return `
-Investment Analysis
-
-Precious metals and safe assets typically perform well during
-inflationary and uncertain economic environments.
-
-Portfolio logic:
-• diversification
-• inflation hedge
-• global liquidity tracking
-
-ZENTRA suggestion:
-avoid concentration risk and balance safe assets with productive investments.`;
-  }
-
-  if(q.includes("türkiye") || q.includes("turkey") || q.includes("ülke") || q.includes("country")){
-    return `
-Country Risk Analysis
-
-Country risk depends on:
-• inflation level
-• currency volatility
-• debt stress
-• political stability
-
-High inflation and currency volatility increase financial pressure.
-
-ZENTRA interpretation:
-monitor macro indicators and capital flows.`;
-  }
-
-  if(q.includes("sektör") || q.includes("tarım") || q.includes("retail") || q.includes("inşaat") || q.includes("technology") || q.includes("energy")){
-    return `
-Sector Economy Analysis
-
-Sector risk depends on:
-• demand strength
-• cost pressure
-• financing conditions
-
-Construction and retail sectors are usually sensitive to interest rate increases.
-
-ZENTRA recommendation:
-focus on sectors with stable demand and low debt dependence.`;
-  }
-
-  if(q.includes("kriz") || q.includes("crisis") || q.includes("resesyon")){
-    return `
-Financial Crisis Interpretation
-
-Financial crises usually emerge from three pressures:
-• credit contraction
-• liquidity stress
-• asset bubbles
-
-Early warning signals:
-• rapid debt growth
-• asset price instability
-• banking stress`;
-  }
-
-  return `
-General Economic Analysis
-
-Economic systems should be evaluated through:
-• macro indicators
-• market signals
-• liquidity conditions
-• sector strength
-
-ZENTRA integrates these signals to interpret financial pressure.`;
-}
-
-async function loadRisk(){
-  try{
-    const r = await fetch(API + "/telescope", { cache:"no-store" });
-    if(!r.ok) throw new Error("HTTP " + r.status);
-    const d = await r.json();
-    live = d;
-
-    document.getElementById("riskScore").innerText = d.risk_score ?? "44";
-    document.getElementById("globalRisk").innerText = d.global_risk_index ?? "57";
-    document.getElementById("economicState").innerText = d.economic_state ?? "moderate pressure";
-    document.getElementById("marketTrend").innerText = d.market?.market_trend ?? "bearish";
-    document.getElementById("aiReason").innerText = d.ai_reason ?? "macro stress signal loaded";
-    document.getElementById("aiAdvice").innerText = d.ai_advice ?? "maintain financial discipline";
-    document.getElementById("inflationMetric").innerText = d.macro?.inflation ?? "5";
-    document.getElementById("stressBar").style.width = Math.max(6, Math.min(100, Number(d.global_risk_index || 57))) + "%";
-    document.getElementById("apiStatus").innerText = "API bağlı / Cloudflare global network aktif";
-
-    const bandEl = document.getElementById("riskBand");
-    const band = d.risk_band || "medium";
-    bandEl.className = "band " + band;
-    bandEl.innerText = band.toUpperCase();
-
-  }catch{
-    live = {
-      risk_score:44,
-      global_risk_index:57,
-      economic_state:"moderate pressure",
-      market:{market_trend:"bearish"},
-      ai_reason:"inflation pressure and credit tightening remain visible",
-      ai_advice:"maintain liquidity and avoid concentrated risk",
-      risk_band:"medium",
-      macro:{inflation:5}
-    };
-
-    document.getElementById("riskScore").innerText = "44";
-    document.getElementById("globalRisk").innerText = "57";
-    document.getElementById("economicState").innerText = "moderate pressure";
-    document.getElementById("marketTrend").innerText = "bearish";
-    document.getElementById("aiReason").innerText = live.ai_reason;
-    document.getElementById("aiAdvice").innerText = live.ai_advice;
-    document.getElementById("inflationMetric").innerText = "5";
-    document.getElementById("riskBand").className = "band medium";
-    document.getElementById("riskBand").innerText = "MEDIUM";
-    document.getElementById("stressBar").style.width = "57%";
-    document.getElementById("apiStatus").innerText = "Fallback veri aktif";
-  }
-
-  globalEconomicBrain();
-}
-
-function askAI(){
-  const q = document.getElementById("question").value.trim();
-  if(!q || !live) return;
-
-  const analysis = knowledgeEngine(q);
-
-  document.getElementById("aiAnswer").innerText =
-`Question:
-${q}
-
-Live Snapshot:
-Risk Score: ${live.risk_score}
-Global Risk Index: ${live.global_risk_index}
-Economic State: ${live.economic_state}
-Market Trend: ${live.market?.market_trend || "--"}
-
-ZENTRA Knowledge Engine:
-${analysis}
-
-Current Platform Guidance:
-${live.ai_advice}`;
-}
-
-function simulateSector(){
-  const sector = document.getElementById("sectorType").value;
-  const sales = parseFloat(document.getElementById("sales").value);
-  const cost = parseFloat(document.getElementById("cost").value);
-  const demand = parseFloat(document.getElementById("demand").value);
-
-  let risk = (1 - sales) * 40 + cost * 30 + (1 - demand) * 30;
-  risk = Math.round(risk);
-
-  let band = "LOW";
-  if(risk > 70) band = "HIGH";
-  else if(risk > 40) band = "MEDIUM";
-
-  document.getElementById("sectorResult").innerText =
-`Sector: ${sector}
-Risk Score: ${risk}
-Risk Level: ${band}`;
-}
-
-function globalEconomicBrain(){
-  if(!live) return;
-
-  const risk = Number(live.global_risk_index || 57);
-  let analysis = "";
-
-  if(risk > 70){
-    analysis = `
-GLOBAL ECONOMIC BRAIN
-
-System Stress: HIGH
-
-Interpretation:
-Financial pressure across global markets is elevated.
-Credit tightening and inflation persistence may slow economic growth.
-
-Strategic Outlook:
-• protect liquidity
-• avoid excessive leverage
-• focus on resilient sectors`;
-  } else if(risk > 50){
-    analysis = `
-GLOBAL ECONOMIC BRAIN
-
-System Stress: MODERATE
-
-Interpretation:
-Economic conditions show moderate pressure.
-Markets remain sensitive to interest rate changes.
-
-Strategic Outlook:
-• balanced portfolios
-• monitor inflation trends
-• focus on stable demand sectors`;
-  } else {
-    analysis = `
-GLOBAL ECONOMIC BRAIN
-
-System Stress: LOW
-
-Interpretation:
-Economic conditions appear relatively stable.
-
-Strategic Outlook:
-• investment opportunities increase
-• risk appetite grows
-• capital expansion possible`;
-  }
-
-  document.getElementById("brainAnalysis").innerText = analysis;
-}
-
-async function loadHeatmap(){
-  let countryData = fallbackCountries;
-
-  try{
-    const r = await fetch(API + "/global-risk", { cache:"no-store" });
-    if(r.ok){
-      const d = await r.json();
-      if(d.countries && d.countries.length){
-        countryData = d.countries;
-      }
-    }
-  }catch{}
-
-  const countryMap = {};
-  countryData.forEach(c => { countryMap[c.code] = c; });
-
-  const world = await fetch("https://unpkg.com/world-atlas@2/countries-110m.json").then(r => r.json());
-  const countries = ChartGeo.topojson.feature(world, world.objects.countries).features;
-
-  const codeAliases = {
-    "840":"USA","276":"DEU","156":"CHN","356":"IND","792":"TUR","076":"BRA",
-    "710":"ZAF","826":"GBR","250":"FRA","392":"JPN","643":"RUS","036":"AUS",
-    "124":"CAN","784":"ARE","032":"ARG"
-  };
-
-  const data = countries.map(feature => {
-    const iso = codeAliases[String(feature.id)] || null;
-    const item = iso ? countryMap[iso] : null;
-    return {
-      feature,
-      value: item?.risk ?? 35,
-      iso: iso,
-      name: item?.name ?? feature.properties.name ?? "Unknown",
-      band: item?.band ?? "low"
-    };
-  });
-
-  const ctx =
+</body>
+</html>

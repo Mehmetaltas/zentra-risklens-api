@@ -1,284 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>ZENTRA Economic Intelligence</title>
 
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
 <style>
-
-body{
-margin:0;
-font-family:Arial;
-background:#050814;
-color:white;
+:root{
+  --bg:#050814;
+  --panel:#081020;
+  --panel2:#0d152e;
+  --line:#1d2b55;
+  --text:#ffffff;
+  --muted:#9db0d8;
+  --cyan:#00d4ff;
+  --green:#19e68c;
+  --yellow:#f5b942;
+  --orange:#ff8a3d;
+  --red:#ff4d6d;
 }
-
+*{box-sizing:border-box;min-width:0}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
 nav{
-background:#081020;
-padding:14px;
-border-bottom:1px solid #1d2b55;
-display:flex;
-flex-wrap:wrap;
-gap:16px;
+  background:var(--panel);
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
-
 nav a{
-color:white;
-text-decoration:none;
-font-size:14px;
+  color:white;
+  text-decoration:none;
+  font-size:14px;
 }
-
-nav a:hover{
-color:#00d4ff;
-}
-
+nav a:hover{color:var(--cyan)}
 section{
-padding:40px;
-border-bottom:1px solid #1d2b55;
+  padding:36px 16px;
+  border-bottom:1px solid var(--line);
 }
-
+.container{
+  max-width:1250px;
+  margin:0 auto;
+}
 h1{
-font-size:36px;
+  margin:0 0 10px 0;
+  font-size:clamp(30px,4vw,42px);
 }
-
+h2{
+  margin:0 0 14px 0;
+  color:var(--cyan);
+  font-size:clamp(22px,3vw,30px);
+}
+.lead{
+  color:var(--muted);
+  line-height:1.75;
+  max-width:900px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:16px;
+}
 .card{
-background:#081020;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
 }
-
-textarea{
-width:100%;
-padding:10px;
-background:#0d152e;
-border:1px solid #1d2b55;
-color:white;
+.col-3{grid-column:span 3}
+.col-4{grid-column:span 4}
+.col-5{grid-column:span 5}
+.col-6{grid-column:span 6}
+.col-7{grid-column:span 7}
+.col-12{grid-column:span 12}
+.metric-label{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:var(--muted);
+  margin-bottom:8px;
 }
-
-button{
-padding:10px 14px;
-background:#00d4ff;
-border:none;
-margin-top:10px;
-cursor:pointer;
-}
-
 .metric{
-font-size:28px;
-color:#00d4ff;
+  font-size:clamp(24px,4vw,34px);
+  color:var(--cyan);
+  font-weight:700;
 }
-
-</style>
-
-</head>
-
-<body>
-
-<nav>
-
-<a href="#home">Home</a>
-
-<a href="#advisor">AI Advisor</a>
-
-<a href="#map">World Map</a>
-
-<a href="#risk">Global Risk</a>
-
-<a href="#radar">Economic Radar</a>
-
-<a href="#platform">Platform</a>
-
-<a href="#intelligence">Intelligence</a>
-
-<a href="#research">Research</a>
-
-<a href="#trust">Trust</a>
-
-<a href="#about">About</a>
-
-</nav>
-
-<section id="home">
-
-<h1>ZENTRA</h1>
-
-<p>
-Global economic intelligence platform that analyzes financial systems,
-macro pressure and market signals.
-</p>
-
-</section>
-
-<section id="advisor">
-
-<h1>AI Advisor</h1>
-
-<textarea id="q" placeholder="Ask an economic question"></textarea>
-
-<button onclick="ask()">Analyze</button>
-
-<div class="card" id="answer">
-Waiting for question...
-</div>
-
-</section>
-
-<section id="map">
-
-<h1>World Economic Map</h1>
-
-<div class="card">
-
-Global economic monitoring layer.
-
-Countries are evaluated with risk scoring and macro indicators.
-
-</div>
-
-</section>
-
-<section id="risk">
-
-<h1>Global Risk Index</h1>
-
-<div class="metric" id="riskScore">--</div>
-
-</section>
-
-<section id="radar">
-
-<h1>Economic Radar</h1>
-
-<div class="card">
-
-Detects macro pressure signals:
-
-• inflation  
-• credit stress  
-• currency volatility  
-• market instability
-
-</div>
-
-</section>
-
-<section id="platform">
-
-<h1>ZENTRA Platform</h1>
-
-<div class="card">
-
-ZENTRA integrates:
-
-• Macro engines  
-• Risk engines  
-• Behavioral finance signals  
-• Market data  
-
-into a single economic intelligence system.
-
-</div>
-
-</section>
-
-<section id="intelligence">
-
-<h1>Intelligence Center</h1>
-
-<div class="card">
-
-AI interpretation layer that explains economic signals
-and transforms data into readable analysis.
-
-</div>
-
-</section>
-
-<section id="research">
-
-<h1>Research</h1>
-
-<div class="card">
-
-Economic research reports.
-
-• inflation regimes  
-• rate cycles  
-• sector pressure  
-• global financial stability
-
-</div>
-
-</section>
-
-<section id="trust">
-
-<h1>Trust Center</h1>
-
-<div class="card">
-
-Security architecture
-
-• data protection  
-• transparency  
-• financial system safety
-
-</div>
-
-</section>
-
-<section id="about">
-
-<h1>About ZENTRA</h1>
-
-<div class="card">
-
-ZENTRA is designed as a global economic intelligence system capable of analyzing
-financial environments and detecting systemic risk.
-
-</div>
-
-</section>
-
-<script>
-
-const API="https://zentra-risklens-api.42mehmetaltas.workers.dev";
-
-async function loadRisk(){
-
-try{
-
-let r=await fetch(API+"/telescope")
-
-let d=await r.json()
-
-document.getElementById("riskScore").innerText=d.global_risk_index
-
-}catch{
-
-document.getElementById("riskScore").innerText="57"
-
+.panel{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
 }
-
+textarea, input, select{
+  width:100%;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  color:white;
+  padding:12px;
+  border-radius:10px;
 }
-
-function ask(){
-
-let q=document.getElementById("q").value
-
-document.getElementById("answer").innerText=
-
-"Question:\n\n"+q+"\n\nZENTRA AI interpretation:\n\nMacro pressure signals and financial conditions must be evaluated together."
-
+button{
+  padding:11px 16px;
+  background:var(--cyan);
+  color:#00131c;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
 }
-
-loadRisk()
-
-</script>
-
-</body>
-</html>
+button.secondary{
+  background:#162445;
+  color:#d7e5ff;
+}
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.answer{
+  margin-top:12px;
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+  min-height:180px;
+  white-space:pre-wrap;
+  line-height:1.7;
+}
+.pill{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px

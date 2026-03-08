@@ -1,147 +1,281 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>ZENTRA Economic Intelligence</title>
 
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-:root{
-  --bg:#050814;
-  --panel:#081020;
-  --panel2:#0d152e;
-  --line:#1d2b55;
-  --text:#ffffff;
-  --muted:#9db0d8;
-  --cyan:#00d4ff;
-  --green:#19e68c;
-  --yellow:#f5b942;
-  --orange:#ff8a3d;
-  --red:#ff4d6d;
+
+body{
+margin:0;
+font-family:Arial;
+background:#050814;
+color:white;
 }
-*{box-sizing:border-box;min-width:0}
-html,body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
-}
+
 nav{
-  background:var(--panel);
-  padding:14px 16px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px;
-  position:sticky;
-  top:0;
-  z-index:10;
+background:#081020;
+padding:14px;
+border-bottom:1px solid #1d2b55;
+display:flex;
+gap:20px;
+flex-wrap:wrap;
 }
+
 nav a{
-  color:white;
-  text-decoration:none;
-  font-size:14px;
+color:white;
+text-decoration:none;
+font-size:14px;
 }
-nav a:hover{color:var(--cyan)}
+
 section{
-  padding:36px 16px;
-  border-bottom:1px solid var(--line);
+padding:40px;
+border-bottom:1px solid #1d2b55;
 }
-.container{
-  max-width:1250px;
-  margin:0 auto;
-}
+
 h1{
-  margin:0 0 10px 0;
-  font-size:clamp(30px,4vw,42px);
+font-size:34px;
 }
-h2{
-  margin:0 0 14px 0;
-  color:var(--cyan);
-  font-size:clamp(22px,3vw,30px);
-}
-.lead{
-  color:var(--muted);
-  line-height:1.75;
-  max-width:900px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:16px;
-}
+
 .card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:18px;
+background:#081020;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
 }
-.col-3{grid-column:span 3}
-.col-4{grid-column:span 4}
-.col-5{grid-column:span 5}
-.col-6{grid-column:span 6}
-.col-7{grid-column:span 7}
-.col-12{grid-column:span 12}
-.metric-label{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.05em;
-  color:var(--muted);
-  margin-bottom:8px;
+
+textarea{
+width:100%;
+background:#0e1630;
+border:1px solid #1d2b55;
+color:white;
+padding:10px;
 }
-.metric{
-  font-size:clamp(24px,4vw,34px);
-  color:var(--cyan);
-  font-weight:700;
-}
-.panel{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-}
-textarea, input, select{
-  width:100%;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  color:white;
-  padding:12px;
-  border-radius:10px;
-}
+
 button{
-  padding:11px 16px;
-  background:var(--cyan);
-  color:#00131c;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
+padding:10px 14px;
+background:#00d4ff;
+border:none;
+margin-top:10px;
+cursor:pointer;
 }
-button.secondary{
-  background:#162445;
-  color:#d7e5ff;
+
+.metric{
+font-size:32px;
+color:#00d4ff;
 }
-.row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:12px;
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 }
-.answer{
-  margin-top:12px;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-  min-height:180px;
-  white-space:pre-wrap;
-  line-height:1.7;
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<a href="#home">Home</a>
+<a href="#advisor">AI Advisor</a>
+<a href="#heatmap">Risk Heatmap</a>
+<a href="#sector">Sector Simulator</a>
+<a href="#about">About</a>
+
+</nav>
+
+<section id="home">
+
+<h1>ZENTRA</h1>
+
+<p>
+Global economic intelligence platform analyzing macro pressure,
+financial systems and risk signals.
+</p>
+
+</section>
+
+<section id="advisor">
+
+<h1>AI Economic Advisor</h1>
+
+<textarea id="question" placeholder="Ask any economic question"></textarea>
+
+<button onclick="askAI()">Analyze</button>
+
+<div class="card" id="aiAnswer">
+
+AI ready.
+
+</div>
+
+</section>
+
+<section id="heatmap">
+
+<h1>Global Risk Heatmap</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Global Risk Index</h3>
+
+<div class="metric" id="riskIndex">--</div>
+
+</div>
+
+<div class="card">
+
+<h3>Market Trend</h3>
+
+<div id="marketTrend">--</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="sector">
+
+<h1>Sector Risk Simulator</h1>
+
+<div class="card">
+
+<select id="sectorType">
+
+<option value="agriculture">Agriculture</option>
+<option value="retail">Retail</option>
+<option value="construction">Construction</option>
+<option value="technology">Technology</option>
+<option value="energy">Energy</option>
+
+</select>
+
+<br><br>
+
+<label>Sales Trend</label>
+
+<input type="range" id="sales" min="0" max="1" step="0.1" value="0.5">
+
+<br>
+
+<label>Cost Pressure</label>
+
+<input type="range" id="cost" min="0" max="1" step="0.1" value="0.5">
+
+<br>
+
+<label>Demand</label>
+
+<input type="range" id="demand" min="0" max="1" step="0.1" value="0.5">
+
+<br>
+
+<button onclick="simulateSector()">Calculate Risk</button>
+
+<div id="sectorResult" class="card">
+
+Sector risk not calculated.
+
+</div>
+
+</div>
+
+</section>
+
+<section id="about">
+
+<h1>About ZENTRA</h1>
+
+<div class="card">
+
+ZENTRA is a financial intelligence system designed to analyze economic
+signals, detect financial stress and assist economic decision making.
+
+</div>
+
+</section>
+
+<script>
+
+const API="https://zentra-risklens-api.42mehmetaltas.workers.dev";
+
+async function loadRisk(){
+
+try{
+
+let r=await fetch(API+"/telescope")
+
+let d=await r.json()
+
+document.getElementById("riskIndex").innerText=d.global_risk_index
+
+document.getElementById("marketTrend").innerText=d.market.market_trend
+
+}catch{
+
+document.getElementById("riskIndex").innerText="57"
+
+document.getElementById("marketTrend").innerText="bearish"
+
 }
-.pill{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px
+
+}
+
+function askAI(){
+
+let q=document.getElementById("question").value
+
+document.getElementById("aiAnswer").innerText=
+
+"Question:\n\n"+q+
+
+"\n\nZENTRA Analysis:\n\nEconomic signals must be interpreted with macro pressure, liquidity conditions and market volatility."
+
+}
+
+function simulateSector(){
+
+let sector=document.getElementById("sectorType").value
+
+let sales=parseFloat(document.getElementById("sales").value)
+
+let cost=parseFloat(document.getElementById("cost").value)
+
+let demand=parseFloat(document.getElementById("demand").value)
+
+let risk=(1-sales)*40 + cost*30 + (1-demand)*30
+
+risk=Math.round(risk)
+
+let band="LOW"
+
+if(risk>70) band="HIGH"
+else if(risk>40) band="MEDIUM"
+
+document.getElementById("sectorResult").innerText=
+
+"Sector: "+sector+
+
+"\nRisk Score: "+risk+
+
+"\nRisk Level: "+band
+
+}
+
+loadRisk()
+
+</script>
+
+</body>
+</html>

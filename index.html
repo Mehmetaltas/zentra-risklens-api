@@ -1,304 +1,261 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZENTRA — Global Economic Intelligence</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZENTRA Global Economic Intelligence</title>
 
 <style>
-:root{
- --bg:#050814;
- --panel:#0c1228;
- --panel2:#07101f;
- --line:#1e2a55;
- --text:#eaf2ff;
- --muted:#9fb3da;
- --cyan:#00d4ff;
- --green:#19e68c;
- --yellow:#f5b942;
- --orange:#ff8a3d;
- --red:#ff4d6d;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-nav{
- background:#060b1c;
- border-bottom:1px solid var(--line);
- padding:14px;
- display:flex;
- gap:20px;
- flex-wrap:wrap
-}
-nav a{color:#fff;text-decoration:none;font-size:14px}
 
-.container{max-width:1200px;margin:auto;padding:28px 16px 60px}
+body{
+background:#050814;
+color:white;
+font-family:Arial;
+margin:0;
+}
+
+nav{
+background:#081020;
+padding:14px;
+border-bottom:1px solid #1d2b55;
+}
+
+nav a{
+color:white;
+margin-right:20px;
+text-decoration:none;
+font-size:14px;
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:20px;
+}
 
 .hero{
- background:
- radial-gradient(circle at top right, rgba(0,212,255,.12), transparent 30%),
- radial-gradient(circle at left center, rgba(25,230,140,.08), transparent 30%),
- var(--panel);
- border:1px solid var(--line);
- border-radius:20px;
- padding:32px;
- margin-bottom:24px
+background:#0b1328;
+padding:30px;
+border-radius:14px;
+margin-bottom:20px;
+border:1px solid #1c2a55;
 }
 
-h1{margin:0 0 10px 0;font-size:38px}
-h2{color:var(--green);margin-top:0}
-.lead{color:var(--muted);line-height:1.7;max-width:900px}
-
-.btn{
- border:none;
- padding:12px 16px;
- border-radius:10px;
- cursor:pointer;
- font-weight:bold
+h1{
+margin:0;
+font-size:36px;
 }
-.primary{background:var(--cyan);color:#00131c}
-.secondary{background:#162445;color:#d7e5ff}
+
+.livebar{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+.metric{
+background:#081020;
+padding:20px;
+border-radius:12px;
+border:1px solid #1d2b55;
+}
+
+.metric h3{
+margin:0;
+font-size:13px;
+color:#8da4d0;
+}
+
+.metric span{
+font-size:28px;
+color:#00d4ff;
+font-weight:bold;
+}
 
 .grid{
- display:grid;
- grid-template-columns:repeat(12,1fr);
- gap:16px
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
 }
 
 .card{
- background:var(--panel);
- border:1px solid var(--line);
- border-radius:16px;
- padding:20px
+background:#081020;
+padding:20px;
+border-radius:12px;
+border:1px solid #1d2b55;
 }
 
-.col-3{grid-column:span 3}
-.col-4{grid-column:span 4}
-.col-6{grid-column:span 6}
-.col-12{grid-column:span 12}
-
-.metric{
- font-size:30px;
- color:var(--cyan);
- font-weight:bold
+.section{
+margin-top:20px;
 }
 
-.label{
- color:#8ea7d8;
- font-size:12px;
- text-transform:uppercase
+.bar{
+height:10px;
+background:#16224a;
+border-radius:10px;
 }
 
-.band{
- display:inline-block;
- margin-top:8px;
- padding:6px 12px;
- border-radius:999px;
- font-size:12px;
- font-weight:bold
+.fill{
+height:10px;
+background:#00d4ff;
+border-radius:10px;
 }
-
-.low{background:rgba(25,230,140,.15);color:var(--green)}
-.medium{background:rgba(245,185,66,.15);color:var(--yellow)}
-.high{background:rgba(255,138,61,.15);color:var(--orange)}
-.critical{background:rgba(255,77,109,.15);color:var(--red)}
 
 textarea{
- width:100%;
- min-height:110px;
- background:var(--panel2);
- border:1px solid var(--line);
- border-radius:12px;
- color:#fff;
- padding:12px
+width:100%;
+background:#020716;
+color:white;
+border:1px solid #1d2b55;
+padding:10px;
+border-radius:10px;
+}
+
+button{
+background:#00d4ff;
+border:none;
+padding:10px 16px;
+border-radius:10px;
+margin-top:10px;
+cursor:pointer;
 }
 
 .answer{
- margin-top:12px;
- background:var(--panel2);
- border:1px solid var(--line);
- border-radius:12px;
- padding:12px;
- min-height:150px;
- white-space:pre-wrap
+margin-top:10px;
+background:#020716;
+padding:12px;
+border-radius:10px;
+border:1px solid #1d2b55;
 }
-
-.module{
- background:var(--panel2);
- border:1px solid var(--line);
- border-radius:12px;
- padding:14px
-}
-
-.bar{height:8px;background:#132041;border-radius:999px}
-.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:999px}
 
 footer{
- margin-top:40px;
- padding:20px;
- border-top:1px solid var(--line);
- color:#7f93bd
+margin-top:40px;
+padding:20px;
+border-top:1px solid #1d2b55;
+color:#7d8ec3;
 }
 
-@media(max-width:900px){
- .col-3,.col-4,.col-6,.col-12{grid-column:span 12}
-}
 </style>
-</head>
 
+</head>
 <body>
 
 <nav>
+
 <a href="#">Home</a>
 <a href="advisor.html">Advisor</a>
 <a href="global-map.html">World Map</a>
-<a href="investor-demo.html">Investor Demo</a>
+<a href="investor-demo.html">Investor</a>
+
 </nav>
 
 <div class="container">
 
-<section class="hero">
+<div class="hero">
 
 <h1>ZENTRA — Global Economic Intelligence</h1>
 
-<p class="lead">
-ZENTRA transforms global financial data, market signals and behavioral patterns into real-time economic risk intelligence. The platform detects financial stress, analyzes macroeconomic conditions and delivers AI-driven insights.
+<p>
+Real-time economic risk detection platform analyzing financial systems, market signals and behavioral finance.
 </p>
 
-<button class="btn primary" onclick="document.getElementById('demo').scrollIntoView()">Explore Risk</button>
-<a href="advisor.html"><button class="btn secondary">Open AI Advisor</button></a>
+<div class="livebar">
 
-</section>
-
-<section class="grid">
-
-<div class="card col-3">
-<div class="label">Risk Score</div>
-<div class="metric" id="riskScore">--</div>
+<div class="metric">
+<h3>Risk Score</h3>
+<span id="risk">--</span>
 </div>
 
-<div class="card col-3">
-<div class="label">Global Risk Index</div>
-<div class="metric" id="globalRisk">--</div>
+<div class="metric">
+<h3>Global Risk Index</h3>
+<span id="global">--</span>
 </div>
 
-<div class="card col-3">
-<div class="label">Economic State</div>
-<div class="metric" style="font-size:22px" id="economicState">--</div>
+<div class="metric">
+<h3>Economic State</h3>
+<span id="state">--</span>
 </div>
 
-<div class="card col-3">
-<div class="label">Market Trend</div>
-<div class="metric" style="font-size:22px" id="marketTrend">--</div>
+<div class="metric">
+<h3>Market Trend</h3>
+<span id="trend">--</span>
 </div>
 
-</section>
+</div>
 
-<br>
-
-<section class="grid">
-
-<div class="card col-12">
-<h2>Core Platform Modules</h2>
+</div>
 
 <div class="grid">
 
-<div class="module col-3">
-<strong>RiskLens Engine</strong>
-<p class="lead">Behavioral and financial risk scoring.</p>
-</div>
+<div>
 
-<div class="module col-3">
-<strong>Credit Stress Engine</strong>
-<p class="lead">Financing pressure analysis.</p>
-</div>
-
-<div class="module col-3">
-<strong>Global Telescope</strong>
-<p class="lead">Country and macro monitoring.</p>
-</div>
-
-<div class="module col-3">
-<strong>AI Advisor</strong>
-<p class="lead">Economic interpretation layer.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<br>
-
-<section id="demo" class="grid">
-
-<div class="card col-7">
-
-<h2>AI Economic Advisor</h2>
-
-<textarea id="question" placeholder="Altın mı dolar mı? Türkiye ekonomisi nasıl?"></textarea>
-
-<br><br>
-
-<button class="btn primary" onclick="ask()">Analyze</button>
-
-<div id="answer" class="answer">Soru bekleniyor...</div>
-
-</div>
-
-<div class="card col-5">
-
-<h2>Live Interpretation</h2>
-
-<div class="label">Risk Band</div>
-<div id="riskBand" class="band medium">--</div>
-
-<p id="aiReason" class="lead"></p>
-
-<p id="aiAdvice" class="lead"></p>
-
-</div>
-
-</section>
-
-<br>
-
-<section class="grid">
-
-<div class="card col-6">
+<div class="card">
 
 <h2>Sector Pressure</h2>
 
-<div>Retail</div>
+<p>Retail</p>
 <div class="bar"><div class="fill" style="width:65%"></div></div>
 
-<br>
-
-<div>Construction</div>
+<p>Construction</p>
 <div class="bar"><div class="fill" style="width:72%"></div></div>
 
-<br>
-
-<div>Technology</div>
+<p>Technology</p>
 <div class="bar"><div class="fill" style="width:40%"></div></div>
 
-</div>
-
-<div class="card col-6">
-
-<h2>Global Risk Map</h2>
-
-<p class="lead">Track country-level financial stress across the world.</p>
-
-<a href="global-map.html"><button class="btn primary">Open World Map</button></a>
+<p>Energy</p>
+<div class="bar"><div class="fill" style="width:55%"></div></div>
 
 </div>
 
-</section>
+<div class="card section">
+
+<h2>Platform Modules</h2>
+
+<ul>
+<li>RiskLens Engine</li>
+<li>Credit Stress Engine</li>
+<li>Global Telescope</li>
+<li>AI Economic Advisor</li>
+</ul>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="card">
+
+<h2>AI Economic Advisor</h2>
+
+<textarea id="q" placeholder="Ask an economic question"></textarea>
+
+<button onclick="ask()">Analyze</button>
+
+<div id="answer" class="answer">
+Waiting for question...
+</div>
+
+</div>
+
+<div class="card section">
+
+<h2>AI Insight</h2>
+
+<p id="reason"></p>
+
+<p id="advice"></p>
+
+</div>
+
+</div>
+
+</div>
 
 <footer>
 
-ZENTRA — Behavioral Financial Infrastructure for Global Economic Intelligence
+ZENTRA Behavioral Financial Infrastructure  
+Global Economic Intelligence Platform
 
 </footer>
 
@@ -314,27 +271,33 @@ async function load(){
 
 try{
 
-const r=await fetch(API+"/telescope")
-const d=await r.json()
+let r=await fetch(API+"/telescope")
+
+let d=await r.json()
 
 live=d
 
-document.getElementById("riskScore").innerText=d.risk_score
-document.getElementById("globalRisk").innerText=d.global_risk_index
-document.getElementById("economicState").innerText=d.economic_state
-document.getElementById("marketTrend").innerText=d.market?.market_trend || "--"
+document.getElementById("risk").innerText=d.risk_score
 
-document.getElementById("riskBand").innerText=d.risk_band
+document.getElementById("global").innerText=d.global_risk_index
 
-document.getElementById("aiReason").innerText=d.ai_reason
-document.getElementById("aiAdvice").innerText=d.ai_advice
+document.getElementById("state").innerText=d.economic_state
+
+document.getElementById("trend").innerText=d.market?.market_trend || "--"
+
+document.getElementById("reason").innerText=d.ai_reason
+
+document.getElementById("advice").innerText=d.ai_advice
 
 }catch{
 
-document.getElementById("riskScore").innerText="44"
-document.getElementById("globalRisk").innerText="57"
-document.getElementById("economicState").innerText="moderate pressure"
-document.getElementById("marketTrend").innerText="bearish"
+document.getElementById("risk").innerText="44"
+
+document.getElementById("global").innerText="57"
+
+document.getElementById("state").innerText="moderate pressure"
+
+document.getElementById("trend").innerText="bearish"
 
 }
 
@@ -342,13 +305,13 @@ document.getElementById("marketTrend").innerText="bearish"
 
 function ask(){
 
-const q=document.getElementById("question").value
+let q=document.getElementById("q").value
 
-if(!live){return}
+if(!live)return
 
 document.getElementById("answer").innerText=
 
-"Question:\n"+q+
+"Question: "+q+
 
 "\n\nRisk Score: "+live.risk_score+
 

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Global Economic Timeline</title>
+
+<style>
+:root{
+  --bg:#050814;
+  --panel:#081020;
+  --panel2:#0b1328;
+  --line:#1d2b55;
+  --text:#ffffff;
+  --muted:#9db0d8;
+  --cyan:#00d4ff;
+  --green:#19e68c;
+  --yellow:#f5b942;
+  --orange:#ff8a3d;
+  --red:#ff4d6d;
+}
+
+*{box-sizing:border-box; min-width:0}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  overflow-x:hidden;
+}
+
+nav{
+  background:var(--panel);
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+nav a{
+  color:var(--text);
+  text-decoration:none;
+  font-size:14px;
+}
+
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px 16px 40px;
+}
+
+.hero{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px;
+  margin-bottom:20px;
+}
+
+h1{
+  margin:0 0 10px 0;
+  font-size:clamp(28px, 4vw, 40px);
+}
+
+.lead{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:900px;
+}
+
+.top-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+}
+
+.label{
+  font-size:12px;
+  text-transform:uppercase;
+  color:var(--muted);
+  letter-spacing:.05em;
+  margin-bottom:8px;
+}
+
+.metric{
+  font-size:clamp(24px, 4vw, 34px);
+  color:var(--cyan);
+  font-weight:700;
+  line-height:1.15;
+}
+
+.timeline-wrap{
+  display:grid;
+  grid-template-columns: 1.4fr .9fr;
+  gap:20px;
+}
+
+.timeline{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+}
+
+.timeline-item{
+  position:relative;
+  padding:0 0 18px 22px;
+  border-left:2px solid #1e2d5b;
+  margin-left:8px;
+}
+
+.timeline-item:last-child{
+  padding-bottom:0;
+}
+
+.timeline-item::before{
+  content:"";
+  position:absolute;
+  left:-8px;
+  top:4px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 0 4px rgba(0,212,255,.12);
+}
+
+.timeline-date{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+.timeline-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.timeline-text{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.low{
+  color:var(--green);
+  background:rgba(25,230,140,.14);
+}
+.medium{
+  color:var(--yellow);
+  background:rgba(245,185,66,.14);
+}
+.high{
+  color:var(--orange);
+  background:rgba(255,138,61,.14);
+}
+.critical{
+  color:var(--red);
+  background:rgba(255,77,109,.14);
+}
+
+.side-panel{
+  display:grid;
+  gap:16px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+}
+
+.panel h2,
+.timeline h2{
+  margin:0 0 14px 0;
+  color:var(--green);
+  font-size:22px;
+}
+
+.list{
+  margin:0;
+  padding-left:18px;
+  color:var(--muted);
+  line-height:1.8;
+}
+
+.status{
+  display:inline-block;
+  margin-top:14px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#132041;
+  color:#d7e6ff;
+  font-size:12px;
+  font-weight:700;
+}
+
+@media (max-width: 980px){
+  .top-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .timeline-wrap{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width: 640px){
+  .top-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="advisor.html">Advisor</a>
+  <a href="global-map.html">World Map</a>
+  <a href="economic-radar.html">Economic Radar</a>
+  <a href="platform-page.html">Platform</a>
+  <a href="economic-timeline.html">Timeline</a>
+</nav>
+
+<div class="container">
+
+  <section class="hero">
+    <h1>ZENTRA Global Economic Timeline</h1>
+    <div class="lead">
+      Track major economic events, crisis signals, rate cycles, inflation pressure and market regime changes in a single structured time view.
+    </div>
+    <div class="status" id="timelineStatus">Timeline loaded</div>
+  </section>
+
+  <section class="top-grid">
+    <div class="card">
+      <div class="label">Latest Global Risk</div>
+      <div class="metric" id="riskMetric">57</div>
+    </div>
+    <div class="card">
+      <div class="label">Current Economic State</div>
+      <div class="metric" id="stateMetric" style="font-size:20px">moderate pressure</div>
+    </div>
+    <div class="card">
+      <div class="label">Current Market Trend</div>
+      <div class="metric" id="trendMetric" style="font-size:20px">bearish</div>
+    </div>
+    <div class="card">
+      <div class="label">Radar Condition</div>
+      <div class="metric" id="radarMetric" style="font-size:20px">stress watch</div>
+    </div>
+  </section>
+
+  <section class="timeline-wrap">
+
+    <div class="timeline">
+      <h2>Event Timeline</h2>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Q1 2026</div>
+        <div class="timeline-title">Persistent inflation pressure</div>
+        <div class="timeline-text">
+          Inflation remains elevated across multiple regions, keeping monetary policy tight and increasing financing pressure for households and businesses.
+        </div>
+        <div class="badge medium">Macro stress</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Q1 2026</div>
+        <div class="timeline-title">Credit conditions tighten</div>
+        <div class="timeline-text">
+          Higher rates feed into credit cost, slowing new investment and raising stress in leverage-sensitive sectors such as construction and retail.
+        </div>
+        <div class="badge high">Credit pressure</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Q1 2026</div>
+        <div class="timeline-title">Commodity price volatility</div>
+        <div class="timeline-text">
+          Oil and energy sensitivity continue to act as transmission channels for inflation, production cost stress and trade disruption risk.
+        </div>
+        <div class="badge medium">Commodity shock</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Q1 2026</div>
+        <div class="timeline-title">Emerging market fragility watch</div>
+        <div class="timeline-text">
+          Currency weakness and debt sensitivity create uneven resilience across countries, requiring closer country-level and sector-level interpretation.
+        </div>
+        <div class="badge high">Country risk</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Forward signal</div>
+        <div class="timeline-title">Crisis radar monitoring window</div>
+        <div class="timeline-text">
+          If inflation remains sticky while market volatility rises and growth weakens, the system may shift from moderate pressure into a broader stress regime.
+        </div>
+        <div class="badge critical">Forward risk</div>
+      </div>
+    </div>
+
+    <div class="side-panel">
+      <div class="panel">
+        <h2>Current Signals</h2>
+        <ul class="list" id="signalList">
+          <li>Inflation pressure</li>
+          <li>Currency volatility</li>
+          <li>Credit tightening</li>
+          <li>Sector fragility watch</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h2>Why it matters</h2>
+        <div class="lead">
+          The timeline connects isolated economic events into a readable sequence. Instead of only showing metrics, ZENTRA shows how regimes evolve over time.
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Use Cases</h2>
+        <ul class="list">
+          <li>Investor macro monitoring</li>
+          <li>Risk committee briefings</li>
+          <li>Country stress review</li>
+          <li>Scenario preparation</li>
+          <li>Economic intelligence research</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+const API = "https://zentra-risklens-api.42mehmetaltas.workers.dev";
+
+async function loadTimeline(){
+  try{
+    const r = await fetch(API + "/telescope", { cache:"no-store" });
+    if(!r.ok) throw new Error("HTTP " + r.status);
+
+    const d = await r.json();
+
+    document.getElementById("riskMetric").innerText = d.global_risk_index ?? 57;
+    document.getElementById("stateMetric").innerText = d.economic_state ?? "moderate pressure";
+    document.getElementById("trendMetric").innerText = d.market?.market_trend ?? "bearish";
+    document.getElementById("radarMetric").innerText =
+      (Number(d.global_risk_index) >= 70) ? "crisis watch" :
+      (Number(d.global_risk_index) >= 50) ? "stress watch" : "stable watch";
+
+    const signalList = document.getElementById("signalList");
+    signalList.innerHTML = `
+      <li>${d.ai_reason || "Inflation pressure"}</li>
+      <li>${d.market?.market_trend || "Market pressure"}</li>
+      <li>${d.economic_state || "Moderate pressure"}</li>
+      <li>${d.ai_advice || "Maintain financial discipline"}</li>
+    `;
+  }catch(e){
+    // fallback bırakıyoruz
+  }
+}
+
+loadTimeline();
+</script>
+
+</body>
+  </html>

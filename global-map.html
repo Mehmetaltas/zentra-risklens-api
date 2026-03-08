@@ -14,7 +14,7 @@
       margin:0;
       background:#050814;
       color:#eaf2ff;
-      font-family:Arial;
+      font-family:Arial, Helvetica, sans-serif;
     }
     nav{
       background:#060b1c;
@@ -71,6 +71,16 @@
       padding:14px;
       line-height:1.7;
       min-height:140px;
+      white-space:pre-wrap;
+    }
+    .status{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#162445;
+      color:#d7e5ff;
+      font-size:12px;
+      margin-top:10px;
     }
     canvas{
       width:100% !important;
@@ -85,7 +95,7 @@
       font-weight:700;
       text-transform:uppercase;
     }
-    .low,.very.low{
+    .very-low, .low{
       color:#19e68c;
       background:rgba(25,230,140,0.12);
       border:1px solid rgba(25,230,140,0.35);
@@ -131,6 +141,7 @@
     <div class="muted">
       Country-level financial risk observation across the global economic system.
     </div>
+    <div class="status" id="mapStatus">Harita yükleniyor...</div>
   </div>
 
   <div class="grid">
@@ -149,17 +160,14 @@
       <div id="countryBand" class="band medium">No data</div>
 
       <div class="label" style="margin-top:18px;">Details</div>
-      <div class="info-box" id="countryInfo">
-        Harita yükleniyor...
-      </div>
+      <div class="info-box" id="countryInfo">Harita yükleniyor...</div>
     </div>
   </div>
 
 </div>
 
 <script>
-  const API_URL = "https://zentra-risklens-api-2.onrender.com/global-risk";
-
+  const API_URL = "https://zentra-core-api.onrender.com/global-risk";
   let chartInstance = null;
 
   function getBand(score){
@@ -170,13 +178,17 @@
     return "very low";
   }
 
+  function setBandClass(el, band){
+    el.className = "band " + band;
+  }
+
   function setCountryPanel(name, risk){
     document.getElementById("countryName").innerText = name || "Unknown";
     document.getElementById("countryRisk").innerText = risk ?? "--";
 
     const band = typeof risk === "number" ? getBand(risk) : "medium";
     const bandEl = document.getElementById("countryBand");
-    bandEl.className = "band " + band.replace(" ", ".");
+    setBandClass(bandEl, band);
     bandEl.innerText = typeof risk === "number" ? band.toUpperCase() : "NO DATA";
 
     document.getElementById("countryInfo").innerText =
@@ -188,9 +200,12 @@
   async function loadMap(){
     try{
       const [worldRes, riskRes] = await Promise.all([
-        fetch("https://unpkg.com/world-atlas@2/countries-110m.json"),
-        fetch(API_URL)
+        fetch("https://unpkg.com/world-atlas@2/countries-110m.json", { cache: "no-store" }),
+        fetch(API_URL, { cache: "no-store" })
       ]);
+
+      if(!worldRes.ok) throw new Error("World map HTTP " + worldRes.status);
+      if(!riskRes.ok) throw new Error("API HTTP " + riskRes.status);
 
       const world = await worldRes.json();
       const riskJson = await riskRes.json();
@@ -202,14 +217,27 @@
         riskMap[c.name] = c.risk;
       });
 
+      const aliases = {
+        "United States of America": "United States",
+        "Russian Federation": "Russia",
+        "United Republic of Tanzania": "Tanzania",
+        "Dem. Rep. Congo": "Congo",
+        "Dominican Rep.": "Dominican Republic",
+        "Central African Rep.": "Central African Republic",
+        "Eq. Guinea": "Equatorial Guinea",
+        "eSwatini": "Eswatini",
+        "Bosnia and Herz.": "Bosnia and Herzegovina",
+        "S. Sudan": "South Sudan"
+      };
+
       const data = countries.map(feature => {
-        const name = feature.properties.name;
-        const value = riskMap[name] ?? null;
-        return { feature, value };
+        const mapName = feature.properties.name;
+        const apiName = aliases[mapName] || mapName;
+        const value = riskMap[apiName] ?? null;
+        return { feature, value, apiName };
       });
 
       const ctx = document.getElementById("worldMap").getContext("2d");
-
       if(chartInstance) chartInstance.destroy();
 
       chartInstance = new Chart(ctx, {
@@ -230,7 +258,7 @@
               callbacks: {
                 label: (context) => {
                   const item = context.raw;
-                  const name = item.feature.properties.name;
+                  const name = item.apiName || item.feature.properties.name;
                   const value = item.value;
                   return `${name}: ${value ?? "No data"}`;
                 }
@@ -254,14 +282,16 @@
             if(!elements.length) return;
             const idx = elements[0].index;
             const item = data[idx];
-            setCountryPanel(item.feature.properties.name, item.value);
+            setCountryPanel(item.apiName || item.feature.properties.name, item.value);
           }
         }
       });
 
       setCountryPanel("Turkey", riskMap["Turkey"] ?? null);
+      document.getElementById("mapStatus").innerText = "Harita yüklendi";
 
     } catch(e){
+      document.getElementById("mapStatus").innerText = "Harita hatası";
       document.getElementById("countryInfo").innerText =
         "Harita veya API yüklenemedi: " + e.message;
     }

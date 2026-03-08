@@ -35,7 +35,7 @@ html,body{
 nav{
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:30;
   background:rgba(8,16,32,.96);
   border-bottom:1px solid var(--line);
   padding:14px 16px;
@@ -160,7 +160,7 @@ button{
 }
 .answer{
   margin-top:12px;
-  min-height:170px;
+  min-height:190px;
   white-space:pre-wrap;
   line-height:1.75;
   background:var(--panel2);
@@ -228,6 +228,10 @@ button{
   font-size:12px;
   font-weight:700;
 }
+select,input[type="range"]{
+  width:100%;
+  max-width:420px;
+}
 @media (max-width:900px){
   .col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-12{grid-column:span 12}
   #worldMap{height:380px !important}
@@ -289,18 +293,22 @@ button{
     <div class="grid">
       <div class="card col-7">
         <textarea id="question" placeholder="Örnek: Altın mı dolar mı daha mantıklı? / Türkiye risk görünümü nasıl? / Faiz artışı neyi tetikler?"></textarea>
+
         <div class="row">
           <button onclick="askAI()">Analyze</button>
           <button class="btn-secondary" onclick="clearAI()">Clear</button>
         </div>
+
         <div class="row">
           <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
           <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye görünümü</span>
           <span class="pill" onclick="setQuestion('Kriz geliyor mu?')">Kriz sinyali</span>
           <span class="pill" onclick="setQuestion('Faiz artışı neyi tetikler?')">Faiz etkisi</span>
         </div>
+
         <div class="answer" id="aiAnswer">AI ready.</div>
       </div>
+
       <div class="card col-5">
         <h3>Live Interpretation</h3>
         <div class="panel">
@@ -331,9 +339,12 @@ button{
         <div class="card">
           <div class="metric-label">Selected Country</div>
           <div class="metric" style="font-size:26px" id="countryName">None</div>
+
           <div class="metric-label" style="margin-top:14px;">Risk Score</div>
           <div class="metric" id="countryScore">--</div>
+
           <div id="countryBand" class="band medium">--</div>
+
           <div class="metric-label" style="margin-top:14px;">Interpretation</div>
           <div class="sub" id="countryInfo">Click a country on the map to see details.</div>
         </div>
@@ -369,6 +380,7 @@ button{
 
       <br>
       <button onclick="simulateSector()">Calculate Risk</button>
+
       <div class="answer" id="sectorResult">Sector risk not calculated.</div>
     </div>
   </div>
@@ -408,7 +420,7 @@ button{
           <li>Risk Engine</li>
           <li>Global Risk Index</li>
           <li>Sector Simulator</li>
-          <li>AI Advisor</li>
+          <li>Economic Knowledge Engine</li>
           <li>Economic Radar</li>
         </ul>
       </div>
@@ -418,7 +430,7 @@ button{
           <li>Data Sources</li>
           <li>Signal Layer</li>
           <li>Risk Engines</li>
-          <li>AI Interpretation</li>
+          <li>Knowledge Layer</li>
           <li>Decision Support</li>
         </ul>
       </div>
@@ -431,7 +443,7 @@ button{
     <h2>Trust</h2>
     <div class="card">
       <p>
-        ZENTRA separates direct signal outputs, model estimates and AI guidance. The platform is designed for economic interpretation and risk understanding, not blind automation.
+        ZENTRA separates direct signal outputs, model estimates and guidance. The platform is designed for economic interpretation and risk understanding, not blind automation.
       </p>
     </div>
   </div>
@@ -486,12 +498,97 @@ function clearAI(){
   document.getElementById("aiAnswer").innerText = "AI ready.";
 }
 
-function classifyQuestion(q){
-  const t = q.toLowerCase();
-  if(t.includes("altın") || t.includes("gold") || t.includes("dolar") || t.includes("yatırım")) return "investment";
-  if(t.includes("türkiye") || t.includes("ülke") || t.includes("ekonomi") || t.includes("enflasyon")) return "country";
-  if(t.includes("kriz") || t.includes("crisis") || t.includes("faiz") || t.includes("interest")) return "macro";
-  return "general";
+function knowledgeEngine(question){
+  let q = question.toLowerCase();
+
+  if(q.includes("enflasyon") || q.includes("inflation") || q.includes("faiz") || q.includes("interest")){
+    return `
+Macro Economy Analysis
+
+Inflation pressure usually leads to interest rate tightening.
+Central banks increase interest rates to reduce demand.
+
+Current Environment:
+High inflation → credit contraction → slower economic growth.
+
+Strategic Response:
+• protect liquidity
+• reduce leverage
+• avoid speculative debt`;
+  }
+
+  if(q.includes("altın") || q.includes("gold") || q.includes("dolar") || q.includes("bitcoin") || q.includes("yatırım")){
+    return `
+Investment Analysis
+
+Precious metals and safe assets typically perform well during
+inflationary and uncertain economic environments.
+
+Portfolio logic:
+• diversification
+• inflation hedge
+• global liquidity tracking
+
+ZENTRA suggestion:
+avoid concentration risk and balance safe assets with productive investments.`;
+  }
+
+  if(q.includes("türkiye") || q.includes("turkey") || q.includes("ülke") || q.includes("country")){
+    return `
+Country Risk Analysis
+
+Country risk depends on:
+• inflation level
+• currency volatility
+• debt stress
+• political stability
+
+High inflation and currency volatility increase financial pressure.
+
+ZENTRA interpretation:
+monitor macro indicators and capital flows.`;
+  }
+
+  if(q.includes("sektör") || q.includes("tarım") || q.includes("retail") || q.includes("inşaat") || q.includes("technology") || q.includes("energy")){
+    return `
+Sector Economy Analysis
+
+Sector risk depends on:
+• demand strength
+• cost pressure
+• financing conditions
+
+Construction and retail sectors are usually sensitive to interest rate increases.
+
+ZENTRA recommendation:
+focus on sectors with stable demand and low debt dependence.`;
+  }
+
+  if(q.includes("kriz") || q.includes("crisis") || q.includes("resesyon")){
+    return `
+Financial Crisis Interpretation
+
+Financial crises usually emerge from three pressures:
+• credit contraction
+• liquidity stress
+• asset bubbles
+
+Early warning signals:
+• rapid debt growth
+• asset price instability
+• banking stress`;
+  }
+
+  return `
+General Economic Analysis
+
+Economic systems should be evaluated through:
+• macro indicators
+• market signals
+• liquidity conditions
+• sector strength
+
+ZENTRA integrates these signals to interpret financial pressure.`;
 }
 
 async function loadRisk(){
@@ -546,27 +643,11 @@ function askAI(){
   const q = document.getElementById("question").value.trim();
   if(!q || !live) return;
 
-  const mode = classifyQuestion(q);
-  let focus = "Economic overview";
-  let note = "Economic signals should be evaluated together with liquidity, market direction and macro pressure.";
-
-  if(mode === "investment"){
-    focus = "Investment allocation";
-    note = "In uncertain conditions, diversification and liquidity protection are more important than single-asset concentration.";
-  } else if(mode === "country"){
-    focus = "Country and macro outlook";
-    note = "Inflation, financing conditions and currency pressure should be read together when evaluating country risk.";
-  } else if(mode === "macro"){
-    focus = "Macro stress transmission";
-    note = "Rate changes, credit tightening and inflation persistence can reinforce each other across the financial system.";
-  }
+  const analysis = knowledgeEngine(q);
 
   document.getElementById("aiAnswer").innerText =
 `Question:
 ${q}
-
-Focus:
-${focus}
 
 Live Snapshot:
 Risk Score: ${live.risk_score}
@@ -574,14 +655,11 @@ Global Risk Index: ${live.global_risk_index}
 Economic State: ${live.economic_state}
 Market Trend: ${live.market?.market_trend || "--"}
 
-Interpretation:
-${live.ai_reason}
+ZENTRA Knowledge Engine:
+${analysis}
 
-Guidance:
-${live.ai_advice}
-
-Additional Note:
-${note}`;
+Current Platform Guidance:
+${live.ai_advice}`;
 }
 
 function simulateSector(){
@@ -686,4 +764,4 @@ loadHeatmap();
 </script>
 
 </body>
-          </html>
+  </html>

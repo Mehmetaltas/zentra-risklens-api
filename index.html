@@ -1,278 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZENTRA Global Economic Intelligence</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ZENTRA Economic Intelligence</title>
 
 <style>
 
 body{
+margin:0;
+font-family:Arial;
 background:#050814;
 color:white;
-font-family:Arial;
-margin:0;
 }
 
 nav{
 background:#081020;
 padding:14px;
 border-bottom:1px solid #1d2b55;
+display:flex;
+flex-wrap:wrap;
+gap:16px;
 }
 
 nav a{
 color:white;
-margin-right:20px;
 text-decoration:none;
 font-size:14px;
 }
 
-.container{
-max-width:1300px;
-margin:auto;
-padding:20px;
+nav a:hover{
+color:#00d4ff;
 }
 
-.hero{
-background:#0b1328;
-padding:30px;
-border-radius:14px;
-margin-bottom:20px;
-border:1px solid #1c2a55;
+section{
+padding:40px;
+border-bottom:1px solid #1d2b55;
 }
 
 h1{
-margin:0;
 font-size:36px;
-}
-
-.livebar{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-top:20px;
-}
-
-.metric{
-background:#081020;
-padding:20px;
-border-radius:12px;
-border:1px solid #1d2b55;
-}
-
-.metric h3{
-margin:0;
-font-size:13px;
-color:#8da4d0;
-}
-
-.metric span{
-font-size:28px;
-color:#00d4ff;
-font-weight:bold;
-}
-
-.grid{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:20px;
 }
 
 .card{
 background:#081020;
 padding:20px;
-border-radius:12px;
-border:1px solid #1d2b55;
-}
-
-.section{
+border-radius:10px;
 margin-top:20px;
-}
-
-.bar{
-height:10px;
-background:#16224a;
-border-radius:10px;
-}
-
-.fill{
-height:10px;
-background:#00d4ff;
-border-radius:10px;
 }
 
 textarea{
 width:100%;
-background:#020716;
-color:white;
-border:1px solid #1d2b55;
 padding:10px;
-border-radius:10px;
+background:#0d152e;
+border:1px solid #1d2b55;
+color:white;
 }
 
 button{
+padding:10px 14px;
 background:#00d4ff;
 border:none;
-padding:10px 16px;
-border-radius:10px;
 margin-top:10px;
 cursor:pointer;
 }
 
-.answer{
-margin-top:10px;
-background:#020716;
-padding:12px;
-border-radius:10px;
-border:1px solid #1d2b55;
-}
-
-footer{
-margin-top:40px;
-padding:20px;
-border-top:1px solid #1d2b55;
-color:#7d8ec3;
+.metric{
+font-size:28px;
+color:#00d4ff;
 }
 
 </style>
 
 </head>
+
 <body>
 
 <nav>
 
-<a href="#">Home</a>
-<a href="advisor.html">Advisor</a>
-<a href="global-map.html">World Map</a>
-<a href="investor-demo.html">Investor</a>
-<a href="economic-radar.html">Economic Radar</a>
-<a href="platform-page.html">Platform</a>    
-  <a href="economic-timeline.html">Timeline</a>
-  <a href="trust.html">Trust</a>
-  <a href="intelligence.html">Intelligence</a>
-<a href="research.html">Research</a>
+<a href="#home">Home</a>
+
+<a href="#advisor">AI Advisor</a>
+
+<a href="#map">World Map</a>
+
+<a href="#risk">Global Risk</a>
+
+<a href="#radar">Economic Radar</a>
+
+<a href="#platform">Platform</a>
+
+<a href="#intelligence">Intelligence</a>
+
+<a href="#research">Research</a>
+
+<a href="#trust">Trust</a>
+
+<a href="#about">About</a>
+
 </nav>
 
-<div class="container">
+<section id="home">
 
-<div class="hero">
-
-<h1>ZENTRA — Global Economic Intelligence</h1>
+<h1>ZENTRA</h1>
 
 <p>
-Real-time economic risk detection platform analyzing financial systems, market signals and behavioral finance.
+Global economic intelligence platform that analyzes financial systems,
+macro pressure and market signals.
 </p>
 
-<div class="livebar">
+</section>
 
-<div class="metric">
-<h3>Risk Score</h3>
-<span id="risk">--</span>
-</div>
+<section id="advisor">
 
-<div class="metric">
-<h3>Global Risk Index</h3>
-<span id="global">--</span>
-</div>
-
-<div class="metric">
-<h3>Economic State</h3>
-<span id="state">--</span>
-</div>
-
-<div class="metric">
-<h3>Market Trend</h3>
-<span id="trend">--</span>
-</div>
-
-</div>
-
-</div>
-
-<div class="grid">
-
-<div>
-
-<div class="card">
-
-<h2>Sector Pressure</h2>
-
-<p>Retail</p>
-<div class="bar"><div class="fill" style="width:65%"></div></div>
-
-<p>Construction</p>
-<div class="bar"><div class="fill" style="width:72%"></div></div>
-
-<p>Technology</p>
-<div class="bar"><div class="fill" style="width:40%"></div></div>
-
-<p>Energy</p>
-<div class="bar"><div class="fill" style="width:55%"></div></div>
-
-</div>
-
-<div class="card section">
-
-<h2>Platform Modules</h2>
-
-<ul>
-<li>RiskLens Engine</li>
-<li>Credit Stress Engine</li>
-<li>Global Telescope</li>
-<li>AI Economic Advisor</li>
-</ul>
-
-</div>
-
-</div>
-
-<div>
-
-<div class="card">
-
-<h2>AI Economic Advisor</h2>
+<h1>AI Advisor</h1>
 
 <textarea id="q" placeholder="Ask an economic question"></textarea>
 
 <button onclick="ask()">Analyze</button>
 
-<div id="answer" class="answer">
+<div class="card" id="answer">
 Waiting for question...
 </div>
 
-</div>
+</section>
 
-<div class="card section">
+<section id="map">
 
-<h2>AI Insight</h2>
+<h1>World Economic Map</h1>
 
-<p id="reason"></p>
+<div class="card">
 
-<p id="advice"></p>
+Global economic monitoring layer.
 
-</div>
-
-</div>
+Countries are evaluated with risk scoring and macro indicators.
 
 </div>
 
-<footer>
+</section>
 
-ZENTRA Behavioral Financial Infrastructure  
-Global Economic Intelligence Platform
+<section id="risk">
 
-</footer>
+<h1>Global Risk Index</h1>
+
+<div class="metric" id="riskScore">--</div>
+
+</section>
+
+<section id="radar">
+
+<h1>Economic Radar</h1>
+
+<div class="card">
+
+Detects macro pressure signals:
+
+• inflation  
+• credit stress  
+• currency volatility  
+• market instability
 
 </div>
+
+</section>
+
+<section id="platform">
+
+<h1>ZENTRA Platform</h1>
+
+<div class="card">
+
+ZENTRA integrates:
+
+• Macro engines  
+• Risk engines  
+• Behavioral finance signals  
+• Market data  
+
+into a single economic intelligence system.
+
+</div>
+
+</section>
+
+<section id="intelligence">
+
+<h1>Intelligence Center</h1>
+
+<div class="card">
+
+AI interpretation layer that explains economic signals
+and transforms data into readable analysis.
+
+</div>
+
+</section>
+
+<section id="research">
+
+<h1>Research</h1>
+
+<div class="card">
+
+Economic research reports.
+
+• inflation regimes  
+• rate cycles  
+• sector pressure  
+• global financial stability
+
+</div>
+
+</section>
+
+<section id="trust">
+
+<h1>Trust Center</h1>
+
+<div class="card">
+
+Security architecture
+
+• data protection  
+• transparency  
+• financial system safety
+
+</div>
+
+</section>
+
+<section id="about">
+
+<h1>About ZENTRA</h1>
+
+<div class="card">
+
+ZENTRA is designed as a global economic intelligence system capable of analyzing
+financial environments and detecting systemic risk.
+
+</div>
+
+</section>
 
 <script>
 
-const API="https://zentra-risklens-api.42mehmetaltas.workers.dev"
+const API="https://zentra-risklens-api.42mehmetaltas.workers.dev";
 
-let live=null
-
-async function load(){
+async function loadRisk(){
 
 try{
 
@@ -280,29 +256,11 @@ let r=await fetch(API+"/telescope")
 
 let d=await r.json()
 
-live=d
-
-document.getElementById("risk").innerText=d.risk_score
-
-document.getElementById("global").innerText=d.global_risk_index
-
-document.getElementById("state").innerText=d.economic_state
-
-document.getElementById("trend").innerText=d.market?.market_trend || "--"
-
-document.getElementById("reason").innerText=d.ai_reason
-
-document.getElementById("advice").innerText=d.ai_advice
+document.getElementById("riskScore").innerText=d.global_risk_index
 
 }catch{
 
-document.getElementById("risk").innerText="44"
-
-document.getElementById("global").innerText="57"
-
-document.getElementById("state").innerText="moderate pressure"
-
-document.getElementById("trend").innerText="bearish"
+document.getElementById("riskScore").innerText="57"
 
 }
 
@@ -312,23 +270,13 @@ function ask(){
 
 let q=document.getElementById("q").value
 
-if(!live)return
-
 document.getElementById("answer").innerText=
 
-"Question: "+q+
-
-"\n\nRisk Score: "+live.risk_score+
-
-"\nGlobal Risk: "+live.global_risk_index+
-
-"\nEconomic State: "+live.economic_state+
-
-"\n\nAdvice:\n"+live.ai_advice
+"Question:\n\n"+q+"\n\nZENTRA AI interpretation:\n\nMacro pressure signals and financial conditions must be evaluated together."
 
 }
 
-load()
+loadRisk()
 
 </script>
 

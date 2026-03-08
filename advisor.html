@@ -5,135 +5,26 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>ZENTRA Advisor</title>
   <style>
-    body{
-      margin:0;
-      background:#050814;
-      color:#eaf2ff;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-    nav{
-      background:#060b1c;
-      padding:14px;
-      border-bottom:1px solid #1e2a55;
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-    nav a{
-      color:white;
-      text-decoration:none;
-      font-size:14px;
-    }
-    .container{
-      max-width:1000px;
-      margin:auto;
-      padding:30px 16px 40px;
-    }
-    .card{
-      background:#0c1228;
-      border:1px solid #1e2a55;
-      border-radius:12px;
-      padding:20px;
-      margin-bottom:20px;
-    }
-    h1{
-      color:#00d4ff;
-      margin-top:0;
-    }
-    h2{
-      color:#19e68c;
-    }
-    .muted{
-      color:#9eb3d9;
-      line-height:1.6;
-    }
-    .input{
-      width:100%;
-      min-height:120px;
-      background:#07101f;
-      color:#eaf2ff;
-      border:1px solid #1e2a55;
-      border-radius:10px;
-      padding:14px;
-      font-size:15px;
-      resize:vertical;
-      box-sizing:border-box;
-    }
-    .row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .btn{
-      background:#00d4ff;
-      color:#00131c;
-      border:none;
-      border-radius:10px;
-      padding:12px 16px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .btn.secondary{
-      background:#162445;
-      color:#d7e5ff;
-    }
-    .answer{
-      background:#07101f;
-      border:1px solid #1e2a55;
-      border-radius:10px;
-      padding:16px;
-      line-height:1.7;
-      min-height:140px;
-      white-space:pre-wrap;
-    }
-    .pill{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#162445;
-      color:#d7e5ff;
-      margin:4px 6px 0 0;
-      font-size:12px;
-      cursor:pointer;
-    }
-    .status{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#162445;
-      color:#d7e5ff;
-      font-size:12px;
-      margin-top:10px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:16px;
-    }
-    .metric-box{
-      background:#07101f;
-      border:1px solid #1e2a55;
-      border-radius:10px;
-      padding:14px;
-    }
-    .metric-label{
-      color:#8ea7d8;
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:0.04em;
-    }
-    .metric-value{
-      color:#00d4ff;
-      font-size:28px;
-      font-weight:700;
-      margin-top:8px;
-    }
-    @media (max-width: 800px){
-      .grid{
-        grid-template-columns:1fr;
-      }
-    }
+    body{margin:0;background:#050814;color:#eaf2ff;font-family:Arial,Helvetica,sans-serif}
+    nav{background:#060b1c;padding:14px;border-bottom:1px solid #1e2a55;display:flex;gap:18px;flex-wrap:wrap}
+    nav a{color:white;text-decoration:none;font-size:14px}
+    .container{max-width:1000px;margin:auto;padding:30px 16px 40px}
+    .card{background:#0c1228;border:1px solid #1e2a55;border-radius:12px;padding:20px;margin-bottom:20px}
+    h1{color:#00d4ff;margin-top:0}
+    h2{color:#19e68c}
+    .muted{color:#9eb3d9;line-height:1.6}
+    .status{display:inline-block;padding:8px 12px;border-radius:999px;background:#162445;color:#d7e5ff;font-size:12px;margin-top:10px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .metric-box{background:#07101f;border:1px solid #1e2a55;border-radius:10px;padding:14px}
+    .metric-label{color:#8ea7d8;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+    .metric-value{color:#00d4ff;font-size:28px;font-weight:700;margin-top:8px}
+    .input{width:100%;min-height:120px;background:#07101f;color:#eaf2ff;border:1px solid #1e2a55;border-radius:10px;padding:14px;font-size:15px;resize:vertical;box-sizing:border-box}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .btn{background:#00d4ff;color:#00131c;border:none;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer}
+    .btn.secondary{background:#162445;color:#d7e5ff}
+    .answer{background:#07101f;border:1px solid #1e2a55;border-radius:10px;padding:16px;line-height:1.7;min-height:140px;white-space:pre-wrap}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#162445;color:#d7e5ff;margin:4px 6px 0 0;font-size:12px;cursor:pointer}
+    @media (max-width:800px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -150,12 +41,9 @@
 </nav>
 
 <div class="container">
-
   <div class="card">
     <h1>ZENTRA Advisor</h1>
-    <div class="muted">
-      Economic AI assistant for risk, market, business and financial interpretation.
-    </div>
+    <div class="muted">Economic AI assistant for risk, market, business and financial interpretation.</div>
     <div class="status" id="apiStatus">API bağlanıyor...</div>
   </div>
 
@@ -172,11 +60,11 @@
       </div>
       <div class="metric-box">
         <div class="metric-label">Economic State</div>
-        <div class="metric-value" id="economicState" style="font-size:20px;">--</div>
+        <div class="metric-value" id="economicState" style="font-size:20px">--</div>
       </div>
       <div class="metric-box">
         <div class="metric-label">Market Trend</div>
-        <div class="metric-value" id="marketTrend" style="font-size:20px;">--</div>
+        <div class="metric-value" id="marketTrend" style="font-size:20px">--</div>
       </div>
     </div>
   </div>
@@ -184,12 +72,10 @@
   <div class="card">
     <h2>Ask Zentra AI</h2>
     <textarea id="question" class="input" placeholder="Örnek: İşletmemin riski neden yükseliyor ve ne yapmalıyım?"></textarea>
-
     <div class="row">
       <button class="btn" onclick="askAdvisor()">Analyze</button>
       <button class="btn secondary" onclick="clearAdvisor()">Clear</button>
     </div>
-
     <div style="margin-top:14px;">
       <span class="pill" onclick="setQuestion('İşletmemin riski neden yükseliyor?')">İşletme riski</span>
       <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
@@ -203,7 +89,6 @@
     <h2>AI Response</h2>
     <div id="answer" class="answer">Soru bekleniyor...</div>
   </div>
-
 </div>
 
 <script>
@@ -221,9 +106,8 @@
 
   async function loadLiveData(){
     try{
-      const res = await fetch(API_BASE + "/telescope");
+      const res = await fetch(API_BASE + "/telescope", { cache: "no-store" });
       if(!res.ok) throw new Error("HTTP " + res.status);
-
       const data = await res.json();
       liveData = data;
 
@@ -234,7 +118,7 @@
       document.getElementById("apiStatus").innerText = "API bağlı";
     } catch(e){
       document.getElementById("apiStatus").innerText = "API hatası";
-      document.getElementById("answer").innerText = "Canlı veri yüklenemedi. API bağlantısını kontrol et.";
+      document.getElementById("answer").innerText = "Canlı veri yüklenemedi: " + e.message;
     }
   }
 

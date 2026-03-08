@@ -114,3 +114,72 @@ def run_scenario(req: ScenarioRequest):
         "macro_environment": economic["economic_state"],
         "scenario_result": result
     }
+    # -----------------------------
+# SECTOR ENGINE
+# -----------------------------
+
+class SectorRequest(BaseModel):
+    sector: str
+    sales_trend: float = 0.5
+    cost_pressure: float = 0.5
+    demand_index: float = 0.5
+
+
+def sector_risk_model(sector, sales_trend, cost_pressure, demand_index, macro_risk):
+
+    sector_base_risk = {
+        "agriculture": 0.45,
+        "retail": 0.55,
+        "construction": 0.65,
+        "technology": 0.40,
+        "energy": 0.50,
+        "finance": 0.48,
+        "manufacturing": 0.52,
+        "logistics": 0.50
+    }
+
+    base = sector_base_risk.get(sector.lower(), 0.50)
+
+    sales_pressure = (1 - sales_trend) * 0.4
+    cost_effect = cost_pressure * 0.3
+    demand_effect = (1 - demand_index) * 0.3
+
+    risk = base * 0.3 + sales_pressure + cost_effect + demand_effect + macro_risk * 0.3
+
+    risk_score = min(risk * 100, 100)
+
+    if risk_score >= 75:
+        band = "critical"
+    elif risk_score >= 60:
+        band = "high"
+    elif risk_score >= 40:
+        band = "medium"
+    else:
+        band = "low"
+
+    return round(risk_score,2), band
+
+
+@app.post("/sector-risk")
+def sector_risk(req: SectorRequest):
+
+    macro = get_macro_data()
+    indicators = indicator_engine(macro)
+    economic = economic_engine(indicators)
+
+    macro_risk = economic["macro_risk"]
+
+    score, band = sector_risk_model(
+        req.sector,
+        req.sales_trend,
+        req.cost_pressure,
+        req.demand_index,
+        macro_risk
+    )
+
+    return {
+        "sector": req.sector,
+        "sector_risk_score": score,
+        "risk_band": band,
+        "macro_environment": economic["economic_state"]
+    }

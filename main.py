@@ -172,3 +172,125 @@ def save_history(risk, global_risk, state):
     timestamp = str(datetime.datetime.utcnow())
     cur.execute("""
     INSERT INTO risk_history(timestamp, risk_score, global_risk, economic_state)
+# -----------------------------
+# SME INTELLIGENCE ENGINE
+# -----------------------------
+
+@app.get("/sme-risk")
+def sme_risk():
+
+    sales_pressure = 0.6
+    cost_pressure = 0.55
+    debt_ratio = 0.5
+    payment_delay = 0.4
+
+    score = (
+        sales_pressure * 0.3 +
+        cost_pressure * 0.25 +
+        debt_ratio * 0.25 +
+        payment_delay * 0.2
+    ) * 100
+
+    if score > 70:
+        band = "high"
+    elif score > 50:
+        band = "medium"
+    else:
+        band = "low"
+
+    return {
+        "sme_risk_score": round(score,2),
+        "risk_band": band
+    }
+
+
+# -----------------------------
+# BANKING CREDIT ENGINE
+# -----------------------------
+
+@app.get("/bank-credit-risk")
+def bank_credit():
+
+    customer_score = 65
+    delay = 0.3
+    sector_risk = 0.5
+
+    risk = (delay*0.4 + sector_risk*0.3 + (1-customer_score/100)*0.3)*100
+
+    return {
+        "credit_risk": round(risk,2)
+    }
+
+
+# -----------------------------
+# TRADE ENGINE
+# -----------------------------
+
+@app.get("/trade-risk")
+def trade():
+
+    currency_vol = 0.6
+    logistics_risk = 0.4
+    demand_pressure = 0.5
+
+    score = (
+        currency_vol*0.4 +
+        logistics_risk*0.3 +
+        demand_pressure*0.3
+    )*100
+
+    return {
+        "trade_risk_score": round(score,2)
+    }
+
+
+# -----------------------------
+# SUPPLY CHAIN ENGINE
+# -----------------------------
+
+@app.get("/supply-risk")
+def supply():
+
+    raw_material = 0.5
+    energy = 0.6
+    logistics = 0.4
+
+    score = (
+        raw_material*0.35 +
+        energy*0.35 +
+        logistics*0.3
+    )*100
+
+    return {
+        "supply_chain_risk": round(score,2)
+    }
+
+
+# -----------------------------
+# GLOBAL CRISIS RADAR
+# -----------------------------
+
+@app.get("/crisis-radar")
+def crisis():
+
+    inflation = 0.6
+    market_vol = 0.5
+    geopolitical = 0.55
+
+    score = (
+        inflation*0.4 +
+        market_vol*0.3 +
+        geopolitical*0.3
+    )*100
+
+    if score > 70:
+        level = "high"
+    elif score > 50:
+        level = "moderate"
+    else:
+        level = "low"
+
+    return {
+        "global_stress_index": round(score,2),
+        "crisis_probability": level
+    }

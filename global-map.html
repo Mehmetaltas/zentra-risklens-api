@@ -3,122 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZENTRA Global Risk Map</title>
+  <title>ZENTRA Real-Time Global Heatmap</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.6/build/index.umd.min.js"></script>
 
   <style>
-    body{
-      margin:0;
-      background:#050814;
-      color:#eaf2ff;
-      font-family:Arial, Helvetica, sans-serif;
-    }
-    nav{
-      background:#060b1c;
-      padding:14px;
-      border-bottom:1px solid #1e2a55;
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-    nav a{
-      color:white;
-      text-decoration:none;
-      font-size:14px;
-    }
-    .container{
-      max-width:1200px;
-      margin:auto;
-      padding:30px 16px 40px;
-    }
-    .card{
-      background:#0c1228;
-      border:1px solid #1e2a55;
-      border-radius:12px;
-      padding:20px;
-      margin-bottom:20px;
-    }
-    h1{ color:#00d4ff; margin-top:0; }
-    h2{ color:#19e68c; }
-    .muted{ color:#9eb3d9; line-height:1.6; }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:16px;
-    }
-    .col-8{ grid-column:span 8; }
-    .col-4{ grid-column:span 4; }
-    .metric{
-      font-size:30px;
-      color:#00d4ff;
-      margin-top:8px;
-      font-weight:700;
-    }
-    .label{
-      color:#8ea7d8;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:0.04em;
-      margin-bottom:8px;
-    }
-    .info-box{
-      background:#07101f;
-      border:1px solid #1e2a55;
-      border-radius:10px;
-      padding:14px;
-      line-height:1.7;
-      min-height:140px;
-      white-space:pre-wrap;
-    }
-    .status{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#162445;
-      color:#d7e5ff;
-      font-size:12px;
-      margin-top:10px;
-    }
-    canvas{
-      width:100% !important;
-      height:560px !important;
-    }
-    .band{
-      display:inline-block;
-      margin-top:10px;
-      padding:7px 12px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:700;
-      text-transform:uppercase;
-    }
-    .very-low, .low{
-      color:#19e68c;
-      background:rgba(25,230,140,0.12);
-      border:1px solid rgba(25,230,140,0.35);
-    }
-    .medium{
-      color:#f5b942;
-      background:rgba(245,185,66,0.12);
-      border:1px solid rgba(245,185,66,0.35);
-    }
-    .high{
-      color:#ff8a3d;
-      background:rgba(255,138,61,0.12);
-      border:1px solid rgba(255,138,61,0.35);
-    }
-    .critical{
-      color:#ff4d6d;
-      background:rgba(255,77,109,0.12);
-      border:1px solid rgba(255,77,109,0.35);
-    }
-    @media (max-width:900px){
-      .col-8,.col-4{ grid-column:span 12; }
-      canvas{ height:420px !important; }
-    }
+    body{margin:0;background:#050814;color:#eaf2ff;font-family:Arial,Helvetica,sans-serif}
+    nav{background:#060b1c;padding:14px;border-bottom:1px solid #1e2a55;display:flex;gap:18px;flex-wrap:wrap}
+    nav a{color:white;text-decoration:none;font-size:14px}
+    .container{max-width:1200px;margin:auto;padding:30px 16px 40px}
+    .card{background:#0c1228;border:1px solid #1e2a55;border-radius:12px;padding:20px;margin-bottom:20px}
+    h1{color:#00d4ff;margin-top:0}
+    h2{color:#19e68c}
+    .muted{color:#9eb3d9;line-height:1.6}
+    .status{display:inline-block;padding:8px 12px;border-radius:999px;background:#162445;color:#d7e5ff;font-size:12px;margin-top:10px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-8{grid-column:span 8}
+    .col-4{grid-column:span 4}
+    .label{color:#8ea7d8;font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+    .metric{font-size:30px;color:#00d4ff;font-weight:700;margin-top:8px}
+    .info-box{background:#07101f;border:1px solid #1e2a55;border-radius:10px;padding:14px;line-height:1.7;min-height:140px;white-space:pre-wrap}
+    .band{display:inline-block;margin-top:10px;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:700;text-transform:uppercase}
+    .very-low,.low{color:#19e68c;background:rgba(25,230,140,.12);border:1px solid rgba(25,230,140,.35)}
+    .medium{color:#f5b942;background:rgba(245,185,66,.12);border:1px solid rgba(245,185,66,.35)}
+    .high{color:#ff8a3d;background:rgba(255,138,61,.12);border:1px solid rgba(255,138,61,.35)}
+    .critical{color:#ff4d6d;background:rgba(255,77,109,.12);border:1px solid rgba(255,77,109,.35)}
+    canvas{width:100%!important;height:560px!important}
+    @media (max-width:900px){.col-8,.col-4{grid-column:span 12}canvas{height:420px!important}}
   </style>
 </head>
 <body>
@@ -135,12 +48,9 @@
 </nav>
 
 <div class="container">
-
   <div class="card">
-    <h1>ZENTRA Global Risk Map</h1>
-    <div class="muted">
-      Country-level financial risk observation across the global economic system.
-    </div>
+    <h1>ZENTRA Real-Time Global Heatmap</h1>
+    <div class="muted">Country-level financial risk observation with automatic refresh.</div>
     <div class="status" id="mapStatus">Harita yükleniyor...</div>
   </div>
 
@@ -163,12 +73,14 @@
       <div class="info-box" id="countryInfo">Harita yükleniyor...</div>
     </div>
   </div>
-
 </div>
 
 <script>
   const API_URL = "https://zentra-core-api.onrender.com/global-risk";
+  const WORLD_URL = "https://unpkg.com/world-atlas@2/countries-110m.json";
   let chartInstance = null;
+  let worldFeatures = null;
+  let latestRiskMap = {};
 
   function getBand(score){
     if(score >= 80) return "critical";
@@ -179,7 +91,7 @@
   }
 
   function setBandClass(el, band){
-    el.className = "band " + band;
+    el.className = "band " + (band || "medium");
   }
 
   function setCountryPanel(name, risk){
@@ -197,107 +109,111 @@
         : "Bu ülke için risk verisi bulunamadı.";
   }
 
-  async function loadMap(){
-    try{
-      const [worldRes, riskRes] = await Promise.all([
-        fetch("https://unpkg.com/world-atlas@2/countries-110m.json", { cache: "no-store" }),
-        fetch(API_URL, { cache: "no-store" })
-      ]);
+  function aliases(name){
+    const map = {
+      "United States of America": "United States",
+      "Russian Federation": "Russia",
+      "United Republic of Tanzania": "Tanzania",
+      "Eq. Guinea": "Equatorial Guinea",
+      "eSwatini": "Eswatini",
+      "Bosnia and Herz.": "Bosnia and Herzegovina"
+    };
+    return map[name] || name;
+  }
 
-      if(!worldRes.ok) throw new Error("World map HTTP " + worldRes.status);
-      if(!riskRes.ok) throw new Error("API HTTP " + riskRes.status);
+  async function loadWorldOnce(){
+    if(worldFeatures) return;
+    const worldRes = await fetch(WORLD_URL, { cache: "no-store" });
+    if(!worldRes.ok) throw new Error("World map HTTP " + worldRes.status);
+    const world = await worldRes.json();
+    worldFeatures = ChartGeo.topojson.feature(world, world.objects.countries).features;
+  }
 
-      const world = await worldRes.json();
-      const riskJson = await riskRes.json();
+  async function loadRisks(){
+    const riskRes = await fetch(API_URL, { cache: "no-store" });
+    if(!riskRes.ok) throw new Error("API HTTP " + riskRes.status);
+    const riskJson = await riskRes.json();
+    latestRiskMap = {};
+    (riskJson.countries || []).forEach(c => {
+      latestRiskMap[c.name] = c.risk;
+    });
+  }
 
-      const countries = ChartGeo.topojson.feature(world, world.objects.countries).features;
-
-      const riskMap = {};
-      (riskJson.countries || []).forEach(c => {
-        riskMap[c.name] = c.risk;
-      });
-
-      const aliases = {
-        "United States of America": "United States",
-        "Russian Federation": "Russia",
-        "United Republic of Tanzania": "Tanzania",
-        "Dem. Rep. Congo": "Congo",
-        "Dominican Rep.": "Dominican Republic",
-        "Central African Rep.": "Central African Republic",
-        "Eq. Guinea": "Equatorial Guinea",
-        "eSwatini": "Eswatini",
-        "Bosnia and Herz.": "Bosnia and Herzegovina",
-        "S. Sudan": "South Sudan"
+  function buildChart(){
+    const data = worldFeatures.map(feature => {
+      const mapName = feature.properties.name;
+      const apiName = aliases(mapName);
+      return {
+        feature,
+        value: latestRiskMap[apiName] ?? null,
+        apiName
       };
+    });
 
-      const data = countries.map(feature => {
-        const mapName = feature.properties.name;
-        const apiName = aliases[mapName] || mapName;
-        const value = riskMap[apiName] ?? null;
-        return { feature, value, apiName };
-      });
+    const ctx = document.getElementById("worldMap").getContext("2d");
+    if(chartInstance) chartInstance.destroy();
 
-      const ctx = document.getElementById("worldMap").getContext("2d");
-      if(chartInstance) chartInstance.destroy();
-
-      chartInstance = new Chart(ctx, {
-        type: "choropleth",
-        data: {
-          labels: countries.map(d => d.properties.name),
-          datasets: [{
-            label: "Country Risk",
-            data: data
-          }]
-        },
-        options: {
-          showOutline: true,
-          showGraticule: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: (context) => {
-                  const item = context.raw;
-                  const name = item.apiName || item.feature.properties.name;
-                  const value = item.value;
-                  return `${name}: ${value ?? "No data"}`;
-                }
+    chartInstance = new Chart(ctx, {
+      type: "choropleth",
+      data: {
+        labels: worldFeatures.map(d => d.properties.name),
+        datasets: [{
+          label: "Country Risk",
+          data
+        }]
+      },
+      options: {
+        showOutline: true,
+        showGraticule: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const item = context.raw;
+                return `${item.apiName}: ${item.value ?? "No data"}`;
               }
             }
-          },
-          scales: {
-            projection: {
-              axis: "x",
-              projection: "equalEarth"
-            },
-            color: {
-              axis: "x",
-              quantize: 5,
-              legend: {
-                position: "bottom-right"
-              }
-            }
-          },
-          onClick: (_, elements) => {
-            if(!elements.length) return;
-            const idx = elements[0].index;
-            const item = data[idx];
-            setCountryPanel(item.apiName || item.feature.properties.name, item.value);
           }
+        },
+        scales: {
+          projection: {
+            axis: "x",
+            projection: "equalEarth"
+          },
+          color: {
+            axis: "x",
+            quantize: 5,
+            legend: { position: "bottom-right" }
+          }
+        },
+        onClick: (_, elements) => {
+          if(!elements.length) return;
+          const idx = elements[0].index;
+          const item = data[idx];
+          setCountryPanel(item.apiName, item.value);
         }
-      });
+      }
+    });
 
-      setCountryPanel("Turkey", riskMap["Turkey"] ?? null);
-      document.getElementById("mapStatus").innerText = "Harita yüklendi";
+    setCountryPanel("Turkey", latestRiskMap["Turkey"] ?? null);
+  }
 
+  async function refreshMap(){
+    try{
+      document.getElementById("mapStatus").innerText = "Güncelleniyor...";
+      await loadWorldOnce();
+      await loadRisks();
+      buildChart();
+      document.getElementById("mapStatus").innerText = "Canlı güncelleme aktif";
     } catch(e){
       document.getElementById("mapStatus").innerText = "Harita hatası";
-      document.getElementById("countryInfo").innerText =
-        "Harita veya API yüklenemedi: " + e.message;
+      document.getElementById("countryInfo").innerText = "Harita veya API yüklenemedi: " + e.message;
     }
   }
 
-  loadMap();
+  refreshMap();
+  setInterval(refreshMap, 60000);
 </script>
 
 </body>

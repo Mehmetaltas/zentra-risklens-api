@@ -512,6 +512,34 @@ const API = "https://zentra-risklens-api.42mehmetaltas.workers.dev";
 let live = null;
 let mapChart = null;
 
+function loadTelescope(){
+  console.log("ZENTRA Telescope Activated");
+
+  const signals = [
+    "Global liquidity tightening",
+    "Energy volatility rising",
+    "Trade fragmentation risk",
+    "Emerging market pressure",
+    "Supply chain restructuring"
+  ];
+
+  const randomSignal = signals[Math.floor(Math.random()*signals.length)];
+
+  const box = document.createElement("div");
+  box.style.marginTop = "20px";
+  box.style.padding = "12px";
+  box.style.border = "1px solid #00e0ff";
+  box.style.borderRadius = "10px";
+  box.style.background = "#0c1220";
+  box.style.color = "#00e0ff";
+
+  box.innerHTML = "<b>ZENTRA Telescope Signal:</b><br>"+randomSignal;
+
+  document.body.appendChild(box);
+}
+
+loadTelescope();  
+
 const fallbackCountries = [
   {code:"USA",name:"United States",risk:42,band:"low"},
   {code:"DEU",name:"Germany",risk:37,band:"low"},

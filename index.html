@@ -262,12 +262,34 @@ pre{
 <section id="home">
   <div class="wrap">
     <div class="hero">
+
       <h1>ZENTRA — Global Economic Intelligence</h1>
+
       <p>
-        ZENTRA transforms macro signals, market pressure and behavioral finance into readable economic risk intelligence.
-        The platform is designed as a financial intelligence layer with expansion potential toward a global economic operating system.
+        ZENTRA is a global economic intelligence platform that transforms macro signals,
+        market pressure, and behavioral finance into real-time risk insight.
       </p>
-      <div class="status" id="apiStatus">API bağlanıyor...</div>
+
+      <p class="sub" style="margin-top:12px;">
+        Detect financial stress earlier.
+        Understand economic pressure faster.
+        Make decisions with intelligence.
+      </p>
+
+      <div class="row" style="margin-top:20px;">
+        <button onclick="document.getElementById('advisor').scrollIntoView({behavior:'smooth'})">
+          Ask ZENTRA
+        </button>
+
+        <button class="btn-secondary" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">
+          Explore Global Risk
+        </button>
+      </div>
+
+      <div class="status" id="apiStatus" style="margin-top:18px">
+        System loading...
+      </div>
+
     </div>
 
     <div class="grid" style="margin-top:16px;">
@@ -790,50 +812,4 @@ async function loadHeatmap(){
     };
   });
 
-  const ctx = document.getElementById("worldMap").getContext("2d");
-  if(mapChart) mapChart.destroy();
-
-  mapChart = new Chart(ctx, {
-    type: "choropleth",
-    data: {
-      labels: countries.map(d => d.properties.name),
-      datasets: [{ label: "Country Risk", data }]
-    },
-    options: {
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (context) => {
-              const item = context.raw;
-              return `${item.name}: ${item.value}`;
-            }
-          }
-        }
-      },
-      scales: {
-        projection: { axis: "x", projection: "equalEarth" },
-        color: { axis: "x", quantize: 5, legend: { position: "bottom" } }
-      },
-      onClick: (_, elements) => {
-        if(!elements.length) return;
-        const idx = elements[0].index;
-        const item = data[idx];
-
-        document.getElementById("countryName").innerText = item.name;
-        document.getElementById("countryScore").innerText = item.value;
-        document.getElementById("countryBand").innerText = item.band.toUpperCase();
-        document.getElementById("countryBand").className = "band " + item.band;
-        document.getElementById("countryInfo").innerText =
-          `${item.name} currently shows a ${item.band} risk profile with a score of ${item.value}. This reflects country-level financial pressure within the ZENTRA model.`;
-      }
-    }
-  });
-}
-
-loadRisk();
-loadHeatmap();
-</script>
-
-</body>
-</html>
+  const ctx =

@@ -1,309 +1,307 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>ZENTRA Trust Center</title>
-
-<meta name="description" content="ZENTRA Security, Compliance and Responsible AI">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Trust & Security</title>
 
 <style>
-
 :root{
---bg:#050814;
---card:#0c1228;
---line:#1e2a55;
---text:#eaf2ff;
---muted:#99a6c6;
---cyan:#00d4ff;
---green:#19e68c;
---gold:#f5b942;
---red:#ff4d6d;
---violet:#7c3aed;
+  --bg:#050814;
+  --panel:#081020;
+  --panel2:#0b1328;
+  --line:#1d2b55;
+  --text:#ffffff;
+  --muted:#9db0d8;
+  --cyan:#00d4ff;
+  --green:#19e68c;
+  --yellow:#f5b942;
+  --orange:#ff8a3d;
+  --red:#ff4d6d;
 }
 
-body{
-margin:0;
-font-family:Arial;
-background:var(--bg);
-color:var(--text);
-}
+*{box-sizing:border-box; min-width:0}
 
-.topbar{
-background:#060b1c;
-border-bottom:1px solid var(--line);
-position:sticky;
-top:0;
-}
-
-.topin{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px;
-flex-wrap:wrap;
-}
-
-.logo{
-width:32px;
-height:32px;
-border-radius:10px;
-background:linear-gradient(135deg,var(--violet),var(--cyan));
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  overflow-x:hidden;
 }
 
 nav{
-display:flex;
-gap:14px;
-flex-wrap:wrap;
+  background:var(--panel);
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
 }
 
 nav a{
-color:white;
-text-decoration:none;
-font-size:13px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:14px;
 }
 
-.wrap{
-max-width:1100px;
-margin:auto;
-padding:24px;
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px 16px 40px;
 }
 
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
-padding:20px;
-margin-bottom:20px;
+.hero{
+  background:
+    radial-gradient(circle at top right, rgba(0,212,255,.10), transparent 28%),
+    radial-gradient(circle at left center, rgba(25,230,140,.08), transparent 28%),
+    var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:28px;
+  margin-bottom:20px;
 }
 
 h1{
-color:var(--cyan);
+  margin:0 0 10px 0;
+  font-size:clamp(28px,4vw,40px);
+}
+
+h2{
+  margin:0 0 14px 0;
+  color:var(--green);
+  font-size:24px;
+}
+
+.lead{
+  color:var(--muted);
+  line-height:1.75;
+  max-width:900px;
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:16px;
-margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:16px;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+}
+
+.col-4{grid-column:span 4}
+.col-6{grid-column:span 6}
+.col-12{grid-column:span 12}
+
+.label{
+  font-size:12px;
+  text-transform:uppercase;
+  color:var(--muted);
+  letter-spacing:.05em;
+  margin-bottom:8px;
 }
 
 .metric{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:12px;
-padding:18px;
-text-align:center;
+  font-size:30px;
+  color:var(--cyan);
+  font-weight:700;
 }
 
-.metric strong{
-display:block;
-font-size:20px;
-color:var(--green);
-margin-bottom:6px;
+.panel{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
 }
 
-footer{
-text-align:center;
-color:#99a6c6;
-font-size:12px;
-margin-top:30px;
+.list{
+  margin:0;
+  padding-left:18px;
+  color:var(--muted);
+  line-height:1.9;
 }
 
+.badge{
+  display:inline-block;
+  margin-top:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  background:#132041;
+  color:#d7e6ff;
+}
+
+.good{color:var(--green)}
+.warn{color:var(--yellow)}
+.info{color:var(--cyan)}
+
+.footer{
+  margin-top:24px;
+  border-top:1px solid var(--line);
+  padding-top:18px;
+  color:#7f93bd;
+  line-height:1.7;
+  font-size:13px;
+}
+
+@media (max-width:900px){
+  .col-4,.col-6,.col-12{grid-column:span 12}
+}
 </style>
-
 </head>
-
 <body>
 
-<div class="topbar">
-
-<div class="topin">
-
-<div style="display:flex;gap:10px;align-items:center">
-<div class="logo"></div>
-<strong>ZENTRA</strong>
-</div>
-
 <nav>
-
-<a href="index.html">Home</a>
-<a href="platform.html">Platform</a>
-<a href="developer.html">Developers</a>
-<a href="investor.html">Investor</a>
-<a href="marketplace.html">Marketplace</a>
-<a href="telescope.html">Telescope</a>
-<a href="use-cases.html">Use Cases</a>
-<a href="trust.html">Trust</a>
-
+  <a href="index.html">Home</a>
+  <a href="advisor.html">Advisor</a>
+  <a href="global-map.html">World Map</a>
+  <a href="economic-radar.html">Economic Radar</a>
+  <a href="platform-page.html">Platform</a>
+  <a href="economic-timeline.html">Timeline</a>
+  <a href="trust.html">Trust</a>
 </nav>
 
-</div>
-
-</div>
-
-<div class="wrap">
-
-<section class="card">
-
-<h1>Trust Center</h1>
-
-<p>
-ZENTRA is designed as a behavioral financial infrastructure platform.
-Security, compliance and responsible intelligence are core principles
-of the system architecture.
-</p>
-
-</section>
-
-<section class="card">
-
-<h2>Security Architecture</h2>
-
-<div class="grid">
-
-<div class="metric">
-
-<strong>Behavioral AML</strong>
-
-<p>
-Detection of abnormal financial flows and transaction velocity.
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Fraud Signals</strong>
-
-<p>
-Merchant instability and transaction anomaly detection.
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Account Misuse</strong>
-
-<p>
-Identity-behavior mismatch monitoring and detection.
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>KYC Intelligence</strong>
-
-<p>
-Behavior backed identity verification signals.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="card">
-
-<h2>Compliance Principles</h2>
-
-<div class="grid">
-
-<div class="metric">
-
-<strong>Explainable Intelligence</strong>
-
-<p>
-ZENTRA provides explainable signals suitable for regulated environments.
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Decision Support</strong>
-
-<p>
-ZENTRA provides decision support signals, not autonomous decisions.
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Institution Control</strong>
-
-<p>
-Financial institutions remain the final decision authority.
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Audit Visibility</strong>
-
-<p>
-Signals can be reviewed and audited by compliance teams.
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="card">
-
-<h2>Responsible AI</h2>
-
-<p>
-
-ZENTRA uses AI only for signal interpretation,
-behavioral pattern detection and explainable insight generation.
-
-The system is designed as a decision support infrastructure
-rather than an automated decision maker.
-
-</p>
-
-</section>
-
-<section class="card">
-
-<h2>Security Disclosure</h2>
-
-<p>
-
-If you discover a vulnerability within the ZENTRA platform,
-please report it responsibly.
-
-</p>
-
-<p>
-
-Email:
-<strong>security@zentrarisk.com</strong>
-
-</p>
-
-</section>
-
-<footer>
-
-ZENTRA Trust Center
-
-</footer>
+<div class="container">
+
+  <section class="hero">
+    <h1>ZENTRA Trust & Security</h1>
+    <div class="lead">
+      ZENTRA is built as a financial intelligence infrastructure platform. Trust requires more than visual design:
+      it depends on data integrity, transparent model logic, controlled AI behavior and clear separation between
+      measured signals, model estimates and general guidance.
+    </div>
+    <div class="badge">Trust Layer Active</div>
+  </section>
+
+  <section class="grid">
+    <div class="card col-4">
+      <div class="label">Platform Principle</div>
+      <div class="metric">Clarity</div>
+      <div class="lead">
+        ZENTRA separates raw indicators, risk scores, scenario outputs and AI guidance to reduce confusion and improve decision quality.
+      </div>
+    </div>
+
+    <div class="card col-4">
+      <div class="label">Data Principle</div>
+      <div class="metric">Integrity</div>
+      <div class="lead">
+        Economic signals should be traceable to structured data sources, normalized logic and explicit scoring rules.
+      </div>
+    </div>
+
+    <div class="card col-4">
+      <div class="label">AI Principle</div>
+      <div class="metric">Control</div>
+      <div class="lead">
+        AI outputs are intended to interpret financial pressure and support judgment, not replace human responsibility.
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" style="margin-top:16px;">
+    <div class="card col-6">
+      <h2>Trust Architecture</h2>
+      <div class="panel">
+        <div class="label">Model Layers</div>
+        <ul class="list">
+          <li>Data sources and signal normalization</li>
+          <li>Core risk engines and scoring logic</li>
+          <li>Scenario and stress interpretation</li>
+          <li>AI explanation and advisory layer</li>
+        </ul>
+      </div>
+
+      <div class="panel" style="margin-top:12px;">
+        <div class="label">Why it matters</div>
+        <div class="lead">
+          Financial users need to know whether a result is directly measured, model-derived, scenario-based or general guidance.
+          ZENTRA is designed to make those distinctions visible.
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-6">
+      <h2>Response Types</h2>
+      <div class="panel">
+        <ul class="list">
+          <li><span class="good">Data Based</span> — direct output derived from current structured indicators</li>
+          <li><span class="warn">Model Estimate</span> — computed by scoring logic or synthetic pressure models</li>
+          <li><span class="info">Scenario Output</span> — forward-looking result under defined assumptions</li>
+          <li>General Guidance — explanation or non-binding advisory interpretation</li>
+        </ul>
+      </div>
+
+      <div class="panel" style="margin-top:12px;">
+        <div class="label">AI boundaries</div>
+        <div class="lead">
+          ZENTRA’s advisory layer is designed for economic interpretation and risk understanding. It should not be treated as legal,
+          audit or regulated investment instruction.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" style="margin-top:16px;">
+    <div class="card col-6">
+      <h2>Security Posture</h2>
+      <ul class="list">
+        <li>Structured API delivery through a controlled gateway</li>
+        <li>Separation between interface, engines and advisory layers</li>
+        <li>Reduced dependency on browser-side secrets</li>
+        <li>Versioned model logic and modular platform design</li>
+      </ul>
+    </div>
+
+    <div class="card col-6">
+      <h2>Data Handling Philosophy</h2>
+      <ul class="list">
+        <li>Use only the minimum necessary data for analysis</li>
+        <li>Prefer normalized signals over noisy raw feeds</li>
+        <li>Keep model assumptions interpretable</li>
+        <li>Preserve explainability for high-stakes outputs</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="grid" style="margin-top:16px;">
+    <div class="card col-12">
+      <h2>Institutional Trust Model</h2>
+      <div class="lead">
+        ZENTRA is intended to evolve toward institutional-grade economic intelligence. That requires a layered trust model:
+        source credibility, scoring transparency, scenario discipline, AI restraint and clear communication of uncertainty.
+      </div>
+
+      <div class="grid" style="margin-top:14px;">
+        <div class="panel col-4">
+          <div class="label">Source trust</div>
+          <div class="lead">Signals should be grounded in recognized economic, market or behavioral inputs.</div>
+        </div>
+        <div class="panel col-4">
+          <div class="label">Model trust</div>
+          <div class="lead">Risk formulas should remain modular, readable and consistent across use cases.</div>
+        </div>
+        <div class="panel col-4">
+          <div class="label">Output trust</div>
+          <div class="lead">Users should understand whether they are seeing measurement, estimate or scenario.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    ZENTRA Trust Layer is designed to support financial clarity, model transparency and controlled AI interpretation
+    across the platform’s risk intelligence workflows.
+  </div>
 
 </div>
 
 </body>
-</html>
+  </html>

@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZENTRA Advisor</title>
+  <title>ZENTRA AI Advisor Chat</title>
   <style>
     body{margin:0;background:#050814;color:#eaf2ff;font-family:Arial,Helvetica,sans-serif}
     nav{background:#060b1c;padding:14px;border-bottom:1px solid #1e2a55;display:flex;gap:18px;flex-wrap:wrap}
     nav a{color:white;text-decoration:none;font-size:14px}
-    .container{max-width:1000px;margin:auto;padding:30px 16px 40px}
+    .container{max-width:1050px;margin:auto;padding:30px 16px 40px}
     .card{background:#0c1228;border:1px solid #1e2a55;border-radius:12px;padding:20px;margin-bottom:20px}
     h1{color:#00d4ff;margin-top:0}
-    h2{color:#19e68c}
+    h2{color:#19e68c;margin-top:0}
     .muted{color:#9eb3d9;line-height:1.6}
     .status{display:inline-block;padding:8px 12px;border-radius:999px;background:#162445;color:#d7e5ff;font-size:12px;margin-top:10px}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
@@ -22,8 +22,13 @@
     .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
     .btn{background:#00d4ff;color:#00131c;border:none;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer}
     .btn.secondary{background:#162445;color:#d7e5ff}
-    .answer{background:#07101f;border:1px solid #1e2a55;border-radius:10px;padding:16px;line-height:1.7;min-height:140px;white-space:pre-wrap}
+    .answer{background:#07101f;border:1px solid #1e2a55;border-radius:10px;padding:16px;line-height:1.75;min-height:180px;white-space:pre-wrap}
     .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#162445;color:#d7e5ff;margin:4px 6px 0 0;font-size:12px;cursor:pointer}
+    .band{display:inline-block;margin-top:10px;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:700;text-transform:uppercase}
+    .very-low,.low{color:#19e68c;background:rgba(25,230,140,.12);border:1px solid rgba(25,230,140,.35)}
+    .medium{color:#f5b942;background:rgba(245,185,66,.12);border:1px solid rgba(245,185,66,.35)}
+    .high{color:#ff8a3d;background:rgba(255,138,61,.12);border:1px solid rgba(255,138,61,.35)}
+    .critical{color:#ff4d6d;background:rgba(255,77,109,.12);border:1px solid rgba(255,77,109,.35)}
     @media (max-width:800px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -42,8 +47,8 @@
 
 <div class="container">
   <div class="card">
-    <h1>ZENTRA Advisor</h1>
-    <div class="muted">Economic AI assistant for risk, market, business and financial interpretation.</div>
+    <h1>ZENTRA AI Advisor Chat</h1>
+    <div class="muted">Finans, ekonomi, işletme, ticaret ve risk soruları için çalışan ekonomik zeka katmanı.</div>
     <div class="status" id="apiStatus">API bağlanıyor...</div>
   </div>
 
@@ -67,21 +72,25 @@
         <div class="metric-value" id="marketTrend" style="font-size:20px">--</div>
       </div>
     </div>
+    <div id="riskBand" class="band medium">--</div>
   </div>
 
   <div class="card">
-    <h2>Ask Zentra AI</h2>
-    <textarea id="question" class="input" placeholder="Örnek: İşletmemin riski neden yükseliyor ve ne yapmalıyım?"></textarea>
+    <h2>Ask Zentra</h2>
+    <textarea id="question" class="input" placeholder="Örnek: Altın mı dolar mı daha mantıklı? / İşletmemin riski neden yükseliyor? / Türkiye risk görünümü nasıl?"></textarea>
+
     <div class="row">
       <button class="btn" onclick="askAdvisor()">Analyze</button>
       <button class="btn secondary" onclick="clearAdvisor()">Clear</button>
     </div>
+
     <div style="margin-top:14px;">
-      <span class="pill" onclick="setQuestion('İşletmemin riski neden yükseliyor?')">İşletme riski</span>
       <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
-      <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye risk görünümü</span>
+      <span class="pill" onclick="setQuestion('İşletmemin riski neden yükseliyor?')">İşletme riski</span>
       <span class="pill" onclick="setQuestion('Nakit akışımı nasıl güçlendiririm?')">Nakit akışı</span>
+      <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye risk görünümü</span>
       <span class="pill" onclick="setQuestion('Bu dönemde borç azaltmak mantıklı mı?')">Borç azaltma</span>
+      <span class="pill" onclick="setQuestion('İthalat mı yerli üretim mi daha mantıklı?')">Ticaret kararı</span>
     </div>
   </div>
 
@@ -104,6 +113,23 @@
     document.getElementById("answer").innerText = "Soru bekleniyor...";
   }
 
+  function classifyQuestion(q){
+    const t = q.toLowerCase();
+    const investment = ["altın","dolar","yatırım","borsa","kripto","bitcoin","ethereum","portföy","hisse","fon"];
+    const business = ["işletme","şirket","nakit","satış","borç","maliyet","tahsilat","stok","kâr","zarar"];
+    const country = ["türkiye","ülke","ekonomi","faiz","enflasyon","merkez bankası","kur","makro"];
+    const trade = ["ithalat","ihracat","ticaret","üretim","tedarik","lojistik"];
+    if (investment.some(k => t.includes(k))) return "investment";
+    if (business.some(k => t.includes(k))) return "business";
+    if (country.some(k => t.includes(k))) return "country";
+    if (trade.some(k => t.includes(k))) return "trade";
+    return "general";
+  }
+
+  function setBandClass(el, band){
+    el.className = "band " + (band || "medium");
+  }
+
   async function loadLiveData(){
     try{
       const res = await fetch(API_BASE + "/telescope", { cache: "no-store" });
@@ -115,11 +141,66 @@
       document.getElementById("globalRisk").innerText = data.global_risk_index ?? "--";
       document.getElementById("economicState").innerText = data.economic_state ?? "--";
       document.getElementById("marketTrend").innerText = data.market?.market_trend ?? "--";
+
+      const bandEl = document.getElementById("riskBand");
+      bandEl.innerText = (data.risk_band || "--").toUpperCase();
+      setBandClass(bandEl, data.risk_band || "medium");
+
       document.getElementById("apiStatus").innerText = "API bağlı";
     } catch(e){
       document.getElementById("apiStatus").innerText = "API hatası";
       document.getElementById("answer").innerText = "Canlı veri yüklenemedi: " + e.message;
     }
+  }
+
+  function buildAnswer(question, mode, d){
+    const risk = d.risk_score ?? "-";
+    const globalRisk = d.global_risk_index ?? "-";
+    const state = d.economic_state ?? "-";
+    const trend = d.market?.market_trend ?? "-";
+    const reason = d.ai_reason ?? "Veri sınırlı.";
+    const advice = d.ai_advice ?? "Finansal disiplini koru.";
+
+    let focus = "";
+    let extra = "";
+
+    if(mode === "investment"){
+      focus = "Yatırım Değerlendirmesi";
+      extra = "Tek bir varlığa yoğunlaşmak yerine risk dağılımı, likidite ve zaman ufku birlikte düşünülmelidir.";
+    } else if(mode === "business"){
+      focus = "İşletme Dayanıklılığı";
+      extra = "Tahsilat süresi, sabit giderler, kısa vadeli borç ve nakit rezervi ilk izlenmesi gereken alanlardır.";
+    } else if(mode === "country"){
+      focus = "Ülke ve Makro Görünüm";
+      extra = "Enflasyon, faiz, kur baskısı ve finansman koşulları birlikte değerlendirilmelidir.";
+    } else if(mode === "trade"){
+      focus = "Ticaret ve Üretim Etkisi";
+      extra = "Kur, lojistik, tedarik süresi ve finansman maliyeti birlikte okunmalıdır.";
+    } else {
+      focus = "Genel Finansal Sağlık";
+      extra = "Karar verirken risk seviyesi, piyasa yönü ve likidite dengesi birlikte izlenmelidir.";
+    }
+
+    return `Soru:
+${question}
+
+Odak:
+${focus}
+
+Durum:
+Risk Score: ${risk}
+Global Risk Index: ${globalRisk}
+Economic State: ${state}
+Market Trend: ${trend}
+
+Neden:
+${reason}
+
+Öneri:
+${advice}
+
+Ek Not:
+${extra}`;
   }
 
   function askAdvisor(){
@@ -136,50 +217,13 @@
       return;
     }
 
-    const risk = liveData.risk_score ?? "-";
-    const globalRisk = liveData.global_risk_index ?? "-";
-    const state = liveData.economic_state ?? "-";
-    const marketTrend = liveData.market?.market_trend ?? "-";
-    const reason = liveData.ai_reason ?? "Veri sınırlı.";
-    const advice = liveData.ai_advice ?? "Finansal disiplini koru.";
-
-    let extra = "";
-    const lowerQ = q.toLowerCase();
-
-    if(lowerQ.includes("altın") || lowerQ.includes("dolar") || lowerQ.includes("yatırım")){
-      extra = "Yatırım kararlarında tek varlığa yoğunlaşmak yerine risk dağılımı ve likidite dengesi korunmalıdır.";
-    } else if(lowerQ.includes("işletme") || lowerQ.includes("nakit") || lowerQ.includes("şirket")){
-      extra = "Kısa vadede tahsilat süresi, gider kontrolü ve kısa vadeli borç seviyesi öncelikli izlenmelidir.";
-    } else if(lowerQ.includes("türkiye") || lowerQ.includes("ülke")){
-      extra = "Ülke riskini değerlendirirken enflasyon, faiz, kur oynaklığı ve finansman koşulları birlikte okunmalıdır.";
-    } else if(lowerQ.includes("borç")){
-      extra = "Faiz ve nakit baskısı yüksek dönemlerde borç vadesi, maliyet ve tahsilat dengesi birlikte yönetilmelidir.";
-    } else {
-      extra = "Karar verirken risk seviyesi, piyasa yönü, finansman maliyeti ve likidite koşulları birlikte değerlendirilmelidir.";
-    }
-
-    answerBox.innerText =
-`Soru:
-${q}
-
-Durum:
-Risk Score: ${risk}
-Global Risk Index: ${globalRisk}
-Economic State: ${state}
-Market Trend: ${marketTrend}
-
-Neden:
-${reason}
-
-Öneri:
-${advice}
-
-Ek Not:
-${extra}`;
+    const mode = classifyQuestion(q);
+    answerBox.innerText = buildAnswer(q, mode, liveData);
   }
 
   loadLiveData();
+  setInterval(loadLiveData, 60000);
 </script>
 
 </body>
-</html>
+        </html>

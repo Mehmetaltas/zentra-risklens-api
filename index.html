@@ -232,6 +232,13 @@ select,input[type="range"]{
   width:100%;
   max-width:420px;
 }
+pre{
+  white-space:pre-wrap;
+  margin:0;
+  font:inherit;
+  color:var(--muted);
+  line-height:1.75;
+}
 @media (max-width:900px){
   .col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-12{grid-column:span 12}
   #worldMap{height:380px !important}
@@ -246,6 +253,7 @@ select,input[type="range"]{
   <a href="#map">World Map</a>
   <a href="#sector">Sector Simulator</a>
   <a href="#radar">Economic Radar</a>
+  <a href="#brain">Economic Brain</a>
   <a href="#platform">Platform</a>
   <a href="#trust">Trust</a>
   <a href="#about">About</a>
@@ -410,6 +418,15 @@ select,input[type="range"]{
   </div>
 </section>
 
+<section id="brain">
+  <div class="wrap">
+    <h2>Global Economic Brain</h2>
+    <div class="card">
+      <pre id="brainAnalysis">Analyzing global economic system...</pre>
+    </div>
+  </div>
+</section>
+
 <section id="platform">
   <div class="wrap">
     <h2>Platform</h2>
@@ -422,6 +439,7 @@ select,input[type="range"]{
           <li>Sector Simulator</li>
           <li>Economic Knowledge Engine</li>
           <li>Economic Radar</li>
+          <li>Global Economic Brain</li>
         </ul>
       </div>
       <div class="card col-6">
@@ -637,6 +655,8 @@ async function loadRisk(){
     document.getElementById("stressBar").style.width = "57%";
     document.getElementById("apiStatus").innerText = "Fallback veri aktif";
   }
+
+  globalEconomicBrain();
 }
 
 function askAI(){
@@ -679,6 +699,58 @@ function simulateSector(){
 `Sector: ${sector}
 Risk Score: ${risk}
 Risk Level: ${band}`;
+}
+
+function globalEconomicBrain(){
+  if(!live) return;
+
+  const risk = Number(live.global_risk_index || 57);
+  let analysis = "";
+
+  if(risk > 70){
+    analysis = `
+GLOBAL ECONOMIC BRAIN
+
+System Stress: HIGH
+
+Interpretation:
+Financial pressure across global markets is elevated.
+Credit tightening and inflation persistence may slow economic growth.
+
+Strategic Outlook:
+• protect liquidity
+• avoid excessive leverage
+• focus on resilient sectors`;
+  } else if(risk > 50){
+    analysis = `
+GLOBAL ECONOMIC BRAIN
+
+System Stress: MODERATE
+
+Interpretation:
+Economic conditions show moderate pressure.
+Markets remain sensitive to interest rate changes.
+
+Strategic Outlook:
+• balanced portfolios
+• monitor inflation trends
+• focus on stable demand sectors`;
+  } else {
+    analysis = `
+GLOBAL ECONOMIC BRAIN
+
+System Stress: LOW
+
+Interpretation:
+Economic conditions appear relatively stable.
+
+Strategic Outlook:
+• investment opportunities increase
+• risk appetite grows
+• capital expansion possible`;
+  }
+
+  document.getElementById("brainAnalysis").innerText = analysis;
 }
 
 async function loadHeatmap(){
@@ -764,4 +836,4 @@ loadHeatmap();
 </script>
 
 </body>
-  </html>
+</html>

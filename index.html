@@ -1,583 +1,730 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZENTRA Financial Telescope</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA | Behavioral Financial Infrastructure</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #050814;
-      color: #eaf2ff;
+    :root{
+      --bg:#050814;
+      --panel:#0c1228;
+      --panel2:#07101f;
+      --line:#1e2a55;
+      --text:#eaf2ff;
+      --muted:#99aed4;
+      --cyan:#00d4ff;
+      --green:#19e68c;
+      --yellow:#f5b942;
+      --orange:#ff8a3d;
+      --red:#ff4d6d;
     }
-    <nav style="
-background:#060b1c;
-padding:14px;
-border-bottom:1px solid #1e2a55;
-display:flex;
-gap:18px;
-flex-wrap:wrap;
-">
 
-<a href="index.html">Home</a>
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+    }
 
-<a href="platform.html">Platform</a>
+    nav{
+      position:sticky;
+      top:0;
+      z-index:20;
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      align-items:center;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background:rgba(6,11,28,.92);
+      backdrop-filter:blur(8px);
+    }
 
-<a href="architecture.html">Architecture</a>
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      font-size:14px;
+    }
 
-<a href="telescope.html">Telescope</a>
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:26px 16px 70px;
+    }
 
-<a href="marketplace.html">Lens</a>
+    .hero{
+      background:
+        radial-gradient(circle at 85% 12%, rgba(0,212,255,.13), transparent 22%),
+        radial-gradient(circle at 12% 60%, rgba(25,230,140,.08), transparent 22%),
+        var(--panel);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:34px 28px;
+      margin-bottom:18px;
+    }
 
-<a href="advisor.html">Advisor</a>
+    .eyebrow{
+      color:var(--cyan);
+      text-transform:uppercase;
+      letter-spacing:.09em;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
 
-<a href="investor.html">Investor</a>
+    h1{
+      margin:0 0 12px 0;
+      font-size:40px;
+      line-height:1.12;
+    }
 
-<a href="#contact">Contact</a>
-<a href="global-map.html">World Map</a>
-   <a href="advisor.html">Advisor</a>
-<a href="global-map.html">World Map</a> 
-    <a href="investor-demo.html">Investor Demo</a>
-</nav>
-    nav {
-      background: #060b1c;
-      border-bottom: 1px solid #1e2a55;
-      padding: 14px 18px;
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
+    .lead{
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.75;
+      max-width:900px;
     }
-    nav a {
-      color: #dbe7ff;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    nav a:hover { color: #00d4ff; }
 
-    .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 22px 16px 40px;
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:20px;
     }
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .brand h1 {
-      margin: 0;
-      font-size: 30px;
-      color: #00d4ff;
-    }
-    .brand p {
-      margin: 6px 0 0;
-      color: #9eb3d9;
-      font-size: 14px;
-    }
-    .status {
-      padding: 10px 14px;
-      border: 1px solid #1e2a55;
-      border-radius: 10px;
-      background: #0c1228;
-      color: #bcd0f7;
-      font-size: 14px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-    }
-    .card {
-      background: #0c1228;
-      border: 1px solid #1c2a55;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.20);
-    }
-    .col-4 { grid-column: span 4; }
-    .col-6 { grid-column: span 6; }
-    .col-8 { grid-column: span 8; }
-    .col-12 { grid-column: span 12; }
 
-    .label {
-      color: #8ea7d8;
-      font-size: 13px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    .btn{
+      display:inline-block;
+      border:none;
+      border-radius:12px;
+      padding:13px 18px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      font-size:14px;
     }
-    .value {
-      font-size: 38px;
-      font-weight: 700;
-      line-height: 1.1;
+
+    .btn.primary{
+      background:var(--cyan);
+      color:#00131d;
     }
-    .sub {
-      margin-top: 10px;
-      color: #b9c9e8;
-      font-size: 15px;
-      line-height: 1.5;
+
+    .btn.secondary{
+      background:#162445;
+      color:#d7e5ff;
     }
-    .band {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+
+    .status{
+      display:inline-block;
+      margin-top:16px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      background:#162445;
+      color:#d7e5ff;
     }
-    .very-low, .low {
-      color: #19e68c;
-      background: rgba(25,230,140,0.12);
-      border: 1px solid rgba(25,230,140,0.35);
+
+    .section{
+      margin-top:18px;
     }
-    .medium {
-      color: #f5b942;
-      background: rgba(245,185,66,0.12);
-      border: 1px solid rgba(245,185,66,0.35);
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
     }
-    .high {
-      color: #ff8a3d;
-      background: rgba(255,138,61,0.12);
-      border: 1px solid rgba(255,138,61,0.35);
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
     }
-    .critical {
-      color: #ff4d6d;
-      background: rgba(255,77,109,0.12);
-      border: 1px solid rgba(255,77,109,0.35);
+
+    .col-3{grid-column:span 3}
+    .col-4{grid-column:span 4}
+    .col-5{grid-column:span 5}
+    .col-6{grid-column:span 6}
+    .col-7{grid-column:span 7}
+    .col-8{grid-column:span 8}
+    .col-12{grid-column:span 12}
+
+    .section-title{
+      margin:0 0 14px 0;
+      color:var(--green);
+      font-size:24px;
     }
-    .reason-box, .advice-box, .chat-response, .error-box {
-      margin-top: 10px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #09101f;
-      border: 1px solid #162445;
-      color: #d7e5ff;
-      min-height: 72px;
-      line-height: 1.5;
+
+    .label{
+      color:#8ea7d8;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
     }
-    .error-box {
-      background: rgba(255,77,109,0.08);
-      border-color: rgba(255,77,109,0.35);
-      color: #ffd7de;
-      display: none;
-      min-height: auto;
+
+    .metric{
+      color:var(--cyan);
+      font-size:34px;
+      font-weight:700;
+      margin-top:8px;
     }
-    .regions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 10px;
+
+    .sub{
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14px;
+      margin-top:8px;
     }
-    .region {
-      background: #09101f;
-      border: 1px solid #162445;
-      border-radius: 12px;
-      padding: 14px;
+
+    .band{
+      display:inline-block;
+      margin-top:12px;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
     }
-    .region-title {
-      font-size: 14px;
-      color: #9eb3d9;
-      margin-bottom: 8px;
+
+    .very-low,.low{
+      color:var(--green);
+      background:rgba(25,230,140,.12);
+      border:1px solid rgba(25,230,140,.35);
     }
-    .region-score {
-      font-size: 24px;
-      font-weight: 700;
+    .medium{
+      color:var(--yellow);
+      background:rgba(245,185,66,.12);
+      border:1px solid rgba(245,185,66,.35);
     }
-    .lens-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 10px;
+    .high{
+      color:var(--orange);
+      background:rgba(255,138,61,.12);
+      border:1px solid rgba(255,138,61,.35);
     }
-    .lens {
-      background: #09101f;
-      border: 1px solid #162445;
-      border-radius: 12px;
-      padding: 14px;
+    .critical{
+      color:var(--red);
+      background:rgba(255,77,109,.12);
+      border:1px solid rgba(255,77,109,.35);
     }
-    .lens h4 {
-      margin: 0 0 8px;
-      font-size: 16px;
-      color: #ffffff;
+
+    .panel{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
     }
-    .lens p {
-      margin: 0;
-      color: #9eb3d9;
-      font-size: 13px;
-      line-height: 1.5;
+
+    .list{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.9;
     }
-    .cert {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 5px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,212,255,0.35);
-      color: #00d4ff;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
+
+    .module-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
     }
-    .chat-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      flex-wrap: wrap;
+
+    .module{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
     }
-    .chat-input {
-      width: 100%;
-      background: #07101f;
-      border: 1px solid #1a2a4a;
-      border-radius: 12px;
-      color: #eaf2ff;
-      padding: 14px;
-      font-size: 15px;
-      outline: none;
+
+    .module h3{
+      margin:0 0 8px 0;
+      color:#fff;
+      font-size:18px;
     }
-    .btn {
-      background: #00d4ff;
-      color: #00121b;
-      border: 0;
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-weight: 700;
-      cursor: pointer;
+
+    .module p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
     }
-    .btn.secondary {
-      background: #162445;
-      color: #d7e5ff;
+
+    .advisor-input{
+      width:100%;
+      min-height:120px;
+      background:var(--panel2);
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
+      font-size:15px;
+      resize:vertical;
     }
-    canvas {
-      width: 100% !important;
-      height: 300px !important;
+
+    .row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
     }
-    .footer-note {
-      margin-top: 18px;
-      color: #8ea7d8;
-      font-size: 13px;
-      line-height: 1.6;
+
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#162445;
+      color:#d7e5ff;
+      margin:4px 6px 0 0;
+      font-size:12px;
+      cursor:pointer;
     }
-    @media (max-width: 900px) {
-      .col-4, .col-6, .col-8, .col-12 {
-        grid-column: span 12;
-      }
-      .lens-grid { grid-template-columns: 1fr; }
-      .regions { grid-template-columns: 1fr; }
-      .value { font-size: 32px; }
-      canvas { height: 240px !important; }
+
+    .answer{
+      margin-top:14px;
+      min-height:180px;
+      white-space:pre-wrap;
+      line-height:1.75;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
+    }
+
+    .sector-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .sector-item{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .sector-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .sector-name{
+      font-weight:700;
+      color:#fff;
+    }
+
+    .bar{
+      height:9px;
+      background:#132041;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .fill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--cyan),var(--green));
+    }
+
+    .footer{
+      margin-top:22px;
+      padding:20px;
+      border:1px solid var(--line);
+      background:var(--panel);
+      border-radius:18px;
+      color:#8297c0;
+      line-height:1.7;
+      font-size:13px;
+    }
+
+    @media (max-width: 900px){
+      .col-3,.col-4,.col-5,.col-6,.col-7,.col-8,.col-12{grid-column:span 12}
+      .module-grid{grid-template-columns:1fr}
+      h1{font-size:30px}
+      .metric{font-size:30px}
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="platform.html">Platform</a>
-    <a href="developer.html">Developers</a>
-    <a href="investor.html">Investor</a>
-    <a href="telescope.html">Telescope</a>
-    <a href="heatmap.html">Heatmap</a>
-    <a href="global-map.html">World Map</a>
-    <a href="architecture.html">Architecture</a>
-    <a href="trust.html">Trust</a>
-    <a href="telescope.html">Telescope</a>
-   <a href="marketplace.html">Lens</a> 
-  </nav>
+<nav>
+  <a href="#home">Home</a>
+  <a href="#platform">Platform</a>
+  <a href="#demo">Live Demo</a>
+  <a href="advisor.html">Advisor</a>
+  <a href="global-map.html">World Map</a>
+  <a href="investor-demo.html">Investor Demo</a>
+</nav>
 
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <h1>ZENTRA Financial Telescope</h1>
-        <p>Live risk dashboard · lens marketplace · AI risk chat</p>
-      </div>
-      <div class="status" id="systemStatus">API bağlanıyor...</div>
+<div class="container">
+
+  <section class="hero" id="home">
+    <div class="eyebrow">ZENTRA / Financial Intelligence Infrastructure</div>
+    <h1>Behavioral Financial Infrastructure for Banks, Regulated Fintech and Global Economic Intelligence</h1>
+    <div class="lead">
+      ZENTRA transforms macro signals, market stress, behavioral finance and sector pressure
+      into live risk intelligence. It is designed as a modular infrastructure layer that can evolve
+      from institutional risk analytics into a distributed global economic operating system.
     </div>
 
-    <div class="grid">
-      <div class="card col-4">
-        <div class="label">Global Risk Index</div>
-        <div class="value" id="globalRiskValue">...</div>
-        <div class="band" id="riskBandBadge">...</div>
+    <div class="hero-actions">
+      <a class="btn primary" href="#demo">View Live Demo</a>
+      <a class="btn secondary" href="#platform">Explore Platform</a>
+    </div>
+
+    <div class="status" id="apiStatus">API bağlanıyor...</div>
+  </section>
+
+  <section class="section grid">
+    <div class="card col-3">
+      <div class="label">Risk Score</div>
+      <div class="metric" id="riskScore">--</div>
+      <div class="sub">Current combined behavioral and macro risk signal.</div>
+    </div>
+
+    <div class="card col-3">
+      <div class="label">Global Risk Index</div>
+      <div class="metric" id="globalRisk">--</div>
+      <div class="sub">Aggregated pressure signal for current environment.</div>
+    </div>
+
+    <div class="card col-3">
+      <div class="label">Economic State</div>
+      <div class="metric" id="economicState" style="font-size:22px;">--</div>
+      <div class="sub">Macro condition produced by core engines.</div>
+    </div>
+
+    <div class="card col-3">
+      <div class="label">Market Trend</div>
+      <div class="metric" id="marketTrend" style="font-size:22px;">--</div>
+      <div class="sub">Live market direction from current signal model.</div>
+    </div>
+  </section>
+
+  <section class="section grid" id="platform">
+    <div class="card col-12">
+      <h2 class="section-title">Platform Overview</h2>
+      <div class="sub">
+        Financial systems often react late. Behavioral signals are ignored, sector stress remains invisible,
+        and macro pressure is seen only after damage emerges. ZENTRA closes this gap by combining live signals,
+        AI interpretation and modular risk engines into a usable infrastructure layer.
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="module-grid">
+        <div class="module">
+          <h3>RiskLens Engine</h3>
+          <p>Behavioral and financial risk scoring across macro, business and payment patterns.</p>
+        </div>
+        <div class="module">
+          <h3>Credit Stress Engine</h3>
+          <p>Installment and financing pressure modeling under changing economic conditions.</p>
+        </div>
+        <div class="module">
+          <h3>AI Advisor</h3>
+          <p>Economic reasoning layer for investment, business, country and trade-related questions.</p>
+        </div>
+        <div class="module">
+          <h3>Global Telescope</h3>
+          <p>Global risk index, country stress view, macro condition and market signal monitoring.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-6">
+      <h2 class="section-title">Core Infrastructure</h2>
+      <ul class="list">
+        <li>Behavioral finance layer</li>
+        <li>Macro and market signal engines</li>
+        <li>Scenario simulation foundation</li>
+        <li>Sector pressure logic</li>
+        <li>Cloudflare global API distribution</li>
+      </ul>
+    </div>
+
+    <div class="card col-6">
+      <h2 class="section-title">Use Cases</h2>
+      <ul class="list">
+        <li>Banks and regulated fintech</li>
+        <li>Risk and credit intelligence</li>
+        <li>SME financing and cashflow diagnostics</li>
+        <li>Institutional macro monitoring</li>
+        <li>Future economic operating system layer</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section grid" id="demo">
+    <div class="card col-7">
+      <h2 class="section-title">Live AI Demo</h2>
+      <textarea id="question" class="advisor-input" placeholder="Örnek: Altın mı dolar mı daha mantıklı? / İşletmemin riski neden yükseliyor? / Türkiye risk görünümü nasıl?"></textarea>
+
+      <div class="row">
+        <button class="btn primary" onclick="askAdvisor()">Analyze</button>
+        <button class="btn secondary" onclick="clearAdvisor()">Clear</button>
       </div>
 
-      <div class="card col-4">
-        <div class="label">Risk Score</div>
-        <div class="value" id="riskScoreValue">...</div>
-        <div class="sub" id="economicState">...</div>
+      <div style="margin-top:12px;">
+        <span class="pill" onclick="setQuestion('Altın mı dolar mı daha mantıklı?')">Altın mı dolar mı</span>
+        <span class="pill" onclick="setQuestion('İşletmemin riski neden yükseliyor?')">İşletme riski</span>
+        <span class="pill" onclick="setQuestion('Türkiye risk görünümü nasıl?')">Türkiye görünümü</span>
+        <span class="pill" onclick="setQuestion('Bu dönemde borç azaltmak mantıklı mı?')">Borç azaltma</span>
+        <span class="pill" onclick="setQuestion('İthalat mı yerli üretim mi daha mantıklı?')">Ticaret kararı</span>
       </div>
 
-      <div class="card col-4">
-        <div class="label">Market State</div>
-        <div class="value" id="marketTrendValue">...</div>
-        <div class="sub" id="btcValue">BTC: ...</div>
+      <div class="answer" id="answer">Soru bekleniyor...</div>
+    </div>
+
+    <div class="card col-5">
+      <h2 class="section-title">Live Interpretation</h2>
+      <div class="panel">
+        <div class="label">Risk Band</div>
+        <div id="riskBand" class="band medium">--</div>
       </div>
 
-      <div class="card col-8">
-        <div class="label">Risk History</div>
-        <canvas id="historyChart"></canvas>
-      </div>
-
-      <div class="card col-4">
+      <div class="panel" style="margin-top:12px;">
         <div class="label">AI Reason</div>
-        <div class="reason-box" id="aiReason">Yükleniyor...</div>
-
-        <div class="label" style="margin-top:16px;">AI Advice</div>
-        <div class="advice-box" id="aiAdvice">Yükleniyor...</div>
+        <div class="sub" id="aiReason">--</div>
       </div>
 
-      <div class="card col-6">
-        <div class="label">Global Risk Map</div>
-        <div class="regions">
-          <div class="region">
-            <div class="region-title">USA</div>
-            <div class="region-score" id="usaRisk">...</div>
-          </div>
-          <div class="region">
-            <div class="region-title">Europe</div>
-            <div class="region-score" id="euRisk">...</div>
-          </div>
-          <div class="region">
-            <div class="region-title">Türkiye</div>
-            <div class="region-score" id="trRisk">...</div>
-          </div>
-          <div class="region">
-            <div class="region-title">Emerging Markets</div>
-            <div class="region-score" id="emRisk">...</div>
-          </div>
+      <div class="panel" style="margin-top:12px;">
+        <div class="label">AI Advice</div>
+        <div class="sub" id="aiAdvice">--</div>
+      </div>
+
+      <div class="panel" style="margin-top:12px;">
+        <div class="label">Investor Positioning</div>
+        <div class="sub">
+          ZENTRA should be presented as a Financial Intelligence Platform,
+          while its long-term architecture expands toward a Global Economic Intelligence System.
         </div>
-      </div>
-
-      <div class="card col-6">
-        <div class="label">Lens Marketplace</div>
-        <div class="lens-grid">
-          <div class="lens">
-            <h4>Banking Lens</h4>
-            <p>Kredi riski ve davranışsal finansal bozulma.</p>
-            <div class="cert">Certified</div>
-          </div>
-          <div class="lens">
-            <h4>SME Lens</h4>
-            <p>KOBİ risk, nakit baskısı ve faaliyet stresi.</p>
-            <div class="cert">Institution Ready</div>
-          </div>
-          <div class="lens">
-            <h4>ERP Lens</h4>
-            <p>Muhasebe, stok, alacak-borç akış analizi.</p>
-            <div class="cert">Certified</div>
-          </div>
-          <div class="lens">
-            <h4>POS Lens</h4>
-            <p>Ödeme ritmi, talep zayıflaması ve satış sinyali.</p>
-            <div class="cert">Certified</div>
-          </div>
-          <div class="lens">
-            <h4>Insurance Lens</h4>
-            <p>Hasar davranışı ve risk yoğunluğu analizi.</p>
-            <div class="cert">RegTech</div>
-          </div>
-          <div class="lens">
-            <h4>Digital Asset Lens</h4>
-            <p>Kripto oynaklığı ve cüzdan risk davranışı.</p>
-            <div class="cert">Beta</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card col-12">
-        <div class="label">AI Risk Chat</div>
-        <textarea id="chatInput" class="chat-input" rows="4" placeholder="Örnek: İşletmemin riski neden yükseliyor?"></textarea>
-        <div class="chat-actions">
-          <button class="btn" onclick="runChat()">Ask Zentra AI</button>
-          <button class="btn secondary" onclick="fillExample()">Örnek Soru</button>
-        </div>
-        <div class="chat-response" id="chatResponse">Soru bekleniyor...</div>
-      </div>
-
-      <div class="card col-12">
-        <div class="label">Connection Status</div>
-        <div class="error-box" id="errorBox"></div>
-        <div class="footer-note">Doğrudan API bağlantısı kullanılıyor.</div>
       </div>
     </div>
+  </section>
+
+  <section class="section grid">
+    <div class="card col-6">
+      <h2 class="section-title">Sector Pressure Snapshot</h2>
+      <div class="sector-list" id="sectorList"></div>
+    </div>
+
+    <div class="card col-6">
+      <h2 class="section-title">Architecture Logic</h2>
+      <div class="panel">
+        <div class="label">Flow</div>
+        <div class="sub">
+          Data Sources → Signals → Engines → Risk Intelligence → AI Interpretation → API Output
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px;">
+        <div class="label">Current Status</div>
+        <div class="sub">
+          Working API, live risk scoring, global risk endpoint, advisor layer, sector pressure view and investor demo structure.
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px;">
+        <div class="label">Next Strategic Layers</div>
+        <div class="sub">
+          Scenario engine expansion, real data pipeline, knowledge graph, digital twin economy and institutional dashboarding.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    ZENTRA is being built as a behavioral financial infrastructure layer first,
+    and as a global distributed economic intelligence system over time.
   </div>
 
-  <script>
-    const API_RAW = "https://zentra-risklens-api-2.onrender.com";
-    const TELESCOPE_URL = API_RAW + "/telescope";
-    const HISTORY_URL = API_RAW + "/history";
+</div>
 
-    let historyChartInstance = null;
-    let liveTelescopeData = null;
+<script>
+  const API_BASE = "https://zentra-risklens-api.42mehmetaltas.workers.dev";
+  let liveData = null;
 
-    function setBandClass(el, band) {
-      el.classList.remove("very-low", "low", "medium", "high", "critical");
-      el.classList.add((band || "medium").toLowerCase());
+  const sectorDefaults = [
+    { name: "Retail", score: 63 },
+    { name: "Construction", score: 69 },
+    { name: "Technology", score: 41 },
+    { name: "Energy", score: 54 },
+    { name: "Finance", score: 48 }
+  ];
+
+  function setQuestion(text){
+    document.getElementById("question").value = text;
+  }
+
+  function clearAdvisor(){
+    document.getElementById("question").value = "";
+    document.getElementById("answer").innerText = "Soru bekleniyor...";
+  }
+
+  function setBandClass(el, band){
+    el.className = "band " + (band || "medium");
+  }
+
+  function classifyQuestion(q){
+    const t = q.toLowerCase();
+    const investment = ["altın","dolar","yatırım","borsa","kripto","bitcoin","portföy","hisse","fon"];
+    const business = ["işletme","şirket","nakit","satış","borç","maliyet","tahsilat","stok","zarar","kâr"];
+    const country = ["türkiye","ülke","ekonomi","faiz","enflasyon","kur","makro","merkez bankası"];
+    const trade = ["ithalat","ihracat","ticaret","üretim","tedarik","lojistik"];
+    if (investment.some(k => t.includes(k))) return "investment";
+    if (business.some(k => t.includes(k))) return "business";
+    if (country.some(k => t.includes(k))) return "country";
+    if (trade.some(k => t.includes(k))) return "trade";
+    return "general";
+  }
+
+  function buildAnswer(question, mode, d){
+    const risk = d.risk_score ?? "-";
+    const globalRisk = d.global_risk_index ?? "-";
+    const state = d.economic_state ?? "-";
+    const trend = d.market?.market_trend ?? "-";
+    const reason = d.ai_reason ?? "Veri sınırlı.";
+    const advice = d.ai_advice ?? "Finansal disiplini koru.";
+
+    let focus = "";
+    let extra = "";
+
+    if(mode === "investment"){
+      focus = "Investment Allocation";
+      extra = "Tek bir varlığa yoğunlaşmak yerine risk dağılımı, likidite ve zaman ufku birlikte düşünülmelidir.";
+    } else if(mode === "business"){
+      focus = "Business Resilience";
+      extra = "Tahsilat süresi, sabit giderler, kısa vadeli borç ve nakit rezervi ilk izlenmesi gereken alanlardır.";
+    } else if(mode === "country"){
+      focus = "Country & Macro Outlook";
+      extra = "Enflasyon, faiz, kur baskısı ve finansman koşulları birlikte değerlendirilmelidir.";
+    } else if(mode === "trade"){
+      focus = "Trade & Production Impact";
+      extra = "Kur, lojistik, tedarik süresi ve finansman maliyeti birlikte okunmalıdır.";
+    } else {
+      focus = "General Financial Position";
+      extra = "Risk, likidite ve piyasa yönü birlikte izlenmelidir.";
     }
 
-    function formatBand(band) {
-      return band ? band.toUpperCase() : "-";
+    return `Question:
+${question}
+
+Focus:
+${focus}
+
+Live Snapshot:
+Risk Score: ${risk}
+Global Risk Index: ${globalRisk}
+Economic State: ${state}
+Market Trend: ${trend}
+
+Reason:
+${reason}
+
+Advice:
+${advice}
+
+Additional Note:
+${extra}`;
+  }
+
+  function askAdvisor(){
+    const q = document.getElementById("question").value.trim();
+    const answerBox = document.getElementById("answer");
+
+    if(!q){
+      answerBox.innerText = "Lütfen bir soru yaz.";
+      return;
     }
 
-    function safeText(value, fallback = "-") {
-      return value === undefined || value === null || value === "" ? fallback : value;
+    if(!liveData){
+      answerBox.innerText = "Canlı veri henüz gelmedi.";
+      return;
     }
 
-    async function fetchJson(url) {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return await res.json();
+    const mode = classifyQuestion(q);
+    answerBox.innerText = buildAnswer(q, mode, liveData);
+  }
+
+  function renderSectorList(items){
+    const wrap = document.getElementById("sectorList");
+    wrap.innerHTML = "";
+
+    items.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "sector-item";
+
+      const top = document.createElement("div");
+      top.className = "sector-top";
+
+      const name = document.createElement("div");
+      name.className = "sector-name";
+      name.textContent = item.name;
+
+      const score = document.createElement("div");
+      score.className = "label";
+      score.textContent = item.score + " / 100";
+
+      const bar = document.createElement("div");
+      bar.className = "bar";
+
+      const fill = document.createElement("div");
+      fill.className = "fill";
+      fill.style.width = Math.max(8, Math.min(100, item.score)) + "%";
+
+      top.appendChild(name);
+      top.appendChild(score);
+      row.appendChild(top);
+      bar.appendChild(fill);
+      row.appendChild(bar);
+      wrap.appendChild(row);
+    });
+  }
+
+  async function loadLiveData(){
+    try{
+      const res = await fetch(API_BASE + "/telescope", { cache: "no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const data = await res.json();
+      liveData = data;
+
+      document.getElementById("riskScore").innerText = data.risk_score ?? "--";
+      document.getElementById("globalRisk").innerText = data.global_risk_index ?? "--";
+      document.getElementById("economicState").innerText = data.economic_state ?? "--";
+      document.getElementById("marketTrend").innerText = data.market?.market_trend ?? "--";
+
+      const bandEl = document.getElementById("riskBand");
+      bandEl.innerText = (data.risk_band || "--").toUpperCase();
+      setBandClass(bandEl, data.risk_band || "medium");
+
+      document.getElementById("aiReason").innerText = data.ai_reason ?? "--";
+      document.getElementById("aiAdvice").innerText = data.ai_advice ?? "--";
+      document.getElementById("apiStatus").innerText = "API bağlı / Cloudflare global network aktif";
+
+      const base = Number(data.global_risk_index || 50);
+      renderSectorList([
+        { name: "Retail", score: Math.min(100, Math.round(base + 6)) },
+        { name: "Construction", score: Math.min(100, Math.round(base + 12)) },
+        { name: "Technology", score: Math.max(0, Math.round(base - 10)) },
+        { name: "Energy", score: Math.min(100, Math.round(base - 2)) },
+        { name: "Finance", score: Math.min(100, Math.round(base - 6)) }
+      ]);
+
+    } catch(e){
+      document.getElementById("apiStatus").innerText = "API hatası";
+      renderSectorList(sectorDefaults);
+      document.getElementById("answer").innerText = "Canlı veri yüklenemedi: " + e.message;
     }
+  }
 
-    function buildHistoryChart(items) {
-      const list = Array.isArray(items) ? items : [];
-      const labels = [...list].reverse().map((_, i) => `Kayıt ${i + 1}`);
-      const riskScores = [...list].reverse().map(x => x.risk_score);
-      const globalScores = [...list].reverse().map(x => x.global_risk);
+  renderSectorList(sectorDefaults);
+  loadLiveData();
+  setInterval(loadLiveData, 60000);
+</script>
 
-      const ctx = document.getElementById("historyChart");
-      if (historyChartInstance) historyChartInstance.destroy();
-
-      historyChartInstance = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Risk Score",
-              data: riskScores,
-              borderColor: "#00d4ff",
-              backgroundColor: "rgba(0,212,255,0.12)",
-              tension: 0.3,
-              fill: false
-            },
-            {
-              label: "Global Risk",
-              data: globalScores,
-              borderColor: "#ff8a3d",
-              backgroundColor: "rgba(255,138,61,0.12)",
-              tension: 0.3,
-              fill: false
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { labels: { color: "#d7e5ff" } }
-          },
-          scales: {
-            x: {
-              ticks: { color: "#9eb3d9" },
-              grid: { color: "rgba(255,255,255,0.05)" }
-            },
-            y: {
-              min: 0,
-              max: 100,
-              ticks: { color: "#9eb3d9" },
-              grid: { color: "rgba(255,255,255,0.05)" }
-            }
-          }
-        }
-      });
-    }
-
-    function showError(message) {
-      const box = document.getElementById("errorBox");
-      box.style.display = "block";
-      box.textContent = message;
-      document.getElementById("systemStatus").textContent = "API hatası";
-    }
-
-    function fillRiskMap(globalRisk) {
-      document.getElementById("usaRisk").textContent = Math.max(0, Math.round(globalRisk - 6));
-      document.getElementById("euRisk").textContent = Math.max(0, Math.round(globalRisk - 2));
-      document.getElementById("trRisk").textContent = Math.min(100, Math.round(globalRisk + 8));
-      document.getElementById("emRisk").textContent = Math.min(100, Math.round(globalRisk + 5));
-    }
-
-    function fillExample() {
-      document.getElementById("chatInput").value = "İşletmemin riski neden yükseliyor ve ne yapmalıyım?";
-    }
-
-    function runChat() {
-      const q = document.getElementById("chatInput").value.trim();
-      const out = document.getElementById("chatResponse");
-
-      if (!liveTelescopeData) {
-        out.textContent = "Canlı veri henüz gelmedi.";
-        return;
-      }
-
-      const risk = liveTelescopeData.risk_score;
-      const globalRisk = liveTelescopeData.global_risk_index;
-      const reason = liveTelescopeData.ai_reason || "Risk nedeni mevcut verilerle okunuyor.";
-      const advice = liveTelescopeData.ai_advice || "Nakit ve risk dengesini koru.";
-
-      if (!q) {
-        out.textContent = "Lütfen bir soru yaz.";
-        return;
-      }
-
-      out.innerHTML =
-        "<strong>Soru:</strong> " + q + "<br><br>" +
-        "<strong>Durum:</strong> Risk " + risk + " / Global Risk " + globalRisk + "<br>" +
-        "<strong>Neden:</strong> " + reason + "<br>" +
-        "<strong>Öneri:</strong> " + advice;
-    }
-
-    async function loadDashboard() {
-      try {
-        document.getElementById("systemStatus").textContent = "API okunuyor...";
-
-        const [telescope, history] = await Promise.all([
-          fetchJson(TELESCOPE_URL),
-          fetchJson(HISTORY_URL)
-        ]);
-
-        liveTelescopeData = telescope;
-
-        const globalRisk = telescope.global_risk_index;
-        const riskScore = telescope.risk_score;
-        const band = (telescope.risk_band || "medium").toLowerCase();
-
-        document.getElementById("globalRiskValue").textContent = safeText(globalRisk);
-        document.getElementById("riskScoreValue").textContent = safeText(riskScore);
-        document.getElementById("riskBandBadge").textContent = formatBand(band);
-        setBandClass(document.getElementById("riskBandBadge"), band);
-
-        document.getElementById("economicState").textContent =
-          `Economic State: ${safeText(telescope.economic_state)}`;
-
-        document.getElementById("marketTrendValue").textContent =
-          safeText(telescope.market?.market_trend, "-").toUpperCase();
-
-        document.getElementById("btcValue").textContent =
-          `BTC: ${safeText(telescope.market?.btc_price)}`;
-
-        document.getElementById("aiReason").textContent =
-          safeText(telescope.ai_reason, "Reason yok");
-
-        document.getElementById("aiAdvice").textContent =
-          safeText(telescope.ai_advice, "Advice yok");
-
-        fillRiskMap(globalRisk);
-        buildHistoryChart(history);
-
-        document.getElementById("systemStatus").textContent = "API bağlı";
-      } catch (err) {
-        showError("Veri okunamadı. Hata: " + err.message);
-      }
-    }
-
-    loadDashboard();
-  </script>
 </body>
-            </html>
+  </html>

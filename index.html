@@ -12,106 +12,99 @@
 
 body{
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
+font-family:Arial;
 background:#071021;
 color:white;
 }
 
-header{
-background:#08132a;
-padding:20px;
-text-align:center;
-border-bottom:1px solid #103865;
-}
-
-header h1{
-margin:0;
-color:#00e0ff;
-}
-
 nav{
-margin-top:10px;
+background:#08132a;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #103865;
 }
 
 nav a{
 color:#7bdfff;
-margin:0 10px;
 text-decoration:none;
-font-size:14px;
+margin-left:20px;
 }
 
-nav a:hover{
+.logo{
+font-weight:bold;
 color:#00e0ff;
+font-size:18px;
 }
 
 .hero{
 text-align:center;
-padding:60px 20px;
+padding:120px 20px;
 }
 
-.hero h2{
-font-size:36px;
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
 color:#00e0ff;
 }
 
 .hero p{
-max-width:800px;
+font-size:20px;
+max-width:700px;
 margin:auto;
-line-height:1.7;
 color:#9dcdf3;
 }
 
-.container{
-max-width:1200px;
+.section{
+padding:80px 20px;
+max-width:1100px;
 margin:auto;
-padding:40px 20px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
+.section h2{
+color:#00e0ff;
+margin-bottom:20px;
 }
 
 .card{
 background:#0e1c38;
 padding:25px;
-border-radius:10px;
+border-radius:12px;
+margin-bottom:20px;
 border:1px solid #103865;
 }
 
-.card h3{
-color:#00e0ff;
-margin-top:0;
+textarea{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+background:#08132a;
+color:white;
 }
 
-.card p{
-font-size:14px;
-line-height:1.6;
-}
-
-.card a{
-display:inline-block;
+button{
 margin-top:10px;
-color:#00e0ff;
-text-decoration:none;
-font-weight:bold;
+padding:12px 20px;
+background:#00e0ff;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.result{
+background:#020814;
+padding:20px;
+margin-top:15px;
+border-radius:10px;
 }
 
 footer{
-margin-top:60px;
-padding:20px;
-background:#08132a;
 text-align:center;
+padding:40px;
+background:#08132a;
 color:#6fa9d6;
-}
-
-@media (max-width:900px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
 }
 
 </style>
@@ -120,145 +113,189 @@ grid-template-columns:1fr;
 
 <body>
 
-<header>
-
-<h1>ZENTRA Economic OS</h1>
-
 <nav>
 
-<a href="index.html">Home</a>
-<a href="advisor.html">AI Advisor</a>
-<a href="dashboard.html">Dashboard</a>
-<a href="knowledge.html">Knowledge</a>
-<a href="simulator.html">Business Simulator</a>
-<a href="trade-intelligence.html">Trade Intelligence</a>
-<a href="economic-brain.html">Economic Brain</a>
-<a href="platform.html">Platform</a>
+<div class="logo">ZENTRA</div>
+
+<div>
+
+<a href="#">Home</a>
+<a href="#platform">Platform</a>
+<a href="#brain">Economic Brain</a>
+<a href="#chat">AI Advisor</a>
+<a href="#knowledge">Knowledge</a>
+
+</div>
 
 </nav>
 
-</header>
-
 <section class="hero">
 
-<h2>The Global Economic Intelligence Platform</h2>
+<h1>ZENTRA Economic OS</h1>
 
 <p>
 
-ZENTRA is a global economic operating system combining
-risk analytics, artificial intelligence, macroeconomic monitoring,
-and real-world business simulations.
-
-It transforms complex financial systems into actionable intelligence
-for individuals, businesses, and institutions.
+Global economic intelligence platform combining
+AI, macro data and financial risk systems.
 
 </p>
 
 </section>
 
-<div class="container">
+<section id="platform" class="section">
 
-<div class="grid">
-
-<div class="card">
-
-<h3>AI Economic Advisor</h3>
-
-<p>
-
-Ask financial or economic questions and receive AI-powered
-analysis and strategic recommendations.
-
-</p>
-
-<a href="advisor.html">Open Advisor →</a>
-
-</div>
+<h2>Platform</h2>
 
 <div class="card">
 
-<h3>Global Economic Dashboard</h3>
+ZENTRA is designed as a global economic operating system.
 
-<p>
+It connects:
 
-Monitor global risk indicators, financial pressure,
-and macroeconomic signals across countries.
+• individuals  
+• businesses  
+• markets  
+• governments  
 
-</p>
-
-<a href="dashboard.html">Open Dashboard →</a>
+into a single financial intelligence layer.
 
 </div>
+
+</section>
+
+<section id="brain" class="section">
+
+<h2>Economic Brain</h2>
+
+<div class="card" id="brainBox">
+
+Loading global economic signal...
+
+</div>
+
+</section>
+
+<section id="chat" class="section">
+
+<h2>AI Advisor</h2>
 
 <div class="card">
 
-<h3>Economic Knowledge Engine</h3>
+<textarea id="chatInput" placeholder="Ask any economic question"></textarea>
 
-<p>
+<button onclick="ask()">Ask</button>
 
-Search and explore financial and economic knowledge
-with AI-assisted explanations.
-
-</p>
-
-<a href="knowledge.html">Open Knowledge →</a>
+<div id="chatResult" class="result"></div>
 
 </div>
+
+</section>
+
+<section id="knowledge" class="section">
+
+<h2>Economic Knowledge Engine</h2>
 
 <div class="card">
 
-<h3>Business Simulator</h3>
+<textarea id="knowledgeInput" placeholder="Example: What is inflation?"></textarea>
 
-<p>
+<button onclick="knowledge()">Explain</button>
 
-Simulate real business models and analyze
-profitability, costs, and risk.
-
-</p>
-
-<a href="simulator.html">Run Simulation →</a>
+<div id="knowledgeResult" class="result"></div>
 
 </div>
 
-<div class="card">
-
-<h3>Trade Intelligence</h3>
-
-<p>
-
-Analyze logistics, import/export routes,
-and global supply chain risk.
-
-</p>
-
-<a href="trade-intelligence.html">Open Trade Engine →</a>
-
-</div>
-
-<div class="card">
-
-<h3>Global Economic Brain</h3>
-
-<p>
-
-A strategic intelligence layer interpreting
-global economic conditions and financial signals.
-
-</p>
-
-<a href="economic-brain.html">Open Brain →</a>
-
-</div>
-
-</div>
-
-</div>
+</section>
 
 <footer>
 
-ZENTRA Economic Operating System • Global Financial Intelligence Platform
+ZENTRA Economic OS
 
 </footer>
+
+<script>
+
+const API="https://zentra-core-api.onrender.com"
+
+async function loadBrain(){
+
+try{
+
+let r=await fetch(API+"/brain")
+
+let data=await r.json()
+
+document.getElementById("brainBox").innerHTML=
+
+`
+Global Risk Index: ${data.global_risk_index}
+
+State: ${data.economic_state}
+
+Trend: ${data.market_trend}
+
+Insight: ${data.insight}
+
+Advice: ${data.advice}
+`
+
+}
+
+catch{
+
+document.getElementById("brainBox").innerHTML="Economic brain offline"
+
+}
+
+}
+
+async function ask(){
+
+let q=document.getElementById("chatInput").value
+
+let r=await fetch(API+"/chat",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({question:q})
+
+})
+
+let data=await r.json()
+
+document.getElementById("chatResult").innerText=data.answer
+
+}
+
+function knowledge(){
+
+let q=document.getElementById("knowledgeInput").value.toLowerCase()
+
+let answer=""
+
+if(q.includes("inflation"))
+answer="Inflation means rising prices and decreasing purchasing power."
+
+else if(q.includes("recession"))
+answer="Recession is economic slowdown with falling demand."
+
+else if(q.includes("gold"))
+answer="Gold is often used as protection during inflation or crisis."
+
+else
+answer="ZENTRA explains economic concepts and their real impact."
+
+document.getElementById("knowledgeResult").innerText=answer
+
+}
+
+loadBrain()
+
+</script>
 
 </body>
 

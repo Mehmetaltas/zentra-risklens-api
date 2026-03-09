@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ZENTRA Economic OS</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
+
 <style>
 body{
   margin:0;
@@ -54,7 +58,7 @@ nav a{
   line-height:1.7;
 }
 .section{
-  max-width:1200px;
+  max-width:1280px;
   margin:auto;
   padding:28px 20px 44px;
 }
@@ -149,6 +153,10 @@ button{
   border-radius:10px;
   border:1px solid #103865;
 }
+#worldMap{
+  width:100% !important;
+  height:520px !important;
+}
 footer{
   text-align:center;
   padding:30px;
@@ -159,6 +167,7 @@ footer{
 @media (max-width:1000px){
   .grid,.grid-2{grid-template-columns:1fr;}
   .country-list{grid-template-columns:1fr;}
+  #worldMap{height:360px !important;}
 }
 </style>
 </head>
@@ -169,6 +178,7 @@ footer{
   <div class="links">
     <a href="#dashboard">Dashboard</a>
     <a href="#brain">Brain</a>
+    <a href="#map">Map</a>
     <a href="#search">Search</a>
     <a href="#chat">AI</a>
     <a href="#sector">Sector</a>
@@ -182,7 +192,8 @@ footer{
   <h1>ZENTRA Economic OS</h1>
   <p>
     Global economic intelligence platform combining real data, AI guidance,
-    sector analysis, scenario simulation, SME diagnostics and trade intelligence.
+    sector analysis, scenario simulation, SME diagnostics, supply chain analysis
+    and trade intelligence in one system.
   </p>
 </section>
 
@@ -208,6 +219,27 @@ footer{
   <h2>Economic Brain</h2>
   <div class="card">
     <div class="result" id="brainResult">Loading economic brain...</div>
+  </div>
+</section>
+
+<section id="map" class="section grid-2">
+  <div>
+    <h2>Interactive Global Risk Map</h2>
+    <div class="card">
+      <canvas id="worldMap"></canvas>
+    </div>
+  </div>
+
+  <div>
+    <h2>Country Intelligence</h2>
+    <div class="card">
+      <div class="small">Selected Country</div>
+      <div class="metric" id="countryName" style="font-size:24px;">None</div>
+      <div class="small" style="margin-top:12px;">Risk Score</div>
+      <div class="metric" id="countryRisk">--</div>
+      <div id="countryBand" class="badge medium">--</div>
+      <div class="result" id="countryInfo">Click a country on the map.</div>
+    </div>
   </div>
 </section>
 
@@ -309,4 +341,405 @@ footer{
       <input id="tradeOrigin" placeholder="Origin">
       <input id="tradeDestination" placeholder="Destination">
       <input id="tradeProduct" placeholder="Product">
-      <input id="transportCost
+      <input id="transportCost" placeholder="Transport Cost">
+      <input id="productPrice" placeholder="Product Price">
+      <button onclick="runTrade()">Analyze Trade</button>
+      <div id="tradeResult" class="result">Trade engine is ready.</div>
+    </div>
+  </div>
+
+  <div id="network">
+    <h2>Network Intelligence</h2>
+    <div class="card">
+      <button onclick="loadNetwork()">Load Network</button>
+      <div id="networkResult" class="result">Network engine is ready.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  ZENTRA Economic Operating System • Live Frontend
+</footer>
+
+<script>
+const API = "https://zentra-core-api.onrender.com"; // BURAYI GEREKİRSE GERÇEK RENDER LINKİNLE DEĞİŞTİR
+
+let mapChart = null;
+const fallbackCountries = [
+  {code:"US", name:"United States", risk:44, band:"medium"},
+  {code:"DE", name:"Germany", risk:36, band:"low"},
+  {code:"CN", name:"China", risk:48, band:"medium"},
+  {code:"IN", name:"India", risk:52, band:"medium"},
+  {code:"TR", name:"Turkey", risk:69, band:"high"},
+  {code:"BR", name:"Brazil", risk:55, band:"medium"},
+  {code:"NG", name:"Nigeria", risk:73, band:"high"},
+  {code:"AR", name:"Argentina", risk:84, band:"critical"}
+];
+
+function riskBandClass(score){
+  if(score >= 80) return "critical";
+  if(score >= 60) return "high";
+  if(score >= 40) return "medium";
+  return "low";
+}
+
+async function loadBrain(){
+  try{
+    const r = await fetch(API + "/brain?country_code=TR");
+    const data = await r.json();
+
+    document.getElementById("riskScore").innerText = data.global_risk_index;
+    document.getElementById("state").innerText = data.economic_state;
+    document.getElementById("trend").innerText = data.market_trend;
+
+    document.getElementById("brainResult").innerText =
+`GLOBAL ECONOMIC BRAIN
+
+Global Risk Index: ${data.global_risk_index}
+Economic State: ${data.economic_state}
+Market Trend: ${data.market_trend}
+
+Insight:
+${data.insight}
+
+Advice:
+${data.advice}
+
+Live Macro:
+Inflation: ${data.macro?.inflation}
+US Policy Rate: ${data.macro?.us_policy_rate}
+ECB Policy Rate: ${data.macro?.ecb_policy_rate}
+Liquidity: ${data.macro?.liquidity}
+Volatility: ${data.macro?.volatility}
+Energy Stress: ${data.macro?.energy}`;
+  }catch(e){
+    document.getElementById("brainResult").innerText = "Economic brain unavailable.";
+  }
+}
+
+async function loadGlobalRiskList(){
+  try{
+    const r = await fetch(API + "/global-risk");
+    const data = await r.json();
+    let html = "";
+    data.countries.forEach(c=>{
+      const cls = c.band || riskBandClass(c.risk);
+      html += `
+      <div class="country-item">
+        <div><b>${c.name}</b></div>
+        <div class="small">Risk Score: ${c.risk}</div>
+        <div class="badge ${cls}">${cls}</div>
+      </div>`;
+    });
+    document.getElementById("countryList").innerHTML = html;
+  }catch(e){
+    document.getElementById("countryList").innerText = "Global risk countries unavailable.";
+  }
+}
+
+async function loadInteractiveMap(){
+  let countriesData = fallbackCountries;
+
+  try{
+    const r = await fetch(API + "/global-risk");
+    const data = await r.json();
+    if(data.countries && data.countries.length){
+      countriesData = data.countries.map(c => ({
+        code: c.code || (
+          c.name === "United States" ? "US" :
+          c.name === "Germany" ? "DE" :
+          c.name === "China" ? "CN" :
+          c.name === "India" ? "IN" :
+          c.name === "Turkey" ? "TR" :
+          c.name === "Brazil" ? "BR" :
+          c.name === "Nigeria" ? "NG" :
+          c.name === "Argentina" ? "AR" : ""
+        ),
+        name: c.name,
+        risk: c.risk,
+        band: c.band || riskBandClass(c.risk)
+      }));
+    }
+  }catch(e){}
+
+  const countryMap = {};
+  countriesData.forEach(c => { countryMap[c.code] = c; });
+
+  const world = await fetch("https://unpkg.com/world-atlas@2/countries-110m.json").then(r => r.json());
+  const countries = ChartGeo.topojson.feature(world, world.objects.countries).features;
+
+  const codeAliases = {
+    "840":"US","276":"DE","156":"CN","356":"IN","792":"TR","076":"BR","566":"NG","032":"AR"
+  };
+
+  const data = countries.map(feature => {
+    const iso = codeAliases[String(feature.id)] || null;
+    const item = iso ? countryMap[iso] : null;
+    return {
+      feature,
+      value: item?.risk ?? 30,
+      name: item?.name ?? feature.properties.name ?? "Unknown",
+      band: item?.band ?? "low"
+    };
+  });
+
+  const ctx = document.getElementById("worldMap").getContext("2d");
+  if(mapChart) mapChart.destroy();
+
+  mapChart = new Chart(ctx, {
+    type: "choropleth",
+    data: {
+      labels: countries.map(d => d.properties.name),
+      datasets: [{
+        label: "Country Risk",
+        data: data
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const item = context.raw;
+              return `${item.name}: ${item.value}`;
+            }
+          }
+        }
+      },
+      scales: {
+        projection: {
+          axis: "x",
+          projection: "equalEarth"
+        },
+        color: {
+          axis: "x",
+          quantize: 5,
+          legend: { position: "bottom" }
+        }
+      },
+      onClick: (_, elements) => {
+        if(!elements.length) return;
+        const idx = elements[0].index;
+        const item = data[idx];
+
+        document.getElementById("countryName").innerText = item.name;
+        document.getElementById("countryRisk").innerText = item.value;
+        document.getElementById("countryBand").innerText = item.band.toUpperCase();
+        document.getElementById("countryBand").className = "badge " + item.band;
+        document.getElementById("countryInfo").innerText =
+          `${item.name} currently shows a ${item.band} risk profile with a score of ${item.value}.`;
+      }
+    }
+  });
+}
+
+async function askChat(){
+  const q = document.getElementById("chatInput").value.trim();
+  if(!q) return;
+
+  const box = document.getElementById("chatBox");
+  box.innerHTML += `<div><b>You:</b> ${q}</div>`;
+
+  try{
+    const r = await fetch(API + "/chat", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ question:q })
+    });
+    const data = await r.json();
+    box.innerHTML += `<div><b>ZENTRA:</b> ${data.answer}</div>`;
+  }catch(e){
+    box.innerHTML += `<div><b>ZENTRA:</b> Chat service unavailable.</div>`;
+  }
+
+  document.getElementById("chatInput").value = "";
+  box.scrollTop = box.scrollHeight;
+}
+
+async function runSector(){
+  const sector = document.getElementById("sectorName").value;
+  const demand = parseFloat(document.getElementById("sectorDemand").value);
+  const costPressure = parseFloat(document.getElementById("sectorCost").value);
+  const financePressure = parseFloat(document.getElementById("sectorFinance").value);
+  if(isNaN(demand) || isNaN(costPressure) || isNaN(financePressure)) return;
+
+  try{
+    const r = await fetch(API + "/sector-intelligence", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        sector: sector,
+        demand: demand,
+        cost_pressure: costPressure,
+        finance_pressure: financePressure
+      })
+    });
+    const data = await r.json();
+
+    document.getElementById("sectorResult").innerText =
+`Sector: ${data.sector}
+Risk Score: ${data.sector_risk_score}
+Band: ${data.band}
+
+Recommendation:
+${data.recommendation}`;
+  }catch(e){
+    document.getElementById("sectorResult").innerText = "Sector engine unavailable.";
+  }
+}
+
+async function runScenario(){
+  const scenario = document.getElementById("scenarioName").value;
+
+  try{
+    const r = await fetch(API + "/scenario", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ scenario: scenario })
+    });
+    const data = await r.json();
+
+    document.getElementById("scenarioResult").innerText =
+`Scenario: ${data.scenario}
+Impact: ${data.impact}
+Projected Risk: ${data.projected_risk}
+Band: ${data.band}`;
+  }catch(e){
+    document.getElementById("scenarioResult").innerText = "Scenario engine unavailable.";
+  }
+}
+
+async function runSME(){
+  const revenue = parseFloat(document.getElementById("smeRevenue").value);
+  const cost = parseFloat(document.getElementById("smeCost").value);
+  const debt = parseFloat(document.getElementById("smeDebt").value);
+  const delay = parseInt(document.getElementById("smeDelay").value);
+  if(isNaN(revenue) || isNaN(cost) || isNaN(debt) || isNaN(delay)) return;
+
+  try{
+    const r = await fetch(API + "/sme-intelligence", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        revenue: revenue,
+        cost: cost,
+        debt: debt,
+        delay: delay
+      })
+    });
+    const data = await r.json();
+
+    document.getElementById("smeResult").innerText =
+`Profit: ${data.profit}
+Risk Score: ${data.risk_score}
+Band: ${data.band}`;
+  }catch(e){
+    document.getElementById("smeResult").innerText = "SME engine unavailable.";
+  }
+}
+
+async function runSupplyChain(){
+  const lead = parseInt(document.getElementById("leadTime").value);
+  const supplier = parseFloat(document.getElementById("supplierRisk").value);
+  const delay = parseFloat(document.getElementById("delayRisk").value);
+  const buffer = parseInt(document.getElementById("bufferDays").value);
+  if(isNaN(lead) || isNaN(supplier) || isNaN(delay) || isNaN(buffer)) return;
+
+  try{
+    const r = await fetch(API + "/supply-chain", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        lead_time_days: lead,
+        supplier_risk: supplier,
+        logistics_delay_risk: delay,
+        inventory_buffer_days: buffer
+      })
+    });
+    const data = await r.json();
+
+    document.getElementById("supplyResult").innerText =
+`Supply Chain Risk Score: ${data.risk_score}
+Band: ${data.band}
+
+Recommendation:
+${data.recommendation}`;
+  }catch(e){
+    document.getElementById("supplyResult").innerText = "Supply chain engine unavailable.";
+  }
+}
+
+async function runTrade(){
+  const origin = document.getElementById("tradeOrigin").value.trim();
+  const destination = document.getElementById("tradeDestination").value.trim();
+  const product = document.getElementById("tradeProduct").value.trim();
+  const transportCost = parseFloat(document.getElementById("transportCost").value);
+  const productPrice = parseFloat(document.getElementById("productPrice").value);
+  if(!origin || !destination || !product || isNaN(transportCost) || isNaN(productPrice)) return;
+
+  try{
+    const r = await fetch(API + "/trade-intelligence", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        origin: origin,
+        destination: destination,
+        product: product,
+        transport_cost: transportCost,
+        product_price: productPrice
+      })
+    });
+    const data = await r.json();
+
+    document.getElementById("tradeResult").innerText =
+`Route: ${data.route}
+Product: ${data.product}
+Margin: ${data.margin}
+Trade Viability: ${data.trade_viability}`;
+  }catch(e){
+    document.getElementById("tradeResult").innerText = "Trade engine unavailable.";
+  }
+}
+
+async function loadNetwork(){
+  try{
+    const r = await fetch(API + "/network");
+    const data = await r.json();
+
+    document.getElementById("networkResult").innerText =
+`Supplier Nodes: ${data.supplier_nodes}
+Trade Nodes: ${data.trade_nodes}
+Logistics Nodes: ${data.logistics_nodes}
+Market Nodes: ${data.market_nodes}
+Network Stress: ${data.network_stress}`;
+  }catch(e){
+    document.getElementById("networkResult").innerText = "Network engine unavailable.";
+  }
+}
+
+async function runSearch(){
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+  if(!q) return;
+
+  let topic = "inflation";
+  if(q.includes("cds")) topic = "cds";
+  else if(q.includes("recession") || q.includes("resesyon")) topic = "recession";
+  else if(q.includes("inflation") || q.includes("enflasyon")) topic = "inflation";
+
+  try{
+    const r = await fetch(API + "/knowledge?topic=" + encodeURIComponent(topic));
+    const data = await r.json();
+    document.getElementById("searchResult").innerText = data.definition;
+  }catch(e){
+    document.getElementById("searchResult").innerText = "Search engine unavailable.";
+  }
+}
+
+loadBrain();
+loadGlobalRiskList();
+loadInteractiveMap();
+</script>
+
+</body>
+  </html>

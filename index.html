@@ -1,744 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>ZENTRA Economic OS</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
-
 <style>
+
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#071021;
-  color:white;
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#071021;
+color:white;
 }
+
 nav{
-  background:#08132a;
-  padding:16px 28px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #103865;
-  position:sticky;
-  top:0;
-  z-index:10;
+background:#08132a;
+padding:16px 28px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #103865;
 }
+
 .logo{
-  color:#00e0ff;
-  font-weight:bold;
-  font-size:18px;
+color:#00e0ff;
+font-weight:bold;
+font-size:18px;
 }
+
 .links{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
+display:flex;
+gap:16px;
 }
+
 nav a{
-  color:#7bdfff;
-  text-decoration:none;
-  font-size:14px;
+color:#7bdfff;
+text-decoration:none;
+font-size:14px;
 }
+
 .hero{
-  text-align:center;
-  padding:80px 20px 60px;
+text-align:center;
+padding:80px 20px 60px;
 }
+
 .hero h1{
-  margin:0 0 16px 0;
-  font-size:54px;
-  color:#00e0ff;
+font-size:54px;
+color:#00e0ff;
+margin:0 0 16px 0;
 }
+
 .hero p{
-  max-width:760px;
-  margin:auto;
-  color:#9dcdf3;
-  font-size:19px;
-  line-height:1.7;
+max-width:760px;
+margin:auto;
+color:#9dcdf3;
+font-size:19px;
+line-height:1.7;
 }
+
 .section{
-  max-width:1280px;
-  margin:auto;
-  padding:28px 20px 44px;
+max-width:1200px;
+margin:auto;
+padding:30px 20px;
 }
+
 .section h2{
-  margin:0 0 16px 0;
-  color:#00e0ff;
+color:#00e0ff;
 }
+
 .grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
 }
-.grid-2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
+
 .card{
-  background:#0e1c38;
-  padding:22px;
-  border-radius:14px;
-  border:1px solid #103865;
+background:#0e1c38;
+padding:22px;
+border-radius:14px;
+border:1px solid #103865;
 }
+
 .metric{
-  font-size:30px;
-  color:#00e0ff;
-  font-weight:bold;
+font-size:32px;
+color:#00e0ff;
+font-weight:bold;
 }
+
 .small{
-  color:#9dcdf3;
-  font-size:14px;
-  line-height:1.7;
+color:#9dcdf3;
+font-size:14px;
 }
-input,textarea,select{
-  width:100%;
-  box-sizing:border-box;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:none;
-  background:#08132a;
-  color:white;
+
+textarea,input{
+width:100%;
+box-sizing:border-box;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:none;
+background:#08132a;
+color:white;
 }
+
 button{
-  margin-top:12px;
-  padding:12px 18px;
-  background:#00e0ff;
-  color:#031019;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
+margin-top:12px;
+padding:12px 18px;
+background:#00e0ff;
+color:#031019;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
 }
-.result{
-  background:#020814;
-  padding:18px;
-  margin-top:12px;
-  border-radius:10px;
-  line-height:1.7;
-  white-space:pre-wrap;
-}
+
 .chatbox{
-  background:#020814;
-  padding:16px;
-  min-height:180px;
-  max-height:320px;
-  overflow:auto;
-  border-radius:10px;
-  line-height:1.7;
+background:#020814;
+padding:16px;
+min-height:180px;
+border-radius:10px;
+overflow:auto;
 }
-.badge{
-  display:inline-block;
-  margin-top:8px;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-  text-transform:uppercase;
+
+.result{
+background:#020814;
+padding:16px;
+border-radius:10px;
+margin-top:10px;
+white-space:pre-wrap;
 }
-.low{color:#00e676;background:rgba(0,230,118,.12);}
-.medium{color:#ffd54f;background:rgba(255,213,79,.12);}
-.high{color:#ff7043;background:rgba(255,112,67,.12);}
-.critical{color:#ff1744;background:rgba(255,23,68,.12);}
-.country-list{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-.country-item{
-  background:#08132a;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #103865;
-}
-#worldMap{
-  width:100% !important;
-  height:520px !important;
-}
+
 footer{
-  text-align:center;
-  padding:30px;
-  background:#08132a;
-  color:#6fa9d6;
-  margin-top:40px;
+text-align:center;
+padding:30px;
+background:#08132a;
+color:#6fa9d6;
+margin-top:40px;
 }
-@media (max-width:1000px){
-  .grid,.grid-2{grid-template-columns:1fr;}
-  .country-list{grid-template-columns:1fr;}
-  #worldMap{height:360px !important;}
-}
+
 </style>
+
 </head>
+
 <body>
 
 <nav>
-  <div class="logo">ZENTRA</div>
-  <div class="links">
-    <a href="#dashboard">Dashboard</a>
-    <a href="#brain">Brain</a>
-    <a href="#map">Map</a>
-    <a href="#search">Search</a>
-    <a href="#chat">AI</a>
-    <a href="#sector">Sector</a>
-    <a href="#scenario">Scenario</a>
-    <a href="#sme">SME</a>
-    <a href="#network">Network</a>
-  </div>
+
+<div class="logo">ZENTRA</div>
+
+<div class="links">
+<a href="#dashboard">Dashboard</a>
+<a href="#brain">Brain</a>
+<a href="#chat">AI</a>
+</div>
+
 </nav>
 
 <section class="hero">
-  <h1>ZENTRA Economic OS</h1>
-  <p>
-    Global economic intelligence platform combining real data, AI guidance,
-    sector analysis, scenario simulation, SME diagnostics, supply chain analysis
-    and trade intelligence in one system.
-  </p>
+
+<h1>ZENTRA Economic OS</h1>
+
+<p>
+Global economic intelligence platform combining AI guidance,
+macro risk analysis and economic decision support.
+</p>
+
 </section>
 
 <section id="dashboard" class="section">
-  <h2>Global Dashboard</h2>
-  <div class="grid">
-    <div class="card">
-      <div class="small">Global Risk Index</div>
-      <div class="metric" id="riskScore">--</div>
-    </div>
-    <div class="card">
-      <div class="small">Economic State</div>
-      <div class="metric" id="state" style="font-size:22px;">--</div>
-    </div>
-    <div class="card">
-      <div class="small">Market Trend</div>
-      <div class="metric" id="trend" style="font-size:22px;">--</div>
-    </div>
-  </div>
+
+<h2>Global Dashboard</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="small">Global Risk Index</div>
+<div class="metric" id="riskScore">--</div>
+</div>
+
+<div class="card">
+<div class="small">Economic State</div>
+<div class="metric" id="state">--</div>
+</div>
+
+<div class="card">
+<div class="small">Market Trend</div>
+<div class="metric" id="trend">--</div>
+</div>
+
+</div>
+
 </section>
 
 <section id="brain" class="section">
-  <h2>Economic Brain</h2>
-  <div class="card">
-    <div class="result" id="brainResult">Loading economic brain...</div>
-  </div>
-</section>
 
-<section id="map" class="section grid-2">
-  <div>
-    <h2>Interactive Global Risk Map</h2>
-    <div class="card">
-      <canvas id="worldMap"></canvas>
-    </div>
-  </div>
+<h2>Economic Brain</h2>
 
-  <div>
-    <h2>Country Intelligence</h2>
-    <div class="card">
-      <div class="small">Selected Country</div>
-      <div class="metric" id="countryName" style="font-size:24px;">None</div>
-      <div class="small" style="margin-top:12px;">Risk Score</div>
-      <div class="metric" id="countryRisk">--</div>
-      <div id="countryBand" class="badge medium">--</div>
-      <div class="result" id="countryInfo">Click a country on the map.</div>
-    </div>
-  </div>
-</section>
+<div class="card">
 
-<section id="search" class="section grid-2">
-  <div>
-    <h2>Economic Search</h2>
-    <div class="card">
-      <input id="searchInput" placeholder="Search a topic like inflation, cds, recession...">
-      <button onclick="runSearch()">Search</button>
-      <div id="searchResult" class="result">Search engine is ready.</div>
-    </div>
-  </div>
+<div class="result" id="brainResult">
 
-  <div>
-    <h2>Global Risk Countries</h2>
-    <div class="card">
-      <div class="country-list" id="countryList">Loading countries...</div>
-    </div>
-  </div>
+Loading economic brain...
+
+</div>
+
+</div>
+
 </section>
 
 <section id="chat" class="section">
-  <h2>AI Advisor</h2>
-  <div class="card">
-    <div class="chatbox" id="chatBox">
-      <div>ZENTRA is ready. Ask about economy, business, gold, inflation, trade or decisions.</div>
-    </div>
-    <textarea id="chatInput" placeholder="Ask an economic question..."></textarea>
-    <button onclick="askChat()">Send</button>
-  </div>
-</section>
 
-<section id="sector" class="section grid-2">
-  <div>
-    <h2>Sector Intelligence</h2>
-    <div class="card">
-      <select id="sectorName">
-        <option value="agriculture">Agriculture</option>
-        <option value="manufacturing">Manufacturing</option>
-        <option value="retail">Retail</option>
-        <option value="services">Services</option>
-        <option value="technology">Technology</option>
-        <option value="logistics">Logistics</option>
-        <option value="energy">Energy</option>
-        <option value="finance">Finance</option>
-      </select>
-      <input id="sectorDemand" placeholder="Demand (0-100)">
-      <input id="sectorCost" placeholder="Cost Pressure (0-100)">
-      <input id="sectorFinance" placeholder="Finance Pressure (0-100)">
-      <button onclick="runSector()">Analyze Sector</button>
-      <div id="sectorResult" class="result">Sector engine is ready.</div>
-    </div>
-  </div>
+<h2>AI Advisor</h2>
 
-  <div id="scenario">
-    <h2>Scenario Simulator</h2>
-    <div class="card">
-      <select id="scenarioName">
-        <option value="interest_shock">Interest Shock</option>
-        <option value="currency_shock">Currency Shock</option>
-        <option value="oil_shock">Oil Shock</option>
-      </select>
-      <button onclick="runScenario()">Run Scenario</button>
-      <div id="scenarioResult" class="result">Scenario engine is ready.</div>
-    </div>
-  </div>
-</section>
+<div class="card">
 
-<section id="sme" class="section grid-2">
-  <div>
-    <h2>SME Intelligence</h2>
-    <div class="card">
-      <input id="smeRevenue" placeholder="Monthly Revenue">
-      <input id="smeCost" placeholder="Monthly Cost">
-      <input id="smeDebt" placeholder="Monthly Debt Payment">
-      <input id="smeDelay" placeholder="Payment Delay Days">
-      <button onclick="runSME()">Run SME Analysis</button>
-      <div id="smeResult" class="result">SME engine is ready.</div>
-    </div>
-  </div>
+<div class="chatbox" id="chatBox">
+<div>ZENTRA ready.</div>
+</div>
 
-  <div>
-    <h2>Supply Chain</h2>
-    <div class="card">
-      <input id="leadTime" placeholder="Lead Time Days">
-      <input id="supplierRisk" placeholder="Supplier Risk (0-100)">
-      <input id="delayRisk" placeholder="Logistics Delay Risk (0-100)">
-      <input id="bufferDays" placeholder="Inventory Buffer Days">
-      <button onclick="runSupplyChain()">Analyze Supply Chain</button>
-      <div id="supplyResult" class="result">Supply chain engine is ready.</div>
-    </div>
-  </div>
-</section>
+<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
 
-<section class="section grid-2">
-  <div>
-    <h2>Trade Intelligence</h2>
-    <div class="card">
-      <input id="tradeOrigin" placeholder="Origin">
-      <input id="tradeDestination" placeholder="Destination">
-      <input id="tradeProduct" placeholder="Product">
-      <input id="transportCost" placeholder="Transport Cost">
-      <input id="productPrice" placeholder="Product Price">
-      <button onclick="runTrade()">Analyze Trade</button>
-      <div id="tradeResult" class="result">Trade engine is ready.</div>
-    </div>
-  </div>
+<button onclick="askChat()">Send</button>
 
-  <div id="network">
-    <h2>Network Intelligence</h2>
-    <div class="card">
-      <button onclick="loadNetwork()">Load Network</button>
-      <div id="networkResult" class="result">Network engine is ready.</div>
-    </div>
-  </div>
+</div>
+
 </section>
 
 <footer>
-  ZENTRA Economic Operating System • Live Frontend
+
+ZENTRA Economic Operating System
+
 </footer>
 
 <script>
-const API = "https://zentra-core-api.onrender.com"; // BURAYI GEREKİRSE GERÇEK RENDER LINKİNLE DEĞİŞTİR
 
-let mapChart = null;
-const fallbackCountries = [
-  {code:"US", name:"United States", risk:44, band:"medium"},
-  {code:"DE", name:"Germany", risk:36, band:"low"},
-  {code:"CN", name:"China", risk:48, band:"medium"},
-  {code:"IN", name:"India", risk:52, band:"medium"},
-  {code:"TR", name:"Turkey", risk:69, band:"high"},
-  {code:"BR", name:"Brazil", risk:55, band:"medium"},
-  {code:"NG", name:"Nigeria", risk:73, band:"high"},
-  {code:"AR", name:"Argentina", risk:84, band:"critical"}
-];
-
-function riskBandClass(score){
-  if(score >= 80) return "critical";
-  if(score >= 60) return "high";
-  if(score >= 40) return "medium";
-  return "low";
-}
+const API = "https://zentra-risklens-api-2.onrender.com";
 
 async function loadBrain(){
-  try{
-    const r = await fetch(API + "/brain?country_code=TR");
-    const data = await r.json();
 
-    document.getElementById("riskScore").innerText = data.global_risk_index;
-    document.getElementById("state").innerText = data.economic_state;
-    document.getElementById("trend").innerText = data.market_trend;
+try{
 
-    document.getElementById("brainResult").innerText =
-`GLOBAL ECONOMIC BRAIN
+const r = await fetch(API + "/brain?country_code=TR");
 
-Global Risk Index: ${data.global_risk_index}
-Economic State: ${data.economic_state}
-Market Trend: ${data.market_trend}
+const data = await r.json();
 
-Insight:
-${data.insight}
+document.getElementById("riskScore").innerText = data.global_risk_index;
+document.getElementById("state").innerText = data.economic_state;
+document.getElementById("trend").innerText = data.market_trend;
 
-Advice:
-${data.advice}
+document.getElementById("brainResult").innerText =
+"Risk Index: " + data.global_risk_index +
+"\nState: " + data.economic_state +
+"\nTrend: " + data.market_trend +
+"\nAdvice: " + data.advice;
 
-Live Macro:
-Inflation: ${data.macro?.inflation}
-US Policy Rate: ${data.macro?.us_policy_rate}
-ECB Policy Rate: ${data.macro?.ecb_policy_rate}
-Liquidity: ${data.macro?.liquidity}
-Volatility: ${data.macro?.volatility}
-Energy Stress: ${data.macro?.energy}`;
-  }catch(e){
-    document.getElementById("brainResult").innerText = "Economic brain unavailable.";
-  }
+}catch(e){
+
+document.getElementById("brainResult").innerText="API connection error";
+
 }
 
-async function loadGlobalRiskList(){
-  try{
-    const r = await fetch(API + "/global-risk");
-    const data = await r.json();
-    let html = "";
-    data.countries.forEach(c=>{
-      const cls = c.band || riskBandClass(c.risk);
-      html += `
-      <div class="country-item">
-        <div><b>${c.name}</b></div>
-        <div class="small">Risk Score: ${c.risk}</div>
-        <div class="badge ${cls}">${cls}</div>
-      </div>`;
-    });
-    document.getElementById("countryList").innerHTML = html;
-  }catch(e){
-    document.getElementById("countryList").innerText = "Global risk countries unavailable.";
-  }
-}
-
-async function loadInteractiveMap(){
-  let countriesData = fallbackCountries;
-
-  try{
-    const r = await fetch(API + "/global-risk");
-    const data = await r.json();
-    if(data.countries && data.countries.length){
-      countriesData = data.countries.map(c => ({
-        code: c.code || (
-          c.name === "United States" ? "US" :
-          c.name === "Germany" ? "DE" :
-          c.name === "China" ? "CN" :
-          c.name === "India" ? "IN" :
-          c.name === "Turkey" ? "TR" :
-          c.name === "Brazil" ? "BR" :
-          c.name === "Nigeria" ? "NG" :
-          c.name === "Argentina" ? "AR" : ""
-        ),
-        name: c.name,
-        risk: c.risk,
-        band: c.band || riskBandClass(c.risk)
-      }));
-    }
-  }catch(e){}
-
-  const countryMap = {};
-  countriesData.forEach(c => { countryMap[c.code] = c; });
-
-  const world = await fetch("https://unpkg.com/world-atlas@2/countries-110m.json").then(r => r.json());
-  const countries = ChartGeo.topojson.feature(world, world.objects.countries).features;
-
-  const codeAliases = {
-    "840":"US","276":"DE","156":"CN","356":"IN","792":"TR","076":"BR","566":"NG","032":"AR"
-  };
-
-  const data = countries.map(feature => {
-    const iso = codeAliases[String(feature.id)] || null;
-    const item = iso ? countryMap[iso] : null;
-    return {
-      feature,
-      value: item?.risk ?? 30,
-      name: item?.name ?? feature.properties.name ?? "Unknown",
-      band: item?.band ?? "low"
-    };
-  });
-
-  const ctx = document.getElementById("worldMap").getContext("2d");
-  if(mapChart) mapChart.destroy();
-
-  mapChart = new Chart(ctx, {
-    type: "choropleth",
-    data: {
-      labels: countries.map(d => d.properties.name),
-      datasets: [{
-        label: "Country Risk",
-        data: data
-      }]
-    },
-    options: {
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (context) => {
-              const item = context.raw;
-              return `${item.name}: ${item.value}`;
-            }
-          }
-        }
-      },
-      scales: {
-        projection: {
-          axis: "x",
-          projection: "equalEarth"
-        },
-        color: {
-          axis: "x",
-          quantize: 5,
-          legend: { position: "bottom" }
-        }
-      },
-      onClick: (_, elements) => {
-        if(!elements.length) return;
-        const idx = elements[0].index;
-        const item = data[idx];
-
-        document.getElementById("countryName").innerText = item.name;
-        document.getElementById("countryRisk").innerText = item.value;
-        document.getElementById("countryBand").innerText = item.band.toUpperCase();
-        document.getElementById("countryBand").className = "badge " + item.band;
-        document.getElementById("countryInfo").innerText =
-          `${item.name} currently shows a ${item.band} risk profile with a score of ${item.value}.`;
-      }
-    }
-  });
 }
 
 async function askChat(){
-  const q = document.getElementById("chatInput").value.trim();
-  if(!q) return;
 
-  const box = document.getElementById("chatBox");
-  box.innerHTML += `<div><b>You:</b> ${q}</div>`;
+const q = document.getElementById("chatInput").value;
 
-  try{
-    const r = await fetch(API + "/chat", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ question:q })
-    });
-    const data = await r.json();
-    box.innerHTML += `<div><b>ZENTRA:</b> ${data.answer}</div>`;
-  }catch(e){
-    box.innerHTML += `<div><b>ZENTRA:</b> Chat service unavailable.</div>`;
-  }
+const box = document.getElementById("chatBox");
 
-  document.getElementById("chatInput").value = "";
-  box.scrollTop = box.scrollHeight;
+box.innerHTML += "<div><b>You:</b> "+q+"</div>";
+
+try{
+
+const r = await fetch(API + "/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({question:q})
+});
+
+const data = await r.json();
+
+box.innerHTML += "<div><b>ZENTRA:</b> "+data.answer+"</div>";
+
+}catch{
+
+box.innerHTML += "<div>AI unavailable</div>";
+
 }
 
-async function runSector(){
-  const sector = document.getElementById("sectorName").value;
-  const demand = parseFloat(document.getElementById("sectorDemand").value);
-  const costPressure = parseFloat(document.getElementById("sectorCost").value);
-  const financePressure = parseFloat(document.getElementById("sectorFinance").value);
-  if(isNaN(demand) || isNaN(costPressure) || isNaN(financePressure)) return;
+document.getElementById("chatInput").value="";
 
-  try{
-    const r = await fetch(API + "/sector-intelligence", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        sector: sector,
-        demand: demand,
-        cost_pressure: costPressure,
-        finance_pressure: financePressure
-      })
-    });
-    const data = await r.json();
-
-    document.getElementById("sectorResult").innerText =
-`Sector: ${data.sector}
-Risk Score: ${data.sector_risk_score}
-Band: ${data.band}
-
-Recommendation:
-${data.recommendation}`;
-  }catch(e){
-    document.getElementById("sectorResult").innerText = "Sector engine unavailable.";
-  }
-}
-
-async function runScenario(){
-  const scenario = document.getElementById("scenarioName").value;
-
-  try{
-    const r = await fetch(API + "/scenario", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ scenario: scenario })
-    });
-    const data = await r.json();
-
-    document.getElementById("scenarioResult").innerText =
-`Scenario: ${data.scenario}
-Impact: ${data.impact}
-Projected Risk: ${data.projected_risk}
-Band: ${data.band}`;
-  }catch(e){
-    document.getElementById("scenarioResult").innerText = "Scenario engine unavailable.";
-  }
-}
-
-async function runSME(){
-  const revenue = parseFloat(document.getElementById("smeRevenue").value);
-  const cost = parseFloat(document.getElementById("smeCost").value);
-  const debt = parseFloat(document.getElementById("smeDebt").value);
-  const delay = parseInt(document.getElementById("smeDelay").value);
-  if(isNaN(revenue) || isNaN(cost) || isNaN(debt) || isNaN(delay)) return;
-
-  try{
-    const r = await fetch(API + "/sme-intelligence", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        revenue: revenue,
-        cost: cost,
-        debt: debt,
-        delay: delay
-      })
-    });
-    const data = await r.json();
-
-    document.getElementById("smeResult").innerText =
-`Profit: ${data.profit}
-Risk Score: ${data.risk_score}
-Band: ${data.band}`;
-  }catch(e){
-    document.getElementById("smeResult").innerText = "SME engine unavailable.";
-  }
-}
-
-async function runSupplyChain(){
-  const lead = parseInt(document.getElementById("leadTime").value);
-  const supplier = parseFloat(document.getElementById("supplierRisk").value);
-  const delay = parseFloat(document.getElementById("delayRisk").value);
-  const buffer = parseInt(document.getElementById("bufferDays").value);
-  if(isNaN(lead) || isNaN(supplier) || isNaN(delay) || isNaN(buffer)) return;
-
-  try{
-    const r = await fetch(API + "/supply-chain", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        lead_time_days: lead,
-        supplier_risk: supplier,
-        logistics_delay_risk: delay,
-        inventory_buffer_days: buffer
-      })
-    });
-    const data = await r.json();
-
-    document.getElementById("supplyResult").innerText =
-`Supply Chain Risk Score: ${data.risk_score}
-Band: ${data.band}
-
-Recommendation:
-${data.recommendation}`;
-  }catch(e){
-    document.getElementById("supplyResult").innerText = "Supply chain engine unavailable.";
-  }
-}
-
-async function runTrade(){
-  const origin = document.getElementById("tradeOrigin").value.trim();
-  const destination = document.getElementById("tradeDestination").value.trim();
-  const product = document.getElementById("tradeProduct").value.trim();
-  const transportCost = parseFloat(document.getElementById("transportCost").value);
-  const productPrice = parseFloat(document.getElementById("productPrice").value);
-  if(!origin || !destination || !product || isNaN(transportCost) || isNaN(productPrice)) return;
-
-  try{
-    const r = await fetch(API + "/trade-intelligence", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        origin: origin,
-        destination: destination,
-        product: product,
-        transport_cost: transportCost,
-        product_price: productPrice
-      })
-    });
-    const data = await r.json();
-
-    document.getElementById("tradeResult").innerText =
-`Route: ${data.route}
-Product: ${data.product}
-Margin: ${data.margin}
-Trade Viability: ${data.trade_viability}`;
-  }catch(e){
-    document.getElementById("tradeResult").innerText = "Trade engine unavailable.";
-  }
-}
-
-async function loadNetwork(){
-  try{
-    const r = await fetch(API + "/network");
-    const data = await r.json();
-
-    document.getElementById("networkResult").innerText =
-`Supplier Nodes: ${data.supplier_nodes}
-Trade Nodes: ${data.trade_nodes}
-Logistics Nodes: ${data.logistics_nodes}
-Market Nodes: ${data.market_nodes}
-Network Stress: ${data.network_stress}`;
-  }catch(e){
-    document.getElementById("networkResult").innerText = "Network engine unavailable.";
-  }
-}
-
-async function runSearch(){
-  const q = document.getElementById("searchInput").value.trim().toLowerCase();
-  if(!q) return;
-
-  let topic = "inflation";
-  if(q.includes("cds")) topic = "cds";
-  else if(q.includes("recession") || q.includes("resesyon")) topic = "recession";
-  else if(q.includes("inflation") || q.includes("enflasyon")) topic = "inflation";
-
-  try{
-    const r = await fetch(API + "/knowledge?topic=" + encodeURIComponent(topic));
-    const data = await r.json();
-    document.getElementById("searchResult").innerText = data.definition;
-  }catch(e){
-    document.getElementById("searchResult").innerText = "Search engine unavailable.";
-  }
 }
 
 loadBrain();
-loadGlobalRiskList();
-loadInteractiveMap();
+
 </script>
 
 </body>

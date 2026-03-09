@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZENTRA Business Simulator</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#071021;
+color:white;
+}
+
+header{
+background:#08132a;
+padding:20px;
+text-align:center;
+border-bottom:1px solid #103865;
+}
+
+header h1{
+margin:0;
+color:#00e0ff;
+}
+
+nav{
+margin-top:10px;
+}
+
+nav a{
+color:#7bdfff;
+margin:0 10px;
+text-decoration:none;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
+}
+
+.simbox{
+background:#0e1c38;
+padding:30px;
+border-radius:10px;
+}
+
+.simbox h2{
+color:#00e0ff;
+}
+
+input,select{
+
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#08132a;
+border:none;
+color:white;
+
+}
+
+button{
+
+margin-top:20px;
+padding:12px;
+background:#00e0ff;
+border:none;
+cursor:pointer;
+font-weight:bold;
+
+}
+
+.result{
+
+margin-top:30px;
+background:#020814;
+padding:20px;
+border-radius:8px;
+
+}
+
+footer{
+margin-top:60px;
+padding:20px;
+background:#08132a;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ZENTRA Business Simulator</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">AI Advisor</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="knowledge.html">Knowledge</a>
+<a href="simulator.html">Business Simulator</a>
+
+</nav>
+
+</header>
+
+<div class="container">
+
+<div class="simbox">
+
+<h2>Simulate Your Business</h2>
+
+<p>Enter your business idea and estimate costs.</p>
+
+<label>Business Type</label>
+
+<select id="sector">
+
+<option>agriculture</option>
+<option>retail</option>
+<option>manufacturing</option>
+<option>services</option>
+
+</select>
+
+<label>Monthly Cost ($)</label>
+
+<input id="cost" placeholder="Example: 5000">
+
+<label>Monthly Revenue ($)</label>
+
+<input id="revenue" placeholder="Example: 9000">
+
+<button onclick="simulate()">Run Simulation</button>
+
+<div class="result" id="result">
+
+ZENTRA ready.
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+ZENTRA Economic OS • Business Simulation Engine
+
+</footer>
+
+<script>
+
+function simulate(){
+
+let cost=parseFloat(document.getElementById("cost").value)
+
+let revenue=parseFloat(document.getElementById("revenue").value)
+
+let sector=document.getElementById("sector").value
+
+let profit=revenue-cost
+
+let risk="Low"
+
+if(profit<0) risk="High"
+else if(profit<2000) risk="Medium"
+
+let text="Sector: "+sector+"<br><br>"
+
+text+="Estimated Profit: $"+profit+"<br><br>"
+
+text+="Risk Level: "+risk+"<br><br>"
+
+if(risk==="High")
+
+text+="Recommendation: reduce costs or increase price."
+
+else
+
+text+="Business model looks sustainable."
+
+document.getElementById("result").innerHTML=text
+
+}
+
+</script>
+
+</body>
+
+</html>

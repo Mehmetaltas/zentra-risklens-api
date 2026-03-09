@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Sector Simulator</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050b18;
+color:white;
+}
+
+header{
+padding:30px;
+background:#08132a;
+text-align:center;
+border-bottom:1px solid #103865;
+}
+
+h1{
+margin:0;
+color:#00e0ff;
+}
+
+nav{
+margin-top:10px;
+}
+
+nav a{
+color:#7bdfff;
+margin:0 12px;
+text-decoration:none;
+}
+
+section{
+padding:40px;
+max-width:900px;
+margin:auto;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-bottom:12px;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:12px 20px;
+background:#00e0ff;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.result{
+margin-top:30px;
+background:#08152c;
+padding:20px;
+border-radius:10px;
+border:1px solid #103865;
+}
+
+footer{
+text-align:center;
+padding:30px;
+background:#08132a;
+margin-top:50px;
+color:#6fa9d6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ZENTRA Sector Simulator</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">Advisor</a>
+<a href="brain.html">Brain</a>
+<a href="map.html">Global Map</a>
+<a href="trade.html">Trade</a>
+<a href="sector.html">Sector</a>
+
+</nav>
+
+</header>
+
+<section>
+
+<h2>Business Simulation</h2>
+
+<p>Estimate cost, revenue and risk for a business idea.</p>
+
+<select id="sector">
+
+<option value="barber">Barber Shop</option>
+<option value="farm">Farm</option>
+<option value="factory">Factory</option>
+<option value="retail">Retail Store</option>
+<option value="ecommerce">E-commerce</option>
+
+</select>
+
+<input id="investment" placeholder="Initial investment ($)">
+<input id="monthlyCost" placeholder="Monthly operating cost ($)">
+<input id="monthlyRevenue" placeholder="Monthly revenue ($)">
+
+<button onclick="simulate()">Simulate Business</button>
+
+<div id="result" class="result" style="display:none"></div>
+
+</section>
+
+<footer>
+
+ZENTRA Sector Intelligence
+
+</footer>
+
+<script>
+
+function simulate(){
+
+let sector = document.getElementById("sector").value
+let investment = parseFloat(document.getElementById("investment").value)
+let cost = parseFloat(document.getElementById("monthlyCost").value)
+let revenue = parseFloat(document.getElementById("monthlyRevenue").value)
+
+if(!investment || !cost || !revenue){
+
+alert("Fill all fields")
+
+return
+
+}
+
+let profit = revenue - cost
+
+let roi = (profit * 12) / investment * 100
+
+let risk = "low"
+
+if(roi < 20){
+risk = "high"
+}else if(roi < 40){
+risk = "medium"
+}
+
+document.getElementById("result").style.display="block"
+
+document.getElementById("result").innerHTML = `
+
+<h3>Business Simulation Result</h3>
+
+Sector: ${sector}<br><br>
+
+Initial Investment: $${investment}<br>
+
+Monthly Cost: $${cost}<br>
+
+Monthly Revenue: $${revenue}<br><br>
+
+Monthly Profit: $${profit}<br>
+
+Annual ROI: ${roi.toFixed(2)} %<br><br>
+
+Risk Level: ${risk}
+
+`
+
+}
+
+</script>
+
+</body>
+</html>

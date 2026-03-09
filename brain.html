@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Global Economic Brain</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#050b18;
+color:white;
+}
+header{
+padding:30px;
+text-align:center;
+background:#08132a;
+border-bottom:1px solid #0f2c55;
+}
+h1{
+margin:0;
+color:#00e0ff;
+font-size:34px;
+}
+nav{
+margin-top:10px;
+}
+nav a{
+color:#7bdfff;
+margin:0 12px;
+text-decoration:none;
+font-size:14px;
+}
+section{
+padding:40px 20px;
+max-width:1100px;
+margin:auto;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
+}
+.card{
+background:#08152c;
+padding:22px;
+border-radius:12px;
+border:1px solid #103865;
+}
+.label{
+font-size:12px;
+text-transform:uppercase;
+color:#8fb8da;
+margin-bottom:8px;
+}
+.metric{
+font-size:30px;
+font-weight:bold;
+color:#00e0ff;
+}
+.bigbox{
+margin-top:20px;
+background:#08152c;
+padding:25px;
+border-radius:12px;
+border:1px solid #103865;
+white-space:pre-wrap;
+line-height:1.7;
+}
+.footer{
+text-align:center;
+padding:30px;
+background:#08132a;
+margin-top:60px;
+font-size:14px;
+color:#6fa9d6;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>ZENTRA Global Economic Brain</h1>
+<nav>
+<a href="index.html">Home</a>
+<a href="advisor.html">Advisor</a>
+<a href="brain.html">Brain</a>
+</nav>
+</header>
+
+<section>
+
+<div class="grid">
+
+<div class="card">
+<div class="label">Global Risk Index</div>
+<div class="metric" id="globalRisk">--</div>
+</div>
+
+<div class="card">
+<div class="label">Economic State</div>
+<div class="metric" id="economicState" style="font-size:22px;">--</div>
+</div>
+
+<div class="card">
+<div class="label">Market Trend</div>
+<div class="metric" id="marketTrend" style="font-size:22px;">--</div>
+</div>
+
+<div class="card">
+<div class="label">Brain Signal</div>
+<div class="metric" id="brainSignal" style="font-size:22px;">--</div>
+</div>
+
+</div>
+
+<div class="bigbox" id="brainReport">
+Economic brain is loading...
+</div>
+
+</section>
+
+<div class="footer">
+ZENTRA — Economic Brain Layer
+</div>
+
+<script>
+const API = "https://zentra-core-api.onrender.com/telescope";
+
+async function loadBrain(){
+  try{
+    const res = await fetch(API);
+    const data = await res.json();
+
+    document.getElementById("globalRisk").innerText = data.global_risk_index;
+    document.getElementById("economicState").innerText = data.economic_state;
+    document.getElementById("marketTrend").innerText = data.market?.market_trend || "neutral";
+
+    let signal = "stable";
+    if(data.global_risk_index >= 75){
+      signal = "critical";
+    }else if(data.global_risk_index >= 55){
+      signal = "stress";
+    }else if(data.global_risk_index >= 35){
+      signal = "caution";
+    }
+
+    document.getElementById("brainSignal").innerText = signal;
+
+    document.getElementById("brainReport").innerText =
+`GLOBAL ECONOMIC BRAIN REPORT
+
+Global Risk Index: ${data.global_risk_index}
+Economic State: ${data.economic_state}
+Market Trend: ${data.market?.market_trend || "neutral"}
+Brain Signal: ${signal}
+
+Interpretation:
+${data.ai_reason}
+
+Strategic View:
+${data.ai_advice}
+
+Economic Brain Summary:
+ZENTRA interprets macro pressure, financial conditions and market direction together to generate a unified economic intelligence layer.`;
+
+  }catch(e){
+
+    document.getElementById("globalRisk").innerText = "57";
+    document.getElementById("economicState").innerText = "moderate pressure";
+    document.getElementById("marketTrend").innerText = "bearish";
+    document.getElementById("brainSignal").innerText = "stress";
+
+    document.getElementById("brainReport").innerText =
+`GLOBAL ECONOMIC BRAIN REPORT
+
+Global Risk Index: 57
+Economic State: moderate pressure
+Market Trend: bearish
+Brain Signal: stress
+
+Interpretation:
+Financial pressure remains moderate across the system.
+
+Strategic View:
+Maintain liquidity, monitor market changes and avoid concentrated risk.
+
+Economic Brain Summary:
+Fallback mode is active.`;
+  }
+}
+
+loadBrain();
+</script>
+
+</body>
+  </html>

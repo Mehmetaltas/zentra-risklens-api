@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Global Risk Map</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050b18;
+color:white;
+}
+
+header{
+padding:30px;
+background:#08132a;
+text-align:center;
+border-bottom:1px solid #103865;
+}
+
+h1{
+margin:0;
+color:#00e0ff;
+}
+
+nav{
+margin-top:10px;
+}
+
+nav a{
+color:#7bdfff;
+margin:0 12px;
+text-decoration:none;
+}
+
+section{
+padding:40px;
+max-width:1200px;
+margin:auto;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.card{
+background:#08152c;
+padding:16px;
+border-radius:10px;
+border:1px solid #103865;
+}
+
+.country{
+font-size:16px;
+margin-bottom:8px;
+}
+
+.risk{
+font-size:22px;
+font-weight:bold;
+}
+
+.band{
+font-size:12px;
+text-transform:uppercase;
+margin-top:4px;
+}
+
+.low{color:#00e676;}
+.medium{color:#ffd54f;}
+.high{color:#ff7043;}
+.critical{color:#ff1744;}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:40px;
+background:#08132a;
+color:#6fa9d6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ZENTRA Global Risk Map</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">Advisor</a>
+<a href="brain.html">Brain</a>
+<a href="map.html">Global Map</a>
+
+</nav>
+
+</header>
+
+<section>
+
+<div class="grid" id="countries">
+
+Loading global risk map...
+
+</div>
+
+</section>
+
+<footer>
+
+ZENTRA Global Economic Intelligence
+
+</footer>
+
+<script>
+
+const API = "https://zentra-core-api.onrender.com/global-risk"
+
+async function loadMap(){
+
+try{
+
+const res = await fetch(API)
+
+const data = await res.json()
+
+let html = ""
+
+data.countries.forEach(c=>{
+
+html += `
+<div class="card">
+
+<div class="country">${c.name}</div>
+
+<div class="risk">${c.risk}</div>
+
+<div class="band ${c.band}">
+${c.band}
+</div>
+
+</div>
+`
+
+})
+
+document.getElementById("countries").innerHTML = html
+
+}catch(e){
+
+document.getElementById("countries").innerHTML =
+"Global data unavailable."
+
+}
+
+}
+
+loadMap()
+
+</script>
+
+</body>
+</html>

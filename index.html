@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZENTRA Economic OS</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial,Helvetica,sans-serif;
@@ -24,6 +20,9 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 border-bottom:1px solid #103865;
+position:sticky;
+top:0;
+z-index:10;
 }
 
 .logo{
@@ -35,6 +34,7 @@ font-size:18px;
 .links{
 display:flex;
 gap:16px;
+flex-wrap:wrap;
 }
 
 nav a{
@@ -70,6 +70,7 @@ padding:30px 20px;
 
 .section h2{
 color:#00e0ff;
+margin-bottom:16px;
 }
 
 .grid{
@@ -94,9 +95,10 @@ font-weight:bold;
 .small{
 color:#9dcdf3;
 font-size:14px;
+line-height:1.7;
 }
 
-textarea,input{
+textarea{
 width:100%;
 box-sizing:border-box;
 padding:12px;
@@ -105,6 +107,7 @@ border-radius:10px;
 border:none;
 background:#08132a;
 color:white;
+min-height:100px;
 }
 
 button{
@@ -124,6 +127,7 @@ padding:16px;
 min-height:180px;
 border-radius:10px;
 overflow:auto;
+line-height:1.7;
 }
 
 .result{
@@ -132,6 +136,7 @@ padding:16px;
 border-radius:10px;
 margin-top:10px;
 white-space:pre-wrap;
+line-height:1.7;
 }
 
 footer{
@@ -142,41 +147,35 @@ color:#6fa9d6;
 margin-top:40px;
 }
 
+@media(max-width:1000px){
+.grid{grid-template-columns:1fr;}
+}
 </style>
-
 </head>
 
 <body>
 
 <nav>
-
 <div class="logo">ZENTRA</div>
-
 <div class="links">
 <a href="#dashboard">Dashboard</a>
 <a href="#brain">Brain</a>
 <a href="#chat">AI</a>
 </div>
-
 </nav>
 
 <section class="hero">
-
 <h1>ZENTRA Economic OS</h1>
-
 <p>
 Global economic intelligence platform combining AI guidance,
 macro risk analysis and economic decision support.
 </p>
-
 </section>
 
 <section id="dashboard" class="section">
-
 <h2>Global Dashboard</h2>
 
 <div class="grid">
-
 <div class="card">
 <div class="small">Global Risk Index</div>
 <div class="metric" id="riskScore">--</div>
@@ -191,113 +190,79 @@ macro risk analysis and economic decision support.
 <div class="small">Market Trend</div>
 <div class="metric" id="trend">--</div>
 </div>
-
 </div>
-
 </section>
 
 <section id="brain" class="section">
-
 <h2>Economic Brain</h2>
-
 <div class="card">
-
-<div class="result" id="brainResult">
-
-Loading economic brain...
-
+<div class="result" id="brainResult">Loading economic brain...</div>
 </div>
-
-</div>
-
 </section>
 
 <section id="chat" class="section">
-
 <h2>AI Advisor</h2>
-
 <div class="card">
-
 <div class="chatbox" id="chatBox">
-<div>ZENTRA ready.</div>
+<div><b>ZENTRA:</b> Ready.</div>
 </div>
 
-<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
-
+<textarea id="chatInput" placeholder="Ask an economic question..."></textarea>
 <button onclick="askChat()">Send</button>
-
 </div>
-
 </section>
 
 <footer>
-
 ZENTRA Economic Operating System
-
 </footer>
 
 <script>
-
-const API = "https://zentra-risklens-api-2.onrender.com";
+const API = "https://zentra-risklens-api.42mehmetaltas.workers.dev";
 
 async function loadBrain(){
+  try{
+    const r = await fetch(API + "/brain?country_code=TR");
+    const data = await r.json();
 
-try{
+    document.getElementById("riskScore").innerText = data.global_risk_index ?? "--";
+    document.getElementById("state").innerText = data.economic_state ?? "--";
+    document.getElementById("trend").innerText = data.market_trend ?? "--";
 
-const r = await fetch(API + "/brain?country_code=TR");
-
-const data = await r.json();
-
-document.getElementById("riskScore").innerText = data.global_risk_index;
-document.getElementById("state").innerText = data.economic_state;
-document.getElementById("trend").innerText = data.market_trend;
-
-document.getElementById("brainResult").innerText =
-"Risk Index: " + data.global_risk_index +
-"\nState: " + data.economic_state +
-"\nTrend: " + data.market_trend +
-"\nAdvice: " + data.advice;
-
-}catch(e){
-
-document.getElementById("brainResult").innerText="API connection error";
-
-}
-
+    document.getElementById("brainResult").innerText =
+      "Risk Index: " + (data.global_risk_index ?? "--") +
+      "\nState: " + (data.economic_state ?? "--") +
+      "\nTrend: " + (data.market_trend ?? "--") +
+      "\nAdvice: " + (data.advice ?? "No advice");
+  }catch(e){
+    document.getElementById("brainResult").innerText = "API connection error";
+  }
 }
 
 async function askChat(){
+  const q = document.getElementById("chatInput").value.trim();
+  if(!q) return;
 
-const q = document.getElementById("chatInput").value;
+  const box = document.getElementById("chatBox");
+  box.innerHTML += "<div><b>You:</b> " + q + "</div>";
 
-const box = document.getElementById("chatBox");
+  try{
+    const r = await fetch(API + "/chat", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({question: q})
+    });
 
-box.innerHTML += "<div><b>You:</b> "+q+"</div>";
+    const data = await r.json();
+    box.innerHTML += "<div><b>ZENTRA:</b> " + (data.answer ?? "No answer") + "</div>";
+  }catch(e){
+    box.innerHTML += "<div><b>ZENTRA:</b> AI unavailable</div>";
+  }
 
-try{
-
-const r = await fetch(API + "/chat",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({question:q})
-});
-
-const data = await r.json();
-
-box.innerHTML += "<div><b>ZENTRA:</b> "+data.answer+"</div>";
-
-}catch{
-
-box.innerHTML += "<div>AI unavailable</div>";
-
-}
-
-document.getElementById("chatInput").value="";
-
+  document.getElementById("chatInput").value = "";
+  box.scrollTop = box.scrollHeight;
 }
 
 loadBrain();
-
 </script>
 
 </body>

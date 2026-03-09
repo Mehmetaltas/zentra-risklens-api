@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZENTRA AI Chat</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#071021;
+color:white;
+}
+
+header{
+background:#08132a;
+padding:20px;
+text-align:center;
+border-bottom:1px solid #103865;
+}
+
+header h1{
+margin:0;
+color:#00e0ff;
+}
+
+nav{
+margin-top:10px;
+}
+
+nav a{
+color:#7bdfff;
+margin:0 10px;
+text-decoration:none;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.chatbox{
+height:400px;
+overflow:auto;
+background:#020814;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+line-height:1.7;
+}
+
+input{
+width:80%;
+padding:15px;
+background:#08132a;
+border:none;
+color:white;
+font-size:16px;
+}
+
+button{
+padding:15px;
+background:#00e0ff;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+.message{
+margin-bottom:15px;
+}
+
+.user{
+color:#7bdfff;
+}
+
+.ai{
+color:#00e0ff;
+}
+
+footer{
+margin-top:60px;
+padding:20px;
+background:#08132a;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ZENTRA AI Chat</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">Advisor</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="knowledge.html">Knowledge</a>
+<a href="simulator.html">Simulator</a>
+<a href="trade-intelligence.html">Trade</a>
+<a href="economic-brain.html">Brain</a>
+
+</nav>
+
+</header>
+
+<div class="container">
+
+<div class="chatbox" id="chat">
+
+<div class="message ai">
+
+Hello. I am ZENTRA AI.  
+Ask me about economy, business, markets, or any topic.
+
+</div>
+
+</div>
+
+<input id="question" placeholder="Ask anything...">
+
+<button onclick="send()">Send</button>
+
+</div>
+
+<footer>
+
+ZENTRA AI Engine • Global Economic Intelligence
+
+</footer>
+
+<script>
+
+function send(){
+
+let q=document.getElementById("question").value
+
+let chat=document.getElementById("chat")
+
+chat.innerHTML+=
+
+'<div class="message user">You: '+q+'</div>'
+
+let answer=""
+
+if(q.includes("gold") || q.includes("altın"))
+
+answer="Gold usually performs well during inflation and financial uncertainty."
+
+else if(q.includes("business") || q.includes("iş"))
+
+answer="A sustainable business model requires demand stability, cost control, and market access."
+
+else if(q.includes("economy") || q.includes("ekonomi"))
+
+answer="Global economic conditions depend on inflation, interest rates, and liquidity."
+
+else
+
+answer="ZENTRA AI is analyzing your question within economic context."
+
+chat.innerHTML+=
+
+'<div class="message ai">ZENTRA: '+answer+'</div>'
+
+document.getElementById("question").value=""
+
+chat.scrollTop=chat.scrollHeight
+
+}
+
+</script>
+
+</body>
+
+</html>

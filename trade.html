@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Trade Planner</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#050b18;
+color:white;
+}
+
+header{
+padding:30px;
+background:#08132a;
+text-align:center;
+border-bottom:1px solid #103865;
+}
+
+h1{
+margin:0;
+color:#00e0ff;
+}
+
+nav{
+margin-top:10px;
+}
+
+nav a{
+color:#7bdfff;
+margin:0 12px;
+text-decoration:none;
+}
+
+section{
+padding:40px;
+max-width:1000px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:12px 20px;
+background:#00e0ff;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.result{
+margin-top:30px;
+background:#08152c;
+padding:20px;
+border-radius:10px;
+border:1px solid #103865;
+}
+
+.footer{
+text-align:center;
+padding:30px;
+background:#08132a;
+margin-top:50px;
+color:#6fa9d6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ZENTRA Trade Planner</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">Advisor</a>
+<a href="brain.html">Brain</a>
+<a href="map.html">Global Map</a>
+<a href="trade.html">Trade</a>
+
+</nav>
+
+</header>
+
+<section>
+
+<h2>Logistics & Trade Simulation</h2>
+
+<p>Plan your shipment and estimate cost and profit.</p>
+
+<input id="product" placeholder="Product (example: hay / wheat / steel)">
+<input id="origin" placeholder="Origin (example: Konya)">
+<input id="destination" placeholder="Destination (example: Istanbul)">
+<input id="quantity" placeholder="Quantity (tons)">
+<input id="price" placeholder="Selling price per ton">
+
+<button onclick="simulate()">Simulate Trade</button>
+
+<div class="result" id="result" style="display:none"></div>
+
+</section>
+
+<div class="footer">
+
+ZENTRA Trade Intelligence
+
+</div>
+
+<script>
+
+function simulate(){
+
+let product = document.getElementById("product").value
+let origin = document.getElementById("origin").value
+let destination = document.getElementById("destination").value
+let quantity = parseFloat(document.getElementById("quantity").value)
+let price = parseFloat(document.getElementById("price").value)
+
+if(!quantity || !price){
+alert("Enter quantity and price")
+return
+}
+
+let distance = 450
+let transportCost = distance * 0.7
+let totalTransport = transportCost * quantity
+
+let revenue = quantity * price
+let profit = revenue - totalTransport
+
+let risk = "medium"
+
+if(profit < 0){
+risk = "high"
+}
+
+document.getElementById("result").style.display="block"
+
+document.getElementById("result").innerHTML = `
+
+<h3>Trade Simulation</h3>
+
+Product: ${product}<br>
+Route: ${origin} → ${destination}<br>
+Quantity: ${quantity} tons<br><br>
+
+Transport Cost: $${totalTransport.toFixed(2)}<br>
+Revenue: $${revenue.toFixed(2)}<br>
+Estimated Profit: $${profit.toFixed(2)}<br><br>
+
+Risk Level: ${risk}
+
+`
+
+}
+
+</script>
+
+</body>
+</html>

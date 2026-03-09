@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -17,8 +18,8 @@ color:white;
 }
 
 header{
-padding:25px;
 background:#08132a;
+padding:20px;
 text-align:center;
 border-bottom:1px solid #103865;
 }
@@ -26,11 +27,10 @@ border-bottom:1px solid #103865;
 header h1{
 margin:0;
 color:#00e0ff;
-font-size:28px;
 }
 
 nav{
-margin-top:15px;
+margin-top:10px;
 }
 
 nav a{
@@ -44,74 +44,74 @@ nav a:hover{
 color:#00e0ff;
 }
 
-.lang{
-margin-top:12px;
-}
-
-.lang button{
-background:#0e1c38;
-border:none;
-color:#7bdfff;
-padding:6px 12px;
-margin:0 5px;
-cursor:pointer;
-border-radius:4px;
-}
-
-.lang button.active{
-background:#00e0ff;
-color:black;
-}
-
 .hero{
 text-align:center;
-padding:80px 20px;
+padding:60px 20px;
 }
 
 .hero h2{
-font-size:42px;
+font-size:36px;
 color:#00e0ff;
-margin-bottom:20px;
 }
 
 .hero p{
-font-size:18px;
-color:#a0d8ff;
-max-width:700px;
+max-width:800px;
 margin:auto;
-}
-
-.btn{
-display:inline-block;
-margin-top:30px;
-padding:12px 24px;
-background:#00e0ff;
-color:black;
-text-decoration:none;
-border-radius:6px;
-font-weight:bold;
+line-height:1.7;
+color:#9dcdf3;
 }
 
 .container{
-max-width:1100px;
+max-width:1200px;
 margin:auto;
 padding:40px 20px;
 }
 
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
 .card{
 background:#0e1c38;
-padding:30px;
-border-radius:8px;
-margin-bottom:25px;
+padding:25px;
+border-radius:10px;
+border:1px solid #103865;
+}
+
+.card h3{
+color:#00e0ff;
+margin-top:0;
+}
+
+.card p{
+font-size:14px;
+line-height:1.6;
+}
+
+.card a{
+display:inline-block;
+margin-top:10px;
+color:#00e0ff;
+text-decoration:none;
+font-weight:bold;
 }
 
 footer{
 margin-top:60px;
-padding:30px;
+padding:20px;
 background:#08132a;
 text-align:center;
-font-size:13px;
-color:#7bdfff;
+color:#6fa9d6;
+}
+
+@media (max-width:900px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
 }
 
 </style>
@@ -126,72 +126,129 @@ color:#7bdfff;
 
 <nav>
 
-<a href="index.html" data-t="home">Home</a>
-<a href="advisor.html" data-t="advisor">AI Advisor</a>
-<a href="brain.html" data-t="brain">Economic Brain</a>
-<a href="map.html" data-t="map">Global Map</a>
-<a href="trade.html" data-t="trade">Trade Engine</a>
-<a href="sector.html" data-t="sector">Sector Simulator</a>
-<a href="crisis.html" data-t="crisis">Crisis Radar</a>
-<a href="learn.html" data-t="knowledge">Knowledge</a>
-<a href="platform.html" data-t="platform">Platform</a>
+<a href="index.html">Home</a>
+<a href="advisor.html">AI Advisor</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="knowledge.html">Knowledge</a>
+<a href="simulator.html">Business Simulator</a>
+<a href="trade-intelligence.html">Trade Intelligence</a>
+<a href="economic-brain.html">Economic Brain</a>
+<a href="platform.html">Platform</a>
 
 </nav>
-
-<div class="lang">
-
-<button id="lang-en" class="active">EN</button>
-<button id="lang-tr">TR</button>
-
-</div>
 
 </header>
 
 <section class="hero">
 
-<h2 data-t="title">Global Economic Intelligence</h2>
+<h2>The Global Economic Intelligence Platform</h2>
 
-<p data-t="subtitle">
-ZENTRA is a global economic intelligence platform combining
-risk analytics, AI advisory systems, and macro-financial monitoring.
+<p>
+
+ZENTRA is a global economic operating system combining
+risk analytics, artificial intelligence, macroeconomic monitoring,
+and real-world business simulations.
+
+It transforms complex financial systems into actionable intelligence
+for individuals, businesses, and institutions.
+
 </p>
-
-<a class="btn" href="advisor.html">Open AI Advisor</a>
 
 </section>
 
 <div class="container">
 
+<div class="grid">
+
 <div class="card">
 
-<h3 data-t="advisor_title">AI Economic Advisor</h3>
+<h3>AI Economic Advisor</h3>
 
-<p data-t="advisor_desc">
-Ask economic or financial questions and receive analysis,
-risk evaluation and strategic insights.
+<p>
+
+Ask financial or economic questions and receive AI-powered
+analysis and strategic recommendations.
+
 </p>
+
+<a href="advisor.html">Open Advisor →</a>
 
 </div>
 
 <div class="card">
 
-<h3 data-t="risk_title">Global Risk Telescope</h3>
+<h3>Global Economic Dashboard</h3>
 
-<p data-t="risk_desc">
-Monitor macroeconomic pressure across countries,
-markets and financial systems.
+<p>
+
+Monitor global risk indicators, financial pressure,
+and macroeconomic signals across countries.
+
 </p>
+
+<a href="dashboard.html">Open Dashboard →</a>
 
 </div>
 
 <div class="card">
 
-<h3 data-t="sector_title">Sector & Business Simulation</h3>
+<h3>Economic Knowledge Engine</h3>
 
-<p data-t="sector_desc">
-Simulate economic conditions for companies,
-industries and investments.
+<p>
+
+Search and explore financial and economic knowledge
+with AI-assisted explanations.
+
 </p>
+
+<a href="knowledge.html">Open Knowledge →</a>
+
+</div>
+
+<div class="card">
+
+<h3>Business Simulator</h3>
+
+<p>
+
+Simulate real business models and analyze
+profitability, costs, and risk.
+
+</p>
+
+<a href="simulator.html">Run Simulation →</a>
+
+</div>
+
+<div class="card">
+
+<h3>Trade Intelligence</h3>
+
+<p>
+
+Analyze logistics, import/export routes,
+and global supply chain risk.
+
+</p>
+
+<a href="trade-intelligence.html">Open Trade Engine →</a>
+
+</div>
+
+<div class="card">
+
+<h3>Global Economic Brain</h3>
+
+<p>
+
+A strategic intelligence layer interpreting
+global economic conditions and financial signals.
+
+</p>
+
+<a href="economic-brain.html">Open Brain →</a>
+
+</div>
 
 </div>
 
@@ -203,73 +260,6 @@ ZENTRA Economic Operating System • Global Financial Intelligence Platform
 
 </footer>
 
-<script>
-
-const dict={
-
-en:{
-home:"Home",
-advisor:"AI Advisor",
-brain:"Economic Brain",
-map:"Global Map",
-trade:"Trade Engine",
-sector:"Sector Simulator",
-crisis:"Crisis Radar",
-knowledge:"Knowledge",
-platform:"Platform",
-title:"Global Economic Intelligence",
-subtitle:"ZENTRA is a global economic intelligence platform combining risk analytics, AI advisory systems, and macro-financial monitoring.",
-advisor_title:"AI Economic Advisor",
-advisor_desc:"Ask economic or financial questions and receive analysis, risk evaluation and strategic insights.",
-risk_title:"Global Risk Telescope",
-risk_desc:"Monitor macroeconomic pressure across countries, markets and financial systems.",
-sector_title:"Sector & Business Simulation",
-sector_desc:"Simulate economic conditions for companies, industries and investments."
-},
-
-tr:{
-home:"Ana Sayfa",
-advisor:"AI Danışman",
-brain:"Ekonomik Beyin",
-map:"Küresel Harita",
-trade:"Ticaret Motoru",
-sector:"Sektör Simülasyonu",
-crisis:"Kriz Radarı",
-knowledge:"Bilgi",
-platform:"Platform",
-title:"Küresel Ekonomik Zeka",
-subtitle:"ZENTRA risk analizi, yapay zeka danışmanlığı ve makro finansal gözlem sistemlerini birleştiren küresel ekonomik platformdur.",
-advisor_title:"AI Ekonomi Danışmanı",
-advisor_desc:"Ekonomik veya finansal sorular sor ve analiz, risk değerlendirmesi ve stratejik içgörü al.",
-risk_title:"Küresel Risk Teleskopu",
-risk_desc:"Ülkeler ve piyasalar üzerindeki makro ekonomik baskıyı takip et.",
-sector_title:"Sektör ve İşletme Simülasyonu",
-sector_desc:"Şirketler ve sektörler için ekonomik senaryolar oluştur."
-}
-
-}
-
-function setLang(lang){
-
-document.querySelectorAll("[data-t]").forEach(el=>{
-const key=el.getAttribute("data-t")
-if(dict[lang][key]){
-el.textContent=dict[lang][key]
-}
-})
-
-document.getElementById("lang-en").classList.toggle("active",lang==="en")
-document.getElementById("lang-tr").classList.toggle("active",lang==="tr")
-
-}
-
-document.getElementById("lang-en").onclick=()=>setLang("en")
-document.getElementById("lang-tr").onclick=()=>setLang("tr")
-
-setLang("en")
-
-</script>
-
 </body>
 
-  </html>
+</html>

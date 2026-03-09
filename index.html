@@ -4,8 +4,9 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>ZENTRA Economic OS</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
@@ -38,11 +39,11 @@ margin-left:20px;
 
 .hero{
 text-align:center;
-padding:100px 20px;
+padding:90px 20px;
 }
 
 .hero h1{
-font-size:60px;
+font-size:55px;
 color:#00e0ff;
 }
 
@@ -67,7 +68,7 @@ margin-bottom:20px;
 border:1px solid #103865;
 }
 
-textarea,input{
+input,textarea,select{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -94,7 +95,7 @@ border-radius:10px;
 }
 
 .metric{
-font-size:28px;
+font-size:26px;
 color:#00e0ff;
 }
 
@@ -119,10 +120,9 @@ color:#6fa9d6;
 
 <a href="#search">Search</a>
 <a href="#brain">Brain</a>
+<a href="#map">Global Map</a>
+<a href="#sector">Sector</a>
 <a href="#chat">AI</a>
-<a href="#business">Business</a>
-<a href="#trade">Trade</a>
-<a href="#crisis">Crisis</a>
 
 </div>
 
@@ -134,7 +134,7 @@ color:#6fa9d6;
 
 <p>
 
-AI powered economic intelligence platform.
+Global AI powered economic intelligence platform
 
 </p>
 
@@ -142,11 +142,11 @@ AI powered economic intelligence platform.
 
 <section id="search" class="section">
 
-<h2>Economic Search Engine</h2>
+<h2>Economic Search</h2>
 
 <div class="card">
 
-<input id="searchInput" placeholder="Search economy, business, trade...">
+<input id="searchInput" placeholder="Search economy">
 
 <button onclick="search()">Search</button>
 
@@ -170,69 +170,57 @@ AI powered economic intelligence platform.
 
 </section>
 
+<section id="map" class="section">
+
+<h2>Global Risk Map</h2>
+
+<div class="card">
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+</section>
+
+<section id="sector" class="section">
+
+<h2>Sector Intelligence</h2>
+
+<div class="card">
+
+<select id="sectorSelect">
+
+<option value="agriculture">Agriculture</option>
+<option value="technology">Technology</option>
+<option value="retail">Retail</option>
+<option value="construction">Construction</option>
+<option value="finance">Finance</option>
+
+</select>
+
+<input id="demand" placeholder="Demand index (0-100)">
+<input id="costPressure" placeholder="Cost pressure (0-100)">
+<input id="financePressure" placeholder="Finance pressure (0-100)">
+
+<button onclick="sector()">Analyze</button>
+
+<div id="sectorResult" class="result"></div>
+
+</div>
+
+</section>
+
 <section id="chat" class="section">
 
 <h2>AI Advisor</h2>
 
 <div class="card">
 
-<textarea id="chatInput" placeholder="Ask question"></textarea>
+<textarea id="chatInput" placeholder="Ask economic question"></textarea>
 
 <button onclick="ask()">Ask</button>
 
 <div id="chatResult" class="result"></div>
-
-</div>
-
-</section>
-
-<section id="business" class="section">
-
-<h2>Business Simulator</h2>
-
-<div class="card">
-
-<input id="cost" placeholder="Cost">
-
-<input id="revenue" placeholder="Revenue">
-
-<button onclick="business()">Simulate</button>
-
-<div id="businessResult" class="result"></div>
-
-</div>
-
-</section>
-
-<section id="trade" class="section">
-
-<h2>Trade Intelligence</h2>
-
-<div class="card">
-
-<input id="qty" placeholder="Quantity">
-
-<input id="unitCost" placeholder="Unit Cost">
-
-<input id="unitPrice" placeholder="Unit Price">
-
-<input id="distance" placeholder="Distance">
-
-<button onclick="trade()">Calculate</button>
-
-<div id="tradeResult" class="result"></div>
-
-</div>
-
-</section>
-
-<section id="crisis" class="section">
-
-<h2>Crisis Radar</h2>
-
-<div class="card">
-
-<div id="crisisResult"></div>
 
 </div>
 
@@ -251,11 +239,9 @@ const API="https://zentra-core-api.onrender.com"
 async function loadBrain(){
 
 let r=await fetch(API+"/brain")
-
 let data=await r.json()
 
-document.getElementById("riskScore").innerText="Global Risk: "+data.global_risk_index
-
+document.getElementById("riskScore").innerText="Risk Index: "+data.global_risk_index
 document.getElementById("state").innerText=data.economic_state
 
 }
@@ -267,9 +253,7 @@ let q=document.getElementById("chatInput").value
 let r=await fetch(API+"/chat",{
 
 method:"POST",
-
 headers:{"Content-Type":"application/json"},
-
 body:JSON.stringify({question:q})
 
 })
@@ -280,52 +264,23 @@ document.getElementById("chatResult").innerText=data.answer
 
 }
 
-async function business(){
+async function sector(){
 
-let cost=parseFloat(document.getElementById("cost").value)
+let s=document.getElementById("sectorSelect").value
+let d=parseFloat(document.getElementById("demand").value)
+let c=parseFloat(document.getElementById("costPressure").value)
+let f=parseFloat(document.getElementById("financePressure").value)
 
-let revenue=parseFloat(document.getElementById("revenue").value)
-
-let r=await fetch(API+"/business",{
-
-method:"POST",
-
-headers:{"Content-Type":"application/json"},
-
-body:JSON.stringify({cost:cost,revenue:revenue})
-
-})
-
-let data=await r.json()
-
-document.getElementById("businessResult").innerText=
-
-"Profit:"+data.profit+" Margin:"+data.margin+"%"
-
-}
-
-async function trade(){
-
-let q=parseFloat(document.getElementById("qty").value)
-
-let c=parseFloat(document.getElementById("unitCost").value)
-
-let p=parseFloat(document.getElementById("unitPrice").value)
-
-let d=parseFloat(document.getElementById("distance").value)
-
-let r=await fetch(API+"/trade",{
+let r=await fetch(API+"/sector-intelligence",{
 
 method:"POST",
-
 headers:{"Content-Type":"application/json"},
-
 body:JSON.stringify({
 
-quantity:q,
-unit_cost:c,
-unit_price:p,
-distance:d
+sector:s,
+demand:d,
+cost_pressure:c,
+finance_pressure:f
 
 })
 
@@ -333,21 +288,10 @@ distance:d
 
 let data=await r.json()
 
-document.getElementById("tradeResult").innerText=
+document.getElementById("sectorResult").innerText=
 
-"Profit:"+data.profit+" Margin:"+data.margin+"%"
-
-}
-
-async function crisis(){
-
-let r=await fetch(API+"/crisis-radar")
-
-let data=await r.json()
-
-document.getElementById("crisisResult").innerText=
-
-"Score:"+data.crisis_score+" Signal:"+data.signal
+"Risk Score:"+data.sector_risk_score+
+" Band:"+data.band
 
 }
 
@@ -357,17 +301,11 @@ let q=document.getElementById("searchInput").value.toLowerCase()
 
 let answer=""
 
-if(q.includes("altın")||q.includes("gold"))
-answer="Gold often rises during inflation and crisis."
+if(q.includes("gold"))
+answer="Gold often rises during inflation."
 
-else if(q.includes("iş")||q.includes("business"))
-answer="Strong business needs stable demand and good margins."
-
-else if(q.includes("ekonomi"))
+else if(q.includes("economy"))
 answer="Economy depends on inflation, interest and liquidity."
-
-else if(q.includes("ticaret")||q.includes("trade"))
-answer="Trade success depends on margin and logistics."
 
 else
 answer="ZENTRA analyzing economic context."
@@ -376,8 +314,26 @@ document.getElementById("searchResult").innerText=answer
 
 }
 
+function loadMap(){
+
+const ctx=document.getElementById('riskChart')
+
+new Chart(ctx,{
+type:'bar',
+data:{
+labels:["US","Germany","China","India","Turkey","Brazil"],
+datasets:[{
+label:"Risk Score",
+data:[44,36,48,52,68,56],
+backgroundColor:"#00e0ff"
+}]
+}
+})
+
+}
+
 loadBrain()
-crisis()
+loadMap()
 
 </script>
 

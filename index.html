@@ -3,22 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Economic OS v4</title>
+<title>ZENTRA Economic OS v5</title>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 
 <style>
+
 *{box-sizing:border-box}
+
 body{
 margin:0;
 font-family:Arial,Helvetica,sans-serif;
 background:#071021;
-color:#fff;
+color:white;
 overflow-x:hidden;
 }
+
 nav{
 background:#08132a;
-padding:16px 20px;
+padding:16px 24px;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -27,166 +31,169 @@ position:sticky;
 top:0;
 z-index:10;
 }
+
 .logo{
 color:#00e0ff;
 font-weight:bold;
 font-size:18px;
 }
+
 .links{
 display:flex;
-gap:12px;
+gap:14px;
 flex-wrap:wrap;
-justify-content:flex-end;
 }
+
 nav a{
 color:#7bdfff;
 text-decoration:none;
 font-size:14px;
 }
+
 .hero{
 text-align:center;
-padding:64px 20px 48px;
+padding:70px 20px;
 }
+
 .hero h1{
 margin:0 0 12px;
 color:#00e0ff;
-font-size:42px;
+font-size:44px;
 }
-.hero p{
-margin:0 auto;
-max-width:860px;
-color:#9dcdf3;
-line-height:1.7;
-}
+
 .section{
 max-width:1200px;
 margin:auto;
-padding:24px 16px 34px;
+padding:26px 20px;
 }
+
 .section h2{
-margin:0 0 14px;
 color:#00e0ff;
 }
+
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:16px;
 }
+
 .grid2{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:16px;
 }
+
 .card{
 background:#0e1c38;
 padding:18px;
 border-radius:12px;
 border:1px solid #103865;
-min-width:0;
-overflow:hidden;
 }
+
 .metric{
 font-size:28px;
 color:#00e0ff;
 font-weight:bold;
-word-break:break-word;
 }
+
 .small{
 color:#9dcdf3;
 font-size:14px;
-line-height:1.6;
 }
-.result,.chatbox{
+
+.result{
 background:#020814;
 padding:16px;
 border-radius:10px;
-line-height:1.7;
+margin-top:10px;
+min-height:120px;
 white-space:pre-wrap;
-word-break:break-word;
-overflow-wrap:anywhere;
 }
-.result{min-height:120px}
+
 .chatbox{
+background:#020814;
+padding:16px;
+border-radius:10px;
 min-height:170px;
 max-height:320px;
 overflow:auto;
 }
+
 input,textarea,select{
 width:100%;
-padding:11px;
+padding:10px;
 margin-top:10px;
 border-radius:8px;
 border:none;
 background:#08132a;
-color:#fff;
+color:white;
 }
+
 button{
 margin-top:10px;
-padding:11px 16px;
+padding:10px 16px;
 background:#00e0ff;
-color:#031019;
 border:none;
 border-radius:8px;
 font-weight:bold;
 cursor:pointer;
 }
+
+#worldMap{
+width:100%!important;
+max-width:100%;
+height:420px!important;
+}
+
 .badge{
 display:inline-block;
 margin-top:8px;
-padding:4px 9px;
+padding:4px 8px;
 border-radius:999px;
 font-size:11px;
 font-weight:bold;
 text-transform:uppercase;
-max-width:100%;
 }
+
 .low{color:#00e676;background:rgba(0,230,118,.12)}
 .medium{color:#ffd54f;background:rgba(255,213,79,.12)}
 .high{color:#ff7043;background:rgba(255,112,67,.12)}
 .critical{color:#ff1744;background:rgba(255,23,68,.12)}
+
 .country-list{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:10px;
 }
+
 .country-item{
 background:#08132a;
 padding:12px;
 border-radius:10px;
 border:1px solid #103865;
-min-width:0;
 }
-.map-wrap{
-width:100%;
-overflow:hidden;
-border-radius:10px;
-}
-#worldMap{
-display:block;
-width:100% !important;
-max-width:100%;
-height:420px !important;
-}
+
 footer{
 text-align:center;
-padding:26px;
+padding:30px;
 background:#08132a;
 color:#6fa9d6;
-margin-top:36px;
+margin-top:40px;
 }
-@media(max-width:950px){
+
+@media(max-width:900px){
 .grid,.grid2,.country-list{grid-template-columns:1fr}
-.hero h1{font-size:34px}
-#worldMap{height:300px !important}
-nav{align-items:flex-start;gap:10px;flex-direction:column}
-.links{justify-content:flex-start}
+#worldMap{height:300px!important}
 }
+
 </style>
 </head>
+
 <body>
 
 <nav>
 <div class="logo">ZENTRA</div>
+
 <div class="links">
 <a href="#dashboard">Dashboard</a>
 <a href="#brain">Brain</a>
@@ -199,74 +206,106 @@ nav{align-items:flex-start;gap:10px;flex-direction:column}
 <a href="#trade">Trade</a>
 <a href="#chat">AI</a>
 </div>
+
 </nav>
 
 <section class="hero">
-<h1>ZENTRA Economic OS v4</h1>
-<p>Economic Brain + Risk Map + Search + Scenario + Sector + Crisis Radar + SME + Trade + AI Advisor</p>
+<h1>ZENTRA Economic OS v5</h1>
+<p class="small">Global Economic Intelligence Platform</p>
 </section>
 
 <section id="dashboard" class="section">
 <h2>Dashboard</h2>
+
 <div class="grid">
+
 <div class="card">
 <div class="small">Global Risk</div>
 <div id="riskScore" class="metric">--</div>
 </div>
+
 <div class="card">
 <div class="small">State</div>
 <div id="state" class="metric">--</div>
 </div>
+
 <div class="card">
 <div class="small">Trend</div>
 <div id="trend" class="metric">--</div>
 </div>
+
 </div>
+
 </section>
 
 <section id="brain" class="section">
 <h2>Economic Brain</h2>
+
 <div class="card">
 <div id="brainResult" class="result">Loading...</div>
 </div>
+
 </section>
 
 <section id="map" class="section grid2">
+
 <div class="card">
 <h2>Global Risk Map</h2>
-<div class="map-wrap">
 <canvas id="worldMap"></canvas>
-</div>
 </div>
 
 <div class="card">
+
 <h2>Country Intelligence</h2>
+
 <div class="small">Selected Country</div>
-<div id="countryName" class="metric" style="font-size:24px">None</div>
+<div id="countryName" class="metric">None</div>
+
 <div class="small">Risk Score</div>
 <div id="countryRisk" class="metric">--</div>
+
 <div id="countryBand" class="badge medium">--</div>
-<div id="countryInfo" class="result">Click a country on the map.</div>
+
+<div id="countryInfo" class="result">
+Click a country on the map
 </div>
+
+</div>
+
 </section>
 
 <section id="search" class="section grid2">
+
 <div class="card">
+
 <h2>Economic Search</h2>
-<input id="searchInput" placeholder="inflation, cds, recession, gold, liquidity...">
+
+<input id="searchInput" placeholder="inflation, cds, recession...">
+
 <button onclick="runSearch()">Search</button>
-<div id="searchResult" class="result">Search engine ready.</div>
+
+<div id="searchResult" class="result">
+Search ready
+</div>
+
 </div>
 
 <div class="card">
+
 <h2>Global Risk Countries</h2>
+
 <div id="countryList" class="country-list"></div>
+
 </div>
+
 </section>
 
 <section id="scenario" class="section grid2">
+
 <div class="card">
+
 <h2>Scenario Engine</h2>
+
 <select id="scenarioName">
 <option value="interest">Interest Shock</option>
 <option value="currency">Currency Shock</option>
@@ -274,12 +313,17 @@ nav{align-items:flex-start;gap:10px;flex-direction:column}
 <option value="demand">Demand Drop</option>
 <option value="credit">Credit Crunch</option>
 </select>
+
 <button onclick="runScenario()">Run Scenario</button>
+
 <div id="scenarioResult" class="result"></div>
+
 </div>
 
 <div id="sector" class="card">
+
 <h2>Sector Engine</h2>
+
 <select id="sectorName">
 <option value="agriculture">Agriculture</option>
 <option value="retail">Retail</option>
@@ -290,270 +334,102 @@ nav{align-items:flex-start;gap:10px;flex-direction:column}
 <option value="manufacturing">Manufacturing</option>
 <option value="logistics">Logistics</option>
 </select>
-<input id="sectorDemand" placeholder="Demand (0-100)">
-<input id="sectorCost" placeholder="Cost Pressure (0-100)">
-<input id="sectorFinance" placeholder="Finance Pressure (0-100)">
+
 <button onclick="runSector()">Analyze Sector</button>
+
 <div id="sectorResult" class="result"></div>
+
 </div>
+
 </section>
 
-<section id="crisis" class="section grid2">
+<section id="crisis" class="section">
+
 <div class="card">
+
 <h2>Crisis Radar</h2>
-<button onclick="runCrisis()">Scan Crisis Risk</button>
+
+<button onclick="runCrisis()">Scan Crisis</button>
+
 <div id="crisisResult" class="result"></div>
+
 </div>
 
-<div id="sme" class="card">
-<h2>SME Intelligence</h2>
-<input id="smeRevenue" placeholder="Monthly Revenue">
-<input id="smeCost" placeholder="Monthly Cost">
-<input id="smeDebt" placeholder="Monthly Debt Payment">
-<input id="smeDelay" placeholder="Payment Delay Days">
-<button onclick="runSME()">Analyze SME</button>
-<div id="smeResult" class="result"></div>
-</div>
-</section>
-
-<section id="trade" class="section">
-<div class="card">
-<h2>Trade Engine</h2>
-<div class="grid">
-<div>
-<input id="tradePrice" placeholder="Unit Selling Price">
-</div>
-<div>
-<input id="tradeCost" placeholder="Unit Cost">
-</div>
-<div>
-<input id="tradeLogistics" placeholder="Logistics Cost">
-</div>
-</div>
-<input id="tradeQty" placeholder="Quantity">
-<button onclick="runTrade()">Analyze Trade</button>
-<div id="tradeResult" class="result"></div>
-</div>
 </section>
 
 <section id="chat" class="section">
+
 <div class="card">
+
 <h2>AI Advisor</h2>
-<div id="chatBox" class="chatbox"><div><b>ZENTRA:</b> Ready.</div></div>
-<textarea id="chatInput" placeholder="Ask an economic question..."></textarea>
-<button onclick="askChat()">Send</button>
+
+<div id="chatBox" class="chatbox">
+<b>ZENTRA:</b> Ready
 </div>
+
+<textarea id="chatInput"></textarea>
+
+<button onclick="askChat()">Send</button>
+
+</div>
+
 </section>
 
-<footer>ZENTRA Economic Operating System v4</footer>
+<footer>
+ZENTRA Economic Operating System v5
+</footer>
 
 <script>
-let mapChart=null;
-
-const countriesData=[
-{code:"US",name:"United States",risk:44,band:"medium"},
-{code:"DE",name:"Germany",risk:36,band:"low"},
-{code:"CN",name:"China",risk:48,band:"medium"},
-{code:"IN",name:"India",risk:52,band:"medium"},
-{code:"TR",name:"Turkey",risk:69,band:"high"},
-{code:"BR",name:"Brazil",risk:55,band:"medium"},
-{code:"NG",name:"Nigeria",risk:73,band:"high"},
-{code:"AR",name:"Argentina",risk:84,band:"critical"},
-{code:"GB",name:"United Kingdom",risk:43,band:"medium"},
-{code:"JP",name:"Japan",risk:28,band:"low"}
-];
 
 function band(score){
-if(score>=80)return"critical";
-if(score>=60)return"high";
-if(score>=40)return"medium";
-return"low";
+if(score>=80)return"critical"
+if(score>=60)return"high"
+if(score>=40)return"medium"
+return"low"
 }
 
 function brain(){
-let inflation=5,rate=4,vol=40,liq=65;
-let risk=((inflation*6)+(rate*4)+vol+(100-liq))/10;
-let state="Stable",trend="Bullish",advice="Growth conditions remain supportive.";
-if(risk>60){
-state="High Pressure";
-trend="Bearish";
-advice="Protect liquidity, reduce fragile exposure and tighten cost discipline.";
-}else if(risk>40){
-state="Moderate Pressure";
-trend="Neutral";
-advice="Control costs, diversify risk and monitor financing conditions.";
-}
-document.getElementById("riskScore").innerText=risk.toFixed(1);
-document.getElementById("state").innerText=state;
-document.getElementById("trend").innerText=trend;
+
+let inflation=5
+let rate=4
+let volatility=40
+let liquidity=65
+let energy=50
+let fx=55
+let credit=60
+
+let risk=(inflation*0.25+rate*0.15+volatility*0.2+(100-liquidity)*0.15+energy*0.1+fx*0.1+credit*0.05)
+
+risk=Math.round(risk)
+
+let state="Stable"
+let trend="Bullish"
+
+if(risk>70){state="High Pressure";trend="Bearish"}
+else if(risk>45){state="Moderate Pressure";trend="Neutral"}
+
+document.getElementById("riskScore").innerText=risk
+document.getElementById("state").innerText=state
+document.getElementById("trend").innerText=trend
+
 document.getElementById("brainResult").innerText=
-"Risk Index: "+risk.toFixed(1)+
+
+"Inflation: "+inflation+
+"\nInterest Rate: "+rate+
+"\nVolatility: "+volatility+
+"\nLiquidity: "+liquidity+
+"\nEnergy Stress: "+energy+
+"\nFX Pressure: "+fx+
+"\nCredit Stress: "+credit+
+
+"\n\nGlobal Risk Index: "+risk+
 "\nState: "+state+
-"\nTrend: "+trend+
-"\nAdvice: "+advice+
-"\nInflation: "+inflation+
-"\nPolicy Rate: "+rate+
-"\nVolatility: "+vol+
-"\nLiquidity: "+liq;
+"\nTrend: "+trend
+
 }
 
-function loadCountryList(){
-let html="";
-countriesData.forEach(c=>{
-html+=`<div class="country-item"><div><b>${c.name}</b></div><div class="small">Risk Score: ${c.risk}</div><div class="badge ${c.band}">${c.band}</div></div>`;
-});
-document.getElementById("countryList").innerHTML=html;
-}
+brain()
 
-function runSearch(){
-let q=document.getElementById("searchInput").value.trim().toLowerCase();
-if(!q)return;
-let answer="ZENTRA Search is analyzing the topic.";
-if(q.includes("inflation")||q.includes("enflasyon"))answer="Inflation is the rate at which prices rise over time and purchasing power falls.";
-else if(q.includes("cds"))answer="CDS is a market-based measure of sovereign or credit default risk.";
-else if(q.includes("recession")||q.includes("resesyon"))answer="Recession is a period of economic slowdown with weaker demand and lower confidence.";
-else if(q.includes("gold")||q.includes("altın"))answer="Gold is often used as a defensive asset during inflation and uncertainty.";
-else if(q.includes("liquidity")||q.includes("likidite"))answer="Liquidity refers to how easily funding and cash circulate through the economy and the financial system.";
-document.getElementById("searchResult").innerText=answer;
-}
-
-function runScenario(){
-let s=document.getElementById("scenarioName").value;
-let base=Number(document.getElementById("riskScore").innerText)||55;
-let add=10,impact="general stress";
-if(s==="currency"){add=15;impact="import cost rises and inflation accelerates";}
-if(s==="oil"){add=12;impact="energy and logistics cost pressure rises";}
-if(s==="demand"){add=8;impact="sales weaken and margins soften";}
-if(s==="credit"){add=14;impact="lending slows and refinancing risk rises";}
-if(s==="interest"){add=11;impact="borrowing becomes more expensive and growth slows";}
-let projected=base+add;
-document.getElementById("scenarioResult").innerText=
-"Scenario: "+s+
-"\nBase Risk: "+base+
-"\nProjected Risk: "+projected+
-"\nBand: "+band(projected)+
-"\nImpact: "+impact;
-}
-
-function runSector(){
-let sector=document.getElementById("sectorName").value;
-let demand=Number(document.getElementById("sectorDemand").value||50);
-let cost=Number(document.getElementById("sectorCost").value||50);
-let finance=Number(document.getElementById("sectorFinance").value||50);
-let base={
-agriculture:42,retail:58,construction:62,technology:35,energy:57,finance:48,manufacturing:55,logistics:50
-}[sector]||50;
-let score=Math.min(100,Math.round(base*0.35+(100-demand)*0.25+cost*0.2+finance*0.2));
-document.getElementById("sectorResult").innerText=
-"Sector: "+sector+
-"\nRisk Score: "+score+
-"\nBand: "+band(score)+
-"\nAdvice: "+(score>=70?"Sector is under strong pressure.":score>=45?"Sector is workable but fragile.":"Sector conditions are comparatively resilient.");
-}
-
-function runCrisis(){
-let risk=Number(document.getElementById("riskScore").innerText)||55;
-let signal="Watch",msg="System remains manageable.";
-if(risk>=70){signal="Critical";msg="Macro pressure and fragility are elevated.";}
-else if(risk>=50){signal="Stress";msg="Financial conditions are tight and shocks can spread faster.";}
-document.getElementById("crisisResult").innerText=
-"Crisis Signal: "+signal+
-"\nRisk Index: "+risk+
-"\nAssessment: "+msg+
-"\nAction: protect liquidity, monitor debt and avoid fragile exposure.";
-}
-
-function runSME(){
-let r=Number(document.getElementById("smeRevenue").value||0);
-let c=Number(document.getElementById("smeCost").value||0);
-let d=Number(document.getElementById("smeDebt").value||0);
-let delay=Number(document.getElementById("smeDelay").value||0);
-let profit=r-c-d;
-let score=35;
-if(profit<0)score+=30;
-else if(profit<2000)score+=15;
-score+=delay*0.5;
-score=Math.min(100,Math.round(score));
-document.getElementById("smeResult").innerText=
-"Operating Profit: "+profit+
-"\nRisk Score: "+score+
-"\nBand: "+band(score)+
-"\nAdvice: "+(score>=70?"Urgent cashflow improvement needed.":score>=45?"Tight margin; improve collections and cost control.":"Business resilience is acceptable.");
-}
-
-function runTrade(){
-let price=Number(document.getElementById("tradePrice").value||0);
-let cost=Number(document.getElementById("tradeCost").value||0);
-let log=Number(document.getElementById("tradeLogistics").value||0);
-let qty=Number(document.getElementById("tradeQty").value||0);
-let unitMargin=price-cost-log;
-let total=unitMargin*qty;
-let viability="Low";
-if(unitMargin>50)viability="High";
-else if(unitMargin>20)viability="Medium";
-document.getElementById("tradeResult").innerText=
-"Unit Margin: "+unitMargin+
-"\nTotal Trade Profit: "+total+
-"\nTrade Viability: "+viability+
-"\nAdvice: "+(unitMargin<=0?"Route is weak; reprice or reduce logistics cost.":"Margin exists; protect execution and payment quality.");
-}
-
-function askChat(){
-let q=document.getElementById("chatInput").value.trim();
-if(!q)return;
-let t=q.toLowerCase(),a="ZENTRA is analyzing the question within economic context.";
-if(t.includes("inflation")||t.includes("enflasyon"))a="Inflation reduces purchasing power, raises cost pressure and usually tightens financial conditions.";
-else if(t.includes("gold")||t.includes("altın"))a="Gold is often used as a defensive asset during inflation and uncertainty.";
-else if(t.includes("business")||t.includes("iş"))a="A healthy business needs stable demand, pricing power, cashflow control and manageable debt.";
-else if(t.includes("trade")||t.includes("ticaret"))a="Trade profitability depends on margin quality, route efficiency, transport cost and payment reliability.";
-else if(t.includes("recession")||t.includes("resesyon"))a="Recession means weaker demand, slower growth and more pressure on fragile businesses.";
-else if(t.includes("turkey")||t.includes("türkiye"))a="Turkey currently reflects moderate-to-high pressure conditions driven by inflation, rates and volatility.";
-const box=document.getElementById("chatBox");
-box.innerHTML+="<div><b>You:</b> "+q+"</div><div><b>ZENTRA:</b> "+a+"</div>";
-document.getElementById("chatInput").value="";
-box.scrollTop=box.scrollHeight;
-}
-
-async function loadMap(){
-const world=await fetch("https://unpkg.com/world-atlas@2/countries-110m.json").then(r=>r.json());
-const countries=ChartGeo.topojson.feature(world,world.objects.countries).features;
-const aliases={"840":"US","276":"DE","156":"CN","356":"IN","792":"TR","076":"BR","566":"NG","032":"AR","826":"GB","392":"JP"};
-const cmap={}; countriesData.forEach(c=>cmap[c.code]=c);
-const data=countries.map(f=>{
-const iso=aliases[String(f.id)]||null;
-const item=iso?cmap[iso]:null;
-return{feature:f,value:item?.risk??30,name:item?.name??f.properties.name??"Unknown",band:item?.band??"low"};
-});
-if(mapChart)mapChart.destroy();
-mapChart=new Chart(document.getElementById("worldMap").getContext("2d"),{
-type:"choropleth",
-data:{labels:countries.map(d=>d.properties.name),datasets:[{label:"Country Risk",data}]},
-options:{
-plugins:{
-legend:{display:false},
-tooltip:{callbacks:{label:(c)=>`${c.raw.name}: ${c.raw.value}`}}
-},
-scales:{
-projection:{axis:"x",projection:"equalEarth"},
-color:{axis:"x",quantize:5,legend:{position:"bottom"}}
-},
-onClick:(_,els)=>{
-if(!els.length)return;
-const item=data[els[0].index];
-document.getElementById("countryName").innerText=item.name;
-document.getElementById("countryRisk").innerText=item.value;
-document.getElementById("countryBand").innerText=item.band.toUpperCase();
-document.getElementById("countryBand").className="badge "+item.band;
-document.getElementById("countryInfo").innerText=`${item.name} currently shows a ${item.band} risk profile with a score of ${item.value}.`;
-}
-}
-});
-}
-
-brain();
-runCrisis();
-loadCountryList();
-loadMap();
 </script>
 
 </body>

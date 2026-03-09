@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -27,8 +26,8 @@ border-bottom:1px solid #103865;
 }
 
 .logo{
-font-weight:bold;
 color:#00e0ff;
+font-weight:bold;
 }
 
 nav a{
@@ -45,7 +44,6 @@ padding:100px 20px;
 .hero h1{
 font-size:60px;
 color:#00e0ff;
-margin-bottom:20px;
 }
 
 .hero p{
@@ -67,11 +65,6 @@ padding:25px;
 border-radius:12px;
 margin-bottom:20px;
 border:1px solid #103865;
-}
-
-.metric{
-font-size:30px;
-color:#00e0ff;
 }
 
 textarea,input{
@@ -100,6 +93,11 @@ margin-top:10px;
 border-radius:10px;
 }
 
+.metric{
+font-size:28px;
+color:#00e0ff;
+}
+
 footer{
 text-align:center;
 padding:40px;
@@ -119,7 +117,7 @@ color:#6fa9d6;
 
 <div>
 
-<a href="#dashboard">Dashboard</a>
+<a href="#search">Search</a>
 <a href="#brain">Brain</a>
 <a href="#chat">AI</a>
 <a href="#business">Business</a>
@@ -136,22 +134,23 @@ color:#6fa9d6;
 
 <p>
 
-Global economic intelligence platform combining
-AI, macro analysis and financial risk systems.
+AI powered economic intelligence platform.
 
 </p>
 
 </section>
 
-<section id="dashboard" class="section">
+<section id="search" class="section">
 
-<h2>Global Dashboard</h2>
+<h2>Economic Search Engine</h2>
 
 <div class="card">
 
-<div class="metric" id="riskScore">Loading...</div>
+<input id="searchInput" placeholder="Search economy, business, trade...">
 
-<div id="state"></div>
+<button onclick="search()">Search</button>
+
+<div id="searchResult" class="result"></div>
 
 </div>
 
@@ -163,7 +162,9 @@ AI, macro analysis and financial risk systems.
 
 <div class="card">
 
-<div id="brainResult"></div>
+<div class="metric" id="riskScore"></div>
+
+<div id="state"></div>
 
 </div>
 
@@ -175,7 +176,7 @@ AI, macro analysis and financial risk systems.
 
 <div class="card">
 
-<textarea id="chatInput" placeholder="Ask economic question"></textarea>
+<textarea id="chatInput" placeholder="Ask question"></textarea>
 
 <button onclick="ask()">Ask</button>
 
@@ -247,17 +248,15 @@ ZENTRA Economic OS
 
 const API="https://zentra-core-api.onrender.com"
 
-async function loadDashboard(){
+async function loadBrain(){
 
 let r=await fetch(API+"/brain")
 
 let data=await r.json()
 
-document.getElementById("riskScore").innerText="Risk Index: "+data.global_risk_index
+document.getElementById("riskScore").innerText="Global Risk: "+data.global_risk_index
 
-document.getElementById("state").innerText="State: "+data.economic_state
-
-document.getElementById("brainResult").innerText=data.advice
+document.getElementById("state").innerText=data.economic_state
 
 }
 
@@ -269,9 +268,7 @@ let r=await fetch(API+"/chat",{
 
 method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
+headers:{"Content-Type":"application/json"},
 
 body:JSON.stringify({question:q})
 
@@ -293,9 +290,7 @@ let r=await fetch(API+"/business",{
 
 method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
+headers:{"Content-Type":"application/json"},
 
 body:JSON.stringify({cost:cost,revenue:revenue})
 
@@ -305,7 +300,7 @@ let data=await r.json()
 
 document.getElementById("businessResult").innerText=
 
-"Profit: "+data.profit+" Margin:"+data.margin+"%"
+"Profit:"+data.profit+" Margin:"+data.margin+"%"
 
 }
 
@@ -323,9 +318,7 @@ let r=await fetch(API+"/trade",{
 
 method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
+headers:{"Content-Type":"application/json"},
 
 body:JSON.stringify({
 
@@ -358,11 +351,35 @@ document.getElementById("crisisResult").innerText=
 
 }
 
-loadDashboard()
+function search(){
+
+let q=document.getElementById("searchInput").value.toLowerCase()
+
+let answer=""
+
+if(q.includes("altın")||q.includes("gold"))
+answer="Gold often rises during inflation and crisis."
+
+else if(q.includes("iş")||q.includes("business"))
+answer="Strong business needs stable demand and good margins."
+
+else if(q.includes("ekonomi"))
+answer="Economy depends on inflation, interest and liquidity."
+
+else if(q.includes("ticaret")||q.includes("trade"))
+answer="Trade success depends on margin and logistics."
+
+else
+answer="ZENTRA analyzing economic context."
+
+document.getElementById("searchResult").innerText=answer
+
+}
+
+loadBrain()
 crisis()
 
 </script>
 
 </body>
-
-  </html>
+</html>

@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ZENTRA Economic OS</title>
 
@@ -12,113 +12,110 @@
 body{
 margin:0;
 font-family:Arial,Helvetica,sans-serif;
-background:#050b18;
+background:#071021;
 color:white;
 }
 
 header{
-padding:40px;
-text-align:center;
+padding:25px;
 background:#08132a;
-border-bottom:1px solid #0f2c55;
+text-align:center;
+border-bottom:1px solid #103865;
 }
 
-h1{
+header h1{
 margin:0;
 color:#00e0ff;
-font-size:36px;
+font-size:28px;
 }
 
 nav{
-margin-top:20px;
+margin-top:15px;
 }
 
 nav a{
 color:#7bdfff;
-margin:0 14px;
+margin:0 10px;
 text-decoration:none;
-font-size:15px;
+font-size:14px;
 }
 
-section{
-padding:60px 20px;
-max-width:1100px;
-margin:auto;
+nav a:hover{
+color:#00e0ff;
+}
+
+.lang{
+margin-top:12px;
+}
+
+.lang button{
+background:#0e1c38;
+border:none;
+color:#7bdfff;
+padding:6px 12px;
+margin:0 5px;
+cursor:pointer;
+border-radius:4px;
+}
+
+.lang button.active{
+background:#00e0ff;
+color:black;
 }
 
 .hero{
 text-align:center;
-margin-top:40px;
+padding:80px 20px;
 }
 
 .hero h2{
-font-size:32px;
+font-size:42px;
+color:#00e0ff;
 margin-bottom:20px;
 }
 
 .hero p{
-color:#9bd6ff;
 font-size:18px;
+color:#a0d8ff;
+max-width:700px;
+margin:auto;
 }
 
 .btn{
 display:inline-block;
-margin-top:25px;
-padding:14px 26px;
+margin-top:30px;
+padding:12px 24px;
 background:#00e0ff;
 color:black;
-border-radius:10px;
 text-decoration:none;
+border-radius:6px;
 font-weight:bold;
 }
 
-.grid{
-margin-top:50px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
 }
 
 .card{
-background:#08152c;
-padding:22px;
-border-radius:12px;
-border:1px solid #103865;
-}
-
-.label{
-font-size:12px;
-text-transform:uppercase;
-color:#8fb8da;
-margin-bottom:8px;
-}
-
-.metric{
-font-size:30px;
-font-weight:bold;
-color:#00e0ff;
-}
-
-.bigbox{
-margin-top:30px;
-background:#08152c;
-padding:25px;
-border-radius:12px;
-border:1px solid #103865;
-white-space:pre-wrap;
-line-height:1.7;
+background:#0e1c38;
+padding:30px;
+border-radius:8px;
+margin-bottom:25px;
 }
 
 footer{
-text-align:center;
+margin-top:60px;
 padding:30px;
 background:#08132a;
-margin-top:60px;
-font-size:14px;
-color:#6fa9d6;
+text-align:center;
+font-size:13px;
+color:#7bdfff;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -129,137 +126,150 @@ color:#6fa9d6;
 
 <nav>
 
-<a href="index.html">Home</a>
-<a href="advisor.html">Advisor</a>
-<a href="brain.html">Brain</a>
-<a href="platform.html">Platform</a>
+<a href="index.html" data-t="home">Home</a>
+<a href="advisor.html" data-t="advisor">AI Advisor</a>
+<a href="brain.html" data-t="brain">Economic Brain</a>
+<a href="map.html" data-t="map">Global Map</a>
+<a href="trade.html" data-t="trade">Trade Engine</a>
+<a href="sector.html" data-t="sector">Sector Simulator</a>
+<a href="crisis.html" data-t="crisis">Crisis Radar</a>
+<a href="learn.html" data-t="knowledge">Knowledge</a>
+<a href="platform.html" data-t="platform">Platform</a>
 
 </nav>
 
+<div class="lang">
+
+<button id="lang-en" class="active">EN</button>
+<button id="lang-tr">TR</button>
+
+</div>
+
 </header>
 
-<section>
+<section class="hero">
 
-<div class="hero">
+<h2 data-t="title">Global Economic Intelligence</h2>
 
-<h2>Global Economic Intelligence</h2>
-
-<p>
-ZENTRA analyzes macroeconomics, markets and business conditions to produce
-a unified economic intelligence layer.
+<p data-t="subtitle">
+ZENTRA is a global economic intelligence platform combining
+risk analytics, AI advisory systems, and macro-financial monitoring.
 </p>
 
-<a class="btn" href="advisor.html">Ask AI Advisor</a>
-
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="label">Global Risk</div>
-<div class="metric" id="riskScore">--</div>
-</div>
-
-<div class="card">
-<div class="label">Economic State</div>
-<div class="metric" id="economicState" style="font-size:22px;">--</div>
-</div>
-
-<div class="card">
-<div class="label">Market Trend</div>
-<div class="metric" id="marketTrend" style="font-size:22px;">--</div>
-</div>
-
-<div class="card">
-<div class="label">System Signal</div>
-<div class="metric" id="signal" style="font-size:22px;">--</div>
-</div>
-
-</div>
-
-<div class="bigbox" id="brainSummary">
-
-Loading economic intelligence...
-
-</div>
+<a class="btn" href="advisor.html">Open AI Advisor</a>
 
 </section>
 
+<div class="container">
+
+<div class="card">
+
+<h3 data-t="advisor_title">AI Economic Advisor</h3>
+
+<p data-t="advisor_desc">
+Ask economic or financial questions and receive analysis,
+risk evaluation and strategic insights.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3 data-t="risk_title">Global Risk Telescope</h3>
+
+<p data-t="risk_desc">
+Monitor macroeconomic pressure across countries,
+markets and financial systems.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3 data-t="sector_title">Sector & Business Simulation</h3>
+
+<p data-t="sector_desc">
+Simulate economic conditions for companies,
+industries and investments.
+</p>
+
+</div>
+
+</div>
+
 <footer>
 
-ZENTRA — Global Economic Operating System
+ZENTRA Economic Operating System • Global Financial Intelligence Platform
 
 </footer>
 
 <script>
 
-const API = "https://zentra-core-api.onrender.com/telescope";
+const dict={
 
-async function loadData(){
+en:{
+home:"Home",
+advisor:"AI Advisor",
+brain:"Economic Brain",
+map:"Global Map",
+trade:"Trade Engine",
+sector:"Sector Simulator",
+crisis:"Crisis Radar",
+knowledge:"Knowledge",
+platform:"Platform",
+title:"Global Economic Intelligence",
+subtitle:"ZENTRA is a global economic intelligence platform combining risk analytics, AI advisory systems, and macro-financial monitoring.",
+advisor_title:"AI Economic Advisor",
+advisor_desc:"Ask economic or financial questions and receive analysis, risk evaluation and strategic insights.",
+risk_title:"Global Risk Telescope",
+risk_desc:"Monitor macroeconomic pressure across countries, markets and financial systems.",
+sector_title:"Sector & Business Simulation",
+sector_desc:"Simulate economic conditions for companies, industries and investments."
+},
 
-try{
-
-const res = await fetch(API);
-const data = await res.json();
-
-document.getElementById("riskScore").innerText = data.global_risk_index;
-document.getElementById("economicState").innerText = data.economic_state;
-document.getElementById("marketTrend").innerText = data.market?.market_trend || "neutral";
-
-let signal = "stable";
-
-if(data.global_risk_index > 75){
-
-signal = "critical";
-
-}else if(data.global_risk_index > 55){
-
-signal = "stress";
-
-}else if(data.global_risk_index > 35){
-
-signal = "caution";
-
-}
-
-document.getElementById("signal").innerText = signal;
-
-document.getElementById("brainSummary").innerText =
-`GLOBAL ECONOMIC INTELLIGENCE
-
-Risk Index: ${data.global_risk_index}
-Economic State: ${data.economic_state}
-Market Trend: ${data.market?.market_trend || "neutral"}
-
-Interpretation:
-${data.ai_reason}
-
-Strategic Recommendation:
-${data.ai_advice}
-
-ZENTRA combines macro data, financial markets and behavioral signals to generate a unified economic intelligence layer.`
-
-}catch(e){
-
-document.getElementById("riskScore").innerText = "57";
-document.getElementById("economicState").innerText = "moderate pressure";
-document.getElementById("marketTrend").innerText = "bearish";
-document.getElementById("signal").innerText = "stress";
-
-document.getElementById("brainSummary").innerText =
-`GLOBAL ECONOMIC INTELLIGENCE
-
-Fallback mode active.
-
-System will reconnect to economic data.`
-
+tr:{
+home:"Ana Sayfa",
+advisor:"AI Danışman",
+brain:"Ekonomik Beyin",
+map:"Küresel Harita",
+trade:"Ticaret Motoru",
+sector:"Sektör Simülasyonu",
+crisis:"Kriz Radarı",
+knowledge:"Bilgi",
+platform:"Platform",
+title:"Küresel Ekonomik Zeka",
+subtitle:"ZENTRA risk analizi, yapay zeka danışmanlığı ve makro finansal gözlem sistemlerini birleştiren küresel ekonomik platformdur.",
+advisor_title:"AI Ekonomi Danışmanı",
+advisor_desc:"Ekonomik veya finansal sorular sor ve analiz, risk değerlendirmesi ve stratejik içgörü al.",
+risk_title:"Küresel Risk Teleskopu",
+risk_desc:"Ülkeler ve piyasalar üzerindeki makro ekonomik baskıyı takip et.",
+sector_title:"Sektör ve İşletme Simülasyonu",
+sector_desc:"Şirketler ve sektörler için ekonomik senaryolar oluştur."
 }
 
 }
 
-loadData();
+function setLang(lang){
+
+document.querySelectorAll("[data-t]").forEach(el=>{
+const key=el.getAttribute("data-t")
+if(dict[lang][key]){
+el.textContent=dict[lang][key]
+}
+})
+
+document.getElementById("lang-en").classList.toggle("active",lang==="en")
+document.getElementById("lang-tr").classList.toggle("active",lang==="tr")
+
+}
+
+document.getElementById("lang-en").onclick=()=>setLang("en")
+document.getElementById("lang-tr").onclick=()=>setLang("tr")
+
+setLang("en")
 
 </script>
 
 </body>
-                                 </html>
+
+  </html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZENTRA Crisis Radar</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#050b18;
+  color:white;
+}
+header{
+  padding:30px;
+  background:#08132a;
+  text-align:center;
+  border-bottom:1px solid #103865;
+}
+h1{
+  margin:0;
+  color:#00e0ff;
+}
+nav{
+  margin-top:10px;
+}
+nav a{
+  color:#7bdfff;
+  margin:0 12px;
+  text-decoration:none;
+}
+section{
+  padding:40px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+.card{
+  background:#08152c;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid #103865;
+}
+.label{
+  font-size:12px;
+  text-transform:uppercase;
+  color:#8fb8da;
+  margin-bottom:8px;
+}
+.metric{
+  font-size:28px;
+  font-weight:bold;
+  color:#00e0ff;
+}
+.band{
+  margin-top:8px;
+  font-size:12px;
+  text-transform:uppercase;
+  font-weight:bold;
+}
+.low{color:#00e676;}
+.medium{color:#ffd54f;}
+.high{color:#ff7043;}
+.critical{color:#ff1744;}
+.bigbox{
+  margin-top:24px;
+  background:#08152c;
+  padding:24px;
+  border-radius:12px;
+  border:1px solid #103865;
+  white-space:pre-wrap;
+  line-height:1.7;
+}
+footer{
+  text-align:center;
+  padding:30px;
+  background:#08132a;
+  margin-top:50px;
+  color:#6fa9d6;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ZENTRA Crisis Radar</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="advisor.html">Advisor</a>
+    <a href="brain.html">Brain</a>
+    <a href="map.html">Global Map</a>
+    <a href="trade.html">Trade</a>
+    <a href="sector.html">Sector</a>
+    <a href="crisis.html">Crisis Radar</a>
+  </nav>
+</header>
+
+<section>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="label">Global Risk Index</div>
+      <div class="metric" id="globalRisk">--</div>
+      <div class="band" id="globalBand">--</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Inflation Pressure</div>
+      <div class="metric" id="inflationPressure">--</div>
+      <div class="band" id="inflationBand">--</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Credit Stress</div>
+      <div class="metric" id="creditStress">--</div>
+      <div class="band" id="creditBand">--</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Market Fragility</div>
+      <div class="metric" id="marketFragility">--</div>
+      <div class="band" id="marketBand">--</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Crisis Signal</div>
+      <div class="metric" id="crisisSignal" style="font-size:22px;">--</div>
+      <div class="band" id="crisisBand">--</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Economic State</div>
+      <div class="metric" id="economicState" style="font-size:22px;">--</div>
+      <div class="band" id="stateBand">--</div>
+    </div>
+
+  </div>
+
+  <div class="bigbox" id="crisisReport">
+Loading crisis radar...
+  </div>
+
+</section>
+
+<footer>
+  ZENTRA Global Economic Intelligence
+</footer>
+
+<script>
+const API = "https://zentra-core-api.onrender.com/telescope";
+
+function bandClass(v){
+  if(v >= 80) return "critical";
+  if(v >= 60) return "high";
+  if(v >= 40) return "medium";
+  return "low";
+}
+
+function signalLabel(v){
+  if(v >= 80) return "critical";
+  if(v >= 60) return "high";
+  if(v >= 40) return "medium";
+  return "low";
+}
+
+async function loadCrisisRadar(){
+  try{
+    const res = await fetch(API);
+    const data = await res.json();
+
+    const globalRisk = Number(data.global_risk_index || 57);
+    const inflation = Math.min(Number(data.macro?.inflation || 5) * 10, 100);
+    const marketFragility =
+      data.market?.market_trend === "bearish" ? 72 :
+      data.market?.market_trend === "neutral" ? 48 : 32;
+
+    const creditStress = Math.min((globalRisk * 0.55) + (inflation * 0.20), 100);
+    const crisisComposite = Math.round(
+      globalRisk * 0.35 +
+      inflation * 0.20 +
+      creditStress * 0.25 +
+      marketFragility * 0.20
+    );
+
+    document.getElementById("globalRisk").innerText = globalRisk;
+    document.getElementById("inflationPressure").innerText = inflation.toFixed(0);
+    document.getElementById("creditStress").innerText = creditStress.toFixed(0);
+    document.getElementById("marketFragility").innerText = marketFragility.toFixed(0);
+    document.getElementById("crisisSignal").innerText = crisisComposite;
+    document.getElementById("economicState").innerText = data.economic_state || "moderate pressure";
+
+    const items = [
+      ["globalBand", globalRisk],
+      ["inflationBand", inflation],
+      ["creditBand", creditStress],
+      ["marketBand", marketFragility],
+      ["crisisBand", crisisComposite],
+      ["stateBand", globalRisk]
+    ];
+
+    items.forEach(([id,val])=>{
+      const el = document.getElementById(id);
+      const cls = bandClass(val);
+      el.className = "band " + cls;
+      el.innerText = signalLabel(val);
+    });
+
+    document.getElementById("crisisReport").innerText =
+`ZENTRA CRISIS RADAR REPORT
+
+Global Risk Index: ${globalRisk}
+Inflation Pressure: ${inflation.toFixed(0)}
+Credit Stress: ${creditStress.toFixed(0)}
+Market Fragility: ${marketFragility.toFixed(0)}
+Composite Crisis Signal: ${crisisComposite}
+
+Interpretation:
+${data.ai_reason || "Macroeconomic pressure remains visible across the system."}
+
+Strategic Recommendation:
+${data.ai_advice || "Maintain liquidity and reduce fragile exposure."}
+
+Radar Summary:
+ZENTRA Crisis Radar combines inflation pressure, financing conditions, market fragility and systemic risk signals to estimate whether the economy is moving toward stability, stress or crisis conditions.`;
+
+  }catch(e){
+    const globalRisk = 57;
+    const inflation = 50;
+    const creditStress = 61;
+    const marketFragility = 72;
+    const crisisComposite = 61;
+
+    document.getElementById("globalRisk").innerText = globalRisk;
+    document.getElementById("inflationPressure").innerText = inflation;
+    document.getElementById("creditStress").innerText = creditStress;
+    document.getElementById("marketFragility").innerText = marketFragility;
+    document.getElementById("crisisSignal").innerText = crisisComposite;
+    document.getElementById("economicState").innerText = "moderate pressure";
+
+    [
+      ["globalBand",globalRisk],
+      ["inflationBand",inflation],
+      ["creditBand",creditStress],
+      ["marketBand",marketFragility],
+      ["crisisBand",crisisComposite],
+      ["stateBand",globalRisk]
+    ].forEach(([id,val])=>{
+      const el = document.getElementById(id);
+      const cls = bandClass(val);
+      el.className = "band " + cls;
+      el.innerText = signalLabel(val);
+    });
+
+    document.getElementById("crisisReport").innerText =
+`ZENTRA CRISIS RADAR REPORT
+
+Fallback mode active.
+
+Global Risk Index: 57
+Inflation Pressure: 50
+Credit Stress: 61
+Market Fragility: 72
+Composite Crisis Signal: 61
+
+Interpretation:
+The system reflects moderate-to-high financial pressure with visible fragility in markets and credit conditions.
+
+Strategic Recommendation:
+Protect liquidity, avoid concentrated exposure and monitor fast-changing risk signals.`;
+  }
+}
+
+loadCrisisRadar();
+</script>
+
+</body>
+</html>

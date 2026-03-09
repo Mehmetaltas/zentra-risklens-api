@@ -1,128 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ZENTRA Platform</title>
 
-<meta name="description" content="ZENTRA Behavioral Financial Infrastructure Platform">
-
 <style>
-
-:root{
---bg:#050814;
---card:#0c1228;
---line:#1e2a55;
---text:#eaf2ff;
---muted:#99a6c6;
---cyan:#00d4ff;
---green:#19e68c;
---gold:#f5b942;
---violet:#7c3aed;
-}
 
 body{
 margin:0;
-font-family:Arial;
-background:var(--bg);
-color:var(--text);
+font-family:Arial,Helvetica,sans-serif;
+background:#071021;
+color:white;
 }
 
-.topbar{
-background:#060b1c;
-border-bottom:1px solid var(--line);
-position:sticky;
-top:0;
+header{
+background:#08132a;
+padding:20px;
+text-align:center;
+border-bottom:1px solid #103865;
 }
 
-.topin{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px;
-flex-wrap:wrap;
-}
-
-.logo{
-width:32px;
-height:32px;
-border-radius:10px;
-background:linear-gradient(135deg,var(--violet),var(--cyan));
+header h1{
+margin:0;
+color:#00e0ff;
 }
 
 nav{
-display:flex;
-gap:14px;
-flex-wrap:wrap;
+margin-top:10px;
 }
 
 nav a{
-color:white;
+color:#7bdfff;
+margin:0 10px;
 text-decoration:none;
-font-size:13px;
+font-size:14px;
 }
 
-.wrap{
-max-width:1100px;
+nav a:hover{
+color:#00e0ff;
+}
+
+.container{
+max-width:1200px;
 margin:auto;
-padding:24px;
+padding:40px 20px;
 }
 
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
-padding:20px;
-margin-bottom:20px;
+.hero{
+text-align:center;
+margin-bottom:40px;
 }
 
-h1{
-color:var(--cyan);
+.hero h2{
+color:#00e0ff;
+font-size:32px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:16px;
-margin-top:16px;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
 }
 
-.metric{
-background:#08101f;
-border:1px solid var(--line);
-border-radius:12px;
-padding:18px;
-text-align:center;
-}
-
-.metric strong{
-display:block;
-font-size:20px;
-color:var(--green);
-margin-bottom:6px;
-}
-
-.code{
-background:#07101f;
-border:1px solid var(--line);
+.card{
+background:#0e1c38;
+padding:25px;
 border-radius:10px;
-padding:12px;
-font-family:monospace;
-font-size:12px;
-white-space:pre-wrap;
+border:1px solid #103865;
+}
+
+.card h3{
+color:#00e0ff;
+margin-top:0;
+}
+
+.card p{
+font-size:14px;
+line-height:1.6;
+}
+
+.card a{
+display:inline-block;
 margin-top:10px;
+color:#00e0ff;
+text-decoration:none;
+font-weight:bold;
 }
 
 footer{
+margin-top:60px;
+padding:20px;
+background:#08132a;
 text-align:center;
-color:#99a6c6;
-font-size:12px;
-margin-top:30px;
+color:#6fa9d6;
+}
+
+@media (max-width:900px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
 }
 
 </style>
@@ -131,291 +113,141 @@ margin-top:30px;
 
 <body>
 
-<div class="topbar">
+<header>
 
-<div class="topin">
-
-<div style="display:flex;gap:10px;align-items:center">
-<div class="logo"></div>
-<strong>ZENTRA</strong>
-</div>
+<h1>ZENTRA Economic OS</h1>
 
 <nav>
 
 <a href="index.html">Home</a>
+<a href="advisor.html">AI Advisor</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="knowledge.html">Knowledge</a>
+<a href="simulator.html">Business Simulator</a>
+<a href="trade-intelligence.html">Trade Intelligence</a>
 <a href="platform.html">Platform</a>
-<a href="developer.html">Developers</a>
-<a href="investor.html">Investor</a>
-<a href="marketplace.html">Marketplace</a>
-<a href="telescope.html">Telescope</a>
-<a href="use-cases.html">Use Cases</a>
-<a href="trust.html">Trust</a>
 
 </nav>
 
-</div>
+</header>
 
-</div>
+<div class="container">
 
-<div class="wrap">
+<div class="hero">
 
-<section class="card">
-
-<h1>Platform Overview</h1>
+<h2>The Global Economic Intelligence Platform</h2>
 
 <p>
 
-ZENTRA is a behavioral financial infrastructure designed to detect financial stress signals
-before traditional scoring systems react.
-
-The platform integrates institutional data streams, behavioral scoring engines
-and intelligence distribution layers.
+ZENTRA is a global economic operating system combining  
+risk analytics, artificial intelligence, and real-world economic simulations.
 
 </p>
 
-</section>
-
-
-<section class="card">
-
-<h2>Platform Layers</h2>
+</div>
 
 <div class="grid">
 
-<div class="metric">
+<div class="card">
 
-<strong>Data Layer</strong>
-
-<p>
-ERP systems<br>
-Banking signals<br>
-Payment activity<br>
-Macro data
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Integration Layer</strong>
+<h3>AI Economic Advisor</h3>
 
 <p>
-API connectors<br>
-Payment rails<br>
-ERP integrations<br>
-Data ingestion
+
+Ask financial and economic questions.  
+ZENTRA analyzes macro conditions and provides strategic insights.
+
 </p>
+
+<a href="advisor.html">Open Advisor →</a>
 
 </div>
 
-<div class="metric">
+<div class="card">
 
-<strong>Engine Layer</strong>
+<h3>Global Economic Dashboard</h3>
 
 <p>
-Behavior engine<br>
-Risk engine<br>
-Stress engine<br>
-Security engine
+
+Monitor global risk indicators, financial pressure,  
+and economic signals across countries.
+
 </p>
+
+<a href="dashboard.html">Open Dashboard →</a>
 
 </div>
 
-<div class="metric">
+<div class="card">
 
-<strong>AI Layer</strong>
+<h3>Knowledge Engine</h3>
 
 <p>
-Explainable AI<br>
-Drift detection<br>
-Predictive patterns
+
+Economic knowledge search engine.  
+Get explanations and insights about markets, finance, and strategy.
+
 </p>
+
+<a href="knowledge.html">Open Knowledge →</a>
 
 </div>
 
-<div class="metric">
+<div class="card">
 
-<strong>Lens Layer</strong>
+<h3>Business Simulator</h3>
 
 <p>
-Institution specific modules<br>
-Banking lens<br>
-SME lens<br>
-ERP lens
+
+Simulate real business models and evaluate  
+profitability, risk, and sustainability.
+
 </p>
+
+<a href="simulator.html">Run Simulation →</a>
 
 </div>
 
-<div class="metric">
+<div class="card">
 
-<strong>Intelligence Layer</strong>
+<h3>Trade Intelligence</h3>
 
 <p>
-Risk signals<br>
-Policy insights<br>
-Systemic indicators
+
+Analyze logistics, trade routes, import/export costs,  
+and global supply chain risks.
+
 </p>
 
-</div>
+<a href="trade-intelligence.html">Open Trade Engine →</a>
 
 </div>
 
-</section>
+<div class="card">
 
-
-<section class="card">
-
-<h2>Infrastructure Flow</h2>
-
-<div class="code">
-
-DATA SOURCES
-↓
-INTEGRATION LAYER
-↓
-ENGINE PROCESSING
-↓
-AI INTERPRETATION
-↓
-LENS MARKETPLACE
-↓
-FINANCIAL INTELLIGENCE
-↓
-FINANCIAL TELESCOPE
-
-</div>
-
-</section>
-
-
-<section class="card">
-
-<h2>Institution Coverage</h2>
-
-<div class="grid">
-
-<div class="metric">
-
-<strong>Banks</strong>
+<h3>Crisis Radar</h3>
 
 <p>
-Credit behavior monitoring
+
+Detect early warning signals of economic stress,  
+financial instability, and macroeconomic pressure.
+
 </p>
 
-</div>
-
-<div class="metric">
-
-<strong>Fintech</strong>
-
-<p>
-Behavioral underwriting
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>ERP Systems</strong>
-
-<p>
-Corporate financial health signals
-</p>
-
-</div>
-
-<div class="metric">
-
-<strong>Funds</strong>
-
-<p>
-Macro risk observation
-</p>
+<a href="dashboard.html">View Crisis Signals →</a>
 
 </div>
 
 </div>
 
-</section>
-
+</div>
 
 <footer>
 
-ZENTRA Platform Architecture
+ZENTRA Economic Operating System • Global Financial Intelligence Platform
 
 </footer>
 
-</div>
-
 </body>
-</html>
-<section id="architecture">
 
-<div class="wrap">
-
-<h2>ZENTRA Economic OS Architecture</h2>
-
-<div class="grid">
-
-<div class="card col-4">
-<h3>Data Layer</h3>
-<ul class="list">
-<li>Global macro data</li>
-<li>Market signals</li>
-<li>Country indicators</li>
-<li>Sector data</li>
-</ul>
-</div>
-
-<div class="card col-4">
-<h3>Signal Layer</h3>
-<ul class="list">
-<li>Macro Engine</li>
-<li>Market Engine</li>
-<li>Behavior Engine</li>
-<li>Risk Engine</li>
-</ul>
-</div>
-
-<div class="card col-4">
-<h3>Intelligence Layer</h3>
-<ul class="list">
-<li>ZENTRA Brain</li>
-<li>Economic Knowledge Engine</li>
-<li>Economic Radar</li>
-<li>Global Risk Index</li>
-</ul>
-</div>
-
-<div class="card col-4">
-<h3>Simulation Layer</h3>
-<ul class="list">
-<li>Scenario Engine</li>
-<li>Economic Simulations</li>
-<li>Crisis Models</li>
-</ul>
-</div>
-
-<div class="card col-4">
-<h3>Decision Layer</h3>
-<ul class="list">
-<li>ZENTRA Advisor</li>
-<li>Strategic Insights</li>
-<li>Economic Guidance</li>
-</ul>
-</div>
-
-<div class="card col-4">
-<h3>Platform Layer</h3>
-<ul class="list">
-<li>Global Risk Map</li>
-<li>Sector Intelligence</li>
-<li>Economic OS Interface</li>
-</ul>
-</div>
-
-</div>
-
-</div>
-
-</section>
+  </html>

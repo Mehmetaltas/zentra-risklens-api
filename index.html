@@ -198,15 +198,15 @@ macro analysis, risk mapping and economic decision support.
 <div class="grid">
 <div class="card">
 <div class="small">Global Risk Index</div>
-<div class="metric" id="riskScore">--</div>
+<div class="metric" id="riskScore">55</div>
 </div>
 <div class="card">
 <div class="small">Economic State</div>
-<div class="metric" id="state" style="font-size:22px;">--</div>
+<div class="metric" id="state" style="font-size:22px;">Moderate</div>
 </div>
 <div class="card">
 <div class="small">Market Trend</div>
-<div class="metric" id="trend" style="font-size:22px;">--</div>
+<div class="metric" id="trend" style="font-size:22px;">Neutral</div>
 </div>
 </div>
 </section>
@@ -214,7 +214,10 @@ macro analysis, risk mapping and economic decision support.
 <section id="brain" class="section">
 <h2>Economic Brain</h2>
 <div class="card">
-<div class="result" id="brainResult">Loading economic brain...</div>
+<div class="result" id="brainResult">Risk Index: 55
+State: Moderate
+Trend: Neutral
+Advice: Control cost structure, diversify risk, monitor financing conditions and protect liquidity.</div>
 </div>
 </section>
 
@@ -239,12 +242,21 @@ macro analysis, risk mapping and economic decision support.
 </div>
 </section>
 
-<section id="search" class="section">
+<section id="search" class="section grid-2">
+<div>
 <h2>Economic Search</h2>
 <div class="card">
 <input id="searchInput" placeholder="Search inflation, cds, recession...">
 <button onclick="runSearch()">Search</button>
 <div id="searchResult" class="result">Search engine is ready.</div>
+</div>
+</div>
+
+<div>
+<h2>Global Risk Countries</h2>
+<div class="card">
+<div class="country-list" id="countryList"></div>
+</div>
 </div>
 </section>
 
@@ -264,10 +276,9 @@ ZENTRA Economic Operating System
 </footer>
 
 <script>
-const API = "https://zentra-risklens-api.42mehmetaltas.workers.dev";
-
 let mapChart = null;
-const fallbackCountries = [
+
+const countriesData = [
   {code:"US", name:"United States", risk:44, band:"medium"},
   {code:"DE", name:"Germany", risk:36, band:"low"},
   {code:"CN", name:"China", risk:48, band:"medium"},
@@ -275,87 +286,76 @@ const fallbackCountries = [
   {code:"TR", name:"Turkey", risk:69, band:"high"},
   {code:"BR", name:"Brazil", risk:55, band:"medium"},
   {code:"NG", name:"Nigeria", risk:73, band:"high"},
-  {code:"AR", name:"Argentina", risk:84, band:"critical"}
+  {code:"AR", name:"Argentina", risk:84, band:"critical"},
+  {code:"GB", name:"United Kingdom", risk:43, band:"medium"},
+  {code:"JP", name:"Japan", risk:28, band:"low"}
 ];
 
-function riskBandClass(score){
-  if(score >= 80) return "critical";
-  if(score >= 60) return "high";
-  if(score >= 40) return "medium";
-  return "low";
+function loadCountryList(){
+  let html = "";
+  countriesData.forEach(c=>{
+    html += `
+      <div class="country-item">
+        <div><b>${c.name}</b></div>
+        <div class="small">Risk Score: ${c.risk}</div>
+        <div class="badge ${c.band}">${c.band}</div>
+      </div>
+    `;
+  });
+  document.getElementById("countryList").innerHTML = html;
 }
 
-async function loadBrain(){
-  try{
-    const r = await fetch(API + "/brain?country_code=TR");
-    const data = await r.json();
+function runSearch(){
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+  if(!q) return;
 
-    document.getElementById("riskScore").innerText = data.global_risk_index;
-    document.getElementById("state").innerText = data.economic_state;
-    document.getElementById("trend").innerText = data.market_trend;
+  let answer = "ZENTRA Search is analyzing the topic in economic context.";
 
-    document.getElementById("brainResult").innerText =
-      "Risk Index: " + data.global_risk_index +
-      "\nState: " + data.economic_state +
-      "\nTrend: " + data.market_trend +
-      "\nAdvice: " + data.advice;
-  }catch(e){
-    document.getElementById("brainResult").innerText = "API connection error";
+  if(q.includes("inflation") || q.includes("enflasyon")){
+    answer = "Inflation is the rate at which prices rise over time and purchasing power falls.";
+  }else if(q.includes("cds")){
+    answer = "CDS is a market-based measure of sovereign or credit default risk.";
+  }else if(q.includes("recession") || q.includes("resesyon")){
+    answer = "Recession is a period of economic slowdown with weaker demand and lower confidence.";
+  }else if(q.includes("gold") || q.includes("altın")){
+    answer = "Gold is often used as a defensive asset during inflation and uncertainty.";
+  }else if(q.includes("interest") || q.includes("faiz")){
+    answer = "Higher interest rates usually tighten credit conditions and slow demand.";
   }
+
+  document.getElementById("searchResult").innerText = answer;
 }
 
-async function askChat(){
+function askChat(){
   const q = document.getElementById("chatInput").value.trim();
   if(!q) return;
 
   const box = document.getElementById("chatBox");
   box.innerHTML += "<div><b>You:</b> " + q + "</div>";
 
-  try{
-    const r = await fetch(API + "/chat", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({question: q})
-    });
+  const t = q.toLowerCase();
+  let answer = "ZENTRA is analyzing the question within economic context.";
 
-    const data = await r.json();
-    box.innerHTML += "<div><b>ZENTRA:</b> " + (data.answer ?? "No answer") + "</div>";
-  }catch(e){
-    box.innerHTML += "<div><b>ZENTRA:</b> AI unavailable</div>";
+  if(t.includes("inflation") || t.includes("enflasyon")){
+    answer = "Inflation reduces purchasing power, raises cost pressure and usually tightens financial conditions.";
+  }else if(t.includes("gold") || t.includes("altın")){
+    answer = "Gold is often used as a defensive asset during inflation and uncertainty, but concentration risk still matters.";
+  }else if(t.includes("business") || t.includes("iş") || t.includes("dükkan")){
+    answer = "A healthy business needs stable demand, pricing power, cashflow control and manageable debt.";
+  }else if(t.includes("trade") || t.includes("ticaret") || t.includes("lojistik")){
+    answer = "Trade profitability depends on margin quality, route efficiency, transport cost and payment reliability.";
+  }else if(t.includes("recession") || t.includes("resesyon")){
+    answer = "Recession means weaker demand, slower growth and more pressure on fragile businesses and debt structures.";
+  }else if(t.includes("turkey") || t.includes("türkiye")){
+    answer = "Turkey currently reflects moderate-to-high pressure conditions driven by inflation, rates and volatility.";
   }
 
+  box.innerHTML += "<div><b>ZENTRA:</b> " + answer + "</div>";
   document.getElementById("chatInput").value = "";
   box.scrollTop = box.scrollHeight;
 }
 
-async function runSearch(){
-  const q = document.getElementById("searchInput").value.trim().toLowerCase();
-  if(!q) return;
-
-  let topic = "inflation";
-  if(q.includes("cds")) topic = "cds";
-  else if(q.includes("recession") || q.includes("resesyon")) topic = "recession";
-
-  try{
-    const r = await fetch(API + "/knowledge?topic=" + encodeURIComponent(topic));
-    const data = await r.json();
-    document.getElementById("searchResult").innerText = data.definition;
-  }catch(e){
-    document.getElementById("searchResult").innerText = "Search unavailable";
-  }
-}
-
 async function loadInteractiveMap(){
-  let countriesData = fallbackCountries;
-
-  try{
-    const r = await fetch(API + "/global-risk");
-    const data = await r.json();
-    if(data.countries && data.countries.length){
-      countriesData = data.countries;
-    }
-  }catch(e){}
-
   const countryMap = {};
   countriesData.forEach(c => { countryMap[c.code] = c; });
 
@@ -363,7 +363,7 @@ async function loadInteractiveMap(){
   const countries = ChartGeo.topojson.feature(world, world.objects.countries).features;
 
   const codeAliases = {
-    "840":"US","276":"DE","156":"CN","356":"IN","792":"TR","076":"BR","566":"NG","032":"AR"
+    "840":"US","276":"DE","156":"CN","356":"IN","792":"TR","076":"BR","566":"NG","032":"AR","826":"GB","392":"JP"
   };
 
   const data = countries.map(feature => {
@@ -417,9 +417,9 @@ async function loadInteractiveMap(){
   });
 }
 
-loadBrain();
+loadCountryList();
 loadInteractiveMap();
 </script>
 
 </body>
-</html>
+  </html>

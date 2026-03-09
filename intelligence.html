@@ -1,144 +1,432 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Research</title>
+<title>ZENTRA Intelligence</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 
 <style>
-:root{
-  --bg:#050814;
-  --panel:#081020;
-  --panel2:#0b1328;
-  --line:#1d2b55;
-  --text:#ffffff;
-  --muted:#9db0d8;
-  --cyan:#00d4ff;
-  --green:#19e68c;
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#071021;
+  color:white;
 }
-*{box-sizing:border-box;min-width:0}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+header{
+  background:#08132a;
+  padding:20px;
+  text-align:center;
+  border-bottom:1px solid #103865;
+}
+header h1{
+  margin:0;
+  color:#00e0ff;
+}
 nav{
-  background:var(--panel);
-  padding:14px 16px;
-  border-bottom:1px solid var(--line);
-  display:flex;gap:16px;flex-wrap:wrap
+  margin-top:10px;
 }
-nav a{color:#fff;text-decoration:none;font-size:14px}
-.container{max-width:1200px;margin:auto;padding:20px 16px 40px}
-.hero{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:28px;
-  margin-bottom:20px
+nav a{
+  color:#7bdfff;
+  margin:0 10px;
+  text-decoration:none;
+  font-size:14px;
 }
-h1{margin:0 0 10px 0;font-size:clamp(28px,4vw,40px)}
-h2{margin:0 0 14px 0;color:var(--green);font-size:24px}
-.lead{color:var(--muted);line-height:1.75;max-width:900px}
-.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
-.col-4{grid-column:span 4}
-.col-6{grid-column:span 6}
-.col-12{grid-column:span 12}
-.report{
-  background:var(--panel2);
-  border:1px solid var(--line);
+nav a:hover{
+  color:#00e0ff;
+}
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:30px 20px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:20px;
+}
+.card{
+  background:#0e1c38;
+  padding:22px;
   border-radius:12px;
-  padding:16px;
+  border:1px solid #103865;
 }
-.report-title{font-size:18px;font-weight:700;margin-bottom:8px}
-.meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.footer{margin-top:24px;border-top:1px solid var(--line);padding-top:18px;color:#7f93bd;font-size:13px;line-height:1.7}
-@media (max-width:900px){
-  .col-4,.col-6,.col-12{grid-column:span 12}
+.card h3{
+  margin-top:0;
+  color:#00e0ff;
+}
+#worldMap{
+  width:100% !important;
+  height:520px !important;
+}
+.metric{
+  font-size:30px;
+  font-weight:bold;
+  color:#00e0ff;
+}
+.badge{
+  display:inline-block;
+  margin-top:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+.low{color:#00e676;background:rgba(0,230,118,.12);}
+.medium{color:#ffd54f;background:rgba(255,213,79,.12);}
+.high{color:#ff7043;background:rgba(255,112,67,.12);}
+.critical{color:#ff1744;background:rgba(255,23,68,.12);}
+textarea{
+  width:100%;
+  min-height:120px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#08132a;
+  color:white;
+  resize:vertical;
+  box-sizing:border-box;
+}
+button{
+  margin-top:12px;
+  padding:12px 16px;
+  background:#00e0ff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.result{
+  margin-top:18px;
+  background:#020814;
+  padding:18px;
+  border-radius:10px;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+.pill{
+  display:inline-block;
+  margin:6px 8px 0 0;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#10233f;
+  color:#9ddcff;
+  cursor:pointer;
+  font-size:13px;
+}
+.small{
+  color:#9dcdf3;
+  font-size:14px;
+  line-height:1.6;
+}
+footer{
+  margin-top:40px;
+  padding:20px;
+  background:#08132a;
+  text-align:center;
+  color:#6fa9d6;
+}
+@media (max-width:980px){
+  .grid{grid-template-columns:1fr;}
+  #worldMap{height:380px !important;}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="advisor.html">Advisor</a>
-  <a href="global-map.html">World Map</a>
-  <a href="economic-radar.html">Radar</a>
-  <a href="platform-page.html">Platform</a>
-  <a href="economic-timeline.html">Timeline</a>
-  <a href="trust.html">Trust</a>
-  <a href="about.html">About</a>
-  <a href="intelligence.html">Intelligence</a>
-  <a href="research.html">Research</a>
-</nav>
+<header>
+  <h1>ZENTRA Intelligence</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="ai-chat.html">AI Chat</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="economic-brain.html">Economic Brain</a>
+    <a href="intelligence.html">Intelligence</a>
+    <a href="platform.html">Platform</a>
+  </nav>
+</header>
 
 <div class="container">
+  <div class="grid">
 
-  <section class="hero">
-    <h1>ZENTRA Research</h1>
-    <div class="lead">
-      Structured research layer for macroeconomic signals, global risk developments, sector pressure and financial system interpretation.
+    <div class="card">
+      <h3>Global Risk Heatmap</h3>
+      <canvas id="worldMap"></canvas>
     </div>
-  </section>
 
-  <section class="grid">
-    <div class="card col-12">
-      <h2>Featured Research</h2>
-      <div class="grid">
-        <div class="report col-4">
-          <div class="meta">Macro / Q1 2026</div>
-          <div class="report-title">Persistent Inflation and Credit Tightening</div>
-          <div class="lead">
-            Reviewing the transmission path from inflation pressure to interest rates, credit cost and business stress.
-          </div>
-        </div>
+    <div class="card">
+      <h3>Country Intelligence</h3>
 
-        <div class="report col-4">
-          <div class="meta">Global Risk / Q1 2026</div>
-          <div class="report-title">Emerging Market Stress Watch</div>
-          <div class="lead">
-            Country-level fragility mapping under currency pressure, debt stress and uneven resilience conditions.
-          </div>
-        </div>
+      <div class="small">Selected Country</div>
+      <div class="metric" id="countryName" style="font-size:24px;">None</div>
 
-        <div class="report col-4">
-          <div class="meta">Sector / Q1 2026</div>
-          <div class="report-title">Retail, Construction and Energy Pressure</div>
-          <div class="lead">
-            Sector comparison across financing sensitivity, demand weakness and cost shock exposure.
-          </div>
-        </div>
+      <div class="small" style="margin-top:12px;">Risk Score</div>
+      <div class="metric" id="countryRisk">--</div>
+      <div id="countryBand" class="badge medium">--</div>
+
+      <div class="small" style="margin-top:16px;" id="countryInfo">
+        Click a country on the map to view risk details.
       </div>
-    </div>
-  </section>
 
-  <section class="grid" style="margin-top:16px;">
-    <div class="card col-6">
-      <h2>Research Themes</h2>
-      <div class="lead">
-        ZENTRA research is organized around the evolution of financial pressure rather than isolated economic headlines.
+      <hr style="border-color:#103865; margin:18px 0;">
+
+      <h3>Economic Knowledge Engine</h3>
+      <textarea id="question" placeholder="Ask an economic question... Example: What is inflation? / Should I buy gold? / What is recession?"></textarea>
+
+      <div>
+        <span class="pill" onclick="setQuestion('What is inflation?')">What is inflation?</span>
+        <span class="pill" onclick="setQuestion('What is recession?')">What is recession?</span>
+        <span class="pill" onclick="setQuestion('Should I buy gold?')">Gold question</span>
+        <span class="pill" onclick="setQuestion('Why do interest rates rise?')">Interest rates</span>
+        <span class="pill" onclick="setQuestion('What is liquidity?')">Liquidity</span>
       </div>
-      <ul style="color:#9db0d8;line-height:1.9">
-        <li>Inflation regimes</li>
-        <li>Rate cycles and credit transmission</li>
-        <li>Country fragility and currency pressure</li>
-        <li>Commodity shocks and production cost stress</li>
-        <li>Sector vulnerability analysis</li>
-      </ul>
+
+      <button onclick="runKnowledge()">Analyze</button>
+
+      <div class="result" id="knowledgeResult">ZENTRA Knowledge Engine is ready.</div>
     </div>
 
-    <div class="card col-6">
-      <h2>Research Purpose</h2>
-      <div class="lead">
-        The objective is to make complex economic developments readable, comparable and actionable for investors,
-        institutions and businesses using the ZENTRA intelligence stack.
-      </div>
-    </div>
-  </section>
-
-  <div class="footer">
-    ZENTRA Research connects macro analysis, risk signals and structured interpretation into a continuous economic intelligence workflow.
   </div>
-
 </div>
+
+<footer>
+  ZENTRA Economic OS • Global Risk + Knowledge Intelligence
+</footer>
+
+<script>
+const API = "https://zentra-core-api.onrender.com";
+let mapChart = null;
+
+const fallbackCountries = [
+  {code:"US", name:"United States", risk:44, band:"medium"},
+  {code:"DE", name:"Germany", risk:36, band:"low"},
+  {code:"CN", name:"China", risk:48, band:"medium"},
+  {code:"IN", name:"India", risk:52, band:"medium"},
+  {code:"TR", name:"Turkey", risk:68, band:"high"},
+  {code:"BR", name:"Brazil", risk:56, band:"medium"},
+  {code:"NG", name:"Nigeria", risk:73, band:"high"},
+  {code:"AR", name:"Argentina", risk:84, band:"critical"},
+  {code:"GB", name:"United Kingdom", risk:43, band:"medium"},
+  {code:"JP", name:"Japan", risk:28, band:"low"}
+];
+
+function setQuestion(text){
+  document.getElementById("question").value = text;
+}
+
+function knowledgeAnswer(q){
+  const t = q.toLowerCase();
+
+  if(t.includes("inflation") || t.includes("enflasyon")){
+    return `CONCEPT
+Inflation is the general rise in prices over time.
+
+MEANING
+When inflation rises, money buys less.
+
+IMPACT
+- daily life gets more expensive
+- savings lose purchasing power
+- businesses face cost pressure
+- central banks may raise interest rates
+
+PRACTICAL TAKEAWAY
+In inflationary periods, budgeting, cash management and asset diversification become more important.`;
+  }
+
+  if(t.includes("recession") || t.includes("resesyon")){
+    return `CONCEPT
+Recession is a slowdown in economic activity.
+
+MEANING
+Demand weakens, investment slows and stress rises across businesses.
+
+IMPACT
+- weaker sales
+- weaker hiring
+- tighter finance
+- lower confidence
+
+PRACTICAL TAKEAWAY
+During recession risk, liquidity and essential-demand sectors usually matter more than aggressive expansion.`;
+  }
+
+  if(t.includes("gold") || t.includes("altın")){
+    return `CONCEPT
+Gold is commonly used as a defensive asset.
+
+MEANING
+It often attracts attention when inflation is high or uncertainty rises.
+
+IMPACT
+- may act as an inflation hedge
+- may help diversify risk
+- does not remove all portfolio risk
+
+PRACTICAL TAKEAWAY
+Gold can support resilience, but concentrated positioning can still be risky.`;
+  }
+
+  if(t.includes("interest") || t.includes("faiz")){
+    return `CONCEPT
+Interest rate is the cost of borrowing and the reward for saving.
+
+MEANING
+Central banks often raise rates to control inflation.
+
+IMPACT
+- loans become more expensive
+- growth may slow
+- debt-heavy businesses feel more pressure
+
+PRACTICAL TAKEAWAY
+When rates rise, financing discipline and cost control become more important.`;
+  }
+
+  if(t.includes("liquidity") || t.includes("likidite")){
+    return `CONCEPT
+Liquidity means how easily cash or assets can be used.
+
+MEANING
+Strong liquidity helps businesses and markets operate smoothly.
+
+IMPACT
+- weak liquidity increases stress
+- borrowing gets harder
+- fragile firms suffer first
+
+PRACTICAL TAKEAWAY
+Liquidity is one of the first things to protect in uncertain periods.`;
+  }
+
+  return `CONCEPT
+ZENTRA explains economic questions through practical meaning.
+
+MEANING
+The goal is not only definition, but real-world impact.
+
+IMPACT
+Economic concepts affect pricing, saving, borrowing, investment and trade.
+
+PRACTICAL TAKEAWAY
+Ask any economic question and ZENTRA will explain it in a practical framework.`;
+}
+
+function runKnowledge(){
+  const q = document.getElementById("question").value.trim();
+  if(q.length < 2){
+    alert("Write a question first.");
+    return;
+  }
+
+  document.getElementById("knowledgeResult").innerText =
+`QUESTION
+${q}
+
+${knowledgeAnswer(q)}`;
+}
+
+async function loadWorldMap(){
+  let countriesData = fallbackCountries;
+
+  try{
+    const res = await fetch(API + "/global-risk");
+    const data = await res.json();
+    if(data.countries && data.countries.length){
+      countriesData = data.countries;
+    }
+  }catch(e){}
+
+  const countryMap = {};
+  countriesData.forEach(c => {
+    countryMap[c.code] = c;
+  });
+
+  const world = await fetch("https://unpkg.com/world-atlas@2/countries-110m.json").then(r => r.json());
+  const countries = ChartGeo.topojson.feature(world, world.objects.countries).features;
+
+  const codeAliases = {
+    "840":"US",
+    "276":"DE",
+    "156":"CN",
+    "356":"IN",
+    "792":"TR",
+    "076":"BR",
+    "566":"NG",
+    "032":"AR",
+    "826":"GB",
+    "392":"JP"
+  };
+
+  const data = countries.map(feature => {
+    const iso = codeAliases[String(feature.id)] || null;
+    const item = iso ? countryMap[iso] : null;
+
+    return {
+      feature,
+      value: item?.risk ?? 35,
+      name: item?.name ?? feature.properties.name ?? "Unknown",
+      band: item?.band ?? "low"
+    };
+  });
+
+  const ctx = document.getElementById("worldMap").getContext("2d");
+
+  if(mapChart) mapChart.destroy();
+
+  mapChart = new Chart(ctx, {
+    type: "choropleth",
+    data: {
+      labels: countries.map(d => d.properties.name),
+      datasets: [{
+        label: "Country Risk",
+        data: data
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const item = context.raw;
+              return `${item.name}: ${item.value}`;
+            }
+          }
+        }
+      },
+      scales: {
+        projection: {
+          axis: "x",
+          projection: "equalEarth"
+        },
+        color: {
+          axis: "x",
+          quantize: 5,
+          legend: { position: "bottom" }
+        }
+      },
+      onClick: (_, elements) => {
+        if(!elements.length) return;
+        const idx = elements[0].index;
+        const item = data[idx];
+
+        document.getElementById("countryName").innerText = item.name;
+        document.getElementById("countryRisk").innerText = item.value;
+        document.getElementById("countryBand").innerText = item.band.toUpperCase();
+        document.getElementById("countryBand").className = "badge " + item.band;
+        document.getElementById("countryInfo").innerText =
+          `${item.name} currently shows a ${item.band} risk profile with a score of ${item.value}.`;
+      }
+    }
+  });
+}
+
+loadWorldMap();
+</script>
 
 </body>
 </html>

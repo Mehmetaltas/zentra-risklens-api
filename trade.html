@@ -1,176 +1,289 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>ZENTRA Trade Planner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Trade Intelligence Engine</title>
 
 <style>
-
 body{
-margin:0;
-font-family:Arial;
-background:#050b18;
-color:white;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#071021;
+  color:white;
 }
-
 header{
-padding:30px;
-background:#08132a;
-text-align:center;
-border-bottom:1px solid #103865;
+  background:#08132a;
+  padding:20px;
+  text-align:center;
+  border-bottom:1px solid #103865;
 }
-
-h1{
-margin:0;
-color:#00e0ff;
+header h1{
+  margin:0;
+  color:#00e0ff;
 }
-
 nav{
-margin-top:10px;
+  margin-top:10px;
 }
-
 nav a{
-color:#7bdfff;
-margin:0 12px;
-text-decoration:none;
+  color:#7bdfff;
+  margin:0 10px;
+  text-decoration:none;
+  font-size:14px;
 }
-
-section{
-padding:40px;
-max-width:1000px;
-margin:auto;
+nav a:hover{
+  color:#00e0ff;
 }
-
-input{
-width:100%;
-padding:10px;
-margin-bottom:10px;
-border-radius:6px;
-border:none;
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
 }
-
+.card{
+  background:#0e1c38;
+  padding:24px;
+  border-radius:12px;
+  border:1px solid #103865;
+}
+h2{
+  color:#00e0ff;
+  margin-top:0;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  background:#08132a;
+  border:none;
+  color:white;
+  border-radius:8px;
+  box-sizing:border-box;
+}
 button{
-padding:12px 20px;
-background:#00e0ff;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
+  margin-top:20px;
+  padding:12px 18px;
+  background:#00e0ff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
 }
-
 .result{
-margin-top:30px;
-background:#08152c;
-padding:20px;
-border-radius:10px;
-border:1px solid #103865;
+  margin-top:24px;
+  background:#020814;
+  padding:20px;
+  border-radius:10px;
+  line-height:1.7;
 }
-
-.footer{
-text-align:center;
-padding:30px;
-background:#08132a;
-margin-top:50px;
-color:#6fa9d6;
+.tag{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
 }
-
+.low{color:#00e676;background:rgba(0,230,118,.12);}
+.medium{color:#ffd54f;background:rgba(255,213,79,.12);}
+.high{color:#ff7043;background:rgba(255,112,67,.12);}
+footer{
+  margin-top:60px;
+  padding:20px;
+  background:#08132a;
+  text-align:center;
+  color:#6fa9d6;
+}
+@media (max-width: 900px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<h1>ZENTRA Trade Planner</h1>
-
-<nav>
-
-<a href="index.html">Home</a>
-<a href="advisor.html">Advisor</a>
-<a href="brain.html">Brain</a>
-<a href="map.html">Global Map</a>
-<a href="trade.html">Trade</a>
-
-</nav>
-
+  <h1>ZENTRA Trade Intelligence Engine</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="advisor.html">AI Advisor</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="knowledge.html">Knowledge</a>
+    <a href="simulator.html">Business Simulator</a>
+    <a href="trade-intelligence.html">Trade Intelligence</a>
+  </nav>
 </header>
 
-<section>
+<div class="container">
 
-<h2>Logistics & Trade Simulation</h2>
+  <div class="card">
+    <h2>Import / Export / Logistics Simulation</h2>
+    <p>Estimate route cost, margin, logistics pressure and trade recommendation.</p>
 
-<p>Plan your shipment and estimate cost and profit.</p>
+    <div class="grid">
+      <div>
+        <label>Product</label>
+        <input id="product" placeholder="Example: hay, textile, machinery, olive oil">
+      </div>
 
-<input id="product" placeholder="Product (example: hay / wheat / steel)">
-<input id="origin" placeholder="Origin (example: Konya)">
-<input id="destination" placeholder="Destination (example: Istanbul)">
-<input id="quantity" placeholder="Quantity (tons)">
-<input id="price" placeholder="Selling price per ton">
+      <div>
+        <label>Trade Type</label>
+        <select id="tradeType">
+          <option value="domestic">Domestic Trade</option>
+          <option value="export">Export</option>
+          <option value="import">Import</option>
+        </select>
+      </div>
 
-<button onclick="simulate()">Simulate Trade</button>
+      <div>
+        <label>Origin</label>
+        <input id="origin" placeholder="Example: Konya / China / Germany">
+      </div>
 
-<div class="result" id="result" style="display:none"></div>
+      <div>
+        <label>Destination</label>
+        <input id="destination" placeholder="Example: Istanbul / Dubai / Italy">
+      </div>
 
-</section>
+      <div>
+        <label>Quantity (tons or units)</label>
+        <input id="quantity" placeholder="Example: 20">
+      </div>
 
-<div class="footer">
+      <div>
+        <label>Unit Cost ($)</label>
+        <input id="unitCost" placeholder="Example: 150">
+      </div>
 
-ZENTRA Trade Intelligence
+      <div>
+        <label>Unit Selling Price ($)</label>
+        <input id="unitPrice" placeholder="Example: 240">
+      </div>
+
+      <div>
+        <label>Distance (km)</label>
+        <input id="distance" placeholder="Example: 700">
+      </div>
+    </div>
+
+    <button onclick="simulateTrade()">Run Trade Intelligence</button>
+
+    <div class="result" id="result">
+      ZENTRA Trade Intelligence is ready.
+    </div>
+  </div>
 
 </div>
 
+<footer>
+  ZENTRA Economic OS • Trade & Logistics Intelligence
+</footer>
+
 <script>
+function simulateTrade(){
+  const product = document.getElementById("product").value || "product";
+  const tradeType = document.getElementById("tradeType").value;
+  const origin = document.getElementById("origin").value || "origin";
+  const destination = document.getElementById("destination").value || "destination";
+  const quantity = parseFloat(document.getElementById("quantity").value);
+  const unitCost = parseFloat(document.getElementById("unitCost").value);
+  const unitPrice = parseFloat(document.getElementById("unitPrice").value);
+  const distance = parseFloat(document.getElementById("distance").value);
 
-function simulate(){
+  if(!quantity || !unitCost || !unitPrice || !distance){
+    alert("Fill quantity, unit cost, unit price and distance.");
+    return;
+  }
 
-let product = document.getElementById("product").value
-let origin = document.getElementById("origin").value
-let destination = document.getElementById("destination").value
-let quantity = parseFloat(document.getElementById("quantity").value)
-let price = parseFloat(document.getElementById("price").value)
+  let transportMultiplier = 0.65;
+  let customsMultiplier = 0;
+  let tradeRiskBase = 22;
 
-if(!quantity || !price){
-alert("Enter quantity and price")
-return
+  if(tradeType === "export"){
+    transportMultiplier = 0.90;
+    customsMultiplier = 0.08;
+    tradeRiskBase = 38;
+  }else if(tradeType === "import"){
+    transportMultiplier = 1.05;
+    customsMultiplier = 0.12;
+    tradeRiskBase = 46;
+  }
+
+  const logisticsCost = distance * transportMultiplier * quantity;
+  const goodsCost = quantity * unitCost;
+  const customsCost = goodsCost * customsMultiplier;
+  const totalCost = goodsCost + logisticsCost + customsCost;
+  const revenue = quantity * unitPrice;
+  const profit = revenue - totalCost;
+  const margin = (profit / revenue) * 100;
+
+  let riskScore = tradeRiskBase;
+
+  if(margin < 10) riskScore += 28;
+  else if(margin < 20) riskScore += 16;
+  else riskScore += 6;
+
+  if(distance > 1500) riskScore += 15;
+  else if(distance > 700) riskScore += 8;
+
+  if(tradeType === "import") riskScore += 8;
+
+  riskScore = Math.min(Math.round(riskScore), 100);
+
+  let riskBand = "low";
+  if(riskScore >= 70) riskBand = "high";
+  else if(riskScore >= 40) riskBand = "medium";
+
+  let routeAdvice = "Route appears manageable.";
+  if(distance > 1500) routeAdvice = "Long-distance trade requires stronger logistics planning and buffer cost control.";
+  else if(distance > 700) routeAdvice = "Mid-range logistics should be optimized with timing and vehicle matching.";
+
+  let commercialAdvice = "Trade margin looks healthy.";
+  if(margin < 10) commercialAdvice = "Margin is weak. Re-negotiate price, reduce logistics cost or increase order size.";
+  else if(margin < 20) commercialAdvice = "Margin is workable but sensitive to cost shocks.";
+
+  let executionPlan =
+`1. Confirm supplier / production readiness
+2. Lock transport option and timeline
+3. Re-check customer payment speed
+4. Protect margin against fuel / delay shocks
+5. Finalize shipment and follow delivery`;
+
+  document.getElementById("result").innerHTML = `
+<h3>Trade Intelligence Result</h3>
+
+<b>Product:</b> ${product}<br>
+<b>Trade Type:</b> ${tradeType}<br>
+<b>Route:</b> ${origin} → ${destination}<br>
+<b>Quantity:</b> ${quantity}<br><br>
+
+<b>Goods Cost:</b> $${goodsCost.toFixed(2)}<br>
+<b>Logistics Cost:</b> $${logisticsCost.toFixed(2)}<br>
+<b>Customs / Border Cost:</b> $${customsCost.toFixed(2)}<br>
+<b>Total Cost:</b> $${totalCost.toFixed(2)}<br>
+<b>Total Revenue:</b> $${revenue.toFixed(2)}<br>
+<b>Estimated Profit:</b> $${profit.toFixed(2)}<br>
+<b>Estimated Margin:</b> ${margin.toFixed(2)} %<br><br>
+
+<b>Risk Level:</b> <span class="tag ${riskBand}">${riskBand}</span><br>
+<b>Risk Score:</b> ${riskScore}<br><br>
+
+<b>Route Analysis:</b><br>
+${routeAdvice}<br><br>
+
+<b>Commercial Analysis:</b><br>
+${commercialAdvice}<br><br>
+
+<b>Execution Recipe:</b><br>
+${executionPlan}
+`;
 }
-
-let distance = 450
-let transportCost = distance * 0.7
-let totalTransport = transportCost * quantity
-
-let revenue = quantity * price
-let profit = revenue - totalTransport
-
-let risk = "medium"
-
-if(profit < 0){
-risk = "high"
-}
-
-document.getElementById("result").style.display="block"
-
-document.getElementById("result").innerHTML = `
-
-<h3>Trade Simulation</h3>
-
-Product: ${product}<br>
-Route: ${origin} → ${destination}<br>
-Quantity: ${quantity} tons<br><br>
-
-Transport Cost: $${totalTransport.toFixed(2)}<br>
-Revenue: $${revenue.toFixed(2)}<br>
-Estimated Profit: $${profit.toFixed(2)}<br><br>
-
-Risk Level: ${risk}
-
-`
-
-}
-
 </script>
 
 </body>

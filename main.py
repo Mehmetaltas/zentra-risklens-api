@@ -1,28 +1,33 @@
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import requests
-import random
-import os
 from typing import Optional
 
-app = FastAPI(title="ZENTRA REAL DATA ENGINE")
+
+app = FastAPI(title="ZENTRA Economic OS API", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://zentrarisk.com",
+        "https://www.zentrarisk.com",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "*",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # -------------------------
-# CONFIG
-# -------------------------
-
-FRED_API_KEY = os.getenv("FRED_API_KEY", "").strip()
-
-WORLD_BANK_BASE = "https://api.worldbank.org/v2"
-FRED_BASE = "https://api.stlouisfed.org/fred"
-ECB_BASE = "https://data-api.ecb.europa.eu"
-
-# -------------------------
-# MODELS
+# REQUEST MODELS
 # -------------------------
 
 class ChatRequest(BaseModel):
     question: str
+
 
 class SectorRequest(BaseModel):
     sector: str
@@ -30,17 +35,20 @@ class SectorRequest(BaseModel):
     cost_pressure: float
     finance_pressure: float
 
+
 class SMERequest(BaseModel):
     revenue: float
     cost: float
     debt: float
     delay: int
 
+
 class SupplyRequest(BaseModel):
     lead_time_days: int
     supplier_risk: float
     logistics_delay_risk: float
     inventory_buffer_days: int
+
 
 class TradeRequest(BaseModel):
     origin: str
@@ -49,20 +57,18 @@ class TradeRequest(BaseModel):
     transport_cost: float
     product_price: float
 
+
 class ScenarioRequest(BaseModel):
     scenario: str
+
 
 # -------------------------
 # HELPERS
 # -------------------------
 
-def safe_float(x, default=0.0):
-    try:
-        if x is None:
-            return default
-        return float(x)
-    except Exception:
-        return default
+def clamp(value: float, low: float = 0, high: float = 100) -> float:
+    return round(max(low, min(high, value)), 2)
+
 
 def risk_band(score: float) -> str:
     if score >= 80:
@@ -73,131 +79,20 @@ def risk_band(score: float) -> str:
         return "medium"
     return "low"
 
+
 # -------------------------
-# REAL DATA PIPELINE
+# ROOT / HEALTH
 # -------------------------
 
-def fetch_world_bank_latest(country_code: str, indicator_code: str, fallback: float) -> float:
-    """
-    Example indicator:
-    FP.CPI.TOTL.ZG = inflation, consumer prices (annual %)
-    """
-    url = f"{WORLD_BANK_BASE}/country/{country_code}/indicator/{indicator_code}?format=json&per_page=60"
-    try:
-        r = requests.get(url, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        if isinstance(data, list) and len(data) > 1 and isinstance(data[1], list):
-            for row in data[1]:
-                if row.get("value") is not None:
-                    return safe_float(row["value"], fallback)
-    except Exception:
-        pass
-    return fallback
+@app.get("/")
+def root():
+    return {"system": "ZENTRA ECONOMIC OS ACTIVE"}
 
-def fetch_fred_latest(series_id: str, fallback: float) -> float:
-    """
-    FRED requires an API key.
-    """
-    if not FRED_API_KEY:
-        return fallback
 
-    url = (
-        f"{FRED_BASE}/series/observations"
-        f"?series_id={series_id}"
-        f"&api_key={FRED_API_KEY}"
-        f"&file_type=json"
-        f"&sort_order=desc"
-        f"&limit=1"
-    )
-    try:
-        r = requests.get(url, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        obs = data.get("observations", [])
-        if obs:
-            return safe_float(obs[0].get("value"), fallback)
-    except Exception:
-        pass
-    return fallback
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
-def fetch_ecb_policy_rate(fallback: float) -> float:
-    """
-    ECB official deposit facility rate example series.
-    API is SDMX-based; if parsing fails, fallback is used.
-    """
-    url = (
-        f"{ECB_BASE}/service/data/FM/"
-        f"D.U2.EUR.4F.KR.DFR.LEV"
-        f"?lastNObservations=1&format=jsondata"
-    )
-    try:
-        r = requests.get(url, timeout=20, headers={"Accept": "application/json"})
-        r.raise_for_status()
-        data = r.json()
-
-        # ECB JSON structures can vary; try a few shapes safely
-        # 1) direct observations list
-        if isinstance(data, dict):
-            if "data" in data and isinstance(data["data"], list) and data["data"]:
-                item = data["data"][0]
-                if isinstance(item, dict):
-                    for k in ("value", "obsValue"):
-                        if k in item:
-                            return safe_float(item[k], fallback)
-
-            # 2) generic deep scan
-            stack = [data]
-            while stack:
-                cur = stack.pop()
-                if isinstance(cur, dict):
-                    for k, v in cur.items():
-                        if k in ("value", "obsValue"):
-                            val = safe_float(v, None)
-                            if val is not None:
-                                return val
-                        else:
-                            stack.append(v)
-                elif isinstance(cur, list):
-                    stack.extend(cur)
-    except Exception:
-        pass
-
-    return fallback
-
-def real_data_pipeline(country_code: str = "TR") -> dict:
-    """
-    TR inflation from World Bank
-    US 10Y yield or Fed Funds from FRED if key exists
-    ECB rate from ECB API if available
-    Other values use deterministic fallback ranges
-    """
-    inflation = fetch_world_bank_latest(country_code, "FP.CPI.TOTL.ZG", fallback=38.0)
-
-    # FRED examples: FEDFUNDS, DGS10
-    us_rate = fetch_fred_latest("FEDFUNDS", fallback=5.25)
-
-    ecb_rate = fetch_ecb_policy_rate(fallback=4.00)
-
-    # These are still modeled until more live feeds are added
-    liquidity = round(random.uniform(35, 80), 2)
-    volatility = round(random.uniform(25, 75), 2)
-    energy = round(random.uniform(35, 85), 2)
-
-    return {
-        "country_code": country_code,
-        "inflation": round(inflation, 2),
-        "us_policy_rate": round(us_rate, 2),
-        "ecb_policy_rate": round(ecb_rate, 2),
-        "liquidity": liquidity,
-        "volatility": volatility,
-        "energy": energy,
-        "sources": {
-            "inflation": "World Bank",
-            "us_policy_rate": "FRED" if FRED_API_KEY else "fallback",
-            "ecb_policy_rate": "ECB API / fallback",
-        }
-    }
 
 # -------------------------
 # ECONOMIC BRAIN
@@ -205,42 +100,76 @@ def real_data_pipeline(country_code: str = "TR") -> dict:
 
 @app.get("/brain")
 def brain(country_code: str = Query("TR")):
-    data = real_data_pipeline(country_code)
+    country_code = country_code.upper()
 
-    liquidity_pressure = 100 - data["liquidity"]
+    country_profiles = {
+        "TR": {
+            "inflation": 61.0,
+            "policy_rate": 50.0,
+            "liquidity": 44.0,
+            "volatility": 67.0,
+            "energy_stress": 58.0,
+        },
+        "US": {
+            "inflation": 3.4,
+            "policy_rate": 5.25,
+            "liquidity": 74.0,
+            "volatility": 39.0,
+            "energy_stress": 36.0,
+        },
+        "DE": {
+            "inflation": 2.8,
+            "policy_rate": 4.0,
+            "liquidity": 71.0,
+            "volatility": 34.0,
+            "energy_stress": 41.0,
+        },
+        "CN": {
+            "inflation": 1.4,
+            "policy_rate": 3.45,
+            "liquidity": 69.0,
+            "volatility": 46.0,
+            "energy_stress": 44.0,
+        },
+    }
 
-    risk = (
-        data["inflation"] * 0.9 +
-        data["us_policy_rate"] * 3.0 +
-        data["ecb_policy_rate"] * 2.0 +
-        liquidity_pressure * 0.35 +
-        data["volatility"] * 0.25 +
-        data["energy"] * 0.15
+    p = country_profiles.get(country_code, country_profiles["TR"])
+
+    liquidity_pressure = 100 - p["liquidity"]
+
+    raw_risk = (
+        p["inflation"] * 0.60
+        + p["policy_rate"] * 0.35
+        + liquidity_pressure * 0.30
+        + p["volatility"] * 0.25
+        + p["energy_stress"] * 0.20
     )
 
-    risk = round(min(max(risk, 0), 100), 2)
+    global_risk_index = clamp(raw_risk)
 
-    if risk > 70:
-        state = "high pressure"
-        trend = "bearish"
-        advice = "reduce leverage and protect liquidity"
-    elif risk > 45:
-        state = "moderate pressure"
-        trend = "neutral"
-        advice = "diversify assets and control costs"
+    if global_risk_index >= 70:
+        economic_state = "high pressure"
+        market_trend = "bearish"
+        advice = "protect liquidity, reduce fragile exposure and keep balance sheet discipline"
+    elif global_risk_index >= 45:
+        economic_state = "moderate pressure"
+        market_trend = "neutral"
+        advice = "control cost structure, diversify risk and monitor financing conditions"
     else:
-        state = "stable"
-        trend = "bullish"
-        advice = "growth opportunities available"
+        economic_state = "stable"
+        market_trend = "bullish"
+        advice = "growth conditions are comparatively supportive, but discipline still matters"
 
     return {
-        "global_risk_index": risk,
-        "economic_state": state,
-        "market_trend": trend,
-        "insight": "economic pressure driven by inflation, rates, liquidity and volatility",
+        "country_code": country_code,
+        "global_risk_index": global_risk_index,
+        "economic_state": economic_state,
+        "market_trend": market_trend,
+        "insight": "economic pressure is driven by inflation, rates, liquidity, volatility and energy stress",
         "advice": advice,
-        "macro": data
+        "macro": p,
     }
+
 
 # -------------------------
 # GLOBAL RISK
@@ -249,18 +178,23 @@ def brain(country_code: str = Query("TR")):
 @app.get("/global-risk")
 def global_risk():
     countries = [
-        {"name": "United States", "risk": 44},
-        {"name": "Germany", "risk": 36},
-        {"name": "China", "risk": 48},
-        {"name": "India", "risk": 52},
-        {"name": "Turkey", "risk": 69},
-        {"name": "Brazil", "risk": 55},
-        {"name": "Nigeria", "risk": 73},
-        {"name": "Argentina", "risk": 84},
+        {"code": "US", "name": "United States", "risk": 44},
+        {"code": "DE", "name": "Germany", "risk": 36},
+        {"code": "CN", "name": "China", "risk": 48},
+        {"code": "IN", "name": "India", "risk": 52},
+        {"code": "TR", "name": "Turkey", "risk": 69},
+        {"code": "BR", "name": "Brazil", "risk": 55},
+        {"code": "NG", "name": "Nigeria", "risk": 73},
+        {"code": "AR", "name": "Argentina", "risk": 84},
+        {"code": "GB", "name": "United Kingdom", "risk": 43},
+        {"code": "JP", "name": "Japan", "risk": 28},
     ]
+
     for c in countries:
         c["band"] = risk_band(c["risk"])
+
     return {"countries": countries}
+
 
 # -------------------------
 # CHAT
@@ -270,83 +204,130 @@ def global_risk():
 def chat(req: ChatRequest):
     q = req.question.lower()
 
-    if "inflation" in q or "enflasyon" in q:
-        answer = "Inflation reduces purchasing power and increases cost pressure."
-    elif "gold" in q or "altın" in q:
-        answer = "Gold often benefits during inflationary periods, but concentration risk still matters."
-    elif "business" in q or "iş" in q:
-        answer = "A healthy business requires strong cashflow, stable demand and resilient margins."
-    elif "trade" in q or "ticaret" in q:
-        answer = "Trade profitability depends on pricing power, route efficiency and logistics cost."
+    if any(x in q for x in ["inflation", "enflasyon"]):
+        answer = "Inflation reduces purchasing power, raises cost pressure and usually tightens financial conditions."
+    elif any(x in q for x in ["gold", "altın"]):
+        answer = "Gold is often used as a defensive asset during inflation and uncertainty, but concentration risk still matters."
+    elif any(x in q for x in ["business", "iş", "shop", "dükkan"]):
+        answer = "A healthy business needs stable demand, pricing power, cashflow control and manageable debt."
+    elif any(x in q for x in ["trade", "ticaret", "logistics", "lojistik"]):
+        answer = "Trade profitability depends on margin quality, route efficiency, transport cost and payment reliability."
+    elif any(x in q for x in ["recession", "resesyon"]):
+        answer = "Recession means weaker demand, slower growth and more pressure on fragile businesses and debt structures."
     else:
-        answer = "ZENTRA is analyzing the economic context."
+        answer = "ZENTRA is analyzing the question within economic context."
 
-    return {"question": req.question, "answer": answer}
+    return {
+        "question": req.question,
+        "answer": answer,
+    }
+
 
 # -------------------------
 # SECTOR INTELLIGENCE
 # -------------------------
 
 @app.post("/sector-intelligence")
-def sector(req: SectorRequest):
-    risk = (req.cost_pressure + req.finance_pressure + (100 - req.demand)) / 3.0
-    risk = round(min(max(risk, 0), 100), 2)
+def sector_intelligence(req: SectorRequest):
+    sector_base = {
+        "agriculture": 42,
+        "manufacturing": 55,
+        "retail": 58,
+        "services": 46,
+        "technology": 35,
+        "logistics": 50,
+        "energy": 57,
+        "finance": 48,
+        "construction": 62,
+    }
+
+    base = sector_base.get(req.sector.lower(), 50)
+    demand_pressure = 100 - req.demand
+
+    score = (
+        base * 0.35
+        + demand_pressure * 0.25
+        + req.cost_pressure * 0.20
+        + req.finance_pressure * 0.20
+    )
+
+    score = clamp(score)
+    band = risk_band(score)
+
+    if score >= 70:
+        recommendation = "sector is under strong pressure; defensive planning and cash discipline are needed"
+    elif score >= 45:
+        recommendation = "sector is workable but fragile; monitor demand and margins carefully"
+    else:
+        recommendation = "sector conditions are comparatively resilient"
 
     return {
         "sector": req.sector,
-        "sector_risk_score": risk,
-        "band": risk_band(risk),
-        "recommendation": "monitor demand, finance and cost dynamics"
+        "sector_risk_score": score,
+        "band": band,
+        "recommendation": recommendation,
     }
+
 
 # -------------------------
 # SME INTELLIGENCE
 # -------------------------
 
 @app.post("/sme-intelligence")
-def sme(req: SMERequest):
+def sme_intelligence(req: SMERequest):
     profit = req.revenue - req.cost - req.debt
-    risk = 40.0
 
+    risk_score = 35.0
     if profit < 0:
-        risk += 30
+        risk_score += 30
+    elif profit < 2000:
+        risk_score += 15
 
-    risk += req.delay * 0.5
-    risk = round(min(max(risk, 0), 100), 2)
+    risk_score += req.delay * 0.5
+    risk_score = clamp(risk_score)
 
     return {
         "profit": round(profit, 2),
-        "risk_score": risk,
-        "band": risk_band(risk)
+        "risk_score": risk_score,
+        "band": risk_band(risk_score),
     }
+
 
 # -------------------------
 # SUPPLY CHAIN
 # -------------------------
 
 @app.post("/supply-chain")
-def supply(req: SupplyRequest):
-    risk = (
-        req.lead_time_days * 0.4 +
-        req.supplier_risk * 0.3 +
-        req.logistics_delay_risk * 0.2 -
-        req.inventory_buffer_days * 0.2
+def supply_chain(req: SupplyRequest):
+    score = (
+        req.lead_time_days * 0.40
+        + req.supplier_risk * 0.30
+        + req.logistics_delay_risk * 0.20
+        - req.inventory_buffer_days * 0.20
     )
 
-    risk = round(min(max(risk, 0), 100), 2)
+    score = clamp(score)
+
+    if score >= 70:
+        recommendation = "increase inventory buffer and diversify suppliers"
+    elif score >= 40:
+        recommendation = "monitor lead times and supplier dependency"
+    else:
+        recommendation = "supply structure appears comparatively stable"
 
     return {
-        "risk_score": risk,
-        "band": risk_band(risk),
-        "recommendation": "increase inventory buffer or diversify suppliers"
+        "risk_score": score,
+        "band": risk_band(score),
+        "recommendation": recommendation,
     }
+
 
 # -------------------------
 # TRADE INTELLIGENCE
 # -------------------------
 
 @app.post("/trade-intelligence")
-def trade(req: TradeRequest):
+def trade_intelligence(req: TradeRequest):
     margin = req.product_price - req.transport_cost
 
     if margin > 50:
@@ -360,8 +341,9 @@ def trade(req: TradeRequest):
         "route": f"{req.origin} → {req.destination}",
         "product": req.product,
         "margin": round(margin, 2),
-        "trade_viability": viability
+        "trade_viability": viability,
     }
+
 
 # -------------------------
 # NETWORK
@@ -374,8 +356,9 @@ def network():
         "trade_nodes": 85,
         "logistics_nodes": 42,
         "market_nodes": 64,
-        "network_stress": 48
+        "network_stress": 48,
     }
+
 
 # -------------------------
 # KNOWLEDGE
@@ -386,13 +369,14 @@ def knowledge(topic: str):
     topic = topic.lower()
 
     if topic == "inflation":
-        return {"definition": "Inflation is the rate at which prices increase over time."}
+        return {"definition": "Inflation is the rate at which prices rise over time and purchasing power falls."}
     if topic == "cds":
-        return {"definition": "CDS is a market-based measure of sovereign credit risk."}
+        return {"definition": "CDS is a market-based measure of sovereign or credit default risk."}
     if topic == "recession":
-        return {"definition": "Recession is a period of economic slowdown and weaker demand."}
+        return {"definition": "Recession is a period of economic slowdown with weaker demand and lower confidence."}
 
     return {"definition": "economic knowledge topic"}
+
 
 # -------------------------
 # SCENARIO
@@ -400,26 +384,26 @@ def knowledge(topic: str):
 
 @app.post("/scenario")
 def scenario(req: ScenarioRequest):
-    base = random.uniform(40, 70)
+    base = 55.0
 
     if req.scenario == "interest_shock":
         impact = "credit contraction"
-        risk = base + 12
+        projected_risk = base + 12
     elif req.scenario == "currency_shock":
         impact = "import inflation"
-        risk = base + 15
+        projected_risk = base + 15
     elif req.scenario == "oil_shock":
         impact = "energy cost spike"
-        risk = base + 10
+        projected_risk = base + 10
     else:
         impact = "unknown scenario"
-        risk = base
+        projected_risk = base
 
-    risk = round(min(max(risk, 0), 100), 2)
+    projected_risk = clamp(projected_risk)
 
     return {
         "scenario": req.scenario,
         "impact": impact,
-        "projected_risk": risk,
-        "band": risk_band(risk)
-    }
+        "projected_risk": projected_risk,
+        "band": risk_band(projected_risk),
+        }

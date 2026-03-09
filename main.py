@@ -4,7 +4,7 @@ import requests
 import sqlite3
 import datetime
 
-app = FastAPI(title="ZENTRA Core Engine")
+app = FastAPI(title="ZENTRA Core Engine V2")
 
 # -----------------------------
 # DATABASE
@@ -202,7 +202,7 @@ def global_risk_index(economic, market_state, behavior):
     return round(total * 100, 2)
 
 # -----------------------------
-# AI INSIGHT
+# AI INSIGHT ENGINE
 # -----------------------------
 
 def ai_insight(risk):
@@ -248,20 +248,121 @@ def save_history(risk, global_risk, state):
     conn.commit()
 
 # -----------------------------
+# COUNTRY RISK ENGINE
+# -----------------------------
+
+def band(score):
+
+    if score >= 80:
+        return "critical"
+
+    elif score >= 65:
+        return "high"
+
+    elif score >= 45:
+        return "medium"
+
+    elif score >= 25:
+        return "low"
+
+    return "very low"
+
+
+def country_risk_score(inflation, interest, currency_vol, debt_stress, political_risk):
+
+    score = (
+
+        0.30 * inflation +
+        0.25 * interest +
+        0.20 * currency_vol +
+        0.15 * debt_stress +
+        0.10 * political_risk
+
+    )
+
+    return round(score, 2)
+
+# -----------------------------
+# COUNTRY DATA
+# -----------------------------
+
+def get_country_risk_data():
+
+    raw = [
+
+        {"code": "US","name":"United States","inflation":42,"interest":48,"currency_vol":30,"debt_stress":55,"political_risk":35},
+
+        {"code": "DE","name":"Germany","inflation":45,"interest":40,"currency_vol":25,"debt_stress":42,"political_risk":20},
+
+        {"code": "CN","name":"China","inflation":35,"interest":38,"currency_vol":40,"debt_stress":50,"political_risk":35},
+
+        {"code": "IN","name":"India","inflation":50,"interest":45,"currency_vol":42,"debt_stress":48,"political_risk":32},
+
+        {"code": "TR","name":"Turkey","inflation":78,"interest":75,"currency_vol":72,"debt_stress":55,"political_risk":45},
+
+        {"code": "BR","name":"Brazil","inflation":55,"interest":52,"currency_vol":58,"debt_stress":50,"political_risk":38},
+
+        {"code": "NG","name":"Nigeria","inflation":72,"interest":60,"currency_vol":75,"debt_stress":58,"political_risk":50},
+
+        {"code": "AR","name":"Argentina","inflation":85,"interest":78,"currency_vol":82,"debt_stress":70,"political_risk":55}
+
+    ]
+
+    result = []
+
+    for c in raw:
+
+        score = country_risk_score(
+
+            c["inflation"],
+            c["interest"],
+            c["currency_vol"],
+            c["debt_stress"],
+            c["political_risk"]
+
+        )
+
+        result.append({
+
+            "code": c["code"],
+            "name": c["name"],
+            "risk": score,
+            "band": band(score)
+
+        })
+
+    return result
+
+# -----------------------------
+# REQUEST MODELS
+# -----------------------------
+
+class ScenarioRequest(BaseModel):
+
+    scenario: str
+
+
+class SectorRequest(BaseModel):
+
+    sector: str
+    sales_trend: float
+    cost_pressure: float
+    demand_index: float
+
+# -----------------------------
 # ROOT
 # -----------------------------
 
 @app.get("/")
 def root():
 
-    return {"system": "ZENTRA CORE ENGINE ACTIVE"}
+    return {"system":"ZENTRA CORE ENGINE ACTIVE"}
 
 # -----------------------------
-# RISK ENDPOINT
+# RISK
 # -----------------------------
 
 @app.get("/risk")
-
 def risk():
 
     macro = get_macro_data()
@@ -288,86 +389,44 @@ def risk():
     }
 
 # -----------------------------
-# TELESCOPE
+# GLOBAL RISK
 # -----------------------------
 
-@app.get("/telescope")
+@app.get("/global-risk")
+def global_risk():
 
-def telescope():
+    countries = get_country_risk_data()
 
-    macro = get_macro_data()
-    market = get_market_data()
-    business = simulate_business()
-
-    indicators = indicator_engine(macro)
-    economic = economic_engine(indicators)
-    market_state = market_engine(market)
-    behavior = behavior_engine(business)
-
-    risk_score = risk_engine(behavior,economic)
-
-    global_risk = global_risk_index(
-
-        economic,
-        market_state,
-        behavior
-
-    )
-
-    insight = ai_insight(risk_score)
-
-    save_history(
-
-        risk_score,
-        global_risk,
-        economic["economic_state"]
-
-    )
-
-    return {
-
-        "macro": macro,
-        "market": market_state,
-        "risk_score": risk_score,
-        "global_risk_index": global_risk,
-        "economic_state": economic["economic_state"],
-        "ai_reason": insight["reason"],
-        "ai_advice": insight["advice"]
-
-    }
+    return {"countries":countries}
 
 # -----------------------------
 # HISTORY
 # -----------------------------
 
 @app.get("/history")
-
 def history():
 
     cur.execute("""
 
     SELECT timestamp,risk_score,global_risk,economic_state
-
     FROM risk_history
-
     ORDER BY id DESC
-
     LIMIT 20
 
     """)
 
     rows = cur.fetchall()
 
-    data = []
+    data=[]
 
     for r in rows:
 
         data.append({
 
-            "timestamp": r[0],
-            "risk_score": r[1],
-            "global_risk": r[2],
-            "economic_state": r[3]
+            "timestamp":r[0],
+            "risk_score":r[1],
+            "global_risk":r[2],
+            "economic_state":r[3]
 
         })
 

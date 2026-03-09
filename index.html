@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Economic OS</title>
+<title>ZENTRA Economic OS v2</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
@@ -24,7 +24,7 @@ align-items:center;
 border-bottom:1px solid #103865;
 position:sticky;
 top:0;
-z-index:10;
+z-index:20;
 }
 .logo{
 color:#00e0ff;
@@ -43,24 +43,24 @@ font-size:14px;
 }
 .hero{
 text-align:center;
-padding:80px 20px 60px;
+padding:72px 20px 52px;
 }
 .hero h1{
 margin:0 0 16px 0;
-font-size:54px;
+font-size:52px;
 color:#00e0ff;
 }
 .hero p{
-max-width:760px;
+max-width:820px;
 margin:auto;
 color:#9dcdf3;
-font-size:19px;
+font-size:18px;
 line-height:1.7;
 }
 .section{
 max-width:1280px;
 margin:auto;
-padding:28px 20px 44px;
+padding:24px 20px 40px;
 }
 .section h2{
 margin:0 0 16px 0;
@@ -74,6 +74,11 @@ gap:18px;
 .grid-2{
 display:grid;
 grid-template-columns:1fr 1fr;
+gap:18px;
+}
+.grid-4{
+display:grid;
+grid-template-columns:repeat(4,1fr);
 gap:18px;
 }
 .card{
@@ -123,8 +128,8 @@ white-space:pre-wrap;
 .chatbox{
 background:#020814;
 padding:16px;
-min-height:180px;
-max-height:320px;
+min-height:220px;
+max-height:360px;
 overflow:auto;
 border-radius:10px;
 line-height:1.7;
@@ -153,6 +158,23 @@ padding:12px;
 border-radius:10px;
 border:1px solid #103865;
 }
+.kpi{
+background:#08132a;
+padding:14px;
+border-radius:10px;
+border:1px solid #103865;
+}
+.kpi .label{
+font-size:12px;
+color:#9dcdf3;
+text-transform:uppercase;
+margin-bottom:6px;
+}
+.kpi .value{
+font-size:22px;
+color:#00e0ff;
+font-weight:bold;
+}
 #worldMap{
 width:100%!important;
 height:520px!important;
@@ -164,8 +186,8 @@ background:#08132a;
 color:#6fa9d6;
 margin-top:40px;
 }
-@media(max-width:1000px){
-.grid,.grid-2{grid-template-columns:1fr;}
+@media(max-width:1100px){
+.grid,.grid-2,.grid-4{grid-template-columns:1fr;}
 .country-list{grid-template-columns:1fr;}
 #worldMap{height:360px!important;}
 }
@@ -177,20 +199,74 @@ margin-top:40px;
 <nav>
 <div class="logo">ZENTRA</div>
 <div class="links">
+<a href="#pipeline">Pipeline</a>
 <a href="#dashboard">Dashboard</a>
 <a href="#brain">Brain</a>
 <a href="#map">Map</a>
-<a href="#search">Search</a>
+<a href="#knowledge">Knowledge</a>
+<a href="#scenario">Scenario</a>
+<a href="#sector">Sector</a>
 <a href="#chat">AI</a>
 </div>
 </nav>
 
 <section class="hero">
-<h1>ZENTRA Economic OS</h1>
+<h1>ZENTRA Economic OS v2</h1>
 <p>
-Global economic intelligence platform combining AI guidance,
-macro analysis, risk mapping and economic decision support.
+Economic Brain Engine, AI Advisor Engine, Knowledge Engine, Scenario Engine,
+Sector Engine and Real Data Pipeline now operate inside one platform.
 </p>
+</section>
+
+<section id="pipeline" class="section">
+<h2>Real Data Pipeline</h2>
+<div class="grid-4">
+<div class="kpi">
+<div class="label">Country</div>
+<div class="value" id="pipeCountry">TR</div>
+</div>
+<div class="kpi">
+<div class="label">Inflation</div>
+<div class="value" id="pipeInflation">--</div>
+</div>
+<div class="kpi">
+<div class="label">Policy Rate</div>
+<div class="value" id="pipeRate">--</div>
+</div>
+<div class="kpi">
+<div class="label">Volatility</div>
+<div class="value" id="pipeVolatility">--</div>
+</div>
+<div class="kpi">
+<div class="label">Liquidity</div>
+<div class="value" id="pipeLiquidity">--</div>
+</div>
+<div class="kpi">
+<div class="label">Energy Stress</div>
+<div class="value" id="pipeEnergy">--</div>
+</div>
+<div class="kpi">
+<div class="label">FX Pressure</div>
+<div class="value" id="pipeFx">--</div>
+</div>
+<div class="kpi">
+<div class="label">Credit Stress</div>
+<div class="value" id="pipeCredit">--</div>
+</div>
+</div>
+<div class="card" style="margin-top:18px;">
+<div class="small">
+Client-side pipeline active. Country profile, market stress and macro variables are refreshed in-browser and feed all engines below.
+</div>
+<select id="countrySelect" onchange="switchCountry()">
+<option value="TR">Turkey</option>
+<option value="US">United States</option>
+<option value="DE">Germany</option>
+<option value="CN">China</option>
+<option value="IN">India</option>
+<option value="BR">Brazil</option>
+</select>
+</div>
 </section>
 
 <section id="dashboard" class="section">
@@ -198,26 +274,23 @@ macro analysis, risk mapping and economic decision support.
 <div class="grid">
 <div class="card">
 <div class="small">Global Risk Index</div>
-<div class="metric" id="riskScore">55</div>
+<div class="metric" id="riskScore">--</div>
 </div>
 <div class="card">
 <div class="small">Economic State</div>
-<div class="metric" id="state" style="font-size:22px;">Moderate</div>
+<div class="metric" id="state" style="font-size:22px;">--</div>
 </div>
 <div class="card">
 <div class="small">Market Trend</div>
-<div class="metric" id="trend" style="font-size:22px;">Neutral</div>
+<div class="metric" id="trend" style="font-size:22px;">--</div>
 </div>
 </div>
 </section>
 
 <section id="brain" class="section">
-<h2>Economic Brain</h2>
+<h2>Economic Brain Engine</h2>
 <div class="card">
-<div class="result" id="brainResult">Risk Index: 55
-State: Moderate
-Trend: Neutral
-Advice: Control cost structure, diversify risk, monitor financing conditions and protect liquidity.</div>
+<div class="result" id="brainResult">Loading Economic Brain Engine...</div>
 </div>
 </section>
 
@@ -242,13 +315,13 @@ Advice: Control cost structure, diversify risk, monitor financing conditions and
 </div>
 </section>
 
-<section id="search" class="section grid-2">
+<section id="knowledge" class="section grid-2">
 <div>
-<h2>Economic Search</h2>
+<h2>Knowledge Engine</h2>
 <div class="card">
-<input id="searchInput" placeholder="Search inflation, cds, recession...">
-<button onclick="runSearch()">Search</button>
-<div id="searchResult" class="result">Search engine is ready.</div>
+<input id="knowledgeInput" placeholder="Search inflation, cds, recession, liquidity, bond yield...">
+<button onclick="runKnowledge()">Explain</button>
+<div id="knowledgeResult" class="result">Knowledge engine is ready.</div>
 </div>
 </div>
 
@@ -260,11 +333,49 @@ Advice: Control cost structure, diversify risk, monitor financing conditions and
 </div>
 </section>
 
+<section id="scenario" class="section grid-2">
+<div>
+<h2>Scenario Engine</h2>
+<div class="card">
+<select id="scenarioName">
+<option value="interest_shock">Interest Shock</option>
+<option value="currency_shock">Currency Shock</option>
+<option value="oil_spike">Oil Spike</option>
+<option value="demand_drop">Demand Drop</option>
+<option value="credit_crunch">Credit Crunch</option>
+</select>
+<button onclick="runScenario()">Run Scenario</button>
+<div id="scenarioResult" class="result">Scenario engine is ready.</div>
+</div>
+</div>
+
+<div id="sector">
+<h2>Sector Engine</h2>
+<div class="card">
+<select id="sectorName">
+<option value="agriculture">Agriculture</option>
+<option value="retail">Retail</option>
+<option value="construction">Construction</option>
+<option value="technology">Technology</option>
+<option value="energy">Energy</option>
+<option value="finance">Finance</option>
+<option value="manufacturing">Manufacturing</option>
+<option value="logistics">Logistics</option>
+</select>
+<input id="sectorDemand" placeholder="Demand (0-100)">
+<input id="sectorCost" placeholder="Cost Pressure (0-100)">
+<input id="sectorFinance" placeholder="Finance Pressure (0-100)">
+<button onclick="runSector()">Analyze Sector</button>
+<div id="sectorResult" class="result">Sector engine is ready.</div>
+</div>
+</div>
+</section>
+
 <section id="chat" class="section">
-<h2>AI Advisor</h2>
+<h2>AI Advisor Engine</h2>
 <div class="card">
 <div class="chatbox" id="chatBox">
-<div><b>ZENTRA:</b> Ready.</div>
+<div><b>ZENTRA:</b> Ready. Ask about inflation, gold, recession, business, trade, sector or the selected country.</div>
 </div>
 <textarea id="chatInput" placeholder="Ask an economic question..."></textarea>
 <button onclick="askChat()">Send</button>
@@ -272,11 +383,22 @@ Advice: Control cost structure, diversify risk, monitor financing conditions and
 </section>
 
 <footer>
-ZENTRA Economic Operating System
+ZENTRA Economic Operating System v2
 </footer>
 
 <script>
 let mapChart = null;
+let activeCountry = "TR";
+let pipelineData = {};
+
+const baseProfiles = {
+  TR:{name:"Turkey", inflation:61, policy_rate:50, liquidity:44, volatility:67, energy_stress:58, fx_pressure:74, credit_stress:69},
+  US:{name:"United States", inflation:3.4, policy_rate:5.25, liquidity:74, volatility:39, energy_stress:36, fx_pressure:28, credit_stress:33},
+  DE:{name:"Germany", inflation:2.8, policy_rate:4.0, liquidity:71, volatility:34, energy_stress:41, fx_pressure:22, credit_stress:31},
+  CN:{name:"China", inflation:1.4, policy_rate:3.45, liquidity:69, volatility:46, energy_stress:44, fx_pressure:37, credit_stress:42},
+  IN:{name:"India", inflation:5.1, policy_rate:6.5, liquidity:63, volatility:48, energy_stress:52, fx_pressure:41, credit_stress:46},
+  BR:{name:"Brazil", inflation:4.6, policy_rate:10.5, liquidity:58, volatility:54, energy_stress:49, fx_pressure:57, credit_stress:55}
+};
 
 const countriesData = [
   {code:"US", name:"United States", risk:44, band:"medium"},
@@ -290,6 +412,102 @@ const countriesData = [
   {code:"GB", name:"United Kingdom", risk:43, band:"medium"},
   {code:"JP", name:"Japan", risk:28, band:"low"}
 ];
+
+function clamp(v, low=0, high=100){
+  return Math.round(Math.max(low, Math.min(high, v)) * 10) / 10;
+}
+
+function riskBand(score){
+  if(score >= 80) return "critical";
+  if(score >= 60) return "high";
+  if(score >= 40) return "medium";
+  return "low";
+}
+
+function buildPipeline(country){
+  const base = baseProfiles[country];
+  const now = new Date();
+  const minuteWave = Math.sin(now.getMinutes() / 60 * Math.PI * 2);
+  const secondWave = Math.cos(now.getSeconds() / 60 * Math.PI * 2);
+
+  pipelineData = {
+    country,
+    name: base.name,
+    inflation: clamp(base.inflation + minuteWave * 0.4),
+    policy_rate: clamp(base.policy_rate + secondWave * 0.05),
+    liquidity: clamp(base.liquidity + minuteWave * 1.2),
+    volatility: clamp(base.volatility + secondWave * 1.8),
+    energy_stress: clamp(base.energy_stress + minuteWave * 1.3),
+    fx_pressure: clamp(base.fx_pressure + secondWave * 1.5),
+    credit_stress: clamp(base.credit_stress + minuteWave * 1.1)
+  };
+}
+
+function paintPipeline(){
+  document.getElementById("pipeCountry").innerText = pipelineData.country;
+  document.getElementById("pipeInflation").innerText = pipelineData.inflation;
+  document.getElementById("pipeRate").innerText = pipelineData.policy_rate;
+  document.getElementById("pipeVolatility").innerText = pipelineData.volatility;
+  document.getElementById("pipeLiquidity").innerText = pipelineData.liquidity;
+  document.getElementById("pipeEnergy").innerText = pipelineData.energy_stress;
+  document.getElementById("pipeFx").innerText = pipelineData.fx_pressure;
+  document.getElementById("pipeCredit").innerText = pipelineData.credit_stress;
+}
+
+function runEconomicBrain(){
+  const liquidityPressure = 100 - pipelineData.liquidity;
+
+  const score = clamp(
+    pipelineData.inflation * 0.45 +
+    pipelineData.policy_rate * 0.20 +
+    liquidityPressure * 0.18 +
+    pipelineData.volatility * 0.10 +
+    pipelineData.energy_stress * 0.04 +
+    pipelineData.fx_pressure * 0.03
+  );
+
+  let state = "Stable";
+  let trend = "Bullish";
+  let advice = "Growth conditions remain supportive.";
+  let summary = "System pressure remains limited.";
+
+  if(score >= 70){
+    state = "High Pressure";
+    trend = "Bearish";
+    advice = "Protect liquidity, reduce fragile exposure, tighten financial discipline and avoid weak-margin expansion.";
+    summary = "Macro pressure is elevated across inflation, rates, volatility and credit conditions.";
+  }else if(score >= 45){
+    state = "Moderate Pressure";
+    trend = "Neutral";
+    advice = "Control costs, diversify risk, monitor financing conditions and protect liquidity.";
+    summary = "The environment is workable but fragile; shocks can quickly pressure margins and cash flow.";
+  }
+
+  document.getElementById("riskScore").innerText = score;
+  document.getElementById("state").innerText = state;
+  document.getElementById("trend").innerText = trend;
+
+  document.getElementById("brainResult").innerText =
+`Country: ${pipelineData.name}
+Global Risk Index: ${score}
+Economic State: ${state}
+Market Trend: ${trend}
+
+Macro Inputs
+Inflation: ${pipelineData.inflation}
+Policy Rate: ${pipelineData.policy_rate}
+Liquidity: ${pipelineData.liquidity}
+Volatility: ${pipelineData.volatility}
+Energy Stress: ${pipelineData.energy_stress}
+FX Pressure: ${pipelineData.fx_pressure}
+Credit Stress: ${pipelineData.credit_stress}
+
+Interpretation
+${summary}
+
+Advice
+${advice}`;
+}
 
 function loadCountryList(){
   let html = "";
@@ -305,25 +523,97 @@ function loadCountryList(){
   document.getElementById("countryList").innerHTML = html;
 }
 
-function runSearch(){
-  const q = document.getElementById("searchInput").value.trim().toLowerCase();
-  if(!q) return;
-
-  let answer = "ZENTRA Search is analyzing the topic in economic context.";
-
+function knowledgeLookup(q){
   if(q.includes("inflation") || q.includes("enflasyon")){
-    answer = "Inflation is the rate at which prices rise over time and purchasing power falls.";
-  }else if(q.includes("cds")){
-    answer = "CDS is a market-based measure of sovereign or credit default risk.";
-  }else if(q.includes("recession") || q.includes("resesyon")){
-    answer = "Recession is a period of economic slowdown with weaker demand and lower confidence.";
-  }else if(q.includes("gold") || q.includes("altın")){
-    answer = "Gold is often used as a defensive asset during inflation and uncertainty.";
-  }else if(q.includes("interest") || q.includes("faiz")){
-    answer = "Higher interest rates usually tighten credit conditions and slow demand.";
+    return "Inflation is the rate at which prices rise over time and purchasing power falls.";
+  }
+  if(q.includes("cds")){
+    return "CDS is a market-based measure of sovereign or credit default risk.";
+  }
+  if(q.includes("recession") || q.includes("resesyon")){
+    return "Recession is a period of economic slowdown with weaker demand and lower confidence.";
+  }
+  if(q.includes("liquidity") || q.includes("likidite")){
+    return "Liquidity refers to how easily funding and cash circulate through the economy and financial system.";
+  }
+  if(q.includes("bond yield") || q.includes("tahvil")){
+    return "Bond yield is the return investors demand for holding debt securities and often reflects inflation and risk expectations.";
+  }
+  if(q.includes("gold") || q.includes("altın")){
+    return "Gold is often used as a defensive asset during inflation and uncertainty.";
+  }
+  return "ZENTRA Knowledge Engine is analyzing the topic in economic context.";
+}
+
+function runKnowledge(){
+  const q = document.getElementById("knowledgeInput").value.trim().toLowerCase();
+  if(!q) return;
+  document.getElementById("knowledgeResult").innerText = knowledgeLookup(q);
+}
+
+function runScenario(){
+  const scenario = document.getElementById("scenarioName").value;
+
+  let shock = 0;
+  let impact = "general market disturbance";
+  if(scenario === "interest_shock"){ shock = 12; impact = "credit tightens, leverage becomes more expensive, growth slows"; }
+  if(scenario === "currency_shock"){ shock = 15; impact = "import cost rises, inflation pressure increases, FX sensitivity grows"; }
+  if(scenario === "oil_spike"){ shock = 10; impact = "energy and logistics costs rise, margin pressure increases"; }
+  if(scenario === "demand_drop"){ shock = 9; impact = "sales weaken, cash flow softens, sectors with weak pricing power suffer"; }
+  if(scenario === "credit_crunch"){ shock = 14; impact = "lending slows, refinancing becomes harder, fragile balance sheets come under pressure"; }
+
+  const baseRisk = Number(document.getElementById("riskScore").innerText || 55);
+  const projected = clamp(baseRisk + shock);
+  const band = riskBand(projected);
+
+  document.getElementById("scenarioResult").innerText =
+`Scenario: ${scenario}
+Base Risk: ${baseRisk}
+Projected Risk: ${projected}
+Band: ${band}
+
+Impact
+${impact}
+
+Action
+Keep liquidity buffer, reduce weak-margin exposure and monitor refinancing conditions.`;
+}
+
+function runSector(){
+  const sector = document.getElementById("sectorName").value;
+  const demand = Number(document.getElementById("sectorDemand").value || 50);
+  const cost = Number(document.getElementById("sectorCost").value || 50);
+  const finance = Number(document.getElementById("sectorFinance").value || 50);
+
+  const base = {
+    agriculture:42,
+    retail:58,
+    construction:62,
+    technology:35,
+    energy:57,
+    finance:48,
+    manufacturing:55,
+    logistics:50
+  }[sector] || 50;
+
+  const demandPressure = 100 - demand;
+  const score = clamp(base * 0.35 + demandPressure * 0.25 + cost * 0.20 + finance * 0.20);
+  const band = riskBand(score);
+
+  let recommendation = "Sector conditions are comparatively resilient.";
+  if(score >= 70){
+    recommendation = "Sector is under strong pressure; defensive planning and cash discipline are needed.";
+  }else if(score >= 45){
+    recommendation = "Sector is workable but fragile; monitor demand and margins carefully.";
   }
 
-  document.getElementById("searchResult").innerText = answer;
+  document.getElementById("sectorResult").innerText =
+`Sector: ${sector}
+Risk Score: ${score}
+Band: ${band}
+
+Recommendation
+${recommendation}`;
 }
 
 function askChat(){
@@ -346,8 +636,14 @@ function askChat(){
     answer = "Trade profitability depends on margin quality, route efficiency, transport cost and payment reliability.";
   }else if(t.includes("recession") || t.includes("resesyon")){
     answer = "Recession means weaker demand, slower growth and more pressure on fragile businesses and debt structures.";
+  }else if(t.includes("sector")){
+    answer = "Use the Sector Engine with demand, cost and finance pressure inputs to evaluate sector resilience.";
+  }else if(t.includes("scenario")){
+    answer = "Use the Scenario Engine to stress test interest shock, currency shock, oil spike, demand drop or credit crunch.";
   }else if(t.includes("turkey") || t.includes("türkiye")){
-    answer = "Turkey currently reflects moderate-to-high pressure conditions driven by inflation, rates and volatility.";
+    answer = "Turkey currently reflects moderate-to-high pressure conditions driven by inflation, rates, volatility and credit stress.";
+  }else if(t.includes("brain")){
+    answer = "Economic Brain currently reads the selected country through inflation, rates, liquidity, volatility, energy, FX and credit stress.";
   }
 
   box.innerHTML += "<div><b>ZENTRA:</b> " + answer + "</div>";
@@ -417,8 +713,25 @@ async function loadInteractiveMap(){
   });
 }
 
+function switchCountry(){
+  activeCountry = document.getElementById("countrySelect").value;
+  buildPipeline(activeCountry);
+  paintPipeline();
+  runEconomicBrain();
+}
+
+function refreshPipeline(){
+  buildPipeline(activeCountry);
+  paintPipeline();
+  runEconomicBrain();
+}
+
 loadCountryList();
+buildPipeline(activeCountry);
+paintPipeline();
+runEconomicBrain();
 loadInteractiveMap();
+setInterval(refreshPipeline, 10000);
 </script>
 
 </body>

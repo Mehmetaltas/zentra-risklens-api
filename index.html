@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA — Economic Intelligence Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ZENTRA Economic OS</title>
 
 <style>
 
@@ -15,7 +17,7 @@ color:white;
 }
 
 header{
-padding:30px;
+padding:40px;
 text-align:center;
 background:#08132a;
 border-bottom:1px solid #0f2c55;
@@ -24,18 +26,18 @@ border-bottom:1px solid #0f2c55;
 h1{
 margin:0;
 color:#00e0ff;
-font-size:34px;
+font-size:36px;
 }
 
 nav{
-margin-top:10px;
+margin-top:20px;
 }
 
 nav a{
 color:#7bdfff;
-margin:0 12px;
+margin:0 14px;
 text-decoration:none;
-font-size:14px;
+font-size:15px;
 }
 
 section{
@@ -46,65 +48,74 @@ margin:auto;
 
 .hero{
 text-align:center;
-padding:80px 20px;
+margin-top:40px;
 }
 
 .hero h2{
-font-size:36px;
-color:#00e0ff;
+font-size:32px;
 margin-bottom:20px;
 }
 
 .hero p{
+color:#9bd6ff;
 font-size:18px;
-color:#9edaff;
-max-width:700px;
-margin:auto;
+}
+
+.btn{
+display:inline-block;
+margin-top:25px;
+padding:14px 26px;
+background:#00e0ff;
+color:black;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.grid{
+margin-top:50px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
 }
 
 .card{
 background:#08152c;
-padding:25px;
-border-radius:10px;
-margin-top:20px;
+padding:22px;
+border-radius:12px;
 border:1px solid #103865;
 }
 
-input,textarea{
-width:100%;
-padding:12px;
-border-radius:6px;
-border:none;
-margin-top:10px;
-background:#0c1c35;
-color:white;
+.label{
+font-size:12px;
+text-transform:uppercase;
+color:#8fb8da;
+margin-bottom:8px;
 }
 
-button{
-margin-top:10px;
-padding:12px 20px;
-background:#00e0ff;
-border:none;
-border-radius:6px;
-cursor:pointer;
+.metric{
+font-size:30px;
+font-weight:bold;
+color:#00e0ff;
 }
 
-.footer{
+.bigbox{
+margin-top:30px;
+background:#08152c;
+padding:25px;
+border-radius:12px;
+border:1px solid #103865;
+white-space:pre-wrap;
+line-height:1.7;
+}
+
+footer{
 text-align:center;
 padding:30px;
 background:#08132a;
 margin-top:60px;
 font-size:14px;
 color:#6fa9d6;
-}
-
-.signal{
-margin-top:20px;
-padding:14px;
-border:1px solid #00e0ff;
-border-radius:10px;
-background:#08132a;
-color:#00e0ff;
 }
 
 </style>
@@ -114,166 +125,141 @@ color:#00e0ff;
 
 <header>
 
-<h1>ZENTRA</h1>
+<h1>ZENTRA Economic OS</h1>
 
 <nav>
-<a href="#advisor">AI Advisor</a>
-<a href="#map">Risk Map</a>
-<a href="#brain">Economic Brain</a>
-<a href="#platform">Platform</a>
-<a href="#about">About</a>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">Advisor</a>
+<a href="brain.html">Brain</a>
+<a href="platform.html">Platform</a>
+
 </nav>
 
 </header>
 
-<section class="hero">
+<section>
 
-<h2>ZENTRA Economic OS</h2>
+<div class="hero">
 
-<p>
-Global economic intelligence platform analyzing financial systems,
-risk structures and macroeconomic signals.
-</p>
-
-</section>
-
-<section id="advisor">
-
-<h2>AI Advisor</h2>
-
-<div class="card">
-
-<textarea id="question" placeholder="Ask economic or business question..."></textarea>
-
-<button onclick="analyze()">Analyze</button>
-
-<div id="response"></div>
-
-</div>
-
-</section>
-
-<section id="map">
-
-<h2>ZENTRA Global Risk Signals</h2>
-
-<div class="card" id="signals"></div>
-
-</section>
-
-<section id="brain">
-
-<h2>Global Economic Brain</h2>
-
-<div class="card">
+<h2>Global Economic Intelligence</h2>
 
 <p>
-ZENTRA analyzes global economic flows, financial stress,
-trade patterns and macro risk indicators to generate
-intelligence signals.
+ZENTRA analyzes macroeconomics, markets and business conditions to produce
+a unified economic intelligence layer.
 </p>
 
-<ul>
-
-<li>Liquidity pressure</li>
-<li>Global trade fragmentation</li>
-<li>Energy volatility</li>
-<li>Emerging market instability</li>
-<li>Debt pressure</li>
-
-</ul>
+<a class="btn" href="advisor.html">Ask AI Advisor</a>
 
 </div>
 
-</section>
-
-<section id="platform">
-
-<h2>ZENTRA Platform Architecture</h2>
+<div class="grid">
 
 <div class="card">
-
-<ul>
-
-<li>RiskLens Engine</li>
-<li>Credit Stress Engine</li>
-<li>Global Risk Radar</li>
-<li>Economic Brain</li>
-<li>AI Advisor Layer</li>
-<li>Behavioral Finance Models</li>
-
-</ul>
-
+<div class="label">Global Risk</div>
+<div class="metric" id="riskScore">--</div>
 </div>
-
-</section>
-
-<section id="about">
-
-<h2>About</h2>
 
 <div class="card">
+<div class="label">Economic State</div>
+<div class="metric" id="economicState" style="font-size:22px;">--</div>
+</div>
 
-<p>
+<div class="card">
+<div class="label">Market Trend</div>
+<div class="metric" id="marketTrend" style="font-size:22px;">--</div>
+</div>
 
-ZENTRA is a behavioral financial intelligence platform designed to
-analyze economic structures, detect financial risk signals and
-generate strategic economic insights.
+<div class="card">
+<div class="label">System Signal</div>
+<div class="metric" id="signal" style="font-size:22px;">--</div>
+</div>
 
-</p>
+</div>
+
+<div class="bigbox" id="brainSummary">
+
+Loading economic intelligence...
 
 </div>
 
 </section>
 
-<div class="footer">
+<footer>
 
-ZENTRA — Behavioral Financial Intelligence
+ZENTRA — Global Economic Operating System
 
-</div>
+</footer>
 
 <script>
 
-function analyze(){
+const API = "https://zentra-core-api.onrender.com/telescope";
 
-let q=document.getElementById("question").value;
+async function loadData(){
 
-let resp=document.getElementById("response");
+try{
 
-resp.innerHTML="<div class='signal'>AI analysis generated for: "+q+"</div>";
+const res = await fetch(API);
+const data = await res.json();
 
-}
+document.getElementById("riskScore").innerText = data.global_risk_index;
+document.getElementById("economicState").innerText = data.economic_state;
+document.getElementById("marketTrend").innerText = data.market?.market_trend || "neutral";
 
-function loadSignals(){
+let signal = "stable";
 
-const signals=[
-"Global liquidity tightening",
-"Energy market volatility rising",
-"Trade fragmentation risk",
-"Emerging market debt pressure",
-"Supply chain restructuring",
-"Central bank policy divergence"
-];
+if(data.global_risk_index > 75){
 
-const box=document.getElementById("signals");
+signal = "critical";
 
-signals.forEach(s=>{
+}else if(data.global_risk_index > 55){
 
-let d=document.createElement("div");
+signal = "stress";
 
-d.className="signal";
+}else if(data.global_risk_index > 35){
 
-d.innerText=s;
-
-box.appendChild(d);
-
-});
+signal = "caution";
 
 }
 
-loadSignals();
+document.getElementById("signal").innerText = signal;
+
+document.getElementById("brainSummary").innerText =
+`GLOBAL ECONOMIC INTELLIGENCE
+
+Risk Index: ${data.global_risk_index}
+Economic State: ${data.economic_state}
+Market Trend: ${data.market?.market_trend || "neutral"}
+
+Interpretation:
+${data.ai_reason}
+
+Strategic Recommendation:
+${data.ai_advice}
+
+ZENTRA combines macro data, financial markets and behavioral signals to generate a unified economic intelligence layer.`
+
+}catch(e){
+
+document.getElementById("riskScore").innerText = "57";
+document.getElementById("economicState").innerText = "moderate pressure";
+document.getElementById("marketTrend").innerText = "bearish";
+document.getElementById("signal").innerText = "stress";
+
+document.getElementById("brainSummary").innerText =
+`GLOBAL ECONOMIC INTELLIGENCE
+
+Fallback mode active.
+
+System will reconnect to economic data.`
+
+}
+
+}
+
+loadData();
 
 </script>
 
 </body>
-</html>
+                                 </html>

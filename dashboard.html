@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZENTRA Global Economic Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#071021;
+color:white;
+}
+
+header{
+background:#08132a;
+padding:20px;
+text-align:center;
+border-bottom:1px solid #103865;
+}
+
+header h1{
+margin:0;
+color:#00e0ff;
+}
+
+nav{
+margin-top:10px;
+}
+
+nav a{
+color:#7bdfff;
+margin:0 10px;
+text-decoration:none;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.card{
+background:#0e1c38;
+padding:20px;
+border-radius:8px;
+}
+
+.card h3{
+color:#00e0ff;
+margin-top:0;
+}
+
+.map{
+height:350px;
+background:#020814;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+color:#7bdfff;
+}
+
+.chatbox{
+height:250px;
+overflow:auto;
+background:#020814;
+padding:10px;
+margin-bottom:10px;
+}
+
+input{
+width:80%;
+padding:10px;
+background:#08132a;
+border:none;
+color:white;
+}
+
+button{
+padding:10px;
+background:#00e0ff;
+border:none;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#08132a;
+margin-top:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ZENTRA Global Economic Dashboard</h1>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="advisor.html">AI Advisor</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="platform.html">Platform</a>
+
+</nav>
+
+</header>
+
+<div class="container">
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Global Risk Heatmap</h3>
+
+<div class="map" id="map">
+
+Loading global risk data...
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Global Risk Index</h3>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+<div class="card">
+
+<h3>AI Economic Advisor</h3>
+
+<div class="chatbox" id="chat"></div>
+
+<input id="question" placeholder="Ask economic question...">
+
+<button onclick="ask()">Ask</button>
+
+</div>
+
+<div class="card">
+
+<h3>Crisis Radar</h3>
+
+<p id="crisis">
+
+Monitoring global economic pressure...
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+ZENTRA Economic OS • Global Financial Intelligence
+
+</footer>
+
+<script>
+
+const API="https://zentra-core-api.onrender.com"
+
+async function loadRisk(){
+
+try{
+
+const res=await fetch(API+"/telescope")
+
+const data=await res.json()
+
+document.getElementById("map").innerHTML=
+
+"Global Risk Index: "+data.global_risk_index+"<br>" +
+
+"Economic State: "+data.economic_state
+
+document.getElementById("crisis").innerText=
+
+"AI Insight: "+data.ai_reason+" — "+data.ai_advice
+
+}catch{
+
+document.getElementById("map").innerText="API connection failed"
+
+}
+
+}
+
+async function chart(){
+
+const res=await fetch(API+"/history")
+
+const data=await res.json()
+
+const labels=data.map(d=>d.timestamp)
+
+const values=data.map(d=>d.global_risk)
+
+new Chart(
+
+document.getElementById("riskChart"),
+
+{
+
+type:"line",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Global Risk",
+
+data:values,
+
+borderColor:"#00e0ff"
+
+}]
+
+}
+
+}
+
+)
+
+}
+
+function ask(){
+
+const q=document.getElementById("question").value
+
+const chat=document.getElementById("chat")
+
+chat.innerHTML+="<div>👤 "+q+"</div>"
+
+chat.innerHTML+="<div>🤖 Economic analysis processing...</div>"
+
+}
+
+loadRisk()
+
+chart()
+
+</script>
+
+</body>
+
+</html>

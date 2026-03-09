@@ -1,488 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>ZENTRA Economic OS</title>
 
 <style>
+
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#071021;
-  color:white;
+margin:0;
+font-family:Arial;
+background:#071021;
+color:white;
 }
+
 nav{
-  background:#08132a;
-  padding:16px 28px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #103865;
-  position:sticky;
-  top:0;
-  z-index:10;
+background:#08132a;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #103865;
 }
+
 .logo{
-  font-weight:bold;
-  color:#00e0ff;
-  font-size:18px;
+font-weight:bold;
+color:#00e0ff;
 }
-nav .links{
-  display:flex;
-  gap:18px;
-  flex-wrap:wrap;
-}
+
 nav a{
-  color:#7bdfff;
-  text-decoration:none;
-  font-size:14px;
+color:#7bdfff;
+text-decoration:none;
+margin-left:20px;
 }
-nav a:hover{
-  color:#00e0ff;
-}
+
 .hero{
-  text-align:center;
-  padding:90px 20px 70px;
+text-align:center;
+padding:100px 20px;
 }
+
 .hero h1{
-  font-size:52px;
-  margin:0 0 18px 0;
-  color:#00e0ff;
+font-size:60px;
+color:#00e0ff;
+margin-bottom:20px;
 }
+
 .hero p{
-  font-size:18px;
-  max-width:820px;
-  margin:auto;
-  line-height:1.7;
-  color:#9dcdf3;
+max-width:700px;
+margin:auto;
+font-size:20px;
+color:#9dcdf3;
 }
-.hero .cta{
-  margin-top:28px;
-}
-.hero .cta a{
-  display:inline-block;
-  padding:12px 20px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:bold;
-  margin:6px;
-}
-.btn-main{
-  background:#00e0ff;
-  color:#02111a;
-}
-.btn-alt{
-  background:#0e1c38;
-  color:#9ddcff;
-  border:1px solid #103865;
-}
+
 .section{
-  max-width:1200px;
-  margin:auto;
-  padding:36px 20px;
+max-width:1200px;
+margin:auto;
+padding:60px 20px;
 }
-.section h2{
-  color:#00e0ff;
-  margin:0 0 18px 0;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
-.grid-2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
+
 .card{
-  background:#0e1c38;
-  padding:22px;
-  border-radius:14px;
-  border:1px solid #103865;
+background:#0e1c38;
+padding:25px;
+border-radius:12px;
+margin-bottom:20px;
+border:1px solid #103865;
 }
+
 .metric{
-  font-size:30px;
-  font-weight:bold;
-  color:#00e0ff;
+font-size:30px;
+color:#00e0ff;
 }
-.label{
-  font-size:12px;
-  text-transform:uppercase;
-  color:#9dcdf3;
-  margin-bottom:8px;
+
+textarea,input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+background:#08132a;
+color:white;
 }
-.small{
-  color:#9dcdf3;
-  line-height:1.7;
-  font-size:14px;
-}
-textarea,input,select{
-  width:100%;
-  box-sizing:border-box;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#08132a;
-  color:white;
-  margin-top:10px;
-}
+
 button{
-  margin-top:12px;
-  padding:12px 16px;
-  background:#00e0ff;
-  color:#02111a;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
+margin-top:10px;
+padding:12px 20px;
+background:#00e0ff;
+border:none;
+border-radius:8px;
+cursor:pointer;
 }
+
 .result{
-  background:#020814;
-  padding:18px;
-  margin-top:14px;
-  border-radius:10px;
-  line-height:1.7;
-  white-space:pre-wrap;
+background:#020814;
+padding:20px;
+margin-top:10px;
+border-radius:10px;
 }
-.chatbox{
-  background:#020814;
-  padding:16px;
-  min-height:180px;
-  max-height:320px;
-  overflow:auto;
-  border-radius:10px;
-  line-height:1.7;
-}
-.country-list{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-.country-item{
-  background:#08132a;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #103865;
-}
-.badge{
-  display:inline-block;
-  margin-top:8px;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-  text-transform:uppercase;
-}
-.low{color:#00e676;background:rgba(0,230,118,.12);}
-.medium{color:#ffd54f;background:rgba(255,213,79,.12);}
-.high{color:#ff7043;background:rgba(255,112,67,.12);}
-.critical{color:#ff1744;background:rgba(255,23,68,.12);}
+
 footer{
-  margin-top:50px;
-  padding:28px;
-  text-align:center;
-  background:#08132a;
-  color:#6fa9d6;
+text-align:center;
+padding:40px;
+background:#08132a;
+color:#6fa9d6;
 }
-@media (max-width:1000px){
-  .grid,.grid-2{
-    grid-template-columns:1fr;
-  }
-  .country-list{
-    grid-template-columns:1fr;
-  }
-}
+
 </style>
+
 </head>
+
 <body>
 
 <nav>
-  <div class="logo">ZENTRA</div>
-  <div class="links">
-    <a href="#home">Home</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#brain">Economic Brain</a>
-    <a href="#chat">AI Advisor</a>
-    <a href="#knowledge">Knowledge</a>
-    <a href="#business">Business</a>
-    <a href="#trade">Trade</a>
-    <a href="#global">Global Risk</a>
-  </div>
+
+<div class="logo">ZENTRA</div>
+
+<div>
+
+<a href="#dashboard">Dashboard</a>
+<a href="#brain">Brain</a>
+<a href="#chat">AI</a>
+<a href="#business">Business</a>
+<a href="#trade">Trade</a>
+<a href="#crisis">Crisis</a>
+
+</div>
+
 </nav>
 
-<section class="hero" id="home">
-  <h1>ZENTRA Economic OS</h1>
-  <p>
-    Global economic intelligence platform combining AI, macro-financial monitoring,
-    risk analytics, business simulation and trade decision support in one system.
-  </p>
-  <div class="cta">
-    <a class="btn-main" href="#chat">Open AI Advisor</a>
-    <a class="btn-alt" href="#dashboard">Open Dashboard</a>
-  </div>
+<section class="hero">
+
+<h1>ZENTRA Economic OS</h1>
+
+<p>
+
+Global economic intelligence platform combining
+AI, macro analysis and financial risk systems.
+
+</p>
+
 </section>
 
-<section class="section" id="dashboard">
-  <h2>Global Economic Dashboard</h2>
-  <div class="grid">
-    <div class="card">
-      <div class="label">Global Risk Index</div>
-      <div class="metric" id="globalRisk">--</div>
-      <div class="small">System-wide economic pressure indicator.</div>
-    </div>
-    <div class="card">
-      <div class="label">Economic State</div>
-      <div class="metric" id="economicState" style="font-size:22px;">--</div>
-      <div class="small">Current macro condition of the environment.</div>
-    </div>
-    <div class="card">
-      <div class="label">Market Trend</div>
-      <div class="metric" id="marketTrend" style="font-size:22px;">--</div>
-      <div class="small">Direction of financial sentiment.</div>
-    </div>
-  </div>
+<section id="dashboard" class="section">
+
+<h2>Global Dashboard</h2>
+
+<div class="card">
+
+<div class="metric" id="riskScore">Loading...</div>
+
+<div id="state"></div>
+
+</div>
+
 </section>
 
-<section class="section" id="brain">
-  <h2>Economic Brain</h2>
-  <div class="card">
-    <div class="result" id="brainBox">Loading economic brain...</div>
-  </div>
+<section id="brain" class="section">
+
+<h2>Economic Brain</h2>
+
+<div class="card">
+
+<div id="brainResult"></div>
+
+</div>
+
 </section>
 
-<section class="section grid-2" id="chat">
-  <div>
-    <h2>AI Advisor</h2>
-    <div class="card">
-      <div class="chatbox" id="chatBox">
-        <div>ZENTRA is ready. Ask about economy, business, trade or daily financial decisions.</div>
-      </div>
-      <textarea id="chatInput" placeholder="Example: Should I buy gold? / Is it a good time to open a barber shop? / What is happening in the Turkish economy?"></textarea>
-      <button onclick="askChat()">Send</button>
-    </div>
-  </div>
+<section id="chat" class="section">
 
-  <div id="knowledge">
-    <h2>Knowledge Engine</h2>
-    <div class="card">
-      <textarea id="knowledgeInput" placeholder="Example: What is inflation?"></textarea>
-      <button onclick="runKnowledge()">Explain</button>
-      <div class="result" id="knowledgeResult">ZENTRA Knowledge Engine is ready.</div>
-    </div>
-  </div>
+<h2>AI Advisor</h2>
+
+<div class="card">
+
+<textarea id="chatInput" placeholder="Ask economic question"></textarea>
+
+<button onclick="ask()">Ask</button>
+
+<div id="chatResult" class="result"></div>
+
+</div>
+
 </section>
 
-<section class="section grid-2" id="business">
-  <div>
-    <h2>Business Simulator</h2>
-    <div class="card">
-      <label class="small">Monthly Cost ($)</label>
-      <input id="businessCost" placeholder="5000">
-      <label class="small">Monthly Revenue ($)</label>
-      <input id="businessRevenue" placeholder="9000">
-      <button onclick="runBusiness()">Run Business Simulation</button>
-      <div class="result" id="businessResult">Business simulation is ready.</div>
-    </div>
-  </div>
+<section id="business" class="section">
 
-  <div id="trade">
-    <h2>Trade Intelligence</h2>
-    <div class="card">
-      <label class="small">Quantity</label>
-      <input id="tradeQuantity" placeholder="20">
-      <label class="small">Unit Cost ($)</label>
-      <input id="tradeUnitCost" placeholder="150">
-      <label class="small">Unit Price ($)</label>
-      <input id="tradeUnitPrice" placeholder="240">
-      <label class="small">Distance (km)</label>
-      <input id="tradeDistance" placeholder="700">
-      <button onclick="runTrade()">Run Trade Simulation</button>
-      <div class="result" id="tradeResult">Trade simulation is ready.</div>
-    </div>
-  </div>
+<h2>Business Simulator</h2>
+
+<div class="card">
+
+<input id="cost" placeholder="Cost">
+
+<input id="revenue" placeholder="Revenue">
+
+<button onclick="business()">Simulate</button>
+
+<div id="businessResult" class="result"></div>
+
+</div>
+
 </section>
 
-<section class="section" id="global">
-  <h2>Global Risk Countries</h2>
-  <div class="card">
-    <div class="country-list" id="countryList">Loading global risk countries...</div>
-  </div>
+<section id="trade" class="section">
+
+<h2>Trade Intelligence</h2>
+
+<div class="card">
+
+<input id="qty" placeholder="Quantity">
+
+<input id="unitCost" placeholder="Unit Cost">
+
+<input id="unitPrice" placeholder="Unit Price">
+
+<input id="distance" placeholder="Distance">
+
+<button onclick="trade()">Calculate</button>
+
+<div id="tradeResult" class="result"></div>
+
+</div>
+
+</section>
+
+<section id="crisis" class="section">
+
+<h2>Crisis Radar</h2>
+
+<div class="card">
+
+<div id="crisisResult"></div>
+
+</div>
+
 </section>
 
 <footer>
-  ZENTRA Economic Operating System • Global Financial Intelligence Platform
+
+ZENTRA Economic OS
+
 </footer>
 
 <script>
-const API = "https://zentra-core-api.onrender.com";
 
-function bandClass(score){
-  if(score >= 80) return "critical";
-  if(score >= 60) return "high";
-  if(score >= 40) return "medium";
-  return "low";
+const API="https://zentra-core-api.onrender.com"
+
+async function loadDashboard(){
+
+let r=await fetch(API+"/brain")
+
+let data=await r.json()
+
+document.getElementById("riskScore").innerText="Risk Index: "+data.global_risk_index
+
+document.getElementById("state").innerText="State: "+data.economic_state
+
+document.getElementById("brainResult").innerText=data.advice
+
 }
 
-async function loadBrain(){
-  try{
-    const r = await fetch(API + "/brain");
-    const data = await r.json();
+async function ask(){
 
-    document.getElementById("globalRisk").innerText = data.global_risk_index;
-    document.getElementById("economicState").innerText = data.economic_state;
-    document.getElementById("marketTrend").innerText = data.market_trend;
+let q=document.getElementById("chatInput").value
 
-    document.getElementById("brainBox").innerText =
-`GLOBAL ECONOMIC BRAIN
+let r=await fetch(API+"/chat",{
 
-Global Risk Index: ${data.global_risk_index}
-Economic State: ${data.economic_state}
-Market Trend: ${data.market_trend}
+method:"POST",
 
-Insight:
-${data.insight}
+headers:{
+"Content-Type":"application/json"
+},
 
-Advice:
-${data.advice}`;
-  }catch(e){
-    document.getElementById("globalRisk").innerText = "57";
-    document.getElementById("economicState").innerText = "moderate pressure";
-    document.getElementById("marketTrend").innerText = "neutral";
-    document.getElementById("brainBox").innerText = "Economic brain offline.";
-  }
+body:JSON.stringify({question:q})
+
+})
+
+let data=await r.json()
+
+document.getElementById("chatResult").innerText=data.answer
+
 }
 
-async function loadGlobalRisk(){
-  try{
-    const r = await fetch(API + "/global-risk");
-    const data = await r.json();
+async function business(){
 
-    let html = "";
-    data.countries.forEach(c=>{
-      html += `
-      <div class="country-item">
-        <div><b>${c.name}</b></div>
-        <div class="small">Risk Score: ${c.risk}</div>
-        <div class="badge ${c.band}">${c.band}</div>
-      </div>`;
-    });
+let cost=parseFloat(document.getElementById("cost").value)
 
-    document.getElementById("countryList").innerHTML = html;
-  }catch(e){
-    document.getElementById("countryList").innerHTML = "Global risk data unavailable.";
-  }
+let revenue=parseFloat(document.getElementById("revenue").value)
+
+let r=await fetch(API+"/business",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({cost:cost,revenue:revenue})
+
+})
+
+let data=await r.json()
+
+document.getElementById("businessResult").innerText=
+
+"Profit: "+data.profit+" Margin:"+data.margin+"%"
+
 }
 
-async function askChat(){
-  const q = document.getElementById("chatInput").value.trim();
-  if(!q) return;
+async function trade(){
 
-  const box = document.getElementById("chatBox");
-  box.innerHTML += `<div><b>You:</b> ${q}</div>`;
+let q=parseFloat(document.getElementById("qty").value)
 
-  try{
-    const r = await fetch(API + "/chat", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ question:q })
-    });
-    const data = await r.json();
-    box.innerHTML += `<div><b>ZENTRA:</b> ${data.answer}</div>`;
-  }catch(e){
-    box.innerHTML += `<div><b>ZENTRA:</b> Chat service unavailable.</div>`;
-  }
+let c=parseFloat(document.getElementById("unitCost").value)
 
-  document.getElementById("chatInput").value = "";
-  box.scrollTop = box.scrollHeight;
+let p=parseFloat(document.getElementById("unitPrice").value)
+
+let d=parseFloat(document.getElementById("distance").value)
+
+let r=await fetch(API+"/trade",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+quantity:q,
+unit_cost:c,
+unit_price:p,
+distance:d
+
+})
+
+})
+
+let data=await r.json()
+
+document.getElementById("tradeResult").innerText=
+
+"Profit:"+data.profit+" Margin:"+data.margin+"%"
+
 }
 
-function runKnowledge(){
-  const q = document.getElementById("knowledgeInput").value.toLowerCase().trim();
-  let answer = "";
+async function crisis(){
 
-  if(q.includes("inflation")){
-    answer = "Inflation means the general rise of prices over time and lower purchasing power of money.";
-  }else if(q.includes("recession")){
-    answer = "Recession is an economic slowdown with weaker demand, lower confidence and more financial pressure.";
-  }else if(q.includes("gold") || q.includes("altın")){
-    answer = "Gold is often used as a defensive asset during inflation and uncertainty.";
-  }else if(q.includes("interest") || q.includes("faiz")){
-    answer = "Interest rates are raised to fight inflation, but they also increase borrowing costs.";
-  }else{
-    answer = "ZENTRA explains economic concepts by linking them to real-world impact on people, business and markets.";
-  }
+let r=await fetch(API+"/crisis-radar")
 
-  document.getElementById("knowledgeResult").innerText = answer;
+let data=await r.json()
+
+document.getElementById("crisisResult").innerText=
+
+"Score:"+data.crisis_score+" Signal:"+data.signal
+
 }
 
-async function runBusiness(){
-  const cost = parseFloat(document.getElementById("businessCost").value);
-  const revenue = parseFloat(document.getElementById("businessRevenue").value);
+loadDashboard()
+crisis()
 
-  if(!cost || !revenue) return;
-
-  try{
-    const r = await fetch(API + "/business", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ cost:cost, revenue:revenue })
-    });
-    const data = await r.json();
-
-    document.getElementById("businessResult").innerText =
-`Profit: $${data.profit}
-Margin: ${data.margin} %
-Risk: ${data.risk}
-
-Recommendation:
-${data.recommendation}`;
-  }catch(e){
-    document.getElementById("businessResult").innerText = "Business engine unavailable.";
-  }
-}
-
-async function runTrade(){
-  const quantity = parseFloat(document.getElementById("tradeQuantity").value);
-  const unitCost = parseFloat(document.getElementById("tradeUnitCost").value);
-  const unitPrice = parseFloat(document.getElementById("tradeUnitPrice").value);
-  const distance = parseFloat(document.getElementById("tradeDistance").value);
-
-  if(!quantity || !unitCost || !unitPrice || !distance) return;
-
-  try{
-    const r = await fetch(API + "/trade", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({
-        quantity:quantity,
-        unit_cost:unitCost,
-        unit_price:unitPrice,
-        distance:distance
-      })
-    });
-    const data = await r.json();
-
-    document.getElementById("tradeResult").innerText =
-`Logistics Cost: $${data.logistics_cost}
-Goods Cost: $${data.goods_cost}
-Total Cost: $${data.total_cost}
-Revenue: $${data.revenue}
-Profit: $${data.profit}
-Margin: ${data.margin} %
-Risk: ${data.risk}
-
-Advice:
-${data.advice}`;
-  }catch(e){
-    document.getElementById("tradeResult").innerText = "Trade engine unavailable.";
-  }
-}
-
-loadBrain();
-loadGlobalRisk();
 </script>
 
 </body>
-</html>
+
+  </html>

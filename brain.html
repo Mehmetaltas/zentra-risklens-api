@@ -193,6 +193,51 @@ Fallback mode is active.`;
 
 loadBrain();
 </script>
+<script>
+const API = "https://zentra-risklens-api.vercel.app/api/zentra";
 
+async function loadZentra() {
+
+const res = await fetch(API);
+const data = await res.json();
+
+document.getElementById("riskScore").innerText = data.brain.risk;
+document.getElementById("state").innerText = data.brain.state;
+document.getElementById("trend").innerText = data.brain.trend;
+
+const brainEl = document.getElementById("brainResult");
+if (brainEl) {
+brainEl.innerText =
+"Risk: " + data.brain.risk +
+"\nState: " + data.brain.state +
+"\nTrend: " + data.brain.trend +
+"\nAdvice: " + data.brain.advice;
+}
+
+const scenarioEl = document.getElementById("scenarioResult");
+if (scenarioEl) {
+scenarioEl.innerText = data.scenarios
+.map(x => x.scenario + " — " + x.impact)
+.join("\n");
+}
+
+const tradeEl = document.getElementById("tradeResult");
+if (tradeEl) {
+tradeEl.innerText = data.trade
+.map(x => x.from + " → " + x.to + " : " + x.product)
+.join("\n");
+}
+
+const careerEl = document.getElementById("careerResult");
+if (careerEl) {
+careerEl.innerText = data.careers
+.map(x => x.field + " — " + x.demand)
+.join("\n");
+}
+
+}
+
+loadZentra();
+</script>
 </body>
   </html>

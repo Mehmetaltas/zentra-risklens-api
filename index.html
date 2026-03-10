@@ -4,157 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZENTRA Global Economic Network</title>
+<title>ZENTRA Economic OS</title>
+
+<link rel="stylesheet" href="style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
-
-<style>
-
-body{
-margin:0;
-font-family:Arial;
-background:#071021;
-color:white;
-overflow-x:hidden;
-}
-
-nav{
-background:#08132a;
-padding:16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-nav a{
-color:#7bdfff;
-text-decoration:none;
-margin-left:15px;
-}
-
-.hero{
-text-align:center;
-padding:70px 20px;
-}
-
-.hero h1{
-font-size:44px;
-color:#00e0ff;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-max-width:1200px;
-margin:auto;
-}
-
-.card{
-background:#0e1c38;
-padding:20px;
-border-radius:12px;
-}
-
-.metric{
-font-size:28px;
-color:#00e0ff;
-}
-
-.map-container{
-width:100%;
-max-width:900px;
-margin:auto;
-background:#050d1a;
-border-radius:16px;
-padding:10px;
-}
-
-#worldMap{
-width:100%!important;
-height:500px!important;
-}
-
-.network-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-max-width:1200px;
-margin:auto;
-}
-
-.network-card{
-background:#08132a;
-padding:20px;
-border-radius:12px;
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-margin-top:10px;
-background:#0e1c38;
-color:white;
-border:none;
-border-radius:8px;
-}
-
-button{
-padding:10px 15px;
-background:#00e0ff;
-border:none;
-border-radius:8px;
-margin-top:10px;
-cursor:pointer;
-}
-
-.result{
-background:#020814;
-padding:15px;
-margin-top:10px;
-border-radius:10px;
-line-height:1.6;
-}
-
-.chat-box{
-background:#020814;
-padding:15px;
-height:220px;
-overflow:auto;
-border-radius:10px;
-}
-
-.company-card{
-background:#0b1730;
-padding:14px;
-border-radius:10px;
-margin-top:10px;
-}
-
-@media(max-width:900px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.network-grid{
-grid-template-columns:1fr;
-}
-
-#worldMap{
-height:320px!important;
-}
-
-.hero h1{
-font-size:32px;
-}
-
-}
-
-</style>
 
 </head>
 
@@ -162,277 +19,147 @@ font-size:32px;
 
 <nav>
 
-<div>ZENTRA</div>
+<div class="logo">ZENTRA</div>
 
-<div>
+<div class="links">
+
 <a href="#dashboard">Dashboard</a>
-<a href="#map">Risk Map</a>
-<a href="#network">Network</a>
-<a href="#companies">Companies</a>
-<a href="#ai">AI</a>
+<a href="#map">Map</a>
+<a href="#scenario">Scenario</a>
+<a href="#sme">SME</a>
+<a href="#trade">Trade</a>
+<a href="#chat">AI</a>
+
 </div>
 
 </nav>
 
-<section class="hero">
 
-<h1>ZENTRA Global Economic Platform</h1>
-<p>Economic Intelligence + Global Trade + Career + Company Network</p>
+<section id="dashboard" class="section">
 
-</section>
-
-<!-- DASHBOARD -->
-
-<section id="dashboard">
+<h2>Dashboard</h2>
 
 <div class="grid">
 
 <div class="card">
-<div>Global Risk</div>
-<div id="riskScore" class="metric"></div>
+<div class="small">Global Risk</div>
+<div id="riskScore" class="metric">--</div>
 </div>
 
 <div class="card">
-<div>Economic State</div>
-<div id="state" class="metric"></div>
+<div class="small">State</div>
+<div id="state" class="metric">--</div>
 </div>
 
 <div class="card">
-<div>Market Trend</div>
-<div id="trend" class="metric"></div>
+<div class="small">Trend</div>
+<div id="trend" class="metric">--</div>
 </div>
 
 </div>
 
 </section>
 
-<!-- MAP -->
 
-<section id="map">
+<section id="map" class="section grid2">
 
-<h2 style="text-align:center">Global Risk Map</h2>
+<div class="card">
 
-<div class="map-container">
+<h2>Global Risk Map</h2>
+
 <canvas id="worldMap"></canvas>
+
+</div>
+
+<div class="card">
+
+<h2>Country Intelligence</h2>
+
+<div id="countryName">None</div>
+
+<div id="countryRisk"></div>
+
+<div id="countryInfo" class="result">
+
+Click country
+
+</div>
+
 </div>
 
 </section>
 
-<!-- TRADE NETWORK -->
 
-<section id="network" style="padding:40px 20px">
+<section id="scenario" class="section">
 
-<h2 style="text-align:center">Trade & Career Network</h2>
+<h2>Scenario Engine</h2>
 
-<div class="network-grid">
+<select id="scenarioName">
 
-<div class="network-card">
+<option value="interest">Interest Shock</option>
+<option value="currency">Currency Shock</option>
+<option value="oil">Oil Spike</option>
 
-<h3>Trade Connector</h3>
+</select>
 
-<input id="product" placeholder="Product">
+<button onclick="runScenario()">Run Scenario</button>
 
-<input id="origin" placeholder="Origin Country">
+<div id="scenarioResult" class="result"></div>
 
-<input id="destination" placeholder="Destination Country">
+</section>
 
-<button onclick="tradeMatch()">Find Trade</button>
+
+<section id="sme" class="section">
+
+<h2>SME Analyzer</h2>
+
+<input id="smeRevenue" placeholder="Revenue">
+
+<input id="smeCost" placeholder="Cost">
+
+<input id="smeDebt" placeholder="Debt">
+
+<button onclick="runSME()">Analyze</button>
+
+<div id="smeResult" class="result"></div>
+
+</section>
+
+
+<section id="trade" class="section">
+
+<h2>Trade Engine</h2>
+
+<input id="tradeOrigin" placeholder="Origin">
+
+<input id="tradeDestination" placeholder="Destination">
+
+<input id="tradeProduct" placeholder="Product">
+
+<button onclick="runTrade()">Analyze</button>
 
 <div id="tradeResult" class="result"></div>
 
-</div>
-
-<div class="network-card">
-
-<h3>Career Connector</h3>
-
-<input id="skill" placeholder="Skill">
-
-<input id="careerCountry" placeholder="Country">
-
-<button onclick="careerMatch()">Find Career</button>
-
-<div id="careerResult" class="result"></div>
-
-</div>
-
-</div>
-
 </section>
 
-<!-- COMPANY NETWORK -->
 
-<section id="companies" style="padding:40px 20px">
-
-<h2 style="text-align:center">Global Company Network</h2>
-
-<div style="max-width:900px;margin:auto">
-
-<input id="companySearch" placeholder="Search product or company">
-
-<button onclick="searchCompanies()">Search</button>
-
-<div id="companyResults"></div>
-
-</div>
-
-</section>
-
-<!-- AI -->
-
-<section id="ai" style="max-width:800px;margin:auto;padding:40px">
+<section id="chat" class="section">
 
 <h2>ZENTRA AI</h2>
 
-<div id="chatBox" class="chat-box">
-<div><b>ZENTRA:</b> Ask anything about economy, trade or career.</div>
+<div id="chatBox" class="chatbox">
+
+ZENTRA AI ready
+
 </div>
 
 <textarea id="chatInput"></textarea>
 
-<button onclick="ask()">Send</button>
+<button onclick="askChat()">Send</button>
 
 </section>
 
-<script>
-
-/* DASHBOARD */
-
-function randomRisk(){
-return Math.floor(Math.random()*100)
-}
-
-let risk=randomRisk()
-
-document.getElementById("riskScore").innerText=risk
-
-let state="Stable"
-
-if(risk>70) state="High Risk"
-
-document.getElementById("state").innerText=state
-
-document.getElementById("trend").innerText="Neutral"
-
-/* MAP */
-
-async function loadRiskMap(){
-
-const world = await fetch(
-"https://unpkg.com/world-atlas@2/countries-110m.json"
-).then(res => res.json())
-
-const countries =
-ChartGeo.topojson.feature(world, world.objects.countries).features
-
-const data = countries.map(d => ({
-feature:d,
-value:Math.floor(Math.random()*100)
-}))
-
-const ctx=document.getElementById("worldMap")
-
-new Chart(ctx,{
-
-type:"choropleth",
-
-data:{
-labels:countries.map(d=>d.properties.name),
-datasets:[{
-label:"Risk Index",
-data:data
-}]
-},
-
-options:{
-plugins:{legend:{display:false}},
-scales:{
-projection:{axis:"x",projection:"equalEarth"},
-color:{axis:"x",quantize:5}
-}
-}
-
-})
-
-}
-
-loadRiskMap()
-
-/* TRADE */
-
-function tradeMatch(){
-
-let p=document.getElementById("product").value
-let o=document.getElementById("origin").value
-let d=document.getElementById("destination").value
-
-document.getElementById("tradeResult").innerText=
-"Trade opportunity for "+p+" from "+o+" to "+d
-
-}
-
-/* CAREER */
-
-function careerMatch(){
-
-let s=document.getElementById("skill").value
-let c=document.getElementById("careerCountry").value
-
-document.getElementById("careerResult").innerText=
-"Career opportunity for "+s+" in "+c
-
-}
-
-/* COMPANY NETWORK */
-
-const companies=[
-{name:"AgroTech",country:"Turkey",product:"Agriculture"},
-{name:"GlobalSteel",country:"Germany",product:"Steel"},
-{name:"SolarFuture",country:"Spain",product:"Solar Energy"},
-{name:"OceanTrade",country:"Singapore",product:"Logistics"}
-]
-
-function searchCompanies(){
-
-let q=document.getElementById("companySearch").value.toLowerCase()
-
-let results=companies.filter(c=>
-c.name.toLowerCase().includes(q)||
-c.product.toLowerCase().includes(q)
-)
-
-let html=""
-
-results.forEach(c=>{
-html+=`
-<div class="company-card">
-<b>${c.name}</b><br>
-Country: ${c.country}<br>
-Product: ${c.product}
-</div>`
-})
-
-document.getElementById("companyResults").innerHTML=html
-
-}
-
-/* AI */
-
-function ask(){
-
-let q=document.getElementById("chatInput").value
-
-let box=document.getElementById("chatBox")
-
-box.innerHTML+=`<div><b>You:</b> ${q}</div>`
-
-box.innerHTML+=`<div><b>ZENTRA:</b> Economic analysis generated.</div>`
-
-box.scrollTop=box.scrollHeight
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>

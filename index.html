@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>ZENTRA Economic OS</title>
+<title>ZENTRA Global Economic Network</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
@@ -63,6 +63,8 @@ GRID
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
+max-width:1200px;
+margin:auto;
 }
 
 /* =========================
@@ -102,20 +104,49 @@ width:100%!important;
 height:500px!important;
 }
 
-.country-panel{
-margin-top:20px;
+/* =========================
+NETWORK
+========================= */
+
+.network-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+max-width:1200px;
+margin:auto;
+}
+
+.network-card{
 background:#08132a;
 padding:20px;
 border-radius:12px;
-max-width:600px;
-margin-left:auto;
-margin-right:auto;
 }
 
-.risk-box{
-font-size:20px;
-color:#00e0ff;
+input{
+width:100%;
+padding:10px;
 margin-top:10px;
+background:#0e1c38;
+color:white;
+border:none;
+border-radius:8px;
+}
+
+button{
+padding:10px 15px;
+background:#00e0ff;
+border:none;
+border-radius:8px;
+margin-top:10px;
+cursor:pointer;
+}
+
+.result{
+background:#020814;
+padding:15px;
+margin-top:10px;
+border-radius:10px;
+line-height:1.6;
 }
 
 /* =========================
@@ -140,15 +171,6 @@ border:none;
 border-radius:8px;
 }
 
-button{
-padding:10px 15px;
-background:#00e0ff;
-border:none;
-border-radius:8px;
-margin-top:10px;
-cursor:pointer;
-}
-
 </style>
 </head>
 
@@ -161,6 +183,7 @@ cursor:pointer;
 <div>
 <a href="#dashboard">Dashboard</a>
 <a href="#map">Risk Map</a>
+<a href="#network">Network</a>
 <a href="#ai">AI</a>
 </div>
 
@@ -168,12 +191,14 @@ cursor:pointer;
 
 <section class="hero">
 
-<h1>ZENTRA Economic Operating System</h1>
-<p>Global Economic Intelligence Platform</p>
+<h1>ZENTRA Global Economic Network</h1>
+<p>Economic Intelligence + Global Trade + Career + Opportunity</p>
 
 </section>
 
-<section id="dashboard" style="max-width:1200px;margin:auto;padding:30px">
+<!-- DASHBOARD -->
+
+<section id="dashboard">
 
 <div class="grid">
 
@@ -183,18 +208,20 @@ cursor:pointer;
 </div>
 
 <div class="card">
-<div>State</div>
+<div>Economic State</div>
 <div id="state" class="metric"></div>
 </div>
 
 <div class="card">
-<div>Trend</div>
+<div>Market Trend</div>
 <div id="trend" class="metric"></div>
 </div>
 
 </div>
 
 </section>
+
+<!-- GLOBAL MAP -->
 
 <section id="map">
 
@@ -204,28 +231,58 @@ cursor:pointer;
 <canvas id="worldMap"></canvas>
 </div>
 
-<div class="country-panel">
+</section>
 
-<h3 id="countryName">Select Country</h3>
+<!-- GLOBAL NETWORK -->
 
-<div class="risk-box">
-Risk Score: <span id="countryRisk">--</span>
+<section id="network" style="padding:40px 20px">
+
+<h2 style="text-align:center">ZENTRA Global Network</h2>
+
+<div class="network-grid">
+
+<div class="network-card">
+
+<h3>Trade Connector</h3>
+
+<input id="product" placeholder="Product">
+
+<input id="origin" placeholder="Origin Country">
+
+<input id="destination" placeholder="Target Country">
+
+<button onclick="tradeMatch()">Find Trade Match</button>
+
+<div id="tradeResult" class="result"></div>
+
 </div>
 
-<div id="countryInfo">
-Click a country to see risk information
+<div class="network-card">
+
+<h3>Career Connector</h3>
+
+<input id="skill" placeholder="Skill">
+
+<input id="careerCountry" placeholder="Country">
+
+<button onclick="careerMatch()">Find Career Opportunity</button>
+
+<div id="careerResult" class="result"></div>
+
 </div>
 
 </div>
 
 </section>
 
-<section id="ai" style="max-width:800px;margin:auto;padding:30px">
+<!-- AI -->
+
+<section id="ai" style="max-width:800px;margin:auto;padding:40px">
 
 <h2>ZENTRA AI</h2>
 
 <div id="chatBox" class="chat-box">
-<div><b>ZENTRA:</b> Ask about economy or business</div>
+<div><b>ZENTRA:</b> Ask about economy, trade or career.</div>
 </div>
 
 <textarea id="chatInput"></textarea>
@@ -236,9 +293,7 @@ Click a country to see risk information
 
 <script>
 
-/* =========================
-DASHBOARD
-========================= */
+/* DASHBOARD */
 
 function randomRisk(){
 
@@ -258,9 +313,7 @@ document.getElementById("state").innerText=state
 
 document.getElementById("trend").innerText="Neutral"
 
-/* =========================
-GLOBAL MAP ENGINE
-========================= */
+/* GLOBAL MAP */
 
 async function loadRiskMap(){
 
@@ -292,36 +345,11 @@ data:data
 },
 
 options:{
-
 plugins:{legend:{display:false}},
-
 scales:{
 projection:{axis:"x",projection:"equalEarth"},
 color:{axis:"x",quantize:5}
-},
-
-onClick:(event,elements)=>{
-
-if(elements.length>0){
-
-const index=elements[0].index
-
-const country=data[index]
-
-document.getElementById("countryName")
-.innerText=country.feature.properties.name
-
-document.getElementById("countryRisk")
-.innerText=country.value
-
-document.getElementById("countryInfo")
-.innerText="Economic risk evaluation for "
-+country.feature.properties.name
-
 }
-
-}
-
 }
 
 })
@@ -330,9 +358,34 @@ document.getElementById("countryInfo")
 
 loadRiskMap()
 
-/* =========================
-AI CHAT
-========================= */
+/* TRADE NETWORK */
+
+function tradeMatch(){
+
+let p=document.getElementById("product").value
+let o=document.getElementById("origin").value
+let d=document.getElementById("destination").value
+
+document.getElementById("tradeResult").innerText=
+"Trade opportunity detected for "+p+
+" from "+o+" to "+d
+
+}
+
+/* CAREER NETWORK */
+
+function careerMatch(){
+
+let s=document.getElementById("skill").value
+let c=document.getElementById("careerCountry").value
+
+document.getElementById("careerResult").innerText=
+"Career opportunity for "+s+
+" in "+c
+
+}
+
+/* AI */
 
 function ask(){
 
@@ -342,11 +395,11 @@ let box=document.getElementById("chatBox")
 
 box.innerHTML+=`<div><b>You:</b> ${q}</div>`
 
-box.innerHTML+=`<div><b>ZENTRA:</b> Economic indicators suggest monitoring inflation and energy.</div>`
+box.innerHTML+=`<div><b>ZENTRA:</b> Analysis generated.</div>`
 
 }
 
 </script>
 
 </body>
-</html>
+  </html>

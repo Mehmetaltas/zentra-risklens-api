@@ -4,7 +4,8 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ZENTRA Global Economic OS</title>
 
@@ -12,142 +13,338 @@
 
 <style>
 
+:root{
+
+--bg:#06101f;
+--panel:#0b1730;
+--text:#eef5ff;
+--muted:#9ab6d9;
+
+--cyan:#49ddff;
+--green:#54f2a1;
+--amber:#ffd166;
+--red:#ff6b6b;
+
+--line:rgba(77,140,223,.22);
+
+}
+
+*{
+box-sizing:border-box
+}
+
 body{
+
 margin:0;
+
 font-family:Arial,Helvetica,sans-serif;
-background:#06101f;
-color:#fff;
+
+background:linear-gradient(
+180deg,
+#040b16,
+#071021,
+#08142a
+);
+
+color:var(--text);
+
+overflow-x:hidden;
+
 }
 
 nav{
+
 background:#08132a;
+
 padding:16px;
+
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 border-bottom:1px solid #123;
+
+position:sticky;
+
+top:0;
+
+z-index:20;
+
+flex-wrap:wrap;
+
 }
 
 .logo{
-color:#49ddff;
+
+color:var(--cyan);
+
 font-weight:bold;
+
 font-size:18px;
+
+}
+
+.nav-links{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:12px;
+
 }
 
 nav a{
+
 color:#9bdcff;
+
 text-decoration:none;
-margin-left:12px;
+
 font-size:14px;
+
 }
 
 .lang{
+
 cursor:pointer;
-background:#49ddff;
+
+background:var(--cyan);
+
 color:#000;
-padding:4px 10px;
+
+padding:6px 10px;
+
 border-radius:6px;
+
 font-size:12px;
+
+font-weight:bold;
+
+border:none;
+
 }
 
 .container{
+
 max-width:1200px;
+
 margin:auto;
+
 padding:20px;
+
 }
 
 .hero{
+
 text-align:center;
+
 padding:60px 20px;
+
 }
 
 .hero h1{
+
 font-size:42px;
-color:#49ddff;
+
+color:var(--cyan);
+
+margin-bottom:10px;
+
 }
 
 .small{
-color:#9ab6d9;
+
+color:var(--muted);
+
 font-size:14px;
+
 }
 
 .section{
+
 margin-top:40px;
+
 }
 
 .grid{
+
 display:grid;
+
 grid-template-columns:repeat(3,1fr);
+
 gap:20px;
+
 }
 
 .card{
-background:#0b1730;
+
+background:var(--panel);
+
 padding:20px;
+
 border-radius:14px;
-border:1px solid rgba(77,140,223,.22);
+
+border:1px solid var(--line);
+
 }
 
 .metric{
+
 font-size:28px;
-color:#49ddff;
+
+color:var(--cyan);
+
 font-weight:bold;
+
 }
 
 .result{
+
 background:#020814;
+
 padding:16px;
+
 border-radius:12px;
+
 margin-top:10px;
+
 white-space:pre-wrap;
+
+line-height:1.6;
+
+}
+
+.chatbox{
+
+background:#020814;
+
+padding:16px;
+
+min-height:160px;
+
+max-height:320px;
+
+overflow:auto;
+
+border-radius:12px;
+
+}
+
+textarea{
+
+width:100%;
+
+padding:10px;
+
+margin-top:10px;
+
+border-radius:8px;
+
+border:none;
+
+background:#08132a;
+
+color:white;
+
+}
+
+button.send{
+
+padding:10px 14px;
+
+margin-top:10px;
+
+border:none;
+
+border-radius:8px;
+
+background:var(--cyan);
+
+color:black;
+
+cursor:pointer;
+
+font-weight:bold;
+
 }
 
 canvas{
+
 margin-top:10px;
+
+max-width:100%;
+
 }
 
 .footer{
+
 text-align:center;
+
 padding:30px;
+
 background:#08132a;
+
 margin-top:60px;
+
 font-size:14px;
+
 color:#6fa9d6;
+
 }
 
 @media(max-width:900px){
-.grid{grid-template-columns:1fr}
+
+.grid{
+
+grid-template-columns:1fr
+
+}
+
 }
 
 </style>
 
 </head>
 
-
 <body>
-
-
-<nav>
+  <nav>
 
 <div class="logo">ZENTRA</div>
 
-<div>
+<div class="nav-links">
 
-<a href="#dashboard" data-tr="Dashboard">Dashboard</a>
-<a href="#brain" data-tr="Brain">Brain</a>
-<a href="#economic" data-tr="Economic">Economic</a>
-<a href="#sectors" data-tr="Sectors">Sectors</a>
-<a href="#scenario" data-tr="Scenario">Scenario</a>
-<a href="#trade" data-tr="Trade">Trade</a>
-<a href="#career" data-tr="Career">Career</a>
-<a href="#opportunity" data-tr="Opportunities">Opportunities</a>
+<a href="#dashboard">Dashboard</a>
 
-<span class="lang" onclick="setLang('en')">EN</span>
-<span class="lang" onclick="setLang('tr')">TR</span>
+<a href="#brain">Brain</a>
+
+<a href="#economic">Economic</a>
+
+<a href="#sectors">Sectors</a>
+
+<a href="#scenario">Scenario</a>
+
+<a href="#trade">Trade</a>
+
+<a href="#career">Career</a>
+
+<a href="#opportunity">Opportunities</a>
+
+<a href="#gps">GPS</a>
+
+<a href="#network">Network</a>
+
+<a href="#chat">AI</a>
+
+<button class="lang" onclick="setLang('en')">EN</button>
+
+<button class="lang" onclick="setLang('tr')">TR</button>
 
 </div>
 
 </nav>
+
 
 
 <section class="hero">
@@ -155,34 +352,47 @@ color:#6fa9d6;
 <h1 id="title">ZENTRA Global Economic OS</h1>
 
 <p class="small" id="subtitle">
+
 Economic Intelligence Platform
+
 </p>
 
 </section>
 
 
+
 <div class="container">
+
 
 
 <section id="dashboard" class="section">
 
-<h2 data-tr="Global Dashboard">Global Dashboard</h2>
+<h2>Global Dashboard</h2>
 
 <div class="grid">
 
 <div class="card">
+
 <div class="small">Risk Score</div>
+
 <div id="riskScore" class="metric">--</div>
+
 </div>
 
 <div class="card">
+
 <div class="small">Economic State</div>
+
 <div id="state" class="metric">--</div>
+
 </div>
 
 <div class="card">
+
 <div class="small">Market Trend</div>
+
 <div id="trend" class="metric">--</div>
+
 </div>
 
 </div>
@@ -193,7 +403,7 @@ Economic Intelligence Platform
 
 <section id="brain" class="section">
 
-<h2 data-tr="Economic Brain">Economic Brain</h2>
+<h2>Economic Brain</h2>
 
 <div class="card">
 
@@ -209,11 +419,46 @@ Loading...
 
 
 
-<section id="sectors" class="section">
+<section id="economic" class="section">
 
-<h2 data-tr="Sector Intelligence">Sector Intelligence</h2>
+<h2>Economic Indicators</h2>
+
+<div class="grid">
 
 <div class="card">
+
+<div class="small">Inflation</div>
+
+<div id="inflation" class="metric">--</div>
+
+</div>
+
+<div class="card">
+
+<div class="small">Interest Rate</div>
+
+<div id="rate" class="metric">--</div>
+
+</div>
+
+<div class="card">
+
+<div class="small">Volatility</div>
+
+<div id="volatility" class="metric">--</div>
+
+</div>
+
+</div>
+
+</section>
+<section id="sectors" class="section">
+
+<h2>Sector Intelligence</h2>
+
+<div class="card">
+
+<div id="sectorResult" class="result"></div>
 
 <canvas id="riskChart"></canvas>
 
@@ -222,7 +467,137 @@ Loading...
 </section>
 
 
+
+<section id="scenario" class="section">
+
+<h2>Scenario Engine</h2>
+
+<div class="card">
+
+<div id="scenarioResult" class="result"></div>
+
 </div>
+
+</section>
+
+
+
+<section id="trade" class="section">
+
+<h2>Global Trade</h2>
+
+<div class="card">
+
+<div id="tradeResult" class="result"></div>
+
+</div>
+
+</section>
+
+
+
+<section id="career" class="section">
+
+<h2>Career Intelligence</h2>
+
+<div class="card">
+
+<div id="careerResult" class="result"></div>
+
+</div>
+
+</section>
+
+
+
+<section id="opportunity" class="section">
+
+<h2>Opportunity Radar</h2>
+
+<div class="card">
+
+<div id="opportunityResult" class="result"></div>
+
+</div>
+
+</section>
+
+
+
+<section id="gps" class="section">
+
+<h2>Economic GPS</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="small">Strategic Direction</div>
+
+<div id="gpsDirection" class="metric">--</div>
+
+</div>
+
+<div class="card">
+
+<div id="gpsAdvice" class="result">
+
+Economic GPS loading...
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="network" class="section">
+
+<h2>Global Economic Network</h2>
+
+<div class="card">
+
+<canvas id="networkMap" height="420"></canvas>
+
+<div id="networkInfo" class="result">
+
+Network loading...
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="chat" class="section">
+
+<h2>ZENTRA AI</h2>
+
+<div class="card">
+
+<div id="chatBox" class="chatbox">
+
+<div><b>ZENTRA:</b> Ready.</div>
+
+</div>
+
+<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
+
+<button class="send" onclick="askChat()">Send</button>
+
+</div>
+
+</section>
+
+
+
+</div>
+
 
 
 <div class="footer">
@@ -230,103 +605,310 @@ Loading...
 ZENTRA — Global Economic Operating System
 
 </div>
-
-
 <script>
 
+const API_URL = "https://zentra-risklens-api.vercel.app/api/zentra";
 
-const API_URL="https://zentra-risklens-api.vercel.app/api/zentra"
+let riskChart = null;
+let currentLang = "en";
 
-
-async function loadData(){
-
-try{
-
-const res=await fetch(API_URL)
-
-const data=await res.json()
-
-document.getElementById("riskScore").innerText=data.brain.risk
-document.getElementById("state").innerText=data.brain.state
-document.getElementById("trend").innerText=data.brain.trend
-
-
-document.getElementById("brainResult").innerText=
-
-`Risk: ${data.brain.risk}
-State: ${data.brain.state}
-Trend: ${data.brain.trend}
-Advice: ${data.brain.advice}`
-
-
-renderChart(data)
-
-}catch(e){
-
-console.log("API error")
-
+function fallbackData(){
+  return {
+    brain:{
+      risk:57,
+      state:"moderate pressure",
+      trend:"bearish",
+      advice:"Maintain liquidity, monitor market changes and avoid concentrated risk."
+    },
+    economic:{
+      inflation:"5.5",
+      rate:"4.8",
+      volatility:"41",
+      liquidity:"61"
+    },
+    sectors:[
+      {sector:"Energy",risk:40},
+      {sector:"Finance",risk:18},
+      {sector:"Technology",risk:56},
+      {sector:"Agriculture",risk:26},
+      {sector:"Manufacturing",risk:38}
+    ],
+    scenarios:[
+      {scenario:"Interest Rate Shock",impact:"High"},
+      {scenario:"Supply Chain Disruption",impact:"Medium"},
+      {scenario:"Energy Crisis",impact:"High"},
+      {scenario:"Currency Volatility",impact:"Medium"},
+      {scenario:"Regional Conflict",impact:"Critical"}
+    ],
+    opportunities:[
+      {country:"Germany",sector:"Manufacturing"},
+      {country:"UAE",sector:"Trade"},
+      {country:"USA",sector:"Technology"},
+      {country:"Turkey",sector:"Energy"},
+      {country:"Singapore",sector:"Logistics"}
+    ],
+    trade:[
+      {from:"Turkey",to:"Germany",product:"Machinery"},
+      {from:"China",to:"USA",product:"Electronics"},
+      {from:"Brazil",to:"EU",product:"Agriculture"},
+      {from:"India",to:"UAE",product:"Textile"}
+    ],
+    careers:[
+      {field:"AI Engineering",demand:"Very High"},
+      {field:"Data Science",demand:"High"},
+      {field:"Logistics",demand:"High"},
+      {field:"Cyber Security",demand:"Very High"}
+    ]
+  };
 }
 
+function setText(id, value){
+  const el = document.getElementById(id);
+  if(el) el.innerText = value;
 }
 
-
+function riskColor(r){
+  if(r < 30) return "#54f2a1";
+  if(r < 50) return "#ffd166";
+  if(r < 70) return "#ff9f68";
+  return "#ff6b6b";
+}
 
 function renderChart(data){
+  const canvas = document.getElementById("riskChart");
+  if(!canvas || !Array.isArray(data.sectors) || typeof Chart === "undefined") return;
 
-const ctx=document.getElementById("riskChart")
+  if(riskChart) riskChart.destroy();
 
-new Chart(ctx,{
-
-type:"bar",
-
-data:{
-
-labels:data.sectors.map(s=>s.sector),
-
-datasets:[{
-
-label:"Sector Risk",
-
-data:data.sectors.map(s=>s.risk),
-
-backgroundColor:"#49ddff"
-
-}]
-
+  riskChart = new Chart(canvas,{
+    type:"bar",
+    data:{
+      labels:data.sectors.map(s => s.sector),
+      datasets:[{
+        label: currentLang === "tr" ? "Sektör Riski" : "Sector Risk",
+        data:data.sectors.map(s => s.risk),
+        backgroundColor:"#49ddff"
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{labels:{color:"#eef5ff"}}
+      },
+      scales:{
+        x:{ticks:{color:"#9ab6d9"},grid:{color:"rgba(77,140,223,.15)"}},
+        y:{ticks:{color:"#9ab6d9"},grid:{color:"rgba(77,140,223,.15)"}}
+      }
+    }
+  });
 }
 
-})
+function renderGPS(data){
+  let direction = "STABLE";
+  let advice = "";
+  const risk = data.brain?.risk ?? 50;
+  const trend = (data.brain?.trend ?? "neutral").toLowerCase();
 
+  if(risk >= 70){
+    direction = currentLang === "tr" ? "SAVUNMA" : "DEFENSIVE";
+    advice = currentLang === "tr"
+      ? "Risk azalt, likiditeyi artır ve korunma stratejisi uygula."
+      : "Reduce exposure, increase liquidity and hedge risk.";
+  }else if(risk >= 50){
+    direction = currentLang === "tr" ? "DİKKAT" : "CAUTION";
+    advice = currentLang === "tr"
+      ? "Yatırımları çeşitlendir ve makro sinyalleri yakından izle."
+      : "Diversify investments and monitor macro signals.";
+  }else if(trend === "bullish"){
+    direction = currentLang === "tr" ? "GENİŞLEME" : "EXPANSION";
+    advice = currentLang === "tr"
+      ? "Fırsat penceresi açık. Kontrollü büyüme ve stratejik yatırım düşünülebilir."
+      : "Opportunity window open. Consider expansion and strategic investment.";
+  }else{
+    direction = currentLang === "tr" ? "DENGELİ" : "BALANCED";
+    advice = currentLang === "tr"
+      ? "Çeşitlendirilmiş stratejiyi koru ve sinyalleri izlemeye devam et."
+      : "Maintain diversified strategy and monitor signals.";
+  }
+
+  setText("gpsDirection", direction);
+  setText("gpsAdvice",
+`${currentLang === "tr" ? "Ekonomik GPS Analizi" : "Economic GPS Analysis"}
+
+${currentLang === "tr" ? "Küresel Risk" : "Global Risk"}: ${risk}
+${currentLang === "tr" ? "Piyasa Trendi" : "Market Trend"}: ${data.brain?.trend ?? "--"}
+
+${currentLang === "tr" ? "Stratejik Yön" : "Strategic Direction"}: ${direction}
+
+${currentLang === "tr" ? "Öneri" : "Recommendation"}:
+${advice}
+
+${currentLang === "tr"
+? "ZENTRA makro risk, piyasa yönü ve sektör zekâsını birleştirerek stratejik yön üretir."
+: "ZENTRA integrates macro risk, market direction and sector intelligence."}`);
 }
 
+function renderNetwork(data){
+  const canvas = document.getElementById("networkMap");
+  if(!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const w = canvas.width;
+  const h = canvas.height;
 
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = "#071120";
+  ctx.fillRect(0,0,w,h);
+
+  const nodes = [
+    {name:"USA",x:0.15*w,y:0.28*h,risk:data.brain?.risk ?? 35},
+    {name:"Germany",x:0.44*w,y:0.24*h,risk:data.sectors?.[4]?.risk ?? 30},
+    {name:"Turkey",x:0.50*w,y:0.33*h,risk:data.sectors?.[1]?.risk ?? 45},
+    {name:"UAE",x:0.57*w,y:0.42*h,risk:data.sectors?.[0]?.risk ?? 35},
+    {name:"India",x:0.68*w,y:0.44*h,risk:data.sectors?.[2]?.risk ?? 50},
+    {name:"China",x:0.75*w,y:0.30*h,risk:data.sectors?.[3]?.risk ?? 55}
+  ];
+
+  const links = [
+    ["USA","Germany"],
+    ["Germany","Turkey"],
+    ["Turkey","UAE"],
+    ["India","UAE"],
+    ["China","Germany"],
+    ["China","USA"]
+  ];
+
+  links.forEach(link=>{
+    const a = nodes.find(n=>n.name===link[0]);
+    const b = nodes.find(n=>n.name===link[1]);
+    if(!a || !b) return;
+    ctx.beginPath();
+    ctx.moveTo(a.x,a.y);
+    ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle = "rgba(73,221,255,.30)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  nodes.forEach(n=>{
+    ctx.beginPath();
+    ctx.fillStyle = riskColor(n.risk);
+    ctx.arc(n.x,n.y,10,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = "#bfe2ff";
+    ctx.font = "12px Arial";
+    ctx.fillText(n.name,n.x+14,n.y+4);
+  });
+
+  setText("networkInfo",
+`${currentLang === "tr" ? "Küresel Ekonomik Ağ" : "Global Economic Network"}
+
+USA ↔ Germany
+Germany ↔ Turkey
+Turkey ↔ UAE
+India ↔ UAE
+China ↔ Germany
+China ↔ USA
+
+${currentLang === "tr"
+? "Risk renkleri: yeşil düşük, sarı orta, turuncu yükselen, kırmızı yüksek."
+: "Risk colors: green low, yellow medium, orange elevated, red high."}`);
+}
+
+function renderData(data){
+  setText("riskScore", data.brain?.risk ?? "--");
+  setText("state", data.brain?.state ?? "--");
+  setText("trend", data.brain?.trend ?? "--");
+
+  setText("brainResult",
+`${currentLang === "tr" ? "Risk" : "Risk"}: ${data.brain?.risk ?? "--"}
+${currentLang === "tr" ? "Durum" : "State"}: ${data.brain?.state ?? "--"}
+${currentLang === "tr" ? "Trend" : "Trend"}: ${data.brain?.trend ?? "--"}
+${currentLang === "tr" ? "Öneri" : "Advice"}: ${data.brain?.advice ?? "--"}`);
+
+  setText("inflation", data.economic?.inflation ?? "--");
+  setText("rate", data.economic?.rate ?? "--");
+  setText("volatility", data.economic?.volatility ?? "--");
+
+  setText("scenarioResult",
+    Array.isArray(data.scenarios)
+      ? data.scenarios.map(x => x.scenario + " — " + x.impact).join("\n")
+      : (currentLang === "tr" ? "Senaryo verisi yok" : "No scenario data"));
+
+  setText("sectorResult",
+    Array.isArray(data.sectors)
+      ? data.sectors.map(x => `${x.sector} risk: ${x.risk}`).join("\n")
+      : (currentLang === "tr" ? "Sektör verisi yok" : "No sector data"));
+
+  setText("tradeResult",
+    Array.isArray(data.trade)
+      ? data.trade.map(x => x.from + " → " + x.to + " : " + x.product).join("\n")
+      : (currentLang === "tr" ? "Ticaret verisi yok" : "No trade data"));
+
+  setText("careerResult",
+    Array.isArray(data.careers)
+      ? data.careers.map(x => x.field + " — " + x.demand).join("\n")
+      : (currentLang === "tr" ? "Kariyer verisi yok" : "No career data"));
+
+  setText("opportunityResult",
+    Array.isArray(data.opportunities)
+      ? data.opportunities.map(x => x.country + " — " + x.sector).join("\n")
+      : (currentLang === "tr" ? "Fırsat verisi yok" : "No opportunity data"));
+
+  renderChart(data);
+  renderGPS(data);
+  renderNetwork(data);
+}
+
+async function loadData(){
+  try{
+    const res = await fetch(API_URL, {cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    window.__zentraData = data;
+    renderData(data);
+  }catch(e){
+    const data = fallbackData();
+    window.__zentraData = data;
+    renderData(data);
+    setText(
+      "brainResult",
+      document.getElementById("brainResult").innerText + `\n\n${currentLang === "tr" ? "Yedek mod aktif." : "Fallback mode active."}`
+    );
+  }
+}
+
+function askChat(){
+  const input = document.getElementById("chatInput");
+  const box = document.getElementById("chatBox");
+  const q = input.value.trim();
+  if(!q) return;
+
+  box.innerHTML += "<div><b>You:</b> " + q + "</div>";
+  box.innerHTML += "<div><b>ZENTRA:</b> " + (currentLang === "tr" ? "Ekonomik analiz modülü aktif." : "Economic analysis module active.") + "</div>";
+  input.value = "";
+  box.scrollTop = box.scrollHeight;
+}
 
 function setLang(lang){
+  currentLang = lang;
+  document.documentElement.lang = lang;
 
-if(lang==="tr"){
+  document.getElementById("title").innerText =
+    lang === "tr" ? "ZENTRA Küresel Ekonomik Sistem" : "ZENTRA Global Economic OS";
 
-title.innerText="ZENTRA Küresel Ekonomik Sistem"
+  document.getElementById("subtitle").innerText =
+    lang === "tr"
+      ? "Ekonomik Zekâ Platformu"
+      : "Economic Intelligence Platform";
 
-subtitle.innerText="Ekonomik Zeka Platformu"
-
+  if(window.__zentraData){
+    renderData(window.__zentraData);
+  }
 }
 
-if(lang==="en"){
-
-title.innerText="ZENTRA Global Economic OS"
-
-subtitle.innerText="Economic Intelligence Platform"
-
-}
-
-}
-
-
-loadData()
+document.addEventListener("DOMContentLoaded", loadData);
 
 </script>
 
-
 </body>
-
 </html>

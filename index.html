@@ -327,6 +327,50 @@ function askChat(){
 
 document.addEventListener("DOMContentLoaded", loadData);
 </script>
+<script>
 
+window.onload = async function(){
+
+const API="https://zentra-risklens-api.vercel.app/api/zentra";
+
+try{
+
+const res = await fetch(API);
+const data = await res.json();
+
+document.getElementById("riskScore").innerText = data.brain.risk;
+document.getElementById("state").innerText = data.brain.state;
+document.getElementById("trend").innerText = data.brain.trend;
+
+document.getElementById("brainResult").innerText =
+"Risk: "+data.brain.risk+
+"\nState: "+data.brain.state+
+"\nTrend: "+data.brain.trend+
+"\nAdvice: "+data.brain.advice;
+
+document.getElementById("sectorResult").innerText =
+data.sectors.map(s=>s.sector+" risk: "+s.risk).join("\n");
+
+document.getElementById("scenarioResult").innerText =
+data.scenarios.map(s=>s.scenario+" — "+s.impact).join("\n");
+
+document.getElementById("tradeResult").innerText =
+data.trade.map(t=>t.from+" → "+t.to+" : "+t.product).join("\n");
+
+document.getElementById("careerResult").innerText =
+data.careers.map(c=>c.field+" — "+c.demand).join("\n");
+
+document.getElementById("opportunityResult").innerText =
+data.opportunities.map(o=>o.country+" — "+o.sector).join("\n");
+
+}catch(e){
+
+console.log("API ERROR",e);
+
+}
+
+}
+
+</script>
 </body>
  </html>

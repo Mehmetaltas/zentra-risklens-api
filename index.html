@@ -1,242 +1,88 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ZENTRA Economic Operating System</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 
 <style>
-
-:root{
-
---bg:#06101f;
---bg2:#0b1730;
---panel:#0e1c38;
---line:#1f3d70;
-
---text:#e8f3ff;
---muted:#9ec3ff;
-
---cyan:#00e0ff;
---blue:#5b8cff;
-
---radius:16px;
---max:1300px;
-
-}
-
-*{
-box-sizing:border-box;
-}
-
 body{
-
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
-color:var(--text);
-
-background:
-radial-gradient(circle at 20% 20%, rgba(0,224,255,.12), transparent 30%),
-radial-gradient(circle at 80% 10%, rgba(91,140,255,.12), transparent 28%),
-linear-gradient(180deg,#040b16,#071021,#08142a);
-
+font-family:Arial;
+background:#071021;
+color:white;
 overflow-x:hidden;
-
-}
-
-a{
-text-decoration:none;
-color:inherit;
 }
 
 nav{
-
 background:#08132a;
-padding:16px 24px;
-
+padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-border-bottom:1px solid var(--line);
-
-position:sticky;
-top:0;
-z-index:20;
-
-}
-
-.logo{
-color:var(--cyan);
-font-weight:bold;
-font-size:18px;
-}
-
-.links{
-
-display:flex;
-gap:16px;
-flex-wrap:wrap;
-
 }
 
 nav a{
-color:#7bdfff;
-font-size:14px;
+color:#8bd6ff;
+margin-left:15px;
+text-decoration:none;
 }
 
 .hero{
-
 text-align:center;
 padding:80px 20px;
-
 }
 
 .hero h1{
-
 font-size:48px;
-margin:0 0 16px;
-color:var(--cyan);
-
+color:#00e0ff;
 }
 
 .section{
-
-max-width:var(--max);
+max-width:1200px;
 margin:auto;
-padding:30px 20px;
-
-}
-
-.section h2{
-
-color:var(--cyan);
-margin-bottom:20px;
-
-}
-
-.grid{
-
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-
-}
-
-.grid2{
-
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-
+padding:30px;
 }
 
 .card{
-
-background:var(--panel);
+background:#0e1c38;
 padding:20px;
-border-radius:var(--radius);
-border:1px solid var(--line);
-
+margin-bottom:20px;
+border-radius:10px;
 }
 
 .metric{
-
-font-size:30px;
-color:var(--cyan);
-font-weight:bold;
-
+font-size:28px;
+color:#00e0ff;
 }
 
-.small{
-
-font-size:14px;
-color:var(--muted);
-line-height:1.6;
-
-}
-
-.result{
-
-background:#020814;
-padding:18px;
-border-radius:12px;
-line-height:1.7;
-
-}
-
-.chatbox{
-
-background:#020814;
-padding:18px;
-border-radius:12px;
-min-height:200px;
-max-height:400px;
-overflow:auto;
-
-}
-
-input,textarea,select{
-
+textarea,input{
 width:100%;
-padding:12px;
+padding:10px;
 margin-top:10px;
-border-radius:8px;
-border:none;
-
 background:#08132a;
 color:white;
-
+border:none;
+border-radius:8px;
 }
 
 button{
-
-margin-top:10px;
-padding:12px 18px;
-background:var(--cyan);
+padding:10px 15px;
+background:#00e0ff;
 border:none;
 border-radius:8px;
-
-font-weight:bold;
-color:#021018;
-
+margin-top:10px;
 cursor:pointer;
-
 }
 
-#worldMap{
-
-height:450px!important;
-width:100%!important;
-
-}
-
-footer{
-
-text-align:center;
-padding:30px;
-margin-top:50px;
-
-background:#08132a;
-color:#6fa9d6;
-
-}
-
-@media(max-width:900px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.grid2{
-grid-template-columns:1fr;
-}
-
+#chatBox{
+background:#020814;
+padding:15px;
+height:200px;
+overflow:auto;
+border-radius:10px;
 }
 
 </style>
@@ -245,186 +91,53 @@ grid-template-columns:1fr;
 <body>
 
 <nav>
-
-<div class="logo">ZENTRA</div>
-
-<div class="links">
-
+<div>ZENTRA</div>
+<div>
 <a href="#dashboard">Dashboard</a>
 <a href="#brain">Brain</a>
-<a href="#map">Risk Map</a>
 <a href="#scenario">Scenario</a>
-<a href="#trade">Trade</a>
-<a href="#directory">Directory</a>
-<a href="#career">Career</a>
 <a href="#chat">AI</a>
-
 </div>
-
 </nav>
 
-<section class="hero">
-
-<h1>ZENTRA Economic Operating System</h1>
-
-<p class="small">
-
-Economic Intelligence Platform  
-Risk Map • Simulation • Trade • Career • AI
-
-</p>
-
-</section>
+<div class="hero">
+<h1>ZENTRA Economic OS</h1>
+<p>AI powered global economic intelligence platform</p>
+</div>
 
 <section id="dashboard" class="section">
 
-<h2>Economic Dashboard</h2>
-
-<div class="grid">
-
 <div class="card">
-<div class="small">Global Risk</div>
-<div id="riskScore" class="metric">--</div>
+<div>Global Risk Index</div>
+<div id="risk" class="metric">--</div>
 </div>
 
 <div class="card">
-<div class="small">Economic State</div>
-<div id="state" class="metric">--</div>
-</div>
-
-<div class="card">
-<div class="small">Market Trend</div>
-<div id="trend" class="metric">--</div>
-</div>
-
+<canvas id="chart"></canvas>
 </div>
 
 </section>
 
 <section id="brain" class="section">
 
-<h2>Economic Brain</h2>
-
 <div class="card">
-
-<div id="brainResult" class="result">
-
-Loading...
-
-</div>
-
-</div>
-
-</section>
-
-<section id="map" class="section grid2">
-
-<div class="card">
-
-<h2>Global Risk Map</h2>
-
-<canvas id="worldMap"></canvas>
-
-</div>
-
-<div class="card">
-
-<h2>Country Intelligence</h2>
-
-<div id="countryName" class="metric">None</div>
-
-<div class="small">Risk Score</div>
-
-<div id="countryRisk" class="metric">--</div>
-
-<div id="countryInfo" class="result">
-
-Click a country.
-
-</div>
-
+<div id="brainText">Economic Brain loading...</div>
 </div>
 
 </section>
 
 <section id="scenario" class="section">
 
-<h2>Scenario Engine</h2>
-
 <div class="card">
-
-<select id="scenarioName">
-
+<select id="scenarioSelect">
 <option value="interest">Interest Shock</option>
 <option value="currency">Currency Shock</option>
-<option value="oil">Oil Spike</option>
 <option value="demand">Demand Drop</option>
-
 </select>
 
 <button onclick="runScenario()">Run Scenario</button>
 
-<div id="scenarioResult" class="result"></div>
-
-</div>
-
-</section>
-
-<section id="trade" class="section">
-
-<h2>Trade Engine</h2>
-
-<div class="card">
-
-<input id="tradeOrigin" placeholder="Origin">
-
-<input id="tradeDestination" placeholder="Destination">
-
-<input id="tradeProduct" placeholder="Product">
-
-<input id="tradePrice" placeholder="Unit Price">
-
-<input id="tradeCost" placeholder="Unit Cost">
-
-<input id="tradeQty" placeholder="Quantity">
-
-<button onclick="runTrade()">Analyze Trade</button>
-
-<div id="tradeResult" class="result"></div>
-
-</div>
-
-</section>
-
-<section id="directory" class="section">
-
-<h2>Company Directory</h2>
-
-<div class="card">
-
-<input id="directorySearch" placeholder="Search company or product">
-
-<button onclick="runDirectory()">Search</button>
-
-<div id="directoryResult" class="result"></div>
-
-</div>
-
-</section>
-
-<section id="career" class="section">
-
-<h2>Career Intelligence</h2>
-
-<div class="card">
-
-<input id="careerSkill" placeholder="Skill">
-
-<input id="careerCountry" placeholder="Target country">
-
-<button onclick="runCareer()">Analyze</button>
-
-<div id="careerResult" class="result"></div>
+<div id="scenarioResult"></div>
 
 </div>
 
@@ -432,129 +145,81 @@ Click a country.
 
 <section id="chat" class="section">
 
-<h2>ZENTRA AI</h2>
-
 <div class="card">
 
-<select id="aiMode">
-
-<option value="general">General</option>
-<option value="economic">Economic</option>
-<option value="business">Business</option>
-<option value="simulation">Simulation</option>
-
-</select>
-
-<div id="chatBox" class="chatbox">
-
-<div><b>ZENTRA:</b> Ready.</div>
-
+<div id="chatBox">
+<div><b>ZENTRA:</b> Ask me about economy.</div>
 </div>
 
-<textarea id="chatInput" placeholder="Ask..."></textarea>
+<textarea id="chatInput"></textarea>
 
-<button onclick="askChat()">Send</button>
+<button onclick="ask()">Send</button>
 
 </div>
 
 </section>
 
-<footer>
-
-ZENTRA Economic Operating System
-
-</footer>
-
 <script>
 
-function updateSystem(){
-
-let risk=Math.round(30+Math.random()*50)
-
-document.getElementById("riskScore").innerText=risk
-
-if(risk>70){
-
-document.getElementById("state").innerText="High Pressure"
-document.getElementById("trend").innerText="Bearish"
-
-}else if(risk>45){
-
-document.getElementById("state").innerText="Moderate"
-document.getElementById("trend").innerText="Neutral"
-
-}else{
-
-document.getElementById("state").innerText="Stable"
-document.getElementById("trend").innerText="Bullish"
-
+function randomRisk(){
+return Math.floor(Math.random()*100)
 }
 
-document.getElementById("brainResult").innerText=
+let risk=randomRisk()
 
-"GLOBAL ECONOMIC MODEL\n\nRisk Score: "+risk
+document.getElementById("risk").innerText=risk
 
+const ctx=document.getElementById("chart")
+
+new Chart(ctx,{
+type:"line",
+data:{
+labels:["Mon","Tue","Wed","Thu","Fri"],
+datasets:[{
+label:"Risk",
+data:[20,40,30,60,50]
+}]
 }
+})
+
+document.getElementById("brainText").innerText=
+"Global economy shows moderate pressure. Monitor inflation and energy."
 
 function runScenario(){
 
-let s=document.getElementById("scenarioName").value
+let s=document.getElementById("scenarioSelect").value
 
-document.getElementById("scenarioResult").innerText=
+let result=""
 
-"Scenario: "+s+"\nEconomic impact simulation complete."
+if(s=="interest"){
+result="Interest increase may slow credit expansion."
+}
+
+if(s=="currency"){
+result="Currency shock may increase import costs."
+}
+
+if(s=="demand"){
+result="Demand drop may pressure retail sector."
+}
+
+document.getElementById("scenarioResult").innerText=result
 
 }
 
-function runTrade(){
-
-let p=document.getElementById("tradePrice").value
-let c=document.getElementById("tradeCost").value
-let q=document.getElementById("tradeQty").value
-
-let profit=(p-c)*q
-
-document.getElementById("tradeResult").innerText=
-
-"Total Profit: "+profit
-
-}
-
-function runDirectory(){
-
-document.getElementById("directoryResult").innerText=
-
-"Sample company: Anatolia Export"
-
-}
-
-function runCareer(){
-
-let skill=document.getElementById("careerSkill").value
-
-document.getElementById("careerResult").innerText=
-
-"Career analysis for: "+skill
-
-}
-
-function askChat(){
+function ask(){
 
 let q=document.getElementById("chatInput").value
 
 let box=document.getElementById("chatBox")
 
-box.innerHTML+=
+box.innerHTML+=`<div><b>You:</b> ${q}</div>`
 
-"<div><b>You:</b> "+q+"</div><div><b>ZENTRA:</b> Analysis ready.</div>"
+box.innerHTML+=`<div><b>ZENTRA:</b> Economic analysis suggests monitoring macro indicators.</div>`
 
 }
-
-updateSystem()
-
-setInterval(updateSystem,10000)
 
 </script>
 
 </body>
-  </html>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -12,10 +13,6 @@
 
 <style>
 
-/* =========================
-GLOBAL
-========================= */
-
 body{
 margin:0;
 font-family:Arial;
@@ -23,10 +20,6 @@ background:#071021;
 color:white;
 overflow-x:hidden;
 }
-
-/* =========================
-NAV
-========================= */
 
 nav{
 background:#08132a;
@@ -42,10 +35,6 @@ text-decoration:none;
 margin-left:15px;
 }
 
-/* =========================
-HERO
-========================= */
-
 .hero{
 text-align:center;
 padding:70px 20px;
@@ -56,10 +45,6 @@ font-size:44px;
 color:#00e0ff;
 }
 
-/* =========================
-GRID
-========================= */
-
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -68,28 +53,16 @@ max-width:1200px;
 margin:auto;
 }
 
-/* =========================
-CARDS
-========================= */
-
 .card{
 background:#0e1c38;
 padding:20px;
 border-radius:12px;
 }
 
-/* =========================
-METRICS
-========================= */
-
 .metric{
 font-size:28px;
 color:#00e0ff;
 }
-
-/* =========================
-MAP
-========================= */
 
 .map-container{
 width:100%;
@@ -105,10 +78,6 @@ width:100%!important;
 height:500px!important;
 }
 
-/* =========================
-NETWORK
-========================= */
-
 .network-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -122,10 +91,6 @@ background:#08132a;
 padding:20px;
 border-radius:12px;
 }
-
-/* =========================
-INPUTS
-========================= */
 
 input,textarea{
 width:100%;
@@ -146,10 +111,6 @@ margin-top:10px;
 cursor:pointer;
 }
 
-/* =========================
-RESULTS
-========================= */
-
 .result{
 background:#020814;
 padding:15px;
@@ -158,21 +119,20 @@ border-radius:10px;
 line-height:1.6;
 }
 
-/* =========================
-CHAT
-========================= */
-
 .chat-box{
 background:#020814;
 padding:15px;
-height:200px;
+height:220px;
 overflow:auto;
 border-radius:10px;
 }
 
-/* =========================
-RESPONSIVE
-========================= */
+.company-card{
+background:#0b1730;
+padding:14px;
+border-radius:10px;
+margin-top:10px;
+}
 
 @media(max-width:900px){
 
@@ -195,6 +155,7 @@ font-size:32px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -207,6 +168,7 @@ font-size:32px;
 <a href="#dashboard">Dashboard</a>
 <a href="#map">Risk Map</a>
 <a href="#network">Network</a>
+<a href="#companies">Companies</a>
 <a href="#ai">AI</a>
 </div>
 
@@ -215,7 +177,7 @@ font-size:32px;
 <section class="hero">
 
 <h1>ZENTRA Global Economic Platform</h1>
-<p>Economic Intelligence + Global Trade + Career Network</p>
+<p>Economic Intelligence + Global Trade + Career + Company Network</p>
 
 </section>
 
@@ -244,7 +206,7 @@ font-size:32px;
 
 </section>
 
-<!-- GLOBAL MAP -->
+<!-- MAP -->
 
 <section id="map">
 
@@ -256,11 +218,11 @@ font-size:32px;
 
 </section>
 
-<!-- NETWORK -->
+<!-- TRADE NETWORK -->
 
 <section id="network" style="padding:40px 20px">
 
-<h2 style="text-align:center">ZENTRA Global Network</h2>
+<h2 style="text-align:center">Trade & Career Network</h2>
 
 <div class="network-grid">
 
@@ -272,9 +234,9 @@ font-size:32px;
 
 <input id="origin" placeholder="Origin Country">
 
-<input id="destination" placeholder="Target Country">
+<input id="destination" placeholder="Destination Country">
 
-<button onclick="tradeMatch()">Find Trade Match</button>
+<button onclick="tradeMatch()">Find Trade</button>
 
 <div id="tradeResult" class="result"></div>
 
@@ -288,11 +250,29 @@ font-size:32px;
 
 <input id="careerCountry" placeholder="Country">
 
-<button onclick="careerMatch()">Find Career Opportunity</button>
+<button onclick="careerMatch()">Find Career</button>
 
 <div id="careerResult" class="result"></div>
 
 </div>
+
+</div>
+
+</section>
+
+<!-- COMPANY NETWORK -->
+
+<section id="companies" style="padding:40px 20px">
+
+<h2 style="text-align:center">Global Company Network</h2>
+
+<div style="max-width:900px;margin:auto">
+
+<input id="companySearch" placeholder="Search product or company">
+
+<button onclick="searchCompanies()">Search</button>
+
+<div id="companyResults"></div>
 
 </div>
 
@@ -305,7 +285,7 @@ font-size:32px;
 <h2>ZENTRA AI</h2>
 
 <div id="chatBox" class="chat-box">
-<div><b>ZENTRA:</b> Ask about economy, trade or career.</div>
+<div><b>ZENTRA:</b> Ask anything about economy, trade or career.</div>
 </div>
 
 <textarea id="chatInput"></textarea>
@@ -334,7 +314,7 @@ document.getElementById("state").innerText=state
 
 document.getElementById("trend").innerText="Neutral"
 
-/* GLOBAL MAP */
+/* MAP */
 
 async function loadRiskMap(){
 
@@ -387,8 +367,7 @@ let o=document.getElementById("origin").value
 let d=document.getElementById("destination").value
 
 document.getElementById("tradeResult").innerText=
-"Trade opportunity detected for "+p+
-" from "+o+" to "+d
+"Trade opportunity for "+p+" from "+o+" to "+d
 
 }
 
@@ -400,8 +379,40 @@ let s=document.getElementById("skill").value
 let c=document.getElementById("careerCountry").value
 
 document.getElementById("careerResult").innerText=
-"Career opportunity for "+s+
-" in "+c
+"Career opportunity for "+s+" in "+c
+
+}
+
+/* COMPANY NETWORK */
+
+const companies=[
+{name:"AgroTech",country:"Turkey",product:"Agriculture"},
+{name:"GlobalSteel",country:"Germany",product:"Steel"},
+{name:"SolarFuture",country:"Spain",product:"Solar Energy"},
+{name:"OceanTrade",country:"Singapore",product:"Logistics"}
+]
+
+function searchCompanies(){
+
+let q=document.getElementById("companySearch").value.toLowerCase()
+
+let results=companies.filter(c=>
+c.name.toLowerCase().includes(q)||
+c.product.toLowerCase().includes(q)
+)
+
+let html=""
+
+results.forEach(c=>{
+html+=`
+<div class="company-card">
+<b>${c.name}</b><br>
+Country: ${c.country}<br>
+Product: ${c.product}
+</div>`
+})
+
+document.getElementById("companyResults").innerHTML=html
 
 }
 
@@ -417,9 +428,11 @@ box.innerHTML+=`<div><b>You:</b> ${q}</div>`
 
 box.innerHTML+=`<div><b>ZENTRA:</b> Economic analysis generated.</div>`
 
+box.scrollTop=box.scrollHeight
+
 }
 
 </script>
 
 </body>
-  </html>
+</html>

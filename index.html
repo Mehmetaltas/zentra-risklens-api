@@ -3,374 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Economic Operating System</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>ZENTRA Test</title>
 <style>
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#06101f;
-color:#fff;
-overflow-x:hidden;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#06101f;
+  color:#fff;
 }
-nav{
-background:#08132a;
-padding:16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:1px solid #123;
-position:sticky;
-top:0;
-z-index:10;
+.wrap{
+  max-width:900px;
+  margin:40px auto;
+  padding:20px;
 }
-nav .logo{
-color:#49ddff;
-font-weight:bold;
-font-size:18px;
+.box{
+  background:#0b1730;
+  border:1px solid rgba(77,140,223,.22);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
 }
-nav a{
-color:#9bdcff;
-text-decoration:none;
-margin-left:12px;
-font-size:14px;
+h1{color:#49ddff}
+pre{
+  white-space:pre-wrap;
+  line-height:1.6;
+  margin:0;
 }
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-.hero{
-text-align:center;
-padding:60px 20px;
-}
-.hero h1{
-font-size:42px;
-color:#49ddff;
-margin-bottom:10px;
-}
-.small{
-color:#9ab6d9;
-font-size:14px;
-}
-.section{
-margin-top:40px;
-}
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-}
-.card{
-background:#0b1730;
-padding:20px;
-border-radius:14px;
-border:1px solid rgba(77,140,223,.22);
-}
-.metric{
-font-size:28px;
-color:#49ddff;
-font-weight:bold;
-}
-.result{
-background:#020814;
-padding:16px;
-border-radius:12px;
-margin-top:10px;
-white-space:pre-wrap;
-line-height:1.6;
-}
-.chatbox{
-background:#020814;
-padding:16px;
-min-height:160px;
-max-height:300px;
-overflow:auto;
-border-radius:12px;
-}
-textarea{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:8px;
-border:none;
-background:#08132a;
-color:white;
-}
-button{
-padding:10px 14px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-background:#49ddff;
-color:black;
-cursor:pointer;
-font-weight:bold;
-}
-canvas{
-margin-top:10px;
-max-width:100%;
-}
-@media(max-width:900px){
-.grid{grid-template-columns:1fr}
-}
+.ok{color:#49ddff;font-weight:bold}
+.err{color:#ff6b6b;font-weight:bold}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <h1>ZENTRA API TEST</h1>
 
-<nav>
-<div class="logo">ZENTRA</div>
-<div>
-<a href="#dashboard">Dashboard</a>
-<a href="#brain">Brain</a>
-<a href="#sectors">Sectors</a>
-<a href="#scenario">Scenario</a>
-<a href="#trade">Trade</a>
-<a href="#career">Career</a>
-<a href="#opportunity">Opportunities</a>
-<a href="#chat">AI</a>
-</div>
-</nav>
+  <div class="box">
+    <div>Connection:</div>
+    <div id="status">Loading...</div>
+  </div>
 
-<section class="hero">
-<h1>ZENTRA Global Economic OS</h1>
-<p class="small">Economic Intelligence Platform</p>
-</section>
+  <div class="box">
+    <div>Risk Score:</div>
+    <div id="riskScore">--</div>
+  </div>
 
-<div class="container">
+  <div class="box">
+    <div>State:</div>
+    <div id="state">--</div>
+  </div>
 
-<section id="dashboard" class="section">
-<h2>Global Dashboard</h2>
-<div class="grid">
-<div class="card">
-<div class="small">Risk Score</div>
-<div id="riskScore" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small">Economic State</div>
-<div id="state" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small">Market Trend</div>
-<div id="trend" class="metric">--</div>
-</div>
-</div>
-</section>
+  <div class="box">
+    <div>Trend:</div>
+    <div id="trend">--</div>
+  </div>
 
-<section id="brain" class="section">
-<h2>Economic Brain</h2>
-<div class="card">
-<div id="brainResult" class="result">Loading...</div>
-</div>
-</section>
+  <div class="box">
+    <div>Brain:</div>
+    <pre id="brainResult">Loading...</pre>
+  </div>
 
-<section id="economic" class="section">
-<h2>Economic Indicators</h2>
-<div class="grid">
-<div class="card">
-<div class="small">Inflation</div>
-<div id="inflation" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small">Interest Rate</div>
-<div id="rate" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small">Volatility</div>
-<div id="volatility" class="metric">--</div>
-</div>
-</div>
-</section>
-
-<section id="sectors" class="section">
-<h2>Sector Intelligence</h2>
-<div class="card">
-<div id="sectorResult" class="result"></div>
-<canvas id="riskChart"></canvas>
-</div>
-</section>
-
-<section id="scenario" class="section">
-<h2>Scenario Engine</h2>
-<div class="card">
-<div id="scenarioResult" class="result"></div>
-</div>
-</section>
-
-<section id="trade" class="section">
-<h2>Global Trade</h2>
-<div class="card">
-<div id="tradeResult" class="result"></div>
-</div>
-</section>
-
-<section id="career" class="section">
-<h2>Career Intelligence</h2>
-<div class="card">
-<div id="careerResult" class="result"></div>
-</div>
-</section>
-
-<section id="opportunity" class="section">
-<h2>Opportunity Radar</h2>
-<div class="card">
-<div id="opportunityResult" class="result"></div>
-</div>
-</section>
-
-<section id="chat" class="section">
-<h2>ZENTRA AI</h2>
-<div class="card">
-<div id="chatBox" class="chatbox">
-<div><b>ZENTRA:</b> Ready.</div>
-</div>
-<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
-<button onclick="askChat()">Send</button>
-</div>
-</section>
-
+  <div class="box">
+    <div>Raw JSON:</div>
+    <pre id="rawJson">Loading...</pre>
+  </div>
 </div>
 
 <script>
-const API = "https://zentra-risklens-api.vercel.app/api/zentra";
-let riskChart = null;
+window.onload = async function () {
+  const API = "https://zentra-risklens-api.vercel.app/api/zentra";
 
-async function loadData(){
-  try{
-    const res = await fetch(API, {cache:"no-store"});
-    if(!res.ok) throw new Error("HTTP " + res.status);
+  const statusEl = document.getElementById("status");
+  const riskEl = document.getElementById("riskScore");
+  const stateEl = document.getElementById("state");
+  const trendEl = document.getElementById("trend");
+  const brainEl = document.getElementById("brainResult");
+  const rawEl = document.getElementById("rawJson");
+
+  try {
+    statusEl.innerHTML = "Connecting to API...";
+
+    const res = await fetch(API, { cache: "no-store" });
+    if (!res.ok) {
+      throw new Error("HTTP " + res.status);
+    }
 
     const data = await res.json();
 
-    document.getElementById("riskScore").innerText = data.brain?.risk ?? "--";
-    document.getElementById("state").innerText = data.brain?.state ?? "--";
-    document.getElementById("trend").innerText = data.brain?.trend ?? "--";
+    statusEl.innerHTML = '<span class="ok">API CONNECTED</span>';
+    riskEl.textContent = data?.brain?.risk ?? "--";
+    stateEl.textContent = data?.brain?.state ?? "--";
+    trendEl.textContent = data?.brain?.trend ?? "--";
 
-    document.getElementById("brainResult").innerText =
-      "Risk: " + (data.brain?.risk ?? "--") +
-      "\nState: " + (data.brain?.state ?? "--") +
-      "\nTrend: " + (data.brain?.trend ?? "--") +
-      "\nAdvice: " + (data.brain?.advice ?? "--");
+    brainEl.textContent =
+      "Risk: " + (data?.brain?.risk ?? "--") +
+      "\nState: " + (data?.brain?.state ?? "--") +
+      "\nTrend: " + (data?.brain?.trend ?? "--") +
+      "\nAdvice: " + (data?.brain?.advice ?? "--");
 
-    document.getElementById("inflation").innerText = data.economic?.inflation ?? "--";
-    document.getElementById("rate").innerText = data.economic?.rate ?? "--";
-    document.getElementById("volatility").innerText = data.economic?.volatility ?? "--";
-
-    document.getElementById("scenarioResult").innerText =
-      Array.isArray(data.scenarios) ? data.scenarios.map(x => x.scenario + " — " + x.impact).join("\n") : "No scenario data";
-
-    document.getElementById("sectorResult").innerText =
-      Array.isArray(data.sectors) ? data.sectors.map(x => x.sector + " risk: " + x.risk).join("\n") : "No sector data";
-
-    document.getElementById("tradeResult").innerText =
-      Array.isArray(data.trade) ? data.trade.map(x => x.from + " → " + x.to + " : " + x.product).join("\n") : "No trade data";
-
-    document.getElementById("careerResult").innerText =
-      Array.isArray(data.careers) ? data.careers.map(x => x.field + " — " + x.demand).join("\n") : "No career data";
-
-    document.getElementById("opportunityResult").innerText =
-      Array.isArray(data.opportunities) ? data.opportunities.map(x => x.country + " — " + x.sector).join("\n") : "No opportunity data";
-
-    renderChart(data);
-  }catch(err){
-    document.getElementById("brainResult").innerText = "Data load failed: " + err.message;
+    rawEl.textContent = JSON.stringify(data, null, 2);
+  } catch (err) {
+    statusEl.innerHTML = '<span class="err">API ERROR</span>';
+    brainEl.textContent = "Error: " + err.message;
+    rawEl.textContent = "Fetch failed.";
+    console.error(err);
   }
-}
-
-function renderChart(data){
-  const canvas = document.getElementById("riskChart");
-  if(!canvas || !Array.isArray(data.sectors)) return;
-
-  if(riskChart) riskChart.destroy();
-
-  riskChart = new Chart(canvas, {
-    type: "bar",
-    data: {
-      labels: data.sectors.map(s => s.sector),
-      datasets: [{
-        label: "Sector Risk",
-        data: data.sectors.map(s => s.risk)
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          labels: { color: "#eef5ff" }
-        }
-      },
-      scales: {
-        x: {
-          ticks: { color: "#9ab6d9" },
-          grid: { color: "rgba(77,140,223,.15)" }
-        },
-        y: {
-          ticks: { color: "#9ab6d9" },
-          grid: { color: "rgba(77,140,223,.15)" }
-        }
-      }
-    }
-  });
-}
-
-function askChat(){
-  const input = document.getElementById("chatInput");
-  const box = document.getElementById("chatBox");
-  const q = input.value.trim();
-  if(!q) return;
-
-  box.innerHTML += "<div><b>You:</b> " + q + "</div>";
-  box.innerHTML += "<div><b>ZENTRA:</b> Economic analysis module active.</div>";
-  input.value = "";
-  box.scrollTop = box.scrollHeight;
-}
-
-document.addEventListener("DOMContentLoaded", loadData);
-</script>
-<script>
-
-window.onload = async function(){
-
-const API="https://zentra-risklens-api.vercel.app/api/zentra";
-
-try{
-
-const res = await fetch(API);
-const data = await res.json();
-
-document.getElementById("riskScore").innerText = data.brain.risk;
-document.getElementById("state").innerText = data.brain.state;
-document.getElementById("trend").innerText = data.brain.trend;
-
-document.getElementById("brainResult").innerText =
-"Risk: "+data.brain.risk+
-"\nState: "+data.brain.state+
-"\nTrend: "+data.brain.trend+
-"\nAdvice: "+data.brain.advice;
-
-document.getElementById("sectorResult").innerText =
-data.sectors.map(s=>s.sector+" risk: "+s.risk).join("\n");
-
-document.getElementById("scenarioResult").innerText =
-data.scenarios.map(s=>s.scenario+" — "+s.impact).join("\n");
-
-document.getElementById("tradeResult").innerText =
-data.trade.map(t=>t.from+" → "+t.to+" : "+t.product).join("\n");
-
-document.getElementById("careerResult").innerText =
-data.careers.map(c=>c.field+" — "+c.demand).join("\n");
-
-document.getElementById("opportunityResult").innerText =
-data.opportunities.map(o=>o.country+" — "+o.sector).join("\n");
-
-}catch(e){
-
-console.log("API ERROR",e);
-
-}
-
-}
-
+};
 </script>
 </body>
- </html>
+</html>

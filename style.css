@@ -1,81 +1,88 @@
 body{
 margin:0;
-background:#050814;
-color:#eaf2ff;
-font-family:Inter,system-ui;
+font-family:Arial;
+background:#071021;
+color:white;
+overflow-x:hidden
 }
 
-.nav{
-position:fixed;
-top:0;left:0;right:0;
+nav{
+background:#08132a;
+padding:16px 24px;
 display:flex;
 justify-content:space-between;
-padding:20px 8%;
-background:rgba(5,8,20,.8);
-backdrop-filter:blur(10px);
+border-bottom:1px solid #103865
 }
 
-.hero{
-height:100vh;
+.links{
 display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:0 10%;
-background:
-radial-gradient(800px 400px at 20% 0%,rgba(0,212,255,.15),transparent 60%),
-radial-gradient(900px 500px at 80% 10%,rgba(124,58,237,.15),transparent 60%);
+gap:14px
 }
 
-.hero h1{
-font-size:56px;
-font-weight:900;
+.section{
+max-width:1200px;
+margin:auto;
+padding:26px 20px
 }
 
-.hero p{
-max-width:700px;
-margin-top:20px;
-color:#8a97b1;
-}
-
-.cta{
-margin-top:30px;
-padding:14px 28px;
-border-radius:40px;
-background:linear-gradient(135deg,#00d4ff,#7c3aed);
-color:#001018;
-font-weight:800;
-}
-
-section{
-padding:100px 8%;
-}
-
-.cards{
+.grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-margin-top:40px;
+grid-template-columns:repeat(3,1fr);
+gap:16px
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px
 }
 
 .card{
-padding:30px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.03);
+background:#0e1c38;
+padding:18px;
+border-radius:12px;
+border:1px solid #103865
 }
 
-.status{
-font-size:12px;
-margin-bottom:12px;
+.metric{
+font-size:28px;
+color:#00e0ff
 }
 
-.locked{
-opacity:.6;
+input,textarea,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+background:#08132a;
+border:none;
+color:white
 }
-footer{
-padding:40px 8%;
-border-top:1px solid rgba(255,255,255,.08);
-color:#8a97b1;
+
+button{
+margin-top:10px;
+padding:10px 16px;
+background:#00e0ff;
+border:none;
+border-radius:8px;
+cursor:pointer
+}
+
+#worldMap{
+width:100%!important;
+height:420px!important
+}
+
+.result{
+background:#020814;
+padding:16px;
+border-radius:10px
+}
+
+.chatbox{
+background:#020814;
+padding:16px;
+border-radius:10px;
+min-height:170px;
+max-height:300px;
+overflow:auto
 }

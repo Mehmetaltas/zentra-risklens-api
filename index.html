@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Economic Operating System</title>
+
+<title>ZENTRA v20 Global Economic OS</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -14,6 +17,13 @@ margin:0;
 font-family:Arial,Helvetica,sans-serif;
 background:#06101f;
 color:white;
+overflow-x:hidden;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
 }
 
 nav{
@@ -38,12 +48,6 @@ color:#9bdcff;
 text-decoration:none;
 margin-left:12px;
 font-size:14px;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
 }
 
 .hero{
@@ -127,33 +131,38 @@ font-weight:bold;
 }
 
 </style>
+
 </head>
 
 <body>
+ <nav>
 
-<nav>
 <div class="logo">ZENTRA</div>
 
 <div>
+
 <a href="#dashboard">Dashboard</a>
 <a href="#brain">Brain</a>
 <a href="#scenario">Scenario</a>
 <a href="#sectors">Sectors</a>
 <a href="#trade">Trade</a>
 <a href="#career">Career</a>
+<a href="#opportunity">Opportunities</a>
 <a href="#chat">AI</a>
+
 </div>
+
 </nav>
 
 <section class="hero">
-<h1>ZENTRA Economic OS</h1>
-<p class="small">Global Economic Intelligence Platform</p>
+
+<h1>ZENTRA Global Economic OS</h1>
+<p>Economic Intelligence Platform</p>
+
 </section>
 
 <div class="container">
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="section">
+  <section id="dashboard" class="section">
 
 <h2>Global Dashboard</h2>
 
@@ -178,19 +187,31 @@ font-weight:bold;
 
 </section>
 
-<!-- BRAIN -->
 
 <section id="brain" class="section">
 
 <h2>Economic Brain</h2>
 
 <div class="card">
-<div id="brainResult" class="result">Loading...</div>
+<div id="brainResult" class="result"></div>
 </div>
 
 </section>
 
-<!-- SCENARIO -->
+
+<section id="sectors" class="section">
+
+<h2>Sector Intelligence</h2>
+
+<div class="card">
+<div id="sectorResult" class="result"></div>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+</section>
+
 
 <section id="scenario" class="section">
 
@@ -201,21 +222,6 @@ font-weight:bold;
 </div>
 
 </section>
-
-<!-- SECTOR -->
-
-<section id="sectors" class="section">
-
-<h2>Sector Intelligence</h2>
-
-<div class="card">
-<div id="sectorResult" class="result"></div>
-</div>
-
-</section>
-
-<!-- TRADE -->
-
 <section id="trade" class="section">
 
 <h2>Global Trade</h2>
@@ -226,7 +232,6 @@ font-weight:bold;
 
 </section>
 
-<!-- CAREER -->
 
 <section id="career" class="section">
 
@@ -238,19 +243,17 @@ font-weight:bold;
 
 </section>
 
-<!-- CHART -->
 
-<section class="section">
+<section id="opportunity" class="section">
 
-<h2>Sector Risk Chart</h2>
+<h2>Opportunity Radar</h2>
 
 <div class="card">
-<canvas id="riskChart"></canvas>
+<div id="opportunityResult" class="result"></div>
 </div>
 
 </section>
 
-<!-- AI -->
 
 <section id="chat" class="section">
 
@@ -262,19 +265,20 @@ font-weight:bold;
 <div><b>ZENTRA:</b> Ready.</div>
 </div>
 
-<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
+<textarea id="chatInput"></textarea>
 
 <button onclick="askChat()">Send</button>
 
 </div>
 
 </section>
-
 </div>
 
 <script>
 
 const API="https://zentra-risklens-api.vercel.app/api/zentra";
+
+let riskChart=null;
 
 async function loadData(){
 
@@ -299,6 +303,8 @@ tradeResult.innerText=data.trade.map(x=>x.from+" → "+x.to+" : "+x.product).joi
 
 careerResult.innerText=data.careers.map(x=>x.field+" — "+x.demand).join("\n");
 
+opportunityResult.innerText=data.opportunities.map(x=>x.country+" — "+x.sector).join("\n");
+
 renderChart(data);
 
 }
@@ -307,7 +313,9 @@ function renderChart(data){
 
 const ctx=document.getElementById("riskChart");
 
-new Chart(ctx,{
+if(riskChart) riskChart.destroy();
+
+riskChart=new Chart(ctx,{
 type:"bar",
 data:{
 labels:data.sectors.map(s=>s.sector),
@@ -340,4 +348,4 @@ chatBox.scrollTop=chatBox.scrollHeight;
 </script>
 
 </body>
-  </html>
+</html>

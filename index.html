@@ -349,3 +349,87 @@ chatBox.scrollTop=chatBox.scrollHeight;
 
 </body>
 </html>
+
+<script>
+
+const API="https://zentra-risklens-api.vercel.app/api/zentra";
+
+async function loadData(){
+
+try{
+
+const res=await fetch(API);
+const data=await res.json();
+
+document.getElementById("riskScore").innerText=data.brain.risk;
+document.getElementById("state").innerText=data.brain.state;
+document.getElementById("trend").innerText=data.brain.trend;
+
+document.getElementById("brainResult").innerText=
+"Risk: "+data.brain.risk+
+"\nState: "+data.brain.state+
+"\nTrend: "+data.brain.trend+
+"\nAdvice: "+data.brain.advice;
+
+document.getElementById("scenarioResult").innerText=
+data.scenarios.map(x=>x.scenario+" — "+x.impact).join("\n");
+
+document.getElementById("sectorResult").innerText=
+data.sectors.map(x=>x.sector+" risk: "+x.risk).join("\n");
+
+document.getElementById("tradeResult").innerText=
+data.trade.map(x=>x.from+" → "+x.to+" : "+x.product).join("\n");
+
+document.getElementById("careerResult").innerText=
+data.careers.map(x=>x.field+" — "+x.demand).join("\n");
+
+document.getElementById("opportunityResult").innerText=
+data.opportunities.map(x=>x.country+" — "+x.sector).join("\n");
+
+drawChart(data);
+
+}catch(e){
+
+console.log("API error",e);
+
+}
+
+}
+
+function drawChart(data){
+
+const ctx=document.getElementById("riskChart");
+
+new Chart(ctx,{
+type:"bar",
+data:{
+labels:data.sectors.map(x=>x.sector),
+datasets:[{
+label:"Sector Risk",
+data:data.sectors.map(x=>x.risk),
+backgroundColor:"#49ddff"
+}]
+}
+});
+
+}
+
+function askChat(){
+
+const q=document.getElementById("chatInput").value;
+
+const box=document.getElementById("chatBox");
+
+box.innerHTML+="<div><b>You:</b> "+q+"</div>";
+
+box.innerHTML+="<div><b>ZENTRA:</b> Economic analysis module active.</div>";
+
+document.getElementById("chatInput").value="";
+
+box.scrollTop=box.scrollHeight;
+
+}
+
+loadData();
+
+</script>

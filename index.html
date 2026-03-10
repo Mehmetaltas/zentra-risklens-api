@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Economic Operating System</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ZENTRA Global Economic OS</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -14,7 +17,6 @@ margin:0;
 font-family:Arial,Helvetica,sans-serif;
 background:#06101f;
 color:#fff;
-overflow-x:hidden;
 }
 
 nav{
@@ -24,9 +26,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 border-bottom:1px solid #123;
-position:sticky;
-top:0;
-z-index:10;
 }
 
 .logo{
@@ -40,6 +39,15 @@ color:#9bdcff;
 text-decoration:none;
 margin-left:12px;
 font-size:14px;
+}
+
+.lang{
+cursor:pointer;
+background:#49ddff;
+color:#000;
+padding:4px 10px;
+border-radius:6px;
+font-size:12px;
 }
 
 .container{
@@ -56,7 +64,6 @@ padding:60px 20px;
 .hero h1{
 font-size:42px;
 color:#49ddff;
-margin-bottom:10px;
 }
 
 .small{
@@ -93,37 +100,10 @@ padding:16px;
 border-radius:12px;
 margin-top:10px;
 white-space:pre-wrap;
-line-height:1.6;
 }
 
-.chatbox{
-background:#020814;
-padding:16px;
-min-height:160px;
-max-height:300px;
-overflow:auto;
-border-radius:12px;
-}
-
-textarea{
-width:100%;
-padding:10px;
+canvas{
 margin-top:10px;
-border-radius:8px;
-border:none;
-background:#08132a;
-color:white;
-}
-
-button{
-padding:10px 14px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-background:#49ddff;
-color:black;
-cursor:pointer;
-font-weight:bold;
 }
 
 .footer{
@@ -140,7 +120,10 @@ color:#6fa9d6;
 }
 
 </style>
+
 </head>
+
+
 <body>
 
 
@@ -150,30 +133,32 @@ color:#6fa9d6;
 
 <div>
 
-<a href="#dashboard">Dashboard</a>
-<a href="#brain">Brain</a>
-<a href="#economic">Economic</a>
-<a href="#sectors">Sectors</a>
-<a href="#scenario">Scenario</a>
-<a href="#trade">Trade</a>
-<a href="#career">Career</a>
-<a href="#opportunity">Opportunities</a>
-<a href="#gps">GPS</a>
-<a href="#chat">AI</a>
+<a href="#dashboard" data-tr="Dashboard">Dashboard</a>
+<a href="#brain" data-tr="Brain">Brain</a>
+<a href="#economic" data-tr="Economic">Economic</a>
+<a href="#sectors" data-tr="Sectors">Sectors</a>
+<a href="#scenario" data-tr="Scenario">Scenario</a>
+<a href="#trade" data-tr="Trade">Trade</a>
+<a href="#career" data-tr="Career">Career</a>
+<a href="#opportunity" data-tr="Opportunities">Opportunities</a>
+
+<span class="lang" onclick="setLang('en')">EN</span>
+<span class="lang" onclick="setLang('tr')">TR</span>
 
 </div>
 
 </nav>
 
 
-
 <section class="hero">
 
-<h1>ZENTRA Global Economic OS</h1>
-<p class="small">Economic Intelligence Platform</p>
+<h1 id="title">ZENTRA Global Economic OS</h1>
+
+<p class="small" id="subtitle">
+Economic Intelligence Platform
+</p>
 
 </section>
-
 
 
 <div class="container">
@@ -181,7 +166,7 @@ color:#6fa9d6;
 
 <section id="dashboard" class="section">
 
-<h2>Global Dashboard</h2>
+<h2 data-tr="Global Dashboard">Global Dashboard</h2>
 
 <div class="grid">
 
@@ -208,35 +193,14 @@ color:#6fa9d6;
 
 <section id="brain" class="section">
 
-<h2>Economic Brain</h2>
+<h2 data-tr="Economic Brain">Economic Brain</h2>
 
 <div class="card">
-<div id="brainResult" class="result">Loading...</div>
-</div>
 
-</section>
+<div id="brainResult" class="result">
 
+Loading...
 
-
-<section id="economic" class="section">
-
-<h2>Economic Indicators</h2>
-
-<div class="grid">
-
-<div class="card">
-<div class="small">Inflation</div>
-<div id="inflation" class="metric">--</div>
-</div>
-
-<div class="card">
-<div class="small">Interest Rate</div>
-<div id="rate" class="metric">--</div>
-</div>
-
-<div class="card">
-<div class="small">Volatility</div>
-<div id="volatility" class="metric">--</div>
 </div>
 
 </div>
@@ -247,11 +211,9 @@ color:#6fa9d6;
 
 <section id="sectors" class="section">
 
-<h2>Sector Intelligence</h2>
+<h2 data-tr="Sector Intelligence">Sector Intelligence</h2>
 
 <div class="card">
-
-<div id="sectorResult" class="result"></div>
 
 <canvas id="riskChart"></canvas>
 
@@ -260,114 +222,7 @@ color:#6fa9d6;
 </section>
 
 
-
-<section id="scenario" class="section">
-
-<h2>Scenario Engine</h2>
-
-<div class="card">
-
-<div id="scenarioResult" class="result"></div>
-
 </div>
-
-</section>
-
-
-
-<section id="trade" class="section">
-
-<h2>Global Trade</h2>
-
-<div class="card">
-
-<div id="tradeResult" class="result"></div>
-
-</div>
-
-</section>
-
-
-
-<section id="career" class="section">
-
-<h2>Career Intelligence</h2>
-
-<div class="card">
-
-<div id="careerResult" class="result"></div>
-
-</div>
-
-</section>
-
-
-
-<section id="opportunity" class="section">
-
-<h2>Opportunity Radar</h2>
-
-<div class="card">
-
-<div id="opportunityResult" class="result"></div>
-
-</div>
-
-</section>
-
-
-
-<section id="gps" class="section">
-
-<h2>Economic GPS</h2>
-
-<div class="grid">
-
-<div class="card">
-<div class="small">Strategic Direction</div>
-<div id="gpsDirection" class="metric">--</div>
-</div>
-
-</div>
-
-<div class="card">
-
-<div id="gpsAdvice" class="result">
-
-Economic GPS loading...
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section id="chat" class="section">
-
-<h2>ZENTRA AI</h2>
-
-<div class="card">
-
-<div id="chatBox" class="chatbox">
-
-<div><b>ZENTRA:</b> Ready.</div>
-
-</div>
-
-<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
-
-<button onclick="askChat()">Send</button>
-
-</div>
-
-</section>
-
-
-
-</div>
-
 
 
 <div class="footer">
@@ -377,56 +232,40 @@ ZENTRA — Global Economic Operating System
 </div>
 
 
-
 <script>
 
 
-const API_URL = "https://zentra-risklens-api.vercel.app/api/zentra"
-
-let riskChart=null
+const API_URL="https://zentra-risklens-api.vercel.app/api/zentra"
 
 
-function renderGPS(data){
+async function loadData(){
 
-let direction="STABLE"
-let advice=""
+try{
 
-const risk=data.brain?.risk ?? 50
-const trend=data.brain?.trend ?? "neutral"
+const res=await fetch(API_URL)
 
-if(risk>=70){
-direction="DEFENSIVE"
-advice="Reduce exposure increase liquidity hedge risk."
+const data=await res.json()
+
+document.getElementById("riskScore").innerText=data.brain.risk
+document.getElementById("state").innerText=data.brain.state
+document.getElementById("trend").innerText=data.brain.trend
+
+
+document.getElementById("brainResult").innerText=
+
+`Risk: ${data.brain.risk}
+State: ${data.brain.state}
+Trend: ${data.brain.trend}
+Advice: ${data.brain.advice}`
+
+
+renderChart(data)
+
+}catch(e){
+
+console.log("API error")
+
 }
-else if(risk>=50){
-direction="CAUTION"
-advice="Diversify investments monitor macro signals."
-}
-else if(trend==="bullish"){
-direction="EXPANSION"
-advice="Opportunity window open expand strategically."
-}
-else{
-direction="BALANCED"
-advice="Maintain diversified strategy monitor signals."
-}
-
-document.getElementById("gpsDirection").innerText=direction
-
-document.getElementById("gpsAdvice").innerText=
-
-`Economic GPS Analysis
-
-Global Risk: ${risk}
-
-Market Trend: ${trend}
-
-Strategic Direction: ${direction}
-
-Recommendation:
-${advice}
-
-ZENTRA integrates macro risk market direction and sector intelligence.`
 
 }
 
@@ -434,13 +273,9 @@ ZENTRA integrates macro risk market direction and sector intelligence.`
 
 function renderChart(data){
 
-const canvas=document.getElementById("riskChart")
+const ctx=document.getElementById("riskChart")
 
-if(!canvas) return
-
-if(riskChart) riskChart.destroy()
-
-riskChart=new Chart(canvas,{
+new Chart(ctx,{
 
 type:"bar",
 
@@ -452,7 +287,9 @@ datasets:[{
 
 label:"Sector Risk",
 
-data:data.sectors.map(s=>s.risk)
+data:data.sectors.map(s=>s.risk),
+
+backgroundColor:"#49ddff"
 
 }]
 
@@ -464,88 +301,25 @@ data:data.sectors.map(s=>s.risk)
 
 
 
-function renderData(data){
+function setLang(lang){
 
-document.getElementById("riskScore").innerText=data.brain?.risk ?? "--"
+if(lang==="tr"){
 
-document.getElementById("state").innerText=data.brain?.state ?? "--"
+title.innerText="ZENTRA Küresel Ekonomik Sistem"
 
-document.getElementById("trend").innerText=data.brain?.trend ?? "--"
-
-
-document.getElementById("brainResult").innerText=
-
-`Risk: ${data.brain?.risk}
-State: ${data.brain?.state}
-Trend: ${data.brain?.trend}
-Advice: ${data.brain?.advice}`
-
-
-document.getElementById("inflation").innerText=data.economic?.inflation ?? "--"
-
-document.getElementById("rate").innerText=data.economic?.rate ?? "--"
-
-document.getElementById("volatility").innerText=data.economic?.volatility ?? "--"
-
-
-document.getElementById("scenarioResult").innerText=data.scenarios.map(x=>x.scenario+" — "+x.impact).join("\n")
-
-document.getElementById("sectorResult").innerText=data.sectors.map(x=>x.sector+" risk "+x.risk).join("\n")
-
-document.getElementById("tradeResult").innerText=data.trade.map(x=>x.from+" → "+x.to+" : "+x.product).join("\n")
-
-document.getElementById("careerResult").innerText=data.careers.map(x=>x.field+" — "+x.demand).join("\n")
-
-document.getElementById("opportunityResult").innerText=data.opportunities.map(x=>x.country+" — "+x.sector).join("\n")
-
-renderChart(data)
-
-renderGPS(data)
+subtitle.innerText="Ekonomik Zeka Platformu"
 
 }
 
+if(lang==="en"){
 
+title.innerText="ZENTRA Global Economic OS"
 
-async function loadData(){
-
-try{
-
-const res=await fetch(API_URL)
-
-const data=await res.json()
-
-renderData(data)
-
-}
-
-catch(e){
-
-console.log("API error")
+subtitle.innerText="Economic Intelligence Platform"
 
 }
 
 }
-
-
-
-function askChat(){
-
-const input=document.getElementById("chatInput")
-
-const box=document.getElementById("chatBox")
-
-const q=input.value
-
-box.innerHTML+="<div><b>You:</b> "+q+"</div>"
-
-box.innerHTML+="<div><b>ZENTRA:</b> Economic analysis module active.</div>"
-
-input.value=""
-
-box.scrollTop=box.scrollHeight
-
-}
-
 
 
 loadData()
@@ -554,4 +328,5 @@ loadData()
 
 
 </body>
+
 </html>

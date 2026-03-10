@@ -1,538 +1,812 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>ZENTRA Global Economic OS</title>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-:root{
---bg:#06101f;
---panel:#0b1730;
---panel2:#0f1e3d;
---text:#eef5ff;
---muted:#9ab6d9;
---cyan:#49ddff;
---blue:#5b8cff;
---green:#54f2a1;
---amber:#ffd166;
---red:#ff6b6b;
---line:rgba(77,140,223,.22);
-}
-*{box-sizing:border-box}
-body{
+
+*{
+box-sizing:border-box;
 margin:0;
+padding:0;
+}
+
+body{
 font-family:Arial,Helvetica,sans-serif;
-background:linear-gradient(180deg,#040b16,#071021,#08142a);
-color:var(--text);
+background:#050b18;
+color:white;
 overflow-x:hidden;
 }
-nav{
-background:#08132a;
-padding:16px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-bottom:1px solid #123;
-position:sticky;
-top:0;
-z-index:20;
-gap:12px;
-flex-wrap:wrap;
-}
-.logo{
-color:var(--cyan);
-font-weight:bold;
-font-size:18px;
-}
-.nav-links{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-align-items:center;
-}
-nav a{
-color:#9bdcff;
+
+a{
 text-decoration:none;
-font-size:14px;
+color:inherit;
 }
-.lang-select{
-background:var(--cyan);
-color:#000;
-border:none;
-border-radius:6px;
-padding:8px 10px;
-font-weight:bold;
-cursor:pointer;
-}
+
 .container{
 max-width:1200px;
 margin:auto;
 padding:20px;
 }
+
+.topbar{
+position:sticky;
+top:0;
+z-index:100;
+background:#08132a;
+border-bottom:1px solid #0f2c55;
+}
+
+.topbar-inner{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+.logo{
+color:#00e0ff;
+font-size:20px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.menu-btn{
+font-size:22px;
+cursor:pointer;
+display:none;
+}
+
+.nav{
+display:flex;
+gap:16px;
+font-size:14px;
+color:#9bdcff;
+}
+
+.nav a:hover{
+color:white;
+}
+
 .hero{
 text-align:center;
-padding:56px 20px 40px;
+padding:80px 20px;
+background:linear-gradient(180deg,#08132a,#050b18);
 }
+
 .hero h1{
-font-size:42px;
-color:var(--cyan);
-margin:0 0 10px;
+font-size:46px;
+color:#00e0ff;
+margin-bottom:12px;
 }
-.small{
-color:var(--muted);
-font-size:14px;
+
+.hero p{
+color:#9ab6d9;
+max-width:700px;
+margin:auto;
+line-height:1.6;
 }
+
+.hero-buttons{
+margin-top:24px;
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:12px 18px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+border:none;
+}
+
+.btn-primary{
+background:#00e0ff;
+color:black;
+}
+
+.btn-outline{
+background:transparent;
+border:1px solid #00e0ff;
+color:#00e0ff;
+}
+
 .section{
-margin-top:40px;
+padding:60px 0;
 }
+
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
 }
+
 .card{
-background:var(--panel);
-padding:20px;
-border-radius:14px;
-border:1px solid var(--line);
+background:#08152c;
+border:1px solid #103865;
+border-radius:12px;
+padding:22px;
 }
+
 .metric{
 font-size:28px;
-color:var(--cyan);
+color:#00e0ff;
 font-weight:bold;
 }
+
+.small{
+font-size:13px;
+color:#8fb8da;
+margin-bottom:6px;
+}
+
 .result{
 background:#020814;
 padding:16px;
-border-radius:12px;
+border-radius:10px;
 margin-top:10px;
 white-space:pre-wrap;
 line-height:1.6;
 }
-.chatbox{
-background:#020814;
-padding:16px;
-min-height:160px;
-max-height:320px;
-overflow:auto;
-border-radius:12px;
-}
-textarea{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:8px;
-border:none;
-background:#08132a;
-color:white;
-min-height:90px;
-}
-button.send{
-padding:10px 14px;
-margin-top:10px;
-border:none;
-border-radius:8px;
-background:var(--cyan);
-color:black;
-cursor:pointer;
-font-weight:bold;
-}
-canvas{
-margin-top:10px;
-max-width:100%;
-}
+
 .footer{
 text-align:center;
 padding:30px;
 background:#08132a;
 margin-top:60px;
-font-size:14px;
 color:#6fa9d6;
 }
-.badge{
-display:inline-block;
-padding:6px 10px;
-border-radius:999px;
-background:rgba(73,221,255,.08);
-border:1px solid rgba(73,221,255,.18);
-color:#bdeeff;
-font-size:12px;
-margin-bottom:16px;
+
+.sidebar{
+position:fixed;
+left:-260px;
+top:0;
+width:260px;
+height:100%;
+background:#08132a;
+padding:30px 20px;
+transition:0.3s;
+z-index:200;
 }
-.network-legend{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-margin-top:12px;
-font-size:12px;
-color:var(--muted);
+
+.sidebar a{
+display:block;
+padding:10px 0;
+color:#9bdcff;
 }
-.network-legend span{
-display:inline-flex;
-align-items:center;
-gap:6px;
+
+.sidebar a:hover{
+color:white;
 }
-.dot{
-width:10px;
-height:10px;
-border-radius:50%;
-display:inline-block;
+
+.sidebar.open{
+left:0;
 }
+
+.overlay{
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.6);
+display:none;
+z-index:150;
+}
+
+.overlay.show{
+display:block;
+}
+
 @media(max-width:900px){
-.grid{grid-template-columns:1fr}
-.hero h1{font-size:34px}
+
+.nav{
+display:none;
 }
+
+.menu-btn{
+display:block;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+}
+
 </style>
 </head>
+
 <body>
-  <nav>
-<div class="logo">ZENTRA</div>
+  <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
 
-<div class="nav-links">
-<a href="#dashboard" data-i="nav_dashboard">Dashboard</a>
-<a href="#brain" data-i="nav_brain">Brain</a>
-<a href="#economic" data-i="nav_economic">Economic</a>
-<a href="#sectors" data-i="nav_sectors">Sectors</a>
-<a href="#scenario" data-i="nav_scenario">Scenario</a>
-<a href="#trade" data-i="nav_trade">Trade</a>
-<a href="#career" data-i="nav_career">Career</a>
-<a href="#opportunity" data-i="nav_opportunity">Opportunities</a>
-<a href="#gps" data-i="nav_gps">GPS</a>
-<a href="#network" data-i="nav_network">Network</a>
-<a href="#chat" data-i="nav_ai">AI</a>
+<div id="sidebar" class="sidebar">
+  <div style="color:#00e0ff;font-size:20px;font-weight:bold;margin-bottom:20px;">ZENTRA</div>
 
-<select id="langSelect" class="lang-select">
-<option value="en">English</option>
-<option value="tr">Türkçe</option>
-<option value="ar">العربية</option>
-<option value="de">Deutsch</option>
-<option value="fr">Français</option>
-<option value="es">Español</option>
-<option value="ru">Русский</option>
-<option value="zh">中文</option>
-<option value="pt">Português</option>
-<option value="it">Italiano</option>
-<option value="nl">Nederlands</option>
-<option value="pl">Polski</option>
-<option value="uk">Українська</option>
-<option value="ro">Română</option>
-<option value="cs">Čeština</option>
-<option value="sv">Svenska</option>
-<option value="no">Norsk</option>
-<option value="da">Dansk</option>
-<option value="fi">Suomi</option>
-<option value="el">Ελληνικά</option>
-<option value="hu">Magyar</option>
-<option value="bg">Български</option>
-<option value="sr">Srpski</option>
-<option value="hr">Hrvatski</option>
-<option value="bs">Bosanski</option>
-<option value="sq">Shqip</option>
-<option value="mk">Македонски</option>
-<option value="sl">Slovenščina</option>
-<option value="sk">Slovenčina</option>
-<option value="et">Eesti</option>
-<option value="lv">Latviešu</option>
-<option value="lt">Lietuvių</option>
-<option value="ja">日本語</option>
-<option value="ko">한국어</option>
-<option value="hi">हिन्दी</option>
-<option value="bn">বাংলা</option>
-<option value="ur">اردو</option>
-<option value="fa">فارسی</option>
-<option value="id">Bahasa Indonesia</option>
-<option value="ms">Bahasa Melayu</option>
-<option value="th">ไทย</option>
-<option value="vi">Tiếng Việt</option>
-<option value="tl">Filipino</option>
-<option value="sw">Kiswahili</option>
-<option value="am">አማርኛ</option>
-<option value="ha">Hausa</option>
-<option value="yo">Yorùbá</option>
-<option value="ig">Igbo</option>
-<option value="ta">தமிழ்</option>
-<option value="te">తెలుగు</option>
-</select>
+  <a href="#home" data-i="nav_home">Home</a>
+  <a href="#about" data-i="nav_about">About</a>
+  <a href="#dashboard" data-i="nav_dashboard">Dashboard</a>
+  <a href="#brain" data-i="nav_brain">Brain</a>
+  <a href="#economic" data-i="nav_economic">Economic</a>
+  <a href="#sectors" data-i="nav_sectors">Sectors</a>
+  <a href="#scenario" data-i="nav_scenario">Scenario</a>
+  <a href="#trade" data-i="nav_trade">Trade</a>
+  <a href="#career" data-i="nav_career">Career</a>
+  <a href="#opportunity" data-i="nav_opportunity">Opportunities</a>
+  <a href="#gps" data-i="nav_gps">GPS</a>
+  <a href="#network" data-i="nav_network">Network</a>
+  <a href="#policy" data-i="nav_policy">Policy</a>
+  <a href="#vision" data-i="nav_vision">Vision</a>
+  <a href="#mission" data-i="nav_mission">Mission</a>
+  <a href="#contact" data-i="nav_contact">Contact</a>
+  <a href="#chat" data-i="nav_ai">AI</a>
+
+  <div style="margin-top:20px;">
+    <select id="langSelectMobile" style="width:100%;padding:10px;border-radius:8px;border:none;background:#00e0ff;color:#000;font-weight:bold;">
+      <option value="en">English</option>
+      <option value="tr">Türkçe</option>
+      <option value="ar">العربية</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="ru">Русский</option>
+      <option value="zh">中文</option>
+    </select>
+  </div>
 </div>
-</nav>
 
-<section class="hero">
-<div class="badge" id="heroBadge">Economic Intelligence Platform</div>
-<h1 id="heroTitle">ZENTRA Global Economic OS</h1>
-<p class="small" id="heroSubtitle">Integrated risk, macro, trade, opportunity and strategic guidance layer.</p>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">ZENTRA</div>
+
+    <div class="nav">
+      <a href="#home" data-i="nav_home">Home</a>
+      <a href="#about" data-i="nav_about">About</a>
+      <a href="#dashboard" data-i="nav_dashboard">Dashboard</a>
+      <a href="#brain" data-i="nav_brain">Brain</a>
+      <a href="#network" data-i="nav_network">Network</a>
+      <a href="#contact" data-i="nav_contact">Contact</a>
+      <a href="#chat" data-i="nav_ai">AI</a>
+
+      <select id="langSelect" style="padding:8px 10px;border-radius:8px;border:none;background:#00e0ff;color:#000;font-weight:bold;">
+        <option value="en">EN</option>
+        <option value="tr">TR</option>
+        <option value="ar">AR</option>
+        <option value="de">DE</option>
+        <option value="fr">FR</option>
+        <option value="es">ES</option>
+        <option value="ru">RU</option>
+        <option value="zh">ZH</option>
+      </select>
+    </div>
+
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </div>
+</div>
+
+<section id="home" class="hero">
+  <div class="container">
+    <div style="display:inline-block;padding:8px 14px;border:1px solid rgba(0,224,255,.25);border-radius:999px;color:#8fefff;background:rgba(0,224,255,.08);margin-bottom:18px;">
+      <span data-i="hero_badge">Economic Intelligence Platform</span>
+    </div>
+
+    <h1 id="heroTitle" data-i="hero_title">ZENTRA Global Economic OS</h1>
+
+    <p id="heroSubtitle" data-i="hero_subtitle">
+      Integrated economic intelligence system connecting macro risk, trade, sectors, opportunities and strategic guidance in one platform.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#dashboard"><button class="btn btn-primary" data-i="hero_btn_1">Open Dashboard</button></a>
+      <a href="#about"><button class="btn btn-outline" data-i="hero_btn_2">Explore Platform</button></a>
+    </div>
+  </div>
 </section>
 
-<div class="container">
+<section id="about" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="about_title">What is ZENTRA?</h2>
 
+    <div class="grid">
+      <div class="card">
+        <div class="small" data-i="about_core_label">Core Engine</div>
+        <div class="result" data-i="about_core_text">Risk engine, macro intelligence, sector analysis and strategic direction layer.</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="about_network_label">Global Network</div>
+        <div class="result" data-i="about_network_text">Trade flows, opportunity radar, market connections and future company directory layer.</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="about_ai_label">AI Layer</div>
+        <div class="result" data-i="about_ai_text">Economic reasoning, scenario interpretation and guided decision support experience.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vision" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="vision_title">Vision</h2>
+    <div class="card">
+      <div class="result" data-i="vision_text">
+        Build a global economic operating system that helps people, companies and institutions understand risk, direction and opportunity with clarity.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mission" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="mission_title">Mission</h2>
+    <div class="card">
+      <div class="result" data-i="mission_text">
+        Transform fragmented economic information into actionable intelligence through connected analytics, visual systems and AI support.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="policy" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="policy_title">Platform Policy</h2>
+    <div class="card">
+      <div class="result" data-i="policy_text">
+        ZENTRA prioritizes clarity, resilience, privacy, responsible analytics and transparent system behavior across all modules.
+      </div>
+    </div>
+  </div>
+</section>
 <section id="dashboard" class="section">
-<h2 data-i="dashboard_title">Global Dashboard</h2>
-<div class="grid">
-<div class="card">
-<div class="small" data-i="risk_score">Risk Score</div>
-<div id="riskScore" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small" data-i="economic_state">Economic State</div>
-<div id="state" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small" data-i="market_trend">Market Trend</div>
-<div id="trend" class="metric">--</div>
-</div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="dashboard_title">Global Dashboard</h2>
+
+    <div class="grid">
+      <div class="card">
+        <div class="small" data-i="risk_score">Risk Score</div>
+        <div id="riskScore" class="metric">--</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="economic_state">Economic State</div>
+        <div id="state" class="metric">--</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="market_trend">Market Trend</div>
+        <div id="trend" class="metric">--</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="brain" class="section">
-<h2 data-i="brain_title">Economic Brain</h2>
-<div class="card">
-<div id="brainResult" class="result">Loading...</div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="brain_title">Economic Brain</h2>
+    <div class="card">
+      <div id="brainResult" class="result">Loading...</div>
+    </div>
+  </div>
 </section>
 
 <section id="economic" class="section">
-<h2 data-i="economic_title">Economic Indicators</h2>
-<div class="grid">
-<div class="card">
-<div class="small" data-i="inflation">Inflation</div>
-<div id="inflation" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small" data-i="interest_rate">Interest Rate</div>
-<div id="rate" class="metric">--</div>
-</div>
-<div class="card">
-<div class="small" data-i="volatility">Volatility</div>
-<div id="volatility" class="metric">--</div>
-</div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="economic_title">Economic Indicators</h2>
+
+    <div class="grid">
+      <div class="card">
+        <div class="small" data-i="inflation">Inflation</div>
+        <div id="inflation" class="metric">--</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="interest_rate">Interest Rate</div>
+        <div id="rate" class="metric">--</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="volatility">Volatility</div>
+        <div id="volatility" class="metric">--</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="sectors" class="section">
-<h2 data-i="sector_title">Sector Intelligence</h2>
-<div class="card">
-<div id="sectorResult" class="result"></div>
-<canvas id="riskChart"></canvas>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="sector_title">Sector Intelligence</h2>
+
+    <div class="card">
+      <div id="sectorResult" class="result"></div>
+      <canvas id="riskChart"></canvas>
+    </div>
+  </div>
 </section>
 
 <section id="scenario" class="section">
-<h2 data-i="scenario_title">Scenario Engine</h2>
-<div class="card">
-<div id="scenarioResult" class="result"></div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="scenario_title">Scenario Engine</h2>
+    <div class="card">
+      <div id="scenarioResult" class="result"></div>
+    </div>
+  </div>
 </section>
 
 <section id="trade" class="section">
-<h2 data-i="trade_title">Global Trade</h2>
-<div class="card">
-<div id="tradeResult" class="result"></div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="trade_title">Global Trade</h2>
+    <div class="card">
+      <div id="tradeResult" class="result"></div>
+    </div>
+  </div>
 </section>
+
 <section id="career" class="section">
-<h2 data-i="career_title">Career Intelligence</h2>
-<div class="card">
-<div id="careerResult" class="result"></div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="career_title">Career Intelligence</h2>
+    <div class="card">
+      <div id="careerResult" class="result"></div>
+    </div>
+  </div>
 </section>
 
 <section id="opportunity" class="section">
-<h2 data-i="opportunity_title">Opportunity Radar</h2>
-<div class="card">
-<div id="opportunityResult" class="result"></div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="opportunity_title">Opportunity Radar</h2>
+    <div class="card">
+      <div id="opportunityResult" class="result"></div>
+    </div>
+  </div>
 </section>
 
 <section id="gps" class="section">
-<h2 data-i="gps_title">Economic GPS</h2>
-<div class="grid">
-<div class="card">
-<div class="small" data-i="strategic_direction">Strategic Direction</div>
-<div id="gpsDirection" class="metric">--</div>
-</div>
-<div class="card">
-<div id="gpsAdvice" class="result">Economic GPS loading...</div>
-</div>
-<div class="card">
-<div class="small" data-i="current_mode">Current Mode</div>
-<div id="gpsMode" class="metric">--</div>
-</div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="gps_title">Economic GPS</h2>
+
+    <div class="grid">
+      <div class="card">
+        <div class="small" data-i="strategic_direction">Strategic Direction</div>
+        <div id="gpsDirection" class="metric">--</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="current_mode">Current Mode</div>
+        <div id="gpsMode" class="metric">--</div>
+      </div>
+
+      <div class="card">
+        <div class="small" data-i="recommendation">Recommendation</div>
+        <div id="gpsShort" class="result">--</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div id="gpsAdvice" class="result">Economic GPS loading...</div>
+    </div>
+  </div>
 </section>
 
 <section id="network" class="section">
-<h2 data-i="network_title">Global Economic Network</h2>
-<div class="card">
-<div class="small" data-i="network_subtitle">Country nodes, risk colors and trade connections</div>
-<canvas id="networkMap" height="420"></canvas>
-<div class="network-legend">
-<span><i class="dot" style="background:#54f2a1"></i><span data-i="low_risk">Low Risk</span></span>
-<span><i class="dot" style="background:#ffd166"></i><span data-i="medium_risk">Medium Risk</span></span>
-<span><i class="dot" style="background:#ff9f68"></i><span data-i="elevated_risk">Elevated Risk</span></span>
-<span><i class="dot" style="background:#ff6b6b"></i><span data-i="high_risk">High Risk</span></span>
-</div>
-<div id="networkInfo" class="result">Network map loading...</div>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="network_title">Global Economic Network</h2>
+
+    <div class="card">
+      <div class="small" data-i="network_subtitle">Country nodes, risk colors and trade connections</div>
+      <canvas id="networkMap" height="420"></canvas>
+
+      <div class="network-legend">
+        <span><i class="dot" style="background:#54f2a1"></i><span data-i="low_risk">Low Risk</span></span>
+        <span><i class="dot" style="background:#ffd166"></i><span data-i="medium_risk">Medium Risk</span></span>
+        <span><i class="dot" style="background:#ff9f68"></i><span data-i="elevated_risk">Elevated Risk</span></span>
+        <span><i class="dot" style="background:#ff6b6b"></i><span data-i="high_risk">High Risk</span></span>
+      </div>
+
+      <div id="networkInfo" class="result">Network map loading...</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="contact_title">Contact</h2>
+    <div class="card">
+      <div class="result" data-i="contact_text">
+        For partnership, licensing, platform development and strategic communication, contact the ZENTRA core team.
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="chat" class="section">
-<h2 data-i="ai_title">ZENTRA AI</h2>
-<div class="card">
-<div id="chatBox" class="chatbox">
-<div><b>ZENTRA:</b> Ready.</div>
-</div>
-<textarea id="chatInput" placeholder="Ask economic question..."></textarea>
-<button class="send" onclick="askChat()" data-i="send_btn">Send</button>
-</div>
+  <div class="container">
+    <h2 style="margin-bottom:20px;color:#00e0ff;" data-i="ai_title">ZENTRA AI</h2>
+
+    <div class="card">
+      <div id="chatBox" class="chatbox">
+        <div><b>ZENTRA:</b> Ready.</div>
+      </div>
+
+      <textarea id="chatInput" placeholder="Ask economic question..."></textarea>
+      <button class="send" onclick="askChat()" data-i="send_btn">Send</button>
+    </div>
+  </div>
 </section>
 
+<div class="footer" id="footerText">
+  ZENTRA — Global Economic Operating System
 </div>
-
-<div class="footer" id="footerText">ZENTRA — Global Economic Operating System</div>
 <script>
 const API_URL = "https://zentra-risklens-api.vercel.app/api/zentra";
 let riskChart = null;
 let currentLang = "en";
 
 const I18N = {
-en:{
-nav_dashboard:"Dashboard",nav_brain:"Brain",nav_economic:"Economic",nav_sectors:"Sectors",nav_scenario:"Scenario",nav_trade:"Trade",nav_career:"Career",nav_opportunity:"Opportunities",nav_gps:"GPS",nav_network:"Network",nav_ai:"AI",
-heroBadge:"Economic Intelligence Platform",
-heroTitle:"ZENTRA Global Economic OS",
-heroSubtitle:"Integrated risk, macro, trade, opportunity and strategic guidance layer.",
-dashboard_title:"Global Dashboard",
-risk_score:"Risk Score",
-economic_state:"Economic State",
-market_trend:"Market Trend",
-brain_title:"Economic Brain",
-economic_title:"Economic Indicators",
-inflation:"Inflation",
-interest_rate:"Interest Rate",
-volatility:"Volatility",
-sector_title:"Sector Intelligence",
-scenario_title:"Scenario Engine",
-trade_title:"Global Trade",
-career_title:"Career Intelligence",
-opportunity_title:"Opportunity Radar",
-gps_title:"Economic GPS",
-strategic_direction:"Strategic Direction",
-current_mode:"Current Mode",
-network_title:"Global Economic Network",
-network_subtitle:"Country nodes, risk colors and trade connections",
-low_risk:"Low Risk",
-medium_risk:"Medium Risk",
-elevated_risk:"Elevated Risk",
-high_risk:"High Risk",
-ai_title:"ZENTRA AI",
-send_btn:"Send",
-footer:"ZENTRA — Global Economic Operating System",
-ask_placeholder:"Ask economic question...",
-gps_analysis:"Economic GPS Analysis",
-global_risk:"Global Risk",
-market_trend_label:"Market Trend",
-strategic_direction_label:"Strategic Direction",
-recommendation:"Recommendation",
-brain_note:"ZENTRA integrates macro risk, market direction and sector intelligence.",
-network_info:"Global Economic Network",
-fallback:"Fallback mode active."
-},
-tr:{
-nav_dashboard:"Panel",nav_brain:"Beyin",nav_economic:"Ekonomi",nav_sectors:"Sektörler",nav_scenario:"Senaryo",nav_trade:"Ticaret",nav_career:"Kariyer",nav_opportunity:"Fırsatlar",nav_gps:"GPS",nav_network:"Ağ",nav_ai:"YZ",
-heroBadge:"Ekonomik Zekâ Platformu",
-heroTitle:"ZENTRA Küresel Ekonomik Sistem",
-heroSubtitle:"Entegre risk, makro, ticaret, fırsat ve stratejik yönlendirme katmanı.",
-dashboard_title:"Küresel Panel",
-risk_score:"Risk Skoru",
-economic_state:"Ekonomik Durum",
-market_trend:"Piyasa Trendi",
-brain_title:"Ekonomik Beyin",
-economic_title:"Ekonomik Göstergeler",
-inflation:"Enflasyon",
-interest_rate:"Faiz Oranı",
-volatility:"Volatilite",
-sector_title:"Sektör Zekâsı",
-scenario_title:"Senaryo Motoru",
-trade_title:"Küresel Ticaret",
-career_title:"Kariyer Zekâsı",
-opportunity_title:"Fırsat Radarı",
-gps_title:"Ekonomik GPS",
-strategic_direction:"Stratejik Yön",
-current_mode:"Geçerli Mod",
-network_title:"Küresel Ekonomik Ağ",
-network_subtitle:"Ülke düğümleri, risk renkleri ve ticaret bağlantıları",
-low_risk:"Düşük Risk",
-medium_risk:"Orta Risk",
-elevated_risk:"Yükselen Risk",
-high_risk:"Yüksek Risk",
-ai_title:"ZENTRA YZ",
-send_btn:"Gönder",
-footer:"ZENTRA — Küresel Ekonomik İşletim Sistemi",
-ask_placeholder:"Ekonomik soru sor...",
-gps_analysis:"Ekonomik GPS Analizi",
-global_risk:"Küresel Risk",
-market_trend_label:"Piyasa Trendi",
-strategic_direction_label:"Stratejik Yön",
-recommendation:"Öneri",
-brain_note:"ZENTRA makro risk, piyasa yönü ve sektör zekâsını birleştirir.",
-network_info:"Küresel Ekonomik Ağ",
-fallback:"Yedek mod aktif."
-},
-ar:{
-nav_dashboard:"اللوحة",nav_brain:"العقل",nav_economic:"الاقتصاد",nav_sectors:"القطاعات",nav_scenario:"السيناريو",nav_trade:"التجارة",nav_career:"المسار المهني",nav_opportunity:"الفرص",nav_gps:"GPS",nav_network:"الشبكة",nav_ai:"الذكاء",
-heroBadge:"منصة الذكاء الاقتصادي",
-heroTitle:"زينترا النظام الاقتصادي العالمي",
-heroSubtitle:"طبقة متكاملة للمخاطر والاقتصاد والتجارة والفرص والتوجيه الاستراتيجي.",
-dashboard_title:"لوحة الاقتصاد العالمية",
-risk_score:"درجة المخاطر",
-economic_state:"الحالة الاقتصادية",
-market_trend:"اتجاه السوق",
-brain_title:"العقل الاقتصادي",
-economic_title:"المؤشرات الاقتصادية",
-inflation:"التضخم",
-interest_rate:"سعر الفائدة",
-volatility:"التذبذب",
-sector_title:"ذكاء القطاعات",
-scenario_title:"محرك السيناريو",
-trade_title:"التجارة العالمية",
-career_title:"ذكاء الوظائف",
-opportunity_title:"رادار الفرص",
-gps_title:"البوصلة الاقتصادية",
-strategic_direction:"الاتجاه الاستراتيجي",
-current_mode:"الوضع الحالي",
-network_title:"الشبكة الاقتصادية العالمية",
-network_subtitle:"عقد الدول وألوان المخاطر وروابط التجارة",
-low_risk:"مخاطر منخفضة",
-medium_risk:"مخاطر متوسطة",
-elevated_risk:"مخاطر مرتفعة",
-high_risk:"مخاطر عالية",
-ai_title:"زينترا AI",
-send_btn:"إرسال",
-footer:"زينترا — نظام التشغيل الاقتصادي العالمي",
-ask_placeholder:"اسأل سؤالاً اقتصادياً...",
-gps_analysis:"تحليل البوصلة الاقتصادية",
-global_risk:"المخاطر العالمية",
-market_trend_label:"اتجاه السوق",
-strategic_direction_label:"الاتجاه الاستراتيجي",
-recommendation:"التوصية",
-brain_note:"زينترا يدمج المخاطر الكلية واتجاه السوق وذكاء القطاعات.",
-network_info:"الشبكة الاقتصادية العالمية",
-fallback:"تم تفعيل الوضع الاحتياطي."
-},
-de:{heroBadge:"Wirtschaftliche Intelligenzplattform",heroTitle:"ZENTRA Globales Wirtschaftssystem",heroSubtitle:"Integrierte Ebene für Risiko, Makro, Handel, Chancen und Strategie."},
-fr:{heroBadge:"Plateforme d’intelligence économique",heroTitle:"ZENTRA Système Économique Global",heroSubtitle:"Couche intégrée de risque, macro, commerce, opportunités et stratégie."},
-es:{heroBadge:"Plataforma de inteligencia económica",heroTitle:"ZENTRA Sistema Económico Global",heroSubtitle:"Capa integrada de riesgo, macro, comercio, oportunidades y estrategia."},
-ru:{heroBadge:"Платформа экономического интеллекта",heroTitle:"ZENTRA Глобальная экономическая система",heroSubtitle:"Интегрированный уровень риска, макро, торговли, возможностей и стратегии."},
-zh:{heroBadge:"经济智能平台",heroTitle:"ZENTRA 全球经济系统",heroSubtitle:"整合风险、宏观、贸易、机会与战略指导。"}
+  en: {
+    nav_home:"Home",
+    nav_about:"About",
+    nav_dashboard:"Dashboard",
+    nav_brain:"Brain",
+    nav_economic:"Economic",
+    nav_sectors:"Sectors",
+    nav_scenario:"Scenario",
+    nav_trade:"Trade",
+    nav_career:"Career",
+    nav_opportunity:"Opportunities",
+    nav_gps:"GPS",
+    nav_network:"Network",
+    nav_policy:"Policy",
+    nav_vision:"Vision",
+    nav_mission:"Mission",
+    nav_contact:"Contact",
+    nav_ai:"AI",
+    hero_badge:"Economic Intelligence Platform",
+    hero_title:"ZENTRA Global Economic OS",
+    hero_subtitle:"Integrated economic intelligence system connecting macro risk, trade, sectors, opportunities and strategic guidance in one platform.",
+    hero_btn_1:"Open Dashboard",
+    hero_btn_2:"Explore Platform",
+    about_title:"What is ZENTRA?",
+    about_core_label:"Core Engine",
+    about_core_text:"Risk engine, macro intelligence, sector analysis and strategic direction layer.",
+    about_network_label:"Global Network",
+    about_network_text:"Trade flows, opportunity radar, market connections and future company directory layer.",
+    about_ai_label:"AI Layer",
+    about_ai_text:"Economic reasoning, scenario interpretation and guided decision support experience.",
+    vision_title:"Vision",
+    vision_text:"Build a global economic operating system that helps people, companies and institutions understand risk, direction and opportunity with clarity.",
+    mission_title:"Mission",
+    mission_text:"Transform fragmented economic information into actionable intelligence through connected analytics, visual systems and AI support.",
+    policy_title:"Platform Policy",
+    policy_text:"ZENTRA prioritizes clarity, resilience, privacy, responsible analytics and transparent system behavior across all modules.",
+    dashboard_title:"Global Dashboard",
+    risk_score:"Risk Score",
+    economic_state:"Economic State",
+    market_trend:"Market Trend",
+    brain_title:"Economic Brain",
+    economic_title:"Economic Indicators",
+    inflation:"Inflation",
+    interest_rate:"Interest Rate",
+    volatility:"Volatility",
+    sector_title:"Sector Intelligence",
+    scenario_title:"Scenario Engine",
+    trade_title:"Global Trade",
+    career_title:"Career Intelligence",
+    opportunity_title:"Opportunity Radar",
+    gps_title:"Economic GPS",
+    strategic_direction:"Strategic Direction",
+    current_mode:"Current Mode",
+    recommendation:"Recommendation",
+    network_title:"Global Economic Network",
+    network_subtitle:"Country nodes, risk colors and trade connections",
+    low_risk:"Low Risk",
+    medium_risk:"Medium Risk",
+    elevated_risk:"Elevated Risk",
+    high_risk:"High Risk",
+    contact_title:"Contact",
+    contact_text:"For partnership, licensing, platform development and strategic communication, contact the ZENTRA core team.",
+    ai_title:"ZENTRA AI",
+    send_btn:"Send",
+    footer:"ZENTRA — Global Economic Operating System",
+    ask_placeholder:"Ask economic question...",
+    gps_analysis:"Economic GPS Analysis",
+    global_risk:"Global Risk",
+    market_trend_label:"Market Trend",
+    strategic_direction_label:"Strategic Direction",
+    brain_note:"ZENTRA integrates macro risk, market direction and sector intelligence.",
+    network_info:"Global Economic Network",
+    fallback:"Fallback mode active.",
+    ai_ready:"Ready.",
+    ai_reply:"Economic analysis module active."
+  },
+
+  tr: {
+    nav_home:"Ana Sayfa",
+    nav_about:"Hakkında",
+    nav_dashboard:"Panel",
+    nav_brain:"Beyin",
+    nav_economic:"Ekonomi",
+    nav_sectors:"Sektörler",
+    nav_scenario:"Senaryo",
+    nav_trade:"Ticaret",
+    nav_career:"Kariyer",
+    nav_opportunity:"Fırsatlar",
+    nav_gps:"GPS",
+    nav_network:"Ağ",
+    nav_policy:"Politika",
+    nav_vision:"Vizyon",
+    nav_mission:"Misyon",
+    nav_contact:"İletişim",
+    nav_ai:"YZ",
+    hero_badge:"Ekonomik Zekâ Platformu",
+    hero_title:"ZENTRA Küresel Ekonomik Sistem",
+    hero_subtitle:"Makro risk, ticaret, sektörler, fırsatlar ve stratejik yönlendirmeyi tek platformda birleştiren ekonomik zekâ sistemi.",
+    hero_btn_1:"Paneli Aç",
+    hero_btn_2:"Platformu Keşfet",
+    about_title:"ZENTRA Nedir?",
+    about_core_label:"Çekirdek Motor",
+    about_core_text:"Risk motoru, makro zekâ, sektör analizi ve stratejik yön katmanı.",
+    about_network_label:"Küresel Ağ",
+    about_network_text:"Ticaret akışları, fırsat radarı, pazar bağlantıları ve ileride şirket rehberi katmanı.",
+    about_ai_label:"YZ Katmanı",
+    about_ai_text:"Ekonomik muhakeme, senaryo yorumlama ve yönlendirilmiş karar destek deneyimi.",
+    vision_title:"Vizyon",
+    vision_text:"İnsanların, şirketlerin ve kurumların risk, yön ve fırsatı net görmesini sağlayan küresel ekonomik işletim sistemi kurmak.",
+    mission_title:"Misyon",
+    mission_text:"Parçalı ekonomik bilgiyi bağlı analiz, görsel sistemler ve YZ desteğiyle uygulanabilir zekâya dönüştürmek.",
+    policy_title:"Platform Politikası",
+    policy_text:"ZENTRA tüm modüllerde açıklık, dayanıklılık, gizlilik, sorumlu analiz ve şeffaf sistem davranışını önceliklendirir.",
+    dashboard_title:"Küresel Panel",
+    risk_score:"Risk Skoru",
+    economic_state:"Ekonomik Durum",
+    market_trend:"Piyasa Trendi",
+    brain_title:"Ekonomik Beyin",
+    economic_title:"Ekonomik Göstergeler",
+    inflation:"Enflasyon",
+    interest_rate:"Faiz Oranı",
+    volatility:"Volatilite",
+    sector_title:"Sektör Zekâsı",
+    scenario_title:"Senaryo Motoru",
+    trade_title:"Küresel Ticaret",
+    career_title:"Kariyer Zekâsı",
+    opportunity_title:"Fırsat Radarı",
+    gps_title:"Ekonomik GPS",
+    strategic_direction:"Stratejik Yön",
+    current_mode:"Geçerli Mod",
+    recommendation:"Öneri",
+    network_title:"Küresel Ekonomik Ağ",
+    network_subtitle:"Ülke düğümleri, risk renkleri ve ticaret bağlantıları",
+    low_risk:"Düşük Risk",
+    medium_risk:"Orta Risk",
+    elevated_risk:"Yükselen Risk",
+    high_risk:"Yüksek Risk",
+    contact_title:"İletişim",
+    contact_text:"Ortaklık, lisanslama, platform geliştirme ve stratejik iletişim için ZENTRA çekirdek ekibiyle iletişime geçin.",
+    ai_title:"ZENTRA YZ",
+    send_btn:"Gönder",
+    footer:"ZENTRA — Küresel Ekonomik İşletim Sistemi",
+    ask_placeholder:"Ekonomik soru sor...",
+    gps_analysis:"Ekonomik GPS Analizi",
+    global_risk:"Küresel Risk",
+    market_trend_label:"Piyasa Trendi",
+    strategic_direction_label:"Stratejik Yön",
+    brain_note:"ZENTRA makro risk, piyasa yönü ve sektör zekâsını birleştirir.",
+    network_info:"Küresel Ekonomik Ağ",
+    fallback:"Yedek mod aktif.",
+    ai_ready:"Hazır.",
+    ai_reply:"Ekonomik analiz modülü aktif."
+  },
+
+  ar: {
+    nav_home:"الرئيسية",
+    nav_about:"حول",
+    nav_dashboard:"اللوحة",
+    nav_brain:"العقل",
+    nav_economic:"الاقتصاد",
+    nav_sectors:"القطاعات",
+    nav_scenario:"السيناريو",
+    nav_trade:"التجارة",
+    nav_career:"المسار المهني",
+    nav_opportunity:"الفرص",
+    nav_gps:"البوصلة",
+    nav_network:"الشبكة",
+    nav_policy:"السياسة",
+    nav_vision:"الرؤية",
+    nav_mission:"الرسالة",
+    nav_contact:"الاتصال",
+    nav_ai:"الذكاء",
+    hero_badge:"منصة الذكاء الاقتصادي",
+    hero_title:"زينترا النظام الاقتصادي العالمي",
+    hero_subtitle:"نظام ذكاء اقتصادي يربط المخاطر الكلية والتجارة والقطاعات والفرص والتوجيه الاستراتيجي في منصة واحدة.",
+    hero_btn_1:"افتح اللوحة",
+    hero_btn_2:"استكشف المنصة",
+    about_title:"ما هو ZENTRA؟",
+    about_core_label:"المحرك الأساسي",
+    about_core_text:"محرك المخاطر، الذكاء الكلي، تحليل القطاعات وطبقة التوجيه الاستراتيجي.",
+    about_network_label:"الشبكة العالمية",
+    about_network_text:"تدفقات التجارة، رادار الفرص، روابط الأسواق وطبقة دليل الشركات المستقبلية.",
+    about_ai_label:"طبقة الذكاء",
+    about_ai_text:"تفكير اقتصادي، تفسير السيناريو، وتجربة دعم القرار الموجّه.",
+    vision_title:"الرؤية",
+    vision_text:"بناء نظام تشغيل اقتصادي عالمي يساعد الأفراد والشركات والمؤسسات على فهم المخاطر والاتجاه والفرصة بوضوح.",
+    mission_title:"الرسالة",
+    mission_text:"تحويل المعلومات الاقتصادية المتفرقة إلى ذكاء قابل للتنفيذ عبر التحليلات المتصلة والأنظمة البصرية ودعم الذكاء الاصطناعي.",
+    policy_title:"سياسة المنصة",
+    policy_text:"تعطي ZENTRA الأولوية للوضوح والمرونة والخصوصية والتحليل المسؤول والسلوك النظامي الشفاف في جميع الوحدات.",
+    dashboard_title:"لوحة التحكم العالمية",
+    risk_score:"درجة المخاطر",
+    economic_state:"الحالة الاقتصادية",
+    market_trend:"اتجاه السوق",
+    brain_title:"العقل الاقتصادي",
+    economic_title:"المؤشرات الاقتصادية",
+    inflation:"التضخم",
+    interest_rate:"سعر الفائدة",
+    volatility:"التذبذب",
+    sector_title:"ذكاء القطاعات",
+    scenario_title:"محرك السيناريو",
+    trade_title:"التجارة العالمية",
+    career_title:"ذكاء الوظائف",
+    opportunity_title:"رادار الفرص",
+    gps_title:"البوصلة الاقتصادية",
+    strategic_direction:"الاتجاه الاستراتيجي",
+    current_mode:"الوضع الحالي",
+    recommendation:"التوصية",
+    network_title:"الشبكة الاقتصادية العالمية",
+    network_subtitle:"عقد الدول وألوان المخاطر وروابط التجارة",
+    low_risk:"مخاطر منخفضة",
+    medium_risk:"مخاطر متوسطة",
+    elevated_risk:"مخاطر مرتفعة",
+    high_risk:"مخاطر عالية",
+    contact_title:"الاتصال",
+    contact_text:"للشراكات والترخيص وتطوير المنصة والتواصل الاستراتيجي، تواصل مع فريق ZENTRA الأساسي.",
+    ai_title:"ZENTRA AI",
+    send_btn:"إرسال",
+    footer:"زينترا — نظام التشغيل الاقتصادي العالمي",
+    ask_placeholder:"اسأل سؤالاً اقتصادياً...",
+    gps_analysis:"تحليل البوصلة الاقتصادية",
+    global_risk:"المخاطر العالمية",
+    market_trend_label:"اتجاه السوق",
+    strategic_direction_label:"الاتجاه الاستراتيجي",
+    brain_note:"تدمج ZENTRA المخاطر الكلية واتجاه السوق وذكاء القطاعات.",
+    network_info:"الشبكة الاقتصادية العالمية",
+    fallback:"تم تفعيل الوضع الاحتياطي.",
+    ai_ready:"جاهز.",
+    ai_reply:"وحدة التحليل الاقتصادي نشطة."
+  }
 };
 
 function t(key){
-  return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
+  return (I18N[currentLang] && I18N[currentLang][key]) || (I18N.en && I18N.en[key]) || key;
 }
 
 function fallbackData(){
   return {
-    brain:{risk:57,state:"moderate pressure",trend:"bearish",advice:"Maintain liquidity, monitor market changes and avoid concentrated risk."},
-    economic:{inflation:"5.5",rate:"4.8",volatility:"41",liquidity:"61"},
+    brain:{
+      risk:57,
+      state:"moderate pressure",
+      trend:"bearish",
+      advice:"Maintain liquidity, monitor market changes and avoid concentrated risk."
+    },
+    economic:{
+      inflation:"5.5",
+      rate:"4.8",
+      volatility:"41",
+      liquidity:"61"
+    },
     sectors:[
       {sector:"Energy",risk:40},
       {sector:"Finance",risk:18},
@@ -574,6 +848,11 @@ function setText(id, value){
   if(el) el.innerText = value;
 }
 
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
+}
+
 function riskColor(r){
   if(r < 30) return "#54f2a1";
   if(r < 50) return "#ffd166";
@@ -584,20 +863,24 @@ function riskColor(r){
 function applyLanguageUI(){
   document.documentElement.lang = currentLang;
   document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+
   document.querySelectorAll("[data-i]").forEach(el=>{
     const key = el.getAttribute("data-i");
     el.innerText = t(key);
   });
-  setText("heroBadge", t("heroBadge"));
-  setText("heroTitle", t("heroTitle"));
-  setText("heroSubtitle", t("heroSubtitle"));
-  setText("footerText", t("footer"));
+
+  setText("heroBadge", t("hero_badge"));
+  setText("heroTitle", t("hero_title"));
+  setText("heroSubtitle", t("hero_subtitle"));
+  setText("footerText", currentLang === "tr" ? I18N.tr.footer : currentLang === "ar" ? I18N.ar.footer : I18N.en.footer);
+
   document.getElementById("chatInput").placeholder = t("ask_placeholder");
 }
 
 function renderChart(data){
   const canvas = document.getElementById("riskChart");
   if(!canvas || !Array.isArray(data.sectors) || typeof Chart === "undefined") return;
+
   if(riskChart) riskChart.destroy();
 
   riskChart = new Chart(canvas,{
@@ -607,7 +890,7 @@ function renderChart(data){
       datasets:[{
         label:t("sector_title"),
         data:data.sectors.map(s => s.risk),
-        backgroundColor:"#49ddff"
+        backgroundColor:"#00e0ff"
       }]
     },
     options:{
@@ -622,35 +905,30 @@ function renderChart(data){
 }
 
 function renderGPS(data){
-  let direction = "STABLE";
-  let advice = "";
+  let direction = currentLang === "tr" ? "DENGELİ" : currentLang === "ar" ? "متوازن" : "BALANCED";
+  let advice = currentLang === "tr"
+    ? "Çeşitlendirilmiş stratejiyi koru."
+    : currentLang === "ar"
+    ? "حافظ على استراتيجية متوازنة."
+    : "Maintain diversified strategy.";
+
   const risk = data.brain?.risk ?? 50;
   const trend = (data.brain?.trend ?? "neutral").toLowerCase();
 
   if(risk >= 70){
     direction = currentLang === "tr" ? "SAVUNMA" : currentLang === "ar" ? "دفاعي" : "DEFENSIVE";
-    advice = currentLang === "tr" ? "Risk azalt, likiditeyi artır ve korunma stratejisi uygula." :
-             currentLang === "ar" ? "قلل الانكشاف وزد السيولة وفعّل التحوط." :
-             "Reduce exposure, increase liquidity and hedge risk.";
+    advice = currentLang === "tr" ? "Risk azalt ve likiditeyi artır." : currentLang === "ar" ? "قلل الانكشاف وزد السيولة." : "Reduce exposure and increase liquidity.";
   }else if(risk >= 50){
     direction = currentLang === "tr" ? "DİKKAT" : currentLang === "ar" ? "حذر" : "CAUTION";
-    advice = currentLang === "tr" ? "Yatırımları çeşitlendir ve makro sinyalleri izle." :
-             currentLang === "ar" ? "نوّع الاستثمارات وراقب الإشارات الكلية." :
-             "Diversify investments and monitor macro signals.";
+    advice = currentLang === "tr" ? "Yatırımları çeşitlendir ve makro sinyalleri izle." : currentLang === "ar" ? "نوّع الاستثمارات وراقب الإشارات الكلية." : "Diversify investments and monitor macro signals.";
   }else if(trend === "bullish"){
     direction = currentLang === "tr" ? "GENİŞLEME" : currentLang === "ar" ? "توسع" : "EXPANSION";
-    advice = currentLang === "tr" ? "Fırsat penceresi açık. Kontrollü büyüme düşünülebilir." :
-             currentLang === "ar" ? "نافذة الفرص مفتوحة. يمكن التفكير في توسع مدروس." :
-             "Opportunity window open. Consider expansion and strategic investment.";
-  }else{
-    direction = currentLang === "tr" ? "DENGELİ" : currentLang === "ar" ? "متوازن" : "BALANCED";
-    advice = currentLang === "tr" ? "Çeşitlendirilmiş stratejiyi koru." :
-             currentLang === "ar" ? "حافظ على استراتيجية متوازنة ومتنوعـة." :
-             "Maintain diversified strategy and monitor signals.";
+    advice = currentLang === "tr" ? "Fırsat penceresi açık." : currentLang === "ar" ? "نافذة الفرص مفتوحة." : "Opportunity window open.";
   }
 
   setText("gpsDirection", direction);
   setText("gpsMode", trend.toUpperCase());
+  setText("gpsShort", advice);
   setText("gpsAdvice",
 `${t("gps_analysis")}
 
@@ -662,7 +940,7 @@ ${t("strategic_direction_label")}: ${direction}
 ${t("recommendation")}:
 ${advice}
 
-${t("brain_note")}`);
+${currentLang === "tr" ? "ZENTRA makro risk, piyasa yönü ve sektör zekâsını birleştirir." : currentLang === "ar" ? "تدمج ZENTRA المخاطر الكلية واتجاه السوق وذكاء القطاعات." : "ZENTRA integrates macro risk, market direction and sector intelligence."}`);
 }
 
 function renderNetwork(data){
@@ -695,24 +973,24 @@ function renderNetwork(data){
   ];
 
   links.forEach(link=>{
-    const a = nodes.find(n=>n.name===link[0]);
-    const b = nodes.find(n=>n.name===link[1]);
+    const a=nodes.find(n=>n.name===link[0]);
+    const b=nodes.find(n=>n.name===link[1]);
     if(!a || !b) return;
     ctx.beginPath();
     ctx.moveTo(a.x,a.y);
     ctx.lineTo(b.x,b.y);
-    ctx.strokeStyle = "rgba(73,221,255,.30)";
-    ctx.lineWidth = 2;
+    ctx.strokeStyle="rgba(73,221,255,.30)";
+    ctx.lineWidth=2;
     ctx.stroke();
   });
 
   nodes.forEach(n=>{
     ctx.beginPath();
-    ctx.fillStyle = riskColor(n.risk);
+    ctx.fillStyle=riskColor(n.risk);
     ctx.arc(n.x,n.y,10,0,Math.PI*2);
     ctx.fill();
-    ctx.fillStyle = "#bfe2ff";
-    ctx.font = "12px Arial";
+    ctx.fillStyle="#bfe2ff";
+    ctx.font="12px Arial";
     ctx.fillText(n.name,n.x+14,n.y+4);
   });
 
@@ -745,27 +1023,27 @@ ${currentLang === "tr" ? "Öneri" : currentLang === "ar" ? "النصيحة" : "A
   setText("scenarioResult",
     Array.isArray(data.scenarios)
       ? data.scenarios.map(x => x.scenario + " — " + x.impact).join("\n")
-      : "No scenario data");
+      : (currentLang === "tr" ? "Senaryo verisi yok" : currentLang === "ar" ? "لا توجد بيانات سيناريو" : "No scenario data"));
 
   setText("sectorResult",
     Array.isArray(data.sectors)
       ? data.sectors.map(x => `${x.sector} risk: ${x.risk}`).join("\n")
-      : "No sector data");
+      : (currentLang === "tr" ? "Sektör verisi yok" : currentLang === "ar" ? "لا توجد بيانات قطاع" : "No sector data"));
 
   setText("tradeResult",
     Array.isArray(data.trade)
       ? data.trade.map(x => x.from + " → " + x.to + " : " + x.product).join("\n")
-      : "No trade data");
+      : (currentLang === "tr" ? "Ticaret verisi yok" : currentLang === "ar" ? "لا توجد بيانات تجارة" : "No trade data"));
 
   setText("careerResult",
     Array.isArray(data.careers)
       ? data.careers.map(x => x.field + " — " + x.demand).join("\n")
-      : "No career data");
+      : (currentLang === "tr" ? "Kariyer verisi yok" : currentLang === "ar" ? "لا توجد بيانات مهنية" : "No career data"));
 
   setText("opportunityResult",
     Array.isArray(data.opportunities)
       ? data.opportunities.map(x => x.country + " — " + x.sector).join("\n")
-      : "No opportunity data");
+      : (currentLang === "tr" ? "Fırsat verisi yok" : currentLang === "ar" ? "لا توجد بيانات فرص" : "No opportunity data"));
 
   renderChart(data);
   renderGPS(data);
@@ -794,7 +1072,7 @@ function askChat(){
   if(!q) return;
 
   box.innerHTML += "<div><b>You:</b> " + q + "</div>";
-  box.innerHTML += "<div><b>ZENTRA:</b> " + (currentLang === "tr" ? "Ekonomik analiz modülü aktif." : currentLang === "ar" ? "وحدة التحليل الاقتصادي نشطة." : "Economic analysis module active.") + "</div>";
+  box.innerHTML += "<div><b>ZENTRA:</b> " + t("ai_reply") + "</div>";
   input.value = "";
   box.scrollTop = box.scrollHeight;
 }
@@ -807,11 +1085,16 @@ function setLang(lang){
   }
 }
 
-document.getElementById("langSelect").addEventListener("change", function(){
-  setLang(this.value);
-});
-
 document.addEventListener("DOMContentLoaded", function(){
+  document.getElementById("langSelect").addEventListener("change", function(){
+    setLang(this.value);
+  });
+
+  document.getElementById("langSelectMobile").addEventListener("change", function(){
+    setLang(this.value);
+    document.getElementById("langSelect").value = this.value;
+  });
+
   applyLanguageUI();
   loadData();
 });

@@ -1,368 +1,530 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Economic Operating System</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA PRO — Economic Operating System</title>
+  <meta name="description" content="ZENTRA PRO — AI powered global economic operating system." />
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 
-<style>
+  <style>
+    :root{
+      --bg:#06101f;
+      --bg2:#09162c;
+      --panel:rgba(13,25,53,.78);
+      --panel2:#0b1730;
+      --panel3:#071120;
+      --line:rgba(77,140,223,.20);
+      --text:#eef5ff;
+      --muted:#9ab6d9;
+      --cyan:#49ddff;
+      --blue:#5b8cff;
+      --green:#54f2a1;
+      --amber:#ffd166;
+      --red:#ff6b6b;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:22px;
+      --max:1280px;
+    }
 
-body{
-margin:0;
-font-family:Arial;
-background:#071021;
-color:white;
-overflow-x:hidden;
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(73,221,255,.10), transparent 30%),
+        radial-gradient(circle at 80% 10%, rgba(91,140,255,.12), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(84,242,161,.08), transparent 34%),
+        linear-gradient(180deg,#040b16 0%, #071021 35%, #08142a 100%);
+      overflow-x:hidden;
+    }
 
-nav{
-background:#08132a;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+    a{color:inherit;text-decoration:none}
 
-nav a{
-color:#8bd6ff;
-margin-left:15px;
-text-decoration:none;
-font-size:14px;
-}
+    .grid-bg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-2;
+      background-image:
+        linear-gradient(rgba(82,134,212,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82,134,212,.08) 1px, transparent 1px);
+      background-size:42px 42px;
+      mask-image:linear-gradient(to bottom, rgba(255,255,255,.28), transparent 85%);
+    }
 
-.hero{
-text-align:center;
-padding:70px 20px;
-}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(14px);
+      background:rgba(6,13,27,.66);
+      border-bottom:1px solid rgba(92,129,190,.18);
+    }
 
-.hero h1{
-font-size:48px;
-color:#00e0ff;
-}
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
 
-.section{
-max-width:1200px;
-margin:auto;
-padding:30px;
-}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.08em;
+      white-space:nowrap;
+    }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-}
+    .brand-mark{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      box-shadow:0 10px 30px rgba(73,221,255,.25);
+      position:relative;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
 
-.card{
-background:#0e1c38;
-padding:20px;
-border-radius:10px;
-}
+    .brand-mark::before,.brand-mark::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.22);
+    }
 
-.metric{
-font-size:28px;
-color:#00e0ff;
-}
+    .brand-mark::before{width:36px;height:36px;left:16px;top:-10px}
+    .brand-mark::after{width:18px;height:18px;left:8px;top:17px}
 
-textarea,input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-background:#08132a;
-color:white;
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .nav a{
+      padding:10px 12px;
+      border-radius:12px;
+      color:#bfe2ff;
+      font-size:13px;
+      transition:.25s ease;
+    }
+
+    .nav a:hover{
+      background:rgba(73,221,255,.08);
+      color:#fff;
+    }
+
+    .lang{
+      border:1px solid var(--line);
+      background:rgba(14,24,48,.86);
+      color:#fff;
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+    }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .hero{
+      min-height:90vh;
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      align-items:center;
+      gap:26px;
+      padding:42px 0 48px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid rgba(73,221,255,.18);
+      border-radius:999px;
+      color:#bdeeff;
+      background:rgba(73,221,255,.06);
+      font-size:12px;
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      font-size:60px;
+      line-height:1.02;
+      margin:0 0 18px;
+      letter-spacing:-.04em;
+    }
+
+    .gradient-text{
+      background:linear-gradient(90deg,#f7fbff 0%, #78efff 50%, #8fa9ff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.8;
+      max-width:720px;
+      margin:0 0 24px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:700;
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      color:#05101b;
+      background:linear-gradient(90deg,var(--cyan),#7df0ff);
+      box-shadow:0 10px 28px rgba(73,221,255,.20);
+    }
+
+    .btn-secondary{
+      color:#d7eeff;
+      background:rgba(15,26,51,.85);
+      border:1px solid var(--line);
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .hero-metrics{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .metric-card{
+      background:rgba(12,23,46,.78);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .metric-card .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .metric-card .value{
+      font-size:24px;
+      color:var(--cyan);
+      font-weight:800;
+      word-break:break-word;
+    }
+
+    .hero-visual{
+      position:relative;
+      min-height:560px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective:1200px;
+    }
+
+    .orbital{
+      width:min(520px,100%);
+      aspect-ratio:1/1;
+      position:relative;
+      transform-style:preserve-3d;
+      animation:tiltCard 9s ease-in-out infinite;
+    }
+
+    @keyframes tiltCard{
+      0%,100%{transform:rotateX(7deg) rotateY(-8deg)}
+      50%{transform:rotateX(-4deg) rotateY(8deg)}
+    }
+
+    .ring{
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      border:1px solid rgba(91,140,255,.22);
+      box-shadow:inset 0 0 30px rgba(91,140,255,.06);
+    }
+    .ring.r1{transform:scale(.95)}
+    .ring.r2{transform:scale(.72) rotateX(68deg)}
+    .ring.r3{transform:scale(.64) rotateY(70deg)}
+    .ring.r4{transform:scale(.40)}
+    .core{
+      position:absolute;
+      inset:50% auto auto 50%;
+      width:130px;
+      height:130px;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #b9f7ff, var(--cyan) 35%, var(--blue) 80%);
+      box-shadow:0 0 80px rgba(73,221,255,.38), 0 0 130px rgba(91,140,255,.18);
+    }
+
+    .float-card{
+      position:absolute;
+      width:220px;
+      background:linear-gradient(180deg, rgba(17,30,59,.96), rgba(10,19,38,.92));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+
+    .float-card h4{
+      margin:0 0 8px;
+      color:var(--cyan);
+      font-size:14px;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+
+    .float-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .fc-1{left:-10px;top:30px}
+    .fc-2{right:-8px;top:78px}
+    .fc-3{left:20px;bottom:60px}
+    .fc-4{right:18px;bottom:30px}
+
+    .section{
+      padding:42px 0;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:32px;
+      letter-spacing:-.03em;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      max-width:760px;
+      line-height:1.7;
+    }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      padding:18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .grid-4{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+    }
+
+    .stat-card,.mini-card,.feature-card{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .stat-label,.mini-label{
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.07em;
+      margin-bottom:8px;
+    }
+
+    .stat-value{
+      font-size:30px;
+      color:var(--cyan);
+      font-weight:800;
+      word-break:break-word;
+    }
+
+    .mini-value{
+      font-size:24px;
+      color:var(--cyan);
+      font-weight:800;
+      word-break:break-word;
+    }
+
+    .feature-card h3{
+      margin:0 0 8px;
+      color:#fff;
+      font-size:20px;
+    }
+
+    .feature-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .map-wrap{
+      width:100%;
+      overflow:hidden;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:#050d1a;
+    }
+
+    #worldMap{
+      display:block;
+      width:100% !important;
+      max-width:100%;
+      height:500px !important;
+    }
+
+    .result{
+      margin-top:12px;
+      background:#08101f;
+      border:1px solid rgba(77,140,223,.16);
+      padding:16px;
+      border-radius:18px;
+      min-height:120px;
+      line-height:1.7;
+      color:#dcecff;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .chatbox{
+      margin-top:12px;
+      background:#08101f;
+      border:1px solid rgba(77,140,223,.16);
+      padding:16px;
+      border-radius:18px;
+      min-height:220px;
+      max-height:380px;
+      overflow:auto;
+      line-height:1.7;
+      color:#dcecff;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .field{
+      width:100%;
+      background:#0a1630;
+      color:#fff;
+      border:1px solid rgba(77,140,223,.18);
+      border-radius:16px;
+      padding:14px 14px;
+      outline:none;
+      margin-top:12px;
+    }
+
+    .row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .row > *{
+      flex:1 1 0;
+      min-width:180px;
+    }
+
+    .btn-small{
+      border:none;
+      cursor:pointer;
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:700;
+      .btn-small{
 border:none;
-border-radius:8px;
-}
-
-button{
-padding:10px 15px;
-background:#00e0ff;
-border:none;
-border-radius:8px;
-margin-top:10px;
 cursor:pointer;
+border-radius:14px;
+padding:12px 14px;
+font-weight:700;
+font-size:13px;
+background:linear-gradient(135deg,#00e0ff,#3aa8ff);
+color:#031019;
+transition:all .25s ease;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:6px;
 }
 
-#chatBox{
-background:#020814;
-padding:15px;
-height:200px;
-overflow:auto;
-border-radius:10px;
+.btn-small:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(0,224,255,.25);
 }
 
-</style>
-</head>
-
-<body>
-
-<nav>
-
-<div>ZENTRA</div>
-
-<div>
-<a href="#dashboard">Dashboard</a>
-<a href="#brain">Brain</a>
-<a href="#opportunity">Opportunity</a>
-<a href="#scenario">Scenario</a>
-<a href="#trade">Trade</a>
-<a href="#career">Career</a>
-<a href="#chat">AI</a>
-</div>
-
-</nav>
-
-<div class="hero">
-<h1>ZENTRA Economic OS</h1>
-<p>Global economic intelligence platform</p>
-</div>
-
-<section id="dashboard" class="section">
-
-<div class="grid">
-
-<div class="card">
-<div>Global Risk Index</div>
-<div id="risk" class="metric"></div>
-</div>
-
-<div class="card">
-<div>Economic State</div>
-<div id="state" class="metric"></div>
-</div>
-
-<div class="card">
-<div>Market Trend</div>
-<div id="trend" class="metric"></div>
-</div>
-
-</div>
-
-<div class="card">
-<canvas id="chart"></canvas>
-</div>
-
-</section>
-
-<section id="brain" class="section">
-
-<div class="card">
-<h3>Economic Brain</h3>
-<div id="brainText"></div>
-</div>
-
-</section>
-
-<section id="opportunity" class="section">
-
-<div class="card">
-<h3>Opportunity Radar</h3>
-
-<select id="sector">
-<option value="food">Food Export</option>
-<option value="energy">Energy</option>
-<option value="tech">Technology</option>
-</select>
-
-<button onclick="opportunity()">Analyze</button>
-
-<div id="opportunityResult"></div>
-
-</div>
-
-</section>
-
-<section id="scenario" class="section">
-
-<div class="card">
-<h3>Scenario Simulation</h3>
-
-<select id="scenarioSelect">
-<option value="interest">Interest Shock</option>
-<option value="currency">Currency Shock</option>
-<option value="demand">Demand Drop</option>
-</select>
-
-<button onclick="scenario()">Run</button>
-
-<div id="scenarioResult"></div>
-
-</div>
-
-</section>
-
-<section id="trade" class="section">
-
-<div class="card">
-
-<h3>Trade Engine</h3>
-
-<input id="product" placeholder="Product">
-
-<input id="country" placeholder="Target Country">
-
-<button onclick="trade()">Find Opportunity</button>
-
-<div id="tradeResult"></div>
-
-</div>
-
-</section>
-
-<section id="career" class="section">
-
-<div class="card">
-
-<h3>Career Engine</h3>
-
-<input id="skill" placeholder="Your Skill">
-
-<button onclick="career()">Analyze</button>
-
-<div id="careerResult"></div>
-
-</div>
-
-</section>
-
-<section id="chat" class="section">
-
-<div class="card">
-
-<h3>ZENTRA AI</h3>
-
-<div id="chatBox">
-
-<div><b>ZENTRA:</b> Ask me about economy or business.</div>
-
-</div>
-
-<textarea id="chatInput"></textarea>
-
-<button onclick="ask()">Send</button>
-
-</div>
-
-</section>
-
-<script>
-
-function randomRisk(){
-return Math.floor(Math.random()*100)
+.btn-outline{
+background:transparent;
+border:1px solid #00e0ff;
+color:#00e0ff;
 }
 
-let risk=randomRisk()
-
-document.getElementById("risk").innerText=risk
-
-let state="Moderate Pressure"
-
-if(risk>70) state="High Risk"
-
-document.getElementById("state").innerText=state
-
-document.getElementById("trend").innerText="Bearish"
-
-const ctx=document.getElementById("chart")
-
-new Chart(ctx,{
-type:"line",
-data:{
-labels:["Mon","Tue","Wed","Thu","Fri"],
-datasets:[{
-label:"Risk",
-data:[20,40,30,60,50]
-}]
-}
-})
-
-document.getElementById("brainText").innerText=
-"Global inflation pressure moderate. Monitor energy and logistics costs."
-
-function opportunity(){
-
-let s=document.getElementById("sector").value
-
-let result=""
-
-if(s=="food"){
-
-result="Opportunity: Food exports to Europe increasing."
-
+.btn-outline:hover{
+background:#00e0ff;
+color:#031019;
 }
 
-if(s=="energy"){
-
-result="Energy transition investments rising."
-
+.btn-dark{
+background:#08132a;
+color:#9bdcff;
+border:1px solid rgba(0,224,255,.15);
 }
 
-if(s=="tech"){
-
-result="Technology sector global demand strong."
-
+.btn-dark:hover{
+background:#0e1c38;
+color:#fff;
 }
-
-document.getElementById("opportunityResult").innerText=result
-
-}
-
-function scenario(){
-
-let s=document.getElementById("scenarioSelect").value
-
-let result=""
-
-if(s=="interest"){
-result="Interest shock may reduce credit expansion."
-}
-
-if(s=="currency"){
-result="Currency shock increases import costs."
-}
-
-if(s=="demand"){
-result="Demand drop pressures retail."
-}
-
-document.getElementById("scenarioResult").innerText=result
-
-}
-
-function trade(){
-
-let p=document.getElementById("product").value
-
-let c=document.getElementById("country").value
-
-document.getElementById("tradeResult").innerText=
-"Trade opportunity found for "+p+" in "+c
-
-}
-
-function career(){
-
-let s=document.getElementById("skill").value
-
-document.getElementById("careerResult").innerText=
-"Skill "+s+" has demand in EU tech sector."
-
-}
-
-function ask(){
-
-let q=document.getElementById("chatInput").value
-
-let box=document.getElementById("chatBox")
-
-box.innerHTML+=`<div><b>You:</b> ${q}</div>`
-
-box.innerHTML+=`<div><b>ZENTRA:</b> Economic indicators suggest monitoring inflation and energy.</div>`
-
-}
-
-</script>
-
-</body>
-  </html>

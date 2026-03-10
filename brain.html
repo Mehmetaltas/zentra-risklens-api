@@ -2,63 +2,74 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Global Economic Brain</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Economic Brain</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial,Helvetica,sans-serif;
 background:#050b18;
 color:white;
 }
+
 header{
 padding:30px;
 text-align:center;
 background:#08132a;
 border-bottom:1px solid #0f2c55;
 }
+
 h1{
 margin:0;
 color:#00e0ff;
 font-size:34px;
 }
+
 nav{
 margin-top:10px;
 }
+
 nav a{
 color:#7bdfff;
 margin:0 12px;
 text-decoration:none;
 font-size:14px;
 }
+
 section{
 padding:40px 20px;
 max-width:1100px;
 margin:auto;
 }
+
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 gap:20px;
 }
+
 .card{
 background:#08152c;
 padding:22px;
 border-radius:12px;
 border:1px solid #103865;
 }
+
 .label{
 font-size:12px;
 text-transform:uppercase;
 color:#8fb8da;
 margin-bottom:8px;
 }
+
 .metric{
 font-size:30px;
 font-weight:bold;
 color:#00e0ff;
 }
+
 .bigbox{
 margin-top:20px;
 background:#08152c;
@@ -68,6 +79,7 @@ border:1px solid #103865;
 white-space:pre-wrap;
 line-height:1.7;
 }
+
 .footer{
 text-align:center;
 padding:30px;
@@ -76,141 +88,185 @@ margin-top:60px;
 font-size:14px;
 color:#6fa9d6;
 }
+
 </style>
 </head>
+
 <body>
 
 <header>
+
 <h1>ZENTRA Global Economic Brain</h1>
+
 <nav>
+
 <a href="index.html">Home</a>
-<a href="advisor.html">Advisor</a>
 <a href="brain.html">Brain</a>
+
 </nav>
+
 </header>
+
+
 
 <section>
 
 <div class="grid">
 
 <div class="card">
+
 <div class="label">Global Risk Index</div>
-<div class="metric" id="globalRisk">--</div>
+<div class="metric" id="risk">--</div>
+
 </div>
 
+
+
 <div class="card">
+
 <div class="label">Economic State</div>
-<div class="metric" id="economicState" style="font-size:22px;">--</div>
+<div class="metric" id="state" style="font-size:22px;">--</div>
+
 </div>
 
+
+
 <div class="card">
+
 <div class="label">Market Trend</div>
-<div class="metric" id="marketTrend" style="font-size:22px;">--</div>
+<div class="metric" id="trend" style="font-size:22px;">--</div>
+
 </div>
+
+
 
 <div class="card">
+
 <div class="label">Brain Signal</div>
-<div class="metric" id="brainSignal" style="font-size:22px;">--</div>
-</div>
+<div class="metric" id="signal" style="font-size:22px;">--</div>
 
 </div>
 
-<div class="bigbox" id="brainReport">
-Economic brain is loading...
 </div>
+
+
+
+<div class="bigbox" id="report">
+
+Economic brain loading...
+
+</div>
+
+
 
 </section>
 
+
+
 <div class="footer">
+
 ZENTRA — Economic Brain Layer
+
 </div>
 
+
+
 <script>
-const API_URL = "https://zentra-risklens-api.vercel.app/api/zentra";
 
-async function loadBrain(){
-  try{
-    const res = await fetch(API_URL, { cache: "no-store" });
-    if(!res.ok){
-      throw new Error("HTTP " + res.status);
-    }
+const API="https://zentra-risklens-api.vercel.app/api/zentra";
 
-    const data = await res.json();
+function fallback(){
 
-    const risk = data?.brain?.risk ?? 57;
-    const state = data?.brain?.state ?? "moderate pressure";
-    const trend = data?.brain?.trend ?? "neutral";
-    const advice = data?.brain?.advice ?? "Control costs and diversify risks.";
+return {
 
-    let signal = "stable";
-    if(risk >= 75){
-      signal = "critical";
-    }else if(risk >= 55){
-      signal = "stress";
-    }else if(risk >= 35){
-      signal = "caution";
-    }
-
-    document.getElementById("globalRisk").innerText = risk;
-    document.getElementById("economicState").innerText = state;
-    document.getElementById("marketTrend").innerText = trend;
-    document.getElementById("brainSignal").innerText = signal;
-
-    document.getElementById("brainReport").innerText =
-`GLOBAL ECONOMIC BRAIN REPORT
-
-Global Risk Index: ${risk}
-Economic State: ${state}
-Market Trend: ${trend}
-Brain Signal: ${signal}
-
-Interpretation:
-ZENTRA reads macro pressure, market structure and sector signals together.
-
-Strategic View:
-${advice}
-
-Sector Signals:
-${Array.isArray(data.sectors) ? data.sectors.map(x => `${x.sector}: ${x.risk}`).join("\n") : "No sector data"}
-
-Scenario Signals:
-${Array.isArray(data.scenarios) ? data.scenarios.map(x => `${x.scenario} — ${x.impact}`).join("\n") : "No scenario data"}
-
-Opportunity Signals:
-${Array.isArray(data.opportunities) ? data.opportunities.map(x => `${x.country} — ${x.sector}`).join("\n") : "No opportunity data"}
-
-Economic Brain Summary:
-ZENTRA generates a unified economic intelligence layer from risk, sectors, scenarios and opportunities.`;
-
-  }catch(e){
-    document.getElementById("globalRisk").innerText = "57";
-    document.getElementById("economicState").innerText = "moderate pressure";
-    document.getElementById("marketTrend").innerText = "bearish";
-    document.getElementById("brainSignal").innerText = "stress";
-
-    document.getElementById("brainReport").innerText =
-`GLOBAL ECONOMIC BRAIN REPORT
-
-Global Risk Index: 57
-Economic State: moderate pressure
-Market Trend: bearish
-Brain Signal: stress
-
-Interpretation:
-Financial pressure remains moderate across the system.
-
-Strategic View:
-Maintain liquidity, monitor market changes and avoid concentrated risk.
-
-Economic Brain Summary:
-Fallback mode is active.
-
-Error:
-${e.message}`;
-  }
+brain:{
+risk:57,
+state:"moderate pressure",
+trend:"bearish",
+advice:"Maintain liquidity and monitor macro risk."
 }
 
-loadBrain();
+};
+
+}
+
+
+
+function render(data){
+
+document.getElementById("risk").innerText=data.brain.risk;
+document.getElementById("state").innerText=data.brain.state;
+document.getElementById("trend").innerText=data.brain.trend;
+
+let signal="stable";
+
+if(data.brain.risk>=75){
+
+signal="critical";
+
+}else if(data.brain.risk>=55){
+
+signal="stress";
+
+}else if(data.brain.risk>=35){
+
+signal="caution";
+
+}
+
+document.getElementById("signal").innerText=signal;
+
+
+
+document.getElementById("report").innerText=
+
+`GLOBAL ECONOMIC BRAIN REPORT
+
+Global Risk Index: ${data.brain.risk}
+Economic State: ${data.brain.state}
+Market Trend: ${data.brain.trend}
+Brain Signal: ${signal}
+
+Strategic Interpretation:
+
+ZENTRA combines macro pressure,
+financial conditions and market signals
+to create a unified economic intelligence layer.
+
+Advice:
+
+${data.brain.advice}
+
+`;
+
+}
+
+
+
+async function load(){
+
+try{
+
+const r=await fetch(API);
+
+const data=await r.json();
+
+render(data);
+
+}
+
+catch(e){
+
+render(fallback());
+
+}
+
+}
+
+
+
+load();
+
 </script>
 
 </body>

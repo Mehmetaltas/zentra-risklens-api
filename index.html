@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
@@ -28,11 +29,12 @@ nav a{
 color:#8bd6ff;
 margin-left:15px;
 text-decoration:none;
+font-size:14px;
 }
 
 .hero{
 text-align:center;
-padding:80px 20px;
+padding:70px 20px;
 }
 
 .hero h1{
@@ -46,10 +48,15 @@ margin:auto;
 padding:30px;
 }
 
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
 .card{
 background:#0e1c38;
 padding:20px;
-margin-bottom:20px;
 border-radius:10px;
 }
 
@@ -58,7 +65,7 @@ font-size:28px;
 color:#00e0ff;
 }
 
-textarea,input{
+textarea,input,select{
 width:100%;
 padding:10px;
 margin-top:10px;
@@ -91,25 +98,45 @@ border-radius:10px;
 <body>
 
 <nav>
+
 <div>ZENTRA</div>
+
 <div>
 <a href="#dashboard">Dashboard</a>
 <a href="#brain">Brain</a>
+<a href="#opportunity">Opportunity</a>
 <a href="#scenario">Scenario</a>
+<a href="#trade">Trade</a>
+<a href="#career">Career</a>
 <a href="#chat">AI</a>
 </div>
+
 </nav>
 
 <div class="hero">
 <h1>ZENTRA Economic OS</h1>
-<p>AI powered global economic intelligence platform</p>
+<p>Global economic intelligence platform</p>
 </div>
 
 <section id="dashboard" class="section">
 
+<div class="grid">
+
 <div class="card">
 <div>Global Risk Index</div>
-<div id="risk" class="metric">--</div>
+<div id="risk" class="metric"></div>
+</div>
+
+<div class="card">
+<div>Economic State</div>
+<div id="state" class="metric"></div>
+</div>
+
+<div class="card">
+<div>Market Trend</div>
+<div id="trend" class="metric"></div>
+</div>
+
 </div>
 
 <div class="card">
@@ -121,7 +148,27 @@ border-radius:10px;
 <section id="brain" class="section">
 
 <div class="card">
-<div id="brainText">Economic Brain loading...</div>
+<h3>Economic Brain</h3>
+<div id="brainText"></div>
+</div>
+
+</section>
+
+<section id="opportunity" class="section">
+
+<div class="card">
+<h3>Opportunity Radar</h3>
+
+<select id="sector">
+<option value="food">Food Export</option>
+<option value="energy">Energy</option>
+<option value="tech">Technology</option>
+</select>
+
+<button onclick="opportunity()">Analyze</button>
+
+<div id="opportunityResult"></div>
+
 </div>
 
 </section>
@@ -129,15 +176,51 @@ border-radius:10px;
 <section id="scenario" class="section">
 
 <div class="card">
+<h3>Scenario Simulation</h3>
+
 <select id="scenarioSelect">
 <option value="interest">Interest Shock</option>
 <option value="currency">Currency Shock</option>
 <option value="demand">Demand Drop</option>
 </select>
 
-<button onclick="runScenario()">Run Scenario</button>
+<button onclick="scenario()">Run</button>
 
 <div id="scenarioResult"></div>
+
+</div>
+
+</section>
+
+<section id="trade" class="section">
+
+<div class="card">
+
+<h3>Trade Engine</h3>
+
+<input id="product" placeholder="Product">
+
+<input id="country" placeholder="Target Country">
+
+<button onclick="trade()">Find Opportunity</button>
+
+<div id="tradeResult"></div>
+
+</div>
+
+</section>
+
+<section id="career" class="section">
+
+<div class="card">
+
+<h3>Career Engine</h3>
+
+<input id="skill" placeholder="Your Skill">
+
+<button onclick="career()">Analyze</button>
+
+<div id="careerResult"></div>
 
 </div>
 
@@ -147,8 +230,12 @@ border-radius:10px;
 
 <div class="card">
 
+<h3>ZENTRA AI</h3>
+
 <div id="chatBox">
-<div><b>ZENTRA:</b> Ask me about economy.</div>
+
+<div><b>ZENTRA:</b> Ask me about economy or business.</div>
+
 </div>
 
 <textarea id="chatInput"></textarea>
@@ -169,6 +256,14 @@ let risk=randomRisk()
 
 document.getElementById("risk").innerText=risk
 
+let state="Moderate Pressure"
+
+if(risk>70) state="High Risk"
+
+document.getElementById("state").innerText=state
+
+document.getElementById("trend").innerText="Bearish"
+
 const ctx=document.getElementById("chart")
 
 new Chart(ctx,{
@@ -183,27 +278,75 @@ data:[20,40,30,60,50]
 })
 
 document.getElementById("brainText").innerText=
-"Global economy shows moderate pressure. Monitor inflation and energy."
+"Global inflation pressure moderate. Monitor energy and logistics costs."
 
-function runScenario(){
+function opportunity(){
+
+let s=document.getElementById("sector").value
+
+let result=""
+
+if(s=="food"){
+
+result="Opportunity: Food exports to Europe increasing."
+
+}
+
+if(s=="energy"){
+
+result="Energy transition investments rising."
+
+}
+
+if(s=="tech"){
+
+result="Technology sector global demand strong."
+
+}
+
+document.getElementById("opportunityResult").innerText=result
+
+}
+
+function scenario(){
 
 let s=document.getElementById("scenarioSelect").value
 
 let result=""
 
 if(s=="interest"){
-result="Interest increase may slow credit expansion."
+result="Interest shock may reduce credit expansion."
 }
 
 if(s=="currency"){
-result="Currency shock may increase import costs."
+result="Currency shock increases import costs."
 }
 
 if(s=="demand"){
-result="Demand drop may pressure retail sector."
+result="Demand drop pressures retail."
 }
 
 document.getElementById("scenarioResult").innerText=result
+
+}
+
+function trade(){
+
+let p=document.getElementById("product").value
+
+let c=document.getElementById("country").value
+
+document.getElementById("tradeResult").innerText=
+"Trade opportunity found for "+p+" in "+c
+
+}
+
+function career(){
+
+let s=document.getElementById("skill").value
+
+document.getElementById("careerResult").innerText=
+"Skill "+s+" has demand in EU tech sector."
 
 }
 
@@ -215,11 +358,11 @@ let box=document.getElementById("chatBox")
 
 box.innerHTML+=`<div><b>You:</b> ${q}</div>`
 
-box.innerHTML+=`<div><b>ZENTRA:</b> Economic analysis suggests monitoring macro indicators.</div>`
+box.innerHTML+=`<div><b>ZENTRA:</b> Economic indicators suggest monitoring inflation and energy.</div>`
 
 }
 
 </script>
 
 </body>
-</html>
+  </html>

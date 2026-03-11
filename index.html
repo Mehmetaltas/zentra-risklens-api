@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Economic OS</title>
+<title>RiskLens powered by ZENTRA</title>
 
 <style>
 *{
@@ -15,6 +15,7 @@ padding:0;
 :root{
 --bg:#030712;
 --panel:#081120;
+--panel2:#0c1830;
 --line:#163052;
 --text:#eef6ff;
 --muted:#9bb3d9;
@@ -22,7 +23,9 @@ padding:0;
 --blue:#4cc9f0;
 --violet:#8b5cf6;
 --green:#19e68c;
---pink:#ff4fd8;
+--yellow:#f5b942;
+--orange:#ff8a3d;
+--red:#ff4d6d;
 }
 
 body{
@@ -384,8 +387,14 @@ box-shadow:0 0 16px rgba(25,230,140,.55);
 }
 
 .dot.d1{top:22%;left:62%;}
-.dot.d2{top:58%;left:32%;background:var(--pink);box-shadow:0 0 16px rgba(255,79,216,.55);}
+.dot.d2{top:58%;left:32%;background:var(--red);box-shadow:0 0 16px rgba(255,77,109,.55);}
 .dot.d3{top:72%;left:68%;background:var(--cyan);}
+
+.section-title{
+font-size:22px;
+margin:26px 0 14px;
+color:#dff6ff;
+}
 
 .grid{
 display:grid;
@@ -422,12 +431,6 @@ margin-bottom:10px;
 color:var(--muted);
 line-height:1.7;
 font-size:14px;
-}
-
-.section-title{
-font-size:22px;
-margin:26px 0 14px;
-color:#dff6ff;
 }
 
 .lower{
@@ -494,40 +497,17 @@ padding:16px;
 <body>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
 <div class="sidebar" id="sidebar">
+  <h2 id="menuTitle">RiskLens</h2>
 
-<h2 id="menuTitle">RiskLens</h2>
-
-<a href="/risklens/dashboard.html" id="menuDashboard">
-Dashboard
-</a>
-
-<a href="/risklens/advisor.html" id="menuEconomic">
-Economic AI
-</a>
-
-<a href="/risklens/worldmap.html" id="menuMap">
-Global Risk Map
-</a>
-
-<a href="/risklens/sectors.html" id="menuSectors">
-Sector Pressure
-</a>
-
-<a href="/risklens/crisis.html" id="menuCrisis">
-Crisis Radar
-</a>
-
-<a href="/risklens/signals.html" id="menuSignals">
-Economic Signals
-</a>
-
-<a href="/trade" id="menuTrade">
-Trade Engine
-</a>
-
-</div>
-
+  <a href="/risklens/dashboard.html" id="menuDashboard">Dashboard</a>
+  <a href="/risklens/advisor.html" id="menuEconomic">Economic AI</a>
+  <a href="/risklens/worldmap.html" id="menuMap">Global Risk Map</a>
+  <a href="/risklens/sectors.html" id="menuSectors">Sector Pressure</a>
+  <a href="/risklens/crisis.html" id="menuCrisis">Crisis Radar</a>
+  <a href="/risklens/signals.html" id="menuSignals">Economic Signals</a>
+  <a href="/trade" id="menuTrade">Trade Engine</a>
 
   <div class="lang-box">
     <label for="lang" id="langLabel">Language</label>
@@ -614,8 +594,8 @@ Trade Engine
     </div>
 
     <div class="card">
-      <a href="/trade" id="cardTrade">Trade Engine</a>
-      <p id="cardTradeText">Trade and logistics intelligence layer prepared for future expansion.</p>
+      <a href="/risklens/sectors.html" id="cardSectors">Sector Pressure</a>
+      <p id="cardSectorsText">Sector fragility monitor across construction, retail, energy, banking and more.</p>
     </div>
   </div>
 
@@ -671,8 +651,8 @@ const translations = {
     cardEconomicText: "Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.",
     cardMap: "Global Risk Map",
     cardMapText: "Interactive global map layer for country-based risk visualization and planetary monitoring.",
-    cardTrade: "Trade Engine",
-    cardTradeText: "Trade and logistics intelligence layer prepared for future expansion.",
+    cardSectors: "Sector Pressure",
+    cardSectorsText: "Sector fragility monitor across construction, retail, energy, banking and more.",
     missionControlTitle: "Mission Control",
     missionControlText: "RiskLens is the first active product layer of ZENTRA. It is designed to unify macro risk, behavior signals, pressure interpretation and AI explanation into one operational surface.",
     expansionTitle: "Expansion Path",
@@ -680,6 +660,9 @@ const translations = {
     menuDashboard: "Dashboard",
     menuEconomic: "Economic AI",
     menuMap: "Global Risk Map",
+    menuSectors: "Sector Pressure",
+    menuCrisis: "Crisis Radar",
+    menuSignals: "Economic Signals",
     menuTrade: "Trade Engine",
     footerText: "ZENTRA Economic OS • Neon Interface • RiskLens Main Platform"
   },
@@ -704,8 +687,8 @@ const translations = {
     cardEconomicText: "Enflasyon, faiz döngüsü, ülke baskısı ve sektör yorumları için özel finansal analiz paneli.",
     cardMap: "Küresel Risk Haritası",
     cardMapText: "Ülke bazlı risk görselleştirme ve küresel izleme için interaktif harita katmanı.",
-    cardTrade: "Ticaret Motoru",
-    cardTradeText: "Gelecek genişleme için hazırlanan ticaret ve lojistik zekâ katmanı.",
+    cardSectors: "Sektör Baskısı",
+    cardSectorsText: "İnşaat, perakende, enerji, bankacılık ve diğer alanlarda sektör kırılganlık izlemesi.",
     missionControlTitle: "Görev Kontrol",
     missionControlText: "RiskLens, ZENTRA'nın ilk aktif ürün katmanıdır. Makro riski, davranış sinyallerini, baskı yorumunu ve yapay zekâ açıklamasını tek operasyon yüzeyinde birleştirir.",
     expansionTitle: "Genişleme Yolu",
@@ -713,6 +696,9 @@ const translations = {
     menuDashboard: "Gösterge Paneli",
     menuEconomic: "Ekonomik YZ",
     menuMap: "Küresel Risk Haritası",
+    menuSectors: "Sektör Baskısı",
+    menuCrisis: "Kriz Radarı",
+    menuSignals: "Ekonomik Sinyaller",
     menuTrade: "Ticaret Motoru",
     footerText: "ZENTRA Economic OS • Neon Arayüz • RiskLens Ana Platform"
   },
@@ -737,8 +723,8 @@ const translations = {
     cardEconomicText: "لوحة تفسير مالي متخصصة للتضخم ودورات الفائدة وضغط الدول والقطاعات.",
     cardMap: "خريطة المخاطر العالمية",
     cardMapText: "طبقة خريطة تفاعلية لتصور المخاطر حسب الدولة والمراقبة العالمية.",
-    cardTrade: "محرك التجارة",
-    cardTradeText: "طبقة ذكاء التجارة واللوجستيات المعدّة للتوسع المستقبلي.",
+    cardSectors: "ضغط القطاعات",
+    cardSectorsText: "مراقبة هشاشة القطاعات عبر البناء والتجزئة والطاقة والبنوك وغيرها.",
     missionControlTitle: "مركز المهمة",
     missionControlText: "RiskLens هي أول طبقة منتج نشطة في ZENTRA، وتهدف إلى توحيد المخاطر الكلية والإشارات السلوكية وتفسير الضغط وشرح الذكاء الاصطناعي في سطح تشغيلي واحد.",
     expansionTitle: "مسار التوسع",
@@ -746,6 +732,9 @@ const translations = {
     menuDashboard: "اللوحة",
     menuEconomic: "الذكاء الاقتصادي",
     menuMap: "خريطة المخاطر العالمية",
+    menuSectors: "ضغط القطاعات",
+    menuCrisis: "رادار الأزمة",
+    menuSignals: "الإشارات الاقتصادية",
     menuTrade: "محرك التجارة",
     footerText: "ZENTRA Economic OS • واجهة نيون • منصة RiskLens الرئيسية"
   }
@@ -753,12 +742,10 @@ const translations = {
 
 function setLanguage(lang){
   const dict = translations[lang] || translations.en;
-
   Object.keys(dict).forEach(key => {
     const el = document.getElementById(key);
     if(el) el.textContent = dict[key];
   });
-
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
 }
@@ -771,4 +758,4 @@ setLanguage("en");
 </script>
 
 </body>
-        </html>
+    </html>

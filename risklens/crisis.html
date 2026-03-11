@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskLens Crisis Radar</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#030712;
+  color:#eef6ff;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  background:#081120;
+  border-bottom:1px solid #163052;
+}
+.brand{color:#00d4ff;font-size:22px;font-weight:bold}
+.menu a{
+  color:#dcecff;
+  text-decoration:none;
+  margin-left:18px;
+  font-size:14px;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px 60px;
+}
+.hero h1{
+  color:#00d4ff;
+  font-size:38px;
+  margin-bottom:10px;
+}
+.hero p{
+  color:#9bb3d9;
+  line-height:1.8;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:24px;
+}
+.card{
+  background:#081120;
+  border:1px solid #163052;
+  border-radius:14px;
+  padding:20px;
+}
+.label{
+  color:#9bb3d9;
+  font-size:12px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.metric{
+  font-size:32px;
+  color:#00d4ff;
+  font-weight:bold;
+}
+.note{
+  margin-top:8px;
+  color:#cfe4ff;
+  font-size:13px;
+}
+.panel{
+  margin-top:24px;
+  background:#081120;
+  border:1px solid #163052;
+  border-radius:14px;
+  padding:20px;
+}
+.panel p{
+  color:#9bb3d9;
+  line-height:1.8;
+}
+@media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.menu{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">RiskLens</div>
+  <div class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="advisor.html">Economic AI</a>
+    <a href="worldmap.html">Global Map</a>
+    <a href="sectors.html">Sectors</a>
+    <a href="crisis.html">Crisis</a>
+    <a href="signals.html">Signals</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <h1>Crisis Radar</h1>
+    <p>Early warning surface for liquidity stress, funding fragility, credit slowdown and instability signals.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Currency Stress</div>
+      <div class="metric">72</div>
+      <div class="note">High</div>
+    </div>
+    <div class="card">
+      <div class="label">Bank Pressure</div>
+      <div class="metric">58</div>
+      <div class="note">Watch</div>
+    </div>
+    <div class="card">
+      <div class="label">Credit Freeze Risk</div>
+      <div class="metric">64</div>
+      <div class="note">Elevated</div>
+    </div>
+    <div class="card">
+      <div class="label">Liquidity Shock</div>
+      <div class="metric">49</div>
+      <div class="note">Moderate</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p>Current conditions suggest visible currency and credit stress. Liquidity channels remain under watch, while broader instability risk is not yet systemic but remains elevated.</p>
+  </div>
+</div>
+
+</body>
+</html>

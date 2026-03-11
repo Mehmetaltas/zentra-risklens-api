@@ -1,26 +1,295 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RiskLens Dashboard</title>
+
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#030712;
+--panel:#081120;
+--line:#163052;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#00d4ff;
+--green:#19e68c;
+--yellow:#f5b942;
+--orange:#ff8a3d;
+--red:#ff4d6d;
+}
+
 body{
-background:#050814;
-color:white;
 font-family:Arial;
-text-align:center;
-padding-top:100px;
-margin:0;
+background:
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
+linear-gradient(180deg,#030712,#07111f 50%,#040914);
+color:var(--text);
 }
-h1{
-color:#00d4ff;
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 22px;
+background:#060d1c;
+border-bottom:1px solid var(--line);
 }
-p{
-color:#9aa8c7;
+
+.brand{
+color:var(--cyan);
+font-size:22px;
+font-weight:bold;
+}
+
+.menu a{
+color:#dcecff;
+text-decoration:none;
+margin-left:18px;
+font-size:14px;
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:30px 20px 60px;
+}
+
+.hero{
+margin-bottom:20px;
+}
+
+.hero h1{
+color:var(--cyan);
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+max-width:800px;
+line-height:1.8;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-top:20px;
+}
+
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+}
+
+.label{
+font-size:12px;
+color:var(--muted);
+text-transform:uppercase;
+margin-bottom:6px;
+}
+
+.metric{
+font-size:34px;
+font-weight:bold;
+color:var(--cyan);
+}
+
+.band{
+margin-top:8px;
+font-size:12px;
+font-weight:bold;
+padding:6px 10px;
+border-radius:999px;
+display:inline-block;
+}
+
+.low{background:rgba(25,230,140,.12);color:var(--green)}
+.medium{background:rgba(245,185,66,.12);color:var(--yellow)}
+.high{background:rgba(255,138,61,.12);color:var(--orange)}
+.critical{background:rgba(255,77,109,.12);color:var(--red)}
+
+.section{
+margin-top:30px;
+}
+
+.section h2{
+color:var(--cyan);
+margin-bottom:14px;
+}
+
+.panel{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+}
+
+.panel p{
+color:var(--muted);
+line-height:1.8;
+}
+
+.table{
+margin-top:14px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.row span{
+color:#dcecff;
+font-size:14px;
+}
+
+@media(max-width:1000px){
+.grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:700px){
+.grid{grid-template-columns:1fr}
+.menu{display:none}
 }
 </style>
 </head>
+
 <body>
-<h1>RiskLens Dashboard</h1>
-<p>Global Risk Monitoring</p>
+
+<div class="topbar">
+<div class="brand">RiskLens</div>
+<div class="menu">
+<a href="/risklens/dashboard.html">Dashboard</a>
+<a href="/risklens/advisor.html">Economic AI</a>
+<a href="/risklens/worldmap.html">Global Map</a>
+<a href="/risklens/sectors.html">Sectors</a>
+<a href="/risklens/crisis.html">Crisis Radar</a>
+<a href="/risklens/signals.html">Signals</a>
+</div>
+</div>
+
+<div class="container">
+
+<div class="hero">
+<h1>Global Risk Dashboard</h1>
+<p>
+RiskLens monitors macroeconomic pressure, financial fragility and sector
+vulnerability to estimate systemic risk conditions.
+</p>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="label">Global Risk Index</div>
+<div class="metric">67</div>
+<div class="band high">Elevated</div>
+</div>
+
+<div class="card">
+<div class="label">Inflation Pressure</div>
+<div class="metric">5.4%</div>
+<div class="band high">Sticky</div>
+</div>
+
+<div class="card">
+<div class="label">Credit Stress</div>
+<div class="metric">61</div>
+<div class="band medium">Moderate</div>
+</div>
+
+<div class="card">
+<div class="label">Market Volatility</div>
+<div class="metric">58</div>
+<div class="band medium">Watch</div>
+</div>
+
+</div>
+
+<div class="section">
+<h2>Sector Snapshot</h2>
+
+<div class="panel">
+<div class="table">
+
+<div class="row">
+<span>Construction</span>
+<span>Critical Pressure</span>
+</div>
+
+<div class="row">
+<span>Retail</span>
+<span>High Pressure</span>
+</div>
+
+<div class="row">
+<span>Manufacturing</span>
+<span>Elevated</span>
+</div>
+
+<div class="row">
+<span>Technology</span>
+<span>Stable</span>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="section">
+<h2>AI Outlook</h2>
+
+<div class="panel">
+<p>
+RiskLens currently detects moderate-to-elevated macro pressure driven by
+persistent inflation and tightening credit conditions. Sector fragility
+remains concentrated in construction, retail and manufacturing.
+</p>
+</div>
+</div>
+
+<div class="section">
+<h2>System Signals</h2>
+
+<div class="panel">
+
+<div class="table">
+
+<div class="row">
+<span>Interest Rate</span>
+<span>4.8%</span>
+</div>
+
+<div class="row">
+<span>Oil</span>
+<span>$82</span>
+</div>
+
+<div class="row">
+<span>Gold</span>
+<span>$2310</span>
+</div>
+
+<div class="row">
+<span>S&P 500</span>
+<span>5180</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </body>
 </html>

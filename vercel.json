@@ -1,14 +1,19 @@
 {
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
 
-    { "src": "/risklens", "dest": "/apps/risklens/index.html" },
-    { "src": "/risklens/(.*)", "dest": "/apps/risklens/$1" },
+    { "source": "/risklens", "destination": "/apps/risklens/dashboard.html" },
+    { "source": "/risklens/dashboard.html", "destination": "/apps/risklens/dashboard.html" },
+    { "source": "/risklens/advisor.html", "destination": "/apps/risklens/advisor.html" },
+    { "source": "/risklens/worldmap.html", "destination": "/apps/risklens/worldmap.html" },
+    { "source": "/risklens/sectors.html", "destination": "/apps/risklens/sectors.html" },
+    { "source": "/risklens/crisis.html", "destination": "/apps/risklens/crisis.html" },
+    { "source": "/risklens/signals.html", "destination": "/apps/risklens/signals.html" },
 
-    { "src": "/trade", "dest": "/apps/trade/index.html" },
-    { "src": "/trade/(.*)", "dest": "/apps/trade/$1" },
+    { "source": "/trade", "destination": "/apps/trade/index.html" },
+    { "source": "/trade/:path*", "destination": "/apps/trade/:path*" },
 
-    { "src": "/telescope", "dest": "/apps/telescope/index.html" },
-    { "src": "/telescope/(.*)", "dest": "/apps/telescope/$1" }
+    { "source": "/telescope", "destination": "/apps/telescope/index.html" },
+    { "source": "/telescope/:path*", "destination": "/apps/telescope/:path*" }
   ]
 }

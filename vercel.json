@@ -1,14 +1,7 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
-
-    { "source": "/risklens", "destination": "/apps/risklens/dashboard.html" },
-    { "source": "/risklens/:path*", "destination": "/apps/risklens/:path*" },
-
-    { "source": "/trade", "destination": "/apps/trade/index.html" },
-    { "source": "/trade/:path*", "destination": "/apps/trade/:path*" },
-
-    { "source": "/telescope", "destination": "/apps/telescope/index.html" },
-    { "source": "/telescope/:path*", "destination": "/apps/telescope/:path*" }
+    { "source": "/trade", "destination": "/trade/index.html" },
+    { "source": "/telescope", "destination": "/telescope/index.html" }
   ]
 }

@@ -73,8 +73,7 @@ gap:12px;
 width:40px;
 height:40px;
 border-radius:12px;
-background:
-linear-gradient(135deg,var(--violet),var(--cyan));
+background:linear-gradient(135deg,var(--violet),var(--cyan));
 box-shadow:
 0 0 18px rgba(0,212,255,.35),
 0 0 36px rgba(139,92,246,.25);
@@ -217,8 +216,7 @@ inset 0 0 24px rgba(255,255,255,.02);
 content:"";
 position:absolute;
 inset:-20%;
-background:
-radial-gradient(circle, rgba(0,212,255,.10), transparent 35%);
+background:radial-gradient(circle, rgba(0,212,255,.10), transparent 35%);
 pointer-events:none;
 animation:pulse 6s linear infinite;
 }
@@ -333,8 +331,7 @@ margin-top:6px;
 margin-top:6px;
 padding:18px;
 border-radius:18px;
-background:
-linear-gradient(180deg, rgba(7,18,37,.95), rgba(5,13,24,.95));
+background:linear-gradient(180deg, rgba(7,18,37,.95), rgba(5,13,24,.95));
 border:1px solid rgba(76,201,240,.12);
 min-height:220px;
 position:relative;
@@ -500,28 +497,27 @@ padding:16px;
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <div class="sidebar" id="sidebar">
-  <h2>RiskLens</h2>
-  <a href="/risklens/dashboard.html">Dashboard</a>
-  <a href="/risklens/economic-ai.html">Economic AI</a>
-  <a href="/risklens/general-ai.html">General AI</a>
-  <a href="/risklens/worldmap.html">Global Risk Map</a>
-  <a href="/risklens/research.html">Research</a>
-  <a href="/risklens/trust.html">Trust</a>
-  <a href="/trade">Trade Engine</a>
+  <h2 id="menuTitle">RiskLens</h2>
+  <a href="/risklens/dashboard.html" id="menuDashboard">Dashboard</a>
+  <a href="/risklens/economic-ai.html" id="menuEconomic">Economic AI</a>
+  <a href="/risklens/general-ai.html" id="menuGeneral">General AI</a>
+  <a href="/risklens/worldmap.html" id="menuMap">Global Risk Map</a>
+  <a href="/risklens/research.html" id="menuResearch">Research</a>
+  <a href="/risklens/trust.html" id="menuTrust">Trust</a>
+  <a href="/trade" id="menuTrade">Trade Engine</a>
 
   <div class="lang-box">
-    <label for="lang">Language</label>
-  <select id="lang">
-  <option value="en">English</option>
-  <option value="tr">Türkçe</option>
-  <option value="ar">العربية</option>
-  <option value="de">Deutsch</option>
-  <option value="fr">Français</option>
-  <option value="es">Español</option>
-  <option value="ru">Русский</option>
-  <option value="zh">中文</option>
-</select>
-    
+    <label for="lang" id="langLabel">Language</label>
+    <select id="lang">
+      <option value="en">English</option>
+      <option value="tr">Türkçe</option>
+      <option value="ar">العربية</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="ru">Русский</option>
+      <option value="zh">中文</option>
+    </select>
   </div>
 </div>
 
@@ -530,7 +526,7 @@ padding:16px;
     <div class="logo"></div>
     <div class="brand-text">
       <h1>ZENTRA</h1>
-      <p>Economic Intelligence System</p>
+      <p id="brandSub">Economic Intelligence System</p>
     </div>
   </div>
   <div class="menu-btn" onclick="toggleMenu()">☰</div>
@@ -540,34 +536,34 @@ padding:16px;
 
   <div class="hero">
     <div class="hero-left">
-      <div class="kicker">Behavioral Financial Infrastructure</div>
-      <h2>RiskLens powered by ZENTRA</h2>
-      <p>
+      <div class="kicker" id="kicker">Behavioral Financial Infrastructure</div>
+      <h2 id="heroTitle">RiskLens powered by ZENTRA</h2>
+      <p id="heroText">
         Advanced macro-risk interpretation, behavioral financial intelligence, AI reasoning
         and global pressure monitoring in a neon-driven platform interface built for clarity,
         speed and institutional-grade expansion.
       </p>
 
       <div class="hero-actions">
-        <a class="btn btn-primary" href="/risklens/dashboard.html">Open Dashboard</a>
-        <a class="btn btn-secondary" href="/risklens/worldmap.html">View Global Map</a>
+        <a class="btn btn-primary" href="/risklens/dashboard.html" id="btnDashboard">Open Dashboard</a>
+        <a class="btn btn-secondary" href="/risklens/worldmap.html" id="btnMap">View Global Map</a>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="panel-label">Live Mission Panel</div>
+      <div class="panel-label" id="missionLabel">Live Mission Panel</div>
 
       <div class="hud">
         <div class="metric-card">
-          <div class="name">Global Risk</div>
+          <div class="name" id="metricRiskName">Global Risk</div>
           <div class="value">67</div>
-          <div class="sub">Moderate pressure</div>
+          <div class="sub" id="metricRiskSub">Moderate pressure</div>
         </div>
 
         <div class="metric-card">
-          <div class="name">AI State</div>
+          <div class="name" id="metricAiName">AI State</div>
           <div class="value">ACTIVE</div>
-          <div class="sub">Economic monitoring live</div>
+          <div class="sub" id="metricAiSub">Economic monitoring live</div>
         </div>
       </div>
 
@@ -581,42 +577,42 @@ padding:16px;
     </div>
   </div>
 
-  <div class="section-title">Core Modules</div>
+  <div class="section-title" id="modulesTitle">Core Modules</div>
 
   <div class="grid">
     <div class="card">
-      <a href="/risklens/dashboard.html">Dashboard</a>
-      <p>Main operational window for macro pressure, direction, monitoring and signal visibility.</p>
+      <a href="/risklens/dashboard.html" id="cardDashboard">Dashboard</a>
+      <p id="cardDashboardText">Main operational window for macro pressure, direction, monitoring and signal visibility.</p>
     </div>
 
     <div class="card">
-      <a href="/risklens/economic-ai.html">Economic AI</a>
-      <p>Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.</p>
+      <a href="/risklens/economic-ai.html" id="cardEconomic">Economic AI</a>
+      <p id="cardEconomicText">Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.</p>
     </div>
 
     <div class="card">
-      <a href="/risklens/general-ai.html">General AI</a>
-      <p>General-purpose conversation panel with multilingual interface and support logic.</p>
+      <a href="/risklens/general-ai.html" id="cardGeneral">General AI</a>
+      <p id="cardGeneralText">General-purpose conversation panel with multilingual interface and support logic.</p>
     </div>
 
     <div class="card">
-      <a href="/risklens/worldmap.html">Global Risk Map</a>
-      <p>Interactive global map layer for country-based risk visualization and planetary monitoring.</p>
+      <a href="/risklens/worldmap.html" id="cardMap">Global Risk Map</a>
+      <p id="cardMapText">Interactive global map layer for country-based risk visualization and planetary monitoring.</p>
     </div>
   </div>
 
   <div class="lower">
     <div class="panel">
-      <h3>Mission Control</h3>
-      <p>
+      <h3 id="missionControlTitle">Mission Control</h3>
+      <p id="missionControlText">
         RiskLens is the first active product layer of ZENTRA. It is designed to unify macro risk,
         behavior signals, pressure interpretation and AI explanation into one operational surface.
       </p>
     </div>
 
     <div class="panel">
-      <h3>Expansion Path</h3>
-      <p>
+      <h3 id="expansionTitle">Expansion Path</h3>
+      <p id="expansionText">
         After RiskLens, the Trade Engine and broader ZENTRA orchestration layers will attach to this
         architecture without breaking the core system.
       </p>
@@ -625,7 +621,7 @@ padding:16px;
 
 </div>
 
-<div class="footer">
+<div class="footer" id="footerText">
   ZENTRA Economic OS • Neon Interface • RiskLens Main Platform
 </div>
 
@@ -634,7 +630,136 @@ function toggleMenu(){
   document.getElementById("sidebar").classList.toggle("open");
   document.getElementById("overlay").classList.toggle("show");
 }
+
+const translations = {
+  en: {
+    menuTitle: "RiskLens",
+    langLabel: "Language",
+    brandSub: "Economic Intelligence System",
+    kicker: "Behavioral Financial Infrastructure",
+    heroTitle: "RiskLens powered by ZENTRA",
+    heroText: "Advanced macro-risk interpretation, behavioral financial intelligence, AI reasoning and global pressure monitoring in a neon-driven platform interface built for clarity, speed and institutional-grade expansion.",
+    btnDashboard: "Open Dashboard",
+    btnMap: "View Global Map",
+    missionLabel: "Live Mission Panel",
+    metricRiskName: "Global Risk",
+    metricRiskSub: "Moderate pressure",
+    metricAiName: "AI State",
+    metricAiSub: "Economic monitoring live",
+    modulesTitle: "Core Modules",
+    cardDashboard: "Dashboard",
+    cardDashboardText: "Main operational window for macro pressure, direction, monitoring and signal visibility.",
+    cardEconomic: "Economic AI",
+    cardEconomicText: "Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.",
+    cardGeneral: "General AI",
+    cardGeneralText: "General-purpose conversation panel with multilingual interface and support logic.",
+    cardMap: "Global Risk Map",
+    cardMapText: "Interactive global map layer for country-based risk visualization and planetary monitoring.",
+    missionControlTitle: "Mission Control",
+    missionControlText: "RiskLens is the first active product layer of ZENTRA. It is designed to unify macro risk, behavior signals, pressure interpretation and AI explanation into one operational surface.",
+    expansionTitle: "Expansion Path",
+    expansionText: "After RiskLens, the Trade Engine and broader ZENTRA orchestration layers will attach to this architecture without breaking the core system.",
+    menuDashboard: "Dashboard",
+    menuEconomic: "Economic AI",
+    menuGeneral: "General AI",
+    menuMap: "Global Risk Map",
+    menuResearch: "Research",
+    menuTrust: "Trust",
+    menuTrade: "Trade Engine",
+    footerText: "ZENTRA Economic OS • Neon Interface • RiskLens Main Platform"
+  },
+  tr: {
+    menuTitle: "RiskLens",
+    langLabel: "Dil",
+    brandSub: "Ekonomik Zekâ Sistemi",
+    kicker: "Davranışsal Finansal Altyapı",
+    heroTitle: "ZENTRA destekli RiskLens",
+    heroText: "Makro risk yorumu, davranışsal finansal zekâ, yapay zekâ analizi ve küresel baskı izlemeyi açıklık, hız ve kurumsal büyüme odağıyla birleştiren neon arayüzlü platform.",
+    btnDashboard: "Paneli Aç",
+    btnMap: "Küresel Haritayı Aç",
+    missionLabel: "Canlı Görev Paneli",
+    metricRiskName: "Küresel Risk",
+    metricRiskSub: "Orta düzey baskı",
+    metricAiName: "YZ Durumu",
+    metricAiSub: "Ekonomik izleme aktif",
+    modulesTitle: "Ana Modüller",
+    cardDashboard: "Gösterge Paneli",
+    cardDashboardText: "Makro baskı, yön, izleme ve sinyal görünürlüğü için ana operasyon ekranı.",
+    cardEconomic: "Ekonomik YZ",
+    cardEconomicText: "Enflasyon, faiz döngüsü, ülke baskısı ve sektör yorumları için özel finansal analiz paneli.",
+    cardGeneral: "Genel YZ",
+    cardGeneralText: "Çok dilli arayüz ve genel destek mantığına sahip genel amaçlı sohbet paneli.",
+    cardMap: "Küresel Risk Haritası",
+    cardMapText: "Ülke bazlı risk görselleştirme ve küresel izleme için interaktif harita katmanı.",
+    missionControlTitle: "Görev Kontrol",
+    missionControlText: "RiskLens, ZENTRA'nın ilk aktif ürün katmanıdır. Makro riski, davranış sinyallerini, baskı yorumunu ve yapay zekâ açıklamasını tek operasyon yüzeyinde birleştirir.",
+    expansionTitle: "Genişleme Yolu",
+    expansionText: "RiskLens'ten sonra Trade Engine ve daha geniş ZENTRA orkestrasyon katmanları çekirdek sistemi bozmadan bu mimariye bağlanacaktır.",
+    menuDashboard: "Gösterge Paneli",
+    menuEconomic: "Ekonomik YZ",
+    menuGeneral: "Genel YZ",
+    menuMap: "Küresel Risk Haritası",
+    menuResearch: "Araştırma",
+    menuTrust: "Güven",
+    menuTrade: "Ticaret Motoru",
+    footerText: "ZENTRA Economic OS • Neon Arayüz • RiskLens Ana Platform"
+  },
+  ar: {
+    menuTitle: "RiskLens",
+    langLabel: "اللغة",
+    brandSub: "نظام الذكاء الاقتصادي",
+    kicker: "بنية مالية سلوكية",
+    heroTitle: "RiskLens بدعم من ZENTRA",
+    heroText: "منصة نيون متقدمة لتفسير المخاطر الكلية والذكاء المالي السلوكي واستدلال الذكاء الاصطناعي ومراقبة الضغط العالمي.",
+    btnDashboard: "افتح اللوحة",
+    btnMap: "افتح الخريطة العالمية",
+    missionLabel: "لوحة المهمة الحية",
+    metricRiskName: "المخاطر العالمية",
+    metricRiskSub: "ضغط متوسط",
+    metricAiName: "حالة الذكاء",
+    metricAiSub: "المراقبة الاقتصادية نشطة",
+    modulesTitle: "الوحدات الأساسية",
+    cardDashboard: "اللوحة",
+    cardDashboardText: "النافذة الرئيسية لمراقبة الضغط الكلي والاتجاه والإشارات.",
+    cardEconomic: "الذكاء الاقتصادي",
+    cardEconomicText: "لوحة تفسير مالي متخصصة للتضخم ودورات الفائدة وضغط الدول والقطاعات.",
+    cardGeneral: "الذكاء العام",
+    cardGeneralText: "لوحة محادثة عامة متعددة اللغات للدعم والمساعدة.",
+    cardMap: "خريطة المخاطر العالمية",
+    cardMapText: "طبقة خريطة تفاعلية لتصور المخاطر حسب الدولة والمراقبة العالمية.",
+    missionControlTitle: "مركز المهمة",
+    missionControlText: "RiskLens هي أول طبقة منتج نشطة في ZENTRA، وتهدف إلى توحيد المخاطر الكلية والإشارات السلوكية وتفسير الضغط وشرح الذكاء الاصطناعي في سطح تشغيلي واحد.",
+    expansionTitle: "مسار التوسع",
+    expansionText: "بعد RiskLens، سيتصل محرك التجارة وطبقات تنسيق ZENTRA الأوسع بهذه البنية دون كسر النظام الأساسي.",
+    menuDashboard: "اللوحة",
+    menuEconomic: "الذكاء الاقتصادي",
+    menuGeneral: "الذكاء العام",
+    menuMap: "خريطة المخاطر العالمية",
+    menuResearch: "الأبحاث",
+    menuTrust: "الثقة",
+    menuTrade: "محرك التجارة",
+    footerText: "ZENTRA Economic OS • واجهة نيون • منصة RiskLens الرئيسية"
+  }
+};
+
+function setLanguage(lang){
+  const dict = translations[lang] || translations.en;
+
+  Object.keys(dict).forEach(key => {
+    const el = document.getElementById(key);
+    if(el) el.textContent = dict[key];
+  });
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+}
+
+document.getElementById("lang").addEventListener("change", function(){
+  setLanguage(this.value);
+});
+
+setLanguage("en");
 </script>
 
 </body>
-</html>
+    </html>

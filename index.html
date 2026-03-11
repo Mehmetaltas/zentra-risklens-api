@@ -2,39 +2,85 @@
 <html>
 <head>
 <title>ZENTRA Economic OS</title>
+
 <style>
+
 body{
 background:#050814;
 color:white;
 font-family:Arial;
+margin:0;
 text-align:center;
-padding-top:80px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding-top:100px;
 }
 
 h1{
 color:#00d4ff;
-font-size:40px;
+font-size:44px;
+margin-bottom:10px;
 }
 
-a{
-display:block;
-margin:20px;
-color:#00d4ff;
-font-size:20px;
-text-decoration:none;
+p{
+color:#9aa8c7;
+margin-bottom:50px;
 }
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:#081020;
+border:1px solid #1e2a55;
+border-radius:12px;
+padding:30px;
+}
+
+.card a{
+text-decoration:none;
+color:#00d4ff;
+font-size:18px;
+}
+
 </style>
+
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>ZENTRA Economic OS</h1>
 <p>Global Economic Intelligence Platform</p>
 
+<div class="grid">
+
+<div class="card">
 <a href="/risklens/dashboard.html">RiskLens Dashboard</a>
+</div>
+
+<div class="card">
 <a href="/risklens/advisor.html">RiskLens Advisor</a>
+</div>
+
+<div class="card">
 <a href="/risklens/worldmap.html">Global Risk Map</a>
+</div>
+
+<div class="card">
 <a href="/trade">Trade Engine</a>
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>

@@ -1,7 +1,12 @@
 {
- "routes": [
-  { "src": "/risklens", "dest": "/apps/risklens/index.html" },
-  { "src": "/trade", "dest": "/apps/trade/index.html" },
-  { "src": "/", "dest": "/apps/zentra/index.html" }
- ]
+  "routes": [
+    { "src": "/risklens", "dest": "/apps/risklens/index.html" },
+    { "src": "/risklens/(.*)", "dest": "/apps/risklens/$1" },
+
+    { "src": "/trade", "dest": "/apps/trade/index.html" },
+    { "src": "/trade/(.*)", "dest": "/apps/trade/$1" },
+
+    { "src": "/", "dest": "/apps/zentra/index.html" },
+    { "src": "/(.*)", "dest": "/apps/zentra/$1" }
+  ]
 }

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<title>RiskLens Advisor</title>
+</head>
+
+<body style="background:#050814;color:white;text-align:center;padding-top:100px;font-family:Arial">
+
+<h1>RiskLens Advisor</h1>
+<p>AI Economic Advisor</p>
+
+<input id="q" placeholder="Ask economic question">
+<button onclick="run()">Analyze</button>
+
+<p id="result"></p>
+
+<script>
+
+function run(){
+
+let q=document.getElementById("q").value
+
+if(q.includes("inflation")){
+document.getElementById("result").innerHTML="Inflation risk increasing globally."
+}
+
+}
+
+</script>
+
+</body>
+</html>

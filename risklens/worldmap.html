@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskLens Global Risk Map</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#030712;
+  color:#eef6ff;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  background:#081120;
+  border-bottom:1px solid #163052;
+}
+.brand{color:#00d4ff;font-size:22px;font-weight:bold}
+.menu a{
+  color:#dcecff;
+  text-decoration:none;
+  margin-left:18px;
+  font-size:14px;
+}
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:30px 20px 60px;
+}
+.hero h1{
+  color:#00d4ff;
+  font-size:38px;
+  margin-bottom:10px;
+}
+.hero p{
+  color:#9bb3d9;
+  line-height:1.8;
+}
+.mapbox{
+  margin-top:24px;
+  background:#081120;
+  border:1px solid #163052;
+  border-radius:16px;
+  padding:24px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.country{
+  background:#0c1830;
+  border:1px solid #163052;
+  border-radius:12px;
+  padding:18px;
+}
+.country h3{
+  color:#00d4ff;
+  margin-bottom:10px;
+}
+.country p{
+  color:#cfe4ff;
+  line-height:1.7;
+}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.menu{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">RiskLens</div>
+  <div class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="advisor.html">Economic AI</a>
+    <a href="worldmap.html">Global Map</a>
+    <a href="sectors.html">Sectors</a>
+    <a href="crisis.html">Crisis</a>
+    <a href="signals.html">Signals</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <h1>Global Risk Map</h1>
+    <p>Country-level watchlist for macro fragility, credit stress, currency pressure and systemic vulnerability.</p>
+  </div>
+
+  <div class="mapbox">
+    <div class="grid">
+      <div class="country">
+        <h3>Turkey</h3>
+        <p>High pressure. Inflation, rates and currency sensitivity remain key transmission risks.</p>
+      </div>
+      <div class="country">
+        <h3>Argentina</h3>
+        <p>Critical fragility. Currency instability and macro imbalance remain elevated.</p>
+      </div>
+      <div class="country">
+        <h3>Germany</h3>
+        <p>Moderate pressure. Manufacturing softness and energy sensitivity remain visible.</p>
+      </div>
+      <div class="country">
+        <h3>United States</h3>
+        <p>Mixed but resilient. Tight financial conditions coexist with stronger capital-market depth.</p>
+      </div>
+      <div class="country">
+        <h3>China</h3>
+        <p>Growth slowdown watch. Structural weakness and demand softness remain important.</p>
+      </div>
+      <div class="country">
+        <h3>United Kingdom</h3>
+        <p>Moderate stress. Inflation and rate pressure continue to shape fragile demand segments.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

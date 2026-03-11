@@ -1,0 +1,7 @@
+{
+ "routes": [
+  { "src": "/risklens", "dest": "/apps/risklens/index.html" },
+  { "src": "/trade", "dest": "/apps/trade/index.html" },
+  { "src": "/", "dest": "/apps/zentra/index.html" }
+ ]
+}

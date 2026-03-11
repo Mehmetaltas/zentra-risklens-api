@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Economic Signals • RiskLens</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial;
+}
+
+:root{
+--bg:#030712;
+--panel:#081120;
+--line:#163052;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#00d4ff;
+--green:#19e68c;
+--yellow:#f5b942;
+--red:#ff4d6d;
+}
+
+body{
+background:
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
+linear-gradient(180deg,#030712,#07111f 50%,#040914);
+color:var(--text);
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 24px;
+background:#060d1c;
+border-bottom:1px solid var(--line);
+}
+
+.brand{
+font-size:22px;
+color:var(--cyan);
+font-weight:bold;
+}
+
+.menu a{
+color:#dcecff;
+text-decoration:none;
+margin-left:18px;
+font-size:14px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px 20px 60px;
+}
+
+.hero h1{
+color:var(--cyan);
+font-size:36px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+line-height:1.7;
+max-width:700px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-top:25px;
+}
+
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+}
+
+.label{
+font-size:12px;
+color:var(--muted);
+text-transform:uppercase;
+margin-bottom:6px;
+}
+
+.metric{
+font-size:28px;
+color:var(--cyan);
+font-weight:bold;
+}
+
+.trend{
+margin-top:8px;
+font-size:13px;
+}
+
+.up{color:var(--red)}
+.down{color:var(--green)}
+.flat{color:var(--yellow)}
+
+.section{
+margin-top:30px;
+}
+
+.section h2{
+color:var(--cyan);
+margin-bottom:12px;
+}
+
+.panel{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.row span{
+font-size:14px;
+}
+
+@media(max-width:900px){
+.grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:600px){
+.grid{grid-template-columns:1fr}
+.menu{display:none}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+
+<div class="brand">RiskLens</div>
+
+<div class="menu">
+<a href="/risklens/dashboard.html">Dashboard</a>
+<a href="/risklens/advisor.html">Economic AI</a>
+<a href="/risklens/worldmap.html">Global Map</a>
+<a href="/risklens/sectors.html">Sectors</a>
+<a href="/risklens/crisis.html">Crisis Radar</a>
+</div>
+
+</div>
+
+
+<div class="container">
+
+<div class="hero">
+<h1>Economic Signals</h1>
+
+<p>
+RiskLens monitors macroeconomic indicators that influence systemic risk.
+Signals track inflation, liquidity, commodity markets and financial stress.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+<div class="label">Inflation</div>
+<div class="metric">5.4%</div>
+<div class="trend up">▲ Rising</div>
+</div>
+
+<div class="card">
+<div class="label">Interest Rate</div>
+<div class="metric">4.8%</div>
+<div class="trend flat">Stable</div>
+</div>
+
+<div class="card">
+<div class="label">Oil Price</div>
+<div class="metric">$82</div>
+<div class="trend up">▲ Rising</div>
+</div>
+
+<div class="card">
+<div class="label">Gold</div>
+<div class="metric">$2310</div>
+<div class="trend up">▲ Safe demand</div>
+</div>
+
+</div>
+
+
+<div class="section">
+
+<h2>Market Indicators</h2>
+
+<div class="panel">
+
+<div class="row">
+<span>S&P 500</span>
+<span>5180</span>
+</div>
+
+<div class="row">
+<span>US Dollar Index</span>
+<span>104.2</span>
+</div>
+
+<div class="row">
+<span>Bond Yield (10Y)</span>
+<span>4.2%</span>
+</div>
+
+<div class="row">
+<span>Credit Spread</span>
+<span>Elevated</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<h2>AI Signal Interpretation</h2>
+
+<div class="panel">
+
+<p>
+RiskLens currently detects persistent inflation pressure combined with
+tight financial conditions. Commodity strength and elevated bond yields
+suggest continued macro stress in several sectors.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</body>
+</html>

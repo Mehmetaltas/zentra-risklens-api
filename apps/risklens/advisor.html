@@ -2,9 +2,36 @@
 <html>
 <head>
 <title>RiskLens Advisor</title>
+<style>
+body{
+background:#050814;
+color:white;
+text-align:center;
+padding-top:100px;
+font-family:Arial;
+margin:0;
+}
+h1{
+color:#00d4ff;
+}
+input{
+padding:10px;
+width:240px;
+}
+button{
+padding:10px 16px;
+margin-left:8px;
+background:#00d4ff;
+border:none;
+cursor:pointer;
+}
+#result{
+margin-top:20px;
+color:#9aa8c7;
+}
+</style>
 </head>
-
-<body style="background:#050814;color:white;text-align:center;padding-top:100px;font-family:Arial">
+<body>
 
 <h1>RiskLens Advisor</h1>
 <p>AI Economic Advisor</p>
@@ -15,17 +42,22 @@
 <p id="result"></p>
 
 <script>
-
 function run(){
-
-let q=document.getElementById("q").value
+let q=document.getElementById("q").value.toLowerCase()
+let result="No analysis available."
 
 if(q.includes("inflation")){
-document.getElementById("result").innerHTML="Inflation risk increasing globally."
+result="Inflation risk increasing globally."
+}
+if(q.includes("bank")){
+result="Banking sector volatility detected."
+}
+if(q.includes("oil")){
+result="Oil market risk elevated."
 }
 
+document.getElementById("result").innerHTML=result
 }
-
 </script>
 
 </body>

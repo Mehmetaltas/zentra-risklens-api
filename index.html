@@ -15,7 +15,6 @@ padding:0;
 :root{
 --bg:#030712;
 --panel:#081120;
---panel-2:#0c1830;
 --line:#163052;
 --text:#eef6ff;
 --muted:#9bb3d9;
@@ -57,7 +56,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:18px 22px;
-background:rgba(4,10,22,.75);
+background:rgba(4,10,22,.78);
 backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(76,201,240,.18);
 box-shadow:0 0 30px rgba(0,212,255,.08);
@@ -499,11 +498,8 @@ padding:16px;
 <div class="sidebar" id="sidebar">
   <h2 id="menuTitle">RiskLens</h2>
   <a href="/risklens/dashboard.html" id="menuDashboard">Dashboard</a>
-  <a href="/risklens/economic-ai.html" id="menuEconomic">Economic AI</a>
-  <a href="/risklens/general-ai.html" id="menuGeneral">General AI</a>
+  <a href="/risklens/advisor.html" id="menuEconomic">Economic AI</a>
   <a href="/risklens/worldmap.html" id="menuMap">Global Risk Map</a>
-  <a href="/risklens/research.html" id="menuResearch">Research</a>
-  <a href="/risklens/trust.html" id="menuTrust">Trust</a>
   <a href="/trade" id="menuTrade">Trade Engine</a>
 
   <div class="lang-box">
@@ -512,11 +508,6 @@ padding:16px;
       <option value="en">English</option>
       <option value="tr">Türkçe</option>
       <option value="ar">العربية</option>
-      <option value="de">Deutsch</option>
-      <option value="fr">Français</option>
-      <option value="es">Español</option>
-      <option value="ru">Русский</option>
-      <option value="zh">中文</option>
     </select>
   </div>
 </div>
@@ -586,18 +577,18 @@ padding:16px;
     </div>
 
     <div class="card">
-      <a href="/risklens/economic-ai.html" id="cardEconomic">Economic AI</a>
+      <a href="/risklens/advisor.html" id="cardEconomic">Economic AI</a>
       <p id="cardEconomicText">Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.</p>
-    </div>
-
-    <div class="card">
-      <a href="/risklens/general-ai.html" id="cardGeneral">General AI</a>
-      <p id="cardGeneralText">General-purpose conversation panel with multilingual interface and support logic.</p>
     </div>
 
     <div class="card">
       <a href="/risklens/worldmap.html" id="cardMap">Global Risk Map</a>
       <p id="cardMapText">Interactive global map layer for country-based risk visualization and planetary monitoring.</p>
+    </div>
+
+    <div class="card">
+      <a href="/trade" id="cardTrade">Trade Engine</a>
+      <p id="cardTradeText">Trade and logistics intelligence layer prepared for future expansion.</p>
     </div>
   </div>
 
@@ -651,20 +642,17 @@ const translations = {
     cardDashboardText: "Main operational window for macro pressure, direction, monitoring and signal visibility.",
     cardEconomic: "Economic AI",
     cardEconomicText: "Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.",
-    cardGeneral: "General AI",
-    cardGeneralText: "General-purpose conversation panel with multilingual interface and support logic.",
     cardMap: "Global Risk Map",
     cardMapText: "Interactive global map layer for country-based risk visualization and planetary monitoring.",
+    cardTrade: "Trade Engine",
+    cardTradeText: "Trade and logistics intelligence layer prepared for future expansion.",
     missionControlTitle: "Mission Control",
     missionControlText: "RiskLens is the first active product layer of ZENTRA. It is designed to unify macro risk, behavior signals, pressure interpretation and AI explanation into one operational surface.",
     expansionTitle: "Expansion Path",
     expansionText: "After RiskLens, the Trade Engine and broader ZENTRA orchestration layers will attach to this architecture without breaking the core system.",
     menuDashboard: "Dashboard",
     menuEconomic: "Economic AI",
-    menuGeneral: "General AI",
     menuMap: "Global Risk Map",
-    menuResearch: "Research",
-    menuTrust: "Trust",
     menuTrade: "Trade Engine",
     footerText: "ZENTRA Economic OS • Neon Interface • RiskLens Main Platform"
   },
@@ -687,20 +675,17 @@ const translations = {
     cardDashboardText: "Makro baskı, yön, izleme ve sinyal görünürlüğü için ana operasyon ekranı.",
     cardEconomic: "Ekonomik YZ",
     cardEconomicText: "Enflasyon, faiz döngüsü, ülke baskısı ve sektör yorumları için özel finansal analiz paneli.",
-    cardGeneral: "Genel YZ",
-    cardGeneralText: "Çok dilli arayüz ve genel destek mantığına sahip genel amaçlı sohbet paneli.",
     cardMap: "Küresel Risk Haritası",
     cardMapText: "Ülke bazlı risk görselleştirme ve küresel izleme için interaktif harita katmanı.",
+    cardTrade: "Ticaret Motoru",
+    cardTradeText: "Gelecek genişleme için hazırlanan ticaret ve lojistik zekâ katmanı.",
     missionControlTitle: "Görev Kontrol",
     missionControlText: "RiskLens, ZENTRA'nın ilk aktif ürün katmanıdır. Makro riski, davranış sinyallerini, baskı yorumunu ve yapay zekâ açıklamasını tek operasyon yüzeyinde birleştirir.",
     expansionTitle: "Genişleme Yolu",
     expansionText: "RiskLens'ten sonra Trade Engine ve daha geniş ZENTRA orkestrasyon katmanları çekirdek sistemi bozmadan bu mimariye bağlanacaktır.",
     menuDashboard: "Gösterge Paneli",
     menuEconomic: "Ekonomik YZ",
-    menuGeneral: "Genel YZ",
     menuMap: "Küresel Risk Haritası",
-    menuResearch: "Araştırma",
-    menuTrust: "Güven",
     menuTrade: "Ticaret Motoru",
     footerText: "ZENTRA Economic OS • Neon Arayüz • RiskLens Ana Platform"
   },
@@ -723,20 +708,17 @@ const translations = {
     cardDashboardText: "النافذة الرئيسية لمراقبة الضغط الكلي والاتجاه والإشارات.",
     cardEconomic: "الذكاء الاقتصادي",
     cardEconomicText: "لوحة تفسير مالي متخصصة للتضخم ودورات الفائدة وضغط الدول والقطاعات.",
-    cardGeneral: "الذكاء العام",
-    cardGeneralText: "لوحة محادثة عامة متعددة اللغات للدعم والمساعدة.",
     cardMap: "خريطة المخاطر العالمية",
     cardMapText: "طبقة خريطة تفاعلية لتصور المخاطر حسب الدولة والمراقبة العالمية.",
+    cardTrade: "محرك التجارة",
+    cardTradeText: "طبقة ذكاء التجارة واللوجستيات المعدّة للتوسع المستقبلي.",
     missionControlTitle: "مركز المهمة",
     missionControlText: "RiskLens هي أول طبقة منتج نشطة في ZENTRA، وتهدف إلى توحيد المخاطر الكلية والإشارات السلوكية وتفسير الضغط وشرح الذكاء الاصطناعي في سطح تشغيلي واحد.",
     expansionTitle: "مسار التوسع",
     expansionText: "بعد RiskLens، سيتصل محرك التجارة وطبقات تنسيق ZENTRA الأوسع بهذه البنية دون كسر النظام الأساسي.",
     menuDashboard: "اللوحة",
     menuEconomic: "الذكاء الاقتصادي",
-    menuGeneral: "الذكاء العام",
     menuMap: "خريطة المخاطر العالمية",
-    menuResearch: "الأبحاث",
-    menuTrust: "الثقة",
     menuTrade: "محرك التجارة",
     footerText: "ZENTRA Economic OS • واجهة نيون • منصة RiskLens الرئيسية"
   }
@@ -762,4 +744,4 @@ setLanguage("en");
 </script>
 
 </body>
-    </html>
+        </html>

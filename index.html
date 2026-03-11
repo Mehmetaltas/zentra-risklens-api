@@ -1,26 +1,19 @@
 <!doctype html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RiskLens powered by ZENTRA</title>
-
-<style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+<title>RiskLens powered by ZENTRA</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
 
 :root{
 --bg:#030712;
 --panel:#081120;
---panel2:#0c1830;
 --line:#163052;
 --text:#eef6ff;
 --muted:#9bb3d9;
 --cyan:#00d4ff;
---blue:#4cc9f0;
 --violet:#8b5cf6;
 --green:#19e68c;
 --yellow:#f5b942;
@@ -33,36 +26,20 @@ font-family:Arial,sans-serif;
 background:
 radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 22%),
 radial-gradient(circle at 80% 10%, rgba(139,92,246,.12), transparent 25%),
-radial-gradient(circle at 50% 80%, rgba(25,230,140,.08), transparent 20%),
 linear-gradient(180deg,#030712,#07111f 45%,#040914);
 color:var(--text);
 overflow-x:hidden;
 }
 
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-background-size:40px 40px;
-pointer-events:none;
-opacity:.18;
-}
-
 .topbar{
-position:sticky;
-top:0;
-z-index:100;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:18px 22px;
 background:rgba(4,10,22,.78);
-backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(76,201,240,.18);
-box-shadow:0 0 30px rgba(0,212,255,.08);
+position:sticky;
+top:0;
 }
 
 .brand{
@@ -72,712 +49,157 @@ gap:12px;
 }
 
 .logo{
-width:40px;
-height:40px;
-border-radius:12px;
+width:36px;
+height:36px;
+border-radius:10px;
 background:linear-gradient(135deg,var(--violet),var(--cyan));
-box-shadow:
-0 0 18px rgba(0,212,255,.35),
-0 0 36px rgba(139,92,246,.25);
 }
 
 .brand-text h1{
 font-size:20px;
 color:var(--cyan);
-letter-spacing:.08em;
-margin:0;
 }
 
 .brand-text p{
 font-size:12px;
 color:var(--muted);
-margin-top:2px;
 }
 
 .menu-btn{
-font-size:28px;
+font-size:26px;
 cursor:pointer;
-color:var(--text);
-padding:6px 10px;
-border:1px solid rgba(76,201,240,.18);
-border-radius:10px;
-background:rgba(8,17,32,.75);
-box-shadow:0 0 18px rgba(0,212,255,.08);
 }
 
 .sidebar{
 position:fixed;
 top:0;
-left:-320px;
-width:300px;
+left:-300px;
+width:280px;
 height:100%;
-background:linear-gradient(180deg,#07111f,#050c18);
-border-right:1px solid rgba(76,201,240,.18);
-padding:24px 18px;
+background:#050c18;
+padding:22px;
 transition:.3s;
-z-index:200;
-overflow-y:auto;
-box-shadow:0 0 40px rgba(0,0,0,.35);
+z-index:50;
 }
 
-.sidebar.open{
-left:0;
-}
-
-.sidebar h2{
-color:var(--cyan);
-font-size:24px;
-margin-bottom:18px;
-}
+.sidebar.open{left:0}
 
 .sidebar a{
 display:block;
+color:#dcecff;
 text-decoration:none;
-color:#dbe9ff;
-background:rgba(12,24,48,.85);
-border:1px solid rgba(76,201,240,.14);
-padding:14px 14px;
-border-radius:12px;
-margin-bottom:10px;
-transition:.2s;
-}
-
-.sidebar a:hover{
-color:var(--cyan);
-border-color:rgba(0,212,255,.45);
-box-shadow:0 0 18px rgba(0,212,255,.10);
-transform:translateX(2px);
-}
-
-.lang-box{
-margin-top:18px;
-padding-top:18px;
-border-top:1px solid rgba(76,201,240,.12);
-}
-
-.lang-box label{
-display:block;
-font-size:13px;
-color:var(--muted);
-margin-bottom:8px;
-}
-
-.lang-box select{
-width:100%;
 padding:12px;
-border:none;
-border-radius:12px;
-background:#0b1730;
-color:white;
-}
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.62);
-display:none;
-z-index:150;
-}
-
-.overlay.show{
-display:block;
+border-radius:10px;
+margin-bottom:10px;
+background:#0c1830;
 }
 
 .container{
-max-width:1280px;
+max-width:1200px;
 margin:auto;
-padding:34px 20px 60px;
-position:relative;
-z-index:1;
+padding:40px 20px;
 }
 
-.hero{
-display:grid;
-grid-template-columns:1.15fr .85fr;
-gap:22px;
-align-items:stretch;
-margin-bottom:24px;
-}
-
-.hero-left,
-.hero-right{
-background:rgba(8,17,32,.75);
-backdrop-filter:blur(10px);
-border:1px solid rgba(76,201,240,.16);
-border-radius:20px;
-padding:26px;
-position:relative;
-overflow:hidden;
-box-shadow:
-0 0 30px rgba(0,212,255,.06),
-inset 0 0 24px rgba(255,255,255,.02);
-}
-
-.hero-left::before,
-.hero-right::before{
-content:"";
-position:absolute;
-inset:-20%;
-background:radial-gradient(circle, rgba(0,212,255,.10), transparent 35%);
-pointer-events:none;
-animation:pulse 6s linear infinite;
-}
-
-@keyframes pulse{
-0%{transform:scale(1) rotate(0deg);}
-50%{transform:scale(1.08) rotate(8deg);}
-100%{transform:scale(1) rotate(0deg);}
-}
-
-.kicker{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-font-size:12px;
-letter-spacing:.08em;
-text-transform:uppercase;
+.hero h2{
+font-size:42px;
 color:var(--cyan);
-background:rgba(0,212,255,.09);
-border:1px solid rgba(0,212,255,.22);
-margin-bottom:16px;
-}
-
-.hero-left h2{
-font-size:44px;
-line-height:1.1;
-margin-bottom:16px;
-color:#f5fbff;
-text-shadow:0 0 18px rgba(0,212,255,.10);
-}
-
-.hero-left p{
-font-size:16px;
-line-height:1.8;
-color:var(--muted);
-max-width:760px;
-}
-
-.hero-actions{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-margin-top:24px;
-}
-
-.btn{
-display:inline-block;
-text-decoration:none;
-padding:13px 18px;
-border-radius:12px;
-font-weight:bold;
-font-size:14px;
-transition:.2s;
-}
-
-.btn-primary{
-background:linear-gradient(135deg,var(--cyan),var(--blue));
-color:#02111d;
-box-shadow:0 0 22px rgba(0,212,255,.22);
-}
-
-.btn-secondary{
-background:rgba(12,24,48,.95);
-color:#dcecff;
-border:1px solid rgba(76,201,240,.18);
-}
-
-.panel-label{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.08em;
-color:var(--muted);
 margin-bottom:12px;
 }
 
-.hud{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-margin-bottom:16px;
-}
-
-.metric-card{
-background:rgba(12,24,48,.82);
-border:1px solid rgba(76,201,240,.12);
-border-radius:16px;
-padding:16px;
-}
-
-.metric-card .name{
-font-size:12px;
+.hero p{
 color:var(--muted);
-text-transform:uppercase;
-letter-spacing:.05em;
-margin-bottom:8px;
-}
-
-.metric-card .value{
-font-size:30px;
-font-weight:bold;
-color:var(--cyan);
-text-shadow:0 0 14px rgba(0,212,255,.18);
-}
-
-.metric-card .sub{
-font-size:13px;
-color:#8fa9d1;
-margin-top:6px;
-}
-
-.radar-box{
-margin-top:6px;
-padding:18px;
-border-radius:18px;
-background:linear-gradient(180deg, rgba(7,18,37,.95), rgba(5,13,24,.95));
-border:1px solid rgba(76,201,240,.12);
-min-height:220px;
-position:relative;
-overflow:hidden;
-}
-
-.radar{
-position:absolute;
-inset:18px;
-border-radius:50%;
-border:1px solid rgba(0,212,255,.18);
-}
-
-.radar::before,
-.radar::after{
-content:"";
-position:absolute;
-inset:14%;
-border-radius:50%;
-border:1px solid rgba(0,212,255,.12);
-}
-
-.radar::after{
-inset:30%;
-}
-
-.sweep{
-position:absolute;
-left:50%;
-top:50%;
-width:48%;
-height:2px;
-transform-origin:left center;
-background:linear-gradient(90deg, rgba(0,212,255,.95), transparent);
-box-shadow:0 0 20px rgba(0,212,255,.35);
-animation:spin 4s linear infinite;
-}
-
-@keyframes spin{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
-}
-
-.dot{
-position:absolute;
-width:10px;
-height:10px;
-border-radius:50%;
-background:var(--green);
-box-shadow:0 0 16px rgba(25,230,140,.55);
-}
-
-.dot.d1{top:22%;left:62%;}
-.dot.d2{top:58%;left:32%;background:var(--red);box-shadow:0 0 16px rgba(255,77,109,.55);}
-.dot.d3{top:72%;left:68%;background:var(--cyan);}
-
-.section-title{
-font-size:22px;
-margin:26px 0 14px;
-color:#dff6ff;
+line-height:1.8;
 }
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:18px;
-margin-top:6px;
+gap:20px;
+margin-top:30px;
 }
 
 .card{
-background:rgba(8,17,32,.78);
-border:1px solid rgba(76,201,240,.14);
-border-radius:18px;
+background:#081120;
+border:1px solid #163052;
+border-radius:16px;
 padding:22px;
-box-shadow:0 0 22px rgba(0,212,255,.05);
-transition:.2s;
-}
-
-.card:hover{
-transform:translateY(-3px);
-border-color:rgba(0,212,255,.35);
-box-shadow:0 0 26px rgba(0,212,255,.10);
 }
 
 .card a{
-text-decoration:none;
 color:var(--cyan);
 font-size:20px;
-font-weight:bold;
+text-decoration:none;
 display:block;
 margin-bottom:10px;
 }
 
 .card p{
 color:var(--muted);
-line-height:1.7;
-font-size:14px;
-}
-
-.lower{
-display:grid;
-grid-template-columns:1.2fr .8fr;
-gap:18px;
-margin-top:18px;
-}
-
-.panel{
-background:rgba(8,17,32,.78);
-border:1px solid rgba(76,201,240,.14);
-border-radius:18px;
-padding:22px;
-}
-
-.panel h3{
-color:var(--cyan);
-margin-bottom:12px;
-font-size:20px;
-}
-
-.panel p{
-color:var(--muted);
-line-height:1.8;
-font-size:14px;
 }
 
 .footer{
+margin-top:40px;
 text-align:center;
-padding:28px 20px;
-margin-top:28px;
-border-top:1px solid rgba(76,201,240,.12);
 color:#7f95c0;
-font-size:13px;
 }
 
-@media(max-width:1050px){
-.hero{
-grid-template-columns:1fr;
+@media(max-width:900px){
+.grid{grid-template-columns:1fr}
+.hero h2{font-size:32px}
 }
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-.lower{
-grid-template-columns:1fr;
-}
-}
-
-@media(max-width:680px){
-.hero-left h2{
-font-size:34px;
-}
-.grid{
-grid-template-columns:1fr;
-}
-.topbar{
-padding:16px;
-}
-}
-</style>
-</head>
-
-<body>
-
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<div class="sidebar" id="sidebar">
-  <h2 id="menuTitle">RiskLens</h2>
-
-  <a href="/risklens/dashboard.html" id="menuDashboard">Dashboard</a>
-  <a href="/risklens/advisor.html" id="menuEconomic">Economic AI</a>
-  <a href="/risklens/worldmap.html" id="menuMap">Global Risk Map</a>
-  <a href="/risklens/sectors.html" id="menuSectors">Sector Pressure</a>
-  <a href="/risklens/crisis.html" id="menuCrisis">Crisis Radar</a>
-  <a href="/risklens/signals.html" id="menuSignals">Economic Signals</a>
-  <a href="/trade" id="menuTrade">Trade Engine</a>
-
-  <div class="lang-box">
-    <label for="lang" id="langLabel">Language</label>
-    <select id="lang">
-      <option value="en">English</option>
-      <option value="tr">Türkçe</option>
-      <option value="ar">العربية</option>
-    </select>
-  </div>
+</style></head><body><div class="sidebar" id="sidebar">
+<a href="/risklens/dashboard.html">Dashboard</a>
+<a href="/risklens/advisor.html">Economic AI</a>
+<a href="/risklens/worldmap.html">Global Risk Map</a>
+<a href="/risklens/sectors.html">Sector Pressure</a>
+<a href="/risklens/crisis.html">Crisis Radar</a>
+<a href="/risklens/signals.html">Economic Signals</a>
+<a href="/trade">Trade Engine</a>
+<a href="/telescope">Global Economic Radar</a>
+</div><div class="topbar">
+<div class="brand">
+<div class="logo"></div>
+<div class="brand-text">
+<h1>ZENTRA</h1>
+<p>Economic Intelligence System</p>
 </div>
-
-<div class="topbar">
-  <div class="brand">
-    <div class="logo"></div>
-    <div class="brand-text">
-      <h1>ZENTRA</h1>
-      <p id="brandSub">Economic Intelligence System</p>
-    </div>
-  </div>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
 </div>
-
-<div class="container">
-
-  <div class="hero">
-    <div class="hero-left">
-      <div class="kicker" id="kicker">Behavioral Financial Infrastructure</div>
-      <h2 id="heroTitle">RiskLens powered by ZENTRA</h2>
-      <p id="heroText">
-        Advanced macro-risk interpretation, behavioral financial intelligence, AI reasoning
-        and global pressure monitoring in a neon-driven platform interface built for clarity,
-        speed and institutional-grade expansion.
-      </p>
-
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="/risklens/dashboard.html" id="btnDashboard">Open Dashboard</a>
-        <a class="btn btn-secondary" href="/risklens/worldmap.html" id="btnMap">View Global Map</a>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <div class="panel-label" id="missionLabel">Live Mission Panel</div>
-
-      <div class="hud">
-        <div class="metric-card">
-          <div class="name" id="metricRiskName">Global Risk</div>
-          <div class="value">67</div>
-          <div class="sub" id="metricRiskSub">Moderate pressure</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="name" id="metricAiName">AI State</div>
-          <div class="value">ACTIVE</div>
-          <div class="sub" id="metricAiSub">Economic monitoring live</div>
-        </div>
-      </div>
-
-      <div class="radar-box">
-        <div class="radar"></div>
-        <div class="sweep"></div>
-        <div class="dot d1"></div>
-        <div class="dot d2"></div>
-        <div class="dot d3"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title" id="modulesTitle">Core Modules</div>
-
-  <div class="grid">
-    <div class="card">
-      <a href="/risklens/dashboard.html" id="cardDashboard">Dashboard</a>
-      <p id="cardDashboardText">Main operational window for macro pressure, direction, monitoring and signal visibility.</p>
-    </div>
-
-    <div class="card">
-      <a href="/risklens/advisor.html" id="cardEconomic">Economic AI</a>
-      <p id="cardEconomicText">Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.</p>
-    </div>
-
-    <div class="card">
-      <a href="/risklens/worldmap.html" id="cardMap">Global Risk Map</a>
-      <p id="cardMapText">Interactive global map layer for country-based risk visualization and planetary monitoring.</p>
-    </div>
-
-    <div class="card">
-      <a href="/risklens/sectors.html" id="cardSectors">Sector Pressure</a>
-      <p id="cardSectorsText">Sector fragility monitor across construction, retail, energy, banking and more.</p>
-    </div>
-
-    <div class="card">
-      <a href="/risklens/crisis.html" id="cardCrisis">Crisis Radar</a>
-      <p id="cardCrisisText">Early warning surface for liquidity stress, credit freeze and instability signals.</p>
-    </div>
-
-    <div class="card">
-      <a href="/risklens/signals.html" id="cardSignals">Economic Signals</a>
-      <p id="cardSignalsText">Inflation, rates, oil, gold, crypto and market indicators in one compact view.</p>
-    </div>
-  </div>
-
-  <div class="lower">
-    <div class="panel">
-      <h3 id="missionControlTitle">Mission Control</h3>
-      <p id="missionControlText">
-        RiskLens is the first active product layer of ZENTRA. It is designed to unify macro risk,
-        behavior signals, pressure interpretation and AI explanation into one operational surface.
-      </p>
-    </div>
-
-    <div class="panel">
-      <h3 id="expansionTitle">Expansion Path</h3>
-      <p id="expansionText">
-        After RiskLens, the Trade Engine and broader ZENTRA orchestration layers will attach to this
-        architecture without breaking the core system.
-      </p>
-    </div>
-  </div>
-
-</div>
-
-<div class="footer" id="footerText">
-  ZENTRA Economic OS • Neon Interface • RiskLens Main Platform
-</div>
-
-<script>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+</div><div class="container"><div class="hero">
+<h2>RiskLens powered by ZENTRA</h2>
+<p>
+Global economic intelligence platform combining macro risk analysis,
+behavioral finance signals and AI interpretation into a unified system.
+</p>
+</div><div class="grid"><div class="card">
+<a href="/risklens/dashboard.html">Dashboard</a>
+<p>Main operational window for macro pressure and signals.</p>
+</div><div class="card">
+<a href="/risklens/advisor.html">Economic AI</a>
+<p>AI interpretation of inflation, interest rates and macro trends.</p>
+</div><div class="card">
+<a href="/risklens/worldmap.html">Global Risk Map</a>
+<p>Country based global risk monitoring interface.</p>
+</div><div class="card">
+<a href="/risklens/sectors.html">Sector Pressure</a>
+<p>Sector fragility monitoring across key industries.</p>
+</div><div class="card">
+<a href="/risklens/crisis.html">Crisis Radar</a>
+<p>Early warning signals for financial instability.</p>
+</div><div class="card">
+<a href="/risklens/signals.html">Economic Signals</a>
+<p>Key macro indicators such as inflation and liquidity.</p>
+</div><div class="card">
+<a href="/telescope">Global Economic Radar</a>
+<p>Mission control interface for global economic monitoring.</p>
+</div><div class="card">
+<a href="/trade">Trade Engine</a>
+<p>Trade opportunity engine powered by economic signals.</p>
+</div></div><div class="footer">
+ZENTRA Economic OS • RiskLens Platform
+</div></div><script>
 function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("open");
-  document.getElementById("overlay").classList.toggle("show");
+document.getElementById("sidebar").classList.toggle("open")
 }
-
-const translations = {
-  en: {
-    menuTitle: "RiskLens",
-    langLabel: "Language",
-    brandSub: "Economic Intelligence System",
-    kicker: "Behavioral Financial Infrastructure",
-    heroTitle: "RiskLens powered by ZENTRA",
-    heroText: "Advanced macro-risk interpretation, behavioral financial intelligence, AI reasoning and global pressure monitoring in a neon-driven platform interface built for clarity, speed and institutional-grade expansion.",
-    btnDashboard: "Open Dashboard",
-    btnMap: "View Global Map",
-    missionLabel: "Live Mission Panel",
-    metricRiskName: "Global Risk",
-    metricRiskSub: "Moderate pressure",
-    metricAiName: "AI State",
-    metricAiSub: "Economic monitoring live",
-    modulesTitle: "Core Modules",
-    cardDashboard: "Dashboard",
-    cardDashboardText: "Main operational window for macro pressure, direction, monitoring and signal visibility.",
-    cardEconomic: "Economic AI",
-    cardEconomicText: "Specialized financial interpretation panel for inflation, rate cycles, country stress and sectors.",
-    cardMap: "Global Risk Map",
-    cardMapText: "Interactive global map layer for country-based risk visualization and planetary monitoring.",
-    cardSectors: "Sector Pressure",
-    cardSectorsText: "Sector fragility monitor across construction, retail, energy, banking and more.",
-    cardCrisis: "Crisis Radar",
-    cardCrisisText: "Early warning surface for liquidity stress, credit freeze and instability signals.",
-    cardSignals: "Economic Signals",
-    cardSignalsText: "Inflation, rates, oil, gold, crypto and market indicators in one compact view.",
-    missionControlTitle: "Mission Control",
-    missionControlText: "RiskLens is the first active product layer of ZENTRA. It is designed to unify macro risk, behavior signals, pressure interpretation and AI explanation into one operational surface.",
-    expansionTitle: "Expansion Path",
-    expansionText: "After RiskLens, the Trade Engine and broader ZENTRA orchestration layers will attach to this architecture without breaking the core system.",
-    menuDashboard: "Dashboard",
-    menuEconomic: "Economic AI",
-    menuMap: "Global Risk Map",
-    menuSectors: "Sector Pressure",
-    menuCrisis: "Crisis Radar",
-    menuSignals: "Economic Signals",
-    menuTrade: "Trade Engine",
-    footerText: "ZENTRA Economic OS • Neon Interface • RiskLens Main Platform"
-  },
-  tr: {
-    menuTitle: "RiskLens",
-    langLabel: "Dil",
-    brandSub: "Ekonomik Zekâ Sistemi",
-    kicker: "Davranışsal Finansal Altyapı",
-    heroTitle: "ZENTRA destekli RiskLens",
-    heroText: "Makro risk yorumu, davranışsal finansal zekâ, yapay zekâ analizi ve küresel baskı izlemeyi açıklık, hız ve kurumsal büyüme odağıyla birleştiren neon arayüzlü platform.",
-    btnDashboard: "Paneli Aç",
-    btnMap: "Küresel Haritayı Aç",
-    missionLabel: "Canlı Görev Paneli",
-    metricRiskName: "Küresel Risk",
-    metricRiskSub: "Orta düzey baskı",
-    metricAiName: "YZ Durumu",
-    metricAiSub: "Ekonomik izleme aktif",
-    modulesTitle: "Ana Modüller",
-    cardDashboard: "Gösterge Paneli",
-    cardDashboardText: "Makro baskı, yön, izleme ve sinyal görünürlüğü için ana operasyon ekranı.",
-    cardEconomic: "Ekonomik YZ",
-    cardEconomicText: "Enflasyon, faiz döngüsü, ülke baskısı ve sektör yorumları için özel finansal analiz paneli.",
-    cardMap: "Küresel Risk Haritası",
-    cardMapText: "Ülke bazlı risk görselleştirme ve küresel izleme için interaktif harita katmanı.",
-    cardSectors: "Sektör Baskısı",
-    cardSectorsText: "İnşaat, perakende, enerji, bankacılık ve diğer alanlarda sektör kırılganlık izlemesi.",
-    cardCrisis: "Kriz Radarı",
-    cardCrisisText: "Likidite stresi, kredi donması ve istikrarsızlık sinyalleri için erken uyarı yüzeyi.",
-    cardSignals: "Ekonomik Sinyaller",
-    cardSignalsText: "Enflasyon, faiz, petrol, altın, kripto ve piyasa göstergeleri tek görünümde.",
-    missionControlTitle: "Görev Kontrol",
-    missionControlText: "RiskLens, ZENTRA'nın ilk aktif ürün katmanıdır. Makro riski, davranış sinyallerini, baskı yorumunu ve yapay zekâ açıklamasını tek operasyon yüzeyinde birleştirir.",
-    expansionTitle: "Genişleme Yolu",
-    expansionText: "RiskLens'ten sonra Trade Engine ve daha geniş ZENTRA orkestrasyon katmanları çekirdek sistemi bozmadan bu mimariye bağlanacaktır.",
-    menuDashboard: "Gösterge Paneli",
-    menuEconomic: "Ekonomik YZ",
-    menuMap: "Küresel Risk Haritası",
-    menuSectors: "Sektör Baskısı",
-    menuCrisis: "Kriz Radarı",
-    menuSignals: "Ekonomik Sinyaller",
-    menuTrade: "Ticaret Motoru",
-    footerText: "ZENTRA Economic OS • Neon Arayüz • RiskLens Ana Platform"
-  },
-  ar: {
-    menuTitle: "RiskLens",
-    langLabel: "اللغة",
-    brandSub: "نظام الذكاء الاقتصادي",
-    kicker: "بنية مالية سلوكية",
-    heroTitle: "RiskLens بدعم من ZENTRA",
-    heroText: "منصة نيون متقدمة لتفسير المخاطر الكلية والذكاء المالي السلوكي واستدلال الذكاء الاصطناعي ومراقبة الضغط العالمي.",
-    btnDashboard: "افتح اللوحة",
-    btnMap: "افتح الخريطة العالمية",
-    missionLabel: "لوحة المهمة الحية",
-    metricRiskName: "المخاطر العالمية",
-    metricRiskSub: "ضغط متوسط",
-    metricAiName: "حالة الذكاء",
-    metricAiSub: "المراقبة الاقتصادية نشطة",
-    modulesTitle: "الوحدات الأساسية",
-    cardDashboard: "اللوحة",
-    cardDashboardText: "النافذة الرئيسية لمراقبة الضغط الكلي والاتجاه والإشارات.",
-    cardEconomic: "الذكاء الاقتصادي",
-    cardEconomicText: "لوحة تفسير مالي متخصصة للتضخم ودورات الفائدة وضغط الدول والقطاعات.",
-    cardMap: "خريطة المخاطر العالمية",
-    cardMapText: "طبقة خريطة تفاعلية لتصور المخاطر حسب الدولة والمراقبة العالمية.",
-    cardSectors: "ضغط القطاعات",
-    cardSectorsText: "مراقبة هشاشة القطاعات عبر البناء والتجزئة والطاقة والبنوك وغيرها.",
-    cardCrisis: "رادار الأزمة",
-    cardCrisisText: "سطح إنذار مبكر لضغط السيولة وتجمّد الائتمان وإشارات عدم الاستقرار.",
-    cardSignals: "الإشارات الاقتصادية",
-    cardSignalsText: "التضخم والفائدة والنفط والذهب والعملات المشفرة ومؤشرات السوق في عرض واحد.",
-    missionControlTitle: "مركز المهمة",
-    missionControlText: "RiskLens هي أول طبقة منتج نشطة في ZENTRA، وتهدف إلى توحيد المخاطر الكلية والإشارات السلوكية وتفسير الضغط وشرح الذكاء الاصطناعي في سطح تشغيلي واحد.",
-    expansionTitle: "مسار التوسع",
-    expansionText: "بعد RiskLens، سيتصل محرك التجارة وطبقات تنسيق ZENTRA الأوسع بهذه البنية دون كسر النظام الأساسي.",
-    menuDashboard: "اللوحة",
-    menuEconomic: "الذكاء الاقتصادي",
-    menuMap: "خريطة المخاطر العالمية",
-    menuSectors: "ضغط القطاعات",
-    menuCrisis: "رادار الأزمة",
-    menuSignals: "الإشارات الاقتصادية",
-    menuTrade: "محرك التجارة",
-    footerText: "ZENTRA Economic OS • واجهة نيون • منصة RiskLens الرئيسية"
-  }
-};
-
-function setLanguage(lang){
-  const dict = translations[lang] || translations.en;
-  Object.keys(dict).forEach(key => {
-    const el = document.getElementById(key);
-    if(el) el.textContent = dict[key];
-  });
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-}
-
-document.getElementById("lang").addEventListener("change", function(){
-  setLanguage(this.value);
-});
-
-setLanguage("en");
-</script>
-
-</body>
+</script></body>
 </html>

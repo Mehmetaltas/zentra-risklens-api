@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RiskLens Economic Signals</title>
+
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+:root{
+--bg:#030712;
+--panel:#081120;
+--line:#163052;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#00d4ff;
+--yellow:#f5b942;
+--orange:#ff8a3d;
+--red:#ff4d6d;
+--green:#19e68c;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 22%),
+radial-gradient(circle at 80% 10%, rgba(139,92,246,.12), transparent 25%),
+linear-gradient(180deg,#030712,#07111f 45%,#040914);
+color:var(--text);
+overflow-x:hidden;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 22px;
+background:rgba(4,10,22,.78);
+border-bottom:1px solid rgba(76,201,240,.18);
+position:sticky;
+top:0;
+z-index:20;
+}
+
+.brand{
+color:var(--cyan);
+font-size:22px;
+font-weight:bold;
+}
+
+.menu a{
+color:#dcecff;
+text-decoration:none;
+margin-left:18px;
+font-size:14px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:34px 20px 60px;
+}
+
+.hero{
+background:rgba(8,17,32,.78);
+border:1px solid rgba(76,201,240,.16);
+border-radius:20px;
+padding:28px;
+margin-bottom:24px;
+box-shadow:0 0 30px rgba(0,212,255,.06);
+}
+
+.hero h1{
+font-size:40px;
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+line-height:1.8;
+max-width:850px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.card{
+background:rgba(8,17,32,.78);
+border:1px solid rgba(76,201,240,.14);
+border-radius:18px;
+padding:22px;
+}
+
+.label{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.05em;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.metric{
+font-size:34px;
+font-weight:bold;
+color:var(--cyan);
+}
+
+.sub{
+margin-top:10px;
+font-size:13px;
+color:#9db5dc;
+line-height:1.7;
+}
+
+.band{
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:bold;
+text-transform:uppercase;
+}
+
+.low{
+color:var(--green);
+background:rgba(25,230,140,.12);
+}
+.medium{
+color:var(--yellow);
+background:rgba(245,185,66,.12);
+}
+.high{
+color:var(--orange);
+background:rgba(255,138,61,.12);
+}
+.critical{
+color:var(--red);
+background:rgba(255,77,109,.12);
+}
+
+.panel{
+background:rgba(8,17,32,.78);
+border:1px solid rgba(76,201,240,.14);
+border-radius:18px;
+padding:22px;
+margin-top:20px;
+}
+
+.panel h2{
+color:var(--cyan);
+margin-bottom:12px;
+}
+
+.panel p, .panel li{
+color:var(--muted);
+line-height:1.8;
+}
+
+.panel ul{
+padding-left:18px;
+}
+
+@media(max-width:1000px){
+.grid{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:700px){
+.grid{
+grid-template-columns:1fr;
+}
+.hero h1{
+font-size:32px;
+}
+.menu{
+display:none;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="brand">RiskLens</div>
+  <div class="menu">
+    <a href="/risklens/dashboard.html">Dashboard</a>
+    <a href="/risklens/advisor.html">Economic AI</a>
+    <a href="/risklens/worldmap.html">Global Map</a>
+    <a href="/risklens/sectors.html">Sectors</a>
+    <a href="/risklens/crisis.html">Crisis</a>
+    <a href="/risklens/signals.html">Signals</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Economic Signals</h1>
+    <p>
+      RiskLens monitors a compact set of macro and market signals to understand where pressure
+      is building. These indicators help explain inflation regimes, financing conditions,
+      commodity stress and broader market behavior.
+    </p>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="label">Inflation</div>
+      <div class="metric">5.4%</div>
+      <div class="band high">Elevated</div>
+      <div class="sub">Persistent pricing pressure remains one of the main macro stress drivers.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Interest Rate</div>
+      <div class="metric">4.8%</div>
+      <div class="band medium">Restrictive</div>
+      <div class="sub">Higher rates tighten credit conditions and slow fragile demand segments.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Oil</div>
+      <div class="metric">$82</div>
+      <div class="band medium">Watch</div>
+      <div class="sub">Energy sensitivity still matters for transport, manufacturing and inflation.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Gold</div>
+      <div class="metric">$2,310</div>
+      <div class="band low">Defensive</div>
+      <div class="sub">Gold remains a defensive reference under uncertainty and inflation concerns.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">BTC</div>
+      <div class="metric">$67,200</div>
+      <div class="band high">Volatile</div>
+      <div class="sub">Crypto markets continue to reflect liquidity cycles and speculative risk appetite.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">S&amp;P 500</div>
+      <div class="metric">5,180</div>
+      <div class="band medium">Mixed</div>
+      <div class="sub">Equity resilience can weaken quickly when rates and earnings expectations diverge.</div>
+    </div>
+
+  </div>
+
+  <div class="panel">
+    <h2>Signal Interpretation</h2>
+    <p>
+      The current signal mix suggests moderate-to-elevated pressure: inflation remains sticky,
+      interest rates stay restrictive and commodity sensitivity continues to affect economic
+      transmission channels.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>Why Signals Matter</h2>
+    <ul>
+      <li>Inflation shapes purchasing power and cost structure.</li>
+      <li>Interest rates change credit speed and investment appetite.</li>
+      <li>Oil and commodities feed production and logistics stress.</li>
+      <li>Gold and crypto often reflect defensive or speculative capital movement.</li>
+      <li>Equity benchmarks summarize confidence and forward expectations.</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

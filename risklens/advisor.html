@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskLens Economic AI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#030712;
+  color:#eef6ff;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 22px;
+  background:#081120;
+  border-bottom:1px solid #163052;
+}
+.brand{color:#00d4ff;font-size:22px;font-weight:bold}
+.menu a{
+  color:#dcecff;
+  text-decoration:none;
+  margin-left:18px;
+  font-size:14px;
+}
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:30px 20px 60px;
+}
+.hero h1{
+  color:#00d4ff;
+  font-size:38px;
+  margin-bottom:10px;
+}
+.hero p{
+  color:#9bb3d9;
+  line-height:1.8;
+}
+.panel{
+  margin-top:24px;
+  background:#081120;
+  border:1px solid #163052;
+  border-radius:16px;
+  padding:22px;
+}
+input, textarea{
+  width:100%;
+  margin-top:14px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#0c1830;
+  color:#eef6ff;
+}
+button{
+  margin-top:14px;
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:#00d4ff;
+  color:#02111d;
+  font-weight:bold;
+  cursor:pointer;
+}
+.result{
+  margin-top:18px;
+  background:#0c1830;
+  border:1px solid #163052;
+  border-radius:12px;
+  padding:18px;
+  line-height:1.8;
+  color:#cfe4ff;
+  min-height:120px;
+}
+@media(max-width:700px){.menu{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">RiskLens</div>
+  <div class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="advisor.html">Economic AI</a>
+    <a href="worldmap.html">Global Map</a>
+    <a href="sectors.html">Sectors</a>
+    <a href="crisis.html">Crisis</a>
+    <a href="signals.html">Signals</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <h1>Economic AI</h1>
+    <p>Ask macroeconomic, financial and sector-based questions. RiskLens returns a structured interpretation.</p>
+  </div>
+
+  <div class="panel">
+    <textarea id="question" rows="5" placeholder="Example: How does inflation affect retail and construction?"></textarea>
+    <button onclick="analyze()">Analyze</button>
+    <div class="result" id="result">RiskLens Economic AI is ready.</div>
+  </div>
+</div>
+
+<script>
+function analyze(){
+  const q = document.getElementById("question").value.toLowerCase().trim();
+  const result = document.getElementById("result");
+
+  if(!q){
+    result.innerHTML = "Please write a question first.";
+    return;
+  }
+
+  let text = "General macro pressure remains moderate to elevated.";
+
+  if(q.includes("inflation")){
+    text = "Inflation pressure reduces purchasing power, increases business costs and weakens fragile sectors such as retail and construction.";
+  } else if(q.includes("interest") || q.includes("rate")){
+    text = "Higher interest rates slow credit growth, weaken leveraged sectors and increase refinancing pressure.";
+  } else if(q.includes("construction")){
+    text = "Construction is highly rate-sensitive and remains vulnerable under tighter financing conditions.";
+  } else if(q.includes("retail")){
+    text = "Retail is vulnerable when inflation weakens household purchasing power and demand slows.";
+  } else if(q.includes("bank")){
+    text = "Banking pressure increases when credit quality weakens and funding conditions tighten.";
+  } else if(q.includes("currency") || q.includes("exchange")){
+    text = "Currency stress raises import costs, worsens inflation transmission and pressures external-balance-sensitive sectors.";
+  }
+
+  result.innerHTML = text;
+}
+</script>
+
+</body>
+</html>

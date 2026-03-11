@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RiskLens Crisis Radar</title>
+
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+:root{
+--bg:#030712;
+--panel:#081120;
+--line:#163052;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#00d4ff;
+--yellow:#f5b942;
+--orange:#ff8a3d;
+--red:#ff4d6d;
+--green:#19e68c;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 22%),
+radial-gradient(circle at 80% 10%, rgba(139,92,246,.12), transparent 25%),
+linear-gradient(180deg,#030712,#07111f 45%,#040914);
+color:var(--text);
+overflow-x:hidden;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 22px;
+background:rgba(4,10,22,.78);
+border-bottom:1px solid rgba(76,201,240,.18);
+position:sticky;
+top:0;
+z-index:20;
+}
+
+.brand{
+color:var(--cyan);
+font-size:22px;
+font-weight:bold;
+}
+
+.menu a{
+color:#dcecff;
+text-decoration:none;
+margin-left:18px;
+font-size:14px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:34px 20px 60px;
+}
+
+.hero{
+background:rgba(8,17,32,.78);
+border:1px solid rgba(76,201,240,.16);
+border-radius:20px;
+padding:28px;
+margin-bottom:24px;
+box-shadow:0 0 30px rgba(0,212,255,.06);
+}
+
+.hero h1{
+font-size:40px;
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+line-height:1.8;
+max-width:850px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+}
+
+.card{
+background:rgba(8,17,32,.78);
+border:1px solid rgba(76,201,240,.14);
+border-radius:18px;
+padding:22px;
+}
+
+.label{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.05em;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.metric{
+font-size:34px;
+font-weight:bold;
+color:var(--cyan);
+}
+
+.band{
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:bold;
+text-transform:uppercase;
+}
+
+.low{
+color:var(--green);
+background:rgba(25,230,140,.12);
+}
+.medium{
+color:var(--yellow);
+background:rgba(245,185,66,.12);
+}
+.high{
+color:var(--orange);
+background:rgba(255,138,61,.12);
+}
+.critical{
+color:var(--red);
+background:rgba(255,77,109,.12);
+}
+
+.panel{
+background:rgba(8,17,32,.78);
+border:1px solid rgba(76,201,240,.14);
+border-radius:18px;
+padding:22px;
+margin-top:20px;
+}
+
+.panel h2{
+color:var(--cyan);
+margin-bottom:12px;
+}
+
+.panel p, .panel li{
+color:var(--muted);
+line-height:1.8;
+}
+
+.panel ul{
+padding-left:18px;
+}
+
+@media(max-width:1000px){
+.grid{
+grid-template-columns:1fr 1fr;
+}
+}
+
+@media(max-width:700px){
+.grid{
+grid-template-columns:1fr;
+}
+.hero h1{
+font-size:32px;
+}
+.menu{
+display:none;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="brand">RiskLens</div>
+  <div class="menu">
+    <a href="/risklens/dashboard.html">Dashboard</a>
+    <a href="/risklens/advisor.html">Economic AI</a>
+    <a href="/risklens/worldmap.html">Global Map</a>
+    <a href="/risklens/sectors.html">Sectors</a>
+    <a href="/risklens/crisis.html">Crisis</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Crisis Radar</h1>
+    <p>
+      RiskLens Crisis Radar monitors instability signals that may point to broader financial
+      stress. It combines macro pressure, credit tightening, market fragility and liquidity
+      weakness to estimate whether the system is moving toward disruption.
+    </p>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="label">Currency Stress</div>
+      <div class="metric">72</div>
+      <div class="band high">High</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Bank Pressure</div>
+      <div class="metric">58</div>
+      <div class="band medium">Watch</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Credit Freeze Risk</div>
+      <div class="metric">64</div>
+      <div class="band high">Elevated</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Liquidity Shock</div>
+      <div class="metric">49</div>
+      <div class="band medium">Moderate</div>
+    </div>
+
+  </div>
+
+  <div class="panel">
+    <h2>Radar Summary</h2>
+    <p>
+      The current system reflects visible stress in currency conditions and moderate pressure
+      in banking and liquidity channels. Credit tightening remains one of the main transmission
+      paths toward broader instability.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>What RiskLens Watches</h2>
+    <ul>
+      <li>Rapid currency depreciation and imported cost pressure</li>
+      <li>Bank funding fragility and tighter financial conditions</li>
+      <li>Credit slowdown and reduced private sector financing</li>
+      <li>Liquidity deterioration across markets and institutions</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

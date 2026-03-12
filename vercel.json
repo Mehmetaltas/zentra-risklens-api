@@ -1,7 +1,7 @@
 {
-  "rewrites": [
-    { "source": "/risklens", "destination": "/risklens/dashboard.html" },
-    { "source": "/trade", "destination": "/trade/index.html" },
-    { "source": "/telescope", "destination": "/telescope/index.html" }
-  ]
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }

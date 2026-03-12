@@ -3,10 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Economic OS</title>
+<title>ZENTRA Mission Control</title>
 
 <style>
-
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
@@ -16,14 +15,18 @@
 --text:#eef6ff;
 --muted:#9bb3d9;
 --cyan:#00d4ff;
+--green:#19e68c;
+--yellow:#f5b942;
+--orange:#ff8a3d;
+--red:#ff4d6d;
 }
 
 body{
-font-family:Arial;
+font-family:Arial,sans-serif;
 color:var(--text);
 background:
-radial-gradient(circle at 20% 20%, rgba(0,212,255,.08), transparent 25%),
-linear-gradient(180deg,#030712,#07111f);
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
+linear-gradient(180deg,#030712,#07111f 50%,#040914);
 min-height:100vh;
 }
 
@@ -34,6 +37,9 @@ align-items:center;
 padding:16px 20px;
 background:#060d1c;
 border-bottom:1px solid var(--line);
+position:sticky;
+top:0;
+z-index:50;
 }
 
 .brand{
@@ -93,6 +99,7 @@ margin-bottom:10px;
 text-decoration:none;
 color:white;
 background:#081120;
+line-height:1.5;
 }
 
 .overlay{
@@ -108,54 +115,223 @@ display:block;
 }
 
 .container{
-max-width:1200px;
+max-width:1280px;
 margin:auto;
-padding:40px 20px;
+padding:30px 20px 60px;
+}
+
+.hero{
+margin-bottom:24px;
 }
 
 .hero h1{
 color:var(--cyan);
-font-size:40px;
-margin-bottom:12px;
+font-size:42px;
+margin-bottom:10px;
 }
 
 .hero p{
 color:var(--muted);
-max-width:800px;
 line-height:1.7;
+max-width:900px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1.3fr 1fr 1fr 1fr;
+gap:18px;
+margin-top:24px;
+}
+
+.card,.panel{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+
+.label{
+font-size:12px;
+color:var(--muted);
+text-transform:uppercase;
+margin-bottom:8px;
+letter-spacing:.8px;
+}
+
+.metric{
+font-size:36px;
+font-weight:bold;
+color:var(--cyan);
+}
+
+.sub{
+margin-top:8px;
+font-size:13px;
+color:var(--muted);
+line-height:1.5;
+}
+
+.band{
+margin-top:10px;
+font-size:12px;
+font-weight:bold;
+padding:6px 10px;
+border-radius:999px;
+display:inline-block;
+}
+
+.low{background:rgba(25,230,140,.12);color:var(--green)}
+.medium{background:rgba(245,185,66,.12);color:var(--yellow)}
+.high{background:rgba(255,138,61,.12);color:var(--orange)}
+.critical{background:rgba(255,77,109,.12);color:var(--red)}
+
+.section{
+margin-top:32px;
+}
+
+.section h2{
+color:var(--cyan);
+margin-bottom:14px;
+font-size:24px;
+}
+
+.two{
+display:grid;
+grid-template-columns:1.25fr 1fr;
+gap:18px;
+}
+
+.map{
+height:340px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.06);
+background:
+radial-gradient(circle at 24% 30%, rgba(0,212,255,.16), transparent 10%),
+radial-gradient(circle at 45% 44%, rgba(255,138,61,.18), transparent 11%),
+radial-gradient(circle at 67% 33%, rgba(255,77,109,.18), transparent 12%),
+radial-gradient(circle at 56% 69%, rgba(25,230,140,.14), transparent 10%),
+linear-gradient(180deg,#07101d,#0a1628);
+position:relative;
+overflow:hidden;
+}
+
+.map::before{
+content:"PLANETARY WATCH SURFACE";
+position:absolute;
+top:14px;
+left:14px;
+color:var(--muted);
+font-size:12px;
+letter-spacing:.8px;
+}
+
+.dot{
+position:absolute;
+width:14px;
+height:14px;
+border-radius:50%;
+box-shadow:0 0 18px currentColor;
+}
+
+.dot.cyan{background:var(--cyan);color:var(--cyan)}
+.dot.orange{background:var(--orange);color:var(--orange)}
+.dot.red{background:var(--red);color:var(--red)}
+.dot.green{background:var(--green);color:var(--green)}
+
+.list{
+display:grid;
+gap:12px;
+}
+
+.item{
+border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.02);
+border-radius:12px;
+padding:14px;
+}
+
+.item strong{
+display:block;
+color:#fff;
+font-size:15px;
+margin-bottom:6px;
+}
+
+.item span{
+display:block;
+font-size:13px;
+line-height:1.55;
+color:var(--muted);
 }
 
 .modules{
-margin-top:40px;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:20px;
+gap:18px;
+margin-top:18px;
 }
 
-.card{
+.module{
+display:block;
+text-decoration:none;
 background:var(--panel);
 border:1px solid var(--line);
-border-radius:14px;
-padding:20px;
-text-decoration:none;
-color:white;
+border-radius:16px;
+padding:18px;
+color:var(--text);
 }
 
-.card h3{
+.module h3{
 color:var(--cyan);
 margin-bottom:8px;
+font-size:22px;
 }
 
-.card p{
+.module p{
 color:var(--muted);
 font-size:14px;
 line-height:1.6;
 }
 
-@media(max-width:900px){
+.bars{
+display:grid;
+gap:12px;
+margin-top:12px;
+}
+
+.bar-row{
+display:grid;
+grid-template-columns:150px 1fr 60px;
+gap:12px;
+align-items:center;
+font-size:14px;
+}
+
+.track{
+height:10px;
+border-radius:999px;
+background:#0e1b2f;
+overflow:hidden;
+border:1px solid rgba(255,255,255,.04);
+}
+
+.fill{
+height:100%;
+border-radius:999px;
+background:linear-gradient(90deg,var(--cyan),var(--orange));
+}
+
+@media(max-width:1100px){
+.grid{grid-template-columns:1fr 1fr}
+.two{grid-template-columns:1fr}
 .modules{grid-template-columns:1fr}
 }
 
+@media(max-width:700px){
+.grid{grid-template-columns:1fr}
+.hero h1{font-size:32px}
+}
 </style>
 </head>
 
@@ -164,89 +340,181 @@ line-height:1.6;
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="drawer" id="drawer">
-
-<h2>ZENTRA</h2>
-
-<a href="/">Home</a>
-
-<a href="/telescope">
-<strong>Telescope</strong><br>
-Global economic radar
-</a>
-
-<a href="/risklens/dashboard.html">
-<strong>RiskLens</strong><br>
-Risk intelligence platform
-</a>
-
-<a href="/trade">
-<strong>Trade Engine</strong><br>
-Trade execution layer
-</a>
-
+  <h2>ZENTRA Menu</h2>
+  <a href="/">Mission Control</a>
+  <a href="/telescope">Telescope</a>
+  <a href="/risklens/dashboard.html">RiskLens Dashboard</a>
+  <a href="/risklens/signals.html">Signals</a>
+  <a href="/risklens/crisis.html">Crisis Radar</a>
+  <a href="/risklens/worldmap.html">World Map</a>
+  <a href="/risklens/sectors.html">Sectors</a>
+  <a href="/risklens/advisor.html">Economic AI</a>
+  <a href="/trade">Trade</a>
 </div>
 
 <div class="topbar">
-
-<div class="brand">ZENTRA</div>
-
-<div class="burger" onclick="openMenu()">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
+  <div class="brand">ZENTRA Mission Control</div>
+  <div class="burger" onclick="openMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
 
 <div class="container">
 
-<div class="hero">
-<h1>Economic Intelligence Operating System</h1>
+  <div class="hero">
+    <h1>Global Economic Mission Control</h1>
+    <p>
+      ZENTRA ana merkez ekranı; küresel risk, dominant driver, aktif sinyaller, baskı yapısı
+      ve çekirdek modülleri tek yüzeyde toplar. Bu ekran sistemin merkezi kilit yüzeyidir.
+    </p>
+  </div>
 
-<p>
-ZENTRA is a global economic intelligence platform combining
-telescope observation, risk analysis and trade execution
-into one unified system.
-</p>
-</div>
+  <div class="grid">
 
-<div class="modules">
+    <div class="card">
+      <div class="label">Global Risk Score</div>
+      <div class="metric">72</div>
+      <div class="band high">Elevated</div>
+      <div class="sub">Dominant driver: oil shock + logistics stress</div>
+    </div>
 
-<a class="card" href="/telescope">
-<h3>Telescope</h3>
-<p>Global observation layer monitoring macro pressure,
-energy, logistics and systemic signals.</p>
-</a>
+    <div class="card">
+      <div class="label">System State</div>
+      <div class="metric" style="font-size:26px">Active</div>
+      <div class="band low">Core Live</div>
+      <div class="sub">Mission Control center is stable and accessible</div>
+    </div>
 
-<a class="card" href="/risklens/dashboard.html">
-<h3>RiskLens</h3>
-<p>Risk analysis interface including dashboard,
-signals, crisis radar and sector pressure.</p>
-</a>
+    <div class="card">
+      <div class="label">Signals</div>
+      <div class="metric">4</div>
+      <div class="band medium">Watch</div>
+      <div class="sub">Energy, logistics, cyber and port stress detected</div>
+    </div>
 
-<a class="card" href="/trade">
-<h3>Trade</h3>
-<p>Trade execution layer translating signals
-into logistics and commercial actions.</p>
-</a>
+    <div class="card">
+      <div class="label">Mode</div>
+      <div class="metric" style="font-size:26px">C Model</div>
+      <div class="band medium">Main Hub</div>
+      <div class="sub">Home → Telescope → RiskLens → Trade</div>
+    </div>
 
-</div>
+  </div>
+
+  <div class="section">
+    <h2>Planetary Surface</h2>
+
+    <div class="two">
+      <div class="panel">
+        <div class="map">
+          <div class="dot cyan" style="left:24%;top:32%;"></div>
+          <div class="dot orange" style="left:45%;top:44%;"></div>
+          <div class="dot red" style="left:67%;top:33%;"></div>
+          <div class="dot green" style="left:56%;top:69%;"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="label">Detected Signals</div>
+        <div class="list">
+
+          <div class="item">
+            <strong>Oil Shock</strong>
+            <span>Severity: High</span>
+            <span>Affects: aviation, logistics, inflation</span>
+          </div>
+
+          <div class="item">
+            <strong>Shipping Congestion</strong>
+            <span>Severity: High</span>
+            <span>Affects: trade, supply chain, retail</span>
+          </div>
+
+          <div class="item">
+            <strong>Cyber Pressure</strong>
+            <span>Severity: Medium</span>
+            <span>Affects: payments, banking, infrastructure</span>
+          </div>
+
+          <div class="item">
+            <strong>Port Activity Stress</strong>
+            <span>Severity: Medium</span>
+            <span>Affects: throughput, routes, shipping</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Pressure Structure</h2>
+    <div class="panel">
+      <div class="bars">
+
+        <div class="bar-row">
+          <div>Energy</div>
+          <div class="track"><div class="fill" style="width:86%"></div></div>
+          <div>86</div>
+        </div>
+
+        <div class="bar-row">
+          <div>Logistics</div>
+          <div class="track"><div class="fill" style="width:74%"></div></div>
+          <div>74</div>
+        </div>
+
+        <div class="bar-row">
+          <div>Aviation</div>
+          <div class="track"><div class="fill" style="width:71%"></div></div>
+          <div>71</div>
+        </div>
+
+        <div class="bar-row">
+          <div>Banking</div>
+          <div class="track"><div class="fill" style="width:63%"></div></div>
+          <div>63</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Core Modules</h2>
+
+    <div class="modules">
+      <a class="module" href="/telescope">
+        <h3>Telescope</h3>
+        <p>Dünyayı izleyen küresel gözlem ve radar yüzeyi.</p>
+      </a>
+
+      <a class="module" href="/risklens/dashboard.html">
+        <h3>RiskLens</h3>
+        <p>Risk, signal, crisis radar ve sektör baskı yüzeyleri.</p>
+      </a>
+
+      <a class="module" href="/trade">
+        <h3>Trade</h3>
+        <p>Sinyalleri ticari uygulanabilirliğe indiren execution katmanı.</p>
+      </a>
+    </div>
+  </div>
 
 </div>
 
 <script>
-
 function openMenu(){
-document.getElementById("drawer").classList.add("open");
-document.getElementById("overlay").classList.add("show");
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
 }
-
 function closeMenu(){
-document.getElementById("drawer").classList.remove("open");
-document.getElementById("overlay").classList.remove("show");
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
 }
-
 </script>
 
 </body>
-</html>
+  </html>

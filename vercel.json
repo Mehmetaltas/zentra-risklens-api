@@ -1,1 +1,16 @@
+{
+  "routes": [
 
+    { "src": "/", "dest": "/index.html" },
+
+    { "src": "/risklens", "dest": "/risklens/index.html" },
+    { "src": "/risklens/(.*)", "dest": "/risklens/$1" },
+
+    { "src": "/telescope", "dest": "/telescope/index.html" },
+    { "src": "/telescope/(.*)", "dest": "/telescope/$1" },
+
+    { "src": "/trade", "dest": "/trade/index.html" },
+    { "src": "/trade/(.*)", "dest": "/trade/$1" }
+
+  ]
+}

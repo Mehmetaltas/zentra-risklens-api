@@ -1,140 +1,159 @@
 <!doctype html>
-<html lang="en">
+
+<html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RiskLens Economic AI</title>
-<style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RiskLens Economic Advisor</title><style>
+
 *{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#030712;
+--panel:#081120;
+--line:#163052;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#00d4ff;
+--green:#19e68c;
+--yellow:#f5b942;
+--orange:#ff8a3d;
+--red:#ff4d6d;
+}
+
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#030712;
-  color:#eef6ff;
+font-family:Arial;
+color:var(--text);
+background:
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
+linear-gradient(180deg,#030712,#07111f 50%,#040914);
+min-height:100vh;
 }
+
 .topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 22px;
-  background:#081120;
-  border-bottom:1px solid #163052;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px 20px;
+background:#060d1c;
+border-bottom:1px solid var(--line);
 }
-.brand{color:#00d4ff;font-size:22px;font-weight:bold}
-.menu a{
-  color:#dcecff;
-  text-decoration:none;
-  margin-left:18px;
-  font-size:14px;
+
+.brand{
+color:var(--cyan);
+font-size:22px;
+font-weight:bold;
 }
+
 .container{
-  max-width:1000px;
-  margin:auto;
-  padding:30px 20px 60px;
+max-width:900px;
+margin:auto;
+padding:40px 20px;
 }
+
 .hero h1{
-  color:#00d4ff;
-  font-size:38px;
-  margin-bottom:10px;
+color:var(--cyan);
+font-size:36px;
+margin-bottom:10px;
 }
+
 .hero p{
-  color:#9bb3d9;
-  line-height:1.8;
+color:var(--muted);
+margin-bottom:30px;
+line-height:1.7;
 }
-.panel{
-  margin-top:24px;
-  background:#081120;
-  border:1px solid #163052;
-  border-radius:16px;
-  padding:22px;
+
+.inputbox{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:16px;
+padding:20px;
 }
-input, textarea{
-  width:100%;
-  margin-top:14px;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  background:#0c1830;
-  color:#eef6ff;
+
+input{
+width:100%;
+padding:14px;
+border-radius:10px;
+border:1px solid var(--line);
+background:#030712;
+color:white;
+margin-bottom:14px;
+font-size:15px;
 }
+
 button{
-  margin-top:14px;
-  padding:12px 18px;
-  border:none;
-  border-radius:12px;
-  background:#00d4ff;
-  color:#02111d;
-  font-weight:bold;
-  cursor:pointer;
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:var(--cyan);
+color:#02111d;
+font-weight:bold;
+cursor:pointer;
 }
+
 .result{
-  margin-top:18px;
-  background:#0c1830;
-  border:1px solid #163052;
-  border-radius:12px;
-  padding:18px;
-  line-height:1.8;
-  color:#cfe4ff;
-  min-height:120px;
+margin-top:30px;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:16px;
+padding:20px;
+line-height:1.7;
 }
-@media(max-width:700px){.menu{display:none}}
-</style>
-</head>
-<body>
 
-<div class="topbar">
-  <div class="brand">RiskLens</div>
-  <div class="menu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="advisor.html">Economic AI</a>
-    <a href="worldmap.html">Global Map</a>
-    <a href="sectors.html">Sectors</a>
-    <a href="crisis.html">Crisis</a>
-    <a href="signals.html">Signals</a>
-  </div>
-</div>
+.label{
+color:var(--muted);
+font-size:13px;
+margin-bottom:6px;
+}
 
-<div class="container">
-  <div class="hero">
-    <h1>Economic AI</h1>
-    <p>Ask macroeconomic, financial and sector-based questions. RiskLens returns a structured interpretation.</p>
-  </div>
+.value{
+font-size:18px;
+margin-bottom:10px;
+}
 
-  <div class="panel">
-    <textarea id="question" rows="5" placeholder="Example: How does inflation affect retail and construction?"></textarea>
-    <button onclick="analyze()">Analyze</button>
-    <div class="result" id="result">RiskLens Economic AI is ready.</div>
-  </div>
-</div>
+</style></head><body><div class="topbar">
+<div class="brand">RiskLens Advisor</div>
+</div><div class="container"><div class="hero">
+<h1>Economic AI Advisor</h1>
+<p>
+Ask an economic or market question.  
+RiskLens will interpret signals and provide a lens-based response.
+</p>
+</div><div class="inputbox"><input id="question" placeholder="Ask about inflation, markets, sectors, oil, logistics..."><button onclick="analyze()">Analyze</button>
 
-<script>
+</div><div class="result" id="result"><div class="label">AI Output</div>
+<div class="value">Waiting for question...</div></div></div><script>
+
 function analyze(){
-  const q = document.getElementById("question").value.toLowerCase().trim();
-  const result = document.getElementById("result");
 
-  if(!q){
-    result.innerHTML = "Please write a question first.";
-    return;
-  }
+const q = document.getElementById("question").value.toLowerCase()
 
-  let text = "General macro pressure remains moderate to elevated.";
+let answer = "No clear signal detected."
 
-  if(q.includes("inflation")){
-    text = "Inflation pressure reduces purchasing power, increases business costs and weakens fragile sectors such as retail and construction.";
-  } else if(q.includes("interest") || q.includes("rate")){
-    text = "Higher interest rates slow credit growth, weaken leveraged sectors and increase refinancing pressure.";
-  } else if(q.includes("construction")){
-    text = "Construction is highly rate-sensitive and remains vulnerable under tighter financing conditions.";
-  } else if(q.includes("retail")){
-    text = "Retail is vulnerable when inflation weakens household purchasing power and demand slows.";
-  } else if(q.includes("bank")){
-    text = "Banking pressure increases when credit quality weakens and funding conditions tighten.";
-  } else if(q.includes("currency") || q.includes("exchange")){
-    text = "Currency stress raises import costs, worsens inflation transmission and pressures external-balance-sensitive sectors.";
-  }
-
-  result.innerHTML = text;
+if(q.includes("inflation")){
+answer = "Inflation risk increasing globally. Central banks likely to maintain tighter policy."
 }
-</script>
 
-</body>
-</html>
+else if(q.includes("oil")){
+answer = "Oil price pressure indicates logistics and transport cost escalation."
+}
+
+else if(q.includes("interest")){
+answer = "Interest rate environment suggests tighter credit and slower growth."
+}
+
+else if(q.includes("market")){
+answer = "Markets currently sensitive to macro signals and liquidity tightening."
+}
+
+else if(q.includes("recession")){
+answer = "Recession probability rising if credit stress continues."
+}
+
+document.getElementById("result").innerHTML =
+"<div class='label'>Economic Lens Output</div><div class='value'>"+answer+"</div>"
+
+}
+
+</script></body>
+  </html>

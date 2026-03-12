@@ -1,5 +1,5 @@
 {
-  "globalRisk": 88,
+  "globalRisk": 99,
   "dominantDriver": "energy shock",
   "signals": [
     { "name": "Oil Price Surge", "severity": "high", "sector": "energy" },

@@ -1,341 +1,252 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZENTRA Economic Intelligence OS</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#030712;
-      --panel:#081120;
-      --line:#163052;
-      --text:#eef6ff;
-      --muted:#9bb3d9;
-      --cyan:#00d4ff;
-      --green:#19e68c;
-      --yellow:#f5b942;
-      --orange:#ff8a3d;
-      --red:#ff4d6d;
-    }
-    body{
-      font-family:Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
-        linear-gradient(180deg,#030712,#07111f 50%,#040914);
-      min-height:100vh;
-    }
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px 22px;
-      background:#060d1c;
-      border-bottom:1px solid var(--line);
-      position:sticky;
-      top:0;
-      z-index:20;
-    }
-    .brand{
-      color:var(--cyan);
-      font-size:22px;
-      font-weight:bold;
-      letter-spacing:.4px;
-    }
-    .menu a{
-      color:#dcecff;
-      text-decoration:none;
-      margin-left:18px;
-      font-size:14px;
-    }
-    .container{
-      max-width:1320px;
-      margin:auto;
-      padding:34px 20px 60px;
-    }
-    .hero{
-      margin-bottom:28px;
-    }
-    .hero h1{
-      color:var(--cyan);
-      font-size:44px;
-      margin-bottom:12px;
-      line-height:1.15;
-    }
-    .hero p{
-      color:var(--muted);
-      max-width:980px;
-      line-height:1.75;
-      font-size:16px;
-    }
-    .hero-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:18px;
-    }
-    .badge{
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      color:#dcecff;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:12px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:1.25fr 1fr 1fr;
-      gap:18px;
-      margin-top:22px;
-    }
-    .panel,.card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:20px;
-      box-shadow:0 10px 30px rgba(0,0,0,.18);
-    }
-    .label{
-      font-size:12px;
-      color:var(--muted);
-      text-transform:uppercase;
-      margin-bottom:8px;
-      letter-spacing:.8px;
-    }
-    .metric{
-      font-size:38px;
-      font-weight:bold;
-      color:var(--cyan);
-    }
-    .sub{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-    }
-    .state{
-      display:inline-block;
-      margin-top:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:bold;
-    }
-    .stable{background:rgba(25,230,140,.12);color:var(--green)}
-    .watch{background:rgba(245,185,66,.12);color:var(--yellow)}
-    .elevated{background:rgba(255,138,61,.12);color:var(--orange)}
-    .high{background:rgba(255,77,109,.12);color:var(--red)}
-    .section-title{
-      color:var(--cyan);
-      font-size:24px;
-      margin:28px 0 14px;
-    }
-    .modules{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-      margin-top:10px;
-    }
-    .module{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:22px;
-      text-decoration:none;
-      color:var(--text);
-      transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
-      box-shadow:0 10px 30px rgba(0,0,0,.18);
-    }
-    .module:hover{
-      transform:translateY(-3px);
-      border-color:#24528a;
-      box-shadow:0 14px 34px rgba(0,0,0,.24);
-    }
-    .module h3{
-      color:var(--cyan);
-      font-size:24px;
-      margin-bottom:10px;
-    }
-    .module p{
-      color:var(--muted);
-      line-height:1.7;
-      font-size:14px;
-      min-height:90px;
-    }
-    .module ul{
-      margin-top:12px;
-      padding-left:18px;
-      color:#dcecff;
-      line-height:1.8;
-      font-size:13px;
-    }
-    .row{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      margin-top:18px;
-    }
-    .mini{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:18px;
-    }
-    .mini strong{
-      display:block;
-      color:#fff;
-      margin-bottom:8px;
-      font-size:15px;
-    }
-    .mini span{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-    .footer-note{
-      margin-top:24px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.7;
-    }
-    @media(max-width:1100px){
-      .grid{grid-template-columns:1fr}
-      .modules{grid-template-columns:1fr}
-      .row{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:700px){
-      .menu{display:none}
-      .hero h1{font-size:34px}
-      .row{grid-template-columns:1fr}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Economic OS</title>
+
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#030712;
+--panel:#081120;
+--line:#163052;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#00d4ff;
+}
+
+body{
+font-family:Arial;
+color:var(--text);
+background:
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.08), transparent 25%),
+linear-gradient(180deg,#030712,#07111f);
+min-height:100vh;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px 20px;
+background:#060d1c;
+border-bottom:1px solid var(--line);
+}
+
+.brand{
+color:var(--cyan);
+font-size:22px;
+font-weight:bold;
+}
+
+.burger{
+width:44px;
+height:44px;
+border-radius:12px;
+border:1px solid var(--line);
+background:#081120;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:5px;
+cursor:pointer;
+}
+
+.burger span{
+width:20px;
+height:2px;
+background:white;
+}
+
+.drawer{
+position:fixed;
+right:-320px;
+top:0;
+width:300px;
+height:100%;
+background:#07111f;
+border-left:1px solid var(--line);
+padding:20px;
+transition:.25s;
+z-index:100;
+}
+
+.drawer.open{
+right:0;
+}
+
+.drawer h2{
+color:var(--cyan);
+margin-bottom:16px;
+}
+
+.drawer a{
+display:block;
+padding:14px;
+border:1px solid var(--line);
+border-radius:10px;
+margin-bottom:10px;
+text-decoration:none;
+color:white;
+background:#081120;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+display:none;
+z-index:90;
+}
+
+.overlay.show{
+display:block;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.hero h1{
+color:var(--cyan);
+font-size:40px;
+margin-bottom:12px;
+}
+
+.hero p{
+color:var(--muted);
+max-width:800px;
+line-height:1.7;
+}
+
+.modules{
+margin-top:40px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:14px;
+padding:20px;
+text-decoration:none;
+color:white;
+}
+
+.card h3{
+color:var(--cyan);
+margin-bottom:8px;
+}
+
+.card p{
+color:var(--muted);
+font-size:14px;
+line-height:1.6;
+}
+
+@media(max-width:900px){
+.modules{grid-template-columns:1fr}
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="topbar">
-    <div class="brand">ZENTRA</div>
-    <div class="menu">
-      <a href="/telescope">Telescope</a>
-      <a href="/risklens/dashboard.html">RiskLens</a>
-      <a href="/trade">Trade</a>
-    </div>
-  </div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-  <div class="container">
+<div class="drawer" id="drawer">
 
-    <div class="hero">
-      <h1>Economic Intelligence Operating System</h1>
-      <p>
-        ZENTRA, küreselde Economic Telescope olarak çalışan; özelde kurumlara entegre olan;
-        risk, baskı, fırsat, lojistik, sağlık, afet ve stratejik etkileri aynı çekirdekten
-        izleyen bir intelligence operating system yapısıdır. Bu ana ekran, sistemin merkezidir.
-      </p>
-      <div class="hero-badges">
-        <div class="badge">Global Telescope</div>
-        <div class="badge">Institution Intelligence</div>
-        <div class="badge">Risk Simulation</div>
-        <div class="badge">Lens Architecture</div>
-        <div class="badge">Decision Support</div>
-      </div>
-    </div>
+<h2>ZENTRA</h2>
 
-    <div class="grid">
-      <div class="panel">
-        <div class="label">Platform State</div>
-        <div class="metric">Live</div>
-        <div class="state stable">Core Active</div>
-        <div class="sub">
-          ZENTRA ana yüzeyi, Telescope, RiskLens ve Trade modüllerine merkezi erişim sağlar.
-          Sonraki aşamada veri omurgası ve lens motorları bu merkezden beslenecektir.
-        </div>
-      </div>
+<a href="/">Home</a>
 
-      <div class="card">
-        <div class="label">Global Focus</div>
-        <div class="metric">72</div>
-        <div class="state elevated">Risk Watch</div>
-        <div class="sub">Küresel baskı ve dominant driver takibi için Telescope merkezi kullanılır.</div>
-      </div>
+<a href="/telescope">
+<strong>Telescope</strong><br>
+Global economic radar
+</a>
 
-      <div class="card">
-        <div class="label">System Model</div>
-        <div class="metric" style="font-size:26px">C Model</div>
-        <div class="state watch">Main Hub</div>
-        <div class="sub">Ana ekran → Telescope → RiskLens → Trade akışı kilitlenmiştir.</div>
-      </div>
-    </div>
+<a href="/risklens/dashboard.html">
+<strong>RiskLens</strong><br>
+Risk intelligence platform
+</a>
 
-    <h2 class="section-title">Core Modules</h2>
+<a href="/trade">
+<strong>Trade Engine</strong><br>
+Trade execution layer
+</a>
 
-    <div class="modules">
-      <a class="module" href="/telescope">
-        <h3>Telescope</h3>
-        <p>
-          Dünyayı izleyen küresel gözlem katmanı. Enerji, lojistik, siber, makro ve operasyonel
-          baskıları mission control mantığında izler.
-        </p>
-        <ul>
-          <li>Global watch surface</li>
-          <li>Detected signals</li>
-          <li>Pressure structure</li>
-        </ul>
-      </a>
+</div>
 
-      <a class="module" href="/risklens/dashboard.html">
-        <h3>RiskLens</h3>
-        <p>
-          Risk analiz yüzeyi. Dashboard, signals, crisis radar, sectors, world map ve advisor
-          modülleri ile baskı ve kırılganlığı görünür hale getirir.
-        </p>
-        <ul>
-          <li>Dashboard</li>
-          <li>Signals</li>
-          <li>Crisis Radar</li>
-        </ul>
-      </a>
+<div class="topbar">
 
-      <a class="module" href="/trade">
-        <h3>Trade</h3>
-        <p>
-          Ticaret ve uygulama katmanı. Lojistik, enerji ve constraint etkilerini işleyerek
-          yürütülebilir trade mantığına geçiş yüzeyidir.
-        </p>
-        <ul>
-          <li>Trade engine surface</li>
-          <li>Execution logic</li>
-          <li>Route sensitivity</li>
-        </ul>
-      </a>
-    </div>
+<div class="brand">ZENTRA</div>
 
-    <h2 class="section-title">System Foundations</h2>
+<div class="burger" onclick="openMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div>
 
-    <div class="row">
-      <div class="mini">
-        <strong>Data Backbone</strong>
-        <span>Gerçek veri, doğrulama, normalizasyon ve signal üretimi altyapısı.</span>
-      </div>
-      <div class="mini">
-        <strong>Lens Architecture</strong>
-        <span>Sektör, kurum ve bağlama göre çalışan analiz motorları.</span>
-      </div>
-      <div class="mini">
-        <strong>Simulation</strong>
-        <span>Kısa, orta ve uzun vade için senaryo ve etki hesaplama katmanı.</span>
-      </div>
-      <div class="mini">
-        <strong>Decision Support</strong>
-        <span>Skor, tez, kanıt, güven ve aksiyon önerisi üreten karar mantığı.</span>
-      </div>
-    </div>
+</div>
 
-    <div class="footer-note">
-      ZENTRA ana ekranı merkez olarak kilitlenmiştir. Bundan sonraki geliştirme bu merkez yapının
-      üstüne ilerleyecektir; yeni yön değil, mevcut çekirdeğin derinleştirilmesi esas alınacaktır.
-    </div>
+<div class="container">
 
-  </div>
+<div class="hero">
+<h1>Economic Intelligence Operating System</h1>
+
+<p>
+ZENTRA is a global economic intelligence platform combining
+telescope observation, risk analysis and trade execution
+into one unified system.
+</p>
+</div>
+
+<div class="modules">
+
+<a class="card" href="/telescope">
+<h3>Telescope</h3>
+<p>Global observation layer monitoring macro pressure,
+energy, logistics and systemic signals.</p>
+</a>
+
+<a class="card" href="/risklens/dashboard.html">
+<h3>RiskLens</h3>
+<p>Risk analysis interface including dashboard,
+signals, crisis radar and sector pressure.</p>
+</a>
+
+<a class="card" href="/trade">
+<h3>Trade</h3>
+<p>Trade execution layer translating signals
+into logistics and commercial actions.</p>
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+function openMenu(){
+document.getElementById("drawer").classList.add("open");
+document.getElementById("overlay").classList.add("show");
+}
+
+function closeMenu(){
+document.getElementById("drawer").classList.remove("open");
+document.getElementById("overlay").classList.remove("show");
+}
+
+</script>
 
 </body>
-      </html>
+</html>

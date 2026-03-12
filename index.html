@@ -1,145 +1,103 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Mission Control</title>
+<title>ZENTRA Economic Intelligence OS</title>
 
 <style>
+
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
 --bg:#030712;
---panel:#081120;
---panel2:#0d1a2d;
---line:#19385f;
+--panel:#0b172a;
+--panel2:#13223d;
+--line:#213d66;
 --text:#eef6ff;
 --muted:#9bb3d9;
 --cyan:#00d4ff;
---cyan2:#7ce9ff;
 --green:#19e68c;
 --yellow:#f5b942;
 --orange:#ff8a3d;
 --red:#ff4d6d;
---shadow:0 20px 50px rgba(0,0,0,.45);
-}
-
-html,body{
-min-height:100%;
 }
 
 body{
-font-family:Arial,sans-serif;
+font-family:Arial;
 color:var(--text);
 background:
 radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
 linear-gradient(180deg,#030712,#07111f 50%,#040914);
-overflow-x:hidden;
 }
 
-body.menu-open{
-overflow:hidden;
-}
+/* TOP BAR */
 
 .topbar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:16px 20px;
-background:rgba(6,13,28,.92);
-backdrop-filter:blur(10px);
+padding:18px 22px;
+background:#060d1c;
 border-bottom:1px solid var(--line);
 position:sticky;
 top:0;
-z-index:60;
+z-index:50;
 }
 
 .brand{
-color:var(--cyan);
 font-size:22px;
 font-weight:bold;
-letter-spacing:.4px;
+color:var(--cyan);
 }
 
-.top-right{
+.actions{
 display:flex;
+gap:14px;
 align-items:center;
-gap:12px;
 }
 
-.top-link{
-color:#dcecff;
+.actions a{
 text-decoration:none;
+color:#dcecff;
 font-size:14px;
-padding:10px 12px;
-border-radius:10px;
-border:1px solid transparent;
 }
 
-.top-link:hover{
-border-color:var(--line);
-background:rgba(255,255,255,.03);
-}
+/* HAMBURGER */
 
 .burger{
 width:48px;
 height:48px;
 border-radius:14px;
 border:1px solid var(--line);
+background:#0c1629;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 gap:5px;
 cursor:pointer;
-background:linear-gradient(180deg,#0a1526,#081120);
-box-shadow:0 8px 24px rgba(0,0,0,.25);
-transition:transform .18s ease,border-color .18s ease,background .18s ease;
-}
-
-.burger:hover{
-transform:translateY(-1px);
-border-color:#2e5d95;
-background:linear-gradient(180deg,#0d1b31,#091426);
 }
 
 .burger span{
 width:20px;
 height:2px;
-background:#fff;
-border-radius:999px;
+background:white;
 display:block;
 }
 
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(1,6,16,.58);
-backdrop-filter:blur(4px);
-opacity:0;
-pointer-events:none;
-transition:opacity .24s ease;
-z-index:80;
-}
-
-.overlay.show{
-opacity:1;
-pointer-events:auto;
-}
+/* DRAWER */
 
 .drawer{
 position:fixed;
 top:0;
 right:-380px;
-width:350px;
+width:360px;
 height:100vh;
-background:
-linear-gradient(180deg,rgba(6,13,28,.98),rgba(7,17,31,.98)),
-radial-gradient(circle at top right, rgba(0,212,255,.08), transparent 20%);
+background:var(--panel2);
 border-left:1px solid var(--line);
-box-shadow:var(--shadow);
-padding:18px 16px 24px;
-transition:right .28s ease;
+padding:20px;
+transition:.3s;
 z-index:100;
 overflow-y:auto;
 }
@@ -148,260 +106,86 @@ overflow-y:auto;
 right:0;
 }
 
-.drawer-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:14px;
-padding-bottom:12px;
-border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-.drawer-title{
-display:flex;
-flex-direction:column;
-gap:3px;
-}
-
-.drawer-title strong{
-color:var(--cyan);
-font-size:22px;
-letter-spacing:.3px;
-}
-
-.drawer-title span{
-color:var(--muted);
-font-size:12px;
-}
-
-.close-btn{
-width:44px;
-height:44px;
-border:none;
-border-radius:12px;
-background:linear-gradient(180deg,#0a1526,#081120);
-border:1px solid var(--line);
-color:#fff;
-font-size:20px;
-cursor:pointer;
-}
-
-.search-wrap{
-position:relative;
-margin-bottom:14px;
-}
-
-.search-icon{
-position:absolute;
-left:14px;
-top:50%;
-transform:translateY(-50%);
-font-size:16px;
-opacity:.9;
-}
-
-.search-input{
-width:100%;
-padding:13px 14px 13px 40px;
-border-radius:14px;
-border:1px solid var(--line);
-background:#030712;
-color:#fff;
-font-size:14px;
-outline:none;
-}
-
-.search-input:focus{
-border-color:#2e5d95;
-box-shadow:0 0 0 3px rgba(0,212,255,.08);
-}
-
-.search-help{
-margin-top:8px;
-font-size:12px;
-color:var(--muted);
-line-height:1.5;
-}
-
-.drawer-section-title{
-margin:18px 4px 10px;
-color:var(--cyan2);
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:1px;
-}
-
-.quick-link{
-display:block;
-text-decoration:none;
-color:#eef6ff;
-background:linear-gradient(180deg,#0a1526,#081120);
-border:1px solid rgba(255,255,255,.06);
-border-radius:14px;
-padding:14px;
-margin-bottom:10px;
-line-height:1.45;
-transition:transform .15s ease,border-color .15s ease,background .15s ease;
-}
-
-.quick-link:hover{
-transform:translateX(-2px);
-border-color:#2e5d95;
-background:linear-gradient(180deg,#0d1b31,#091426);
-}
-
-.quick-link strong{
-display:block;
-color:var(--cyan);
-margin-bottom:4px;
-font-size:15px;
-}
-
-.quick-link span{
-color:var(--muted);
-font-size:12px;
-}
-
-.accordion{
-margin-top:8px;
-}
-
-.acc-item{
-border:1px solid rgba(255,255,255,.06);
-border-radius:14px;
-background:linear-gradient(180deg,#0a1526,#081120);
-margin-bottom:10px;
-overflow:hidden;
-}
-
-.acc-head{
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px;
-background:transparent;
-border:none;
-color:#eef6ff;
-cursor:pointer;
-text-align:left;
-}
-
-.acc-head-left strong{
-display:block;
-color:var(--cyan);
-font-size:15px;
-margin-bottom:4px;
-}
-
-.acc-head-left span{
-display:block;
-font-size:12px;
-color:var(--muted);
-}
-
-.acc-icon{
-font-size:20px;
-color:#dcecff;
-min-width:20px;
-text-align:center;
-}
-
-.acc-body{
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
 display:none;
-padding:0 12px 12px;
-background:rgba(255,255,255,.02);
-border-top:1px solid rgba(255,255,255,.05);
+z-index:80;
 }
 
-.acc-body.open{
+.overlay.show{
 display:block;
-animation:fadeDown .18s ease;
 }
 
-.acc-body a{
+.section{
+margin-top:18px;
+}
+
+.section h3{
+color:var(--cyan);
+margin-bottom:10px;
+font-size:16px;
+}
+
+.menu-link{
 display:block;
+padding:14px;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:12px;
+margin-bottom:8px;
 text-decoration:none;
-color:#dcecff;
-padding:12px 10px;
-border-radius:10px;
-margin-top:8px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.04);
+color:white;
 font-size:14px;
-transition:background .15s ease,border-color .15s ease,transform .15s ease;
 }
 
-.acc-body a:hover{
-background:rgba(255,255,255,.05);
-border-color:#2e5d95;
-transform:translateX(2px);
+.menu-link strong{
+color:var(--cyan);
+display:block;
 }
+
+/* SEARCH */
+
+.search{
+margin-bottom:14px;
+}
+
+.search input{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid var(--line);
+background:#020817;
+color:white;
+}
+
+/* HERO */
 
 .container{
 max-width:1200px;
 margin:auto;
-padding:32px 20px 60px;
+padding:30px 20px;
 }
 
 .hero h1{
-font-size:40px;
+font-size:42px;
 color:var(--cyan);
 margin-bottom:10px;
 }
 
 .hero p{
 color:var(--muted);
+max-width:900px;
 line-height:1.7;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-margin-top:28px;
-}
-
-.card{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:16px;
-padding:18px;
-box-shadow:0 10px 30px rgba(0,0,0,.18);
-}
-
-.label{
-font-size:12px;
-color:var(--muted);
-margin-bottom:6px;
-text-transform:uppercase;
-letter-spacing:.8px;
-}
-
-.metric{
-font-size:34px;
-color:var(--cyan);
-font-weight:bold;
-}
-
-.state{
-display:inline-block;
-margin-top:10px;
-padding:6px 10px;
-border-radius:999px;
-font-size:12px;
-font-weight:bold;
-}
-
-.stable{background:rgba(25,230,140,.12);color:var(--green)}
-.watch{background:rgba(245,185,66,.12);color:var(--yellow)}
-.elevated{background:rgba(255,138,61,.12);color:var(--orange)}
-.high{background:rgba(255,77,109,.12);color:var(--red)}
+/* MODULES */
 
 .modules{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:18px;
+gap:20px;
 margin-top:30px;
 }
 
@@ -411,50 +195,39 @@ border:1px solid var(--line);
 border-radius:16px;
 padding:22px;
 text-decoration:none;
-color:var(--text);
-box-shadow:0 10px 30px rgba(0,0,0,.18);
-transition:transform .15s ease,border-color .15s ease;
-}
-
-.module:hover{
-transform:translateY(-2px);
-border-color:#2e5d95;
+color:white;
 }
 
 .module h3{
 color:var(--cyan);
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .module p{
 color:var(--muted);
-font-size:14px;
 line-height:1.6;
 }
 
-.note{
-margin-top:28px;
+/* MISSION */
+
+.mission{
+margin-top:40px;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:16px;
+padding:24px;
+}
+
+.mission h2{
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.mission p{
 color:var(--muted);
-font-size:13px;
 line-height:1.7;
 }
 
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-4px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-@media(max-width:980px){
-.grid{grid-template-columns:1fr 1fr}
-.modules{grid-template-columns:1fr}
-}
-
-@media(max-width:640px){
-.grid{grid-template-columns:1fr}
-.hero h1{font-size:32px}
-.drawer{width:300px}
-.top-link{display:none}
-}
 </style>
 </head>
 
@@ -464,243 +237,202 @@ to{opacity:1;transform:translateY(0)}
 
 <div class="drawer" id="drawer">
 
-  <div class="drawer-head">
-    <div class="drawer-title">
-      <strong>ZENTRA</strong>
-      <span>Mission Navigation Layer</span>
-    </div>
-    <button class="close-btn" onclick="closeMenu()">×</button>
-  </div>
+<div class="search">
+<input type="text" placeholder="Search site or lens...">
+</div>
 
-  <div class="search-wrap">
-    <div class="search-icon">🔎</div>
-    <input id="menuSearch" class="search-input" type="text" placeholder="Lens, module, signal ara" onkeydown="handleSearch(event)">
-    <div class="search-help">Enter ile lens veya modül ara. Örnek: inflation, oil, trade, crisis</div>
-  </div>
+<div class="section">
+<h3>General AI</h3>
 
-  <div class="drawer-section-title">Quick Access</div>
+<a class="menu-link" href="#">
+<strong>General Assistant</strong>
+ChatGPT-style assistant for writing, questions and research.
+</a>
 
-  <a class="quick-link" href="/">
-    <strong>Mission Control</strong>
-    <span>Main economic intelligence center</span>
-  </a>
+</div>
 
-  <a class="quick-link" href="/telescope">
-    <strong>Global Telescope</strong>
-    <span>Planetary scale economic observation</span>
-  </a>
+<div class="section">
+<h3>Economic AI</h3>
 
-  <a class="quick-link" href="/trade">
-    <strong>Trade Engine</strong>
-    <span>Trade execution and orchestration layer</span>
-  </a>
+<a class="menu-link" href="/risklens.html">
+<strong>RiskLens</strong>
+Global economic risk intelligence system.
+</a>
 
-  <a class="quick-link" href="/risklens.html">
-    <strong>RiskLens Home</strong>
-    <span>Risk intelligence module hub</span>
-  </a>
+<a class="menu-link" href="/risklens/dashboard.html">
+<strong>Dashboard</strong>
+Global risk monitoring surface.
+</a>
 
-  <div class="drawer-section-title">Expandable Navigation</div>
+<a class="menu-link" href="/risklens/signals.html">
+<strong>Signals</strong>
+Macro indicators and pressure signals.
+</a>
 
-  <div class="accordion">
+<a class="menu-link" href="/risklens/crisis.html">
+<strong>Crisis Radar</strong>
+Systemic shock detection.
+</a>
 
-    <div class="acc-item">
-      <button class="acc-head" onclick="toggleAcc('risklensMenu', this)">
-        <div class="acc-head-left">
-          <strong>RiskLens</strong>
-          <span>Risk analysis surfaces</span>
-        </div>
-        <div class="acc-icon">+</div>
-      </button>
-      <div class="acc-body" id="risklensMenu">
-        <a href="/risklens/dashboard.html">Dashboard</a>
-        <a href="/risklens/signals.html">Signals</a>
-        <a href="/risklens/crisis.html">Crisis Radar</a>
-        <a href="/risklens/worldmap.html">World Map</a>
-        <a href="/risklens/sectors.html">Sector Pressure</a>
-        <a href="/risklens/advisor.html">Economic Advisor</a>
-      </div>
-    </div>
+<a class="menu-link" href="/risklens/worldmap.html">
+<strong>World Map</strong>
+Global economic risk visualization.
+</a>
 
-    <div class="acc-item">
-      <button class="acc-head" onclick="toggleAcc('lensMenu', this)">
-        <div class="acc-head-left">
-          <strong>Lens Library</strong>
-          <span>Grouped lens navigation</span>
-        </div>
-        <div class="acc-icon">+</div>
-      </button>
-      <div class="acc-body" id="lensMenu">
-        <a href="/risklens/advisor.html">Macro Lenses</a>
-        <a href="/risklens/advisor.html">Market Lenses</a>
-        <a href="/risklens/advisor.html">Commodity Lenses</a>
-        <a href="/risklens/advisor.html">Trade Lenses</a>
-        <a href="/risklens/advisor.html">Sector Lenses</a>
-        <a href="/risklens/advisor.html">Health Lenses</a>
-        <a href="/risklens/advisor.html">Disaster Lenses</a>
-        <a href="/risklens/advisor.html">Cyber Lenses</a>
-        <a href="/risklens/advisor.html">Geo-Economic Lenses</a>
-      </div>
-    </div>
+</div>
 
-    <div class="acc-item">
-      <button class="acc-head" onclick="toggleAcc('signalMenu', this)">
-        <div class="acc-head-left">
-          <strong>Signals & Monitoring</strong>
-          <span>Live pressure and watch layers</span>
-        </div>
-        <div class="acc-icon">+</div>
-      </button>
-      <div class="acc-body" id="signalMenu">
-        <a href="/telescope">Planetary Surface</a>
-        <a href="/risklens/signals.html">Signal Surface</a>
-        <a href="/risklens/crisis.html">Crisis Monitoring</a>
-        <a href="/risklens/worldmap.html">Global Risk Map</a>
-      </div>
-    </div>
+<div class="section">
+<h3>Platform</h3>
 
-  </div>
+<a class="menu-link" href="/telescope">
+<strong>Global Telescope</strong>
+Planetary scale economic observation system.
+</a>
+
+<a class="menu-link" href="/trade">
+<strong>Trade Engine</strong>
+Global trade orchestration layer.
+</a>
+
+</div>
+
+<div class="section">
+<h3>Company</h3>
+
+<a class="menu-link" href="#">
+<strong>About ZENTRA</strong>
+Economic intelligence operating system.
+</a>
+
+<a class="menu-link" href="#">
+<strong>Mission</strong>
+Transform global signals into decisions.
+</a>
+
+<a class="menu-link" href="#">
+<strong>Vision</strong>
+Build the global economic telescope.
+</a>
+
+</div>
+
+<div class="section">
+<h3>User</h3>
+
+<a class="menu-link" href="#">Login</a>
+<a class="menu-link" href="#">Register</a>
+
+</div>
+
+<div class="section">
+<h3>Language</h3>
+
+<select style="width:100%;padding:10px;border-radius:10px;background:#020817;color:white;border:1px solid var(--line)">
+<option>English</option>
+<option>Türkçe</option>
+<option>العربية</option>
+<option>Deutsch</option>
+<option>Français</option>
+<option>Español</option>
+</select>
+
+</div>
 
 </div>
 
 <div class="topbar">
-  <div class="brand">ZENTRA Mission Control</div>
-  <div class="top-right">
-    <a class="top-link" href="/telescope">Telescope</a>
-    <a class="top-link" href="/risklens.html">RiskLens</a>
-    <a class="top-link" href="/trade">Trade</a>
-    <div class="burger" onclick="openMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
+
+<div class="brand">ZENTRA</div>
+
+<div class="actions">
+
+<a href="/risklens.html">RiskLens</a>
+<a href="/telescope">Telescope</a>
+<a href="/trade">Trade</a>
+
+<div class="burger" onclick="openMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+</div>
+
 </div>
 
 <div class="container">
 
-  <div class="hero">
-    <h1>ZENTRA Economic Intelligence OS</h1>
-    <p>
-      Global economic intelligence platform observing risk, markets, sectors and systemic
-      pressure across the world. Mission Control is the central navigation surface of the system.
-    </p>
-  </div>
+<div class="hero">
 
-  <div class="grid">
+<h1>ZENTRA Economic Intelligence OS</h1>
 
-    <div class="card">
-      <div class="label">Global Risk</div>
-      <div class="metric">72</div>
-      <div class="state elevated">Elevated</div>
-    </div>
+<p>
+ZENTRA is a global economic intelligence operating system that combines
+economic observation, multi-lens analysis, institutional decision support
+and trade execution into one platform.
+</p>
 
-    <div class="card">
-      <div class="label">Inflation Pressure</div>
-      <div class="metric">5.4%</div>
-      <div class="state watch">Sticky</div>
-    </div>
+</div>
 
-    <div class="card">
-      <div class="label">Credit Stress</div>
-      <div class="metric">61</div>
-      <div class="state watch">Moderate</div>
-    </div>
+<div class="modules">
 
-    <div class="card">
-      <div class="label">Market Volatility</div>
-      <div class="metric">58</div>
-      <div class="state stable">Stable</div>
-    </div>
+<a class="module" href="/risklens.html">
+<h3>RiskLens</h3>
+<p>
+Global risk intelligence system analyzing inflation, credit stress,
+sectors and systemic pressure.
+</p>
+</a>
 
-  </div>
+<a class="module" href="/telescope">
+<h3>Global Telescope</h3>
+<p>
+Planetary scale monitoring of economic, logistic and commodity signals.
+</p>
+</a>
 
-  <div class="modules">
+<a class="module" href="/trade">
+<h3>Trade Engine</h3>
+<p>
+Trade orchestration layer connecting economic insight with real trade.
+</p>
+</a>
 
-    <a class="module" href="/risklens.html">
-      <h3>RiskLens</h3>
-      <p>Global risk intelligence system and economic analysis surface.</p>
-    </a>
+</div>
 
-    <a class="module" href="/telescope">
-      <h3>Global Telescope</h3>
-      <p>Planetary scale economic observation and signal monitoring.</p>
-    </a>
+<div class="mission">
 
-    <a class="module" href="/trade">
-      <h3>Trade Engine</h3>
-      <p>Trade execution system for global logistics and commerce.</p>
-    </a>
+<h2>Mission</h2>
 
-  </div>
+<p>
+Transform global economic signals into actionable intelligence for
+institutions, governments and markets.
+</p>
 
-  <div class="note">
-    Hamburger menü; koyu katman, akıcı kayma animasyonu, arama kutusu ve açılır grup yapısıyla
-    yeniden tasarlanmıştır. Lens sayısı büyüdüğünde dağılmadan yönetilebilir.
-  </div>
+<h2 style="margin-top:20px">Vision</h2>
+
+<p>
+Build the world’s first economic telescope capable of observing systemic
+risk, sector pressure and trade opportunity across the planet.
+</p>
+
+</div>
 
 </div>
 
 <script>
+
 function openMenu(){
-  document.getElementById("drawer").classList.add("open");
-  document.getElementById("overlay").classList.add("show");
-  document.body.classList.add("menu-open");
+document.getElementById("drawer").classList.add("open");
+document.getElementById("overlay").classList.add("show");
 }
 
 function closeMenu(){
-  document.getElementById("drawer").classList.remove("open");
-  document.getElementById("overlay").classList.remove("show");
-  document.body.classList.remove("menu-open");
+document.getElementById("drawer").classList.remove("open");
+document.getElementById("overlay").classList.remove("show");
 }
 
-function toggleAcc(id, btn){
-  const body = document.getElementById(id);
-  const icon = btn.querySelector(".acc-icon");
-  body.classList.toggle("open");
-  icon.textContent = body.classList.contains("open") ? "−" : "+";
-}
-
-function handleSearch(event){
-  if(event.key !== "Enter") return;
-
-  const q = event.target.value.toLowerCase().trim();
-
-  if(!q) return;
-
-  if(q.includes("inflation") || q.includes("macro") || q.includes("interest")){
-    window.location.href = "/risklens/advisor.html";
-    return;
-  }
-
-  if(q.includes("signal") || q.includes("oil") || q.includes("gold") || q.includes("rate")){
-    window.location.href = "/risklens/signals.html";
-    return;
-  }
-
-  if(q.includes("crisis") || q.includes("risk") || q.includes("shock")){
-    window.location.href = "/risklens/crisis.html";
-    return;
-  }
-
-  if(q.includes("map") || q.includes("world") || q.includes("global")){
-    window.location.href = "/risklens/worldmap.html";
-    return;
-  }
-
-  if(q.includes("trade") || q.includes("logistics") || q.includes("shipping")){
-    window.location.href = "/trade";
-    return;
-  }
-
-  if(q.includes("lens")){
-    window.location.href = "/risklens/advisor.html";
-    return;
-  }
-
-  window.location.href = "/risklens.html";
-}
 </script>
 
 </body>
-  </html>
+</html>

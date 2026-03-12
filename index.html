@@ -515,6 +515,33 @@ function closeMenu(){
   document.getElementById("overlay").classList.remove("show");
 }
 </script>
+<script>
 
+async function loadGlobalSignals(){
+
+  try{
+
+    const response = await fetch("/data/global-signals.json");
+    const data = await response.json();
+
+    console.log("ZENTRA DATA ENGINE:",data);
+
+    // Global risk skorunu güncelle
+    const riskMetric = document.querySelector(".metric");
+    if(riskMetric){
+      riskMetric.textContent = data.globalRisk;
+    }
+
+  }catch(err){
+
+    console.log("Data engine error:",err);
+
+  }
+
+}
+
+loadGlobalSignals();
+
+</script>
 </body>
   </html>

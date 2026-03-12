@@ -1,0 +1,14 @@
+{
+  "risk_score": 72,
+  "risk_level": "Elevated",
+  "driver": "Oil shock + logistics stress",
+
+  "oil": 82,
+  "gold": 2310,
+  "interest_rate": 4.8,
+  "sp500": 5180,
+
+  "inflation": 5.4,
+  "credit_stress": 61,
+  "volatility": 58
+}

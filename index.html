@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Economic Intelligence OS</title>
+<title>ZENTRA Mission Control</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,6 +11,7 @@
 :root{
 --bg:#030712;
 --panel:#081120;
+--panel2:#0b1628;
 --line:#163052;
 --text:#eef6ff;
 --muted:#9bb3d9;
@@ -39,6 +40,7 @@ background:#060d1c;
 border-bottom:1px solid var(--line);
 position:sticky;
 top:0;
+z-index:50;
 }
 
 .brand{
@@ -67,29 +69,78 @@ height:2px;
 background:#fff;
 }
 
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:none;
+z-index:80;
+}
+
+.overlay.show{
+display:block;
+}
+
 .drawer{
 position:fixed;
 top:0;
-right:-320px;
-width:300px;
+right:-360px;
+width:330px;
 height:100vh;
 background:#07111f;
 border-left:1px solid var(--line);
-padding:22px;
-transition:.25s;
+padding:20px 16px 24px;
+transition:right .25s ease;
 z-index:100;
+overflow-y:auto;
+box-shadow:-20px 0 40px rgba(0,0,0,.35);
 }
 
 .drawer.open{
 right:0;
 }
 
-.drawer h2{
-color:var(--cyan);
-margin-bottom:20px;
+.drawer-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
 }
 
-.drawer a{
+.drawer-title{
+color:var(--cyan);
+font-size:22px;
+font-weight:bold;
+}
+
+.close-btn{
+width:42px;
+height:42px;
+border:none;
+border-radius:12px;
+background:#081120;
+border:1px solid var(--line);
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+.drawer-search{
+margin-bottom:14px;
+}
+
+.drawer-search input{
+width:100%;
+padding:12px 14px;
+border-radius:12px;
+border:1px solid var(--line);
+background:#030712;
+color:#fff;
+font-size:14px;
+outline:none;
+}
+
+.quick-link{
 display:block;
 text-decoration:none;
 color:#eef6ff;
@@ -98,23 +149,88 @@ border:1px solid var(--line);
 border-radius:12px;
 padding:14px;
 margin-bottom:10px;
+line-height:1.5;
 }
 
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.5);
-display:none;
-}
-
-.overlay.show{
+.quick-link strong{
 display:block;
+color:var(--cyan);
+margin-bottom:4px;
+font-size:15px;
+}
+
+.accordion{
+margin-top:10px;
+}
+
+.acc-item{
+border:1px solid var(--line);
+border-radius:12px;
+background:var(--panel);
+margin-bottom:10px;
+overflow:hidden;
+}
+
+.acc-head{
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px;
+background:transparent;
+border:none;
+color:#eef6ff;
+cursor:pointer;
+font-size:15px;
+text-align:left;
+}
+
+.acc-head strong{
+color:var(--cyan);
+display:block;
+font-size:15px;
+}
+
+.acc-head span{
+color:var(--muted);
+font-size:12px;
+display:block;
+margin-top:3px;
+}
+
+.acc-icon{
+font-size:18px;
+color:#dcecff;
+margin-left:12px;
+}
+
+.acc-body{
+display:none;
+padding:0 12px 12px;
+background:var(--panel2);
+border-top:1px solid rgba(255,255,255,.04);
+}
+
+.acc-body.open{
+display:block;
+}
+
+.acc-body a{
+display:block;
+text-decoration:none;
+color:#dcecff;
+padding:12px 10px;
+border-radius:10px;
+margin-top:8px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.04);
+font-size:14px;
 }
 
 .container{
 max-width:1200px;
 margin:auto;
-padding:32px 20px;
+padding:32px 20px 60px;
 }
 
 .hero h1{
@@ -127,6 +243,46 @@ margin-bottom:10px;
 color:var(--muted);
 line-height:1.7;
 }
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-top:28px;
+}
+
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+}
+
+.label{
+font-size:12px;
+color:var(--muted);
+margin-bottom:6px;
+text-transform:uppercase;
+}
+
+.metric{
+font-size:34px;
+color:var(--cyan);
+font-weight:bold;
+}
+
+.state{
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:999px;
+font-size:12px;
+}
+
+.stable{background:rgba(25,230,140,.12);color:var(--green)}
+.watch{background:rgba(245,185,66,.12);color:var(--yellow)}
+.elevated{background:rgba(255,138,61,.12);color:var(--orange)}
+.high{background:rgba(255,77,109,.12);color:var(--red)}
 
 .modules{
 display:grid;
@@ -155,161 +311,213 @@ font-size:14px;
 line-height:1.6;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-margin-top:30px;
-}
-
-.card{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:16px;
-padding:18px;
-}
-
-.label{
-font-size:12px;
+.note{
+margin-top:28px;
 color:var(--muted);
-margin-bottom:6px;
+font-size:13px;
+line-height:1.7;
 }
 
-.metric{
-font-size:34px;
-color:var(--cyan);
-font-weight:bold;
-}
-
-.state{
-display:inline-block;
-margin-top:10px;
-padding:6px 10px;
-border-radius:999px;
-font-size:12px;
-}
-
-.stable{background:rgba(25,230,140,.12);color:var(--green)}
-.watch{background:rgba(245,185,66,.12);color:var(--yellow)}
-.elevated{background:rgba(255,138,61,.12);color:var(--orange)}
-.high{background:rgba(255,77,109,.12);color:var(--red)}
-
-@media(max-width:900px){
-.modules{grid-template-columns:1fr}
+@media(max-width:980px){
 .grid{grid-template-columns:1fr 1fr}
+.modules{grid-template-columns:1fr}
+}
+
+@media(max-width:640px){
+.grid{grid-template-columns:1fr}
+.hero h1{font-size:32px}
+.drawer{width:300px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="overlay"></div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="drawer" id="drawer">
 
-<h2>ZENTRA</h2>
+  <div class="drawer-head">
+    <div class="drawer-title">ZENTRA</div>
+    <button class="close-btn" onclick="closeMenu()">×</button>
+  </div>
 
-<a href="/risklens.html">
-<strong>RiskLens</strong>
-Risk intelligence system
-</a>
+  <div class="drawer-search">
+    <input type="text" placeholder="Search lens / module">
+  </div>
 
-<a href="/telescope">
-<strong>Global Telescope</strong>
-Macro economic observation
-</a>
+  <a class="quick-link" href="/">
+    <strong>Mission Control</strong>
+    Main economic intelligence center
+  </a>
 
-<a href="/trade">
-<strong>Trade Engine</strong>
-Trade orchestration layer
-</a>
+  <a class="quick-link" href="/telescope">
+    <strong>Global Telescope</strong>
+    Planetary scale economic observation
+  </a>
+
+  <a class="quick-link" href="/trade">
+    <strong>Trade Engine</strong>
+    Trade execution and orchestration layer
+  </a>
+
+  <a class="quick-link" href="/risklens.html">
+    <strong>RiskLens Home</strong>
+    Risk intelligence module hub
+  </a>
+
+  <div class="accordion">
+
+    <div class="acc-item">
+      <button class="acc-head" onclick="toggleAcc('risklensMenu', this)">
+        <div>
+          <strong>RiskLens</strong>
+          <span>Risk analysis surfaces</span>
+        </div>
+        <div class="acc-icon">+</div>
+      </button>
+      <div class="acc-body" id="risklensMenu">
+        <a href="/risklens/dashboard.html">Dashboard</a>
+        <a href="/risklens/signals.html">Signals</a>
+        <a href="/risklens/crisis.html">Crisis Radar</a>
+        <a href="/risklens/worldmap.html">World Map</a>
+        <a href="/risklens/sectors.html">Sector Pressure</a>
+        <a href="/risklens/advisor.html">Economic Advisor</a>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-head" onclick="toggleAcc('lensMenu', this)">
+        <div>
+          <strong>Lens Library</strong>
+          <span>Grouped lens navigation</span>
+        </div>
+        <div class="acc-icon">+</div>
+      </button>
+      <div class="acc-body" id="lensMenu">
+        <a href="/risklens/advisor.html">Macro Lenses</a>
+        <a href="/risklens/advisor.html">Market Lenses</a>
+        <a href="/risklens/advisor.html">Commodity Lenses</a>
+        <a href="/risklens/advisor.html">Trade Lenses</a>
+        <a href="/risklens/advisor.html">Sector Lenses</a>
+        <a href="/risklens/advisor.html">Health Lenses</a>
+        <a href="/risklens/advisor.html">Disaster Lenses</a>
+        <a href="/risklens/advisor.html">Cyber Lenses</a>
+        <a href="/risklens/advisor.html">Geo-Economic Lenses</a>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-head" onclick="toggleAcc('signalMenu', this)">
+        <div>
+          <strong>Signals & Monitoring</strong>
+          <span>Live pressure and watch layers</span>
+        </div>
+        <div class="acc-icon">+</div>
+      </button>
+      <div class="acc-body" id="signalMenu">
+        <a href="/telescope">Planetary Surface</a>
+        <a href="/risklens/signals.html">Signal Surface</a>
+        <a href="/risklens/crisis.html">Crisis Monitoring</a>
+        <a href="/risklens/worldmap.html">Global Risk Map</a>
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
 <div class="topbar">
-
-<div class="brand">
-ZENTRA
-</div>
-
-<div class="burger" onclick="toggleMenu()">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
+  <div class="brand">ZENTRA Mission Control</div>
+  <div class="burger" onclick="openMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
 
 <div class="container">
 
-<div class="hero">
-<h1>ZENTRA Economic Intelligence OS</h1>
-<p>
-Global economic intelligence platform observing risk,
-markets, sectors and systemic pressure across the world.
-</p>
-</div>
+  <div class="hero">
+    <h1>ZENTRA Economic Intelligence OS</h1>
+    <p>
+      Global economic intelligence platform observing risk, markets, sectors and systemic
+      pressure across the world. Mission Control is the central navigation surface of the system.
+    </p>
+  </div>
 
-<div class="modules">
+  <div class="grid">
 
-<a class="module" href="/risklens.html">
-<h3>RiskLens</h3>
-<p>Global risk intelligence system and economic analysis surface.</p>
-</a>
+    <div class="card">
+      <div class="label">Global Risk</div>
+      <div class="metric">72</div>
+      <div class="state elevated">Elevated</div>
+    </div>
 
-<a class="module" href="/telescope">
-<h3>Global Telescope</h3>
-<p>Planetary scale economic observation layer.</p>
-</a>
+    <div class="card">
+      <div class="label">Inflation Pressure</div>
+      <div class="metric">5.4%</div>
+      <div class="state watch">Sticky</div>
+    </div>
 
-<a class="module" href="/trade">
-<h3>Trade Engine</h3>
-<p>Trade orchestration system for global commerce.</p>
-</a>
+    <div class="card">
+      <div class="label">Credit Stress</div>
+      <div class="metric">61</div>
+      <div class="state watch">Moderate</div>
+    </div>
 
-</div>
+    <div class="card">
+      <div class="label">Market Volatility</div>
+      <div class="metric">58</div>
+      <div class="state stable">Stable</div>
+    </div>
 
-<div class="grid">
+  </div>
 
-<div class="card">
-<div class="label">Global Risk</div>
-<div class="metric">72</div>
-<div class="state elevated">Elevated</div>
-</div>
+  <div class="modules">
 
-<div class="card">
-<div class="label">Inflation Pressure</div>
-<div class="metric">5.4%</div>
-<div class="state watch">Sticky</div>
-</div>
+    <a class="module" href="/risklens.html">
+      <h3>RiskLens</h3>
+      <p>Global risk intelligence system and economic analysis surface.</p>
+    </a>
 
-<div class="card">
-<div class="label">Credit Stress</div>
-<div class="metric">61</div>
-<div class="state watch">Moderate</div>
-</div>
+    <a class="module" href="/telescope">
+      <h3>Global Telescope</h3>
+      <p>Planetary scale economic observation and signal monitoring.</p>
+    </a>
 
-<div class="card">
-<div class="label">Market Volatility</div>
-<div class="metric">58</div>
-<div class="state stable">Stable</div>
-</div>
+    <a class="module" href="/trade">
+      <h3>Trade Engine</h3>
+      <p>Trade execution system for global logistics and commerce.</p>
+    </a>
 
-</div>
+  </div>
+
+  <div class="note">
+    Hamburger menü içinde açılır bölümler kilitlenmiştir: RiskLens, Lens Library,
+    Signals & Monitoring. Böylece lens sayısı büyüdüğünde yapı dağılmaz.
+  </div>
 
 </div>
 
 <script>
-
-function toggleMenu(){
-const drawer=document.getElementById("drawer")
-const overlay=document.getElementById("overlay")
-
-drawer.classList.toggle("open")
-overlay.classList.toggle("show")
+function openMenu(){
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
 }
 
+function closeMenu(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+
+function toggleAcc(id, btn){
+  const body = document.getElementById(id);
+  const icon = btn.querySelector(".acc-icon");
+  body.classList.toggle("open");
+  icon.textContent = body.classList.contains("open") ? "−" : "+";
+}
 </script>
 
 </body>
-</html>
+  </html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RiskLens Economic Advisor</title><style>
-
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
@@ -22,7 +21,7 @@
 }
 
 body{
-font-family:Arial;
+font-family:Arial,sans-serif;
 color:var(--text);
 background:
 radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
@@ -45,6 +44,26 @@ font-size:22px;
 font-weight:bold;
 }
 
+.tabs{
+display:flex;
+gap:10px;
+}
+
+.tab{
+padding:10px 16px;
+border-radius:10px;
+background:var(--panel);
+border:1px solid var(--line);
+cursor:pointer;
+font-size:14px;
+}
+
+.tab.active{
+background:var(--cyan);
+color:#02111d;
+font-weight:bold;
+}
+
 .container{
 max-width:900px;
 margin:auto;
@@ -53,7 +72,7 @@ padding:40px 20px;
 
 .hero h1{
 color:var(--cyan);
-font-size:36px;
+font-size:34px;
 margin-bottom:10px;
 }
 
@@ -63,6 +82,14 @@ margin-bottom:30px;
 line-height:1.7;
 }
 
+.panel{
+display:none;
+}
+
+.panel.active{
+display:block;
+}
+
 .inputbox{
 background:var(--panel);
 border:1px solid var(--line);
@@ -70,7 +97,7 @@ border-radius:16px;
 padding:20px;
 }
 
-input{
+input,textarea{
 width:100%;
 padding:14px;
 border-radius:10px;
@@ -79,6 +106,11 @@ background:#030712;
 color:white;
 margin-bottom:14px;
 font-size:15px;
+}
+
+textarea{
+min-height:90px;
+resize:vertical;
 }
 
 button{
@@ -107,53 +139,143 @@ margin-bottom:6px;
 }
 
 .value{
-font-size:18px;
+font-size:16px;
 margin-bottom:10px;
 }
 
+.lensRow{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+font-size:14px;
+}
+
+.lensRow span:first-child{
+color:#dcecff;
+}
+
+.lensRow span:last-child{
+font-weight:bold;
+}
+
+.good{color:var(--green)}
+.warn{color:var(--yellow)}
+.bad{color:var(--red)}
+
 </style></head><body><div class="topbar">
-<div class="brand">RiskLens Advisor</div>
+<div class="brand">RiskLens Advisor</div><div class="tabs">
+<div class="tab active" onclick="switchTab('chat')">AI Chat</div>
+<div class="tab" onclick="switchTab('lens')">Lens Analysis</div>
+</div>
 </div><div class="container"><div class="hero">
-<h1>Economic AI Advisor</h1>
+<h1>Economic Intelligence Advisor</h1>
 <p>
-Ask an economic or market question.  
-RiskLens will interpret signals and provide a lens-based response.
+Ask economic questions or run a multi-lens macro analysis.
+RiskLens interprets signals across inflation, markets, energy,
+liquidity and global trade conditions.
 </p>
-</div><div class="inputbox"><input id="question" placeholder="Ask about inflation, markets, sectors, oil, logistics..."><button onclick="analyze()">Analyze</button>
+</div><!-- CHAT PANEL --><div id="chatPanel" class="panel active"><div class="inputbox"><input id="question" placeholder="Ask about inflation, markets, oil, recession, logistics..."><button onclick="analyzeChat()">Analyze</button>
 
-</div><div class="result" id="result"><div class="label">AI Output</div>
-<div class="value">Waiting for question...</div></div></div><script>
+</div><div class="result" id="chatResult"><div class="label">AI Output</div>
+<div class="value">Waiting for question...</div></div></div><!-- LENS PANEL --><div id="lensPanel" class="panel"><div class="inputbox"><textarea id="lensQuestion" placeholder="Example: global inflation impact on construction and retail sectors"></textarea><button onclick="runLens()">Run Lens Analysis</button>
 
-function analyze(){
+</div><div class="result" id="lensResult"><div class="label">Lens Output</div>
+<div class="value">Waiting for analysis...</div></div></div></div><script>
 
-const q = document.getElementById("question").value.toLowerCase()
+function switchTab(mode){
 
-let answer = "No clear signal detected."
+document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"))
+event.target.classList.add("active")
+
+document.getElementById("chatPanel").classList.remove("active")
+document.getElementById("lensPanel").classList.remove("active")
+
+if(mode==="chat"){
+document.getElementById("chatPanel").classList.add("active")
+}else{
+document.getElementById("lensPanel").classList.add("active")
+}
+
+}
+
+function analyzeChat(){
+
+const q=document.getElementById("question").value.toLowerCase()
+
+let answer="No clear signal detected."
 
 if(q.includes("inflation")){
-answer = "Inflation risk increasing globally. Central banks likely to maintain tighter policy."
+answer="Rising inflation pressure is eroding purchasing power and increasing operating costs across demand-sensitive sectors."
 }
 
 else if(q.includes("oil")){
-answer = "Oil price pressure indicates logistics and transport cost escalation."
+answer="Oil price pressure increases transport and logistics costs, amplifying global supply chain stress."
 }
 
 else if(q.includes("interest")){
-answer = "Interest rate environment suggests tighter credit and slower growth."
+answer="Higher interest rates tighten credit conditions and slow investment activity."
 }
 
 else if(q.includes("market")){
-answer = "Markets currently sensitive to macro signals and liquidity tightening."
+answer="Markets remain sensitive to macro signals and liquidity tightening."
 }
 
 else if(q.includes("recession")){
-answer = "Recession probability rising if credit stress continues."
+answer="Recession probability rises if credit stress and weak demand persist."
 }
 
-document.getElementById("result").innerHTML =
+document.getElementById("chatResult").innerHTML=
 "<div class='label'>Economic Lens Output</div><div class='value'>"+answer+"</div>"
 
 }
 
+function runLens(){
+
+const text=document.getElementById("lensQuestion").value.toLowerCase()
+
+let inflation="neutral"
+let oil="neutral"
+let demand="neutral"
+let credit="neutral"
+let logistics="neutral"
+
+if(text.includes("inflation")) inflation="risk"
+if(text.includes("oil")) oil="risk"
+if(text.includes("construction")) demand="weak"
+if(text.includes("retail")) demand="weak"
+if(text.includes("credit")) credit="stress"
+if(text.includes("logistics")) logistics="stress"
+
+function score(v){
+if(v==="risk"||v==="stress") return "<span class='bad'>High Risk</span>"
+if(v==="weak") return "<span class='warn'>Weak</span>"
+return "<span class='good'>Neutral</span>"
+}
+
+let html=""
+
+html+=row("Inflation Lens",score(inflation))
+html+=row("Oil / Energy Lens",score(oil))
+html+=row("Demand Lens",score(demand))
+html+=row("Credit Lens",score(credit))
+html+=row("Logistics Lens",score(logistics))
+
+let conclusion="Mixed macro signals detected."
+
+if(inflation==="risk" && demand==="weak"){
+conclusion="Inflation pressure combined with weak demand increases sector fragility."
+}
+
+document.getElementById("lensResult").innerHTML=
+"<div class='label'>Lens Analysis</div>"+html+
+"<div style='margin-top:16px'><strong>Conclusion:</strong> "+conclusion+"</div>"
+
+}
+
+function row(name,val){
+return "<div class='lensRow'><span>"+name+"</span><span>"+val+"</span></div>"
+}
+
 </script></body>
-  </html>
+</html>

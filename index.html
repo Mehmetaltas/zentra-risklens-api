@@ -3,30 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA RiskLens Access</title>
+<title>ZENTRA Economic Intelligence OS</title>
+<meta name="description" content="ZENTRA is a global economic intelligence operating system combining observation, multi-lens analysis, institutional decision support and trade execution.">
 
 <style>
-
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
 --bg:#030712;
+--bg2:#07111f;
 --panel:#0f1b31;
+--panel2:#162846;
 --line:#294a7c;
 --text:#eef6ff;
 --muted:#9fb6d8;
 --cyan:#00d4ff;
+--cyan2:#8cecff;
 --green:#19e68c;
+--yellow:#f5b942;
 --orange:#ff8a3d;
+--red:#ff4d6d;
+--shadow:0 20px 50px rgba(0,0,0,.28);
+}
+
+html,body{
+min-height:100%;
+overflow-x:hidden;
 }
 
 body{
-font-family:Arial;
+font-family:Arial,sans-serif;
 color:var(--text);
 background:
-radial-gradient(circle at 20% 20%, rgba(0,212,255,.15), transparent 30%),
-linear-gradient(180deg,#030712,#07111f 60%,#050b16);
-min-height:100vh;
+radial-gradient(circle at 20% 20%, rgba(0,212,255,.12), transparent 30%),
+linear-gradient(180deg,var(--bg), var(--bg2) 60%, #050b16);
+}
+
+body.lock{
+overflow:hidden;
 }
 
 .topbar{
@@ -34,14 +48,35 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:16px 20px;
-background:#07111f;
-border-bottom:1px solid var(--line);
+background:rgba(8,15,28,.84);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:30;
 }
 
 .brand{
 color:var(--cyan);
 font-size:22px;
 font-weight:bold;
+letter-spacing:.4px;
+}
+
+.top-right{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.top-link{
+text-decoration:none;
+color:#eaf6ff;
+font-size:14px;
+padding:10px 12px;
+border-radius:12px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
 }
 
 .burger{
@@ -55,12 +90,26 @@ justify-content:center;
 align-items:center;
 gap:5px;
 cursor:pointer;
+background:#0f1b31;
 }
 
 .burger span{
 width:22px;
 height:2px;
 background:white;
+display:block;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:none;
+z-index:80;
+}
+
+.overlay.show{
+display:block;
 }
 
 .drawer{
@@ -81,22 +130,35 @@ overflow:auto;
 right:0;
 }
 
-.drawer a{
-display:block;
-text-decoration:none;
-color:white;
-background:#0f1b31;
-border:1px solid var(--line);
-padding:16px;
-border-radius:12px;
-margin-bottom:10px;
+.drawer-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:16px;
 }
 
-.search{
-margin-bottom:20px;
+.drawer-title{
+color:var(--cyan);
+font-size:20px;
+font-weight:bold;
 }
 
-.search input{
+.close-btn{
+width:40px;
+height:40px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.04);
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+.drawer-search{
+margin-bottom:16px;
+}
+
+.drawer-search input{
 width:100%;
 padding:12px;
 border-radius:10px;
@@ -105,25 +167,40 @@ background:#081120;
 color:white;
 }
 
-.lang{
-margin-top:20px;
+.drawer-group{
+margin-top:18px;
 }
 
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-display:none;
+.drawer-group h3{
+font-size:12px;
+letter-spacing:1px;
+text-transform:uppercase;
+color:var(--cyan2);
+margin-bottom:10px;
 }
 
-.overlay.show{
+.drawer a{
 display:block;
+text-decoration:none;
+color:white;
+background:#0f1b31;
+border:1px solid var(--line);
+padding:14px;
+border-radius:12px;
+margin-bottom:10px;
+line-height:1.5;
+}
+
+.drawer a strong{
+display:block;
+color:var(--cyan);
+margin-bottom:4px;
 }
 
 .container{
 max-width:1200px;
 margin:auto;
-padding:40px 20px;
+padding:36px 20px 60px;
 }
 
 .hero{
@@ -132,26 +209,32 @@ grid-template-columns:1.1fr .9fr;
 gap:20px;
 }
 
-.left{
+.left,.right{
 background:var(--panel);
 border:1px solid var(--line);
 border-radius:18px;
-padding:26px;
+box-shadow:var(--shadow);
+}
+
+.left{
+padding:28px;
 }
 
 .left h1{
-font-size:42px;
+font-size:44px;
 color:var(--cyan);
 margin-bottom:12px;
+line-height:1.08;
 }
 
 .left p{
 color:var(--muted);
-line-height:1.7;
+line-height:1.75;
+font-size:15px;
 }
 
 .badges{
-margin-top:16px;
+margin-top:18px;
 display:flex;
 flex-wrap:wrap;
 gap:10px;
@@ -166,12 +249,12 @@ font-size:12px;
 }
 
 .right{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
 position:relative;
 overflow:hidden;
-min-height:320px;
+min-height:330px;
+background:
+linear-gradient(180deg,rgba(17,31,53,.96),rgba(12,22,38,.98)),
+radial-gradient(circle at 72% 18%, rgba(0,212,255,.14), transparent 18%);
 }
 
 .core{
@@ -179,25 +262,25 @@ position:absolute;
 left:50%;
 top:50%;
 transform:translate(-50%,-50%);
-width:120px;
-height:120px;
+width:130px;
+height:130px;
 border-radius:50%;
-background:radial-gradient(circle,#00d4ff,#003d55);
-box-shadow:0 0 40px #00d4ff;
+background:radial-gradient(circle,#8cecff,#00d4ff 45%, rgba(0,212,255,.15) 70%, transparent 71%);
+box-shadow:0 0 36px rgba(0,212,255,.4);
 animation:pulse 3s infinite;
 }
 
 .orbit{
 position:absolute;
-border:1px solid rgba(255,255,255,.15);
-border-radius:50%;
 left:50%;
 top:50%;
 transform:translate(-50%,-50%);
+border:1px solid rgba(255,255,255,.16);
+border-radius:50%;
 }
 
-.o1{width:200px;height:200px;animation:spin 16s linear infinite}
-.o2{width:300px;height:300px;animation:spin 24s linear infinite}
+.o1{width:220px;height:220px;animation:spin 16s linear infinite}
+.o2{width:320px;height:320px;animation:spin2 24s linear infinite}
 
 .dot{
 position:absolute;
@@ -208,6 +291,31 @@ background:var(--cyan);
 top:0;
 left:50%;
 transform:translateX(-50%);
+box-shadow:0 0 16px var(--cyan);
+}
+
+.hero-note{
+position:absolute;
+left:18px;
+right:18px;
+bottom:18px;
+padding:14px;
+border-radius:14px;
+background:rgba(7,17,31,.72);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.hero-note strong{
+display:block;
+color:var(--cyan2);
+margin-bottom:6px;
+}
+
+.hero-note span{
+display:block;
+color:var(--muted);
+font-size:13px;
+line-height:1.6;
 }
 
 .metrics{
@@ -220,49 +328,66 @@ gap:14px;
 .metric{
 background:var(--panel);
 border:1px solid var(--line);
-border-radius:12px;
-padding:16px;
+border-radius:14px;
+padding:18px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
 
-.metric strong{
-display:block;
+.metric .label{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.8px;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.metric .value{
+font-size:32px;
+font-weight:bold;
 color:var(--cyan);
-font-size:26px;
-margin-bottom:6px;
 }
 
-.access{
-margin-top:30px;
+.metric .sub{
+margin-top:8px;
+font-size:13px;
+line-height:1.6;
+color:var(--muted);
+}
+
+.modules{
+margin-top:28px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.module{
 background:var(--panel);
 border:1px solid var(--line);
 border-radius:18px;
-padding:24px;
-}
-
-.access input{
-width:100%;
-padding:14px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid var(--line);
-background:#081120;
+padding:22px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
+text-decoration:none;
 color:white;
 }
 
-.access button{
-margin-top:12px;
-padding:12px 16px;
-border:none;
-border-radius:10px;
-background:var(--cyan);
-cursor:pointer;
-font-weight:bold;
+.module h3{
+color:var(--cyan);
+font-size:22px;
+margin-bottom:8px;
 }
 
-.contact{
-margin-top:20px;
+.module p{
 color:var(--muted);
 font-size:14px;
+line-height:1.7;
+}
+
+.note{
+margin-top:24px;
+font-size:13px;
+line-height:1.7;
+color:var(--muted);
 }
 
 @keyframes spin{
@@ -270,177 +395,214 @@ from{transform:translate(-50%,-50%) rotate(0deg)}
 to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
+@keyframes spin2{
+from{transform:translate(-50%,-50%) rotate(360deg)}
+to{transform:translate(-50%,-50%) rotate(0deg)}
+}
+
 @keyframes pulse{
 0%,100%{transform:translate(-50%,-50%) scale(1)}
-50%{transform:translate(-50%,-50%) scale(1.1)}
+50%{transform:translate(-50%,-50%) scale(1.08)}
 }
 
-@media(max-width:900px){
+@media(max-width:980px){
 .hero{grid-template-columns:1fr}
 .metrics{grid-template-columns:1fr 1fr}
+.modules{grid-template-columns:1fr}
 }
 
+@media(max-width:680px){
+.left h1{font-size:34px}
+.metrics{grid-template-columns:1fr}
+.top-link{display:none}
+.drawer{width:300px}
+}
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="drawer" id="drawer">
 
-<div class="search">
-<input type="text" placeholder="Search page..." onkeyup="searchPage(this.value)">
-</div>
+  <div class="drawer-head">
+    <div class="drawer-title">ZENTRA</div>
+    <button class="close-btn" onclick="closeMenu()">×</button>
+  </div>
 
-<a href="/">Mission Control</a>
-<a href="/risklens/dashboard.html">Dashboard</a>
-<a href="/risklens/signals.html">Signals</a>
-<a href="/risklens/crisis.html">Crisis Radar</a>
-<a href="/risklens/worldmap.html">World Map</a>
-<a href="/risklens/sectors.html">Sectors</a>
-<a href="/telescope">Global Telescope</a>
-<a href="/trade">Trade Engine</a>
+  <div class="drawer-search">
+    <input type="text" placeholder="Search page..." onkeyup="searchPage(this.value)">
+  </div>
 
-<div class="lang">
-<select>
-<option>English</option>
-<option>Türkçe</option>
-</select>
-</div>
+  <div class="drawer-group">
+    <h3>Platform</h3>
+    <a href="/">
+      <strong>Mission Control</strong>
+      Main economic intelligence center
+    </a>
+    <a href="/risklens.html">
+      <strong>RiskLens Access</strong>
+      Public intro + private gateway
+    </a>
+    <a href="/lens-lab.html">
+      <strong>Lens Lab</strong>
+      Private analytical environment
+    </a>
+    <a href="/telescope">
+      <strong>Global Telescope</strong>
+      Planetary observation system
+    </a>
+    <a href="/trade">
+      <strong>Trade Engine</strong>
+      Trade orchestration layer
+    </a>
+  </div>
 
-<a href="mailto:info@zentrarisk.com">Contact</a>
+  <div class="drawer-group">
+    <h3>RiskLens Modules</h3>
+    <a href="/risklens/dashboard.html"><strong>Dashboard</strong>Main dashboard</a>
+    <a href="/risklens/signals.html"><strong>Signals</strong>Pressure signals</a>
+    <a href="/risklens/crisis.html"><strong>Crisis Radar</strong>Shock detection</a>
+    <a href="/risklens/worldmap.html"><strong>World Map</strong>Global economic map</a>
+    <a href="/risklens/sectors.html"><strong>Sectors</strong>Sector view</a>
+    <a href="/risklens/advisor.html"><strong>Economic Advisor</strong>AI advisor</a>
+  </div>
+
+  <div class="drawer-group">
+    <h3>Contact</h3>
+    <a href="mailto:info@zentrarisk.com">
+      <strong>info@zentrarisk.com</strong>
+      Primary communication channel
+    </a>
+  </div>
 
 </div>
 
 <div class="topbar">
-<div class="brand">ZENTRA | RiskLens</div>
-
-<div class="burger" onclick="toggleMenu()">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
+  <div class="brand">ZENTRA</div>
+  <div class="top-right">
+    <a class="top-link" href="/risklens.html">RiskLens</a>
+    <a class="top-link" href="/telescope">Telescope</a>
+    <a class="top-link" href="/trade">Trade</a>
+    <div class="burger" onclick="openMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
 </div>
 
 <div class="container">
 
-<div class="hero">
+  <div class="hero">
 
-<div class="left">
+    <div class="left">
+      <h1>ZENTRA Economic Intelligence OS</h1>
+      <p>
+        ZENTRA is a global economic intelligence operating system that combines observation,
+        multi-lens analysis, institutional decision support and trade execution into one platform.
+      </p>
 
-<h1>ZENTRA Economic Intelligence OS</h1>
+      <div class="badges">
+        <div class="badge">Economic AI</div>
+        <div class="badge">Global Observation</div>
+        <div class="badge">Lens Architecture</div>
+        <div class="badge">Institutional Platform</div>
+        <div class="badge">Trade Execution</div>
+      </div>
+    </div>
 
-<p>
-ZENTRA observes the global economy through multiple analytical lenses,
-interpreting systemic signals and transforming them into strategic insights
-for institutions, markets and governments.
-</p>
+    <div class="right">
+      <div class="orbit o1"><div class="dot"></div></div>
+      <div class="orbit o2"><div class="dot"></div></div>
+      <div class="core"></div>
 
-<div class="badges">
-<div class="badge">Economic AI</div>
-<div class="badge">Global Observation</div>
-<div class="badge">Lens Architecture</div>
-<div class="badge">Institutional Access</div>
-</div>
+      <div class="hero-note">
+        <strong>Mission Control Surface</strong>
+        <span>Global observation, economic AI, institutional access and trade orchestration in one system.</span>
+      </div>
+    </div>
 
-</div>
+  </div>
 
-<div class="right">
+  <div class="metrics">
 
-<div class="orbit o1"><div class="dot"></div></div>
-<div class="orbit o2"><div class="dot"></div></div>
-<div class="core"></div>
+    <div class="metric">
+      <div class="label">Global Risk</div>
+      <div class="value">72</div>
+      <div class="sub">Elevated systemic pressure</div>
+    </div>
 
-</div>
+    <div class="metric">
+      <div class="label">Inflation Pressure</div>
+      <div class="value">5.4%</div>
+      <div class="sub">Sticky macro environment</div>
+    </div>
 
-</div>
+    <div class="metric">
+      <div class="label">Credit Stress</div>
+      <div class="value">61</div>
+      <div class="sub">Moderate fragility</div>
+    </div>
 
-<div class="metrics">
+    <div class="metric">
+      <div class="label">Market Volatility</div>
+      <div class="value">58</div>
+      <div class="sub">Stable but watch-sensitive</div>
+    </div>
 
-<div class="metric">
-<strong>OS</strong>
-Economic Intelligence System
-</div>
+  </div>
 
-<div class="metric">
-<strong>Dual AI</strong>
-General + Economic
-</div>
+  <div class="modules">
 
-<div class="metric">
-<strong>2 Layer</strong>
-Public + Private
-</div>
+    <a class="module" href="/risklens.html">
+      <h3>RiskLens</h3>
+      <p>Public gateway, institutional presentation and protected entry layer.</p>
+    </a>
 
-<div class="metric">
-<strong>B2B</strong>
-Institutional Platform
-</div>
+    <a class="module" href="/telescope">
+      <h3>Global Telescope</h3>
+      <p>Planetary macro, commodity, logistics and observation system.</p>
+    </a>
 
-</div>
+    <a class="module" href="/trade">
+      <h3>Trade Engine</h3>
+      <p>Trade orchestration infrastructure connecting insight to execution.</p>
+    </a>
 
-<div class="access">
+  </div>
 
-<h2>Private Analytical Access</h2>
-
-<p>Authorized investors and partners may enter the analytical layer.</p>
-
-<input id="passInput" type="password" placeholder="Enter access password">
-
-<button onclick="openPrivate()">Enter System</button>
-
-<div id="msg"></div>
-
-<div class="contact">
-Primary Contact  
-<strong>info@zentrarisk.com</strong>
-</div>
-
-</div>
+  <div class="note">
+    Root page corrected as Mission Control. RiskLens gateway and Lens Lab remain separate layers.
+  </div>
 
 </div>
 
 <script>
-
-function toggleMenu(){
-
-const drawer=document.getElementById("drawer")
-const overlay=document.getElementById("overlay")
-
-drawer.classList.toggle("open")
-overlay.classList.toggle("show")
-
+function openMenu(){
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+  document.body.classList.add("lock");
 }
 
-function openPrivate(){
-
-const pass=document.getElementById("passInput").value
-
-if(pass==="ZentraCore"){
-
-window.location.href="/lens-lab.html"
-
-}else{
-
-document.getElementById("msg").innerHTML="Access denied"
-
-}
-
+function closeMenu(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+  document.body.classList.remove("lock");
 }
 
 function searchPage(q){
-
-if(q==="dashboard") location="/risklens/dashboard.html"
-if(q==="signals") location="/risklens/signals.html"
-if(q==="crisis") location="/risklens/crisis.html"
-if(q==="telescope") location="/telescope"
-if(q==="trade") location="/trade"
-
+  const s = q.trim().toLowerCase();
+  if(s === "dashboard") location.href="/risklens/dashboard.html";
+  if(s === "signals") location.href="/risklens/signals.html";
+  if(s === "crisis") location.href="/risklens/crisis.html";
+  if(s === "telescope") location.href="/telescope";
+  if(s === "trade") location.href="/trade";
+  if(s === "risklens") location.href="/risklens.html";
+  if(s === "lenslab" || s === "lens lab") location.href="/lens-lab.html";
 }
-
 </script>
 
 </body>
-</html>
+                                                     </html>

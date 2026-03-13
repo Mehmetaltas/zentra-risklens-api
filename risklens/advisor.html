@@ -1,281 +1,317 @@
-<!doctype html>
-
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RiskLens Economic Advisor</title><style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA RiskLens Advisor</title>
+<style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
---bg:#030712;
---panel:#081120;
---line:#163052;
---text:#eef6ff;
---muted:#9bb3d9;
---cyan:#00d4ff;
---green:#19e68c;
---yellow:#f5b942;
---orange:#ff8a3d;
---red:#ff4d6d;
+--bg:#07101d;
+--panel:#101a2d;
+--panel2:#16233b;
+--line:#24395f;
+--text:#eef5ff;
+--muted:#a9b9d6;
+--cyan:#63b3ff;
+--cyan2:#8fd7ff;
+--red:#ff5c70;
+--orange:#ff9d57;
+--yellow:#ffd166;
+--green:#45d483;
 }
 
 body{
 font-family:Arial,sans-serif;
-color:var(--text);
 background:
-radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
-linear-gradient(180deg,#030712,#07111f 50%,#040914);
+radial-gradient(circle at 15% 20%, rgba(99,179,255,.10), transparent 24%),
+radial-gradient(circle at 85% 10%, rgba(69,212,131,.08), transparent 18%),
+linear-gradient(180deg,#07101d,#0b1324 55%,#07101d);
+color:var(--text);
 min-height:100vh;
+padding:28px 16px 48px;
 }
 
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px 20px;
-background:#060d1c;
-border-bottom:1px solid var(--line);
-}
-
-.brand{
-color:var(--cyan);
-font-size:22px;
-font-weight:bold;
-}
-
-.tabs{
-display:flex;
-gap:10px;
-}
-
-.tab{
-padding:10px 16px;
-border-radius:10px;
-background:var(--panel);
-border:1px solid var(--line);
-cursor:pointer;
-font-size:14px;
-}
-
-.tab.active{
-background:var(--cyan);
-color:#02111d;
-font-weight:bold;
-}
-
-.container{
-max-width:900px;
+.wrapper{
+max-width:1280px;
 margin:auto;
-padding:40px 20px;
+}
+
+.hero{
+margin-bottom:20px;
+background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(12,20,35,.96));
+border:1px solid var(--line);
+border-radius:18px;
+padding:24px;
+box-shadow:0 14px 40px rgba(0,0,0,.25);
 }
 
 .hero h1{
-color:var(--cyan);
+color:var(--cyan2);
 font-size:34px;
 margin-bottom:10px;
 }
 
 .hero p{
 color:var(--muted);
-margin-bottom:30px;
 line-height:1.7;
+max-width:920px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:340px 1fr;
+gap:18px;
 }
 
 .panel{
-display:none;
-}
-
-.panel.active{
-display:block;
-}
-
-.inputbox{
-background:var(--panel);
+background:linear-gradient(180deg,var(--panel),var(--panel2));
 border:1px solid var(--line);
-border-radius:16px;
-padding:20px;
+border-radius:18px;
+padding:22px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
 
-input,textarea{
-width:100%;
-padding:14px;
-border-radius:10px;
-border:1px solid var(--line);
-background:#030712;
-color:white;
+.panel h2{
+color:var(--cyan2);
+font-size:21px;
 margin-bottom:14px;
-font-size:15px;
 }
 
-textarea{
-min-height:90px;
-resize:vertical;
+.score{
+font-size:54px;
+line-height:1;
+font-weight:bold;
+color:var(--cyan2);
+margin-bottom:10px;
+text-align:center;
 }
 
-button{
-padding:12px 18px;
+.driver{
+text-align:center;
+color:var(--muted);
+font-size:16px;
+line-height:1.6;
+}
+
+.metric-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:16px;
+}
+
+.metric{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+border-radius:14px;
+padding:14px;
+text-align:center;
+}
+
+.metric-label{
+color:var(--muted);
+font-size:13px;
+margin-bottom:7px;
+}
+
+.metric-value{
+font-size:22px;
+font-weight:bold;
+color:var(--cyan2);
+}
+
+.chat-box{
+display:grid;
+gap:14px;
+}
+
+.msg{
+padding:14px 16px;
+border-radius:16px;
+line-height:1.7;
+}
+
+.user{
+background:rgba(99,179,255,.10);
+border:1px solid rgba(99,179,255,.20);
+}
+
+.ai{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+color:var(--muted);
+}
+
+.input-wrap{
+margin-top:14px;
+display:grid;
+grid-template-columns:1fr auto;
+gap:12px;
+}
+
+.input{
+width:100%;
+padding:14px 16px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,.08);
+background:#0d1626;
+color:#fff;
+outline:none;
+}
+
+.button{
+padding:14px 18px;
 border:none;
-border-radius:10px;
-background:var(--cyan);
-color:#02111d;
+border-radius:14px;
+background:linear-gradient(90deg,var(--cyan),var(--green));
+color:#07101d;
 font-weight:bold;
 cursor:pointer;
 }
 
-.result{
-margin-top:30px;
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:16px;
-padding:20px;
-line-height:1.7;
-}
-
-.label{
-color:var(--muted);
-font-size:13px;
-margin-bottom:6px;
-}
-
-.value{
-font-size:16px;
-margin-bottom:10px;
-}
-
-.lensRow{
+.quick{
 display:flex;
-justify-content:space-between;
-padding:8px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-font-size:14px;
+flex-wrap:wrap;
+gap:10px;
+margin-top:14px;
 }
 
-.lensRow span:first-child{
-color:#dcecff;
+.quick button{
+padding:8px 12px;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.03);
+color:#fff;
+cursor:pointer;
 }
 
-.lensRow span:last-child{
-font-weight:bold;
+@media(max-width:980px){
+.grid{grid-template-columns:1fr}
 }
 
-.good{color:var(--green)}
-.warn{color:var(--yellow)}
-.bad{color:var(--red)}
+@media(max-width:760px){
+.hero h1{font-size:28px}
+.input-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
 
-</style></head><body><div class="topbar">
-<div class="brand">RiskLens Advisor</div><div class="tabs">
-<div class="tab active" onclick="switchTab('chat')">AI Chat</div>
-<div class="tab" onclick="switchTab('lens')">Lens Analysis</div>
-</div>
-</div><div class="container"><div class="hero">
-<h1>Economic Intelligence Advisor</h1>
+<div class="wrapper">
+
+<div class="hero">
+<h1>🧠 ZENTRA RiskLens Advisor</h1>
 <p>
-Ask economic questions or run a multi-lens macro analysis.
-RiskLens interprets signals across inflation, markets, energy,
-liquidity and global trade conditions.
+Decision-oriented advisory surface transforming macroeconomic pressure,
+sector signals and systemic risk into readable institutional guidance.
 </p>
-</div><!-- CHAT PANEL --><div id="chatPanel" class="panel active"><div class="inputbox"><input id="question" placeholder="Ask about inflation, markets, oil, recession, logistics..."><button onclick="analyzeChat()">Analyze</button>
+</div>
 
-</div><div class="result" id="chatResult"><div class="label">AI Output</div>
-<div class="value">Waiting for question...</div></div></div><!-- LENS PANEL --><div id="lensPanel" class="panel"><div class="inputbox"><textarea id="lensQuestion" placeholder="Example: global inflation impact on construction and retail sectors"></textarea><button onclick="runLens()">Run Lens Analysis</button>
+<div class="grid">
 
-</div><div class="result" id="lensResult"><div class="label">Lens Output</div>
-<div class="value">Waiting for analysis...</div></div></div></div><script>
+<div class="panel">
+<h2>Advisor State</h2>
+<div class="score">ACTIVE</div>
+<div class="driver">Current focus: energy shock, logistics stress and sector fragility</div>
 
-function switchTab(mode){
+<div class="metric-grid">
+  <div class="metric">
+    <div class="metric-label">Global Risk</div>
+    <div class="metric-value">99</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Dominant Driver</div>
+    <div class="metric-value">Energy</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Short Horizon</div>
+    <div class="metric-value">Elevated</div>
+  </div>
+  <div class="metric">
+    <div class="metric-label">Action Bias</div>
+    <div class="metric-value">Selective</div>
+  </div>
+</div>
 
-document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"))
-event.target.classList.add("active")
+<div class="quick">
+  <button onclick="quickAsk('What is driving global risk right now?')">Global risk</button>
+  <button onclick="quickAsk('Which sectors are under the most pressure?')">Sector pressure</button>
+  <button onclick="quickAsk('What should institutions monitor in the short term?')">Short term</button>
+  <button onclick="quickAsk('Is there a trade opportunity under current conditions?')">Trade view</button>
+</div>
+</div>
 
-document.getElementById("chatPanel").classList.remove("active")
-document.getElementById("lensPanel").classList.remove("active")
+<div class="panel">
+<h2>Advisor Conversation</h2>
 
-if(mode==="chat"){
-document.getElementById("chatPanel").classList.add("active")
-}else{
-document.getElementById("lensPanel").classList.add("active")
+<div class="chat-box" id="chatBox">
+  <div class="msg user">
+    What is driving global risk right now?
+  </div>
+  <div class="msg ai">
+    Current systemic pressure is being driven primarily by energy cost transmission and freight stress.
+    Oil-linked cost escalation is propagating into logistics, industrial production and import-dependent sectors,
+    while secondary inflation pressure is reducing resilience in retail and construction-linked activity.
+  </div>
+</div>
+
+<div class="input-wrap">
+  <input id="userInput" class="input" type="text" placeholder="Ask RiskLens Advisor..." />
+  <button class="button" onclick="runAdvisor()">Ask</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function quickAsk(text){
+  document.getElementById("userInput").value = text;
+  runAdvisor();
 }
 
+function runAdvisor(){
+  const input = document.getElementById("userInput");
+  const chat = document.getElementById("chatBox");
+  const q = input.value.trim();
+  if(!q) return;
+
+  const user = document.createElement("div");
+  user.className = "msg user";
+  user.textContent = q;
+  chat.appendChild(user);
+
+  const ai = document.createElement("div");
+  ai.className = "msg ai";
+
+  const lower = q.toLowerCase();
+
+  if(lower.includes("global risk") || lower.includes("driving")){
+    ai.textContent =
+      "Global risk is currently being driven by energy shock, freight cost escalation and spillover pressure into import-dependent sectors. These drivers are reinforcing inflation persistence and widening sector fragility.";
+  }else if(lower.includes("sector")){
+    ai.textContent =
+      "The most pressured sectors at the moment are construction, logistics, retail and energy-sensitive manufacturing. These sectors are exposed to cost transmission, route volatility and reduced margin flexibility.";
+  }else if(lower.includes("short term") || lower.includes("monitor")){
+    ai.textContent =
+      "In the short term, institutions should monitor oil price persistence, freight congestion, port throughput pressure and credit tightening conditions. These variables are the most likely near-term amplifiers of systemic stress.";
+  }else if(lower.includes("trade")){
+    ai.textContent =
+      "Despite elevated risk, selective trade opportunities may still exist where cross-market price gaps remain strong and logistics routes stay open. Execution quality and route discipline are critical under current conditions.";
+  }else{
+    ai.textContent =
+      "RiskLens Advisor interprets current conditions as elevated but selective. Institutions should combine macro monitoring, sector filtering and route-sensitive decision support before expanding exposure.";
+  }
+
+  chat.appendChild(ai);
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
 }
+</script>
 
-function analyzeChat(){
-
-const q=document.getElementById("question").value.toLowerCase()
-
-let answer="No clear signal detected."
-
-if(q.includes("inflation")){
-answer="Rising inflation pressure is eroding purchasing power and increasing operating costs across demand-sensitive sectors."
-}
-
-else if(q.includes("oil")){
-answer="Oil price pressure increases transport and logistics costs, amplifying global supply chain stress."
-}
-
-else if(q.includes("interest")){
-answer="Higher interest rates tighten credit conditions and slow investment activity."
-}
-
-else if(q.includes("market")){
-answer="Markets remain sensitive to macro signals and liquidity tightening."
-}
-
-else if(q.includes("recession")){
-answer="Recession probability rises if credit stress and weak demand persist."
-}
-
-document.getElementById("chatResult").innerHTML=
-"<div class='label'>Economic Lens Output</div><div class='value'>"+answer+"</div>"
-
-}
-
-function runLens(){
-
-const text=document.getElementById("lensQuestion").value.toLowerCase()
-
-let inflation="neutral"
-let oil="neutral"
-let demand="neutral"
-let credit="neutral"
-let logistics="neutral"
-
-if(text.includes("inflation")) inflation="risk"
-if(text.includes("oil")) oil="risk"
-if(text.includes("construction")) demand="weak"
-if(text.includes("retail")) demand="weak"
-if(text.includes("credit")) credit="stress"
-if(text.includes("logistics")) logistics="stress"
-
-function score(v){
-if(v==="risk"||v==="stress") return "<span class='bad'>High Risk</span>"
-if(v==="weak") return "<span class='warn'>Weak</span>"
-return "<span class='good'>Neutral</span>"
-}
-
-let html=""
-
-html+=row("Inflation Lens",score(inflation))
-html+=row("Oil / Energy Lens",score(oil))
-html+=row("Demand Lens",score(demand))
-html+=row("Credit Lens",score(credit))
-html+=row("Logistics Lens",score(logistics))
-
-let conclusion="Mixed macro signals detected."
-
-if(inflation==="risk" && demand==="weak"){
-conclusion="Inflation pressure combined with weak demand increases sector fragility."
-}
-
-document.getElementById("lensResult").innerHTML=
-"<div class='label'>Lens Analysis</div>"+html+
-"<div style='margin-top:16px'><strong>Conclusion:</strong> "+conclusion+"</div>"
-
-}
-
-function row(name,val){
-return "<div class='lensRow'><span>"+name+"</span><span>"+val+"</span></div>"
-}
-
-</script></body>
+</body>
 </html>

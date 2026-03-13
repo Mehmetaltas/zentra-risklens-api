@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RiskLens Access | ZENTRA</title>
-<meta name="description" content="ZENTRA RiskLens access page. Public introduction and protected private analytical layer.">
+<title>RiskLens Access | ZENTRA Economic Intelligence OS</title>
+<meta name="description" content="ZENTRA is a global economic intelligence operating system combining global observation, multi-lens analysis, institutional decision support and trade execution in one platform.">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -13,6 +13,7 @@
 --bg:#040814;
 --panel:#0f1b31;
 --panel2:#162846;
+--panel3:#1d3558;
 --line:#284b79;
 --text:#eef6ff;
 --muted:#a8bfe2;
@@ -21,6 +22,7 @@
 --green:#19e68c;
 --orange:#ff8a3d;
 --red:#ff4d6d;
+--shadow:0 20px 50px rgba(0,0,0,.28);
 }
 
 body{
@@ -31,6 +33,7 @@ radial-gradient(circle at 15% 20%, rgba(0,212,255,.12), transparent 24%),
 radial-gradient(circle at 85% 15%, rgba(137,236,255,.06), transparent 18%),
 linear-gradient(180deg,#030712 0%, #07111f 48%, #050b16 100%);
 min-height:100vh;
+overflow-x:hidden;
 }
 
 .topbar{
@@ -53,6 +56,12 @@ color:var(--cyan);
 letter-spacing:.4px;
 }
 
+.topbar-right{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
 .topbar a{
 text-decoration:none;
 color:#eaf6ff;
@@ -61,6 +70,16 @@ padding:10px 12px;
 border-radius:12px;
 background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
+}
+
+.lang-select{
+padding:10px 12px;
+border-radius:12px;
+background:#091221;
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+font-size:14px;
+outline:none;
 }
 
 .container{
@@ -81,7 +100,7 @@ align-items:stretch;
 background:linear-gradient(180deg,rgba(15,27,49,.92),rgba(11,22,39,.94));
 border:1px solid rgba(255,255,255,.07);
 border-radius:22px;
-box-shadow:0 20px 50px rgba(0,0,0,.28);
+box-shadow:var(--shadow);
 overflow:hidden;
 position:relative;
 }
@@ -95,6 +114,13 @@ font-size:42px;
 line-height:1.12;
 color:var(--cyan);
 margin-bottom:12px;
+}
+
+.hero-tagline{
+font-size:16px;
+line-height:1.7;
+color:#dcecff;
+margin-bottom:14px;
 }
 
 .left p{
@@ -250,6 +276,33 @@ line-height:1.5;
 color:var(--muted);
 }
 
+.platform-grid{
+margin-top:26px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+}
+
+.module{
+background:linear-gradient(180deg,#0f1b31,#0c172a);
+border:1px solid rgba(255,255,255,.07);
+border-radius:18px;
+padding:20px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+
+.module h3{
+font-size:20px;
+color:var(--cyan);
+margin-bottom:8px;
+}
+
+.module p{
+font-size:13px;
+line-height:1.65;
+color:var(--muted);
+}
+
 .access{
 margin-top:28px;
 background:linear-gradient(180deg,#12213a,#0f1b31);
@@ -313,6 +366,34 @@ color:var(--muted);
 min-height:22px;
 }
 
+.contact-grid{
+margin-top:18px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.contact-card{
+padding:16px;
+border-radius:16px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+}
+
+.contact-card strong{
+display:block;
+font-size:14px;
+color:#eaf6ff;
+margin-bottom:6px;
+}
+
+.contact-card span{
+display:block;
+font-size:13px;
+line-height:1.6;
+color:var(--muted);
+}
+
 .footer-note{
 margin-top:18px;
 font-size:12px;
@@ -320,14 +401,21 @@ line-height:1.6;
 color:var(--muted);
 }
 
-@media(max-width:980px){
+@media(max-width:1020px){
 .hero{grid-template-columns:1fr}
 .section{grid-template-columns:1fr}
+.platform-grid{grid-template-columns:1fr 1fr}
+.contact-grid{grid-template-columns:1fr}
 }
 
 @media(max-width:640px){
 .left h1{font-size:34px}
 .access-grid{grid-template-columns:1fr}
+.platform-grid{grid-template-columns:1fr}
+.topbar{padding:14px 16px}
+.topbar-right{gap:8px}
+.topbar a{padding:8px 10px;font-size:13px}
+.lang-select{font-size:13px;padding:8px 10px}
 }
 </style>
 </head>
@@ -336,7 +424,17 @@ color:var(--muted);
 
 <div class="topbar">
   <div class="brand">ZENTRA | RiskLens</div>
-  <a href="/">Mission Control</a>
+  <div class="topbar-right">
+    <a href="/">Mission Control</a>
+    <select class="lang-select">
+      <option>English</option>
+      <option>Türkçe</option>
+      <option>العربية</option>
+      <option>Deutsch</option>
+      <option>Français</option>
+      <option>Español</option>
+    </select>
+  </div>
 </div>
 
 <div class="container">
@@ -344,19 +442,23 @@ color:var(--muted);
   <div class="hero">
 
     <div class="left">
-      <h1>RiskLens Access Layer</h1>
+      <h1>ZENTRA Economic Intelligence OS</h1>
+      <div class="hero-tagline">Observing the world. Interpreting signals. Guiding decisions.</div>
       <p>
-        ZENTRA is a global economic intelligence operating system that combines economic observation,
-        multi-lens analysis, institutional decision support and trade execution into one platform.
-        This page presents the public introduction layer of RiskLens and the protected gateway to the private analytical environment.
+        ZENTRA is a global economic intelligence operating system that observes the world through multiple analytical lenses,
+        interprets systemic signals and transforms them into strategic insights for institutions, markets and governments.
+      </p>
+      <p>
+        The platform combines global observation, multi-lens analysis, economic AI, institutional decision support and trade orchestration
+        into a unified intelligence environment.
       </p>
 
       <div class="badges">
         <div class="badge">Economic AI</div>
-        <div class="badge">Risk Intelligence</div>
+        <div class="badge">Global Observation</div>
         <div class="badge">Lens Architecture</div>
-        <div class="badge">Protected Access</div>
-        <div class="badge">Institution Ready</div>
+        <div class="badge">Institutional Access</div>
+        <div class="badge">Trade Orchestration</div>
       </div>
     </div>
 
@@ -370,9 +472,33 @@ color:var(--muted);
       <div class="layer l3"></div>
 
       <div class="right-note">
-        <strong>Public Introduction + Private Core</strong>
-        <span>RiskLens follows a two-layer publication model: public explanation for investors and institutions, protected full-access analytical core for authorized users.</span>
+        <strong>Controlled Presentation Mode</strong>
+        <span>ZENTRA is currently presented to selected institutional partners and investors through a controlled access environment.</span>
       </div>
+    </div>
+
+  </div>
+
+  <div class="platform-grid">
+
+    <div class="module">
+      <h3>RiskLens</h3>
+      <p>The economic intelligence layer of ZENTRA responsible for interpreting macro pressure, sector fragility and systemic risk signals.</p>
+    </div>
+
+    <div class="module">
+      <h3>Global Telescope</h3>
+      <p>Planetary observation system monitoring global macro, commodity, logistics and pressure signals.</p>
+    </div>
+
+    <div class="module">
+      <h3>Trade Engine</h3>
+      <p>Trade orchestration infrastructure connecting insight with commercial execution and strategic routing.</p>
+    </div>
+
+    <div class="module">
+      <h3>Lens Library</h3>
+      <p>Analytical lens architecture for macro, market, commodity, trade, health, disaster and geo-economic interpretation.</p>
     </div>
 
   </div>
@@ -380,10 +506,10 @@ color:var(--muted);
   <div class="section">
 
     <div class="card">
-      <h2>What is RiskLens?</h2>
+      <h2>RiskLens</h2>
       <p>
-        RiskLens is the economic AI layer of ZENTRA. It interprets global macro pressure, sector vulnerability,
-        trade stress, energy shock, credit fragility and systemic disruption through a multi-lens intelligence framework.
+        RiskLens is the economic intelligence layer of ZENTRA responsible for interpreting macroeconomic pressure,
+        sector vulnerability, commodity shocks and systemic risk signals.
       </p>
 
       <div class="list">
@@ -403,24 +529,52 @@ color:var(--muted);
     </div>
 
     <div class="card">
-      <h2>Publication Model</h2>
+      <h2>Controlled Access Model</h2>
       <p>
-        This layer is intentionally structured as a controlled access model. Public visitors can understand the architecture,
-        while full operational depth remains protected in the private analytical environment.
+        The ZENTRA platform is currently presented through a controlled publication model designed for institutional demonstration and investor review.
       </p>
 
       <div class="list">
         <div class="list-item">
-          <strong>Layer 1 — Public</strong>
-          <span>Introduction, architecture summary, investor-facing overview, high-level modules.</span>
+          <strong>Public Layer</strong>
+          <span>Introduction, architecture overview, module summary and investor-facing explanation.</span>
         </div>
         <div class="list-item">
-          <strong>Layer 2 — Private</strong>
-          <span>Full RiskLens, Telescope, Trade Engine, Lens Library, Advisor and deeper analytical access.</span>
+          <strong>Private Analytical Layer</strong>
+          <span>Full RiskLens system, lens architecture, economic AI advisor and deeper analytical tools.</span>
         </div>
         <div class="list-item">
           <strong>Use Case</strong>
-          <span>Investor presentation, institutional entry, controlled product visibility.</span>
+          <span>Investor presentation, institutional entry and controlled product visibility.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <div class="card">
+      <h2>Institutional Access</h2>
+      <p>
+        Financial institutions, governments, investment groups and strategic partners may request controlled analytical access to the ZENTRA platform.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Investor Relations</h2>
+      <p>
+        ZENTRA is currently presented to selected investors and institutional partners through a protected analytical environment.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <strong>Investor Contact</strong>
+          <span>invest@zentrarisk.com</span>
+        </div>
+        <div class="contact-card">
+          <strong>Access Contact</strong>
+          <span>access@zentrarisk.com</span>
         </div>
       </div>
     </div>
@@ -428,9 +582,9 @@ color:var(--muted);
   </div>
 
   <div class="access">
-    <h2>Private Access</h2>
+    <h2>Private Analytical Access</h2>
     <p>
-      Enter the short access password to open the private analytical layer. Authorized access leads to the deeper RiskLens environment.
+      Authorized users may enter the private analytical layer of the platform using the access password.
     </p>
 
     <div class="access-grid">
@@ -441,7 +595,7 @@ color:var(--muted);
     <div class="access-msg" id="accessMsg"></div>
 
     <div class="footer-note">
-      Public layer shows the system introduction. Private layer is intended for protected analytical access.
+      ZENTRA is currently operating in controlled presentation mode.
     </div>
   </div>
 
@@ -455,7 +609,7 @@ function handlePass(event){
 }
 
 function openPrivate(){
-  const pass = document.getElementById("passInput").value.trim();
+  const pass = document.getElementById("passInput").value.trim().toLowerCase();
   const msg = document.getElementById("accessMsg");
 
   if(pass === "zentra2026"){

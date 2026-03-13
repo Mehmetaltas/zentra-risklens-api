@@ -3,33 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Economic Intelligence OS</title>
-<meta name="description" content="ZENTRA is a global economic intelligence operating system combining observation, lens analysis, institutional decision support and trade execution.">
+<title>RiskLens Access | ZENTRA</title>
+<meta name="description" content="ZENTRA RiskLens access page. Public introduction and protected private analytical layer.">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
---bg:#030712;
---bg2:#07111f;
---panel:#0e1b30;
---panel2:#152845;
---panel3:#1d3558;
---line:#274a78;
+--bg:#040814;
+--panel:#0f1b31;
+--panel2:#162846;
+--line:#284b79;
 --text:#eef6ff;
---muted:#a9c0e5;
+--muted:#a8bfe2;
 --cyan:#00d4ff;
---cyan2:#82ebff;
+--cyan2:#89ecff;
 --green:#19e68c;
---yellow:#f5b942;
 --orange:#ff8a3d;
 --red:#ff4d6d;
---shadow:0 24px 60px rgba(0,0,0,.35);
-}
-
-html,body{
-min-height:100%;
-overflow-x:hidden;
 }
 
 body{
@@ -37,465 +28,80 @@ font-family:Arial,sans-serif;
 color:var(--text);
 background:
 radial-gradient(circle at 15% 20%, rgba(0,212,255,.12), transparent 24%),
-radial-gradient(circle at 85% 12%, rgba(130,235,255,.07), transparent 18%),
-linear-gradient(180deg,var(--bg) 0%, var(--bg2) 50%, #050b16 100%);
-}
-
-body.lock{
-overflow:hidden;
+radial-gradient(circle at 85% 15%, rgba(137,236,255,.06), transparent 18%),
+linear-gradient(180deg,#030712 0%, #07111f 48%, #050b16 100%);
+min-height:100vh;
 }
 
 .topbar{
-position:sticky;
-top:0;
-z-index:90;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:14px 18px;
-background:rgba(8,15,28,.82);
-backdrop-filter:blur(12px);
+padding:16px 20px;
+background:rgba(8,15,28,.84);
+backdrop-filter:blur(10px);
 border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:30;
 }
 
 .brand{
 font-size:22px;
-font-weight:700;
+font-weight:bold;
 color:var(--cyan);
 letter-spacing:.4px;
 }
 
-.top-actions{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.top-link{
+.topbar a{
 text-decoration:none;
 color:#eaf6ff;
 font-size:14px;
 padding:10px 12px;
 border-radius:12px;
+background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
-background:rgba(255,255,255,.03);
 }
-
-.top-link:hover{
-border-color:#5c8fc2;
-}
-
-.burger,.chat-launch{
-width:48px;
-height:48px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,.08);
-background:linear-gradient(180deg,#12233d,#0d1c31);
-display:flex;
-justify-content:center;
-align-items:center;
-cursor:pointer;
-box-shadow:0 10px 28px rgba(0,0,0,.22);
-transition:transform .18s ease,border-color .18s ease;
-}
-
-.burger:hover,.chat-launch:hover{
-transform:translateY(-1px);
-border-color:#5c8fc2;
-}
-
-.burger{
-flex-direction:column;
-gap:5px;
-}
-
-.burger span{
-width:20px;
-height:2px;
-background:#fff;
-border-radius:999px;
-display:block;
-}
-
-.chat-launch{
-font-size:18px;
-color:#fff;
-}
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(3,8,18,.46);
-backdrop-filter:blur(4px);
-opacity:0;
-pointer-events:none;
-transition:opacity .24s ease;
-z-index:80;
-}
-
-.overlay.show{
-opacity:1;
-pointer-events:auto;
-}
-
-/* MENU DRAWER */
-
-.menu-drawer{
-position:fixed;
-top:0;
-right:-390px;
-width:360px;
-height:100vh;
-z-index:100;
-overflow-y:auto;
-padding:18px 16px 28px;
-background:
-linear-gradient(180deg, rgba(22,40,69,.98), rgba(17,31,53,.98)),
-radial-gradient(circle at top right, rgba(126,234,255,.12), transparent 22%);
-border-left:1px solid rgba(255,255,255,.08);
-box-shadow:var(--shadow);
-transition:right .28s ease;
-}
-
-.menu-drawer.open{
-right:0;
-}
-
-.drawer-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding-bottom:12px;
-margin-bottom:14px;
-border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.drawer-title strong{
-display:block;
-font-size:22px;
-color:var(--cyan);
-}
-
-.drawer-title span{
-display:block;
-margin-top:3px;
-font-size:12px;
-color:var(--muted);
-}
-
-.close-btn{
-width:44px;
-height:44px;
-border:none;
-cursor:pointer;
-border-radius:12px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.08);
-color:#fff;
-font-size:20px;
-}
-
-.search-wrap{
-margin-bottom:14px;
-}
-
-.search-label{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.9px;
-color:var(--cyan2);
-margin-bottom:8px;
-}
-
-.search-box{
-position:relative;
-}
-
-.search-box span{
-position:absolute;
-left:12px;
-top:50%;
-transform:translateY(-50%);
-font-size:15px;
-opacity:.95;
-}
-
-.search-box input{
-width:100%;
-padding:13px 14px 13px 38px;
-border-radius:14px;
-background:#0a1322;
-border:1px solid rgba(255,255,255,.08);
-color:#fff;
-font-size:14px;
-outline:none;
-}
-
-.search-help{
-margin-top:8px;
-font-size:12px;
-color:var(--muted);
-line-height:1.5;
-}
-
-.drawer-section{
-margin-top:18px;
-}
-
-.drawer-section h3{
-font-size:13px;
-text-transform:uppercase;
-letter-spacing:1px;
-color:var(--cyan2);
-margin:0 4px 10px;
-}
-
-.menu-card{
-display:block;
-text-decoration:none;
-color:#eef6ff;
-background:linear-gradient(180deg,#132440,#102038);
-border:1px solid rgba(255,255,255,.08);
-border-radius:14px;
-padding:14px;
-margin-bottom:10px;
-transition:transform .16s ease,border-color .16s ease;
-}
-
-.menu-card:hover{
-transform:translateX(-2px);
-border-color:#5c8fc2;
-}
-
-.menu-card strong{
-display:block;
-color:var(--cyan);
-margin-bottom:4px;
-font-size:15px;
-}
-
-.menu-card span{
-display:block;
-font-size:12px;
-line-height:1.5;
-color:var(--muted);
-}
-
-.acc-item{
-border:1px solid rgba(255,255,255,.08);
-border-radius:14px;
-background:linear-gradient(180deg,#132440,#102038);
-margin-bottom:10px;
-overflow:hidden;
-}
-
-.acc-head{
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px;
-border:none;
-background:transparent;
-color:#fff;
-cursor:pointer;
-text-align:left;
-}
-
-.acc-head-left strong{
-display:block;
-color:var(--cyan);
-font-size:15px;
-margin-bottom:4px;
-}
-
-.acc-head-left span{
-display:block;
-font-size:12px;
-color:var(--muted);
-}
-
-.acc-icon{
-font-size:20px;
-color:#fff;
-min-width:20px;
-text-align:center;
-}
-
-.acc-body{
-display:none;
-padding:0 12px 12px;
-background:rgba(255,255,255,.03);
-border-top:1px solid rgba(255,255,255,.06);
-}
-
-.acc-body.open{
-display:block;
-animation:fadeDown .18s ease;
-}
-
-.acc-body a{
-display:block;
-text-decoration:none;
-color:#e9f5ff;
-padding:12px 10px;
-border-radius:10px;
-margin-top:8px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.05);
-font-size:14px;
-}
-
-/* CHAT PANEL */
-
-.chat-panel{
-position:fixed;
-top:0;
-right:-460px;
-width:420px;
-height:100vh;
-z-index:110;
-background:
-linear-gradient(180deg,rgba(17,31,53,.98),rgba(13,24,41,.98)),
-radial-gradient(circle at top right, rgba(0,212,255,.12), transparent 20%);
-border-left:1px solid rgba(255,255,255,.08);
-box-shadow:var(--shadow);
-transition:right .28s ease;
-display:flex;
-flex-direction:column;
-}
-
-.chat-panel.open{
-right:0;
-}
-
-.chat-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 16px;
-border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.chat-title strong{
-display:block;
-font-size:22px;
-color:var(--cyan);
-}
-
-.chat-title span{
-display:block;
-font-size:12px;
-color:var(--muted);
-margin-top:4px;
-}
-
-.chat-body{
-flex:1;
-overflow:auto;
-padding:18px 16px;
-display:flex;
-flex-direction:column;
-gap:14px;
-}
-
-.msg{
-max-width:92%;
-padding:14px;
-border-radius:16px;
-line-height:1.65;
-font-size:14px;
-}
-
-.msg.bot{
-align-self:flex-start;
-background:linear-gradient(180deg,#132440,#102038);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.msg.user{
-align-self:flex-end;
-background:linear-gradient(180deg,#0d2c3a,#0a2430);
-border:1px solid rgba(0,212,255,.18);
-}
-
-.chat-input-wrap{
-padding:14px 16px 18px;
-border-top:1px solid rgba(255,255,255,.08);
-}
-
-.chat-input-row{
-display:grid;
-grid-template-columns:1fr auto;
-gap:10px;
-}
-
-.chat-input{
-width:100%;
-padding:14px;
-border-radius:14px;
-background:#0a1322;
-border:1px solid rgba(255,255,255,.08);
-color:#fff;
-font-size:14px;
-outline:none;
-}
-
-.send-btn{
-padding:0 16px;
-border:none;
-border-radius:14px;
-background:var(--cyan);
-color:#03111c;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* MAIN */
 
 .container{
-max-width:1240px;
+max-width:1180px;
 margin:auto;
-padding:28px 18px 56px;
+padding:34px 18px 60px;
 }
 
 .hero{
 display:grid;
-grid-template-columns:1.08fr .92fr;
+grid-template-columns:1.15fr .85fr;
 gap:22px;
 align-items:stretch;
-margin-top:8px;
 }
 
-.hero-left,
-.hero-right{
-background:linear-gradient(180deg,rgba(14,27,48,.9),rgba(11,22,39,.92));
+.left,
+.right{
+background:linear-gradient(180deg,rgba(15,27,49,.92),rgba(11,22,39,.94));
 border:1px solid rgba(255,255,255,.07);
-border-radius:20px;
-box-shadow:var(--shadow);
+border-radius:22px;
+box-shadow:0 20px 50px rgba(0,0,0,.28);
 overflow:hidden;
 position:relative;
 }
 
-.hero-left{
-padding:28px 24px;
+.left{
+padding:30px 24px;
 }
 
-.hero-left h1{
+.left h1{
 font-size:42px;
 line-height:1.12;
 color:var(--cyan);
 margin-bottom:12px;
-max-width:700px;
-animation:fadeUp .6s ease;
 }
 
-.hero-left p{
+.left p{
 font-size:15px;
 line-height:1.75;
 color:var(--muted);
 max-width:760px;
-animation:fadeUp .8s ease;
 }
 
 .badges{
@@ -503,7 +109,6 @@ display:flex;
 flex-wrap:wrap;
 gap:10px;
 margin-top:18px;
-animation:fadeUp 1s ease;
 }
 
 .badge{
@@ -515,586 +120,354 @@ font-size:12px;
 color:#eaf6ff;
 }
 
-.hero-right{
-min-height:330px;
+.right{
+min-height:340px;
 background:
-linear-gradient(180deg,rgba(16,31,53,.95),rgba(11,21,38,.96)),
-radial-gradient(circle at 75% 18%, rgba(0,212,255,.10), transparent 18%);
-}
-
-.layers{
-position:absolute;
-inset:0;
-overflow:hidden;
+linear-gradient(180deg,rgba(17,31,53,.95),rgba(12,22,38,.96)),
+radial-gradient(circle at 75% 16%, rgba(0,212,255,.12), transparent 18%);
 }
 
 .layer{
 position:absolute;
-border-radius:22px;
+border-radius:20px;
 border:1px solid rgba(255,255,255,.08);
-box-shadow:0 18px 40px rgba(0,0,0,.22);
-animation:floaty 7s ease-in-out infinite;
+box-shadow:0 14px 34px rgba(0,0,0,.22);
 }
 
-.layer.one{
+.l1{
 top:34px;
-left:34px;
+left:30px;
 width:58%;
-height:42%;
+height:40%;
 background:linear-gradient(180deg,rgba(0,212,255,.14),rgba(255,255,255,.02));
 transform:rotate(-6deg);
-animation-delay:0s;
 }
 
-.layer.two{
+.l2{
 bottom:46px;
-right:40px;
-width:52%;
-height:36%;
+right:38px;
+width:50%;
+height:34%;
 background:linear-gradient(180deg,rgba(255,138,61,.14),rgba(255,255,255,.02));
-transform:rotate(8deg);
-animation-delay:1.4s;
+transform:rotate(7deg);
 }
 
-.layer.three{
-top:88px;
-right:90px;
-width:34%;
-height:26%;
+.l3{
+top:98px;
+right:88px;
+width:33%;
+height:24%;
 background:linear-gradient(180deg,rgba(25,230,140,.12),rgba(255,255,255,.02));
 transform:rotate(-10deg);
-animation-delay:2.2s;
 }
 
 .ring{
 position:absolute;
-border:1px solid rgba(126,234,255,.18);
+border:1px solid rgba(137,236,255,.18);
 border-radius:50%;
-animation:pulseRing 5s ease-in-out infinite;
 }
 
-.ring.r1{width:190px;height:190px;right:48px;top:34px}
-.ring.r2{width:280px;height:280px;right:-8px;top:-14px;animation-delay:1s}
-.ring.r3{width:360px;height:360px;right:-50px;top:-54px;animation-delay:2s}
+.r1{width:190px;height:190px;right:42px;top:28px}
+.r2{width:280px;height:280px;right:-8px;top:-16px}
+.r3{width:360px;height:360px;right:-56px;top:-60px}
 
-.spark{
+.right-note{
 position:absolute;
-width:8px;
-height:8px;
-border-radius:50%;
-background:var(--cyan2);
-box-shadow:0 0 16px var(--cyan2);
-animation:orbit 6s linear infinite;
-}
-
-.spark.s1{top:54px;right:120px}
-.spark.s2{bottom:74px;left:120px;animation-duration:8s}
-.spark.s3{top:150px;left:220px;animation-duration:7s}
-
-.hero-right-label{
-position:absolute;
-left:22px;
-bottom:22px;
-right:22px;
+left:20px;
+right:20px;
+bottom:20px;
 padding:16px;
 border-radius:16px;
 background:rgba(7,17,31,.78);
 border:1px solid rgba(255,255,255,.08);
-animation:fadeUp 1s ease;
 }
 
-.hero-right-label strong{
+.right-note strong{
 display:block;
 color:var(--cyan2);
 margin-bottom:6px;
 font-size:16px;
 }
 
-.hero-right-label span{
+.right-note span{
 display:block;
 color:var(--muted);
 font-size:13px;
 line-height:1.6;
 }
 
-.grid{
+.section{
+margin-top:26px;
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:1fr 1fr;
 gap:18px;
-margin-top:24px;
 }
 
 .card{
-background:linear-gradient(180deg,#0e1b30,#0c1729);
-border:1px solid rgba(255,255,255,.07);
-border-radius:18px;
-padding:18px;
-box-shadow:0 10px 28px rgba(0,0,0,.18);
-animation:fadeUp .9s ease;
-}
-
-.label{
-font-size:12px;
-color:var(--muted);
-margin-bottom:6px;
-text-transform:uppercase;
-letter-spacing:.8px;
-}
-
-.metric{
-font-size:34px;
-color:var(--cyan);
-font-weight:bold;
-}
-
-.state{
-display:inline-block;
-margin-top:10px;
-padding:6px 10px;
-border-radius:999px;
-font-size:12px;
-font-weight:bold;
-}
-
-.stable{background:rgba(25,230,140,.12);color:var(--green)}
-.watch{background:rgba(245,185,66,.12);color:var(--yellow)}
-.elevated{background:rgba(255,138,61,.12);color:var(--orange)}
-.high{background:rgba(255,77,109,.12);color:var(--red)}
-
-.modules{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
-margin-top:28px;
-}
-
-.module{
-background:linear-gradient(180deg,#0e1b30,#0c1729);
+background:linear-gradient(180deg,#0f1b31,#0c172a);
 border:1px solid rgba(255,255,255,.07);
 border-radius:18px;
 padding:22px;
-text-decoration:none;
-color:var(--text);
 box-shadow:0 10px 28px rgba(0,0,0,.18);
-transition:transform .15s ease,border-color .15s ease;
 }
 
-.module:hover{
-transform:translateY(-2px);
+.card h2{
+font-size:22px;
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.card p{
+font-size:14px;
+line-height:1.7;
+color:var(--muted);
+}
+
+.list{
+margin-top:14px;
+display:grid;
+gap:10px;
+}
+
+.list-item{
+padding:12px 14px;
+border-radius:14px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+}
+
+.list-item strong{
+display:block;
+font-size:14px;
+color:#eaf6ff;
+margin-bottom:4px;
+}
+
+.list-item span{
+display:block;
+font-size:12px;
+line-height:1.5;
+color:var(--muted);
+}
+
+.access{
+margin-top:28px;
+background:linear-gradient(180deg,#12213a,#0f1b31);
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+padding:24px;
+box-shadow:0 14px 34px rgba(0,0,0,.22);
+}
+
+.access h2{
+color:var(--cyan);
+font-size:24px;
+margin-bottom:10px;
+}
+
+.access p{
+color:var(--muted);
+font-size:14px;
+line-height:1.7;
+margin-bottom:18px;
+}
+
+.access-grid{
+display:grid;
+grid-template-columns:1fr auto;
+gap:12px;
+align-items:center;
+}
+
+.access input{
+width:100%;
+padding:14px 16px;
+border-radius:14px;
+background:#091221;
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+font-size:15px;
+outline:none;
+}
+
+.access input:focus{
 border-color:#5c8fc2;
 }
 
-.module h3{
-color:var(--cyan);
-margin-bottom:8px;
-font-size:22px;
-}
-
-.module p{
-color:var(--muted);
+.access button{
+padding:14px 18px;
+border:none;
+border-radius:14px;
+background:var(--cyan);
+color:#03111c;
+font-weight:bold;
+cursor:pointer;
 font-size:14px;
-line-height:1.65;
 }
 
-.note{
-margin-top:26px;
-color:var(--muted);
+.access-msg{
+margin-top:12px;
 font-size:13px;
-line-height:1.7;
+line-height:1.6;
+color:var(--muted);
+min-height:22px;
 }
 
-@keyframes fadeDown{
-from{opacity:0;transform:translateY(-4px)}
-to{opacity:1;transform:translateY(0)}
+.footer-note{
+margin-top:18px;
+font-size:12px;
+line-height:1.6;
+color:var(--muted);
 }
 
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(16px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes pulseRing{
-0%,100%{transform:scale(1);opacity:.75}
-50%{transform:scale(1.04);opacity:.35}
-}
-
-@keyframes floaty{
-0%,100%{transform:translateY(0) rotate(-4deg)}
-50%{transform:translateY(-8px) rotate(-6deg)}
-}
-
-@keyframes orbit{
-0%{transform:translate(0,0)}
-25%{transform:translate(18px,-10px)}
-50%{transform:translate(0,-18px)}
-75%{transform:translate(-18px,-8px)}
-100%{transform:translate(0,0)}
-}
-
-@media(max-width:1100px){
+@media(max-width:980px){
 .hero{grid-template-columns:1fr}
-.grid{grid-template-columns:1fr 1fr}
-.modules{grid-template-columns:1fr}
-.chat-panel{width:380px}
+.section{grid-template-columns:1fr}
 }
 
-@media(max-width:760px){
-.grid{grid-template-columns:1fr}
-.hero-left h1{font-size:34px}
-.top-link,.lang-pill{display:none}
-.menu-drawer{width:310px}
-.chat-panel{width:100%;right:-110%}
+@media(max-width:640px){
+.left h1{font-size:34px}
+.access-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="overlay" onclick="closeAllPanels()"></div>
-
-<div class="menu-drawer" id="menuDrawer">
-
-  <div class="drawer-head">
-    <div class="drawer-title">
-      <strong>ZENTRA</strong>
-      <span>Navigation Layer</span>
-    </div>
-    <button class="close-btn" onclick="closeAllPanels()">×</button>
-  </div>
-
-  <div class="search-wrap">
-    <div class="search-label">Site Search</div>
-    <div class="search-box">
-      <span>🔎</span>
-      <input id="siteSearch" type="text" placeholder="Mission, trade, telescope, company..." onkeydown="handleSiteSearch(event)">
-    </div>
-    <div class="search-help">Enter ile modül ve sayfa araması yap.</div>
-  </div>
-
-  <div class="search-wrap">
-    <div class="search-label">Lens Search</div>
-    <div class="search-box">
-      <span>🔍</span>
-      <input id="lensSearch" type="text" placeholder="Inflation, oil, recession, logistics..." onkeydown="handleLensSearch(event)">
-    </div>
-    <div class="search-help">Economic AI lens araması. Enter ile Advisor’a gider.</div>
-  </div>
-
-  <div class="drawer-section">
-    <h3>General AI</h3>
-    <a class="menu-card" href="javascript:void(0)" onclick="openChatPanel()">
-      <strong>General Assistant</strong>
-      <span>ChatGPT-style general writing, guidance and conversation layer.</span>
-    </a>
-  </div>
-
-  <div class="drawer-section">
-    <h3>Economic AI</h3>
-
-    <div class="acc-item">
-      <button class="acc-head" onclick="toggleAcc('risklensMenu', this)">
-        <div class="acc-head-left">
-          <strong>RiskLens</strong>
-          <span>Risk analysis surfaces</span>
-        </div>
-        <div class="acc-icon">+</div>
-      </button>
-      <div class="acc-body" id="risklensMenu">
-        <a href="/risklens.html">RiskLens Home</a>
-        <a href="/risklens/dashboard.html">Dashboard</a>
-        <a href="/risklens/signals.html">Signals</a>
-        <a href="/risklens/crisis.html">Crisis Radar</a>
-        <a href="/risklens/worldmap.html">World Map</a>
-        <a href="/risklens/sectors.html">Sector Pressure</a>
-        <a href="/risklens/advisor.html">Economic Advisor</a>
-      </div>
-    </div>
-
-    <div class="acc-item">
-      <button class="acc-head" onclick="toggleAcc('lensMenu', this)">
-        <div class="acc-head-left">
-          <strong>Lens Library</strong>
-          <span>Economic AI lens groups</span>
-        </div>
-        <div class="acc-icon">+</div>
-      </button>
-      <div class="acc-body" id="lensMenu">
-        <a href="/risklens/advisor.html">Macro Lenses</a>
-        <a href="/risklens/advisor.html">Market Lenses</a>
-        <a href="/risklens/advisor.html">Commodity Lenses</a>
-        <a href="/risklens/advisor.html">Trade Lenses</a>
-        <a href="/risklens/advisor.html">Sector Lenses</a>
-        <a href="/risklens/advisor.html">Health Lenses</a>
-        <a href="/risklens/advisor.html">Disaster Lenses</a>
-        <a href="/risklens/advisor.html">Cyber Lenses</a>
-        <a href="/risklens/advisor.html">Geo-Economic Lenses</a>
-      </div>
-    </div>
-
-    <div class="acc-item">
-      <button class="acc-head" onclick="toggleAcc('platformMenu', this)">
-        <div class="acc-head-left">
-          <strong>Platform Modules</strong>
-          <span>Core operating surfaces</span>
-        </div>
-        <div class="acc-icon">+</div>
-      </button>
-      <div class="acc-body" id="platformMenu">
-        <a href="/">Mission Control</a>
-        <a href="/telescope">Global Telescope</a>
-        <a href="/trade">Trade Engine</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="drawer-section">
-    <h3>Company</h3>
-    <a class="menu-card" href="#">
-      <strong>About ZENTRA</strong>
-      <span>Economic intelligence operating system overview.</span>
-    </a>
-    <a class="menu-card" href="#">
-      <strong>Mission</strong>
-      <span>Transform global signals into decision support.</span>
-    </a>
-    <a class="menu-card" href="#">
-      <strong>Vision</strong>
-      <span>Build the world’s economic telescope.</span>
-    </a>
-  </div>
-
-  <div class="drawer-section">
-    <h3>User</h3>
-    <a class="menu-card" href="#"><strong>Login</strong><span>Access platform modules.</span></a>
-    <a class="menu-card" href="#"><strong>Register</strong><span>Create account and start using ZENTRA.</span></a>
-  </div>
-
-  <div class="drawer-section">
-    <h3>Language</h3>
-    <select class="lang-select">
-      <option>English</option>
-      <option>Türkçe</option>
-      <option>العربية</option>
-      <option>Deutsch</option>
-      <option>Français</option>
-      <option>Español</option>
-      <option>Русский</option>
-      <option>中文</option>
-    </select>
-  </div>
-
-</div>
-
-<div class="chat-panel" id="chatPanel">
-
-  <div class="chat-head">
-    <div class="chat-title">
-      <strong>General AI</strong>
-      <span>Conversation layer</span>
-    </div>
-    <button class="close-btn" onclick="closeAllPanels()">×</button>
-  </div>
-
-  <div class="chat-body" id="chatBody">
-    <div class="msg bot">Hello. I’m your general assistant layer inside ZENTRA. Ask anything about writing, research, planning or ideas.</div>
-    <div class="msg bot">Economic analysis belongs to Economic AI. General conversation belongs here.</div>
-  </div>
-
-  <div class="chat-input-wrap">
-    <div class="chat-input-row">
-      <input id="chatInput" class="chat-input" type="text" placeholder="Type a message..." onkeydown="handleChat(event)">
-      <button class="send-btn" onclick="sendChat()">Send</button>
-    </div>
-  </div>
-
-</div>
-
 <div class="topbar">
-  <div class="brand">ZENTRA</div>
-
-  <div class="top-actions">
-    <a class="top-link" href="/telescope">Telescope</a>
-    <a class="top-link" href="/risklens.html">RiskLens</a>
-    <a class="top-link" href="/trade">Trade</a>
-    <div class="chat-launch" onclick="openChatPanel()">✦</div>
-    <div class="burger" onclick="openMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
+  <div class="brand">ZENTRA | RiskLens</div>
+  <a href="/">Mission Control</a>
 </div>
 
 <div class="container">
 
   <div class="hero">
 
-    <div class="hero-left">
-      <h1>ZENTRA Economic Intelligence OS</h1>
+    <div class="left">
+      <h1>RiskLens Access Layer</h1>
       <p>
         ZENTRA is a global economic intelligence operating system that combines economic observation,
         multi-lens analysis, institutional decision support and trade execution into one platform.
+        This page presents the public introduction layer of RiskLens and the protected gateway to the private analytical environment.
       </p>
 
       <div class="badges">
-        <div class="badge">General AI</div>
         <div class="badge">Economic AI</div>
-        <div class="badge">Global Telescope</div>
         <div class="badge">Risk Intelligence</div>
-        <div class="badge">Trade Execution</div>
+        <div class="badge">Lens Architecture</div>
+        <div class="badge">Protected Access</div>
+        <div class="badge">Institution Ready</div>
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="layers">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <div class="ring r3"></div>
-        <div class="layer one"></div>
-        <div class="layer two"></div>
-        <div class="layer three"></div>
-        <div class="spark s1"></div>
-        <div class="spark s2"></div>
-        <div class="spark s3"></div>
-      </div>
-      <div class="hero-right-label">
-        <strong>Mission Control Surface</strong>
-        <span>Multi-layered economic observation, signal interpretation and trade direction in one system.</span>
+    <div class="right">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+
+      <div class="layer l1"></div>
+      <div class="layer l2"></div>
+      <div class="layer l3"></div>
+
+      <div class="right-note">
+        <strong>Public Introduction + Private Core</strong>
+        <span>RiskLens follows a two-layer publication model: public explanation for investors and institutions, protected full-access analytical core for authorized users.</span>
       </div>
     </div>
 
   </div>
 
-  <div class="grid">
+  <div class="section">
 
     <div class="card">
-      <div class="label">Global Risk</div>
-      <div class="metric">72</div>
-      <div class="state elevated">Elevated</div>
+      <h2>What is RiskLens?</h2>
+      <p>
+        RiskLens is the economic AI layer of ZENTRA. It interprets global macro pressure, sector vulnerability,
+        trade stress, energy shock, credit fragility and systemic disruption through a multi-lens intelligence framework.
+      </p>
+
+      <div class="list">
+        <div class="list-item">
+          <strong>Global Risk Monitoring</strong>
+          <span>Macro pressure, inflation, credit stress, energy and volatility.</span>
+        </div>
+        <div class="list-item">
+          <strong>Multi-Lens Analysis</strong>
+          <span>Macro, market, commodity, trade, sector, health, disaster and geo-economic lenses.</span>
+        </div>
+        <div class="list-item">
+          <strong>Decision Support</strong>
+          <span>Institutional interpretation, scenario reading and strategic output.</span>
+        </div>
+      </div>
     </div>
 
     <div class="card">
-      <div class="label">Inflation Pressure</div>
-      <div class="metric">5.4%</div>
-      <div class="state watch">Sticky</div>
-    </div>
+      <h2>Publication Model</h2>
+      <p>
+        This layer is intentionally structured as a controlled access model. Public visitors can understand the architecture,
+        while full operational depth remains protected in the private analytical environment.
+      </p>
 
-    <div class="card">
-      <div class="label">Credit Stress</div>
-      <div class="metric">61</div>
-      <div class="state watch">Moderate</div>
-    </div>
-
-    <div class="card">
-      <div class="label">Market Volatility</div>
-      <div class="metric">58</div>
-      <div class="state stable">Stable</div>
+      <div class="list">
+        <div class="list-item">
+          <strong>Layer 1 — Public</strong>
+          <span>Introduction, architecture summary, investor-facing overview, high-level modules.</span>
+        </div>
+        <div class="list-item">
+          <strong>Layer 2 — Private</strong>
+          <span>Full RiskLens, Telescope, Trade Engine, Lens Library, Advisor and deeper analytical access.</span>
+        </div>
+        <div class="list-item">
+          <strong>Use Case</strong>
+          <span>Investor presentation, institutional entry, controlled product visibility.</span>
+        </div>
+      </div>
     </div>
 
   </div>
 
-  <div class="modules">
+  <div class="access">
+    <h2>Private Access</h2>
+    <p>
+      Enter the short access password to open the private analytical layer. Authorized access leads to the deeper RiskLens environment.
+    </p>
 
-    <a class="module" href="/risklens.html">
-      <h3>RiskLens</h3>
-      <p>Global risk intelligence system and economic analysis surface.</p>
-    </a>
+    <div class="access-grid">
+      <input id="passInput" type="password" placeholder="Enter access password" onkeydown="handlePass(event)">
+      <button onclick="openPrivate()">Open Private Layer</button>
+    </div>
 
-    <a class="module" href="/telescope">
-      <h3>Global Telescope</h3>
-      <p>Planetary scale economic observation and systemic monitoring.</p>
-    </a>
+    <div class="access-msg" id="accessMsg"></div>
 
-    <a class="module" href="/trade">
-      <h3>Trade Engine</h3>
-      <p>Trade orchestration system connecting insight with real trade action.</p>
-    </a>
-
-  </div>
-
-  <div class="note">
-    Main screen now keeps mission and vision out of the hero area. Menu and chat are separated into different layers so General AI and Economic AI do not mix.
+    <div class="footer-note">
+      Public layer shows the system introduction. Private layer is intended for protected analytical access.
+    </div>
   </div>
 
 </div>
 
 <script>
-function openMenu(){
-  document.getElementById("menuDrawer").classList.add("open");
-  document.getElementById("chatPanel").classList.remove("open");
-  document.getElementById("overlay").classList.add("show");
-  document.body.classList.add("lock");
-}
-
-function openChatPanel(){
-  document.getElementById("chatPanel").classList.add("open");
-  document.getElementById("menuDrawer").classList.remove("open");
-  document.getElementById("overlay").classList.add("show");
-  document.body.classList.add("lock");
-}
-
-function closeAllPanels(){
-  document.getElementById("menuDrawer").classList.remove("open");
-  document.getElementById("chatPanel").classList.remove("open");
-  document.getElementById("overlay").classList.remove("show");
-  document.body.classList.remove("lock");
-}
-
-function toggleAcc(id, btn){
-  const body = document.getElementById(id);
-  const icon = btn.querySelector(".acc-icon");
-  body.classList.toggle("open");
-  icon.textContent = body.classList.contains("open") ? "−" : "+";
-}
-
-function handleSiteSearch(event){
-  if(event.key !== "Enter") return;
-  const q = event.target.value.toLowerCase().trim();
-
-  if(q.includes("risk")) return window.location.href="/risklens.html";
-  if(q.includes("telescope") || q.includes("global")) return window.location.href="/telescope";
-  if(q.includes("trade") || q.includes("shipping")) return window.location.href="/trade";
-  if(q.includes("signal")) return window.location.href="/risklens/signals.html";
-  if(q.includes("crisis")) return window.location.href="/risklens/crisis.html";
-  if(q.includes("sector")) return window.location.href="/risklens/sectors.html";
-  if(q.includes("map")) return window.location.href="/risklens/worldmap.html";
-  if(q.includes("advisor") || q.includes("economic ai")) return window.location.href="/risklens/advisor.html";
-
-  window.location.href="/";
-}
-
-function handleLensSearch(event){
-  if(event.key !== "Enter") return;
-  const q = event.target.value.trim();
-  if(!q) return;
-  window.location.href="/risklens/advisor.html";
-}
-
-function handleChat(event){
+function handlePass(event){
   if(event.key === "Enter"){
-    sendChat();
+    openPrivate();
   }
 }
 
-function sendChat(){
-  const input = document.getElementById("chatInput");
-  const value = input.value.trim();
-  if(!value) return;
+function openPrivate(){
+  const pass = document.getElementById("passInput").value.trim();
+  const msg = document.getElementById("accessMsg");
 
-  const body = document.getElementById("chatBody");
-
-  const user = document.createElement("div");
-  user.className = "msg user";
-  user.textContent = value;
-  body.appendChild(user);
-
-  const bot = document.createElement("div");
-  bot.className = "msg bot";
-  bot.textContent = "General AI received your message. For macro, risk, trade and lens analysis, use Economic AI inside RiskLens.";
-  body.appendChild(bot);
-
-  input.value = "";
-  body.scrollTop = body.scrollHeight;
+  if(pass === "zentra2026"){
+    msg.style.color = "#19e68c";
+    msg.textContent = "Access granted. Opening private layer...";
+    setTimeout(() => {
+      window.location.href = "/lens-lab.html";
+    }, 600);
+  }else{
+    msg.style.color = "#ff8a3d";
+    msg.textContent = "Access denied. Please enter the correct access password.";
+  }
 }
 </script>
 

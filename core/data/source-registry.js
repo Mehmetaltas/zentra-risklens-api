@@ -20,3 +20,23 @@ export const SOURCES = {
       fallback: 3200
     }
   ],
+
+  cyber: [
+    {
+      id: "cyber_threat",
+      name: "Cyber Threat Level",
+      unit: "score",
+      fallback: 41
+    }
+  ],
+
+  macro: [
+    {
+      id: "inflation",
+      name: "Global Inflation",
+      unit: "%",
+      fallback: 5.4
+    }
+  ]
+
+};

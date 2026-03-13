@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ZENTRA Global Telescope</title>
+<style>
+body{
+font-family:Arial;
+background:#0b0f18;
+color:white;
+padding:40px;
+}
 
+.panel{
+background:#141b2d;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+.score{
+font-size:40px;
+color:#ff5757;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌍 ZENTRA Global Economic Telescope</h1>
+
+<div class="panel">
+<h2>Global Risk Score</h2>
+<div class="score" id="riskScore">loading...</div>
+</div>
+
+<script>
+
+fetch("../data/global-signals.json")
+.then(res => res.json())
+.then(data => {
+
+document.getElementById("riskScore").innerText = data.globalRisk;
+
+})
+
+</script>
+
+</body>
+</html>

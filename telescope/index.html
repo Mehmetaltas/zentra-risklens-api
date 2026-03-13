@@ -1,48 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>ZENTRA Global Telescope</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Global Economic Telescope</title>
 <style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
 body{
-font-family:Arial;
-background:#0b0f18;
-color:white;
-padding:40px;
+  font-family:Arial, sans-serif;
+  background:#0b0f18;
+  color:#ffffff;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:40px 16px;
+}
+
+.wrapper{
+  width:100%;
+  max-width:1000px;
+}
+
+h1{
+  text-align:center;
+  color:#5aa9ff;
+  margin-bottom:24px;
+  font-size:34px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
 }
 
 .panel{
-background:#141b2d;
-padding:20px;
-border-radius:10px;
-margin-bottom:20px;
+  background:#141b2d;
+  padding:24px;
+  border-radius:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+
+.panel h2{
+  color:#8dc3ff;
+  margin-bottom:14px;
+  font-size:22px;
 }
 
 .score{
-font-size:40px;
-color:#ff5757;
+  font-size:54px;
+  font-weight:bold;
+  color:#ff5757;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.driver{
+  text-align:center;
+  font-size:18px;
+  color:#cfd8e6;
+}
+
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.market-card{
+  background:#1d2740;
+  border-radius:10px;
+  padding:16px;
+  text-align:center;
+}
+
+.market-label{
+  color:#9fb3d1;
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+.market-value{
+  color:#ffffff;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.signal-list{
+  display:grid;
+  gap:12px;
+}
+
+.signal-item{
+  background:#1d2740;
+  border-radius:10px;
+  padding:14px 16px;
+}
+
+.signal-name{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.signal-meta{
+  color:#b9c7dc;
+  font-size:14px;
+}
+
+.loading{
+  text-align:center;
+  color:#9fb3d1;
+}
+
+@media (max-width:700px){
+  h1{
+    font-size:28px;
+  }
+
+  .score{
+    font-size:42px;
+  }
+
+  .market-grid{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
-
 <body>
 
-<h1>🌍 ZENTRA Global Economic Telescope</h1>
+<div class="wrapper">
+  <h1>🌍 ZENTRA Global Economic Telescope</h1>
 
-<div class="panel">
-<h2>Global Risk Score</h2>
-<div class="score" id="riskScore">loading...</div>
+  <div class="grid">
+
+    <div class="panel">
+      <h2>Global Risk Score</h2>
+      <div id="riskScore" class="score">Loading...</div>
+      <div id="driver" class="driver">Preparing signal engine...</div>
+    </div>
+
+    <div class="panel">
+      <h2>Markets</h2>
+      <div id="markets" class="market-grid">
+        <div class="loading">Loading market data...</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Detected Signals</h2>
+      <div id="signals" class="signal-list">
+        <div class="loading">Loading detected signals...</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-
 fetch("../data/global-signals.json")
-.then(res => res.json())
-.then(data => {
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById("riskScore").innerText = data.globalRisk;
+    document.getElementById("driver").innerText = "Dominant Driver: " + data.dominantDriver;
 
-document.getElementById("riskScore").innerText = data.globalRisk;
+    const marketsHtml = `
+      <div class="market-card">
+        <div class="market-label">Oil</div>
+        <div class="market-value">${data.markets.oil}</div>
+      </div>
+      <div class="market-card">
+        <div class="market-label">Gold</div>
+        <div class="market-value">${data.markets.gold}</div>
+      </div>
+      <div class="market-card">
+        <div class="market-label">S&amp;P500</div>
+        <div class="market-value">${data.markets.sp500}</div>
+      </div>
+      <div class="market-card">
+        <div class="market-label">Interest Rate</div>
+        <div class="market-value">${data.markets.interestRate}</div>
+      </div>
+    `;
+    document.getElementById("markets").innerHTML = marketsHtml;
 
-})
+    const signalsHtml = data.signals.map(signal => `
+      <div class="signal-item">
+        <div class="signal-name">${signal.name}</div>
+        <div class="signal-meta">Severity: ${signal.severity} | Sector: ${signal.sector}</div>
+      </div>
+    `).join("");
 
+    document.getElementById("signals").innerHTML = signalsHtml;
+  })
+  .catch(error => {
+    document.getElementById("riskScore").innerText = "Error";
+    document.getElementById("driver").innerText = "Failed to load telescope data.";
+    document.getElementById("markets").innerHTML = '<div class="loading">Market data could not be loaded.</div>';
+    document.getElementById("signals").innerHTML = '<div class="loading">Signal data could not be loaded.</div>';
+    console.error(error);
+  });
 </script>
 
 </body>

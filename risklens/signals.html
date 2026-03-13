@@ -1,224 +1,354 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Signals</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZENTRA RiskLens Signals</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
 :root{
---bg:#030712;
---panel:#081120;
---line:#163052;
---text:#eef6ff;
---muted:#9bb3d9;
---cyan:#00d4ff;
---green:#19e68c;
---yellow:#f5b942;
---orange:#ff8a3d;
---red:#ff4d6d;
+  --bg:#07101d;
+  --panel:#101a2d;
+  --panel2:#16233b;
+  --line:#24395f;
+  --text:#eef5ff;
+  --muted:#a9b9d6;
+  --cyan:#63b3ff;
+  --cyan2:#8fd7ff;
+  --red:#ff5c70;
+  --orange:#ff9d57;
+  --yellow:#ffd166;
+  --green:#45d483;
 }
-
 body{
-font-family:Arial;
-background:
-radial-gradient(circle at 20% 20%, rgba(0,212,255,.10), transparent 25%),
-linear-gradient(180deg,#030712,#07111f 50%,#040914);
-color:var(--text);
+  font-family:Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(99,179,255,.10), transparent 24%),
+    radial-gradient(circle at 85% 10%, rgba(255,157,87,.08), transparent 18%),
+    linear-gradient(180deg,#07101d,#0b1324 55%,#07101d);
+  color:var(--text);
+  min-height:100vh;
+  padding:28px 16px 48px;
 }
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 22px;
-background:#060d1c;
-border-bottom:1px solid var(--line);
+.wrapper{width:100%;max-width:1280px;margin:0 auto}
+.hero{
+  margin-bottom:20px;
+  background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(12,20,35,.96));
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 14px 40px rgba(0,0,0,.25);
 }
-
-.brand{
-color:var(--cyan);
-font-size:22px;
-font-weight:bold;
-}
-
-.menu a{
-color:#dcecff;
-text-decoration:none;
-margin-left:18px;
-font-size:14px;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:30px 20px 60px;
-}
-
 .hero h1{
-color:var(--cyan);
-font-size:36px;
-margin-bottom:10px;
+  color:var(--cyan2);
+  font-size:34px;
+  margin-bottom:10px;
 }
-
 .hero p{
-color:var(--muted);
-line-height:1.7;
-max-width:800px;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:920px;
 }
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-margin-top:30px;
+.top-grid{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:18px;
+  margin-bottom:18px;
 }
-
-.card{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:14px;
-padding:20px;
-}
-
-.label{
-font-size:12px;
-color:var(--muted);
-margin-bottom:6px;
-text-transform:uppercase;
-}
-
-.metric{
-font-size:32px;
-color:var(--cyan);
-font-weight:bold;
-}
-
-.band{
-margin-top:8px;
-font-size:12px;
-font-weight:bold;
-padding:6px 10px;
-border-radius:999px;
-display:inline-block;
-}
-
-.low{background:rgba(25,230,140,.12);color:var(--green)}
-.medium{background:rgba(245,185,66,.12);color:var(--yellow)}
-.high{background:rgba(255,138,61,.12);color:var(--orange)}
-.critical{background:rgba(255,77,109,.12);color:var(--red)}
-
-.section{
-margin-top:40px;
-}
-
-.section h2{
-color:var(--cyan);
-margin-bottom:16px;
-}
-
 .panel{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:14px;
-padding:20px;
+  background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
-
-.row{
-display:flex;
-justify-content:space-between;
-padding:10px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
+.panel h2{
+  color:var(--cyan2);
+  font-size:21px;
+  margin-bottom:14px;
 }
-
-.row span{
-color:#dcecff;
-font-size:14px;
+.score{
+  font-size:56px;
+  line-height:1;
+  font-weight:bold;
+  color:var(--orange);
+  margin-bottom:10px;
+  text-align:center;
 }
-
-@media(max-width:900px){
-.grid{grid-template-columns:1fr}
-.menu{display:none}
+.driver{
+  text-align:center;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.6;
+}
+.metric-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+.metric{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  padding:14px;
+  text-align:center;
+}
+.metric-label{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:7px;
+}
+.metric-value{
+  font-size:22px;
+  font-weight:bold;
+  color:var(--cyan2);
+}
+.chain-box{
+  min-height:330px;
+  display:grid;
+  align-content:center;
+  gap:14px;
+}
+.chain-step{
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  text-align:center;
+}
+.chain-step strong{
+  display:block;
+  margin-bottom:6px;
+  color:var(--cyan2);
+}
+.arrow{
+  text-align:center;
+  color:var(--muted);
+  font-size:20px;
+}
+.grid-bottom{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.list{display:grid;gap:12px}
+.item{
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+}
+.item strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:15px;
+}
+.item small{
+  color:var(--muted);
+  line-height:1.6;
+  display:block;
+}
+.meta{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:bold;
+}
+.badge.red{background:rgba(255,92,112,.12);color:var(--red)}
+.badge.orange{background:rgba(255,157,87,.12);color:var(--orange)}
+.badge.yellow{background:rgba(255,209,102,.12);color:var(--yellow)}
+.badge.green{background:rgba(69,212,131,.12);color:var(--green)}
+@media (max-width:1100px){
+  .top-grid{grid-template-columns:1fr}
+  .grid-bottom{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .hero h1{font-size:28px}
+  .metric-grid{grid-template-columns:1fr}
+  .score{font-size:46px}
 }
 </style>
 </head>
-
 <body>
 
-<div class="topbar">
-<div class="brand">RiskLens Signals</div>
-<div class="menu">
-<a href="/">Home</a>
-<a href="/risklens/dashboard.html">Dashboard</a>
-<a href="/telescope">Telescope</a>
-<a href="/trade">Trade</a>
-</div>
-</div>
+<div class="wrapper">
 
-<div class="container">
+  <div class="hero">
+    <h1>📡 ZENTRA RiskLens Signals</h1>
+    <p>
+      Signal detection surface showing active stress points, transmission chains,
+      affected sectors and institutional relevance across the economic system.
+    </p>
+  </div>
 
-<div class="hero">
-<h1>Global Economic Signals</h1>
-<p>
-RiskLens sinyal katmanı makro ekonomik baskıları, enerji şoklarını,
-lojistik problemlerini ve finansal stres işaretlerini izler.
-Bu ekran erken uyarı sistemidir.
-</p>
-</div>
+  <div class="top-grid">
 
-<div class="grid">
+    <div class="panel">
+      <h2>Signal State</h2>
+      <div class="score">7</div>
+      <div class="driver">Critical signals are clustering around energy, logistics and credit-sensitive sectors.</div>
 
-<div class="card">
-<div class="label">Energy Signal</div>
-<div class="metric">84</div>
-<div class="band high">Oil Pressure</div>
-</div>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-label">High Severity</div>
+          <div class="metric-value">3</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Medium Severity</div>
+          <div class="metric-value">2</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Active Sectors</div>
+          <div class="metric-value">5</div>
+        </div>
+      </div>
+    </div>
 
-<div class="card">
-<div class="label">Logistics Signal</div>
-<div class="metric">76</div>
-<div class="band high">Shipping Stress</div>
-</div>
+    <div class="panel">
+      <h2>Signal Chain</h2>
+      <div class="chain-box">
+        <div class="chain-step">
+          <strong>Energy Shock</strong>
+          Oil cost transmission enters logistics and production layers.
+        </div>
+        <div class="arrow">↓</div>
+        <div class="chain-step">
+          <strong>Freight Inflation</strong>
+          Route costs and landed prices rise across import-dependent sectors.
+        </div>
+        <div class="arrow">↓</div>
+        <div class="chain-step">
+          <strong>Sector Pressure</strong>
+          Construction, retail and trade-linked portfolios face margin compression.
+        </div>
+      </div>
+    </div>
 
-<div class="card">
-<div class="label">Cyber Risk</div>
-<div class="metric">61</div>
-<div class="band medium">Elevated</div>
-</div>
+  </div>
 
-</div>
+  <div class="grid-bottom">
 
-<div class="section">
-<h2>Detected Signals</h2>
+    <div class="panel">
+      <h2>Detected Signals</h2>
+      <div class="list">
 
-<div class="panel">
+        <div class="item">
+          <strong>Oil Price Surge</strong>
+          <small>
+            A sharp rise in global oil prices is amplifying cost pressure across
+            logistics corridors, industrial production and energy-dependent sectors.
+          </small>
+          <div class="meta">
+            <span class="badge red">Critical</span>
+            <span class="badge orange">Energy</span>
+            <span class="badge yellow">Confidence: High</span>
+          </div>
+        </div>
 
-<div class="row">
-<span>Oil Shock</span>
-<span>Energy markets tightening</span>
-</div>
+        <div class="item">
+          <strong>Freight Cost Escalation Belt</strong>
+          <small>
+            Transport and freight cost inflation is increasing landed prices and
+            compressing margins in import-dependent industries.
+          </small>
+          <div class="meta">
+            <span class="badge red">Critical</span>
+            <span class="badge orange">Logistics</span>
+            <span class="badge yellow">Confidence: High</span>
+          </div>
+        </div>
 
-<div class="row">
-<span>Shipping Congestion</span>
-<span>Trade routes slowing</span>
-</div>
+        <div class="item">
+          <strong>Credit Tightening Drift</strong>
+          <small>
+            Financing conditions remain tighter than normal, reducing flexibility
+            for exposure-sensitive sectors and leveraged balance sheets.
+          </small>
+          <div class="meta">
+            <span class="badge orange">High</span>
+            <span class="badge yellow">Banking</span>
+            <span class="badge yellow">Confidence: Medium</span>
+          </div>
+        </div>
 
-<div class="row">
-<span>Cyber Activity</span>
-<span>Infrastructure pressure rising</span>
-</div>
+        <div class="item">
+          <strong>Port Stress Accumulation</strong>
+          <small>
+            Throughput constraints and handling delays are reducing execution
+            efficiency on selected trade corridors.
+          </small>
+          <div class="meta">
+            <span class="badge orange">High</span>
+            <span class="badge orange">Trade</span>
+            <span class="badge yellow">Confidence: Medium</span>
+          </div>
+        </div>
 
-<div class="row">
-<span>Port Stress</span>
-<span>Container backlog signals</span>
-</div>
+      </div>
+    </div>
 
-</div>
-</div>
+    <div class="panel">
+      <h2>Affected Areas</h2>
+      <div class="list">
+
+        <div class="item">
+          <strong>Construction</strong>
+          <small>
+            Material, transport and financing pressure are combining into a severe
+            profitability squeeze.
+          </small>
+          <div class="meta">
+            <span class="badge red">Severe Exposure</span>
+          </div>
+        </div>
+
+        <div class="item">
+          <strong>Retail</strong>
+          <small>
+            Inflation persistence and logistics pass-through continue to weaken
+            volume resilience and price flexibility.
+          </small>
+          <div class="meta">
+            <span class="badge orange">High Exposure</span>
+          </div>
+        </div>
+
+        <div class="item">
+          <strong>Banking & Payment Systems</strong>
+          <small>
+            Cyber and funding-related stress remain manageable but require
+            increased operational monitoring.
+          </small>
+          <div class="meta">
+            <span class="badge yellow">Watch</span>
+          </div>
+        </div>
+
+        <div class="item">
+          <strong>Trade Corridors</strong>
+          <small>
+            Selected routes remain pressured while alternative execution windows
+            are beginning to emerge.
+          </small>
+          <div class="meta">
+            <span class="badge green">Selective Opportunity</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
 </body>
-</html>
+  </html>

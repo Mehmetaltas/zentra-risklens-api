@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Economic Globe</title>
+
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#050c18;
+--panel:#0f1828;
+--line:#22385e;
+--text:#eef6ff;
+--muted:#9bb3d9;
+--cyan:#63b3ff;
+--green:#45d483;
+--orange:#ff9d57;
+--red:#ff5c70;
+}
+
+body{
+font-family:Arial;
+background:
+radial-gradient(circle at 20% 20%, rgba(99,179,255,.08), transparent 25%),
+linear-gradient(180deg,#050c18,#071324 60%,#050c18);
+color:var(--text);
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:40px 20px;
+}
+
+h1{
+font-size:40px;
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.section{
+margin-top:22px;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:18px;
+padding:20px;
+}
+
+canvas{
+width:100%;
+height:420px;
+background:#020812;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.data-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin-top:16px;
+}
+
+.data-card{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+padding:16px;
+border-radius:12px;
+text-align:center;
+}
+
+.data-card strong{
+display:block;
+font-size:26px;
+color:var(--cyan);
+margin-top:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌍 ZENTRA Global Economic Globe</h1>
+
+<div class="section">
+
+<canvas id="globe"></canvas>
+
+</div>
+
+<div class="section">
+
+<h2>📈 Live Economic Indicators</h2>
+
+<div class="data-grid">
+
+<div class="data-card">
+Oil
+<strong id="oil">82</strong>
+</div>
+
+<div class="data-card">
+Gold
+<strong id="gold">2310</strong>
+</div>
+
+<div class="data-card">
+S&P500
+<strong id="sp">5180</strong>
+</div>
+
+<div class="data-card">
+Interest Rate
+<strong id="rate">4.8</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* rotating globe effect */
+
+const canvas=document.getElementById("globe")
+const ctx=canvas.getContext("2d")
+
+canvas.width=900
+canvas.height=420
+
+let rotation=0
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+let x=canvas.width/2
+let y=canvas.height/2
+
+ctx.beginPath()
+ctx.arc(x,y,160,0,Math.PI*2)
+ctx.strokeStyle="rgba(99,179,255,.3)"
+ctx.lineWidth=2
+ctx.stroke()
+
+for(let i=0;i<12;i++){
+
+let angle=i*Math.PI/6+rotation
+
+ctx.beginPath()
+ctx.moveTo(x,y)
+ctx.lineTo(
+x+160*Math.cos(angle),
+y+160*Math.sin(angle)
+)
+
+ctx.strokeStyle="rgba(99,179,255,.2)"
+ctx.stroke()
+
+}
+
+rotation+=0.01
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+/* fake live data */
+
+function updateData(){
+
+let oil=80+Math.random()*5
+let gold=2300+Math.random()*20
+let sp=5180+Math.random()*30
+let rate=4.5+Math.random()*0.5
+
+document.getElementById("oil").innerText=oil.toFixed(1)
+document.getElementById("gold").innerText=gold.toFixed(0)
+document.getElementById("sp").innerText=sp.toFixed(0)
+document.getElementById("rate").innerText=rate.toFixed(2)
+
+}
+
+setInterval(updateData,3000)
+
+</script>
+
+</body>
+</html>

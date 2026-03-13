@@ -3,157 +3,357 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA RiskLens Access</title>
+<title>ZENTRA | Lens Lab</title>
+<meta name="description" content="ZENTRA private analytical layer. Economic AI, lens architecture, signals and strategic intelligence interface.">
 
 <style>
-
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
 --bg:#030712;
+--bg2:#07111f;
 --panel:#0f1b31;
---line:#294a7c;
+--panel2:#162846;
+--panel3:#1f3a61;
+--line:#2b4f7f;
 --text:#eef6ff;
---muted:#9fb6d8;
+--muted:#adc4e6;
 --cyan:#00d4ff;
+--cyan2:#8cecff;
 --green:#19e68c;
+--yellow:#f5b942;
 --orange:#ff8a3d;
+--red:#ff4d6d;
+--shadow:0 22px 56px rgba(0,0,0,.34);
+}
+
+html,body{
+min-height:100%;
+overflow-x:hidden;
 }
 
 body{
-font-family:Arial;
+font-family:Arial,sans-serif;
 color:var(--text);
 background:
-radial-gradient(circle at 20% 20%, rgba(0,212,255,.15), transparent 30%),
-linear-gradient(180deg,#030712,#07111f 60%,#050b16);
-min-height:100vh;
+radial-gradient(circle at 14% 18%, rgba(0,212,255,.14), transparent 22%),
+radial-gradient(circle at 82% 10%, rgba(140,236,255,.07), transparent 18%),
+radial-gradient(circle at 70% 82%, rgba(255,138,61,.05), transparent 20%),
+linear-gradient(180deg,var(--bg) 0%, var(--bg2) 52%, #050b16 100%);
 }
 
+body.lock{
+overflow:hidden;
+}
+
+/* topbar */
 .topbar{
+position:sticky;
+top:0;
+z-index:90;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:16px 20px;
-background:#07111f;
-border-bottom:1px solid var(--line);
+padding:14px 18px;
+background:rgba(8,15,28,.84);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,.06);
 }
 
 .brand{
-color:var(--cyan);
 font-size:22px;
-font-weight:bold;
+font-weight:700;
+color:var(--cyan);
+letter-spacing:.4px;
+}
+
+.top-actions{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.top-link{
+text-decoration:none;
+color:#eaf6ff;
+font-size:14px;
+padding:10px 12px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.03);
+}
+
+.lang-pill{
+padding:10px 12px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.03);
+font-size:14px;
+color:#fff;
 }
 
 .burger{
-width:46px;
-height:46px;
-border-radius:12px;
-border:1px solid var(--line);
+width:48px;
+height:48px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,.08);
+background:linear-gradient(180deg,#12233d,#0d1c31);
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 gap:5px;
 cursor:pointer;
+box-shadow:0 10px 28px rgba(0,0,0,.22);
 }
 
 .burger span{
-width:22px;
+width:20px;
 height:2px;
-background:white;
+background:#fff;
+border-radius:999px;
+display:block;
 }
 
+/* overlay */
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(3,8,18,.46);
+backdrop-filter:blur(4px);
+opacity:0;
+pointer-events:none;
+transition:opacity .24s ease;
+z-index:80;
+}
+
+.overlay.show{
+opacity:1;
+pointer-events:auto;
+}
+
+/* drawer */
 .drawer{
 position:fixed;
 top:0;
-right:-340px;
-width:320px;
+right:-390px;
+width:360px;
 height:100vh;
-background:#07111f;
-border-left:1px solid var(--line);
-padding:22px;
-transition:.25s;
 z-index:100;
+overflow-y:auto;
+padding:18px 16px 28px;
+background:
+linear-gradient(180deg, rgba(22,40,69,.98), rgba(17,31,53,.98)),
+radial-gradient(circle at top right, rgba(126,234,255,.12), transparent 22%);
+border-left:1px solid rgba(255,255,255,.08);
+box-shadow:var(--shadow);
+transition:right .28s ease;
 }
 
 .drawer.open{
 right:0;
 }
 
-.drawer a{
+.drawer-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding-bottom:12px;
+margin-bottom:14px;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.drawer-title strong{
+display:block;
+font-size:22px;
+color:var(--cyan);
+}
+
+.drawer-title span{
+display:block;
+margin-top:3px;
+font-size:12px;
+color:var(--muted);
+}
+
+.close-btn{
+width:44px;
+height:44px;
+border:none;
+cursor:pointer;
+border-radius:12px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+font-size:20px;
+}
+
+.search-wrap{
+margin-bottom:14px;
+}
+
+.search-label{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.9px;
+color:var(--cyan2);
+margin-bottom:8px;
+}
+
+.search-box{
+position:relative;
+}
+
+.search-box span{
+position:absolute;
+left:12px;
+top:50%;
+transform:translateY(-50%);
+font-size:15px;
+opacity:.95;
+}
+
+.search-box input{
+width:100%;
+padding:13px 14px 13px 38px;
+border-radius:14px;
+background:#0a1322;
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+font-size:14px;
+outline:none;
+}
+
+.search-help{
+margin-top:8px;
+font-size:12px;
+color:var(--muted);
+line-height:1.5;
+}
+
+.drawer-section{
+margin-top:18px;
+}
+
+.drawer-section h3{
+font-size:13px;
+text-transform:uppercase;
+letter-spacing:1px;
+color:var(--cyan2);
+margin:0 4px 10px;
+}
+
+.menu-card{
 display:block;
 text-decoration:none;
-color:white;
-background:#0f1b31;
-border:1px solid var(--line);
-padding:16px;
-border-radius:12px;
+color:#eef6ff;
+background:linear-gradient(180deg,#132440,#102038);
+border:1px solid rgba(255,255,255,.08);
+border-radius:14px;
+padding:14px;
 margin-bottom:10px;
 }
 
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-display:none;
-}
-
-.overlay.show{
+.menu-card strong{
 display:block;
+color:var(--cyan);
+margin-bottom:4px;
+font-size:15px;
 }
 
+.menu-card span{
+display:block;
+font-size:12px;
+line-height:1.5;
+color:var(--muted);
+}
+
+.lang-select{
+width:100%;
+padding:12px;
+border-radius:12px;
+background:#0a1322;
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+font-size:14px;
+}
+
+/* main */
 .container{
-max-width:1200px;
+max-width:1240px;
 margin:auto;
-padding:40px 20px;
+padding:28px 18px 56px;
 }
 
 .hero{
 display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:20px;
+grid-template-columns:1.05fr .95fr;
+gap:22px;
+align-items:stretch;
 }
 
-.left{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
-padding:26px;
+.hero-left,
+.hero-right{
+background:linear-gradient(180deg,rgba(15,27,49,.92),rgba(11,22,39,.95));
+border:1px solid rgba(255,255,255,.07);
+border-radius:22px;
+box-shadow:var(--shadow);
+overflow:hidden;
+position:relative;
 }
 
-.left h1{
-font-size:42px;
+.hero-left{
+padding:28px 24px;
+}
+
+.kicker{
+display:inline-block;
+margin-bottom:12px;
+padding:8px 12px;
+border-radius:999px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.06);
+font-size:12px;
+letter-spacing:.8px;
+text-transform:uppercase;
+color:var(--cyan2);
+}
+
+.hero-left h1{
+font-size:40px;
+line-height:1.1;
 color:var(--cyan);
 margin-bottom:12px;
 }
 
-.left p{
+.hero-left p{
+font-size:15px;
+line-height:1.8;
 color:var(--muted);
-line-height:1.7;
+max-width:760px;
 }
 
 .badges{
-margin-top:16px;
 display:flex;
 flex-wrap:wrap;
 gap:10px;
+margin-top:18px;
 }
 
 .badge{
-background:#09192e;
-border:1px solid var(--line);
 padding:8px 12px;
 border-radius:999px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.06);
 font-size:12px;
+color:#eaf6ff;
 }
 
-.right{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
-position:relative;
-overflow:hidden;
-min-height:320px;
+.hero-right{
+min-height:360px;
+background:
+linear-gradient(180deg,rgba(17,31,53,.96),rgba(12,22,38,.98)),
+radial-gradient(circle at 72% 18%, rgba(0,212,255,.14), transparent 18%);
 }
 
 .core{
@@ -161,90 +361,209 @@ position:absolute;
 left:50%;
 top:50%;
 transform:translate(-50%,-50%);
-width:120px;
-height:120px;
+width:140px;
+height:140px;
 border-radius:50%;
-background:radial-gradient(circle,#00d4ff,#003d55);
-box-shadow:0 0 40px #00d4ff;
-animation:pulse 3s infinite;
+background:
+radial-gradient(circle at center, rgba(140,236,255,.95), rgba(0,212,255,.28) 44%, rgba(0,212,255,.08) 72%, transparent 73%);
+box-shadow:0 0 40px rgba(0,212,255,.24), 0 0 90px rgba(0,212,255,.12);
+animation:pulseCore 3.4s ease-in-out infinite;
 }
 
 .orbit{
 position:absolute;
-border:1px solid rgba(255,255,255,.15);
-border-radius:50%;
 left:50%;
 top:50%;
 transform:translate(-50%,-50%);
+border:1px solid rgba(140,236,255,.16);
+border-radius:50%;
 }
 
-.o1{width:200px;height:200px;animation:spin 16s linear infinite}
-.o2{width:300px;height:300px;animation:spin 24s linear infinite}
+.o1{width:220px;height:220px;animation:spin 16s linear infinite}
+.o2{width:310px;height:310px;animation:spinReverse 22s linear infinite}
+.o3{width:390px;height:390px;animation:spin 28s linear infinite}
 
 .dot{
 position:absolute;
 width:10px;
 height:10px;
 border-radius:50%;
-background:var(--cyan);
-top:0;
-left:50%;
-transform:translateX(-50%);
+background:var(--cyan2);
+box-shadow:0 0 18px var(--cyan2);
+}
+
+.o1 .dot{top:14px;left:50%;transform:translateX(-50%)}
+.o2 .dot{right:22px;top:50%;transform:translateY(-50%);background:var(--orange);box-shadow:0 0 18px var(--orange)}
+.o3 .dot{bottom:18px;left:24%;background:var(--green);box-shadow:0 0 18px var(--green)}
+
+.hero-right-label{
+position:absolute;
+left:20px;
+right:20px;
+bottom:20px;
+padding:16px;
+border-radius:16px;
+background:rgba(7,17,31,.78);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.hero-right-label strong{
+display:block;
+color:var(--cyan2);
+margin-bottom:6px;
+font-size:16px;
+}
+
+.hero-right-label span{
+display:block;
+color:var(--muted);
+font-size:13px;
+line-height:1.6;
 }
 
 .metrics{
 margin-top:24px;
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:14px;
+gap:18px;
 }
 
-.metric{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:12px;
-padding:16px;
+.metric-card{
+background:linear-gradient(180deg,#0f1b31,#0c172a);
+border:1px solid rgba(255,255,255,.07);
+border-radius:18px;
+padding:20px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
 }
 
-.metric strong{
-display:block;
+.metric-card .label{
+font-size:12px;
+text-transform:uppercase;
+letter-spacing:.8px;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.metric-card .value{
+font-size:32px;
+font-weight:bold;
 color:var(--cyan);
-font-size:26px;
+}
+
+.metric-card .sub{
+margin-top:8px;
+font-size:13px;
+line-height:1.6;
+color:var(--muted);
+}
+
+.section{
+margin-top:28px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.card{
+background:linear-gradient(180deg,#0f1b31,#0c172a);
+border:1px solid rgba(255,255,255,.07);
+border-radius:20px;
+padding:24px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+
+.card h2{
+font-size:22px;
+color:var(--cyan);
+margin-bottom:10px;
+}
+
+.card p{
+font-size:14px;
+line-height:1.75;
+color:var(--muted);
+}
+
+.list{
+margin-top:14px;
+display:grid;
+gap:10px;
+}
+
+.list-item{
+padding:13px 14px;
+border-radius:14px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+}
+
+.list-item strong{
+display:block;
+font-size:14px;
+color:#eaf6ff;
+margin-bottom:4px;
+}
+
+.list-item span{
+display:block;
+font-size:12px;
+line-height:1.55;
+color:var(--muted);
+}
+
+.lens-grid{
+margin-top:28px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.lens-card{
+background:linear-gradient(180deg,#0f1b31,#0c172a);
+border:1px solid rgba(255,255,255,.07);
+border-radius:20px;
+padding:22px;
+box-shadow:0 10px 28px rgba(0,0,0,.18);
+}
+
+.lens-card h3{
+font-size:20px;
+color:var(--cyan);
+margin-bottom:8px;
+}
+
+.lens-card p{
+font-size:13px;
+line-height:1.65;
+color:var(--muted);
+}
+
+.contact-grid{
+margin-top:18px;
+display:grid;
+grid-template-columns:1fr;
+gap:18px;
+}
+
+.contact-card{
+padding:16px;
+border-radius:16px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+}
+
+.contact-card strong{
+display:block;
+font-size:14px;
+color:#eaf6ff;
 margin-bottom:6px;
 }
 
-.access{
-margin-top:30px;
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-}
-
-.access input{
-width:100%;
-padding:14px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid var(--line);
-background:#081120;
-color:white;
-}
-
-.access button{
-margin-top:12px;
-padding:12px 16px;
-border:none;
-border-radius:10px;
-background:var(--cyan);
-cursor:pointer;
-font-weight:bold;
-}
-
-.contact{
-margin-top:20px;
+.contact-card span{
+display:block;
+font-size:13px;
+line-height:1.6;
 color:var(--muted);
-font-size:14px;
 }
 
 @keyframes spin{
@@ -252,157 +571,240 @@ from{transform:translate(-50%,-50%) rotate(0deg)}
 to{transform:translate(-50%,-50%) rotate(360deg)}
 }
 
-@keyframes pulse{
-0%,100%{transform:translate(-50%,-50%) scale(1)}
-50%{transform:translate(-50%,-50%) scale(1.1)}
+@keyframes spinReverse{
+from{transform:translate(-50%,-50%) rotate(360deg)}
+to{transform:translate(-50%,-50%) rotate(0deg)}
 }
 
-@media(max-width:900px){
+@keyframes pulseCore{
+0%,100%{transform:translate(-50%,-50%) scale(1)}
+50%{transform:translate(-50%,-50%) scale(1.06)}
+}
+
+@media(max-width:1040px){
 .hero{grid-template-columns:1fr}
 .metrics{grid-template-columns:1fr 1fr}
+.section{grid-template-columns:1fr}
+.lens-grid{grid-template-columns:1fr 1fr}
 }
 
+@media(max-width:700px){
+.hero-left h1{font-size:34px}
+.metrics{grid-template-columns:1fr}
+.lens-grid{grid-template-columns:1fr}
+.top-link,.lang-pill{display:none}
+.drawer{width:310px}
+}
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="drawer-title">
+      <strong>ZENTRA</strong>
+      <span>Private Analytical Layer</span>
+    </div>
+    <button class="close-btn" onclick="closeMenu()">×</button>
+  </div>
 
-<a href="/">Mission Control</a>
-<a href="/risklens">RiskLens</a>
-<a href="/telescope">Global Telescope</a>
-<a href="/trade">Trade Engine</a>
+  <div class="search-wrap">
+    <div class="search-label">Lens Search</div>
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="Inflation, oil, credit, logistics...">
+    </div>
+    <div class="search-help">Economic AI lens search interface.</div>
+  </div>
 
+  <div class="drawer-section">
+    <h3>Navigation</h3>
+    <a class="menu-card" href="/"><strong>Mission Control</strong><span>Main platform surface</span></a>
+    <a class="menu-card" href="/risklens.html"><strong>RiskLens Access</strong><span>Public intro + gateway</span></a>
+    <a class="menu-card" href="/risklens/dashboard.html"><strong>Dashboard</strong><span>Core economic dashboard</span></a>
+    <a class="menu-card" href="/risklens/signals.html"><strong>Signals</strong><span>Pressure and signal surface</span></a>
+    <a class="menu-card" href="/risklens/crisis.html"><strong>Crisis Radar</strong><span>Stress and disruption view</span></a>
+    <a class="menu-card" href="/telescope"><strong>Global Telescope</strong><span>Planetary observation module</span></a>
+    <a class="menu-card" href="/trade"><strong>Trade Engine</strong><span>Execution and routing layer</span></a>
+  </div>
+
+  <div class="drawer-section">
+    <h3>Language</h3>
+    <select class="lang-select">
+      <option>English</option>
+      <option>Türkçe</option>
+    </select>
+  </div>
+
+  <div class="drawer-section">
+    <h3>Contact</h3>
+    <a class="menu-card" href="mailto:info@zentrarisk.com"><strong>info@zentrarisk.com</strong><span>Primary platform contact</span></a>
+  </div>
 </div>
 
 <div class="topbar">
-<div class="brand">ZENTRA | RiskLens</div>
-
-<div class="burger" onclick="toggleMenu()">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
+  <div class="brand">ZENTRA | Lens Lab</div>
+  <div class="top-actions">
+    <a class="top-link" href="/risklens/dashboard.html">Dashboard</a>
+    <a class="top-link" href="/telescope">Telescope</a>
+    <a class="top-link" href="/trade">Trade</a>
+    <div class="lang-pill">EN / TR</div>
+    <div class="burger" onclick="openMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
 </div>
 
 <div class="container">
 
-<div class="hero">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="kicker">Private Analytical Environment</div>
+      <h1>ZENTRA Lens Lab</h1>
+      <p>
+        Lens Lab is the deeper analytical layer of ZENTRA where economic AI, signal interpretation,
+        lens architecture and institutional intelligence surfaces become visible in one environment.
+      </p>
+      <div class="badges">
+        <div class="badge">Economic AI</div>
+        <div class="badge">Lens Architecture</div>
+        <div class="badge">Private Access</div>
+        <div class="badge">Institution Layer</div>
+        <div class="badge">Strategic Signals</div>
+      </div>
+    </div>
 
-<div class="left">
+    <div class="hero-right">
+      <div class="orbit o1"><div class="dot"></div></div>
+      <div class="orbit o2"><div class="dot"></div></div>
+      <div class="orbit o3"><div class="dot"></div></div>
+      <div class="core"></div>
 
-<h1>ZENTRA Economic Intelligence OS</h1>
+      <div class="hero-right-label">
+        <strong>Deep Economic Surface</strong>
+        <span>Risk interpretation, lens selection, scenario reading and controlled institutional access.</span>
+      </div>
+    </div>
+  </div>
 
-<p>
-ZENTRA observes the global economy through multiple analytical lenses,
-interpreting systemic signals and transforming them into strategic insights
-for institutions, markets and governments.
-</p>
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="label">System Mode</div>
+      <div class="value">Private</div>
+      <div class="sub">Protected analytical layer</div>
+    </div>
 
-<div class="badges">
-<div class="badge">Economic AI</div>
-<div class="badge">Global Observation</div>
-<div class="badge">Lens Architecture</div>
-<div class="badge">Institutional Access</div>
-</div>
+    <div class="metric-card">
+      <div class="label">Lens Classes</div>
+      <div class="value">9</div>
+      <div class="sub">Macro, market, trade, disaster and more</div>
+    </div>
 
-</div>
+    <div class="metric-card">
+      <div class="label">AI Split</div>
+      <div class="value">Dual</div>
+      <div class="sub">General AI + Economic AI separation</div>
+    </div>
 
-<div class="right">
+    <div class="metric-card">
+      <div class="label">Contact</div>
+      <div class="value">1</div>
+      <div class="sub">Single institutional communication channel</div>
+    </div>
+  </div>
 
-<div class="orbit o1"><div class="dot"></div></div>
-<div class="orbit o2"><div class="dot"></div></div>
-<div class="core"></div>
+  <div class="section">
+    <div class="card">
+      <h2>What happens here?</h2>
+      <p>
+        This environment is designed for deeper institutional access. It is where lens structures,
+        macro interpretation, systemic scenarios and economic AI surfaces are presented together.
+      </p>
 
-</div>
+      <div class="list">
+        <div class="list-item">
+          <strong>Signal Interpretation</strong>
+          <span>Macro, commodity, credit and trade signals become interpretable layers.</span>
+        </div>
+        <div class="list-item">
+          <strong>Lens-Based Reading</strong>
+          <span>Economic events are processed through multiple analytical lenses rather than a single score.</span>
+        </div>
+        <div class="list-item">
+          <strong>Decision Support</strong>
+          <span>Institutional users can evaluate risk, pressure, fragility and strategic direction.</span>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <div class="card">
+      <h2>Institutional Communication</h2>
+      <p>
+        ZENTRA communication is centralized through a single institutional contact channel for investor,
+        partner and controlled access discussions.
+      </p>
 
-<div class="metrics">
+      <div class="contact-grid">
+        <div class="contact-card">
+          <strong>Primary Contact</strong>
+          <span>info@zentrarisk.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="metric">
-<strong>OS</strong>
-Economic Intelligence System
-</div>
+  <div class="lens-grid">
+    <div class="lens-card">
+      <h3>Macro Lenses</h3>
+      <p>Inflation, rates, recession, liquidity and policy pressure interpretation.</p>
+    </div>
 
-<div class="metric">
-<strong>Dual AI</strong>
-General + Economic
-</div>
+    <div class="lens-card">
+      <h3>Market Lenses</h3>
+      <p>Volatility, credit stress, equities, spreads and positioning layers.</p>
+    </div>
 
-<div class="metric">
-<strong>2 Layer</strong>
-Public + Private
-</div>
+    <div class="lens-card">
+      <h3>Commodity Lenses</h3>
+      <p>Oil, energy, metals, food and supply shock interpretation.</p>
+    </div>
 
-<div class="metric">
-<strong>B2B</strong>
-Institutional Platform
-</div>
+    <div class="lens-card">
+      <h3>Trade Lenses</h3>
+      <p>Shipping, logistics, route risk, throughput and execution pressure.</p>
+    </div>
 
-</div>
+    <div class="lens-card">
+      <h3>Sector Lenses</h3>
+      <p>Retail, construction, banking, technology and demand-sensitive sectors.</p>
+    </div>
 
-<div class="access">
-
-<h2>Private Analytical Access</h2>
-
-<p>Authorized investors and partners may enter the analytical layer.</p>
-
-<input id="passInput" type="password" placeholder="Enter access password">
-
-<button onclick="openPrivate()">Enter System</button>
-
-<div id="msg"></div>
-
-<div class="contact">
-
-Primary Contact  
-<strong>info@zentrarisk.com</strong>
-
-</div>
-
-</div>
+    <div class="lens-card">
+      <h3>Geo-Economic Lenses</h3>
+      <p>Sanctions, conflict, energy security, trade blocks and systemic disruption.</p>
+    </div>
+  </div>
 
 </div>
 
 <script>
-
-function toggleMenu(){
-
-const drawer=document.getElementById("drawer")
-const overlay=document.getElementById("overlay")
-
-drawer.classList.toggle("open")
-overlay.classList.toggle("show")
-
+function openMenu(){
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+  document.body.classList.add("lock");
 }
 
-function openPrivate(){
-
-const pass=document.getElementById("passInput").value
-const msg=document.getElementById("msg")
-
-if(pass==="ZentraCore"){
-
-msg.innerHTML="Access granted..."
-
-setTimeout(()=>{
-window.location.href="/lens-lab.html"
-},500)
-
-}else{
-
-msg.innerHTML="Access denied"
-
+function closeMenu(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+  document.body.classList.remove("lock");
 }
-
-}
-
 </script>
 
 </body>
-</html>
+  </html>

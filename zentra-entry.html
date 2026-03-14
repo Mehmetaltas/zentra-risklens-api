@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Platform Access</title>
+  <meta name="description" content="Controlled access to the ZENTRA deep intelligence platform." />
+  <link rel="stylesheet" href="/assets/css/app-shell.css" />
+</head>
+<body class="theme-entry">
 
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-title">ZENTRA</div>
+        <div class="brand-sub">Secure Platform Entry</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="header-back" href="/index.html">← Ana Sayfa</a>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-box narrow">
+        <div class="eyebrow">Private Layer Gateway</div>
+        <h1>ZENTRA Platform Access</h1>
+        <p>
+          Bu giriş, RiskLens, Finance Engine, Trade Engine, Global Telescope ve derin sistem
+          katmanlarına kontrollü erişim sağlar.
+        </p>
+
+        <div class="entry-form">
+          <label for="zentraPassword">Platform Şifresi</label>
+          <input id="zentraPassword" type="password" placeholder="Şifre gir" />
+          <button class="btn-primary" onclick="loginZentra()">Derin Katmana Gir</button>
+          <p id="entryMessage" class="form-message"></p>
+        </div>
+
+        <div class="card-grid single-gap">
+          <div class="info-card">
+            <h3>Derin Katman</h3>
+            <p>RiskLens, Signals, Crisis, Sectors, Advisor, Finance, Trade ve Telescope.</p>
+          </div>
+          <div class="info-card">
+            <h3>Kurumsal Seviye</h3>
+            <p>Yatırımcı ve kurum temsilcisi burada sistemin ikinci ana katmanına geçtiğini hissetmeli.</p>
+          </div>
+          <div class="info-card">
+            <h3>Gelecek Uyumu</h3>
+            <p>Bu kapı gelecekte SSO, bulut rol yönetimi, agent erişimi ve tenant auth ile büyütülebilir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/js/zentra-auth.js"></script>
+</body>
+</html>

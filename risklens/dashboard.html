@@ -402,4 +402,17 @@ body{
 </div>
 
 </body>
-            </html>
+<body>
+
+<script>
+if (sessionStorage.getItem("zentra_private_access") !== "true") {
+  const pass = prompt("ZENTRA Private Access");
+  if (pass === "ZentraCore") {
+    sessionStorage.setItem("zentra_private_access", "true");
+  } else {
+    alert("Access denied");
+    window.location.href = "/";
+  }
+}
+</script>        
+</html>

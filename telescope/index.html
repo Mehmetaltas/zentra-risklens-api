@@ -422,6 +422,32 @@ body{
   </div>
 
 </div>
+<script type="module">
 
+import { getTelescopeData } from "../api/telescope.js"
+
+getTelescopeData().then(data => {
+
+document.getElementById("risk").innerText =
+"Global Risk: " + data.globalRiskScore
+
+document.getElementById("driver").innerText =
+"Driver: " + data.dominantDriver
+
+document.getElementById("markets").innerHTML = `
+Oil: ${data.markets.oil}<br>
+Gold: ${data.markets.gold}<br>
+S&P500: ${data.markets.sp500}<br>
+Interest: ${data.markets.interestRate}
+`
+
+document.getElementById("signals").innerHTML =
+data.signals.map(s =>
+`<div>${s.name} (${s.severity})</div>`
+).join("")
+
+})
+
+</script>
 </body>
   </html>

@@ -1,442 +1,969 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ZENTRA RiskLens Dashboard</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#07101d;
-  --panel:#101a2d;
-  --panel2:#16233b;
-  --line:#24395f;
-  --text:#eef5ff;
-  --muted:#a9b9d6;
-  --cyan:#63b3ff;
-  --cyan2:#8fd7ff;
-  --red:#ff5c70;
-  --orange:#ff9d57;
-  --yellow:#ffd166;
-  --green:#45d483;
-}
-body{
-  font-family:Arial,sans-serif;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(99,179,255,.10), transparent 24%),
-    radial-gradient(circle at 85% 10%, rgba(255,92,112,.08), transparent 18%),
-    linear-gradient(180deg,#07101d,#0b1324 55%,#07101d);
-  color:var(--text);
-  min-height:100vh;
-  padding:28px 16px 48px;
-}
-.wrapper{width:100%;max-width:1280px;margin:0 auto}
-.hero{
-  margin-bottom:20px;
-  background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(12,20,35,.96));
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:24px;
-  box-shadow:0 14px 40px rgba(0,0,0,.25);
-}
-.hero h1{
-  color:var(--cyan2);
-  font-size:34px;
-  margin-bottom:10px;
-}
-.hero p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:920px;
-}
-.grid-top{
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:18px;
-  margin-bottom:18px;
-}
-.panel{
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 28px rgba(0,0,0,.18);
-}
-.panel h2{
-  color:var(--cyan2);
-  font-size:21px;
-  margin-bottom:14px;
-}
-.score{
-  font-size:60px;
-  line-height:1;
-  font-weight:bold;
-  color:var(--red);
-  margin-bottom:10px;
-  text-align:center;
-}
-.driver{
-  text-align:center;
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.6;
-}
-.metric-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:16px;
-}
-.metric{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:14px;
-  padding:14px;
-  text-align:center;
-}
-.metric-label{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:7px;
-}
-.metric-value{
-  font-size:24px;
-  font-weight:bold;
-  color:var(--cyan2);
-}
-.radar-box{
-  min-height:360px;
-  position:relative;
-  overflow:hidden;
-}
-.radar-shell{
-  position:relative;
-  min-height:300px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.06);
-  background:
-    radial-gradient(circle at center, rgba(99,179,255,.10), transparent 48%),
-    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-}
-.ring{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  border:1px solid rgba(143,215,255,.13);
-  border-radius:50%;
-}
-.r1{width:140px;height:140px}
-.r2{width:230px;height:230px}
-.r3{width:320px;height:320px}
-.core{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:var(--cyan2);
-  box-shadow:0 0 18px var(--cyan2),0 0 42px rgba(143,215,255,.45);
-}
-.sweep{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:320px;
-  height:320px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:conic-gradient(from 0deg, rgba(99,179,255,0) 0deg, rgba(99,179,255,0) 300deg, rgba(99,179,255,.20) 340deg, rgba(99,179,255,0) 360deg);
-  animation:spin 7s linear infinite;
-}
-.ping{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  text-align:center;
-}
-.dot{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  margin:0 auto 6px;
-  box-shadow:0 0 16px currentColor;
-}
-.dot.red{background:var(--red);color:var(--red)}
-.dot.orange{background:var(--orange);color:var(--orange)}
-.dot.yellow{background:var(--yellow);color:var(--yellow)}
-.dot.green{background:var(--green);color:var(--green)}
-.ping span{
-  display:block;
-  font-size:11px;
-  color:#e9f2ff;
-  background:rgba(8,14,25,.72);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:999px;
-  padding:4px 8px;
-  white-space:nowrap;
-}
-.grid-bottom{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:18px;
-}
-.list{display:grid;gap:12px}
-.item{
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-}
-.item strong{
-  display:block;
-  margin-bottom:5px;
-  font-size:15px;
-}
-.item small{
-  color:var(--muted);
-  line-height:1.6;
-  display:block;
-}
-.badge{
-  display:inline-block;
-  margin-top:8px;
-  padding:5px 8px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-}
-.badge.red{background:rgba(255,92,112,.12);color:var(--red)}
-.badge.orange{background:rgba(255,157,87,.12);color:var(--orange)}
-.badge.yellow{background:rgba(255,209,102,.12);color:var(--yellow)}
-.badge.green{background:rgba(69,212,131,.12);color:var(--green)}
-@keyframes spin{
-  from{transform:translate(-50%,-50%) rotate(0deg)}
-  to{transform:translate(-50%,-50%) rotate(360deg)}
-}
-@media (max-width:1100px){
-  .grid-top{grid-template-columns:1fr}
-  .grid-bottom{grid-template-columns:1fr}
-  .metric-grid{grid-template-columns:1fr 1fr}
-}
-@media (max-width:760px){
-  .hero h1{font-size:28px}
-  .metric-grid{grid-template-columns:1fr}
-  .score{font-size:48px}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA RiskLens Dashboard — Deep Economic Risk Intelligence</title>
+  <meta
+    name="description"
+    content="ZENTRA RiskLens Dashboard provides deep economic risk intelligence, active signals, sector stress, AI interpretation and strategic control panels."
+  />
+  <script src="/assets/js/auth-guard.js"></script>
+  <link rel="stylesheet" href="/assets/css/app-shell.css" />
+
+  <style>
+    body{
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,92,112,.10), transparent 18%),
+        radial-gradient(circle at 82% 12%, rgba(99,179,255,.12), transparent 18%),
+        linear-gradient(180deg,#07101d,#091321 55%,#07101d);
+    }
+
+    .deep-shell{
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 18px 50px;
+    }
+
+    .deep-topbar{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+      background: rgba(6,13,28,.82);
+      border-bottom: 1px solid rgba(143,215,255,.10);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 18px;
+    }
+
+    .brand-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-mark{
+      width:42px;height:42px;border-radius:14px;
+      border:1px solid rgba(143,215,255,.24);
+      background:linear-gradient(180deg,#0f1c31,#132443);
+    }
+
+    .brand-title{
+      color:#8fd7ff;
+      font-size:22px;
+      font-weight:700;
+    }
+
+    .brand-sub{
+      color:#a4b7d4;
+      font-size:12px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .status-pills{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .status-pill{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      color:#a4b7d4;
+      font-size:12px;
+    }
+
+    .status-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#45d483;
+      box-shadow:0 0 12px #45d483;
+    }
+
+    .lang{
+      background:#0d1626;
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:12px;
+    }
+
+    .burger{
+      width:48px;height:48px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:#0d1626;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:5px;
+    }
+
+    .burger span{
+      width:22px;height:2px;background:#fff;display:block;
+    }
+
+    .drawer{
+      position:fixed;top:0;right:-390px;width:370px;max-width:92vw;height:100vh;
+      background:linear-gradient(180deg,rgba(9,17,31,.98),rgba(12,22,39,.98));
+      border-left:1px solid rgba(143,215,255,.14);
+      box-shadow:-20px 0 60px rgba(0,0,0,.35);
+      padding:20px;transition:right .28s ease;z-index:1200;overflow-y:auto;
+    }
+
+    .drawer.open{right:0}
+
+    .drawer-head{
+      display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    }
+
+    .drawer-title{
+      color:#8fd7ff;font-size:20px;font-weight:700;
+    }
+
+    .drawer-close{
+      width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+      background:#0d1626;color:#fff;cursor:pointer;
+    }
+
+    .searchBox{
+      width:100%;padding:13px 14px;margin-bottom:16px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);background:#081020;color:white;outline:none;
+    }
+
+    .nav-group{
+      margin-bottom:18px;border:1px solid rgba(255,255,255,.05);
+      background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden;
+    }
+
+    .nav-group-title{
+      padding:14px 16px;color:#8fd7ff;font-size:13px;font-weight:700;text-transform:uppercase;
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+
+    .nav-link{
+      display:block;padding:14px 16px;color:#fff;border-top:1px solid rgba(255,255,255,.04);
+      text-decoration:none;
+    }
+
+    .nav-link small{
+      display:block;
+      color:#a4b7d4;
+      margin-top:4px;
+      line-height:1.45;
+      font-size:12px;
+    }
+
+    .deep-hero{
+      padding:28px 0 18px;
+    }
+
+    .deep-hero-box{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(143,215,255,.10);
+      border-radius:28px;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(255,92,112,.14), transparent 24%),
+        radial-gradient(circle at 80% 18%, rgba(99,179,255,.12), transparent 18%),
+        linear-gradient(180deg,rgba(16,26,45,.98),rgba(10,19,35,.98));
+      box-shadow:0 18px 48px rgba(0,0,0,.28);
+      padding:30px;
+    }
+
+    .breadcrumb{
+      color:#a4b7d4;
+      font-size:13px;
+      margin-bottom:14px;
+    }
+
+    .eyebrow{
+      display:inline-block;padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
+      color:#8fd7ff;font-size:12px;margin-bottom:16px;
+    }
+
+    .deep-hero h1{
+      font-size:clamp(32px,4.5vw,56px);
+      line-height:1.05;
+      margin-bottom:14px;
+    }
+
+    .deep-hero p{
+      color:#a4b7d4;
+      line-height:1.85;
+      max-width:980px;
+      font-size:15px;
+    }
+
+    .hero-strip{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .hero-chip{
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .hero-chip strong{
+      display:block;
+      color:#8fd7ff;
+      margin-bottom:6px;
+      font-size:13px;
+    }
+
+    .hero-chip span{
+      color:#a4b7d4;
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .section{
+      padding:18px 0;
+    }
+
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .panel{
+      border:1px solid rgba(255,255,255,.06);
+      background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(13,22,39,.96));
+      border-radius:22px;
+      padding:22px;
+      box-shadow:0 10px 28px rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+
+    .panel h2{
+      color:#8fd7ff;
+      font-size:21px;
+      margin-bottom:14px;
+    }
+
+    .risk-score{
+      font-size:62px;
+      line-height:1;
+      font-weight:700;
+      color:#ff5c70;
+      text-align:center;
+      margin-bottom:12px;
+    }
+
+    .driver{
+      color:#a4b7d4;
+      text-align:center;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .metric-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .metric{
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px;
+      text-align:center;
+    }
+
+    .metric-label{
+      color:#a4b7d4;
+      font-size:12px;
+      margin-bottom:7px;
+    }
+
+    .metric-value{
+      color:#8fd7ff;
+      font-size:22px;
+      font-weight:700;
+    }
+
+    .radar-box{
+      min-height:400px;
+      position:relative;
+    }
+
+    .radar-shell{
+      min-height:340px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        radial-gradient(circle at center, rgba(99,179,255,.10), transparent 48%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      position:relative;
+      overflow:hidden;
+    }
+
+    .ring{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      border:1px solid rgba(143,215,255,.14);
+      border-radius:50%;
+    }
+
+    .r1{width:140px;height:140px}
+    .r2{width:230px;height:230px}
+    .r3{width:320px;height:320px}
+
+    .core{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#8fd7ff;
+      box-shadow:0 0 18px #8fd7ff,0 0 42px rgba(143,215,255,.45);
+    }
+
+    .sweep{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:320px;
+      height:320px;
+      transform:translate(-50%,-50%);
+      border-radius:50%;
+      background:conic-gradient(from 0deg, rgba(99,179,255,0) 0deg, rgba(99,179,255,0) 300deg, rgba(99,179,255,.20) 340deg, rgba(99,179,255,0) 360deg);
+      animation:spin 7s linear infinite;
+    }
+
+    .ping{
+      position:absolute;
+      transform:translate(-50%,-50%);
+      text-align:center;
+    }
+
+    .dot{
+      width:12px;height:12px;border-radius:50%;margin:0 auto 6px;box-shadow:0 0 16px currentColor;
+    }
+
+    .dot.red{background:#ff5c70;color:#ff5c70}
+    .dot.orange{background:#ff9d57;color:#ff9d57}
+    .dot.yellow{background:#ffd166;color:#ffd166}
+    .dot.green{background:#45d483;color:#45d483}
+
+    .ping span{
+      display:block;
+      font-size:11px;
+      color:#e9f2ff;
+      background:rgba(8,14,25,.72);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:999px;
+      padding:4px 8px;
+      white-space:nowrap;
+    }
+
+    .lower-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .list{
+      display:grid;
+      gap:12px;
+    }
+
+    .item{
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .item strong{
+      display:block;
+      margin-bottom:5px;
+      font-size:15px;
+    }
+
+    .item small{
+      color:#a4b7d4;
+      display:block;
+      line-height:1.65;
+      font-size:13px;
+    }
+
+    .badge{
+      display:inline-block;
+      margin-top:8px;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .badge.red{background:rgba(255,92,112,.12);color:#ff5c70}
+    .badge.orange{background:rgba(255,157,87,.12);color:#ff9d57}
+    .badge.yellow{background:rgba(255,209,102,.12);color:#ffd166}
+    .badge.green{background:rgba(69,212,131,.12);color:#45d483}
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .quick-card{
+      display:block;
+      border:1px solid rgba(255,255,255,.06);
+      background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(13,22,39,.96));
+      border-radius:20px;
+      padding:20px;
+      text-decoration:none;
+      color:#fff;
+      box-shadow:0 10px 28px rgba(0,0,0,.18);
+      transition:.2s ease;
+    }
+
+    .quick-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(143,215,255,.22);
+    }
+
+    .quick-card strong{
+      display:block;
+      color:#8fd7ff;
+      margin-bottom:10px;
+      font-size:17px;
+    }
+
+    .quick-card p{
+      color:#a4b7d4;
+      line-height:1.7;
+      font-size:13px;
+    }
+
+    .section-head{
+      margin-bottom:16px;
+    }
+
+    .section-head h2{
+      color:#8fd7ff;
+      font-size:28px;
+      margin-bottom:10px;
+    }
+
+    .section-head p{
+      color:#a4b7d4;
+      line-height:1.8;
+      max-width:900px;
+    }
+
+    .faq-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    details.faq{
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    details.faq summary{
+      list-style:none;
+      cursor:pointer;
+      font-weight:700;
+      color:#fff;
+    }
+
+    details.faq summary::-webkit-details-marker{display:none}
+
+    details.faq p{
+      margin-top:12px;
+      color:#a4b7d4;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .footer-note{
+      margin-top:18px;
+      color:#a4b7d4;
+      font-size:13px;
+      line-height:1.8;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:18px;
+    }
+
+    @keyframes spin{
+      from{transform:translate(-50%,-50%) rotate(0deg)}
+      to{transform:translate(-50%,-50%) rotate(360deg)}
+    }
+
+    @media (max-width:1180px){
+      .dashboard-grid,
+      .lower-grid,
+      .quick-grid,
+      .faq-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .hero-strip{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width:860px){
+      .dashboard-grid,
+      .lower-grid,
+      .quick-grid,
+      .faq-grid,
+      .hero-strip{
+        grid-template-columns:1fr;
+      }
+
+      .status-pills{display:none}
+    }
+
+    @media (max-width:760px){
+      .deep-shell{padding:0 14px 40px}
+      .deep-topbar{padding:12px 14px}
+      .brand-title{font-size:18px}
+      .brand-sub{display:none}
+      .drawer{width:100vw;max-width:100vw;right:-100vw}
+      .risk-score{font-size:50px}
+      .metric-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
 
-<div class="wrapper">
-
-  <div class="hero">
-    <h1>📊 ZENTRA RiskLens Dashboard</h1>
-    <p>
-      Institutional risk interpretation surface combining macro pressure, sector vulnerability,
-      systemic stress and decision-oriented signal reading in one analytical environment.
-    </p>
-  </div>
-
-  <div class="grid-top">
-
-    <div class="panel">
-      <h2>Global Risk State</h2>
-      <div class="score">99</div>
-      <div class="driver">Dominant Driver: energy shock + logistics stress</div>
-
-      <div class="metric-grid">
-        <div class="metric">
-          <div class="metric-label">Inflation</div>
-          <div class="metric-value">5.4%</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Oil</div>
-          <div class="metric-value">82</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Credit Stress</div>
-          <div class="metric-value">61</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Volatility</div>
-          <div class="metric-value">58</div>
-        </div>
+  <header class="deep-topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-title">ZENTRA</div>
+        <div class="brand-sub">RiskLens Deep Dashboard</div>
       </div>
     </div>
 
-    <div class="panel radar-box">
-      <h2>Risk Concentration Radar</h2>
-      <div class="radar-shell">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <div class="ring r3"></div>
-        <div class="sweep"></div>
-        <div class="core"></div>
-
-        <div class="ping" style="left:32%;top:34%;">
-          <div class="dot red"></div>
-          <span>Energy Shock</span>
+    <div class="top-actions">
+      <div class="status-pills">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>Deep Layer Online</span>
         </div>
-
-        <div class="ping" style="left:68%;top:42%;">
-          <div class="dot orange"></div>
-          <span>Logistics Stress</span>
+        <div class="status-pill">
+          <span>Signals: 14</span>
         </div>
-
-        <div class="ping" style="left:44%;top:68%;">
-          <div class="dot yellow"></div>
-          <span>Banking Pressure</span>
-        </div>
-
-        <div class="ping" style="left:73%;top:67%;">
-          <div class="dot green"></div>
-          <span>Trade Opportunity</span>
+        <div class="status-pill">
+          <span>Global Risk: 72</span>
         </div>
       </div>
+
+      <select class="lang" aria-label="Language">
+        <option>TR</option>
+        <option>EN</option>
+      </select>
+
+      <button class="burger" onclick="toggleMenu()" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <aside id="menuDrawer" class="drawer">
+    <div class="drawer-head">
+      <div class="drawer-title">RiskLens Navigation</div>
+      <button class="drawer-close" onclick="toggleMenu()">✕</button>
     </div>
 
-  </div>
+    <input class="searchBox" placeholder="Derin katmanda ara..." onkeyup="siteSearch(this.value)" />
 
-  <div class="grid-bottom">
+    <div class="nav-group">
+      <div class="nav-group-title">Core Layer</div>
+      <a class="nav-link" href="/index.html">
+        Ana Sayfa
+        <small>Public giriş katmanına dön.</small>
+      </a>
+      <a class="nav-link" href="/zentra-entry.html">
+        ZENTRA Entry
+        <small>İkinci ana giriş ve güvenli kapı.</small>
+      </a>
+      <a class="nav-link" href="/risklens/dashboard.html">
+        Dashboard
+        <small>Derin ana kontrol merkezi.</small>
+      </a>
+    </div>
 
-    <div class="panel">
-      <h2>⚠️ Active Risk Signals</h2>
-      <div class="list">
-        <div class="item">
-          <strong>Oil Price Surge</strong>
-          <small>
-            A sharp rise in global oil prices is amplifying cost pressure across
-            logistics corridors, industrial production and global supply chains.
-            The shock is currently propagating through energy-dependent sectors.
-          </small>
-          <span class="badge red">Critical Signal</span>
-        </div>
+    <div class="nav-group">
+      <div class="nav-group-title">RiskLens</div>
+      <a class="nav-link" href="/risklens/signals.html">
+        Signals
+        <small>Aktif ekonomik sinyal katmanı.</small>
+      </a>
+      <a class="nav-link" href="/risklens/crisis.html">
+        Crisis
+        <small>Kriz ve kırılma senaryoları.</small>
+      </a>
+      <a class="nav-link" href="/risklens/worldmap.html">
+        World Map
+        <small>Küresel risk ve fırsat görünümü.</small>
+      </a>
+      <a class="nav-link" href="/risklens/sectors.html">
+        Sectors
+        <small>Sektör baskı ve fırsat paneli.</small>
+      </a>
+      <a class="nav-link" href="/risklens/advisor.html">
+        Advisor
+        <small>AI yorum ve yönlendirme katmanı.</small>
+      </a>
+    </div>
 
-        <div class="item">
-          <strong>Freight Cost Escalation Belt</strong>
-          <small>
-            Transport and freight cost inflation is propagating across global logistics
-            corridors, increasing landed prices and compressing margins in
-            import-dependent industries.
-          </small>
-          <span class="badge red">Critical Signal</span>
-        </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Execution</div>
+      <a class="nav-link" href="/finance-demo.html">
+        Finance Engine
+        <small>Finansman, kredi, vade ve teminat zekâsı.</small>
+      </a>
+      <a class="nav-link" href="/trade/index.html">
+        Trade Engine
+        <small>Ticaret fırsatı ve rota zekâsı.</small>
+      </a>
+      <a class="nav-link" href="/telescope/index.html">
+        Global Telescope
+        <small>Küresel ekonomik gözlem katmanı.</small>
+      </a>
+    </div>
 
-        <div class="item">
-          <strong>Cyber Financial Pressure</strong>
-          <small>
-            Elevated cyber risk conditions are increasing operational fragility
-            across banking, payment and institution-linked digital systems.
-          </small>
-          <span class="badge yellow">Medium Severity</span>
+    <div class="nav-group">
+      <div class="nav-group-title">Lens System</div>
+      <a class="nav-link" href="/lens-explorer.html">
+        Lens Explorer
+        <small>Analitik lens arama sistemi.</small>
+      </a>
+      <a class="nav-link" href="/lens-lab.html">
+        Lens Lab
+        <small>Derin analiz laboratuvarı.</small>
+      </a>
+      <a class="nav-link" href="/lens-registry.html">
+        Lens Registry
+        <small>Kayıtlı lens katmanı.</small>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Session</div>
+      <a class="nav-link" href="#" onclick="logoutZentra()">
+        Logout
+        <small>Derin katmandan çık ve güvenli kapıya dön.</small>
+      </a>
+    </div>
+  </aside>
+
+  <main class="deep-shell">
+
+    <section class="deep-hero">
+      <div class="deep-hero-box">
+        <div class="breadcrumb">Platform / RiskLens / Dashboard</div>
+        <div class="eyebrow">Deep Economic Risk Intelligence</div>
+        <h1>RiskLens Deep Dashboard</h1>
+        <p>
+          Bu katman ZENTRA’nın derin ekonomik risk zekâsı merkezidir. Sistemik baskılar, aktif
+          sinyaller, piyasa yönü, sektör kırılganlığı ve AI tabanlı yorum burada birleşir.
+        </p>
+
+        <div class="hero-strip">
+          <div class="hero-chip">
+            <strong>Layer Type</strong>
+            <span>Private institutional intelligence layer.</span>
+          </div>
+          <div class="hero-chip">
+            <strong>Primary Role</strong>
+            <span>Global risk observation and signal interpretation.</span>
+          </div>
+          <div class="hero-chip">
+            <strong>Decision Context</strong>
+            <span>Finance, trade, simulation and institutional action support.</span>
+          </div>
+          <div class="hero-chip">
+            <strong>Experience</strong>
+            <span>Investors and institutions should feel the second system layer here.</span>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="panel">
-      <h2>🏭 Sector Pressure</h2>
-      <div class="list">
-        <div class="item">
-          <strong>Construction</strong>
-          <small>
-            Energy cost pass-through and material price pressure are compressing
-            profitability and weakening project stability.
-          </small>
-          <span class="badge red">Severe</span>
+    <section class="section">
+      <div class="dashboard-grid">
+
+        <div class="panel">
+          <h2>Global Risk State</h2>
+          <div class="risk-score" id="riskScore">96</div>
+          <div class="driver" id="driver">Dominant Driver: Energy Shock</div>
+
+          <div class="metric-grid">
+            <div class="metric">
+              <div class="metric-label">Oil</div>
+              <div class="metric-value" id="oilValue">82</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Gold</div>
+              <div class="metric-value" id="goldValue">2310</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">S&P500</div>
+              <div class="metric-value" id="spValue">5180</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Interest</div>
+              <div class="metric-value" id="rateValue">4.8</div>
+            </div>
+          </div>
         </div>
 
-        <div class="item">
-          <strong>Retail</strong>
-          <small>
-            Inflation persistence is eroding purchasing power and weakening
-            volume resilience in demand-sensitive segments.
-          </small>
-          <span class="badge orange">High</span>
+        <div class="panel radar-box">
+          <h2>Risk Concentration Radar</h2>
+          <div class="radar-shell">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+            <div class="sweep"></div>
+            <div class="core"></div>
+
+            <div class="ping" style="left:32%;top:34%;">
+              <div class="dot red"></div>
+              <span>Energy Shock</span>
+            </div>
+
+            <div class="ping" style="left:68%;top:42%;">
+              <div class="dot orange"></div>
+              <span>Logistics Stress</span>
+            </div>
+
+            <div class="ping" style="left:44%;top:68%;">
+              <div class="dot yellow"></div>
+              <span>Banking Pressure</span>
+            </div>
+
+            <div class="ping" style="left:73%;top:67%;">
+              <div class="dot green"></div>
+              <span>Trade Window</span>
+            </div>
+          </div>
         </div>
 
-        <div class="item">
-          <strong>Banking</strong>
-          <small>
-            Credit conditions remain tighter than normal, with moderate stress
-            visibility across risk-sensitive portfolios.
-          </small>
-          <span class="badge yellow">Watch</span>
-        </div>
       </div>
-    </div>
 
-    <div class="panel">
-      <h2>🧠 AI Interpretation</h2>
-      <div class="list">
-        <div class="item">
-          <strong>System View</strong>
-          <small>
-            Current risk concentration is being driven by energy cost transmission,
-            freight inflation and secondary pressure across industrial and trade networks.
-          </small>
+      <div class="lower-grid">
+
+        <div class="panel">
+          <h2>Active Risk Signals</h2>
+          <div class="list">
+            <div class="item">
+              <strong>Oil Price Surge</strong>
+              <small>Energy pressure is expanding cost stress across logistics and industrial sectors.</small>
+              <span class="badge red">High</span>
+            </div>
+
+            <div class="item">
+              <strong>Shipping Congestion</strong>
+              <small>Freight escalation continues to pressure import-dependent flows and route timing.</small>
+              <span class="badge red">High</span>
+            </div>
+
+            <div class="item">
+              <strong>Cyber Pressure</strong>
+              <small>Operational pressure is rising across finance-linked digital systems.</small>
+              <span class="badge yellow">Medium</span>
+            </div>
+
+            <div class="item">
+              <strong>Port Stress</strong>
+              <small>Selected corridors remain execution-sensitive under current global pressure.</small>
+              <span class="badge yellow">Medium</span>
+            </div>
+          </div>
         </div>
 
-        <div class="item">
-          <strong>Short Horizon</strong>
-          <small>
-            If current transport and energy conditions persist, inflation stickiness
-            and sector fragility may remain elevated in the near term.
-          </small>
+        <div class="panel">
+          <h2>Sector Pressure</h2>
+          <div class="list">
+            <div class="item">
+              <strong>Construction</strong>
+              <small>Material inflation and energy pass-through continue to weaken margin stability.</small>
+              <span class="badge red">Severe</span>
+            </div>
+
+            <div class="item">
+              <strong>Retail</strong>
+              <small>Purchasing power erosion and freight pass-through reduce commercial flexibility.</small>
+              <span class="badge orange">High</span>
+            </div>
+
+            <div class="item">
+              <strong>Banking</strong>
+              <small>Credit conditions remain tighter than normal and require closer monitoring.</small>
+              <span class="badge yellow">Watch</span>
+            </div>
+
+            <div class="item">
+              <strong>Trade</strong>
+              <small>Pressure remains elevated, yet selective trade windows are still visible.</small>
+              <span class="badge green">Mixed</span>
+            </div>
+          </div>
         </div>
 
-        <div class="item">
-          <strong>Suggested Action</strong>
-          <small>
-            Maintain selective exposure discipline, monitor route stress and prioritize
-            sector-filtered decision support for sensitive portfolios.
-          </small>
-          <span class="badge green">Actionable</span>
+        <div class="panel">
+          <h2>AI Interpretation</h2>
+          <div class="list">
+            <div class="item">
+              <strong>System View</strong>
+              <small>Current risk concentration is primarily driven by energy transmission, route pressure and second-order sector fragility.</small>
+            </div>
+
+            <div class="item">
+              <strong>Short Horizon</strong>
+              <small>If current pressure persists, import-sensitive sectors may remain under elevated stress through the next cycle.</small>
+            </div>
+
+            <div class="item">
+              <strong>Suggested Action</strong>
+              <small>Maintain route-sensitive monitoring, tighten sector-specific exposure and prioritize selective opportunity scanning.</small>
+              <span class="badge green">Actionable</span>
+            </div>
+          </div>
         </div>
+
       </div>
-    </div>
+    </section>
 
-  </div>
+    <section class="section">
+      <div class="section-head">
+        <h2>Execution Layers</h2>
+        <p>
+          RiskLens is not an isolated dashboard. It is the decision surface that connects finance,
+          trade, telescope, simulation and analytical lens systems together.
+        </p>
+      </div>
 
-</div>
-<script src="/assets/js/auth-guard.js"></script>
+      <div class="quick-grid">
+        <a class="quick-card" href="/finance-demo.html">
+          <strong>Finance Engine</strong>
+          <p>Invoice financing, collateral, tax exposure, installment logic and financial decision support.</p>
+        </a>
+
+        <a class="quick-card" href="/trade/index.html">
+          <strong>Trade Engine</strong>
+          <p>Global trade opportunity detection, route analysis, supply-demand imbalance and margin logic.</p>
+        </a>
+
+        <a class="quick-card" href="/telescope/index.html">
+          <strong>Global Telescope</strong>
+          <p>Planetary economic observation with global risk clusters, logistics stress and opportunity zones.</p>
+        </a>
+
+        <a class="quick-card" href="/lens-explorer.html">
+          <strong>Lens Explorer</strong>
+          <p>Multi-layer analytical modules for finance, behavior, trade, integrity and sector intelligence.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Investor Questions — Answered in Context</h2>
+        <p>
+          This layer should answer the most common questions without forcing the investor to zoom, search or guess the platform logic.
+        </p>
+      </div>
+
+      <div class="faq-grid">
+        <details class="faq">
+          <summary>What exactly is this screen?</summary>
+          <p>
+            This is the deep institutional dashboard of ZENTRA. It is the second main layer after secure entry and represents the active risk intelligence center of the platform.
+          </p>
+        </details>
+
+        <details class="faq">
+          <summary>How is this different from the public page?</summary>
+          <p>
+            The public page introduces the system. This deep layer shows how the system actually observes, interprets and connects economic risk with financial and trade decisions.
+          </p>
+        </details>
+
+        <details class="faq">
+          <summary>Does this only show data?</summary>
+          <p>
+            No. RiskLens interprets signals, identifies sector stress, connects cause-effect logic and routes the user toward finance, simulation and trade execution layers.
+          </p>
+        </details>
+
+        <details class="faq">
+          <summary>Why does this matter for institutions?</summary>
+          <p>
+            Institutions need more than charts. They need an operating layer that can understand pressure, compare scenarios and support controlled decision making.
+          </p>
+        </details>
+      </div>
+
+      <div class="footer-note">
+        ZENTRA RiskLens Dashboard is the active decision layer between raw observation and economic action.
+        It is designed to feel materially different from the public entry and to establish institutional-grade confidence.
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/assets/js/app-shell.js"></script>
+  <script>
+    const dashboardData = {
+      globalRisk: 96,
+      dominantDriver: "Energy Shock",
+      markets: {
+        oil: 82,
+        gold: 2310,
+        sp500: 5180,
+        interestRate: 4.8
+      }
+    };
+
+    function loadDashboardData() {
+      document.getElementById("riskScore").innerText = dashboardData.globalRisk;
+      document.getElementById("driver").innerText = "Dominant Driver: " + dashboardData.dominantDriver;
+      document.getElementById("oilValue").innerText = dashboardData.markets.oil;
+      document.getElementById("goldValue").innerText = dashboardData.markets.gold;
+      document.getElementById("spValue").innerText = dashboardData.markets.sp500;
+      document.getElementById("rateValue").innerText = dashboardData.markets.interestRate;
+    }
+
+    loadDashboardData();
+  </script>
 </body>
-  <header class="topbar">
-  <div class="brand">ZENTRA</div>
-
-  <div class="top-actions">
-    <select class="lang">
-      <option>TR</option>
-      <option>EN</option>
-    </select>
-
-    <div class="burger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-</header>
-
-<div id="menuDrawer" class="drawer">
-  <div class="drawer-head">
-    <div class="drawer-title">RiskLens Deep Layer</div>
-    <button onclick="toggleMenu()" class="close">✕</button>
-  </div>
-
-  <nav class="menuLinks">
-    <a href="/index.html">🏠 Ana Sayfa</a>
-    <a href="/risklens.html">🔐 RiskLens Access</a>
-    <a href="/risklens/dashboard.html">📊 Dashboard</a>
-    <a href="/risklens/signals.html">📡 Signals</a>
-    <a href="/risklens/crisis.html">⚠ Crisis</a>
-    <a href="/risklens/worldmap.html">🌍 World Map</a>
-    <a href="/risklens/sectors.html">🏭 Sectors</a>
-    <a href="/risklens/advisor.html">🧠 Advisor</a>
-    <a href="/telescope/index.html">🛰 Telescope</a>
-    <a href="/trade/index.html">🚢 Trade</a>
-    <a href="/demo-finance.html">🏦 Finance Demo</a>
-  </nav>
-</div>
-</html>
+      </html>

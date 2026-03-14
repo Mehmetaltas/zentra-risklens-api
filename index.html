@@ -1,610 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Control Center</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
---bg:#050c18;
---panel:#0f1828;
---panel2:#16243c;
---line:#24395f;
---text:#eef6ff;
---muted:#9bb3d9;
---cyan:#63b3ff;
---cyan2:#8fd7ff;
---green:#45d483;
---orange:#ff9d57;
---red:#ff5c70;
---yellow:#ffd166;
-}
-
-body{
-font-family:Arial,sans-serif;
-background:
-radial-gradient(circle at 20% 20%, rgba(99,179,255,.10), transparent 25%),
-radial-gradient(circle at 80% 12%, rgba(255,157,87,.08), transparent 18%),
-linear-gradient(180deg,#050c18,#081425 60%,#050c18);
-color:var(--text);
-min-height:100vh;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px 20px;
-background:#060d1c;
-border-bottom:1px solid #1f3558;
-position:sticky;
-top:0;
-z-index:50;
-}
-
-.brand{
-font-size:24px;
-color:var(--cyan2);
-font-weight:bold;
-letter-spacing:.5px;
-}
-
-.top-actions{
-display:flex;
-align-items:center;
-gap:12px;
-}
-
-.lang{
-background:#0d1626;
-border:1px solid rgba(255,255,255,.08);
-color:#fff;
-padding:8px 10px;
-border-radius:8px;
-}
-
-.burger{
-width:46px;
-height:46px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.08);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-gap:5px;
-cursor:pointer;
-background:#0d1626;
-}
-
-.burger span{
-width:22px;
-height:2px;
-background:white;
-display:block;
-}
-
-.drawer{
-position:fixed;
-right:-340px;
-top:0;
-width:320px;
-height:100vh;
-background:#0c1627;
-border-left:1px solid #22385e;
-padding:22px;
-transition:.3s;
-z-index:200;
-overflow:auto;
-}
-
-.drawer.open{
-right:0;
-}
-
-.drawer-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:14px;
-}
-
-.drawer-title{
-color:#8fd7ff;
-font-size:20px;
-font-weight:bold;
-}
-
-.close{
-background:none;
-border:none;
-color:white;
-font-size:20px;
-cursor:pointer;
-}
-
-.searchBox{
-width:100%;
-padding:12px;
-margin-bottom:16px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,.08);
-background:#081020;
-color:white;
-}
-
-.menuLinks{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.menuLinks a{
-text-decoration:none;
-color:white;
-padding:12px;
-border-radius:10px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.04);
-}
-
-.menuLinks a:hover{
-background:#14233d;
-}
-
-.container{
-max-width:1300px;
-margin:auto;
-padding:34px 18px 50px;
-}
-
-.hero{
-background:linear-gradient(180deg,var(--panel),var(--panel2));
-border:1px solid var(--line);
-border-radius:20px;
-padding:30px;
-margin-bottom:20px;
-box-shadow:0 14px 40px rgba(0,0,0,.25);
-}
-
-.hero h1{
-font-size:44px;
-color:var(--cyan2);
-margin-bottom:12px;
-}
-
-.hero p{
-color:var(--muted);
-line-height:1.75;
-max-width:920px;
-}
-
-.kpis{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-margin-top:22px;
-}
-
-.kpi{
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-border-radius:16px;
-padding:18px;
-text-align:center;
-}
-
-.kpi .label{
-color:var(--muted);
-font-size:13px;
-margin-bottom:8px;
-}
-
-.kpi .value{
-font-size:30px;
-font-weight:bold;
-color:var(--cyan2);
-}
-
-.layout{
-display:grid;
-grid-template-columns:1.05fr .95fr;
-gap:18px;
-margin-bottom:18px;
-}
-
-.panel{
-background:linear-gradient(180deg,var(--panel),var(--panel2));
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-box-shadow:0 10px 28px rgba(0,0,0,.18);
-}
-
-.panel h2{
-color:var(--cyan2);
-font-size:22px;
-margin-bottom:14px;
-}
-
-.panel p{
-color:var(--muted);
-line-height:1.7;
-}
-
-.radar{
-position:relative;
-min-height:360px;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.06);
-overflow:hidden;
-background:
-radial-gradient(circle at center, rgba(99,179,255,.10), transparent 48%),
-linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-}
-
-.ring{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-border:1px solid rgba(143,215,255,.13);
-border-radius:50%;
-}
-.r1{width:150px;height:150px}
-.r2{width:250px;height:250px}
-.r3{width:360px;height:360px}
-
-.core{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-width:14px;
-height:14px;
-border-radius:50%;
-background:var(--cyan2);
-box-shadow:0 0 18px var(--cyan2),0 0 42px rgba(143,215,255,.45);
-}
-
-.sweep{
-position:absolute;
-left:50%;
-top:50%;
-width:360px;
-height:360px;
-transform:translate(-50%,-50%);
-border-radius:50%;
-background:conic-gradient(from 0deg, rgba(99,179,255,0) 0deg, rgba(99,179,255,0) 300deg, rgba(99,179,255,.20) 340deg, rgba(99,179,255,0) 360deg);
-animation:spin 8s linear infinite;
-}
-
-.ping{
-position:absolute;
-transform:translate(-50%,-50%);
-text-align:center;
-}
-
-.dot{
-width:12px;
-height:12px;
-border-radius:50%;
-margin:0 auto 6px;
-box-shadow:0 0 16px currentColor;
-}
-
-.dot.red{background:var(--red);color:var(--red)}
-.dot.orange{background:var(--orange);color:var(--orange)}
-.dot.green{background:var(--green);color:var(--green)}
-.dot.yellow{background:var(--yellow);color:var(--yellow)}
-
-.ping span{
-display:block;
-font-size:11px;
-color:#e9f2ff;
-background:rgba(8,14,25,.72);
-border:1px solid rgba(255,255,255,.08);
-border-radius:999px;
-padding:4px 8px;
-white-space:nowrap;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
-margin-top:18px;
-}
-
-.card{
-display:block;
-text-decoration:none;
-background:linear-gradient(180deg,var(--panel),var(--panel2));
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-color:var(--text);
-transition:.2s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-border-color:#2f5f9e;
-}
-
-.card h3{
-color:var(--cyan2);
-margin-bottom:8px;
-font-size:21px;
-}
-
-.card p{
-color:var(--muted);
-font-size:14px;
-line-height:1.7;
-}
-
-.tag{
-display:inline-block;
-margin-top:10px;
-padding:5px 8px;
-border-radius:999px;
-font-size:11px;
-font-weight:bold;
-}
-
-.tag.green{background:rgba(69,212,131,.12);color:var(--green)}
-.tag.orange{background:rgba(255,157,87,.12);color:var(--orange)}
-.tag.red{background:rgba(255,92,112,.12);color:var(--red)}
-.tag.yellow{background:rgba(255,209,102,.12);color:var(--yellow)}
-
-.footer{
-margin-top:22px;
-padding:18px;
-border-radius:16px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-color:var(--muted);
-line-height:1.7;
-}
-
-@keyframes spin{
-from{transform:translate(-50%,-50%) rotate(0deg)}
-to{transform:translate(-50%,-50%) rotate(360deg)}
-}
-
-@media(max-width:1100px){
-.kpis{grid-template-columns:1fr 1fr}
-.layout{grid-template-columns:1fr}
-.cards{grid-template-columns:1fr}
-}
-
-@media(max-width:760px){
-.hero h1{font-size:30px}
-.kpis{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA — Economic Intelligence Operating System</title>
+  <meta name="description" content="ZENTRA is a global economic intelligence operating system for risk analysis, finance intelligence, simulation and trade opportunity detection." />
+  <link rel="stylesheet" href="/assets/css/app-shell.css" />
 </head>
-<body>
+<body class="theme-public">
 
-<header class="topbar">
-
-  <div class="brand">ZENTRA</div>
-
-  <div class="top-actions">
-    <select class="lang">
-      <option>EN</option>
-      <option>TR</option>
-      <option>DE</option>
-      <option>AR</option>
-      <option>FR</option>
-      <option>RU</option>
-      <option>ZH</option>
-    </select>
-
-    <div class="burger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-
-</header>
-
-<div id="menuDrawer" class="drawer">
-
-  <div class="drawer-head">
-    <div class="drawer-title">ZENTRA</div>
-    <button onclick="toggleMenu()" class="close">✕</button>
-  </div>
-
-  <input type="text" class="searchBox" placeholder="Search platform..." onkeyup="siteSearch(this.value)">
-
-  <nav class="menuLinks">
-    <a href="/index.html">🏠 Dashboard</a>
-    <a href="/lens-explorer.html">🔎 Lens Explorer</a>
-    <a href="/lens-registry.html">🧩 Lens Registry</a>
-    <a href="/risklens/dashboard.html">📊 RiskLens Dashboard</a>
-    <a href="/risklens/signals.html">📡 Signals</a>
-    <a href="/risklens/crisis.html">⚠ Crisis</a>
-    <a href="/risklens/worldmap.html">🌍 Global Risk Map</a>
-    <a href="/risklens/sectors.html">🏭 Sectors</a>
-    <a href="/risklens/advisor.html">🧠 Advisor</a>
-    <a href="/telescope/">🛰 Global Telescope</a>
-    <a href="/trade/">🚢 Trade Engine</a>
-    <a href="/investor.html">📘 Investor</a>
-  </nav>
-
-</div>
-
-<div class="container">
-
-  <div class="hero">
-    <h1>ZENTRA Control Center</h1>
-    <p>
-      Economic intelligence operating system observing global signals, interpreting systemic stress,
-      supporting institutional decisions and enabling trade-oriented execution across a modular platform architecture.
-    </p>
-
-    <div class="kpis">
-      <div class="kpi">
-        <div class="label">Global Risk</div>
-        <div class="value">99</div>
-      </div>
-      <div class="kpi">
-        <div class="label">Dominant Driver</div>
-        <div class="value">Energy</div>
-      </div>
-      <div class="kpi">
-        <div class="label">Modules Active</div>
-        <div class="value">8</div>
-      </div>
-      <div class="kpi">
-        <div class="label">Institution Fit</div>
-        <div class="value">High</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="layout">
-
-    <div class="panel">
-      <h2>System Overview</h2>
-      <p>
-        ZENTRA combines Telescope observation, RiskLens analysis, sector intelligence,
-        crisis simulation, advisor reasoning, trade execution support and modular lens architecture
-        in a single platform flow.
-      </p>
-
-      <div class="cards" style="grid-template-columns:1fr 1fr;margin-top:18px;">
-        <a class="card" href="/telescope/">
-          <h3>Global Telescope</h3>
-          <p>World-scale monitoring of energy shock, logistics stress and trade corridors.</p>
-          <span class="tag green">Observation</span>
-        </a>
-
-        <a class="card" href="/trade/">
-          <h3>Trade Engine</h3>
-          <p>Opportunity-aware commercial intelligence with route and margin sensitivity.</p>
-          <span class="tag yellow">Execution</span>
-        </a>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-title">ZENTRA</div>
+        <div class="brand-sub">Economic Intelligence Operating System</div>
       </div>
     </div>
 
-    <div class="panel">
-      <h2>Live Risk Radar</h2>
-      <div class="radar">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <div class="ring r3"></div>
-        <div class="sweep"></div>
-        <div class="core"></div>
+    <div class="top-actions">
+      <select class="lang">
+        <option>TR</option>
+        <option>EN</option>
+      </select>
+      <button class="burger" onclick="toggleMenu()" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-        <div class="ping" style="left:32%;top:34%;">
-          <div class="dot red"></div>
-          <span>Energy Shock</span>
-        </div>
-
-        <div class="ping" style="left:68%;top:42%;">
-          <div class="dot orange"></div>
-          <span>Logistics Stress</span>
-        </div>
-
-        <div class="ping" style="left:44%;top:68%;">
-          <div class="dot yellow"></div>
-          <span>Banking Pressure</span>
-        </div>
-
-        <div class="ping" style="left:73%;top:67%;">
-          <div class="dot green"></div>
-          <span>Trade Window</span>
-        </div>
-      </div>
+  <aside id="menuDrawer" class="drawer">
+    <div class="drawer-head">
+      <div class="drawer-title">ZENTRA</div>
+      <button class="drawer-close" onclick="toggleMenu()">✕</button>
     </div>
 
-  </div>
+    <input class="searchBox" id="menuSearch" placeholder="Platformda ara..." onkeyup="siteSearch(this.value)" />
 
-  <div class="cards">
-    <a class="card" href="/lens-explorer.html">
-      <h3>Lens Explorer</h3>
-      <p>Analytical gateway opening the major ZENTRA surfaces and intelligence layers.</p>
-      <span class="tag green">Gateway</span>
-    </a>
+    <div class="nav-group">
+      <div class="nav-group-title">Platform</div>
+      <a class="nav-link" href="/index.html">Ana Sayfa</a>
+      <a class="nav-link" href="/investor.html">Investor</a>
+      <a class="nav-link" href="/privacy.html">Privacy</a>
+    </div>
 
-    <a class="card" href="/lens-registry.html">
-      <h3>Lens Registry</h3>
-      <p>Structured library of macro, trade, logistics, institution and sector lenses.</p>
-      <span class="tag orange">Registry</span>
-    </a>
+    <div class="nav-group">
+      <div class="nav-group-title">Girişler</div>
+      <a class="nav-link" href="/index.html#general-entry">Genel AI Girişi</a>
+      <a class="nav-link" href="/zentra-entry.html">ZENTRA Platform Girişi</a>
+    </div>
 
-    <a class="card" href="/risklens/dashboard.html">
-      <h3>RiskLens Dashboard</h3>
-      <p>Core institutional risk surface combining macro pressure and sector fragility.</p>
-      <span class="tag red">Risk</span>
-    </a>
+    <div class="nav-group">
+      <div class="nav-group-title">Kurumsal</div>
+      <a class="nav-link" href="#about">Hakkımızda</a>
+      <a class="nav-link" href="#mission">Misyon & Vizyon</a>
+      <a class="nav-link" href="#contact">İletişim</a>
+    </div>
+  </aside>
 
-    <a class="card" href="/risklens/signals.html">
-      <h3>Signal Engine</h3>
-      <p>Detection layer for active stress patterns, transmission chains and sector effects.</p>
-      <span class="tag red">Signals</span>
-    </a>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-box">
+        <div class="eyebrow">Global Economic Intelligence Platform</div>
+        <h1>Dünyayı izle. Riski anla. Fırsatı uygula.</h1>
+        <p>
+          ZENTRA; ekonomik gözlem, risk zekâsı, finansal karar desteği, simülasyon ve
+          ticaret fırsatı tespiti için tasarlanmış kurumsal yapay zekâ platformudur.
+        </p>
 
-    <a class="card" href="/risklens/crisis.html">
-      <h3>Crisis Simulation</h3>
-      <p>Scenario engine for modelling economic disruption and mitigation options.</p>
-      <span class="tag orange">Simulation</span>
-    </a>
+        <div class="entry-grid">
+          <a id="general-entry" class="entry-card" href="/general-ai.html">
+            <div class="entry-icon">💬</div>
+            <h3>Genel AI</h3>
+            <p>Genel kullanım, sohbet, soru-cevap ve yardımcı yapay zekâ katmanı.</p>
+            <span>Genel girişe git →</span>
+          </a>
 
-    <a class="card" href="/risklens/worldmap.html">
-      <h3>Global Risk Map</h3>
-      <p>World risk surface highlighting energy, logistics and opportunity regions.</p>
-      <span class="tag red">Map</span>
-    </a>
+          <a class="entry-card entry-card-primary" href="/zentra-entry.html">
+            <div class="entry-icon">🛰️</div>
+            <h3>ZENTRA Platform</h3>
+            <p>RiskLens, Finance Engine, Trade, Telescope ve derin ekonomik zekâ katmanı.</p>
+            <span>Platform girişine git →</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-    <a class="card" href="/risklens/sectors.html">
-      <h3>Sector Monitor</h3>
-      <p>Industry-level pressure analysis across construction, retail, banking and logistics.</p>
-      <span class="tag yellow">Sector</span>
-    </a>
+    <section id="about" class="content-section">
+      <div class="section-head">
+        <h2>Platform Katmanları</h2>
+        <p>ZENTRA tek sayfa ürün değil, çok katmanlı bir ekonomik işletim sistemidir.</p>
+      </div>
 
-    <a class="card" href="/risklens/advisor.html">
-      <h3>RiskLens Advisor</h3>
-      <p>Decision-oriented AI interpretation surface for institutional users.</p>
-      <span class="tag green">AI</span>
-    </a>
+      <div class="card-grid">
+        <div class="info-card">
+          <h3>Risk Intelligence</h3>
+          <p>Küresel ekonomik baskı, sektör kırılganlığı ve sistemik risk analizi.</p>
+        </div>
+        <div class="info-card">
+          <h3>Finance Intelligence</h3>
+          <p>Kredi, vade, teminat, çek/senet, fatura ve tahsilat karar desteği.</p>
+        </div>
+        <div class="info-card">
+          <h3>Trade Intelligence</h3>
+          <p>Fiyat farkı, lojistik rota, arz-talep ve ticaret fırsatı tespiti.</p>
+        </div>
+      </div>
+    </section>
 
-    <a class="card" href="/investor.html">
-      <h3>Investor Overview</h3>
-      <p>Platform positioning, modular licensing logic and institutional fit narrative.</p>
-      <span class="tag green">Investor</span>
-    </a>
-  </div>
+    <section id="mission" class="content-section">
+      <div class="section-head">
+        <h2>Misyon & Vizyon</h2>
+      </div>
+      <div class="card-grid">
+        <div class="info-card">
+          <h3>Misyon</h3>
+          <p>Kurumlara, devletlere ve stratejik operatörlere ekonomik karmaşıklığı açıklığa dönüştüren zekâ sağlamak.</p>
+        </div>
+        <div class="info-card">
+          <h3>Vizyon</h3>
+          <p>Risk, finans, ticaret ve simülasyon için dünyanın en güçlü ekonomik zekâ işletim sistemi olmak.</p>
+        </div>
+        <div class="info-card">
+          <h3>Neden Farklı?</h3>
+          <p>ZENTRA veri göstermez; ekonomik akıl yürütür, simüle eder ve aksiyon önerir.</p>
+        </div>
+      </div>
+    </section>
 
-  <div class="footer">
-    <strong style="display:block;color:#8fd7ff;margin-bottom:8px;">CTO Note</strong>
-    This page should remain the unified command surface of ZENTRA. The deeper pages explain, simulate,
-    analyze and operationalize. The main page must always feel like a real control center, not a link list.
-  </div>
+    <section id="contact" class="content-section">
+      <div class="section-head">
+        <h2>Kurumsal İletişim</h2>
+        <p>Demo, yatırımcı görüşmesi, kurum lisansı ve stratejik ortaklıklar için iletişim kanalı.</p>
+      </div>
+      <div class="card-grid">
+        <div class="info-card">
+          <h3>Institutional Access</h3>
+          <p>Kurumsal demo ve kontrollü erişim.</p>
+        </div>
+        <div class="info-card">
+          <h3>Investor Relations</h3>
+          <p>Yatırımcı materyali, platform akışı ve stratejik yapı.</p>
+        </div>
+        <div class="info-card">
+          <h3>Strategic Partnerships</h3>
+          <p>Banka, fintech, kamu ve kurumsal iş birliği alanları.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-</div>
-
-<script>
-function toggleMenu(){
-  const menu = document.getElementById("menuDrawer");
-  menu.classList.toggle("open");
-}
-
-function siteSearch(q){
-  q = q.toLowerCase();
-  const links = document.querySelectorAll(".menuLinks a");
-  links.forEach(l => {
-    if(l.innerText.toLowerCase().includes(q)) l.style.display = "block";
-    else l.style.display = "none";
-  });
-}
-</script>
-
+  <script src="/assets/js/app-shell.js"></script>
 </body>
-          </html>
+</html>

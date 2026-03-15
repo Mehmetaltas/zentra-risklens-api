@@ -1,320 +1,515 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Global Economic Telescope</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    if (!localStorage.getItem("zentraAuth")) {
+      window.location.href = "/zentra-entry.html";
+    }
+  </script>
 
-<title>ZENTRA Global Economic Telescope</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<script>
-if(!localStorage.getItem("zentraAuth")){
-location.href="/zentra-entry.html";
-}
-</script>
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:#050b15;
+      color:#fff;
+      overflow-x:hidden;
+    }
 
-<style>
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 22px;
+      background:#0f1b2d;
+      border-bottom:1px solid #24395f;
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
 
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#050b15;
-color:white;
-}
+    .logo{
+      font-size:22px;
+      font-weight:bold;
+      color:#00ffd5;
+    }
 
-/* HEADER */
+    .menu-btn{
+      font-size:28px;
+      cursor:pointer;
+      user-select:none;
+    }
 
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 25px;
-background:#0f1b2d;
-}
+    nav{
+      position:fixed;
+      top:0;
+      left:-270px;
+      width:260px;
+      height:100%;
+      background:#0f1b2d;
+      transition:0.3s;
+      padding-top:70px;
+      z-index:1000;
+      border-right:1px solid #24395f;
+    }
 
-.logo{
-font-size:22px;
-font-weight:bold;
-color:#00ffd5;
-}
+    nav a{
+      display:block;
+      padding:14px 22px;
+      color:white;
+      text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
 
-.menu-btn{
-font-size:26px;
-cursor:pointer;
-}
+    nav a:hover{
+      background:#162842;
+    }
 
-/* MENU */
+    .container{
+      max-width:1300px;
+      margin:auto;
+      padding:34px 18px 40px;
+    }
 
-nav{
-position:fixed;
-top:0;
-left:-260px;
-width:260px;
-height:100%;
-background:#0f1b2d;
-transition:0.3s;
-padding-top:60px;
-z-index:1000;
-}
+    .hero{
+      text-align:center;
+      margin-bottom:28px;
+    }
 
-nav a{
-display:block;
-padding:14px 25px;
-color:white;
-text-decoration:none;
-}
+    .hero h1{
+      font-size:38px;
+      color:#00ffd5;
+      margin:0 0 12px 0;
+      line-height:1.1;
+    }
 
-nav a:hover{
-background:#162842;
-}
+    .hero p{
+      margin:0 auto;
+      max-width:900px;
+      color:#c6d5ea;
+      line-height:1.8;
+      font-size:15px;
+    }
 
-/* HERO */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:18px;
+      margin-bottom:24px;
+    }
 
-.hero{
-text-align:center;
-padding:60px 20px;
-}
+    .card{
+      background:#0f1b2d;
+      padding:20px;
+      text-align:center;
+      border-radius:12px;
+      border:1px solid #24395f;
+    }
 
-.hero h1{
-font-size:36px;
-color:#00ffd5;
-}
+    .card h3{
+      color:#00ffd5;
+      margin:0 0 8px 0;
+      font-size:18px;
+    }
 
-/* WORLD MAP */
+    .card p{
+      margin:0;
+      font-size:22px;
+      font-weight:bold;
+    }
 
-.map-container{
-width:90%;
-max-width:900px;
-margin:40px auto;
-position:relative;
-}
+    .main-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      margin-bottom:24px;
+    }
 
-.world{
-width:100%;
-border-radius:12px;
-opacity:0.9;
-}
+    .panel{
+      background:#101a2d;
+      border:1px solid #24395f;
+      border-radius:14px;
+      padding:20px;
+      overflow:hidden;
+    }
 
-/* HEAT SPOTS */
+    .panel h3{
+      color:#8fd7ff;
+      margin-top:0;
+      margin-bottom:16px;
+      font-size:22px;
+    }
 
-.spot{
-position:absolute;
-width:14px;
-height:14px;
-background:red;
-border-radius:50%;
-animation:pulse 2s infinite;
-}
+    .map-container{
+      width:100%;
+      max-width:100%;
+      position:relative;
+      background:linear-gradient(180deg,#0f1b2d,#0c1626);
+      border:1px solid #24395f;
+      border-radius:12px;
+      padding:14px;
+      overflow:hidden;
+    }
 
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.6)}
-100%{transform:scale(1)}
-}
+    .world{
+      width:100%;
+      max-width:100%;
+      height:auto;
+      display:block;
+      border-radius:10px;
+      opacity:.92;
+      background:#0b1320;
+    }
 
-/* RADAR */
+    .spot{
+      position:absolute;
+      width:14px;
+      height:14px;
+      background:#ff5c70;
+      border-radius:50%;
+      animation:pulse 2s infinite;
+      box-shadow:0 0 16px rgba(255,92,112,.8);
+    }
 
-.radar{
-width:300px;
-height:300px;
-border:2px solid #00ffd5;
-border-radius:50%;
-margin:40px auto;
-position:relative;
-}
+    .spot.orange{
+      background:#ff9d57;
+      box-shadow:0 0 16px rgba(255,157,87,.8);
+    }
 
-.radar::before{
-content:"";
-position:absolute;
-width:100%;
-height:100%;
-border-radius:50%;
-border:1px solid #00ffd5;
-animation:spin 8s linear infinite;
-}
+    .spot.green{
+      background:#45d483;
+      box-shadow:0 0 16px rgba(69,212,131,.8);
+    }
 
-@keyframes spin{
-0%{transform:rotate(0)}
-100%{transform:rotate(360deg)}
-}
+    .spot-label{
+      position:absolute;
+      color:#fff;
+      font-size:12px;
+      background:rgba(5,11,21,.82);
+      padding:5px 8px;
+      border-radius:8px;
+      border:1px solid rgba(143,215,255,.18);
+      white-space:nowrap;
+    }
 
-/* SIGNALS */
+    @keyframes pulse{
+      0%{transform:scale(1);opacity:.85;}
+      50%{transform:scale(1.7);opacity:1;}
+      100%{transform:scale(1);opacity:.85;}
+    }
 
-.signals{
-max-width:800px;
-margin:40px auto;
-}
+    .signals{
+      display:grid;
+      gap:12px;
+    }
 
-.signal{
-background:#0f1b2d;
-padding:20px;
-margin:10px 0;
-border-radius:10px;
-}
+    .signal{
+      background:#16233b;
+      border:1px solid #24395f;
+      padding:14px;
+      border-radius:10px;
+    }
 
-/* MARKETS */
+    .signal strong{
+      display:block;
+      margin-bottom:6px;
+      color:#fff;
+    }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
-padding:30px;
-}
+    .signal p{
+      margin:0;
+      color:#c6d5ea;
+      line-height:1.7;
+      font-size:14px;
+    }
 
-.card{
-background:#0f1b2d;
-padding:20px;
-text-align:center;
-border-radius:10px;
-}
+    .sub-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:22px;
+      margin-bottom:24px;
+    }
 
-.card h3{
-color:#00ffd5;
-}
+    .risk{
+      padding:12px 14px;
+      margin-bottom:10px;
+      background:#16233b;
+      border-radius:8px;
+      border:1px solid #24395f;
+      line-height:1.6;
+    }
 
-footer{
-text-align:center;
-padding:40px;
-opacity:0.6;
-}
+    .risk:last-child{ margin-bottom:0; }
 
-</style>
+    .radar-container{
+      position:relative;
+      height:260px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:radial-gradient(circle at center, rgba(99,179,255,.08), transparent 60%);
+      border-radius:12px;
+      border:1px solid #24395f;
+      overflow:hidden;
+    }
 
+    .radar-circle{
+      position:absolute;
+      width:200px;
+      height:200px;
+      border-radius:50%;
+      border:1px solid #24395f;
+    }
+
+    .circle2{
+      width:140px;
+      height:140px;
+    }
+
+    .circle3{
+      width:80px;
+      height:80px;
+    }
+
+    .radar-line{
+      position:absolute;
+      width:2px;
+      height:200px;
+      background:#63b3ff;
+      animation:spin 4s linear infinite;
+      transform-origin:bottom center;
+      box-shadow:0 0 16px rgba(99,179,255,.7);
+    }
+
+    @keyframes spin{
+      from{transform:rotate(0deg);}
+      to{transform:rotate(360deg);}
+    }
+
+    .radar-dot{
+      position:absolute;
+      background:#63b3ff;
+      color:#07101d;
+      padding:5px 9px;
+      border-radius:6px;
+      font-size:12px;
+      font-weight:bold;
+      box-shadow:0 0 14px rgba(99,179,255,.6);
+    }
+
+    .dot1{top:30px;left:120px;}
+    .dot2{top:150px;left:200px;}
+    .dot3{top:180px;left:80px;}
+    .dot4{top:60px;left:30px;}
+
+    .footer{
+      text-align:center;
+      padding:10px 0 0;
+      color:#9fb3d2;
+      font-size:13px;
+      opacity:0.9;
+    }
+
+    @media (max-width: 980px){
+      .main-grid,
+      .sub-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 760px){
+      .hero h1{ font-size:30px; }
+      .container{ padding:24px 14px 34px; }
+      header{ padding:16px 14px; }
+      .radar-container{ height:220px; }
+      .radar-circle{ width:170px; height:170px; }
+      .circle2{ width:120px; height:120px; }
+      .circle3{ width:70px; height:70px; }
+      .radar-line{ height:170px; }
+      .dot1{top:24px;left:96px;}
+      .dot2{top:130px;left:168px;}
+      .dot3{top:154px;left:56px;}
+      .dot4{top:52px;left:18px;}
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-<div class="logo">ZENTRA</div>
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
-</header>
+  <header>
+    <div class="logo">ZENTRA</div>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </header>
 
-<nav id="menu">
+  <nav id="menu">
+    <a href="/risklens/dashboard.html">RiskLens</a>
+    <a href="/finance-demo.html">Finance Engine</a>
+    <a href="/trade/index.html">Trade Engine</a>
+    <a href="/telescope/index.html">Global Telescope</a>
+    <a href="/lens-lab.html">Lens Lab</a>
+    <a href="/simulation/index.html">Simulation</a>
+  </nav>
 
-<a href="/risklens/dashboard.html">RiskLens</a>
-<a href="/finance/index.html">Finance Engine</a>
-<a href="/trade/index.html">Trade Engine</a>
-<a href="/telescope/index.html">Global Telescope</a>
-<a href="/lens/lab.html">Lens Lab</a>
-<a href="/simulation/index.html">Simulation</a>
+  <div class="container">
 
-</nav>
+    <section class="hero">
+      <h1>Global Economic Telescope</h1>
+      <p>
+        Planetary scale economic observation engine monitoring energy shocks,
+        logistics stress, cyber pressure and global trade opportunity clusters.
+      </p>
+    </section>
 
-<section class="hero">
+    <section class="cards">
+      <div class="card">
+        <h3>Oil</h3>
+        <p>$82</p>
+      </div>
+      <div class="card">
+        <h3>Gold</h3>
+        <p>$2310</p>
+      </div>
+      <div class="card">
+        <h3>S&P500</h3>
+        <p>5180</p>
+      </div>
+      <div class="card">
+        <h3>Interest</h3>
+        <p>4.8%</p>
+      </div>
+    </section>
 
-<h1>Global Economic Telescope</h1>
+    <section class="main-grid">
+      <div class="panel">
+        <h3>Risk Heatmap</h3>
 
-<p>
-Planetary scale economic observation engine monitoring energy shocks,
-logistics stress and global trade pressure.
-</p>
+        <div class="map-container">
+          <img
+            class="world"
+            src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+            alt="World Map"
+          >
 
-</section>
+          <div class="spot" style="top:40%;left:49%;"></div>
+          <div class="spot-label" style="top:36%;left:52%;">Energy Shock</div>
 
-<!-- MARKET DATA -->
+          <div class="spot orange" style="top:28%;left:69%;"></div>
+          <div class="spot-label" style="top:24%;left:72%;">Freight Stress</div>
 
-<div class="cards">
+          <div class="spot green" style="top:49%;left:31%;"></div>
+          <div class="spot-label" style="top:45%;left:34%;">Trade Window</div>
+        </div>
+      </div>
 
-<div class="card">
-<h3>Oil</h3>
-<p>$82</p>
-</div>
+      <div class="panel">
+        <h3>Detected Global Signals</h3>
 
-<div class="card">
-<h3>Gold</h3>
-<p>$2310</p>
-</div>
+        <div class="signals">
+          <div class="signal">
+            <strong>Energy Shock Zone</strong>
+            <p>
+              Oil price volatility is increasing cost pressure across manufacturing
+              and freight-sensitive sectors.
+            </p>
+          </div>
 
-<div class="card">
-<h3>S&P500</h3>
-<p>5180</p>
-</div>
+          <div class="signal">
+            <strong>Freight Stress Corridor</strong>
+            <p>
+              Major shipping routes are experiencing congestion and freight rate pressure
+              with visible spillover risk.
+            </p>
+          </div>
 
-<div class="card">
-<h3>Interest</h3>
-<p>4.8%</p>
-</div>
+          <div class="signal">
+            <strong>Trade Opportunity Cluster</strong>
+            <p>
+              Regional demand growth is creating selective opportunity windows in
+              agriculture and industrial goods.
+            </p>
+          </div>
 
-</div>
+          <div class="signal">
+            <strong>Cyber Pressure Signal</strong>
+            <p>
+              Financial and logistics-linked digital systems show moderate operational
+              cyber pressure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- WORLD MAP -->
+    <section class="sub-grid">
+      <div class="panel">
+        <h3>Economic Radar</h3>
 
-<div class="map-container">
+        <div class="radar-container">
+          <div class="radar-circle"></div>
+          <div class="radar-circle circle2"></div>
+          <div class="radar-circle circle3"></div>
 
-<img class="world"
-src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
+          <div class="radar-line"></div>
 
-<div class="spot" style="top:40%;left:50%"></div>
-<div class="spot" style="top:30%;left:70%"></div>
-<div class="spot" style="top:50%;left:30%"></div>
+          <div class="radar-dot dot1">Energy</div>
+          <div class="radar-dot dot2">Logistics</div>
+          <div class="radar-dot dot3">Cyber</div>
+          <div class="radar-dot dot4">Trade</div>
+        </div>
+      </div>
 
-</div>
+      <div class="panel">
+        <h3>Pressure & Opportunity Zones</h3>
 
-<!-- RADAR -->
+        <div class="risk">Middle East: energy supply risk remains elevated.</div>
+        <div class="risk">Red Sea: route disruption pressure affects cost structure.</div>
+        <div class="risk">Europe: industrial margins remain sensitive to energy pass-through.</div>
+        <div class="risk">Asia: demand recovery creates selective export windows.</div>
+      </div>
+    </section>
 
-<div class="radar"></div>
+    <section class="panel">
+      <h3>Telescope Summary</h3>
+      <div class="signals">
+        <div class="signal">
+          <strong>Halk Dili</strong>
+          <p>
+            Enerji baskısı ve navlun sıkışması, küresel ticaret maliyetlerini yükseltiyor.
+            Ama bazı bölgelerde yeni ticaret fırsatları açılıyor.
+          </p>
+        </div>
+        <div class="signal">
+          <strong>Teknik Dil</strong>
+          <p>
+            Energy-driven cost transmission and freight corridor stress are elevating
+            trade execution costs, while selective regional demand clusters still support
+            profitable opportunity windows.
+          </p>
+        </div>
+      </div>
+    </section>
 
-<!-- SIGNALS -->
+    <div class="footer">
+      ZENTRA Planetary Economic Observation System
+    </div>
 
-<section class="signals">
+  </div>
 
-<h2 style="text-align:center">Detected Global Signals</h2>
-
-<div class="signal">
-
-<strong>Energy Shock Zone</strong>
-
-<p>
-Oil price volatility affecting manufacturing
-and logistics chains across multiple regions.
-</p>
-
-</div>
-
-<div class="signal">
-
-<strong>Freight Stress Corridor</strong>
-
-<p>
-Major shipping routes experiencing congestion
-and freight rate pressure.
-</p>
-
-</div>
-
-<div class="signal">
-
-<strong>Trade Opportunity Cluster</strong>
-
-<p>
-Regional demand surge detected in emerging markets.
-</p>
-
-</div>
-
-</section>
-
-<footer>
-
-ZENTRA Planetary Economic Observation System
-
-</footer>
-
-<script>
-
-function toggleMenu(){
-
-let menu=document.getElementById("menu");
-
-if(menu.style.left=="0px"){
-menu.style.left="-260px";
-}else{
-menu.style.left="0px";
-}
-
-}
-
-</script>
+  <script>
+    function toggleMenu(){
+      let menu = document.getElementById("menu");
+      if(menu.style.left === "0px"){
+        menu.style.left = "-270px";
+      } else {
+        menu.style.left = "0px";
+      }
+    }
+  </script>
 
 </body>
 </html>

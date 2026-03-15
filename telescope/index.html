@@ -1,151 +1,201 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ZENTRA Global Telescope</title><style>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZENTRA Global Telescope</title>
+
+<script>
+
+if(!localStorage.getItem("zentraAuth")){
+window.location.href="/zentra-entry.html";
+}
+
+</script>
+
+<style>
 
 body{
-background:#0f172a;
+background:#0b1320;
 color:white;
 font-family:Arial;
-padding:40px;
+margin:0;
+}
+
+header{
+background:#111a2c;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.brand{
+font-size:22px;
+color:#63b3ff;
+font-weight:bold;
+}
+
+.menu{
+display:flex;
+gap:20px;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
 }
 
 .container{
-max-width:1100px;
+padding:40px;
+max-width:1300px;
 margin:auto;
 }
 
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:12px;
-margin-bottom:25px;
-}
-
-h1{
-margin-bottom:30px;
-}
-
-.market-grid{
+.grid{
 display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin-top:15px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.panel{
+background:#101a2d;
+border:1px solid #24395f;
+border-radius:12px;
+padding:20px;
+}
+
+.panel h3{
+color:#8fd7ff;
+margin-top:0;
 }
 
 .market{
-background:#0f172a;
-padding:15px;
-border-radius:8px;
-text-align:center;
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
 }
 
-.market span{
-display:block;
-font-size:22px;
-margin-top:5px;
+.risk{
+padding:10px;
+margin-bottom:10px;
+background:#16233b;
+border-radius:6px;
 }
 
-.signal{
-background:#0f172a;
-padding:15px;
-border-radius:8px;
-margin-top:10px;
+.map{
+height:220px;
+background:linear-gradient(#16233b,#0e1b30);
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+font-size:20px;
+color:#63b3ff;
 }
 
-.signal.high{
-border-left:5px solid #ef4444;
+.radar{
+height:220px;
+border-radius:50%;
+border:1px solid #24395f;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+color:#8fd7ff;
+background:#0e1b30;
 }
 
-.signal.medium{
-border-left:5px solid #f59e0b;
-}
+</style>
 
-</style></head><body><div class="container"><h1>ZENTRA Global Economic Telescope</h1><div class="card">
-<h2>Global Risk</h2>
-<div id="riskScore">loading...</div>
-<div id="driver"></div>
-</div><div class="card">
-<h2>Markets</h2><div class="market-grid"><div class="market">
-Oil
-<span id="oil"></span>
-</div><div class="market">
-Gold
-<span id="gold"></span>
-</div><div class="market">
-S&P500
-<span id="sp"></span>
-</div><div class="market">
-Interest Rate
-<span id="rate"></span>
-</div></div></div><div class="card">
-<h2>Active Risk Signals</h2>
-<div id="signals"></div>
-</div></div><script>
+</head>
 
-const data = {
+<body>
 
-globalRisk: 99,
+<header>
 
-dominantDriver: "Energy Shock",
+<div class="brand">ZENTRA</div>
 
-signals: [
-{ name:"Oil Price Surge", severity:"high", sector:"energy"},
-{ name:"Shipping Congestion", severity:"high", sector:"logistics"},
-{ name:"Cyber Pressure", severity:"medium", sector:"banking"},
-{ name:"Port Stress", severity:"medium", sector:"trade"}
-],
-
-markets:{
-oil:82,
-gold:2310,
-sp500:5180,
-interestRate:4.8
-}
-
-}
-
-function computeRisk(data){
-
-let score = 0
-
-if(data.markets.oil > 80) score += 30
-if(data.markets.interestRate > 4.5) score += 20
-
-data.signals.forEach(s=>{
-if(s.severity==="high") score += 15
-if(s.severity==="medium") score += 8
-})
-
-return score
-
-}
-
-function render(){
-
-document.getElementById("riskScore").innerText =
-"Risk Score: "+computeRisk(data)
-
-document.getElementById("driver").innerText =
-"Driver: "+data.dominantDriver
-
-document.getElementById("oil").innerText = data.markets.oil
-document.getElementById("gold").innerText = data.markets.gold
-document.getElementById("sp").innerText = data.markets.sp500
-document.getElementById("rate").innerText = data.markets.interestRate
-
-const signalsHTML = data.signals.map(s=>`
-<div class="signal ${s.severity}">
-<strong>${s.name}</strong><br>
-Sector: ${s.sector}
+<div class="menu">
+<a href="/risklens/dashboard.html">RiskLens</a>
+<a href="/finance-demo.html">Finance</a>
+<a href="/trade/index.html">Trade</a>
+<a href="/telescope/index.html">Telescope</a>
 </div>
-`).join("")
 
-document.getElementById("signals").innerHTML = signalsHTML
+</header>
 
-}
+<div class="container">
 
-render()
+<div class="grid">
 
-</script>
-<script src="/assets/js/auth-guard.js"></script>
+<div class="panel">
+
+<h3>Global Markets</h3>
+
+<div class="market"><span>Oil</span><span>82</span></div>
+<div class="market"><span>Gold</span><span>2310</span></div>
+<div class="market"><span>S&P500</span><span>5180</span></div>
+<div class="market"><span>Interest Rate</span><span>4.8</span></div>
+
+</div>
+
+<div class="panel">
+
+<h3>Global Risk State</h3>
+
+<div class="risk">Energy Shock</div>
+<div class="risk">Shipping Congestion</div>
+<div class="risk">Cyber Pressure</div>
+<div class="risk">Port Stress</div>
+
+</div>
+
+<div class="panel">
+
+<h3>Risk Heatmap</h3>
+
+<div class="map">
+🌍 Global Risk Map
+</div>
+
+</div>
+
+<div class="panel">
+
+<h3>Trade Opportunity Radar</h3>
+
+<div class="radar">
+📡 Trade Radar
+</div>
+
+</div>
+
+<div class="panel">
+
+<h3>Energy Shock Zones</h3>
+
+<div class="risk">Middle East Supply Risk</div>
+<div class="risk">European Energy Stress</div>
+<div class="risk">Asian Demand Surge</div>
+
+</div>
+
+<div class="panel">
+
+<h3>Logistics Pressure</h3>
+
+<div class="risk">Red Sea Route</div>
+<div class="risk">Panama Canal</div>
+<div class="risk">China Export Ports</div>
+
+</div>
+
+</div>
+
+</div>
+
 </body>
 </html>

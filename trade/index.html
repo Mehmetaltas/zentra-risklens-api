@@ -1,402 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>ZENTRA Trade Engine</title>
+
+<script>
+if(!localStorage.getItem("zentraAuth")){
+location.href="/zentra-entry.html";
+}
+</script>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#07101d;
-  --panel:#101a2d;
-  --panel2:#16233b;
-  --line:#24395f;
-  --text:#eef5ff;
-  --muted:#a9b9d6;
-  --cyan:#63b3ff;
-  --cyan2:#8fd7ff;
-  --red:#ff5c70;
-  --orange:#ff9d57;
-  --yellow:#ffd166;
-  --green:#45d483;
-}
+
 body{
-  font-family:Arial,sans-serif;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(99,179,255,.10), transparent 24%),
-    radial-gradient(circle at 85% 10%, rgba(69,212,131,.08), transparent 18%),
-    linear-gradient(180deg,#07101d,#0b1324 55%,#07101d);
-  color:var(--text);
-  min-height:100vh;
-  padding:28px 16px 48px;
+margin:0;
+font-family:Arial;
+background:#060b16;
+color:white;
 }
-.wrapper{
-  width:100%;
-  max-width:1280px;
-  margin:0 auto;
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 25px;
+background:#0f1b2d;
 }
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#00ffd5;
+}
+
+.menu-btn{
+font-size:26px;
+cursor:pointer;
+}
+
+nav{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#0f1b2d;
+transition:0.3s;
+padding-top:60px;
+}
+
+nav a{
+display:block;
+padding:14px 25px;
+color:white;
+text-decoration:none;
+}
+
+nav a:hover{
+background:#162842;
+}
+
 .hero{
-  margin-bottom:20px;
-  background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(12,20,35,.96));
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:24px;
-  box-shadow:0 14px 40px rgba(0,0,0,.25);
+text-align:center;
+padding:60px 20px;
 }
+
 .hero h1{
-  color:var(--cyan2);
-  font-size:34px;
-  margin-bottom:10px;
+font-size:36px;
+color:#00ffd5;
 }
-.hero p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:920px;
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:40px;
 }
-.grid{
-  display:grid;
-  grid-template-columns:340px 1fr;
-  gap:18px;
-  margin-bottom:18px;
+
+.card{
+background:#0f1b2d;
+padding:20px;
+border-radius:10px;
+text-align:center;
 }
-.panel{
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 28px rgba(0,0,0,.18);
+
+.card h3{
+color:#00ffd5;
 }
-.panel h2{
-  color:var(--cyan2);
-  font-size:21px;
-  margin-bottom:14px;
+
+.radar{
+width:320px;
+height:320px;
+border:2px solid #00ffd5;
+border-radius:50%;
+margin:40px auto;
+position:relative;
+animation:spin 10s linear infinite;
 }
-.score{
-  font-size:54px;
-  line-height:1;
-  font-weight:bold;
-  color:var(--green);
-  margin-bottom:10px;
-  text-align:center;
+
+@keyframes spin{
+0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
 }
-.driver{
-  text-align:center;
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.6;
+
+.signal{
+padding:15px;
+margin:10px;
+background:#0f1b2d;
+border-radius:8px;
 }
-.metric-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:16px;
+
+footer{
+text-align:center;
+padding:40px;
+opacity:0.6;
 }
-.metric-card{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:14px;
-  padding:14px;
-  text-align:center;
-}
-.metric-label{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:7px;
-}
-.metric-value{
-  font-size:24px;
-  font-weight:bold;
-  color:var(--cyan2);
-}
-.trade-map{
-  position:relative;
-  min-height:420px;
-  overflow:hidden;
-}
-.trade-shell{
-  position:relative;
-  width:100%;
-  min-height:360px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.06);
-  background:
-    radial-gradient(circle at center, rgba(99,179,255,.10), transparent 48%),
-    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-}
-.trade-grid{
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-  background-size:32px 32px;
-  opacity:.22;
-}
-.node{
-  position:absolute;
-  transform:translate(-50%,-50%);
-  text-align:center;
-}
-.node-dot{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  margin:0 auto 6px;
-  box-shadow:0 0 16px currentColor;
-}
-.node-dot.blue{background:var(--cyan2);color:var(--cyan2)}
-.node-dot.green{background:var(--green);color:var(--green)}
-.node-dot.orange{background:var(--orange);color:var(--orange)}
-.node span{
-  display:block;
-  font-size:11px;
-  color:#e9f2ff;
-  background:rgba(8,14,25,.72);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:999px;
-  padding:4px 8px;
-  white-space:nowrap;
-}
-.route{
-  position:absolute;
-  height:2px;
-  background:linear-gradient(90deg, rgba(99,179,255,.10), rgba(99,179,255,.9), rgba(69,212,131,.15));
-  transform-origin:left center;
-  box-shadow:0 0 10px rgba(99,179,255,.35);
-}
-.route.r1{left:21%;top:50%;width:29%;transform:rotate(-8deg)}
-.route.r2{left:50%;top:46%;width:22%;transform:rotate(6deg)}
-.route.r3{left:26%;top:62%;width:18%;transform:rotate(18deg)}
-.bottom-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:18px;
-}
-.list{display:grid;gap:12px}
-.item{
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-}
-.item strong{
-  display:block;
-  margin-bottom:5px;
-  font-size:15px;
-}
-.item small{
-  color:var(--muted);
-  line-height:1.5;
-  display:block;
-}
-.badge{
-  display:inline-block;
-  margin-top:8px;
-  padding:5px 8px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-}
-.badge.red{background:rgba(255,92,112,.12);color:var(--red)}
-.badge.orange{background:rgba(255,157,87,.12);color:var(--orange)}
-.badge.yellow{background:rgba(255,209,102,.12);color:var(--yellow)}
-.badge.green{background:rgba(69,212,131,.12);color:var(--green)}
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.input{
-  width:100%;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.08);
-  background:#0d1626;
-  color:#fff;
-  outline:none;
-}
-.button{
-  margin-top:14px;
-  width:100%;
-  padding:13px 14px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(90deg,var(--cyan),var(--green));
-  color:#07101d;
-  font-weight:bold;
-  cursor:pointer;
-}
-.result{
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  line-height:1.7;
-  color:var(--muted);
-}
-@media (max-width:1100px){
-  .grid{grid-template-columns:1fr}
-  .bottom-grid{grid-template-columns:1fr}
-}
-@media (max-width:760px){
-  .hero h1{font-size:28px}
-  .metric-grid,.form-grid{grid-template-columns:1fr}
-  .score{font-size:44px}
-}
+
 </style>
 </head>
+
 <body>
 
-<div class="wrapper">
+<header>
+<div class="logo">ZENTRA</div>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+</header>
 
-  <div class="hero">
-    <h1>💹 ZENTRA Trade Engine</h1>
-    <p>
-      Trade opportunity detection, route pressure reading, logistics cost awareness and execution-oriented
-      commercial intelligence in one operational surface.
-    </p>
-  </div>
+<nav id="menu">
 
-  <div class="grid">
+<a href="/risklens/dashboard.html">RiskLens</a>
+<a href="/finance/index.html">Finance Engine</a>
+<a href="/trade/index.html">Trade Engine</a>
+<a href="/telescope/index.html">Global Telescope</a>
+<a href="/lens/lab.html">Lens Lab</a>
+<a href="/simulation/index.html">Simulation</a>
 
-    <div class="panel">
-      <h2>Trade Opportunity Score</h2>
-      <div class="score">84</div>
-      <div class="driver">Dominant Driver: cross-market price gap + stable route availability</div>
+</nav>
 
-      <div class="metric-grid">
-        <div class="metric-card">
-          <div class="metric-label">Margin Potential</div>
-          <div class="metric-value">18%</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Route Stress</div>
-          <div class="metric-value">Medium</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Execution Window</div>
-          <div class="metric-value">Open</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Funding Fit</div>
-          <div class="metric-value">Strong</div>
-        </div>
-      </div>
-    </div>
+<section class="hero">
 
-    <div class="panel trade-map">
-      <h2>Trade Flow Radar</h2>
-      <div class="trade-shell">
-        <div class="trade-grid"></div>
+<h1>Trade Opportunity Engine</h1>
 
-        <div class="route r1"></div>
-        <div class="route r2"></div>
-        <div class="route r3"></div>
+<p>
+AI identifies global trade opportunities based on
+price differences, logistics pressure and demand signals.
+</p>
 
-        <div class="node" style="left:20%;top:52%;">
-          <div class="node-dot blue"></div>
-          <span>Türkiye Supply</span>
-        </div>
+</section>
 
-        <div class="node" style="left:49%;top:47%;">
-          <div class="node-dot orange"></div>
-          <span>Transit Pressure</span>
-        </div>
+<div class="cards">
 
-        <div class="node" style="left:72%;top:49%;">
-          <div class="node-dot green"></div>
-          <span>Iraq Demand</span>
-        </div>
+<div class="card">
+<h3>Oil</h3>
+<p>$82</p>
+</div>
 
-        <div class="node" style="left:41%;top:66%;">
-          <div class="node-dot orange"></div>
-          <span>Logistics Cost</span>
-        </div>
-      </div>
-    </div>
+<div class="card">
+<h3>Gold</h3>
+<p>$2310</p>
+</div>
 
-  </div>
+<div class="card">
+<h3>S&P500</h3>
+<p>5180</p>
+</div>
 
-  <div class="bottom-grid">
-
-    <div class="panel">
-      <h2>📦 Logistics Pressure</h2>
-      <div class="list">
-        <div class="item">
-          <strong>Regional Freight Cost Rise</strong>
-          <small>Transport cost base is elevated but still below trade-break threshold.</small>
-          <span class="badge orange">Manageable</span>
-        </div>
-        <div class="item">
-          <strong>Border Delay Risk</strong>
-          <small>Customs and queue friction may slow execution on specific corridors.</small>
-          <span class="badge yellow">Watch</span>
-        </div>
-        <div class="item">
-          <strong>Route Availability</strong>
-          <small>Main lanes remain accessible with selective pricing adjustments.</small>
-          <span class="badge green">Open</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <h2>⚡ Commercial Drivers</h2>
-      <div class="list">
-        <div class="item">
-          <strong>Price Gap Detected</strong>
-          <small>Cross-market price dispersion supports an attractive export margin.</small>
-          <span class="badge green">Positive</span>
-        </div>
-        <div class="item">
-          <strong>Demand Pull</strong>
-          <small>Destination-side demand remains stronger than local supply conditions.</small>
-          <span class="badge green">Positive</span>
-        </div>
-        <div class="item">
-          <strong>Energy Spillover</strong>
-          <small>Energy costs affect transport but do not erase trade viability yet.</small>
-          <span class="badge yellow">Caution</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <h2>🧠 AI Trade Check</h2>
-      <div class="form-grid">
-        <input id="product" class="input" placeholder="Product (e.g. flour)" />
-        <input id="route" class="input" placeholder="Route (e.g. Turkey → Iraq)" />
-      </div>
-      <button class="button" onclick="runTradeCheck()">Run Trade Intelligence</button>
-      <div id="tradeResult" class="result">
-        Enter a product and route to generate a trade interpretation.
-      </div>
-    </div>
-
-  </div>
+<div class="card">
+<h3>Interest</h3>
+<p>4.8%</p>
+</div>
 
 </div>
 
+<div class="radar"></div>
+
+<section>
+
+<h2 style="text-align:center">Active Trade Signals</h2>
+
+<div class="signal">
+<strong>Freight Cost Escalation</strong>
+<p>Logistics pressure increasing import costs.</p>
+</div>
+
+<div class="signal">
+<strong>Energy Shock</strong>
+<p>Energy price surge affecting supply chains.</p>
+</div>
+
+<div class="signal">
+<strong>Demand Surge</strong>
+<p>Regional demand growth detected.</p>
+</div>
+
+</section>
+
+<footer>
+
+ZENTRA Global Economic Intelligence Platform
+
+</footer>
+
 <script>
-function runTradeCheck(){
-  const product = document.getElementById("product").value.trim();
-  const route = document.getElementById("route").value.trim();
-  const result = document.getElementById("tradeResult");
 
-  if(!product || !route){
-    result.innerHTML = "Please enter both product and route.";
-    return;
-  }
+function toggleMenu(){
 
-  result.innerHTML =
-    "<strong style='color:#8fd7ff'>Trade Interpretation</strong><br>" +
-    "Product: " + product + "<br>" +
-    "Route: " + route + "<br>" +
-    "Assessment: Positive price gap, manageable logistics pressure and viable execution window detected.<br>" +
-    "Recommendation: Proceed with selective margin control and route monitoring.";
+let menu=document.getElementById("menu");
+
+if(menu.style.left=="0px"){
+menu.style.left="-260px";
+}else{
+menu.style.left="0px";
 }
+
+}
+
 </script>
-<script src="/assets/js/auth-guard.js"></script>
+
 </body>
-  </html>
+</html>

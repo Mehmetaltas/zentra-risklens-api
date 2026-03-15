@@ -786,3 +786,418 @@
         <div>
           <div class="brand-title">ZENTRA</div>
           <
+<div class="brand-sub" data-i18n="brand_sub">Economic Intelligence Operating System</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="top-btn ai-btn" onclick="openAI()" data-i18n="general_ai_btn">General AI</button>
+
+        <select class="lang" id="langSelect" aria-label="Language">
+          <option value="tr">TR</option>
+          <option value="en">EN</option>
+        </select>
+
+        <button class="burger" onclick="toggleMenu()" aria-label="Open navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <aside id="menuDrawer" class="drawer">
+    <div class="drawer-head">
+      <div class="drawer-title">ZENTRA</div>
+      <button class="drawer-close" onclick="toggleMenu()">✕</button>
+    </div>
+
+    <input
+      type="text"
+      class="searchBox"
+      placeholder="Search platform..."
+      onkeyup="siteSearch(this.value)"
+    >
+
+    <div class="nav-group">
+      <div class="nav-group-title" data-i18n="nav_platform">Platform</div>
+      <a class="nav-link" href="#intro">
+        <span data-i18n="nav_home">Home</span>
+        <small data-i18n="nav_home_desc">Public introduction and platform overview.</small>
+      </a>
+      <a class="nav-link" href="/zentra-entry.html">
+        <span data-i18n="nav_platform_entry">ZENTRA Platform Entry</span>
+        <small data-i18n="nav_platform_entry_desc">Secure entry to the deep intelligence layer.</small>
+      </a>
+      <a class="nav-link" href="/investor.html">
+        <span data-i18n="nav_investor">Investor</span>
+        <small data-i18n="nav_investor_desc">Strategic positioning and institutional overview.</small>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title" data-i18n="nav_modules">Modules</div>
+      <a class="nav-link" href="/risklens.html">
+        <span>RiskLens</span>
+        <small data-i18n="nav_risklens_desc">Global economic risk intelligence.</small>
+      </a>
+      <a class="nav-link" href="/finance-demo.html">
+        <span data-i18n="nav_finance">Finance Engine</span>
+        <small data-i18n="nav_finance_desc">Financial decision intelligence and demos.</small>
+      </a>
+      <a class="nav-link" href="/trade/index.html">
+        <span data-i18n="nav_trade">Trade Engine</span>
+        <small data-i18n="nav_trade_desc">Trade opportunities, routes and execution logic.</small>
+      </a>
+      <a class="nav-link" href="/telescope/index.html">
+        <span data-i18n="nav_telescope">Global Telescope</span>
+        <small data-i18n="nav_telescope_desc">Planetary-scale economic observation.</small>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title" data-i18n="nav_about">Corporate</div>
+      <a class="nav-link" href="#about">
+        <span data-i18n="nav_about_link">About</span>
+        <small data-i18n="nav_about_link_desc">Mission, vision and platform identity.</small>
+      </a>
+      <a class="nav-link" href="#faq">
+        <span data-i18n="nav_faq">FAQ</span>
+        <small data-i18n="nav_faq_desc">Key investor and institutional questions.</small>
+      </a>
+      <a class="nav-link" href="#contact">
+        <span data-i18n="nav_contact">Contact</span>
+        <small data-i18n="nav_contact_desc">Institutional contact and collaboration channels.</small>
+      </a>
+    </div>
+  </aside>
+
+  <main class="page-shell">
+    <section id="intro" class="hero">
+      <div class="hero-shell">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow" data-i18n="hero_eyebrow">Global Economic Intelligence Platform</div>
+            <h1 data-i18n="hero_title">Dünyayı izle. Riski anla. Fırsatı uygula.</h1>
+            <p data-i18n="hero_desc">
+              ZENTRA; ekonomik gözlem, risk zekâsı, finansal karar desteği, simülasyon ve ticaret fırsatı tespiti için tasarlanmış kurumsal yapay zekâ platformudur.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="/zentra-entry.html" data-i18n="hero_platform_btn">ZENTRA Platform</a>
+              <button class="btn btn-secondary" onclick="openAI()" data-i18n="hero_ai_btn">Open General AI</button>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="floating-card">
+              <h3 data-i18n="hero_card1_title">Risk Intelligence</h3>
+              <p data-i18n="hero_card1_desc">Detects market stress, systemic pressure and emerging sector vulnerabilities.</p>
+            </div>
+            <div class="floating-card">
+              <h3 data-i18n="hero_card2_title">Finance Intelligence</h3>
+              <p data-i18n="hero_card2_desc">Supports credit, collateral, tax and installment-based financial decisions.</p>
+            </div>
+            <div class="floating-card">
+              <h3 data-i18n="hero_card3_title">Trade Intelligence</h3>
+              <p data-i18n="hero_card3_desc">Identifies global price gaps, routes and profitable execution opportunities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 data-i18n="entries_title">Two Main Entry Layers</h2>
+        <p data-i18n="entries_desc">
+          The platform separates public AI interaction from the protected institutional intelligence layer.
+        </p>
+      </div>
+
+      <div class="entry-grid">
+        <div class="entry-card ai">
+          <div class="entry-icon">💬</div>
+          <h3 data-i18n="ai_card_title">General AI</h3>
+          <p data-i18n="ai_card_desc">
+            A conversation-first AI layer for quick questions, idea generation, explanation and guided interaction.
+          </p>
+          <ul>
+            <li data-i18n="ai_card_li1">General questions and support</li>
+            <li data-i18n="ai_card_li2">Chat-style interface</li>
+            <li data-i18n="ai_card_li3">Future assistants and tools</li>
+          </ul>
+          <a href="#" class="entry-link" onclick="openAI(); return false;" data-i18n="ai_card_link">Open General AI →</a>
+        </div>
+
+        <div class="entry-card platform">
+          <div class="entry-icon">🛰️</div>
+          <h3 data-i18n="platform_card_title">ZENTRA Platform</h3>
+          <p data-i18n="platform_card_desc">
+            The protected strategic layer that connects RiskLens, Finance Engine, Trade Engine, Global Telescope and the lens system.
+          </p>
+          <ul>
+            <li data-i18n="platform_card_li1">Secure institutional entry</li>
+            <li data-i18n="platform_card_li2">Deep economic intelligence</li>
+            <li data-i18n="platform_card_li3">Risk, finance, trade and simulation</li>
+          </ul>
+          <a href="/zentra-entry.html" class="entry-link" data-i18n="platform_card_link">Enter Platform →</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-head">
+        <h2 data-i18n="about_title">Platform Layers</h2>
+        <p data-i18n="about_desc">
+          ZENTRA is not a simple website. It is a layered economic intelligence system designed for institutions, strategic users and future execution engines.
+        </p>
+      </div>
+
+      <div class="layer-grid">
+        <div class="info-card">
+          <h3 data-i18n="layer1_title">Observation</h3>
+          <p data-i18n="layer1_desc">Global markets, logistics, energy, cyber and economic pressure signals are monitored continuously.</p>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="layer2_title">Analysis</h3>
+          <p data-i18n="layer2_desc">RiskLens, memory systems, behavior models and analytical lenses convert data into structured intelligence.</p>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="layer3_title">Execution</h3>
+          <p data-i18n="layer3_desc">The platform supports financial decisions, trade pathways and strategic institutional actions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="section-head">
+        <h2 data-i18n="faq_title">Questions Investors Will Ask</h2>
+        <p data-i18n="faq_desc">
+          Every core layer should explain itself without requiring a presentation call.
+        </p>
+      </div>
+
+      <div class="faq-wrap">
+        <details class="faq">
+          <summary data-i18n="faq1_q">What is ZENTRA in one sentence?</summary>
+          <p data-i18n="faq1_a">ZENTRA is a global economic intelligence operating system that observes the world economy, analyzes risk, simulates scenarios and supports financial and trade decisions.</p>
+        </details>
+
+        <details class="faq">
+          <summary data-i18n="faq2_q">Why are there two entry layers?</summary>
+          <p data-i18n="faq2_a">Because the public-facing AI interaction should remain separate from the protected institutional intelligence layer.</p>
+        </details>
+
+        <details class="faq">
+          <summary data-i18n="faq3_q">Is this only a risk dashboard?</summary>
+          <p data-i18n="faq3_a">No. ZENTRA combines risk intelligence, finance logic, simulation, trade opportunity detection and strategic observation.</p>
+        </details>
+
+        <details class="faq">
+          <summary data-i18n="faq4_q">Can this grow into a larger system later?</summary>
+          <p data-i18n="faq4_a">Yes. The current structure is designed to expand into cloud services, agent orchestration, role-based access and deeper AI modules.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <h2 data-i18n="contact_title">Institutional Contact</h2>
+        <p data-i18n="contact_desc">
+          For platform demos, licensing, investor discussions and strategic collaboration.
+        </p>
+      </div>
+
+      <div class="layer-grid">
+        <div class="info-card">
+          <h3 data-i18n="contact1_title">Institutional Demo</h3>
+          <p data-i18n="contact1_desc">Controlled product walkthrough for banks, institutions and strategic partners.</p>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="contact2_title">Investor Relations</h3>
+          <p data-i18n="contact2_desc">Platform positioning, architecture, revenue logic and strategic direction.</p>
+        </div>
+        <div class="info-card">
+          <h3 data-i18n="contact3_title">Strategic Collaboration</h3>
+          <p data-i18n="contact3_desc">Partnerships across finance, trade, AI infrastructure and public sector intelligence.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span data-i18n="footer_text">
+        ZENTRA is designed as a modular economic intelligence platform for institutions, strategic operators and future-facing financial systems.
+      </span>
+    </footer>
+  </main>
+
+  <div id="aiOverlay" class="chat-overlay">
+    <div class="chat-modal">
+      <div class="chat-sidebar">
+        <h3 data-i18n="chat_sidebar_title">General AI</h3>
+        <p data-i18n="chat_sidebar_desc">
+          This layer is designed for conversation-first interaction and future AI assistants.
+        </p>
+
+        <div class="cap-list">
+          <div class="cap-item">
+            <strong data-i18n="chat_cap1_title">Conversation</strong>
+            <span data-i18n="chat_cap1_desc">Natural chat flow for explanation, support and idea development.</span>
+          </div>
+          <div class="cap-item">
+            <strong data-i18n="chat_cap2_title">Assistants</strong>
+            <span data-i18n="chat_cap2_desc">Future expert assistants for sectors, finance and operational guidance.</span>
+          </div>
+          <div class="cap-item">
+            <strong data-i18n="chat_cap3_title">Scalable Layer</strong>
+            <span data-i18n="chat_cap3_desc">Can later expand into tools, workflows, agents and integrated AI services.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-main">
+        <div class="chat-head">
+          <div>
+            <div class="chat-head-title" data-i18n="chat_head_title">General AI Interface</div>
+            <div class="chat-head-sub" data-i18n="chat_head_sub">Conversation-oriented layer separated from the protected platform core.</div>
+          </div>
+          <button class="close-chat" onclick="closeAI()">✕</button>
+        </div>
+
+        <div class="chat-messages">
+          <div class="msg ai" data-i18n="chat_msg1">
+            Merhaba. Ben ZENTRA General AI katmanıyım. Sorularını cevaplayabilir, fikirlerini netleştirebilir ve seni doğru platform katmanına yönlendirebilirim.
+          </div>
+          <div class="msg user" data-i18n="chat_msg2">
+            ZENTRA ne yapıyor?
+          </div>
+          <div class="msg ai" data-i18n="chat_msg3">
+            ZENTRA; ekonomik gözlem, risk zekâsı, finansal karar desteği, simülasyon ve ticaret fırsatı tespiti yapan çok katmanlı bir ekonomik zekâ işletim sistemidir.
+          </div>
+          <div class="msg user" data-i18n="chat_msg4">
+            Platforma nasıl geçerim?
+          </div>
+          <div class="msg ai" data-i18n="chat_msg5">
+            Üstteki ZENTRA Platform girişini kullan. Orada güvenli kapı açılır ve derin katmana şifre ile girilir.
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input type="text" data-i18n-placeholder="chat_input_placeholder" placeholder="Bir şey yaz..." />
+          <button class="send-btn" type="button" data-i18n="chat_send_btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+function toggleMenu() {
+  const menu = document.getElementById("menuDrawer");
+  menu.classList.toggle("open");
+}
+
+function siteSearch(q) {
+  q = q.toLowerCase().trim();
+  const links = document.querySelectorAll(".nav-link");
+
+  links.forEach(link => {
+    const text = link.innerText.toLowerCase();
+    link.style.display = text.includes(q) ? "block" : "none";
+  });
+}
+
+function openAI() {
+  document.getElementById("aiOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAI() {
+  document.getElementById("aiOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("click", function (e) {
+
+  const drawer = document.getElementById("menuDrawer");
+  const burger = document.querySelector(".burger");
+
+  if (drawer.classList.contains("open")) {
+    const inside = drawer.contains(e.target);
+    const isBurger = burger.contains(e.target);
+
+    if (!inside && !isBurger) {
+      drawer.classList.remove("open");
+    }
+  }
+
+});
+
+const translations = {
+
+tr: {
+hero_title:"Dünyayı izle. Riski anla. Fırsatı uygula.",
+hero_desc:"ZENTRA ekonomik gözlem, risk zekâsı, finansal karar desteği ve ticaret fırsatı analizi yapan kurumsal bir ekonomik zekâ platformudur.",
+general_ai_btn:"Genel AI",
+hero_platform_btn:"ZENTRA Platform",
+hero_ai_btn:"Genel AI Aç",
+chat_input_placeholder:"Bir şey yaz...",
+chat_send_btn:"Gönder"
+},
+
+en: {
+hero_title:"Observe the world. Understand the risk. Execute the opportunity.",
+hero_desc:"ZENTRA is an institutional economic intelligence platform for risk analysis, financial decision support and global trade opportunity detection.",
+general_ai_btn:"General AI",
+hero_platform_btn:"ZENTRA Platform",
+hero_ai_btn:"Open General AI",
+chat_input_placeholder:"Type something...",
+chat_send_btn:"Send"
+}
+
+};
+
+function applyLanguage(lang){
+
+const dict = translations[lang];
+
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const key = el.getAttribute("data-i18n");
+
+if(dict[key]){
+el.textContent = dict[key];
+}
+
+});
+
+document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+const key = el.getAttribute("data-i18n-placeholder");
+
+if(dict[key]){
+el.setAttribute("placeholder",dict[key]);
+}
+
+});
+
+localStorage.setItem("zentraLang",lang);
+
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const select=document.getElementById("langSelect");
+
+const saved=localStorage.getItem("zentraLang") || "tr";
+
+select.value=saved;
+
+applyLanguage(saved);
+
+select.addEventListener("change",e=>{
+applyLanguage(e.target.value);
+});
+
+});
+
+</script>

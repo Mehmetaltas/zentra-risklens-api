@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZENTRA Finance Engine</title>
+
+<script>
+
+if(!localStorage.getItem("zentraAuth")){
+window.location.href="/zentra-entry.html";
+}
+
+</script>
+
+<style>
+
+body{
+background:#0b1320;
+color:white;
+font-family:Arial;
+margin:0;
+}
+
+header{
+background:#111a2c;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.brand{
+font-size:22px;
+color:#63b3ff;
+font-weight:bold;
+}
+
+.menu{
+display:flex;
+gap:20px;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+}
+
+.container{
+padding:40px;
+max-width:1200px;
+margin:auto;
+}
+
+.panel{
+background:#101a2d;
+border:1px solid #24395f;
+border-radius:12px;
+padding:25px;
+margin-bottom:30px;
+}
+
+.panel h2{
+color:#8fd7ff;
+margin-top:0;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:15px;
+background:#16233b;
+border:1px solid #24395f;
+color:white;
+border-radius:6px;
+}
+
+button{
+background:#63b3ff;
+color:black;
+padding:12px 20px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.result{
+background:#16233b;
+padding:15px;
+border-radius:8px;
+margin-top:15px;
+}
+
+.score{
+font-size:42px;
+color:#63b3ff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="brand">ZENTRA</div>
+
+<div class="menu">
+<a href="/risklens/dashboard.html">RiskLens</a>
+<a href="/finance-demo.html">Finance</a>
+<a href="/trade/index.html">Trade</a>
+<a href="/telescope/index.html">Telescope</a>
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="panel">
+
+<h2>Finance Engine Demo</h2>
+
+<p>
+Bu demo ZENTRA'nın finansal karar zekasının nasıl çalıştığını gösterir.
+Faktoring, katılım bankacılığı, kredi değerlendirmesi ve teminat analizi yapılır.
+</p>
+
+</div>
+
+<div class="panel">
+
+<h2>Başvuru Bilgisi</h2>
+
+<div class="grid">
+
+<div>
+
+<label>Başvuru Türü</label>
+<select id="product">
+<option value="factoring">Faktoring</option>
+<option value="participation">Katılım Finansmanı</option>
+<option value="credit">Ticari Kredi</option>
+</select>
+
+<label>Talep Tutarı</label>
+<input id="amount" type="number" value="500000">
+
+<label>Vade Gün</label>
+<input id="maturity" type="number" value="60">
+
+</div>
+
+<div>
+
+<label>Vergi Borcu</label>
+<input id="tax" type="number" value="0">
+
+<label>Piyasaya Borç</label>
+<input id="debt" type="number" value="200000">
+
+<label>Piyasadan Alacak</label>
+<input id="receivable" type="number" value="350000">
+
+</div>
+
+</div>
+
+<button onclick="calculate()">Analizi Çalıştır</button>
+
+<div id="output" class="result"></div>
+
+</div>
+<script>
+
+function calculate(){
+
+let amount = Number(document.getElementById("amount").value)
+let tax = Number(document.getElementById("tax").value)
+let debt = Number(document.getElementById("debt").value)
+let receivable = Number(document.getElementById("receivable").value)
+let maturity = Number(document.getElementById("maturity").value)
+
+let risk = 30
+
+if(tax>0) risk+=10
+if(debt>receivable) risk+=15
+if(maturity>90) risk+=10
+
+if(risk<40){
+decision="Onay"
+ratio=80
+}
+
+else if(risk<60){
+decision="Koşullu Onay"
+ratio=60
+}
+
+else{
+decision="Manuel İnceleme"
+ratio=40
+}
+
+let limit = amount*(ratio/100)
+
+document.getElementById("output").innerHTML =
+
+`
+<div class="score">${risk}</div>
+
+<p>Risk Score</p>
+
+<p><b>Karar:</b> ${decision}</p>
+
+<p><b>Önerilen Limit:</b> ${limit.toLocaleString()}</p>
+
+<p><b>Finansman Oranı:</b> %${ratio}</p>
+
+`
+
+}
+
+</script>
+
+</div>
+
+</body>
+</html>

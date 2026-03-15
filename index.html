@@ -4,28 +4,806 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA — Economic Intelligence Operating System</title>
-  <meta name="description" content="ZENTRA is a global economic intelligence operating system for risk analysis, finance intelligence, simulation and trade opportunity detection." />
-  <link rel="stylesheet" href="/assets/css/app-shell.css" />
+  <meta
+    name="description"
+    content="ZENTRA is a global economic intelligence operating system for risk analysis, finance intelligence, simulation and trade opportunity detection."
+  />
+  <meta
+    name="keywords"
+    content="economic intelligence, global risk analysis, finance intelligence, trade intelligence, simulation, AI platform, telescope, risklens"
+  />
+  <meta name="theme-color" content="#07101d" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+      --bg:#07101d;
+      --bg2:#0b1324;
+      --panel:#101a2d;
+      --panel2:#16233b;
+      --line:#24395f;
+      --text:#eef5ff;
+      --muted:#9fb3d2;
+      --cyan:#63b3ff;
+      --cyan2:#8fd7ff;
+      --green:#45d483;
+      --orange:#ff9d57;
+      --red:#ff5c70;
+      --shadow:0 18px 48px rgba(0,0,0,.28);
+      --radius:22px;
+      --max:1320px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(99,179,255,.12), transparent 20%),
+        radial-gradient(circle at 85% 10%, rgba(69,212,131,.08), transparent 18%),
+        radial-gradient(circle at 50% 80%, rgba(255,157,87,.06), transparent 18%),
+        linear-gradient(180deg, #07101d 0%, #0a1323 55%, #07101d 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(6, 13, 28, .82);
+      border-bottom: 1px solid rgba(143,215,255,.12);
+    }
+
+    .topbar-inner{
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(143,215,255,.22);
+      background:
+        radial-gradient(circle at 35% 35%, rgba(143,215,255,.35), transparent 40%),
+        linear-gradient(180deg,#0f1c31,#132443);
+      box-shadow: 0 0 28px rgba(99,179,255,.12);
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    .brand-title{
+      color: var(--cyan2);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: .6px;
+      line-height: 1.1;
+    }
+
+    .brand-sub{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+
+    .top-btn,
+    .lang{
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.03);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .top-btn:hover,
+    .lang:hover,
+    .burger:hover{
+      border-color: rgba(143,215,255,.35);
+      transform: translateY(-1px);
+    }
+
+    .top-btn.ai-btn{
+      background: linear-gradient(90deg, rgba(99,179,255,.18), rgba(69,212,131,.10));
+      color: var(--cyan2);
+    }
+
+    .burger{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:5px;
+      cursor:pointer;
+      background:#0d1626;
+      transition:.2s ease;
+      flex-shrink:0;
+    }
+
+    .burger span{
+      width:22px;
+      height:2px;
+      background:#fff;
+      display:block;
+      border-radius:2px;
+    }
+
+    .drawer{
+      position: fixed;
+      top: 0;
+      right: -390px;
+      width: 370px;
+      max-width: 92vw;
+      height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(9,17,31,.98), rgba(12,22,39,.98));
+      border-left: 1px solid rgba(143,215,255,.14);
+      box-shadow: -20px 0 60px rgba(0,0,0,.35);
+      padding: 20px;
+      transition: right .28s ease;
+      z-index: 1200;
+      overflow-y: auto;
+    }
+
+    .drawer.open { right: 0; }
+
+    .drawer-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .drawer-title{
+      color: var(--cyan2);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .drawer-close{
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:#0d1626;
+      color:#fff;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    .searchBox{
+      width:100%;
+      padding:13px 14px;
+      margin-bottom:16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:#081020;
+      color:white;
+      outline:none;
+    }
+
+    .nav-group{
+      margin-bottom: 18px;
+      border: 1px solid rgba(255,255,255,.05);
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .nav-group-title{
+      padding: 14px 16px;
+      color: var(--cyan2);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      background: rgba(255,255,255,.02);
+    }
+
+    .nav-link{
+      display:block;
+      padding: 14px 16px;
+      color:#fff;
+      border-top: 1px solid rgba(255,255,255,.04);
+      transition:.18s ease;
+    }
+
+    .nav-link:hover{
+      background:#14233d;
+      color: var(--cyan2);
+    }
+
+    .nav-link small{
+      display:block;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.45;
+      font-size: 12px;
+    }
+
+    .page-shell{
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 18px 48px;
+    }
+
+    .hero{
+      position: relative;
+      padding: 34px 0 18px;
+    }
+
+    .hero-shell{
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(143,215,255,.12);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(99,179,255,.16), transparent 26%),
+        radial-gradient(circle at 80% 18%, rgba(69,212,131,.10), transparent 18%),
+        linear-gradient(180deg, rgba(16,26,45,.98), rgba(10,19,35,.98));
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: var(--cyan2);
+      font-size: 12px;
+      margin-bottom: 16px;
+      animation: slideInUp .7s ease;
+    }
+
+    .hero h1{
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.06;
+      letter-spacing: -.8px;
+      margin-bottom: 16px;
+      animation: slideInUp .8s ease;
+    }
+
+    .hero p{
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+      max-width: 760px;
+      animation: slideInUp .95s ease;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top: 24px;
+      animation: slideInUp 1.05s ease;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height: 50px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,.08);
+      transition:.2s ease;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      color: #07101d;
+      border: none;
+      box-shadow: 0 10px 26px rgba(69,212,131,.18);
+    }
+
+    .btn-secondary{
+      background: rgba(255,255,255,.03);
+      color: #fff;
+    }
+
+    .btn:hover{
+      transform: translateY(-2px);
+    }
+
+    .hero-side{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .floating-card{
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.03);
+      border-radius: 20px;
+      padding: 18px;
+      min-height: 120px;
+      animation: floatY 5s ease-in-out infinite;
+    }
+
+    .floating-card:nth-child(2){ animation-delay: .6s; }
+    .floating-card:nth-child(3){ animation-delay: 1.1s; }
+
+    .floating-card h3{
+      color: var(--cyan2);
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .floating-card p{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .section{
+      padding: 18px 0;
+    }
+
+    .section-head{
+      margin-bottom: 16px;
+    }
+
+    .section-head h2{
+      font-size: clamp(26px, 3vw, 38px);
+      margin-bottom: 10px;
+      color: var(--cyan2);
+    }
+
+    .section-head p{
+      color: var(--muted);
+      max-width: 900px;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .entry-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .entry-card{
+      position: relative;
+      overflow: hidden;
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(16,26,45,.96), rgba(13,22,39,.96));
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.18);
+      transition:.22s ease;
+      min-height: 290px;
+    }
+
+    .entry-card:hover{
+      transform: translateY(-5px);
+      border-color: rgba(143,215,255,.22);
+    }
+
+    .entry-card.ai{
+      background:
+        radial-gradient(circle at 20% 20%, rgba(99,179,255,.16), transparent 24%),
+        linear-gradient(180deg, rgba(14,26,51,.98), rgba(11,19,39,.98));
+    }
+
+    .entry-card.platform{
+      background:
+        radial-gradient(circle at 75% 25%, rgba(255,92,112,.14), transparent 24%),
+        radial-gradient(circle at 15% 80%, rgba(69,212,131,.12), transparent 20%),
+        linear-gradient(180deg, rgba(18,22,44,.98), rgba(11,17,32,.98));
+    }
+
+    .entry-icon{
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 26px;
+      margin-bottom: 16px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+
+    .entry-card h3{
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .entry-card p{
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .entry-card ul{
+      margin-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 13px;
+    }
+
+    .entry-link{
+      display:inline-block;
+      margin-top: 18px;
+      color: var(--cyan2);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .layer-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card{
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(16,26,45,.96), rgba(13,22,39,.96));
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.18);
+    }
+
+    .info-card h3{
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .info-card p{
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .faq-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    details.faq{
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      border-radius: 18px;
+      padding: 18px 18px;
+    }
+
+    details.faq summary{
+      list-style: none;
+      cursor:pointer;
+      font-weight:700;
+      color:#fff;
+    }
+
+    details.faq summary::-webkit-details-marker{ display:none; }
+
+    details.faq p{
+      color: var(--muted);
+      line-height: 1.8;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .footer{
+      margin-top: 28px;
+      padding: 22px 0 8px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .chat-overlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 8, 16, .72);
+      backdrop-filter: blur(8px);
+      display: none;
+      z-index: 1400;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .chat-overlay.open{
+      display:flex;
+      animation: fadeIn .25s ease;
+    }
+
+    .chat-modal{
+      width: 100%;
+      max-width: 980px;
+      height: min(84vh, 760px);
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid rgba(143,215,255,.14);
+      background:
+        radial-gradient(circle at 15% 18%, rgba(99,179,255,.12), transparent 20%),
+        linear-gradient(180deg, rgba(13,21,37,.98), rgba(9,15,28,.98));
+      box-shadow: 0 24px 70px rgba(0,0,0,.45);
+      display:grid;
+      grid-template-columns: 320px 1fr;
+    }
+
+    .chat-sidebar{
+      border-right: 1px solid rgba(255,255,255,.06);
+      padding: 18px;
+      background: rgba(255,255,255,.02);
+    }
+
+    .chat-sidebar h3{
+      color: var(--cyan2);
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .chat-sidebar p{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .cap-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .cap-item{
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .cap-item strong{
+      color: #fff;
+      display:block;
+      margin-bottom: 4px;
+    }
+
+    .chat-main{
+      display:grid;
+      grid-template-rows: auto 1fr auto;
+      min-height:0;
+    }
+
+    .chat-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .chat-head-title{
+      color:#fff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .chat-head-sub{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .close-chat{
+      width:42px;
+      height:42px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color:#fff;
+      cursor:pointer;
+      font-size:18px;
+    }
+
+    .chat-messages{
+      padding: 18px;
+      overflow:auto;
+      display:grid;
+      gap:14px;
+    }
+
+    .msg{
+      max-width: 78%;
+      border-radius: 18px;
+      padding: 14px 16px;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .msg.ai{
+      justify-self: start;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:#eef5ff;
+    }
+
+    .msg.user{
+      justify-self: end;
+      background: linear-gradient(90deg, rgba(99,179,255,.22), rgba(69,212,131,.16));
+      border:1px solid rgba(143,215,255,.14);
+      color:#fff;
+    }
+
+    .chat-input{
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 14px 18px;
+      display:flex;
+      gap:10px;
+    }
+
+    .chat-input input{
+      flex:1;
+      min-width:0;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:#0b1423;
+      color:#fff;
+      padding: 14px 16px;
+      outline:none;
+    }
+
+    .send-btn{
+      min-width: 120px;
+      border:none;
+      border-radius: 14px;
+      font-weight:700;
+      cursor:pointer;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      color:#07101d;
+    }
+
+    @keyframes pulseGlow{
+      0%,100%{ box-shadow: 0 0 20px rgba(99,179,255,.10); }
+      50%{ box-shadow: 0 0 34px rgba(99,179,255,.20); }
+    }
+
+    @keyframes slideInUp{
+      from{ opacity:0; transform: translateY(20px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    @keyframes floatY{
+      0%,100%{ transform: translateY(0px); }
+      50%{ transform: translateY(-8px); }
+    }
+
+    @keyframes fadeIn{
+      from{ opacity:0; }
+      to{ opacity:1; }
+    }
+
+    @media (max-width: 1180px){
+      .hero-grid,
+      .layer-grid,
+      .faq-wrap{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px){
+      .chat-modal{
+        grid-template-columns: 1fr;
+        height: min(88vh, 820px);
+      }
+      .chat-sidebar{
+        display:none;
+      }
+    }
+
+    @media (max-width: 760px){
+      .topbar-inner{ padding: 12px 14px; }
+      .brand-title{ font-size: 18px; }
+      .brand-sub{ display:none; }
+      .page-shell{ padding: 0 14px 40px; }
+      .hero-shell{ padding: 22px; border-radius: 22px; }
+      .hero-actions{ flex-direction: column; }
+      .btn{ width: 100%; }
+      .entry-grid,
+      .layer-grid,
+      .faq-wrap{
+        grid-template-columns: 1fr;
+      }
+      .drawer{ width: 100vw; max-width: 100vw; right: -100vw; }
+      .top-btn.ai-btn{
+        min-width: auto;
+        padding: 0 12px;
+      }
+      .lang{
+        padding: 0 12px;
+      }
+    }
+  </style>
 </head>
-<body class="theme-public">
+<body>
 
   <header class="topbar">
-    <div class="brand-wrap">
-      <div class="brand-mark"></div>
-      <div>
-        <div class="brand-title">ZENTRA</div>
-        <div class="brand-sub">Economic Intelligence Operating System</div>
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <div class="brand-title">ZENTRA</div>
+          <
+           <div class="brand-sub" data-i18n="brand_sub">Economic Intelligence Operating System</div>
+        </div>
       </div>
-    </div>
 
-    <div class="top-actions">
-      <select class="lang">
-        <option>TR</option>
-        <option>EN</option>
-      </select>
-      <button class="burger" onclick="toggleMenu()" aria-label="menu">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="top-actions">
+        <button class="top-btn ai-btn" onclick="openAI()" data-i18n="general_ai_btn">General AI</button>
+
+        <select class="lang" id="langSelect" aria-label="Language">
+          <option value="tr">TR</option>
+          <option value="en">EN</option>
+        </select>
+
+        <button class="burger" onclick="toggleMenu()" aria-label="Open navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -35,121 +813,391 @@
       <button class="drawer-close" onclick="toggleMenu()">✕</button>
     </div>
 
-    <input class="searchBox" id="menuSearch" placeholder="Platformda ara..." onkeyup="siteSearch(this.value)" />
+    <input
+      type="text"
+      class="searchBox"
+      placeholder="Search platform..."
+      onkeyup="siteSearch(this.value)"
+    >
 
     <div class="nav-group">
-      <div class="nav-group-title">Platform</div>
-      <a class="nav-link" href="/index.html">Ana Sayfa</a>
-      <a class="nav-link" href="/investor.html">Investor</a>
-      <a class="nav-link" href="/privacy.html">Privacy</a>
+      <div class="nav-group-title" data-i18n="nav_platform">Platform</div>
+      <a class="nav-link" href="#intro">
+        <span data-i18n="nav_home">Home</span>
+        <small data-i18n="nav_home_desc">Public introduction and platform overview.</small>
+      </a>
+      <a class="nav-link" href="/zentra-entry.html">
+        <span data-i18n="nav_platform_entry">ZENTRA Platform Entry</span>
+        <small data-i18n="nav_platform_entry_desc">Secure entry to the deep intelligence layer.</small>
+      </a>
+      <a class="nav-link" href="/investor.html">
+        <span data-i18n="nav_investor">Investor</span>
+        <small data-i18n="nav_investor_desc">Strategic positioning and institutional overview.</small>
+      </a>
     </div>
 
     <div class="nav-group">
-      <div class="nav-group-title">Girişler</div>
-      <a class="nav-link" href="/index.html#general-entry">Genel AI Girişi</a>
-      <a class="nav-link" href="/zentra-entry.html">ZENTRA Platform Girişi</a>
+      <div class="nav-group-title" data-i18n="nav_modules">Modules</div>
+      <a class="nav-link" href="/risklens.html">
+        <span>RiskLens</span>
+        <small data-i18n="nav_risklens_desc">Global economic risk intelligence.</small>
+      </a>
+      <a class="nav-link" href="/finance-demo.html">
+        <span data-i18n="nav_finance">Finance Engine</span>
+        <small data-i18n="nav_finance_desc">Financial decision intelligence and demos.</small>
+      </a>
+      <a class="nav-link" href="/trade/index.html">
+        <span data-i18n="nav_trade">Trade Engine</span>
+        <small data-i18n="nav_trade_desc">Trade opportunities, routes and execution logic.</small>
+      </a>
+      <a class="nav-link" href="/telescope/index.html">
+        <span data-i18n="nav_telescope">Global Telescope</span>
+        <small data-i18n="nav_telescope_desc">Planetary-scale economic observation.</small>
+      </a>
     </div>
 
     <div class="nav-group">
-      <div class="nav-group-title">Kurumsal</div>
-      <a class="nav-link" href="#about">Hakkımızda</a>
-      <a class="nav-link" href="#mission">Misyon & Vizyon</a>
-      <a class="nav-link" href="#contact">İletişim</a>
+      <div class="nav-group-title" data-i18n="nav_about">Corporate</div>
+      <a class="nav-link" href="#about">
+        <span data-i18n="nav_about_link">About</span>
+        <small data-i18n="nav_about_link_desc">Mission, vision and platform identity.</small>
+      </a>
+      <a class="nav-link" href="#faq">
+        <span data-i18n="nav_faq">FAQ</span>
+        <small data-i18n="nav_faq_desc">Key investor and institutional questions.</small>
+      </a>
+      <a class="nav-link" href="#contact">
+        <span data-i18n="nav_contact">Contact</span>
+        <small data-i18n="nav_contact_desc">Institutional contact and collaboration channels.</small>
+      </a>
     </div>
   </aside>
 
   <main class="page-shell">
-    <section class="hero">
-      <div class="hero-box">
-        <div class="eyebrow">Global Economic Intelligence Platform</div>
-        <h1>Dünyayı izle. Riski anla. Fırsatı uygula.</h1>
-        <p>
-          ZENTRA; ekonomik gözlem, risk zekâsı, finansal karar desteği, simülasyon ve
-          ticaret fırsatı tespiti için tasarlanmış kurumsal yapay zekâ platformudur.
+    <section id="intro" class="hero">
+      <div class="hero-shell">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow" data-i18n="hero_eyebrow">Global Economic Intelligence Platform</div>
+            <h1 data-i18n="hero_title">Dünyayı izle. Riski anla. Fırsatı uygula.</h1>
+            <p data-i18n="hero_desc">
+              ZENTRA; ekonomik gözlem, risk zekâsı, finansal karar desteği, simülasyon ve ticaret fırsatı tespiti için tasarlanmış kurumsal yapay zekâ platformudur.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="/zentra-entry.html" data-i18n="hero_platform_btn">ZENTRA Platform</a>
+              <button class="btn btn-secondary" onclick="openAI()" data-i18n="hero_ai_btn">Open General AI</button>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="floating-card">
+              <h3 data-i18n="hero_card1_title">Risk Intelligence</h3>
+              <p data-i18n="hero_card1_desc">Detects market stress, systemic pressure and emerging sector vulnerabilities.</p>
+            </div>
+            <div class="floating-card">
+              <h3 data-i18n="hero_card2_title">Finance Intelligence</h3>
+              <p data-i18n="hero_card2_desc">Supports credit, collateral, tax and installment-based financial decisions.</p>
+            </div>
+            <div class="floating-card">
+              <h3 data-i18n="hero_card3_title">Trade Intelligence</h3>
+              <p data-i18n="hero_card3_desc">Identifies global price gaps, routes and profitable execution opportunities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 data-i18n="entries_title">Two Main Entry Layers</h2>
+        <p data-i18n="entries_desc">
+          The platform separates public AI interaction from the protected institutional intelligence layer.
         </p>
+      </div>
 
-        <div class="entry-grid">
-          <a id="general-entry" class="entry-card" href="/general-ai.html">
-            <div class="entry-icon">💬</div>
-            <h3>Genel AI</h3>
-            <p>Genel kullanım, sohbet, soru-cevap ve yardımcı yapay zekâ katmanı.</p>
-            <span>Genel girişe git →</span>
-          </a>
+      <div class="entry-grid">
+        <div class="entry-card ai">
+          <div class="entry-icon">💬</div>
+          <h3 data-i18n="ai_card_title">General AI</h3>
+          <p data-i18n="ai_card_desc">
+            A conversation-first AI layer for quick questions, idea generation, explanation and guided interaction.
+          </p>
+          <ul>
+            <li data-i18n="ai_card_li1">General questions and support</li>
+            <li data-i18n="ai_card_li2">Chat-style interface</li>
+            <li data-i18n="ai_card_li3">Future assistants and tools</li>
+          </ul>
+          <a href="#" class="entry-link" onclick="openAI(); return false;" data-i18n="ai_card_link">Open General AI →</a>
+        </div>
 
-          <a class="entry-card entry-card-primary" href="/zentra-entry.html">
-            <div class="entry-icon">🛰️</div>
-            <h3>ZENTRA Platform</h3>
-            <p>RiskLens, Finance Engine, Trade, Telescope ve derin ekonomik zekâ katmanı.</p>
-            <span>Platform girişine git →</span>
-          </a>
+        <div class="entry-card platform">
+          <div class="entry-icon">🛰️</div>
+          <h3 data-i18n="platform_card_title">ZENTRA Platform</h3>
+          <p data-i18n="platform_card_desc">
+            The protected strategic layer that connects RiskLens, Finance Engine, Trade Engine, Global Telescope and the lens system.
+          </p>
+          <ul>
+            <li data-i18n="platform_card_li1">Secure institutional entry</li>
+            <li data-i18n="platform_card_li2">Deep economic intelligence</li>
+            <li data-i18n="platform_card_li3">Risk, finance, trade and simulation</li>
+          </ul>
+          <a href="/zentra-entry.html" class="entry-link" data-i18n="platform_card_link">Enter Platform →</a>
         </div>
       </div>
     </section>
 
-    <section id="about" class="content-section">
+    <section id="about" class="section">
       <div class="section-head">
-        <h2>Platform Katmanları</h2>
-        <p>ZENTRA tek sayfa ürün değil, çok katmanlı bir ekonomik işletim sistemidir.</p>
+        <h2 data-i18n="about_title">Platform Layers</h2>
+        <p data-i18n="about_desc">
+          ZENTRA is not a simple website. It is a layered economic intelligence system designed for institutions, strategic users and future execution engines.
+        </p>
       </div>
 
-      <div class="card-grid">
+      <div class="layer-grid">
         <div class="info-card">
-          <h3>Risk Intelligence</h3>
-          <p>Küresel ekonomik baskı, sektör kırılganlığı ve sistemik risk analizi.</p>
+          <h3 data-i18n="layer1_title">Observation</h3>
+          <p data-i18n="layer1_desc">Global markets, logistics, energy, cyber and economic pressure signals are monitored continuously.</p>
         </div>
         <div class="info-card">
-          <h3>Finance Intelligence</h3>
-          <p>Kredi, vade, teminat, çek/senet, fatura ve tahsilat karar desteği.</p>
+          <h3 data-i18n="layer2_title">Analysis</h3>
+          <p data-i18n="layer2_desc">RiskLens, memory systems, behavior models and analytical lenses convert data into structured intelligence.</p>
         </div>
         <div class="info-card">
-          <h3>Trade Intelligence</h3>
-          <p>Fiyat farkı, lojistik rota, arz-talep ve ticaret fırsatı tespiti.</p>
+          <h3 data-i18n="layer3_title">Execution</h3>
+          <p data-i18n="layer3_desc">The platform supports financial decisions, trade pathways and strategic institutional actions.</p>
         </div>
       </div>
     </section>
 
-    <section id="mission" class="content-section">
+    <section id="faq" class="section">
       <div class="section-head">
-        <h2>Misyon & Vizyon</h2>
+        <h2 data-i18n="faq_title">Questions Investors Will Ask</h2>
+        <p data-i18n="faq_desc">
+          Every core layer should explain itself without requiring a presentation call.
+        </p>
       </div>
-      <div class="card-grid">
+
+      <div class="faq-wrap">
+        <details class="faq">
+          <summary data-i18n="faq1_q">What is ZENTRA in one sentence?</summary>
+          <p data-i18n="faq1_a">ZENTRA is a global economic intelligence operating system that observes the world economy, analyzes risk, simulates scenarios and supports financial and trade decisions.</p>
+        </details>
+
+        <details class="faq">
+          <summary data-i18n="faq2_q">Why are there two entry layers?</summary>
+          <p data-i18n="faq2_a">Because the public-facing AI interaction should remain separate from the protected institutional intelligence layer.</p>
+        </details>
+
+        <details class="faq">
+          <summary data-i18n="faq3_q">Is this only a risk dashboard?</summary>
+          <p data-i18n="faq3_a">No. ZENTRA combines risk intelligence, finance logic, simulation, trade opportunity detection and strategic observation.</p>
+        </details>
+
+        <details class="faq">
+          <summary data-i18n="faq4_q">Can this grow into a larger system later?</summary>
+          <p data-i18n="faq4_a">Yes. The current structure is designed to expand into cloud services, agent orchestration, role-based access and deeper AI modules.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <h2 data-i18n="contact_title">Institutional Contact</h2>
+        <p data-i18n="contact_desc">
+          For platform demos, licensing, investor discussions and strategic collaboration.
+        </p>
+      </div>
+
+      <div class="layer-grid">
         <div class="info-card">
-          <h3>Misyon</h3>
-          <p>Kurumlara, devletlere ve stratejik operatörlere ekonomik karmaşıklığı açıklığa dönüştüren zekâ sağlamak.</p>
+          <h3 data-i18n="contact1_title">Institutional Demo</h3>
+          <p data-i18n="contact1_desc">Controlled product walkthrough for banks, institutions and strategic partners.</p>
         </div>
         <div class="info-card">
-          <h3>Vizyon</h3>
-          <p>Risk, finans, ticaret ve simülasyon için dünyanın en güçlü ekonomik zekâ işletim sistemi olmak.</p>
+          <h3 data-i18n="contact2_title">Investor Relations</h3>
+          <p data-i18n="contact2_desc">Platform positioning, architecture, revenue logic and strategic direction.</p>
         </div>
         <div class="info-card">
-          <h3>Neden Farklı?</h3>
-          <p>ZENTRA veri göstermez; ekonomik akıl yürütür, simüle eder ve aksiyon önerir.</p>
+          <h3 data-i18n="contact3_title">Strategic Collaboration</h3>
+          <p data-i18n="contact3_desc">Partnerships across finance, trade, AI infrastructure and public sector intelligence.</p>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="content-section">
-      <div class="section-head">
-        <h2>Kurumsal İletişim</h2>
-        <p>Demo, yatırımcı görüşmesi, kurum lisansı ve stratejik ortaklıklar için iletişim kanalı.</p>
-      </div>
-      <div class="card-grid">
-        <div class="info-card">
-          <h3>Institutional Access</h3>
-          <p>Kurumsal demo ve kontrollü erişim.</p>
-        </div>
-        <div class="info-card">
-          <h3>Investor Relations</h3>
-          <p>Yatırımcı materyali, platform akışı ve stratejik yapı.</p>
-        </div>
-        <div class="info-card">
-          <h3>Strategic Partnerships</h3>
-          <p>Banka, fintech, kamu ve kurumsal iş birliği alanları.</p>
-        </div>
-      </div>
-    </section>
+    <footer class="footer">
+      <span data-i18n="footer_text">
+        ZENTRA is designed as a modular economic intelligence platform for institutions, strategic operators and future-facing financial systems.
+      </span>
+    </footer>
   </main>
 
-  <script src="/assets/js/app-shell.js"></script>
-</body>
-</html>
+  <div id="aiOverlay" class="chat-overlay">
+    <div class="chat-modal">
+      <div class="chat-sidebar">
+        <h3 data-i18n="chat_sidebar_title">General AI</h3>
+        <p data-i18n="chat_sidebar_desc">
+          This layer is designed for conversation-first interaction and future AI assistants.
+        </p>
+
+        <div class="cap-list">
+          <div class="cap-item">
+            <strong data-i18n="chat_cap1_title">Conversation</strong>
+            <span data-i18n="chat_cap1_desc">Natural chat flow for explanation, support and idea development.</span>
+          </div>
+          <div class="cap-item">
+            <strong data-i18n="chat_cap2_title">Assistants</strong>
+            <span data-i18n="chat_cap2_desc">Future expert assistants for sectors, finance and operational guidance.</span>
+          </div>
+          <div class="cap-item">
+            <strong data-i18n="chat_cap3_title">Scalable Layer</strong>
+            <span data-i18n="chat_cap3_desc">Can later expand into tools, workflows, agents and integrated AI services.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-main">
+        <div class="chat-head">
+          <div>
+            <div class="chat-head-title" data-i18n="chat_head_title">General AI Interface</div>
+            <div class="chat-head-sub" data-i18n="chat_head_sub">Conversation-oriented layer separated from the protected platform core.</div>
+          </div>
+          <button class="close-chat" onclick="closeAI()">✕</button>
+        </div>
+
+        <div class="chat-messages">
+          <div class="msg ai" data-i18n="chat_msg1">
+            Merhaba. Ben ZENTRA General AI katmanıyım. Sorularını cevaplayabilir, fikirlerini netleştirebilir ve seni doğru platform katmanına yönlendirebilirim.
+          </div>
+          <div class="msg user" data-i18n="chat_msg2">
+            ZENTRA ne yapıyor?
+          </div>
+          <div class="msg ai" data-i18n="chat_msg3">
+            ZENTRA; ekonomik gözlem, risk zekâsı, finansal karar desteği, simülasyon ve ticaret fırsatı tespiti yapan çok katmanlı bir ekonomik zekâ işletim sistemidir.
+          </div>
+          <div class="msg user" data-i18n="chat_msg4">
+            Platforma nasıl geçerim?
+          </div>
+          <div class="msg ai" data-i18n="chat_msg5">
+            Üstteki ZENTRA Platform girişini kullan. Orada güvenli kapı açılır ve derin katmana şifre ile girilir.
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input type="text" data-i18n-placeholder="chat_input_placeholder" placeholder="Bir şey yaz..." />
+          <button class="send-btn" type="button" data-i18n="chat_send_btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+function toggleMenu() {
+  const menu = document.getElementById("menuDrawer");
+  menu.classList.toggle("open");
+}
+
+function siteSearch(q) {
+  q = q.toLowerCase().trim();
+  const links = document.querySelectorAll(".nav-link");
+
+  links.forEach(link => {
+    const text = link.innerText.toLowerCase();
+    link.style.display = text.includes(q) ? "block" : "none";
+  });
+}
+
+function openAI() {
+  document.getElementById("aiOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeAI() {
+  document.getElementById("aiOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("click", function (e) {
+
+  const drawer = document.getElementById("menuDrawer");
+  const burger = document.querySelector(".burger");
+
+  if (drawer.classList.contains("open")) {
+    const inside = drawer.contains(e.target);
+    const isBurger = burger.contains(e.target);
+
+    if (!inside && !isBurger) {
+      drawer.classList.remove("open");
+    }
+  }
+
+});
+
+const translations = {
+
+tr: {
+hero_title:"Dünyayı izle. Riski anla. Fırsatı uygula.",
+hero_desc:"ZENTRA ekonomik gözlem, risk zekâsı, finansal karar desteği ve ticaret fırsatı analizi yapan kurumsal bir ekonomik zekâ platformudur.",
+general_ai_btn:"Genel AI",
+hero_platform_btn:"ZENTRA Platform",
+hero_ai_btn:"Genel AI Aç",
+chat_input_placeholder:"Bir şey yaz...",
+chat_send_btn:"Gönder"
+},
+
+en: {
+hero_title:"Observe the world. Understand the risk. Execute the opportunity.",
+hero_desc:"ZENTRA is an institutional economic intelligence platform for risk analysis, financial decision support and global trade opportunity detection.",
+general_ai_btn:"General AI",
+hero_platform_btn:"ZENTRA Platform",
+hero_ai_btn:"Open General AI",
+chat_input_placeholder:"Type something...",
+chat_send_btn:"Send"
+}
+
+};
+
+function applyLanguage(lang){
+
+const dict = translations[lang];
+
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const key = el.getAttribute("data-i18n");
+
+if(dict[key]){
+el.textContent = dict[key];
+}
+
+});
+
+document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+const key = el.getAttribute("data-i18n-placeholder");
+
+if(dict[key]){
+el.setAttribute("placeholder",dict[key]);
+}
+
+});
+
+localStorage.setItem("zentraLang",lang);
+
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const select=document.getElementById("langSelect");
+
+const saved=localStorage.getItem("zentraLang") || "tr";
+
+select.value=saved;
+
+applyLanguage(saved);
+
+select.addEventListener("change",e=>{
+applyLanguage(e.target.value);
+});
+
+});
+
+</script>

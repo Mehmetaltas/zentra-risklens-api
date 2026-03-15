@@ -3,109 +3,179 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>ZENTRA Global Telescope</title>
+<title>ZENTRA Global Economic Telescope</title>
 
 <script>
-
 if(!localStorage.getItem("zentraAuth")){
-window.location.href="/zentra-entry.html";
+location.href="/zentra-entry.html";
 }
-
 </script>
 
 <style>
 
 body{
-background:#0b1320;
-color:white;
-font-family:Arial;
 margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#050b15;
+color:white;
 }
 
+/* HEADER */
+
 header{
-background:#111a2c;
-padding:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+padding:15px 25px;
+background:#0f1b2d;
 }
 
-.brand{
+.logo{
 font-size:22px;
-color:#63b3ff;
 font-weight:bold;
+color:#00ffd5;
 }
 
-.menu{
-display:flex;
-gap:20px;
+.menu-btn{
+font-size:26px;
+cursor:pointer;
 }
 
-.menu a{
+/* MENU */
+
+nav{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#0f1b2d;
+transition:0.3s;
+padding-top:60px;
+z-index:1000;
+}
+
+nav a{
+display:block;
+padding:14px 25px;
 color:white;
 text-decoration:none;
 }
 
-.container{
-padding:40px;
-max-width:1300px;
-margin:auto;
+nav a:hover{
+background:#162842;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
+/* HERO */
+
+.hero{
+text-align:center;
+padding:60px 20px;
 }
 
-.panel{
-background:#101a2d;
-border:1px solid #24395f;
+.hero h1{
+font-size:36px;
+color:#00ffd5;
+}
+
+/* WORLD MAP */
+
+.map-container{
+width:90%;
+max-width:900px;
+margin:40px auto;
+position:relative;
+}
+
+.world{
+width:100%;
 border-radius:12px;
-padding:20px;
+opacity:0.9;
 }
 
-.panel h3{
-color:#8fd7ff;
-margin-top:0;
+/* HEAT SPOTS */
+
+.spot{
+position:absolute;
+width:14px;
+height:14px;
+background:red;
+border-radius:50%;
+animation:pulse 2s infinite;
 }
 
-.market{
-display:flex;
-justify-content:space-between;
-margin-bottom:8px;
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.6)}
+100%{transform:scale(1)}
 }
 
-.risk{
-padding:10px;
-margin-bottom:10px;
-background:#16233b;
-border-radius:6px;
-}
-
-.map{
-height:220px;
-background:linear-gradient(#16233b,#0e1b30);
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-font-size:20px;
-color:#63b3ff;
-}
+/* RADAR */
 
 .radar{
-height:220px;
+width:300px;
+height:300px;
+border:2px solid #00ffd5;
 border-radius:50%;
-border:1px solid #24395f;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:18px;
-color:#8fd7ff;
-background:#0e1b30;
+margin:40px auto;
+position:relative;
+}
+
+.radar::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+border:1px solid #00ffd5;
+animation:spin 8s linear infinite;
+}
+
+@keyframes spin{
+0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+}
+
+/* SIGNALS */
+
+.signals{
+max-width:800px;
+margin:40px auto;
+}
+
+.signal{
+background:#0f1b2d;
+padding:20px;
+margin:10px 0;
+border-radius:10px;
+}
+
+/* MARKETS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+padding:30px;
+}
+
+.card{
+background:#0f1b2d;
+padding:20px;
+text-align:center;
+border-radius:10px;
+}
+
+.card h3{
+color:#00ffd5;
+}
+
+footer{
+text-align:center;
+padding:40px;
+opacity:0.6;
 }
 
 </style>
@@ -115,87 +185,136 @@ background:#0e1b30;
 <body>
 
 <header>
-
-<div class="brand">ZENTRA</div>
-
-<div class="menu">
-<a href="/risklens/dashboard.html">RiskLens</a>
-<a href="/finance-demo.html">Finance</a>
-<a href="/trade/index.html">Trade</a>
-<a href="/telescope/index.html">Telescope</a>
-</div>
-
+<div class="logo">ZENTRA</div>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 </header>
 
-<div class="container">
+<nav id="menu">
 
-<div class="grid">
+<a href="/risklens/dashboard.html">RiskLens</a>
+<a href="/finance/index.html">Finance Engine</a>
+<a href="/trade/index.html">Trade Engine</a>
+<a href="/telescope/index.html">Global Telescope</a>
+<a href="/lens/lab.html">Lens Lab</a>
+<a href="/simulation/index.html">Simulation</a>
 
-<div class="panel">
+</nav>
 
-<h3>Global Markets</h3>
+<section class="hero">
 
-<div class="market"><span>Oil</span><span>82</span></div>
-<div class="market"><span>Gold</span><span>2310</span></div>
-<div class="market"><span>S&P500</span><span>5180</span></div>
-<div class="market"><span>Interest Rate</span><span>4.8</span></div>
+<h1>Global Economic Telescope</h1>
 
+<p>
+Planetary scale economic observation engine monitoring energy shocks,
+logistics stress and global trade pressure.
+</p>
+
+</section>
+
+<!-- MARKET DATA -->
+
+<div class="cards">
+
+<div class="card">
+<h3>Oil</h3>
+<p>$82</p>
 </div>
 
-<div class="panel">
-
-<h3>Global Risk State</h3>
-
-<div class="risk">Energy Shock</div>
-<div class="risk">Shipping Congestion</div>
-<div class="risk">Cyber Pressure</div>
-<div class="risk">Port Stress</div>
-
+<div class="card">
+<h3>Gold</h3>
+<p>$2310</p>
 </div>
 
-<div class="panel">
-
-<h3>Risk Heatmap</h3>
-
-<div class="map">
-🌍 Global Risk Map
+<div class="card">
+<h3>S&P500</h3>
+<p>5180</p>
 </div>
 
-</div>
-
-<div class="panel">
-
-<h3>Trade Opportunity Radar</h3>
-
-<div class="radar">
-📡 Trade Radar
-</div>
-
-</div>
-
-<div class="panel">
-
-<h3>Energy Shock Zones</h3>
-
-<div class="risk">Middle East Supply Risk</div>
-<div class="risk">European Energy Stress</div>
-<div class="risk">Asian Demand Surge</div>
-
-</div>
-
-<div class="panel">
-
-<h3>Logistics Pressure</h3>
-
-<div class="risk">Red Sea Route</div>
-<div class="risk">Panama Canal</div>
-<div class="risk">China Export Ports</div>
-
+<div class="card">
+<h3>Interest</h3>
+<p>4.8%</p>
 </div>
 
 </div>
 
+<!-- WORLD MAP -->
+
+<div class="map-container">
+
+<img class="world"
+src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
+
+<div class="spot" style="top:40%;left:50%"></div>
+<div class="spot" style="top:30%;left:70%"></div>
+<div class="spot" style="top:50%;left:30%"></div>
+
 </div>
+
+<!-- RADAR -->
+
+<div class="radar"></div>
+
+<!-- SIGNALS -->
+
+<section class="signals">
+
+<h2 style="text-align:center">Detected Global Signals</h2>
+
+<div class="signal">
+
+<strong>Energy Shock Zone</strong>
+
+<p>
+Oil price volatility affecting manufacturing
+and logistics chains across multiple regions.
+</p>
+
+</div>
+
+<div class="signal">
+
+<strong>Freight Stress Corridor</strong>
+
+<p>
+Major shipping routes experiencing congestion
+and freight rate pressure.
+</p>
+
+</div>
+
+<div class="signal">
+
+<strong>Trade Opportunity Cluster</strong>
+
+<p>
+Regional demand surge detected in emerging markets.
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+ZENTRA Planetary Economic Observation System
+
+</footer>
+
+<script>
+
+function toggleMenu(){
+
+let menu=document.getElementById("menu");
+
+if(menu.style.left=="0px"){
+menu.style.left="-260px";
+}else{
+menu.style.left="0px";
+}
+
+}
+
+</script>
 
 </body>
 </html>

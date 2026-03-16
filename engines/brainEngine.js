@@ -4,20 +4,13 @@ export function runBrain(){
 
 const result = runZentra()
 
-const brain = {
-
+return {
 riskScore: result.risk.score,
 riskLevel: result.risk.riskLevel,
 driver: result.data.dominantDriver,
-
 markets: result.data.markets,
-
 signals: result.data.signals,
-
 advisory: result.advisory
-
 }
-
-return brain
 
 }

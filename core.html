@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Core Access</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#050c16;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh;
+}
+
+.box{
+background:#0d1b2a;
+border:1px solid #1f3a56;
+border-radius:14px;
+padding:40px;
+width:360px;
+text-align:center;
+}
+
+h1{
+margin:0 0 10px 0;
+font-size:30px;
+}
+
+p{
+color:#9fb4cc;
+margin:0 0 20px 0;
+line-height:1.5;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #1f3a56;
+background:#13263a;
+color:white;
+box-sizing:border-box;
+}
+
+button{
+margin-top:14px;
+padding:12px;
+width:100%;
+border-radius:8px;
+border:none;
+background:#3a7cff;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.error{
+color:#ff6b6b;
+margin-top:12px;
+font-size:14px;
+min-height:18px;
+}
+
+.back{
+display:inline-block;
+margin-top:16px;
+color:#9fb4cc;
+text-decoration:none;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h1>ZENTRA Core</h1>
+<p>Deep system access requires core authorization.</p>
+
+<input id="pass" type="password" placeholder="Enter Core Access Key" onkeydown="if(event.key==='Enter'){check()}">
+
+<button onclick="check()">Enter Core System</button>
+
+<div id="error" class="error"></div>
+
+<a class="back" href="/platform.html">Back to Platform</a>
+</div>
+
+<script>
+function check(){
+  const pass = document.getElementById("pass").value;
+
+  if(pass === "ZentraCore"){
+    localStorage.setItem("zentraCoreAccess","true");
+    window.location = "/command-center.html";
+  } else {
+    document.getElementById("error").innerText = "Access Denied";
+  }
+}
+</script>
+
+</body>
+</html>

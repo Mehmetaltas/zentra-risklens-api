@@ -34,7 +34,6 @@ font-size:30px;
 p{
 color:#9fb4cc;
 margin:0 0 20px 0;
-line-height:1.5;
 }
 
 input{
@@ -45,7 +44,6 @@ border-radius:8px;
 border:1px solid #1f3a56;
 background:#13263a;
 color:white;
-box-sizing:border-box;
 }
 
 button{
@@ -64,25 +62,13 @@ cursor:pointer;
 color:#ff6b6b;
 margin-top:12px;
 font-size:14px;
-min-height:18px;
-}
-
-.actions{
-display:flex;
-flex-direction:column;
-gap:10px;
-margin-top:16px;
 }
 
 .back{
-display:inline-block;
+display:block;
+margin-top:18px;
 color:#9fb4cc;
 text-decoration:none;
-font-size:14px;
-padding:10px 14px;
-border:1px solid #1f3a56;
-border-radius:8px;
-background:#13263a;
 }
 </style>
 </head>
@@ -90,30 +76,29 @@ background:#13263a;
 <body>
 
 <div class="box">
-<h1>ZENTRA Core</h1>
-<p>Deep system access requires core authorization.</p>
 
-<input id="pass" type="password" placeholder="Enter Core Access Key" onkeydown="if(event.key==='Enter'){check()}">
+<h1>ZENTRA Core</h1>
+<p>Deep system access requires authorization.</p>
+
+<input id="pass" type="password" placeholder="Enter Core Access Key">
 
 <button onclick="check()">Enter Core System</button>
 
 <div id="error" class="error"></div>
 
-<div class="actions">
-  <a class="back" href="/platform.html">Back to Platform</a>
-  <a class="back" href="/docs.html">Open Docs</a>
-</div>
+<a class="back" href="/platform.html">Back to Platform</a>
+
 </div>
 
 <script>
 function check(){
-  const pass = document.getElementById("pass").value;
+  const pass=document.getElementById("pass").value;
 
-  if(pass === "ZentraCore"){
+  if(pass==="ZentraCore"){
     localStorage.setItem("zentraCoreAccess","true");
-    window.location = "/zentra-main.html";
-  } else {
-    document.getElementById("error").innerText = "Access Denied";
+    window.location="/zentra-main.html";
+  }else{
+    document.getElementById("error").innerText="Access Denied";
   }
 }
 </script>

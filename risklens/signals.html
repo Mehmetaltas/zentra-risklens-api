@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZENTRA Signals</title>
+
 <script>
 if(localStorage.getItem("zentraCoreAccess")!=="true"){
   window.location="/core.html";
 }
 </script>
+
 <style>
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#eef4ff}
 .wrap{max-width:1200px;margin:auto;padding:20px}
@@ -51,7 +53,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#e
 <div class="metric"><div class="label">Dominant Driver</div><div class="value" id="driver">--</div></div>
 <div class="metric"><div class="label">Signals Count</div><div class="value" id="count">--</div></div>
 <div class="metric"><div class="label">High Severity</div><div class="value" id="highCount">--</div></div>
-<div class="metric"><div class="label">System Status</div><div class="value">Active</div></div>
+<div class="metric"><div class="label">Data Source</div><div class="value" id="dataSource">--</div></div>
 </div>
 </div>
 
@@ -75,28 +77,38 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#e
 
 <script type="module">
 import { runBrain } from "../engines/brainEngine.js";
-const brain = runBrain();
-document.getElementById("driver").textContent = brain.driver;
-document.getElementById("count").textContent = brain.signals.length;
-document.getElementById("highCount").textContent = brain.signals.filter(s => s.severity === "high").length;
-document.getElementById("oil").textContent = brain.markets.oil;
-document.getElementById("gold").textContent = brain.markets.gold;
-document.getElementById("sp500").textContent = brain.markets.sp500;
-document.getElementById("interest").textContent = brain.markets.interestRate;
-const signalsBox = document.getElementById("signals");
-signalsBox.innerHTML = "";
-brain.signals.forEach(s => {
-  const div = document.createElement("div");
-  div.className = "signal";
-  div.innerHTML = `
-    <div class="signal-head">
-      <div class="signal-title">${s.title}</div>
-      <div class="badge ${s.severity}">${s.severity}</div>
-    </div>
-    <div class="signal-summary">${s.summary || "No summary available."}</div>
-  `;
-  signalsBox.appendChild(div);
-});
+
+async function startZentra(){
+  const brain = await runBrain();
+
+  document.getElementById("driver").textContent = brain.driver;
+  document.getElementById("count").textContent = brain.signals.length;
+  document.getElementById("highCount").textContent =
+    brain.signals.filter(s => s.severity === "high").length;
+  document.getElementById("dataSource").textContent = brain.source || "unknown";
+  document.getElementById("oil").textContent = brain.markets.oil;
+  document.getElementById("gold").textContent = brain.markets.gold;
+  document.getElementById("sp500").textContent = brain.markets.sp500;
+  document.getElementById("interest").textContent = brain.markets.interestRate;
+
+  const signalsBox = document.getElementById("signals");
+  signalsBox.innerHTML = "";
+
+  brain.signals.forEach(s => {
+    const div = document.createElement("div");
+    div.className = "signal";
+    div.innerHTML = `
+      <div class="signal-head">
+        <div class="signal-title">${s.title}</div>
+        <div class="badge ${s.severity}">${s.severity}</div>
+      </div>
+      <div class="signal-summary">${s.summary || "No summary available."}</div>
+    `;
+    signalsBox.appendChild(div);
+  });
+}
+
+startZentra();
 </script>
 </body>
 </html>

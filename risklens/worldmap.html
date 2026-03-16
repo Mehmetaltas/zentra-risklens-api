@@ -1,421 +1,568 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Global Risk Map</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA World Risk Map Pro</title>
 
-:root{
---bg:#07101d;
---panel:#101a2d;
---panel2:#16233b;
---line:#24395f;
---text:#eef5ff;
---muted:#a9b9d6;
---cyan:#63b3ff;
---cyan2:#8fd7ff;
---red:#ff5c70;
---orange:#ff9d57;
---yellow:#ffd166;
---green:#45d483;
-}
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
 
-body{
-font-family:Arial,sans-serif;
-background:
-radial-gradient(circle at 15% 20%, rgba(99,179,255,.10), transparent 24%),
-radial-gradient(circle at 85% 10%, rgba(255,92,112,.08), transparent 18%),
-linear-gradient(180deg,#07101d,#0b1324 55%,#07101d);
-color:var(--text);
-min-height:100vh;
-padding:28px 16px 48px;
-}
+  <style>
+    :root{
+      --bg:#040914;
+      --bg2:#08101d;
+      --panel:#0c1828;
+      --panel2:#13263a;
+      --line:#1f3a56;
+      --line2:#2c5377;
+      --text:#eef4ff;
+      --muted:#9fb4cc;
+      --accent:#4da3ff;
+      --high:#ff6b6b;
+      --medium:#ffb347;
+      --low:#38d39f;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+    }
 
-.wrapper{
-max-width:1320px;
-margin:auto;
-}
+    *{box-sizing:border-box}
 
-.hero{
-margin-bottom:20px;
-background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(12,20,35,.96));
-border:1px solid var(--line);
-border-radius:18px;
-padding:24px;
-box-shadow:0 14px 40px rgba(0,0,0,.25);
-}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(77,163,255,.10), transparent 26%),
+        radial-gradient(circle at top right, rgba(56,211,159,.06), transparent 22%),
+        linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+    }
 
-.hero h1{
-color:var(--cyan2);
-font-size:34px;
-margin-bottom:10px;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-.hero p{
-color:var(--muted);
-line-height:1.7;
-max-width:920px;
-}
+    .wrap{
+      max-width:1360px;
+      margin:auto;
+      padding:20px;
+    }
 
-.layout{
-display:grid;
-grid-template-columns:1.2fr .8fr;
-gap:18px;
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+      padding:16px 18px;
+      background:rgba(12,24,40,.92);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
 
-.panel{
-background:linear-gradient(180deg,var(--panel),var(--panel2));
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-box-shadow:0 10px 28px rgba(0,0,0,.18);
-}
+    .title-block h1{
+      margin:0;
+      font-size:30px;
+      letter-spacing:.3px;
+    }
 
-.panel h2{
-color:var(--cyan2);
-font-size:21px;
-margin-bottom:14px;
-}
+    .title-block p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
 
-.map-shell{
-position:relative;
-min-height:620px;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.06);
-overflow:hidden;
-background:
-radial-gradient(circle at center, rgba(99,179,255,.10), transparent 48%),
-linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-}
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
 
-.map-grid{
-position:absolute;
-inset:0;
-background-image:
-linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-background-size:34px 34px;
-opacity:.22;
-}
+    .nav a{
+      padding:9px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel2);
+      color:var(--muted);
+      font-size:13px;
+    }
 
-.ring{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-border:1px solid rgba(143,215,255,.13);
-border-radius:50%;
-}
-.r1{width:220px;height:220px}
-.r2{width:360px;height:360px}
-.r3{width:520px;height:520px}
-.r4{width:700px;height:700px}
+    .hero{
+      display:grid;
+      grid-template-columns:2.1fr .9fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
 
-.core{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-width:16px;
-height:16px;
-border-radius:50%;
-background:var(--cyan2);
-box-shadow:0 0 18px var(--cyan2), 0 0 44px rgba(143,215,255,.45);
-}
+    .card{
+      background:rgba(12,24,40,.94);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
 
-.sweep{
-position:absolute;
-left:50%;
-top:50%;
-width:620px;
-height:620px;
-transform:translate(-50%,-50%);
-border-radius:50%;
-background:conic-gradient(from 0deg, rgba(99,179,255,0) 0deg, rgba(99,179,255,0) 300deg, rgba(99,179,255,.20) 340deg, rgba(99,179,255,0) 360deg);
-animation:spin 8s linear infinite;
-mix-blend-mode:screen;
-}
+    .map-card{
+      overflow:hidden;
+    }
 
-.continent{
-position:absolute;
-opacity:.16;
-background:linear-gradient(180deg, rgba(143,215,255,.55), rgba(99,179,255,.18));
-filter:blur(.2px);
-}
+    .section-title{
+      margin:0 0 12px;
+      font-size:20px;
+    }
 
-.na{width:180px;height:90px;left:10%;top:23%;border-radius:45% 55% 38% 62%/53% 42% 58% 47%}
-.sa{width:88px;height:145px;left:24%;top:48%;border-radius:44% 56% 47% 53%/40% 48% 52% 60%}
-.eu{width:112px;height:58px;left:43%;top:22%;border-radius:58% 42% 49% 51%/44% 51% 49% 56%}
-.af{width:120px;height:150px;left:46%;top:38%;border-radius:48% 52% 43% 57%/57% 45% 55% 43%}
-.as{width:230px;height:120px;left:58%;top:24%;border-radius:46% 54% 51% 49%/52% 46% 54% 48%}
-.au{width:105px;height:62px;left:76%;top:63%;border-radius:61% 39% 56% 44%/46% 54% 46% 54%}
+    .section-sub{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
 
-.pin{
-position:absolute;
-transform:translate(-50%,-50%);
-text-align:center;
-z-index:3;
-}
+    #map{
+      width:100%;
+      height:640px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--line2);
+      box-shadow:inset 0 0 0 1px rgba(77,163,255,.05);
+    }
 
-.pin-dot{
-width:16px;
-height:16px;
-border-radius:50%;
-margin:0 auto 6px;
-box-shadow:0 0 16px currentColor;
-}
+    .leaflet-container{
+      background:#091423 !important;
+    }
 
-.pin-dot.red{background:var(--red);color:var(--red)}
-.pin-dot.orange{background:var(--orange);color:var(--orange)}
-.pin-dot.yellow{background:var(--yellow);color:var(--yellow)}
-.pin-dot.green{background:var(--green);color:var(--green)}
+    .side-stack{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
 
-.pin span{
-display:block;
-font-size:11px;
-color:#e9f2ff;
-background:rgba(8,14,25,.78);
-border:1px solid rgba(255,255,255,.08);
-border-radius:999px;
-padding:4px 8px;
-white-space:nowrap;
-}
+    .metric-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
 
-.legend{
-display:grid;
-gap:10px;
-margin-top:16px;
-}
+    .metric{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
 
-.legend-item{
-display:flex;
-align-items:center;
-gap:10px;
-color:var(--muted);
-font-size:14px;
-}
+    .metric .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+    }
 
-.legend-dot{
-width:12px;
-height:12px;
-border-radius:50%;
-}
+    .metric .value{
+      font-size:24px;
+      font-weight:700;
+      line-height:1.15;
+    }
 
-.list{
-display:grid;
-gap:12px;
-}
+    .selected-box{
+      background:
+        radial-gradient(circle at top right, rgba(77,163,255,.08), transparent 32%),
+        var(--panel2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
 
-.item{
-padding:14px;
-border-radius:14px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
+    .selected-name{
+      font-size:24px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
 
-.item strong{
-display:block;
-margin-bottom:6px;
-font-size:15px;
-}
+    .selected-meta{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:12px;
+    }
 
-.item small{
-display:block;
-color:var(--muted);
-line-height:1.6;
-}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#0c1d2f;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      margin-bottom:12px;
+    }
 
-.badge{
-display:inline-block;
-margin-top:8px;
-padding:5px 8px;
-border-radius:999px;
-font-size:11px;
-font-weight:bold;
-}
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      display:inline-block;
+    }
 
-.badge.red{background:rgba(255,92,112,.12);color:var(--red)}
-.badge.orange{background:rgba(255,157,87,.12);color:var(--orange)}
-.badge.yellow{background:rgba(255,209,102,.12);color:var(--yellow)}
-.badge.green{background:rgba(69,212,131,.12);color:var(--green)}
+    .advisory{
+      color:var(--muted);
+      line-height:1.58;
+      font-size:14px;
+    }
 
-.summary{
-margin-top:18px;
-padding:16px;
-border-radius:14px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-}
+    .bottom{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+    }
 
-.summary h3{
-color:var(--cyan2);
-margin-bottom:8px;
-font-size:18px;
-}
+    .signals{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
 
-.summary p{
-color:var(--muted);
-line-height:1.7;
-}
+    .signal{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
 
-@keyframes spin{
-from{transform:translate(-50%,-50%) rotate(0deg)}
-to{transform:translate(-50%,-50%) rotate(360deg)}
-}
+    .signal-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
 
-@media(max-width:1100px){
-.layout{grid-template-columns:1fr}
-.map-shell{min-height:520px}
-}
+    .sev{
+      font-size:11px;
+      text-transform:uppercase;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      letter-spacing:.5px;
+    }
 
-@media(max-width:760px){
-.hero h1{font-size:28px}
-.map-shell{min-height:460px}
-}
-</style>
+    .high{color:var(--high)}
+    .medium{color:var(--medium)}
+    .low{color:var(--low)}
+
+    .signal p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:13px;
+    }
+
+    .legend{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .legend-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted);
+      font-size:14px;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .swatch{
+      width:16px;
+      height:16px;
+      border-radius:5px;
+      border:1px solid rgba(255,255,255,.08);
+      flex:0 0 auto;
+    }
+
+    .footer{
+      text-align:right;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:10px;
+      padding-bottom:8px;
+    }
+
+    .risk-high{
+      color:var(--high);
+    }
+
+    .risk-medium{
+      color:var(--medium);
+    }
+
+    .risk-low{
+      color:var(--low);
+    }
+
+    @media (max-width:1080px){
+      .hero,
+      .bottom{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:760px){
+      .signals{
+        grid-template-columns:1fr;
+      }
+      .metric-grid{
+        grid-template-columns:1fr;
+      }
+      #map{
+        height:500px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="wrap">
 
-<div class="hero">
-<h1>🌍 ZENTRA Global Risk Map</h1>
-<p>
-A world-scale risk visualization surface showing energy shock zones, logistics choke points,
-institutional pressure areas and selective trade opportunity regions across the economic system.
-</p>
-</div>
+  <div class="topbar">
+    <div class="title-block">
+      <h1>ZENTRA World Risk Map Pro</h1>
+      <p>Country-level risk visibility / command view / regional pressure mapping</p>
+    </div>
 
-<div class="layout">
-
-<div class="panel">
-<h2>World Risk Heat Surface</h2>
-
-<div class="map-shell">
-<div class="map-grid"></div>
-
-<div class="continent na"></div>
-<div class="continent sa"></div>
-<div class="continent eu"></div>
-<div class="continent af"></div>
-<div class="continent as"></div>
-<div class="continent au"></div>
-
-<div class="ring r1"></div>
-<div class="ring r2"></div>
-<div class="ring r3"></div>
-<div class="ring r4"></div>
-<div class="sweep"></div>
-<div class="core"></div>
-
-<div class="pin" style="left:20%;top:28%;">
-  <div class="pin-dot orange"></div>
-  <span>North Atlantic Freight Stress</span>
-</div>
-
-<div class="pin" style="left:49%;top:26%;">
-  <div class="pin-dot red"></div>
-  <span>European Energy Shock</span>
-</div>
-
-<div class="pin" style="left:58%;top:42%;">
-  <div class="pin-dot yellow"></div>
-  <span>MENA Route Pressure</span>
-</div>
-
-<div class="pin" style="left:71%;top:33%;">
-  <div class="pin-dot red"></div>
-  <span>Asian Supply Tension</span>
-</div>
-
-<div class="pin" style="left:78%;top:61%;">
-  <div class="pin-dot green"></div>
-  <span>Pacific Trade Window</span>
-</div>
-
-<div class="pin" style="left:28%;top:63%;">
-  <div class="pin-dot orange"></div>
-  <span>South Corridor Instability</span>
-</div>
-
-</div>
-
-<div class="legend">
-  <div class="legend-item"><span class="legend-dot" style="background:#ff5c70"></span> Critical risk zone</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#ff9d57"></span> Logistics choke / route stress</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#ffd166"></span> Watch region / spillover risk</div>
-  <div class="legend-item"><span class="legend-dot" style="background:#45d483"></span> Selective trade opportunity</div>
-</div>
-</div>
-
-<div class="panel">
-<h2>Regional Risk Notes</h2>
-
-<div class="list">
-
-  <div class="item">
-    <strong>European Energy Shock</strong>
-    <small>
-      Energy price transmission remains the most concentrated macro driver,
-      amplifying industrial production stress and inflation persistence.
-    </small>
-    <span class="badge red">Critical</span>
+    <div class="nav">
+      <a href="/">Landing</a>
+      <a href="/platform.html">Platform</a>
+      <a href="/risklens/economic-terminal.html">Terminal</a>
+      <a href="/economic-globe.html">Globe</a>
+      <a href="/risklens/dashboard.html">Dashboard</a>
+      <a href="/risklens/signals.html">Signals</a>
+    </div>
   </div>
 
-  <div class="item">
-    <strong>North Atlantic Freight Stress</strong>
-    <small>
-      Freight cost escalation and scheduling friction continue to increase landed-price
-      pressure for import-dependent sectors.
-    </small>
-    <span class="badge orange">High Stress</span>
-  </div>
+  <section class="hero">
+    <div class="card map-card">
+      <h2 class="section-title">Global Risk Surface</h2>
+      <p class="section-sub">
+        Seçili ülkeler üzerinde risk yoğunluğu, bölgesel baskılar ve stratejik notlar gösterilir.
+        Harita üzerindeki bir ülkeye tıklayarak detayları sağ panelde görebilirsin.
+      </p>
+      <div id="map"></div>
+    </div>
 
-  <div class="item">
-    <strong>MENA Route Pressure</strong>
-    <small>
-      Trade corridors remain usable but show elevated execution sensitivity under
-      shipping congestion and energy-linked cost shifts.
-    </small>
-    <span class="badge yellow">Watch</span>
-  </div>
+    <div class="side-stack">
+      <div class="card">
+        <h2 class="section-title">Global Snapshot</h2>
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="label">Global Risk Score</div>
+            <div class="value" id="globalRiskScore">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">Risk Level</div>
+            <div class="value" id="riskLevel">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">Dominant Driver</div>
+            <div class="value" id="driver">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">Map Status</div>
+            <div class="value">Active</div>
+          </div>
+        </div>
+      </div>
 
-  <div class="item">
-    <strong>Asian Supply Tension</strong>
-    <small>
-      Manufacturing and routing concentration generate broad spillover risk across
-      commodity, industrial and electronics-linked systems.
-    </small>
-    <span class="badge red">Critical</span>
-  </div>
+      <div class="selected-box">
+        <div class="selected-name" id="selectedRegion">No Region Selected</div>
+        <div class="selected-meta">Tıkla / Popup aç / Sağ panel güncellensin</div>
+        <div class="badge" id="selectedBadge">
+          <span class="dot" id="selectedDot" style="background:#4da3ff;"></span>
+          <span id="selectedRisk">No selection</span>
+        </div>
+        <div class="advisory" id="strategicNote">
+          Global energy and logistics pressure remain the primary map drivers.
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="item">
-    <strong>Pacific Trade Window</strong>
-    <small>
-      Selective alternative routing and price-gap conditions may create near-term
-      trade opportunities for agile operators.
-    </small>
-    <span class="badge green">Opportunity</span>
-  </div>
+  <section class="bottom">
+    <div class="card">
+      <h2 class="section-title">Signals Overlay</h2>
+      <div class="signals" id="signalsBox"></div>
+    </div>
 
+    <div class="card">
+      <h2 class="section-title">Risk Legend</h2>
+      <div class="legend">
+        <div class="legend-item">
+          <span class="swatch" style="background:#38d39f;"></span>
+          <span>Low Risk — daha stabil görünüm, baskı sınırlı</span>
+        </div>
+        <div class="legend-item">
+          <span class="swatch" style="background:#ffb347;"></span>
+          <span>Medium Risk — izleme artmalı, hassasiyet büyüyor</span>
+        </div>
+        <div class="legend-item">
+          <span class="swatch" style="background:#ff6b6b;"></span>
+          <span>High Risk — baskı yüksek, hızlı karar desteği gerekli</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">ZENTRA / World Risk Map Pro / Regional Risk Intelligence</div>
 </div>
 
-<div class="summary">
-  <h3>AI Summary</h3>
-  <p>
-    Current world-map stress clustering indicates that energy and freight remain the strongest
-    transmission channels. Institutions with sector exposure to logistics, industrial inputs,
-    imported consumer goods and leveraged trade routes should maintain elevated monitoring.
-  </p>
-</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-</div>
+<script>
+  const DATA = {
+    driver: "Energy Pressure",
+    markets: {
+      oil: 82.4,
+      interestRate: 4.75
+    },
+    signals: [
+      { title: "Energy Pressure", severity: "high", summary: "Energy costs are rising across key regions." },
+      { title: "Logistics Stress", severity: "medium", summary: "Shipping routes remain under pressure." },
+      { title: "Market Stress", severity: "low", summary: "Market volatility is present but contained." }
+    ],
+    countries: [
+      { name: "United States", lat: 37.0902, lng: -95.7129, risk: "medium", score: 58, note: "Moderate pressure from rates and logistics." },
+      { name: "Germany", lat: 51.1657, lng: 10.4515, risk: "medium", score: 55, note: "Industrial demand remains under pressure." },
+      { name: "Turkey", lat: 38.9637, lng: 35.2433, risk: "high", score: 74, note: "Energy and regional trade pressure elevated." },
+      { name: "China", lat: 35.8617, lng: 104.1954, risk: "medium", score: 61, note: "Supply and shipping dynamics remain sensitive." },
+      { name: "Brazil", lat: -14.2350, lng: -51.9253, risk: "low", score: 39, note: "Risk profile remains relatively contained." },
+      { name: "United Kingdom", lat: 55.3781, lng: -3.4360, risk: "medium", score: 52, note: "Financial sensitivity remains moderate." },
+      { name: "South Africa", lat: -30.5595, lng: 22.9375, risk: "high", score: 71, note: "High macro and logistics pressure." },
+      { name: "India", lat: 20.5937, lng: 78.9629, risk: "medium", score: 60, note: "Growth remains strong but exposed to imports." }
+    ]
+  };
 
-</div>
+  function computeRisk(data){
+    let score = 0;
+    if (data.markets.oil > 80) score += 30;
+    if (data.markets.interestRate > 4.5) score += 20;
 
-</div>
-<script src="/assets/js/auth-guard.js"></script>
+    data.signals.forEach(s => {
+      if (s.severity === "high") score += 15;
+      if (s.severity === "medium") score += 8;
+      if (s.severity === "low") score += 3;
+    });
+
+    if (score > 100) score = 100;
+
+    let level = "LOW";
+    if (score >= 70) level = "HIGH";
+    else if (score >= 40) level = "MEDIUM";
+
+    return { score, level };
+  }
+
+  function getRiskColor(risk){
+    if (risk === "high") return "#ff6b6b";
+    if (risk === "medium") return "#ffb347";
+    return "#38d39f";
+  }
+
+  function setText(id, value){
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function renderTop(){
+    const result = computeRisk(DATA);
+    setText("globalRiskScore", result.score);
+    setText("riskLevel", result.level);
+    setText("driver", DATA.driver);
+
+    const levelEl = document.getElementById("riskLevel");
+    if (levelEl) {
+      levelEl.classList.remove("risk-high","risk-medium","risk-low");
+      levelEl.classList.add(
+        result.level === "HIGH" ? "risk-high" :
+        result.level === "MEDIUM" ? "risk-medium" : "risk-low"
+      );
+    }
+  }
+
+  function renderSignals(){
+    const box = document.getElementById("signalsBox");
+    box.innerHTML = "";
+
+    DATA.signals.forEach(s => {
+      const div = document.createElement("div");
+      div.className = "signal";
+      div.innerHTML = `
+        <div class="signal-head">
+          <strong>${s.title}</strong>
+          <span class="sev ${s.severity}">${s.severity}</span>
+        </div>
+        <p>${s.summary}</p>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  function updateSelected(country){
+    setText("selectedRegion", country.name);
+    setText("selectedRisk", `${country.risk.toUpperCase()} / Score ${country.score}`);
+    setText("strategicNote", country.note);
+
+    const dot = document.getElementById("selectedDot");
+    if (dot) dot.style.background = getRiskColor(country.risk);
+  }
+
+  function initMap(){
+    const map = L.map("map", {
+      zoomControl: true,
+      attributionControl: false
+    }).setView([24, 12], 2);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 6
+    }).addTo(map);
+
+    DATA.countries.forEach(country => {
+      const color = getRiskColor(country.risk);
+
+      const marker = L.circleMarker([country.lat, country.lng], {
+        radius: 11,
+        color: color,
+        fillColor: color,
+        fillOpacity: 0.88,
+        weight: 2
+      }).addTo(map);
+
+      marker.bindPopup(`
+        <strong>${country.name}</strong><br>
+        Risk: ${country.risk.toUpperCase()}<br>
+        Score: ${country.score}<br>
+        Note: ${country.note}
+      `);
+
+      marker.on("click", () => updateSelected(country));
+    });
+  }
+
+  renderTop();
+  renderSignals();
+  initMap();
+</script>
+
 </body>
-    </html>
+                                                                                </html>

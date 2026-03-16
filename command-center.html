@@ -737,4 +737,17 @@ if (advisoryEl) {
     result.advisory.shortTerm + " / " + result.advisory.midTerm;
 }
 </script>
+  <script type="module">
+
+import { runBrain } from "./engines/brainEngine.js"
+
+const brain = runBrain()
+
+console.log("ZENTRA BRAIN", brain)
+
+document.getElementById("globalRiskScore").textContent = brain.riskScore
+document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase()
+document.getElementById("driver").textContent = brain.driver
+
+</script>
 </html>

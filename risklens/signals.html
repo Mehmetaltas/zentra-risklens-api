@@ -1,193 +1,57 @@
-<script>
-if(localStorage.getItem("zentraAuth")!=="true"){
-window.location="/";
-}
-</script>
 <!doctype html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZENTRA Signals</title>
-
+<script>
+if(localStorage.getItem("zentraCoreAccess")!=="true"){
+  window.location="/core.html";
+}
+</script>
 <style>
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#050b14;
-color:#eef4ff;
-}
-
-.wrap{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:12px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
-
-.title{
-font-size:28px;
-font-weight:700;
-}
-
-.nav{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-}
-
-.nav a{
-color:#9fb4cc;
-text-decoration:none;
-padding:8px 12px;
-border:1px solid #1f3a56;
-border-radius:10px;
-background:#13263a;
-font-size:13px;
-}
-
-.card{
-background:#0d1b2a;
-border:1px solid #1f3a56;
-border-radius:14px;
-padding:16px;
-margin-bottom:16px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-}
-
-.metric{
-background:#13263a;
-border:1px solid #1f3a56;
-padding:12px;
-border-radius:10px;
-}
-
-.metric .label{
-font-size:12px;
-color:#9fb4cc;
-margin-bottom:8px;
-text-transform:uppercase;
-}
-
-.metric .value{
-font-size:24px;
-font-weight:700;
-}
-
-.signal{
-background:#13263a;
-border:1px solid #1f3a56;
-padding:12px;
-border-radius:10px;
-margin-bottom:10px;
-}
-
-.signal-head{
-display:flex;
-justify-content:space-between;
-gap:10px;
-margin-bottom:8px;
-align-items:center;
-}
-
-.signal-title{
-font-weight:700;
-}
-
-.signal-summary{
-color:#9fb4cc;
-line-height:1.5;
-font-size:14px;
-}
-
-.badge{
-font-size:12px;
-text-transform:uppercase;
-padding:4px 10px;
-border-radius:999px;
-border:1px solid #1f3a56;
-}
-
-.high{color:#ff6b6b;}
-.medium{color:#ffb347;}
-.low{color:#38d39f;}
-
-.footer{
-text-align:right;
-color:#9fb4cc;
-margin-top:10px;
-font-size:13px;
-}
-
-@media(max-width:900px){
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-}
-
-@media(max-width:560px){
-.grid{
-grid-template-columns:1fr;
-}
-}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#eef4ff}
+.wrap{max-width:1200px;margin:auto;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.title{font-size:28px;font-weight:700}
+.nav{display:flex;flex-wrap:wrap;gap:10px}
+.nav a{color:#9fb4cc;text-decoration:none;padding:8px 12px;border:1px solid #1f3a56;border-radius:10px;background:#13263a;font-size:13px}
+.card{background:#0d1b2a;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px}
+.metric .label{font-size:12px;color:#9fb4cc;margin-bottom:8px;text-transform:uppercase}
+.metric .value{font-size:24px;font-weight:700}
+.signal{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px;margin-bottom:10px}
+.signal-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;align-items:center}
+.signal-title{font-weight:700}
+.signal-summary{color:#9fb4cc;line-height:1.5;font-size:14px}
+.badge{font-size:12px;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid #1f3a56}
+.high{color:#ff6b6b}.medium{color:#ffb347}.low{color:#38d39f}
+.footer{text-align:right;color:#9fb4cc;margin-top:10px;font-size:13px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
 <div class="wrap">
-
 <div class="topbar">
 <div class="title">ZENTRA Signals</div>
-
 <div class="nav">
-<a href="/">Landing</a>
 <a href="/platform.html">Platform</a>
-<a href="/bridge.html">Bridge</a>
+<a href="/zentra-main.html">Main</a>
 <a href="/command-center.html">Command</a>
 <a href="/risklens/economic-terminal.html">Terminal</a>
 <a href="/economic-globe.html">Globe</a>
-<a href="/risklens/dashboard.html">Dashboard</a>
-<a href="/risklens/worldmap.html">World Map</a>
 </div>
 </div>
 
 <div class="card">
 <h3>Signals Overview</h3>
-
 <div class="grid">
-<div class="metric">
-<div class="label">Dominant Driver</div>
-<div class="value" id="driver">--</div>
-</div>
-
-<div class="metric">
-<div class="label">Signals Count</div>
-<div class="value" id="count">--</div>
-</div>
-
-<div class="metric">
-<div class="label">High Severity</div>
-<div class="value" id="highCount">--</div>
-</div>
-
-<div class="metric">
-<div class="label">System Status</div>
-<div class="value">Active</div>
-</div>
+<div class="metric"><div class="label">Dominant Driver</div><div class="value" id="driver">--</div></div>
+<div class="metric"><div class="label">Signals Count</div><div class="value" id="count">--</div></div>
+<div class="metric"><div class="label">High Severity</div><div class="value" id="highCount">--</div></div>
+<div class="metric"><div class="label">System Status</div><div class="value">Active</div></div>
 </div>
 </div>
 
@@ -198,78 +62,41 @@ grid-template-columns:1fr;
 
 <div class="card">
 <h3>Markets Snapshot</h3>
-
 <div class="grid">
-<div class="metric">
-<div class="label">Oil</div>
-<div class="value" id="oil">--</div>
-</div>
-
-<div class="metric">
-<div class="label">Gold</div>
-<div class="value" id="gold">--</div>
-</div>
-
-<div class="metric">
-<div class="label">S&amp;P500</div>
-<div class="value" id="sp500">--</div>
-</div>
-
-<div class="metric">
-<div class="label">Interest</div>
-<div class="value" id="interest">--</div>
-</div>
+<div class="metric"><div class="label">Oil</div><div class="value" id="oil">--</div></div>
+<div class="metric"><div class="label">Gold</div><div class="value" id="gold">--</div></div>
+<div class="metric"><div class="label">S&amp;P500</div><div class="value" id="sp500">--</div></div>
+<div class="metric"><div class="label">Interest</div><div class="value" id="interest">--</div></div>
 </div>
 </div>
 
-<div class="footer">
-ZENTRA Signals Intelligence Layer
-</div>
-
+<div class="footer">ZENTRA / Signals Layer</div>
 </div>
 
 <script type="module">
 import { runBrain } from "../engines/brainEngine.js";
-
 const brain = runBrain();
-
-const driverEl = document.getElementById("driver");
-const countEl = document.getElementById("count");
-const highCountEl = document.getElementById("highCount");
-const oilEl = document.getElementById("oil");
-const goldEl = document.getElementById("gold");
-const sp500El = document.getElementById("sp500");
-const interestEl = document.getElementById("interest");
+document.getElementById("driver").textContent = brain.driver;
+document.getElementById("count").textContent = brain.signals.length;
+document.getElementById("highCount").textContent = brain.signals.filter(s => s.severity === "high").length;
+document.getElementById("oil").textContent = brain.markets.oil;
+document.getElementById("gold").textContent = brain.markets.gold;
+document.getElementById("sp500").textContent = brain.markets.sp500;
+document.getElementById("interest").textContent = brain.markets.interestRate;
 const signalsBox = document.getElementById("signals");
-
-if (driverEl) driverEl.textContent = brain.driver;
-if (countEl) countEl.textContent = brain.signals.length;
-if (highCountEl) highCountEl.textContent = brain.signals.filter(s => s.severity === "high").length;
-
-if (oilEl) oilEl.textContent = brain.markets.oil;
-if (goldEl) goldEl.textContent = brain.markets.gold;
-if (sp500El) sp500El.textContent = brain.markets.sp500;
-if (interestEl) interestEl.textContent = brain.markets.interestRate;
-
-if (signalsBox) {
-  signalsBox.innerHTML = "";
-
-  brain.signals.forEach(s => {
-    const div = document.createElement("div");
-    div.className = "signal";
-
-    div.innerHTML = `
-      <div class="signal-head">
-        <div class="signal-title">${s.title}</div>
-        <div class="badge ${s.severity}">${s.severity}</div>
-      </div>
-      <div class="signal-summary">${s.summary || "No summary available."}</div>
-    `;
-
-    signalsBox.appendChild(div);
-  });
-}
+signalsBox.innerHTML = "";
+brain.signals.forEach(s => {
+  const div = document.createElement("div");
+  div.className = "signal";
+  div.innerHTML = `
+    <div class="signal-head">
+      <div class="signal-title">${s.title}</div>
+      <div class="badge ${s.severity}">${s.severity}</div>
+    </div>
+    <div class="signal-summary">${s.summary || "No summary available."}</div>
+  `;
+  signalsBox.appendChild(div);
+});
 </script>
-
 </body>
-  </html>
+</html>

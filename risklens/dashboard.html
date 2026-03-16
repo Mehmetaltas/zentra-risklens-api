@@ -1,4 +1,208 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Dashboard</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#07111d;
+color:#eef4ff;
+}
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.title{
+font-size:28px;
+font-weight:700;
+}
+
+.nav{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav a{
+color:#9fb4cc;
+text-decoration:none;
+padding:8px 12px;
+border:1px solid #1f3a56;
+border-radius:10px;
+background:#13263a;
+font-size:13px;
+}
+
+.card{
+background:#0d1b2a;
+border:1px solid #1f3a56;
+border-radius:14px;
+padding:16px;
+margin-bottom:16px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.metric{
+background:#13263a;
+border:1px solid #1f3a56;
+padding:12px;
+border-radius:10px;
+}
+
+.metric .label{
+font-size:12px;
+color:#9fb4cc;
+margin-bottom:8px;
+text-transform:uppercase;
+}
+
+.metric .value{
+font-size:26px;
+font-weight:700;
+}
+
+.advisory{
+background:#13263a;
+border:1px solid #1f3a56;
+border-radius:12px;
+padding:14px;
+margin-top:10px;
+line-height:1.5;
+color:#9fb4cc;
+}
+
+.footer{
+text-align:right;
+color:#9fb4cc;
+margin-top:10px;
+font-size:13px;
+}
+
+@media(max-width:900px){
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:560px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="topbar">
+<div class="title">ZENTRA RiskLens Dashboard</div>
+
+<div class="nav">
+<a href="/">Landing</a>
+<a href="/platform.html">Platform</a>
+<a href="/bridge.html">Bridge</a>
+<a href="/command-center.html">Command</a>
+<a href="/risklens/economic-terminal.html">Terminal</a>
+<a href="/economic-globe.html">Globe</a>
+<a href="/risklens/signals.html">Signals</a>
+<a href="/risklens/worldmap.html">World Map</a>
+</div>
+</div>
+
+<div class="card">
+<h3>Global Risk Snapshot</h3>
+
+<div class="grid">
+<div class="metric">
+<div class="label">Risk Score</div>
+<div class="value" id="riskScore">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Risk Level</div>
+<div class="value" id="riskLevel">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Dominant Driver</div>
+<div class="value" id="driver">--</div>
+</div>
+
+<div class="metric">
+<div class="label">System Status</div>
+<div class="value">Operational</div>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<h3>Market Indicators</h3>
+
+<div class="grid">
+<div class="metric">
+<div class="label">Oil</div>
+<div class="value" id="oil">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Gold</div>
+<div class="value" id="gold">--</div>
+</div>
+
+<div class="metric">
+<div class="label">S&amp;P500</div>
+<div class="value" id="sp500">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Interest Rate</div>
+<div class="value" id="interest">--</div>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<h3>Strategic Advisory</h3>
+
+<div class="advisory" id="advice">
+Loading advisory...
+</div>
+
+</div>
+
+<div class="footer">
+ZENTRA Risk Intelligence Layer
+</div>
+
+</div>
+
 <script type="module">
+
 import { runBrain } from "../engines/brainEngine.js";
 
 const brain = runBrain();
@@ -22,7 +226,11 @@ if (sp500El) sp500El.textContent = brain.markets.sp500;
 if (interestEl) interestEl.textContent = brain.markets.interestRate;
 
 if (adviceEl) {
-  adviceEl.textContent =
-    brain.advisory.shortTerm + " / " + brain.advisory.midTerm;
+adviceEl.textContent =
+brain.advisory.shortTerm + " / " + brain.advisory.midTerm;
 }
+
 </script>
+
+</body>
+  </html>

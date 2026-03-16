@@ -702,4 +702,39 @@
 </script>
 
 </body>
-        </html>
+<script type="module">
+import { runZentra } from "./engines/systemEngine.js";
+
+const result = runZentra();
+
+console.log("ZENTRA ENGINE RESULT", result);
+
+const riskScoreEl = document.getElementById("globalRiskScore");
+const riskLevelEl = document.getElementById("riskLevel");
+const driverEl = document.getElementById("driver");
+const oilEl = document.getElementById("oil");
+const goldEl = document.getElementById("gold");
+const sp500El = document.getElementById("sp500");
+const interestEl = document.getElementById("interest");
+const shippingEl = document.getElementById("shipping");
+const signalCountEl = document.getElementById("signalCount");
+const advisoryEl = document.getElementById("globalAdvisory");
+
+if (riskScoreEl) riskScoreEl.textContent = result.risk.score;
+if (riskLevelEl) riskLevelEl.textContent = result.risk.riskLevel.toUpperCase();
+if (driverEl) driverEl.textContent = result.data.dominantDriver;
+
+if (oilEl) oilEl.textContent = result.data.markets.oil;
+if (goldEl) goldEl.textContent = result.data.markets.gold;
+if (sp500El) sp500El.textContent = result.data.markets.sp500;
+if (interestEl) interestEl.textContent = result.data.markets.interestRate;
+if (shippingEl) shippingEl.textContent = result.data.markets.shipping;
+
+if (signalCountEl) signalCountEl.textContent = result.data.signals.length;
+
+if (advisoryEl) {
+  advisoryEl.textContent =
+    result.advisory.shortTerm + " / " + result.advisory.midTerm;
+}
+</script>
+</html>

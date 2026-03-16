@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA Telescope Master Screen</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+
+  <style>
+    :root{
+      --bg:#050b14;
+      --panel:#0d1b2a;
+      --panel2:#13263a;
+      --line:#1f3a56;
+      --text:#eef4ff;
+      --muted:#9fb4cc;
+      --accent:#4da3ff;
+      --high:#ff6b6b;
+      --medium:#ffb347;
+      --low:#38d39f;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#050b14 0%, #091423 100%);
+      color:var(--text);
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .wrap{
+      max-width:1280px;
+      margin:auto;
+      padding:20px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .title{
+      font-size:30px;
+      font-weight:700;
+    }
+
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .nav a{
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel2);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .card{
+      background:rgba(13,27,42,.95);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      margin-bottom:16px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.6fr 1fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .headline{
+      margin:0 0 10px;
+      font-size:34px;
+      line-height:1.14;
+    }
+
+    .subtext{
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:14px;
+    }
+
+    .metric-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .metric{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .metric .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+
+    .metric .value{
+      font-size:26px;
+      font-weight:700;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+    }
+
+    .col-8{grid-column:span 8}
+    .col-4{grid-column:span 4}
+    .col-6{grid-column:span 6}
+    .col-12{grid-column:span 12}
+
+    #map{
+      width:100%;
+      height:520px;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+
+    .leaflet-container{
+      background:#08111f !important;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      font-size:20px;
+    }
+
+    .signals{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .signal{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .signal-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .sev{
+      font-size:12px;
+      text-transform:uppercase;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:4px 10px;
+    }
+
+    .high{color:var(--high)}
+    .medium{color:var(--medium)}
+    .low{color:var(--low)}
+
+    .note{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .legend{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .legend-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .swatch{
+      width:14px;
+      height:14px;
+      border-radius:4px;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .footer{
+      text-align:right;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+      padding-bottom:8px;
+    }
+
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .col-8,.col-4,.col-6,.col-12{grid-column:span 12}
+    }
+
+    @media (max-width:620px){
+      .headline{font-size:28px}
+      .metric-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="title">ZENTRA Telescope Master Screen</div>
+    <div class="nav">
+      <a href="/">Landing</a>
+      <a href="/platform.html">Platform</a>
+      <a href="/risklens/economic-terminal.html">Terminal</a>
+      <a href="/economic-globe.html">Globe</a>
+      <a href="/risklens/dashboard.html">RiskLens</a>
+      <a href="/risklens/signals.html">Signals</a>
+      <a href="/risklens/worldmap.html">World Map</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="card">
+      <h1 class="headline">Küresel sinyal, risk, piyasa ve bölgesel baskıları tek ekran üzerinden izleyen ana ZENTRA gözlem katmanı.</h1>
+      <div class="subtext">
+        Bu ekran ZENTRA’nın üst kontrol görünümüdür. Global risk seviyesini, dominant driver’ı,
+        temel market baskılarını, sinyal yoğunluğunu ve ülke bazlı risk dağılımını bir arada gösterir.
+      </div>
+      <div class="note">
+        V1 sürümü tek HTML ve statik veri ile çalışır. Sonraki aşamada ortak veri modeliyle tüm modüller aynı çekirdeğe bağlanır.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="label">Global Risk Score</div>
+          <div class="value" id="riskScore">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Risk Level</div>
+          <div class="value" id="riskLevel">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Dominant Driver</div>
+          <div class="value" id="driver">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">System Status</div>
+          <div class="value">Operational</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card col-8">
+      <h2 class="section-title">Global Risk Map</h2>
+      <div id="map"></div>
+      <div class="legend">
+        <div class="legend-item"><span class="swatch" style="background:#38d39f;"></span> Low Risk</div>
+        <div class="legend-item"><span class="swatch" style="background:#ffb347;"></span> Medium Risk</div>
+        <div class="legend-item"><span class="swatch" style="background:#ff6b6b;"></span> High Risk</div>
+      </div>
+    </div>
+
+    <div class="card col-4">
+      <h2 class="section-title">Market Snapshot</h2>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="label">Oil</div>
+          <div class="value" id="oil">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Gold</div>
+          <div class="value" id="gold">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">S&amp;P 500</div>
+          <div class="value" id="sp500">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Interest</div>
+          <div class="value" id="interest">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Shipping</div>
+          <div class="value" id="shipping">--</div>
+        </div>
+        <div class="metric">
+          <div class="label">Signals</div>
+          <div class="value" id="signalCount">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-6">
+      <h2 class="section-title">Signals Layer</h2>
+      <div class="signals" id="signalsBox"></div>
+    </div>
+
+    <div class="card col-6">
+      <h2 class="section-title">Strategic Advisory</h2>
+      <div class="note" id="advice"></div>
+      <div style="height:12px"></div>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="label">Selected Region</div>
+          <div class="value" id="selectedRegion" style="font-size:20px;">None</div>
+        </div>
+        <div class="metric">
+          <div class="label">Selected Risk</div>
+          <div class="value" id="selectedRisk" style="font-size:20px;">--</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">ZENTRA / Telescope Master Screen / Global Economic Observation Layer</div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+<script>
+  const DATA = {
+    driver: "Energy Pressure",
+    markets: {
+      oil: 82.4,
+      gold: 2180.5,
+      sp500: 5120.3,
+      interest: 4.75,
+      shipping: 1460
+    },
+    signals: [
+      { title: "Energy Pressure", severity: "high", summary: "Energy costs are rising across key regions." },
+      { title: "Logistics Stress", severity: "medium", summary: "Shipping routes remain under pressure." },
+      { title: "Market Stress", severity: "low", summary: "Market volatility is present but contained." },
+      { title: "Trade Friction", severity: "medium", summary: "Trade flows show selective regional slowdown." }
+    ],
+    countries: [
+      { name: "United States", lat: 37.0902, lng: -95.7129, risk: "medium", score: 58, note: "Moderate pressure from rates and logistics." },
+      { name: "Germany", lat: 51.1657, lng: 10.4515, risk: "medium", score: 55, note: "Industrial demand remains under pressure." },
+      { name: "Turkey", lat: 38.9637, lng: 35.2433, risk: "high", score: 74, note: "Energy and regional trade pressure elevated." },
+      { name: "China", lat: 35.8617, lng: 104.1954, risk: "medium", score: 61, note: "Supply and shipping dynamics remain sensitive." },
+      { name: "Brazil", lat: -14.2350, lng: -51.9253, risk: "low", score: 39, note: "Risk profile remains relatively contained." },
+      { name: "United Kingdom", lat: 55.3781, lng: -3.4360, risk: "medium", score: 52, note: "Financial sensitivity remains moderate." },
+      { name: "South Africa", lat: -30.5595, lng: 22.9375, risk: "high", score: 71, note: "High macro and logistics pressure." },
+      { name: "India", lat: 20.5937, lng: 78.9629, risk: "medium", score: 60, note: "Growth remains strong but exposed to imports." }
+    ]
+  };
+
+  function computeRisk(data){
+    let score = 0;
+
+    if (data.markets.oil > 80) score += 30;
+    if (data.markets.interest > 4.5) score += 20;
+
+    data.signals.forEach(s => {
+      if (s.severity === "high") score += 15;
+      if (s.severity === "medium") score += 8;
+      if (s.severity === "low") score += 3;
+    });
+
+    if (score > 100) score = 100;
+
+    let level = "LOW";
+    if (score >= 70) level = "HIGH";
+    else if (score >= 40) level = "MEDIUM";
+
+    return { score, level };
+  }
+
+  function getRiskColor(risk){
+    if (risk === "high") return "#ff6b6b";
+    if (risk === "medium") return "#ffb347";
+    return "#38d39f";
+  }
+
+  function setText(id, value){
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function renderTop(){
+    const result = computeRisk(DATA);
+    setText("riskScore", result.score);
+    setText("riskLevel", result.level);
+    setText("driver", DATA.driver);
+    setText("oil", DATA.markets.oil);
+    setText("gold", DATA.markets.gold);
+    setText("sp500", DATA.markets.sp500);
+    setText("interest", DATA.markets.interest);
+    setText("shipping", DATA.markets.shipping);
+    setText("signalCount", DATA.signals.length);
+
+    let advice = "Maintain baseline observation across macro, energy and logistics channels.";
+    if (result.level === "HIGH") {
+      advice = "High-pressure conditions detected. Prioritize energy, shipping and regional trade route monitoring immediately.";
+    } else if (result.level === "MEDIUM") {
+      advice = "Moderate pressure detected. Increase monitoring cadence and review regional exposure sensitivity.";
+    }
+    setText("advice", advice);
+  }
+
+  function renderSignals(){
+    const box = document.getElementById("signalsBox");
+    box.innerHTML = "";
+
+    DATA.signals.forEach(s => {
+      const div = document.createElement("div");
+      div.className = "signal";
+      div.innerHTML = `
+        <div class="signal-head">
+          <strong>${s.title}</strong>
+          <span class="sev ${s.severity}">${s.severity}</span>
+        </div>
+        <div class="note">${s.summary}</div>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  function initMap(){
+    const map = L.map("map", {
+      zoomControl: true,
+      attributionControl: false
+    }).setView([24, 12], 2);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 6
+    }).addTo(map);
+
+    DATA.countries.forEach(country => {
+      const color = getRiskColor(country.risk);
+
+      L.circleMarker([country.lat, country.lng], {
+        radius: 10,
+        color,
+        fillColor: color,
+        fillOpacity: 0.78,
+        weight: 2
+      })
+      .addTo(map)
+      .bindPopup(`
+        <strong>${country.name}</strong><br>
+        Risk: ${country.risk.toUpperCase()}<br>
+        Score: ${country.score}<br>
+        Note: ${country.note}
+      `)
+      .on("click", () => {
+        setText("selectedRegion", country.name);
+        setText("selectedRisk", `${country.risk.toUpperCase()} / ${country.score}`);
+        setText("advice", country.note);
+      });
+    });
+  }
+
+  renderTop();
+  renderSignals();
+  initMap();
+</script>
+
+</body>
+  </html>

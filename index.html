@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZENTRA Control Panel</title>
+  <title>ZENTRA</title>
+
   <style>
     :root{
-      --bg:#08111f;
+      --bg:#050b14;
       --panel:#0d1b2a;
       --panel2:#13263a;
       --line:#1f3a56;
       --text:#eef4ff;
-      --muted:#9eb4cd;
+      --muted:#9fb4cc;
       --accent:#4da3ff;
       --high:#ff6b6b;
       --medium:#ffb347;
@@ -23,7 +24,7 @@
     body{
       margin:0;
       font-family:Arial,Helvetica,sans-serif;
-      background:linear-gradient(180deg,#06101c 0%, #091423 100%);
+      background:linear-gradient(180deg,#050b14 0%, #091423 100%);
       color:var(--text);
     }
 
@@ -44,7 +45,7 @@
       align-items:center;
       gap:16px;
       padding:16px 18px;
-      background:rgba(13,27,42,.94);
+      background:rgba(13,27,42,.95);
       border:1px solid var(--line);
       border-radius:16px;
       margin-bottom:18px;
@@ -53,76 +54,67 @@
     .brand h1{
       margin:0;
       font-size:28px;
-      letter-spacing:.4px;
+      letter-spacing:.5px;
     }
 
     .brand p{
       margin:6px 0 0;
       color:var(--muted);
       font-size:14px;
-      line-height:1.4;
     }
 
-    .status-pill{
-      border:1px solid var(--line);
-      background:var(--panel2);
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .nav a{
       color:var(--muted);
-      padding:10px 14px;
-      border-radius:999px;
-      white-space:nowrap;
-      font-size:13px;
+      font-size:14px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel2);
     }
 
     .hero{
       display:grid;
-      grid-template-columns:1.7fr 1fr;
+      grid-template-columns:1.6fr 1fr;
       gap:16px;
       margin-bottom:16px;
     }
 
     .card{
-      background:rgba(13,27,42,.94);
+      background:rgba(13,27,42,.95);
       border:1px solid var(--line);
       border-radius:18px;
       padding:18px;
     }
 
-    .hero h2,
-    .card h2{
-      margin:0 0 12px;
-      font-size:20px;
-    }
-
-    .hero-main{
-      min-height:250px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
     .eyebrow{
       display:inline-block;
       padding:6px 10px;
-      border:1px solid var(--line);
       border-radius:999px;
       background:var(--panel2);
+      border:1px solid var(--line);
       color:var(--muted);
       font-size:12px;
       margin-bottom:12px;
     }
 
     .headline{
-      font-size:36px;
-      font-weight:700;
-      line-height:1.15;
       margin:0 0 14px;
-      max-width:720px;
+      font-size:42px;
+      line-height:1.12;
+      max-width:760px;
     }
 
     .subtext{
       color:var(--muted);
-      line-height:1.6;
-      max-width:760px;
+      line-height:1.65;
+      font-size:15px;
+      max-width:780px;
       margin-bottom:18px;
     }
 
@@ -133,22 +125,16 @@
     }
 
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:44px;
-      padding:0 16px;
+      min-height:46px;
+      padding:0 18px;
       border-radius:12px;
       border:1px solid var(--line);
       background:var(--panel2);
       color:var(--text);
-      font-weight:600;
-      transition:.18s ease;
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-      border-color:var(--accent);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
     }
 
     .btn.primary{
@@ -156,9 +142,9 @@
       border-color:#2f5f89;
     }
 
-    .hero-side{
-      display:flex;
-      flex-direction:column;
+    .metric-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
       gap:12px;
     }
 
@@ -171,13 +157,18 @@
 
     .metric .label{
       color:var(--muted);
-      font-size:13px;
+      font-size:12px;
       margin-bottom:8px;
     }
 
     .metric .value{
-      font-size:28px;
+      font-size:26px;
       font-weight:700;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      font-size:24px;
     }
 
     .grid{
@@ -189,21 +180,21 @@
 
     .module{
       grid-column:span 4;
+      min-height:260px;
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      min-height:240px;
     }
 
     .module-top h3{
       margin:0 0 10px;
-      font-size:20px;
+      font-size:22px;
     }
 
     .module-top p{
       margin:0;
       color:var(--muted);
-      line-height:1.5;
+      line-height:1.55;
       font-size:14px;
     }
 
@@ -215,12 +206,12 @@
     }
 
     .tag{
-      font-size:12px;
-      color:var(--muted);
       border:1px solid var(--line);
       background:var(--panel2);
       border-radius:999px;
       padding:5px 10px;
+      color:var(--muted);
+      font-size:12px;
     }
 
     .module-bottom{
@@ -231,7 +222,7 @@
       gap:10px;
     }
 
-    .module-status{
+    .status{
       font-size:13px;
       color:var(--muted);
     }
@@ -248,7 +239,7 @@
       grid-column:span 5;
     }
 
-    .two-col{
+    .mini-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
@@ -263,12 +254,12 @@
 
     .mini .label{
       color:var(--muted);
-      font-size:13px;
+      font-size:12px;
       margin-bottom:8px;
     }
 
     .mini .value{
-      font-size:22px;
+      font-size:20px;
       font-weight:700;
     }
 
@@ -298,41 +289,35 @@
     }
 
     .footer{
-      margin-top:10px;
       color:var(--muted);
-      font-size:13px;
       text-align:right;
-      padding-bottom:8px;
+      font-size:13px;
+      margin-top:6px;
+      padding-bottom:10px;
     }
 
-    @media (max-width: 980px){
+    @media (max-width:980px){
       .hero{
         grid-template-columns:1fr;
       }
-
       .module{
         grid-column:span 6;
       }
-
-      .info-left,
-      .info-right{
+      .info-left,.info-right{
         grid-column:span 12;
       }
     }
 
-    @media (max-width: 620px){
+    @media (max-width:620px){
       .headline{
-        font-size:28px;
+        font-size:30px;
       }
-
       .module{
         grid-column:span 12;
       }
-
-      .two-col{
+      .mini-grid{
         grid-template-columns:1fr;
       }
-
       .topbar{
         flex-direction:column;
         align-items:flex-start;
@@ -346,44 +331,54 @@
 
     <div class="topbar">
       <div class="brand">
-        <h1>ZENTRA Control Panel</h1>
-        <p>Global Economic AI Operating System / V1 platform access panel</p>
+        <h1>ZENTRA</h1>
+        <p>Global Economic AI Operating System</p>
       </div>
-      <div class="status-pill">System Mode: GitHub Pages / Static V1</div>
+
+      <div class="nav">
+        <a href="/platform.html">Platform</a>
+        <a href="/investor.html">Investor</a>
+        <a href="/economic-globe.html">Globe</a>
+        <a href="/risklens/economic-terminal.html">Terminal</a>
+      </div>
     </div>
 
     <section class="hero">
-      <div class="card hero-main">
-        <div>
-          <span class="eyebrow">GLOBAL ECONOMIC AI OPERATING SYSTEM</span>
-          <h2 class="headline">Küresel sinyal, risk, piyasa ve ekonomik görünürlüğü tek panelden yöneten ZENTRA ana giriş ekranı.</h2>
-          <div class="subtext">
-            Bu panel, ZENTRA V1 içinde çalışan ana modüllere erişim sağlar. Economic Terminal,
-            Economic Globe ve RiskLens katmanları tek yerden açılır. Sistem şu anda temizlenmiş,
-            sadeleştirilmiş ve statik veri modunda çalışan kararlı bir V1 yapısındadır.
-          </div>
+      <div class="card">
+        <span class="eyebrow">GLOBAL ECONOMIC AI OPERATING SYSTEM</span>
+        <h2 class="headline">Küresel risk, sinyal, piyasa ve ekonomik görünürlüğü tek sistemde toplayan ZENTRA’ya hoş geldin.</h2>
+        <div class="subtext">
+          ZENTRA; ekonomik gözlem, sinyal işleme, risk görünürlüğü ve karar desteğini tek panel altında toplayan
+          çok katmanlı bir platformdur. Bu ilk ekran tanıtım katmanıdır. Buradan platforma girilir, ardından
+          Economic Terminal, Economic Globe Pro ve RiskLens gibi derin sistem modüllerine geçilir.
         </div>
 
         <div class="cta-row">
-          <a class="btn primary" href="/risklens/economic-terminal.html">Economic Terminal Aç</a>
-          <a class="btn" href="/economic-globe.html">Economic Globe Aç</a>
-          <a class="btn" href="/risklens/dashboard.html">RiskLens Aç</a>
-          <a class="btn" href="/risklens/signals.html">Signals Aç</a>
+          <a class="btn primary" href="/platform.html">Enter Platform</a>
+          <a class="btn" href="/risklens/economic-terminal.html">Economic Terminal</a>
+          <a class="btn" href="/economic-globe.html">Economic Globe</a>
+          <a class="btn" href="/risklens/dashboard.html">RiskLens</a>
         </div>
       </div>
 
-      <div class="hero-side">
-        <div class="metric">
-          <div class="label">Platform Status</div>
-          <div class="value ok">Operational</div>
-        </div>
-        <div class="metric">
-          <div class="label">Deployment</div>
-          <div class="value">GitHub Pages</div>
-        </div>
-        <div class="metric">
-          <div class="label">Runtime Mode</div>
-          <div class="value">Static V1</div>
+      <div class="card">
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="label">Platform Status</div>
+            <div class="value ok">Active</div>
+          </div>
+          <div class="metric">
+            <div class="label">Deployment</div>
+            <div class="value">GitHub Pages</div>
+          </div>
+          <div class="metric">
+            <div class="label">Current Mode</div>
+            <div class="value">Static V1</div>
+          </div>
+          <div class="metric">
+            <div class="label">Risk Snapshot</div>
+            <div class="value warn">76</div>
+          </div>
         </div>
       </div>
     </section>
@@ -393,8 +388,8 @@
         <div class="module-top">
           <h3>Economic Terminal</h3>
           <p>
-            Global risk score, dominant driver, market monitor, signals panel ve strategic advisory
-            görünümünü tek ekranda sunan ana operasyon paneli.
+            Küresel risk skoru, dominant driver, market monitor, signals panel ve strategic advisory
+            görünümünü tek ekranda toplayan ana operasyon katmanı.
           </p>
           <div class="tag-row">
             <span class="tag">Markets</span>
@@ -404,27 +399,28 @@
           </div>
         </div>
         <div class="module-bottom">
-          <div class="module-status ok">Status: Active</div>
-          <a class="btn" href="/risklens/economic-terminal.html">Aç</a>
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/risklens/economic-terminal.html">Open</a>
         </div>
       </article>
 
       <article class="card module">
         <div class="module-top">
-          <h3>Economic Globe</h3>
+          <h3>Economic Globe Pro</h3>
           <p>
-            Küresel ekonomik görünürlüğü, coğrafi baskı ve genel sistem perspektifini sunan
-            görsel katman. Global Telescope yönünün ilk gösterim yüzü.
+            Dönen küre görünümü ile interaktif dünya risk haritasını aynı modülde sunan
+            küresel gözlem ve görünürlük katmanı.
           </p>
           <div class="tag-row">
-            <span class="tag">Global View</span>
-            <span class="tag">Macro</span>
-            <span class="tag">Map Layer</span>
+            <span class="tag">Globe</span>
+            <span class="tag">Map</span>
+            <span class="tag">Overlay</span>
+            <span class="tag">Signals</span>
           </div>
         </div>
         <div class="module-bottom">
-          <div class="module-status ok">Status: Active</div>
-          <a class="btn" href="/economic-globe.html">Aç</a>
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/economic-globe.html">Open</a>
         </div>
       </article>
 
@@ -432,69 +428,69 @@
         <div class="module-top">
           <h3>RiskLens</h3>
           <p>
-            Risk odaklı görünüm. Dashboard, signals, sectors ve worldmap katmanlarıyla
-            risk zekâsının ilk ürün yüzünü oluşturur.
+            Risk dashboard ve signals görünümü ile ZENTRA’nın risk zekâsı çekirdeğini
+            ürün yüzüne taşıyan analiz katmanı.
           </p>
           <div class="tag-row">
             <span class="tag">Risk</span>
-            <span class="tag">Dashboard</span>
             <span class="tag">Signals</span>
+            <span class="tag">Dashboard</span>
           </div>
         </div>
         <div class="module-bottom">
-          <div class="module-status warn">Status: Partial+</div>
-          <a class="btn" href="/risklens/dashboard.html">Aç</a>
+          <div class="status warn">Status: Partial+</div>
+          <a class="btn" href="/risklens/dashboard.html">Open</a>
         </div>
       </article>
     </section>
 
     <section class="grid">
       <div class="card info-left">
-        <h2>V1 Core Map</h2>
-        <div class="two-col">
+        <h2 class="section-title">ZENTRA Akış Mimarisi</h2>
+        <div class="mini-grid">
           <div class="mini">
-            <div class="label">Çalışan Ana Yol</div>
-            <div class="value">Index → Terminal → Globe → RiskLens</div>
+            <div class="label">Layer 1</div>
+            <div class="value">Landing / Introduction</div>
           </div>
           <div class="mini">
-            <div class="label">Signal Core</div>
-            <div class="value">global-signals.json + signal-engine.js</div>
+            <div class="label">Layer 2</div>
+            <div class="value">Platform Control</div>
           </div>
           <div class="mini">
-            <div class="label">V1 Mode</div>
-            <div class="value">Static Data Operational</div>
+            <div class="label">Layer 3</div>
+            <div class="value">Deep System Modules</div>
           </div>
           <div class="mini">
-            <div class="label">Infra State</div>
-            <div class="value">Vercel Removed / Render Removed</div>
+            <div class="label">Navigation Model</div>
+            <div class="value">Landing → Platform → Hamburger</div>
           </div>
         </div>
       </div>
 
       <div class="card info-right">
-        <h2>System Notes</h2>
+        <h2 class="section-title">System Notes</h2>
         <div class="list">
           <div class="list-item">
             <strong>Current State</strong>
-            <span>ZENTRA V1 şu anda sadeleştirilmiş, deploy karmaşasından temizlenmiş ve GitHub Pages üzerinde çalışan bir ürün demosu halindedir.</span>
+            <span>ZENTRA V1 şu anda çalışan ana ekranlara sahiptir: Control Panel, Economic Terminal, Economic Globe Pro, RiskLens Dashboard ve Signals.</span>
           </div>
           <div class="list-item">
-            <strong>Priority</strong>
-            <span>Bu aşamadan sonra amaç yeni mimari açmak değil; mevcut çalışan ekranları aynı sinyal çekirdeğiyle bağlayarak V1’i sabitlemektir.</span>
+            <strong>Architecture</strong>
+            <span>Bu sayfa tanıtım katmanıdır. Platform ikinci katmandır. Derin sistem modülleri platform ve hamburger menü üzerinden açılır.</span>
           </div>
           <div class="list-item">
-            <strong>Next Phase</strong>
-            <span>RiskLens dashboard, signals sayfası ve economic globe katmanını aynı veri modeliyle tek platform hissine taşımak.</span>
+            <strong>Next Step</strong>
+            <span>Ortak veri modeli, world map katmanı, live data ve karar motoru ile sistemi daha derin ürün seviyesine taşımak.</span>
           </div>
         </div>
       </div>
     </section>
 
     <div class="footer">
-      ZENTRA / Control Panel / Global Economic AI Operating System
+      ZENTRA / Landing Layer / Global Economic AI Operating System
     </div>
 
   </div>
 
 </body>
-  </html>
+</html>

@@ -19,21 +19,16 @@ if(localStorage.getItem("zentraCoreAccess")!=="true"){
   --bg2:#091423;
   --panel:#0c1828;
   --panel2:#13263a;
-  --panel3:#0f2134;
   --line:#1f3a56;
   --line2:#2b5378;
   --text:#eef4ff;
   --muted:#9fb4cc;
-  --accent:#4da3ff;
   --high:#ff6b6b;
   --medium:#ffb347;
   --low:#38d39f;
-  --shadow:0 20px 50px rgba(0,0,0,.35);
 }
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
@@ -43,441 +38,114 @@ body{
     radial-gradient(circle at top right, rgba(56,211,159,.05), transparent 20%),
     linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
 }
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-.wrap{
-  max-width:1420px;
-  margin:auto;
-  padding:20px;
-}
-
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1400px;margin:auto;padding:20px}
 .topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-  padding:16px 18px;
-  background:rgba(12,24,40,.92);
-  border:1px solid var(--line);
-  border-radius:18px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(10px);
-  position:sticky;
-  top:10px;
-  z-index:50;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  margin-bottom:18px;padding:16px 18px;background:rgba(12,24,40,.92);
+  border:1px solid var(--line);border-radius:18px;position:sticky;top:10px;z-index:20;
 }
-
-.brand h1{
-  margin:0;
-  font-size:30px;
-  letter-spacing:.3px;
-}
-
-.brand p{
-  margin:6px 0 0;
-  color:var(--muted);
-  font-size:14px;
-}
-
-.nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
+.brand h1{margin:0;font-size:30px}
+.brand p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.nav{display:flex;flex-wrap:wrap;gap:10px}
 .nav a{
-  padding:9px 12px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:var(--panel2);
-  color:var(--muted);
-  font-size:13px;
+  padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--panel2);color:var(--muted);font-size:13px;
 }
-
 .hero{
-  display:grid;
-  grid-template-columns:1.45fr .95fr;
-  gap:16px;
-  margin-bottom:16px;
+  display:grid;grid-template-columns:1.45fr .95fr;gap:16px;margin-bottom:16px;
 }
-
 .card{
-  background:rgba(12,24,40,.94);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  box-shadow:var(--shadow);
+  background:rgba(12,24,40,.94);border:1px solid var(--line);border-radius:18px;padding:18px;
 }
-
 .eyebrow{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:var(--panel2);
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:12px;
+  display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--muted);font-size:12px;margin-bottom:12px;
 }
-
-.headline{
-  margin:0 0 12px;
-  font-size:40px;
-  line-height:1.1;
-}
-
-.subtext{
-  color:var(--muted);
-  line-height:1.65;
-  font-size:15px;
-  margin-bottom:16px;
-}
-
-.cta-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
-
+.headline{margin:0 0 12px;font-size:40px;line-height:1.1}
+.subtext{color:var(--muted);line-height:1.65;font-size:15px;margin-bottom:16px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
 .btn{
-  min-height:46px;
-  padding:0 18px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:var(--panel2);
-  color:var(--text);
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  cursor:pointer;
+  min-height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--line);
+  background:var(--panel2);display:inline-flex;align-items:center;justify-content:center;font-weight:700;
 }
-
-.btn.primary{
-  background:linear-gradient(180deg,#17314a 0%, #11263a 100%);
-  border-color:#2f5f89;
-}
-
-.metric-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
+.btn.primary{background:linear-gradient(180deg,#17314a 0%, #11263a 100%)}
+.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .metric{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;
 }
-
-.metric .label{
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:8px;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-
-.metric .value{
-  font-size:28px;
-  font-weight:700;
-  line-height:1.1;
-}
-
-.risk-high{color:var(--high)}
-.risk-medium{color:var(--medium)}
-.risk-low{color:var(--low)}
-
-.section-title{
-  margin:0 0 12px;
-  font-size:22px;
-}
-
-.section-sub{
-  margin:0 0 14px;
-  color:var(--muted);
-  line-height:1.5;
-  font-size:14px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:16px;
-  margin-bottom:16px;
-}
-
+.metric .label{color:var(--muted);font-size:12px;margin-bottom:8px;text-transform:uppercase}
+.metric .value{font-size:28px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:16px}
 .col-12{grid-column:span 12}
 .col-7{grid-column:span 7}
 .col-6{grid-column:span 6}
 .col-5{grid-column:span 5}
 .col-3{grid-column:span 3}
-
-.module{
-  min-height:230px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-
-.module h3{
-  margin:0 0 10px;
-  font-size:22px;
-}
-
-.module p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.55;
-  font-size:14px;
-}
-
-.tag-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:14px;
-}
-
+.module{min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
+.module h3{margin:0 0 10px;font-size:22px}
+.module p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .tag{
-  border:1px solid var(--line);
-  background:var(--panel2);
-  border-radius:999px;
-  padding:5px 10px;
-  color:var(--muted);
-  font-size:12px;
+  border:1px solid var(--line);background:var(--panel2);border-radius:999px;
+  padding:5px 10px;color:var(--muted);font-size:12px;
 }
-
-.module-bottom{
-  margin-top:18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.status{
-  font-size:13px;
-  color:var(--muted);
-}
-
+.module-bottom{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.status{font-size:13px;color:var(--muted)}
 .ok{color:var(--low)}
 .warn{color:var(--medium)}
-
 #map{
-  width:100%;
-  height:620px;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--line2);
-  box-shadow:inset 0 0 0 1px rgba(77,163,255,.05);
+  width:100%;height:560px;border-radius:14px;overflow:hidden;border:1px solid var(--line2);
 }
-
-.leaflet-container{
-  background:#091423 !important;
-}
-
-.side-stack{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  height:100%;
-}
-
+.leaflet-container{background:#091423 !important}
+.side-stack{display:flex;flex-direction:column;gap:16px}
 .selected-box{
-  background:
-    radial-gradient(circle at top right, rgba(77,163,255,.08), transparent 32%),
-    var(--panel2);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:16px;
 }
-
-.selected-name{
-  font-size:24px;
-  font-weight:700;
-  margin-bottom:8px;
-}
-
-.selected-meta{
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:12px;
-}
-
+.selected-name{font-size:24px;font-weight:700;margin-bottom:8px}
+.selected-meta{color:var(--muted);font-size:14px;margin-bottom:12px}
 .badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  min-height:32px;
-  padding:0 12px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:#0c1d2f;
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  margin-bottom:12px;
+  display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 12px;border-radius:999px;
+  border:1px solid var(--line);background:#0c1d2f;font-size:12px;text-transform:uppercase;margin-bottom:12px;
 }
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  display:inline-block;
-}
-
-.advisory{
-  color:var(--muted);
-  line-height:1.6;
-  font-size:14px;
-}
-
-.signals{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.advisory{color:var(--muted);line-height:1.6;font-size:14px}
+.signals{display:flex;flex-direction:column;gap:10px}
 .signal{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;
 }
-
 .signal-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin-bottom:10px;
+  display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px;
 }
-
 .sev{
-  font-size:11px;
-  text-transform:uppercase;
-  padding:4px 10px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  letter-spacing:.5px;
+  font-size:11px;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);
 }
-
 .high{color:var(--high)}
 .medium{color:var(--medium)}
 .low{color:var(--low)}
-
-.signal p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.5;
-  font-size:13px;
-}
-
-.stream{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
+.signal p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}
+.stream{display:flex;flex-direction:column;gap:10px}
 .stream-item{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px 14px;
+  display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--panel2);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px;
 }
-
-.stream-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-
-.stream-dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  flex:0 0 auto;
-}
-
-.stream-title{
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.stream-right{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  flex:0 0 auto;
-}
-
-.legend{
-  display:grid;
-  gap:12px;
-}
-
+.stream-left{display:flex;align-items:center;gap:10px}
+.stream-dot{width:10px;height:10px;border-radius:50%}
+.legend{display:grid;gap:12px}
 .legend-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:var(--muted);
-  font-size:14px;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:12px;
+  display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;background:var(--panel2);
+  border:1px solid var(--line);border-radius:12px;padding:12px;
 }
-
-.swatch{
-  width:16px;
-  height:16px;
-  border-radius:5px;
-  border:1px solid rgba(255,255,255,.08);
-  flex:0 0 auto;
-}
-
-.footer{
-  text-align:right;
-  color:var(--muted);
-  font-size:13px;
-  margin-top:10px;
-  padding-bottom:8px;
-}
-
+.swatch{width:16px;height:16px;border-radius:5px}
+.footer{text-align:right;color:var(--muted);font-size:13px;margin-top:10px;padding-bottom:8px}
 @media (max-width:1180px){
-  .hero{
-    grid-template-columns:1fr;
-  }
-  .col-7,.col-6,.col-5,.col-3{
-    grid-column:span 12;
-  }
+  .hero{grid-template-columns:1fr}
+  .col-7,.col-6,.col-5,.col-3{grid-column:span 12}
 }
-
 @media (max-width:760px){
-  .metric-grid{
-    grid-template-columns:1fr;
-  }
-  .headline{
-    font-size:30px;
-  }
-  #map{
-    height:500px;
-  }
+  .metric-grid{grid-template-columns:1fr}
+  .headline{font-size:30px}
+  #map{height:420px}
 }
 </style>
 </head>
@@ -488,11 +156,10 @@ a{
   <div class="topbar">
     <div class="brand">
       <h1>ZENTRA Main System</h1>
-      <p>Global Economic AI Operating System / core protected main screen</p>
+      <p>Core protected unified screen</p>
     </div>
-
     <div class="nav">
-      <a href="#landing">Overview</a>
+      <a href="#overview">Overview</a>
       <a href="#modules">Modules</a>
       <a href="#command">Command</a>
       <a href="#maparea">Map</a>
@@ -500,18 +167,17 @@ a{
     </div>
   </div>
 
-  <section class="hero" id="landing">
+  <section class="hero" id="overview">
     <div class="card">
       <span class="eyebrow">CORE SYSTEM LAYER</span>
-      <h2 class="headline">ZENTRA’nın derin sistem ekranı. Küresel risk, sinyal, piyasa ve stratejik advisory tek merkezde toplanır.</h2>
+      <h2 class="headline">Küresel risk, sinyal, market ve stratejik advisory tek merkezde.</h2>
       <div class="subtext">
-        Bu ekran core erişim korumalı ana derin katmandır. Command Center, Globe, Market, Signals ve RiskLens
-        mantığını tek panelde birleştirir.
+        Bu ekran ZENTRA’nın core korumalı birleşik ana sistemidir. Engine katmanı buradan merkezi şekilde görünür.
       </div>
       <div class="cta-row">
         <a class="btn primary" href="#command">Open Command Layer</a>
-        <a class="btn" href="#modules">View Modules</a>
         <a class="btn" href="/command-center.html">Command Center</a>
+        <a class="btn" href="/risklens/dashboard.html">RiskLens</a>
       </div>
     </div>
 
@@ -526,12 +192,12 @@ a{
           <div class="value">GitHub Pages</div>
         </div>
         <div class="metric">
-          <div class="label">Current Mode</div>
-          <div class="value">Core Protected</div>
+          <div class="label">Data Source</div>
+          <div class="value" id="dataSource">--</div>
         </div>
         <div class="metric">
           <div class="label">Risk Snapshot</div>
-          <div class="value risk-medium" id="heroRiskScore">--</div>
+          <div class="value warn" id="heroRiskScore">--</div>
         </div>
       </div>
     </div>
@@ -541,7 +207,7 @@ a{
     <article class="card module col-3">
       <div>
         <h3>Economic Terminal</h3>
-        <p>Global risk score, dominant driver, market pressure ve advisory görünümünü veren ana operasyon katmanı.</p>
+        <p>Global risk score, driver, market pressure ve advisory görünümü.</p>
         <div class="tag-row">
           <span class="tag">Markets</span>
           <span class="tag">Signals</span>
@@ -549,7 +215,7 @@ a{
         </div>
       </div>
       <div class="module-bottom">
-        <div class="status ok">Status: Built</div>
+        <div class="status ok">Built</div>
         <a class="btn" href="/risklens/economic-terminal.html">Open</a>
       </div>
     </article>
@@ -557,15 +223,15 @@ a{
     <article class="card module col-3">
       <div>
         <h3>Economic Globe</h3>
-        <p>Küresel görünürlük, ekonomik yüzey ve observation katmanını sunan görsel ekran.</p>
+        <p>Küresel observation ve economic surface görünümü.</p>
         <div class="tag-row">
           <span class="tag">Globe</span>
-          <span class="tag">Map</span>
           <span class="tag">Visual</span>
+          <span class="tag">Observation</span>
         </div>
       </div>
       <div class="module-bottom">
-        <div class="status ok">Status: Built</div>
+        <div class="status ok">Built</div>
         <a class="btn" href="/economic-globe.html">Open</a>
       </div>
     </article>
@@ -573,7 +239,7 @@ a{
     <article class="card module col-3">
       <div>
         <h3>RiskLens</h3>
-        <p>Risk dashboard, signals ve world map ile risk zekâsını ürün yüzüne taşıyan analiz katmanı.</p>
+        <p>Dashboard, signals ve world map ile risk intelligence görünümü.</p>
         <div class="tag-row">
           <span class="tag">Dashboard</span>
           <span class="tag">Signals</span>
@@ -581,7 +247,7 @@ a{
         </div>
       </div>
       <div class="module-bottom">
-        <div class="status ok">Status: Built</div>
+        <div class="status ok">Built</div>
         <a class="btn" href="/risklens/dashboard.html">Open</a>
       </div>
     </article>
@@ -589,7 +255,7 @@ a{
     <article class="card module col-3">
       <div>
         <h3>Market Live</h3>
-        <p>Canlı piyasa görünümü ile terminal hissini güçlendiren ayrı market katmanı.</p>
+        <p>Canlı market görünümü ve piyasa izleme katmanı.</p>
         <div class="tag-row">
           <span class="tag">Live</span>
           <span class="tag">Markets</span>
@@ -597,7 +263,7 @@ a{
         </div>
       </div>
       <div class="module-bottom">
-        <div class="status ok">Status: Built</div>
+        <div class="status ok">Built</div>
         <a class="btn" href="/market-live.html">Open</a>
       </div>
     </article>
@@ -606,11 +272,7 @@ a{
   <section class="grid" id="command">
     <div class="card col-12">
       <h2 class="section-title">Global Command Snapshot</h2>
-      <p class="section-sub">
-        ZENTRA’nın üst risk ve karar görünümü. Risk seviyesi, dominant driver, market baskıları ve sinyal yoğunluğu burada birleşir.
-      </p>
-
-      <div class="metric-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="metric-grid" style="grid-template-columns:repeat(4,1fr)">
         <div class="metric">
           <div class="label">Global Risk Score</div>
           <div class="value" id="globalRiskScore">--</div>
@@ -642,44 +304,24 @@ a{
         <h2 class="section-title">Selected Region</h2>
         <div class="selected-box">
           <div class="selected-name" id="selectedRegion">No Region Selected</div>
-          <div class="selected-meta">Haritadaki bir ülkeye tıkla</div>
+          <div class="selected-meta">Haritadaki bir işaretçiye tıkla</div>
           <div class="badge">
-            <span class="dot" id="selectedDot" style="background:#4da3ff;"></span>
+            <span class="dot" id="selectedDot" style="background:#4da3ff"></span>
             <span id="selectedRisk">No selection</span>
           </div>
-          <div class="advisory" id="strategicNote">
-            Global energy and logistics pressure remain the primary strategic drivers.
-          </div>
+          <div class="advisory" id="strategicNote">No region selected.</div>
         </div>
       </div>
 
       <div class="card">
         <h2 class="section-title">Market Snapshot</h2>
         <div class="metric-grid">
-          <div class="metric">
-            <div class="label">Oil</div>
-            <div class="value" id="oil">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Gold</div>
-            <div class="value" id="gold">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">S&P 500</div>
-            <div class="value" id="sp500">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Interest</div>
-            <div class="value" id="interest">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Shipping</div>
-            <div class="value" id="shipping">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Signals Count</div>
-            <div class="value" id="signalCount">--</div>
-          </div>
+          <div class="metric"><div class="label">Oil</div><div class="value" id="oil">--</div></div>
+          <div class="metric"><div class="label">Gold</div><div class="value" id="gold">--</div></div>
+          <div class="metric"><div class="label">S&P 500</div><div class="value" id="sp500">--</div></div>
+          <div class="metric"><div class="label">Interest</div><div class="value" id="interest">--</div></div>
+          <div class="metric"><div class="label">Shipping</div><div class="value" id="shipping">--</div></div>
+          <div class="metric"><div class="label">Signals Count</div><div class="value" id="signalCount">--</div></div>
         </div>
       </div>
     </div>
@@ -701,30 +343,19 @@ a{
     <div class="card col-6">
       <h2 class="section-title">Risk Legend</h2>
       <div class="legend">
-        <div class="legend-item">
-          <span class="swatch" style="background:#38d39f;"></span>
-          <span>Low Risk — daha stabil görünüm, baskı sınırlı</span>
-        </div>
-        <div class="legend-item">
-          <span class="swatch" style="background:#ffb347;"></span>
-          <span>Medium Risk — izleme artmalı, hassasiyet büyüyor</span>
-        </div>
-        <div class="legend-item">
-          <span class="swatch" style="background:#ff6b6b;"></span>
-          <span>High Risk — baskı yüksek, hızlı karar desteği gerekli</span>
-        </div>
+        <div class="legend-item"><span class="swatch" style="background:#38d39f"></span><span>Low Risk</span></div>
+        <div class="legend-item"><span class="swatch" style="background:#ffb347"></span><span>Medium Risk</span></div>
+        <div class="legend-item"><span class="swatch" style="background:#ff6b6b"></span><span>High Risk</span></div>
       </div>
     </div>
 
     <div class="card col-6">
       <h2 class="section-title">Strategic Advisory</h2>
-      <div class="advisory" id="globalAdvisory">
-        Loading advisory...
-      </div>
+      <div class="advisory" id="globalAdvisory">Loading advisory...</div>
     </div>
   </section>
 
-  <div class="footer">ZENTRA / Main System / Core Protected Unified Screen</div>
+  <div class="footer">ZENTRA / Main System / Core Protected</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -732,30 +363,28 @@ a{
 <script type="module">
 import { runBrain } from "./engines/brainEngine.js";
 
-const brain = runBrain();
-
 const countries = [
-  { name: "United States", lat: 37.0902, lng: -95.7129, risk: "medium", score: 58, note: "Moderate pressure from rates and logistics." },
-  { name: "Germany", lat: 51.1657, lng: 10.4515, risk: "medium", score: 55, note: "Industrial demand remains under pressure." },
-  { name: "Turkey", lat: 38.9637, lng: 35.2433, risk: "high", score: 74, note: "Energy and regional trade pressure elevated." },
-  { name: "China", lat: 35.8617, lng: 104.1954, risk: "medium", score: 61, note: "Supply and shipping dynamics remain sensitive." },
-  { name: "Brazil", lat: -14.2350, lng: -51.9253, risk: "low", score: 39, note: "Risk profile remains relatively contained." },
-  { name: "United Kingdom", lat: 55.3781, lng: -3.4360, risk: "medium", score: 52, note: "Financial sensitivity remains moderate." },
-  { name: "South Africa", lat: -30.5595, lng: 22.9375, risk: "high", score: 71, note: "High macro and logistics pressure." },
-  { name: "India", lat: 20.5937, lng: 78.9629, risk: "medium", score: 60, note: "Growth remains strong but exposed to imports." }
+  { name:"United States", lat:37.0902, lng:-95.7129, risk:"medium", score:58, note:"Moderate pressure from rates and logistics." },
+  { name:"Germany", lat:51.1657, lng:10.4515, risk:"medium", score:55, note:"Industrial demand remains under pressure." },
+  { name:"Turkey", lat:38.9637, lng:35.2433, risk:"high", score:74, note:"Energy and regional trade pressure elevated." },
+  { name:"China", lat:35.8617, lng:104.1954, risk:"medium", score:61, note:"Supply and shipping dynamics remain sensitive." },
+  { name:"Brazil", lat:-14.2350, lng:-51.9253, risk:"low", score:39, note:"Risk profile remains relatively contained." }
 ];
 
 function getRiskColor(risk){
-  if (risk === "high") return "#ff6b6b";
-  if (risk === "medium") return "#ffb347";
+  if(risk==="high") return "#ff6b6b";
+  if(risk==="medium") return "#ffb347";
   return "#38d39f";
 }
 
-function renderTop(){
+async function startZentra(){
+  const brain = await runBrain();
+
   document.getElementById("globalRiskScore").textContent = brain.riskScore;
   document.getElementById("heroRiskScore").textContent = brain.riskScore;
   document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase();
   document.getElementById("driver").textContent = brain.driver;
+  document.getElementById("dataSource").textContent = brain.source || "unknown";
 
   document.getElementById("oil").textContent = brain.markets.oil;
   document.getElementById("gold").textContent = brain.markets.gold;
@@ -763,76 +392,58 @@ function renderTop(){
   document.getElementById("interest").textContent = brain.markets.interestRate;
   document.getElementById("shipping").textContent = brain.markets.shipping;
   document.getElementById("signalCount").textContent = brain.signals.length;
-
   document.getElementById("globalAdvisory").textContent =
     (brain.advisory.shortTerm || "") + " / " + (brain.advisory.midTerm || "");
-}
 
-function renderSignals(){
   const signalsBox = document.getElementById("signalsBox");
   const streamBox = document.getElementById("streamBox");
-
   signalsBox.innerHTML = "";
   streamBox.innerHTML = "";
 
-  brain.signals.forEach(s => {
-    const div = document.createElement("div");
-    div.className = "signal";
-    div.innerHTML = `
+  brain.signals.forEach(signal => {
+    const signalCard = document.createElement("div");
+    signalCard.className = "signal";
+    signalCard.innerHTML = `
       <div class="signal-head">
-        <strong>${s.title}</strong>
-        <span class="sev ${s.severity}">${s.severity}</span>
+        <strong>${signal.title}</strong>
+        <span class="sev ${signal.severity}">${signal.severity}</span>
       </div>
-      <p>${s.summary || "No summary available."}</p>
+      <p>${signal.summary || "No summary available."}</p>
     `;
-    signalsBox.appendChild(div);
+    signalsBox.appendChild(signalCard);
 
-    const color = getRiskColor(s.severity);
-    const row = document.createElement("div");
-    row.className = "stream-item";
-    row.innerHTML = `
+    const color = getRiskColor(signal.severity);
+    const streamRow = document.createElement("div");
+    streamRow.className = "stream-item";
+    streamRow.innerHTML = `
       <div class="stream-left">
-        <span class="stream-dot" style="background:${color};"></span>
-        <span class="stream-title">${s.title}</span>
+        <span class="stream-dot" style="background:${color}"></span>
+        <span>${signal.title}</span>
       </div>
-      <div class="stream-right ${s.severity}">${s.severity}</div>
+      <div class="sev ${signal.severity}">${signal.severity}</div>
     `;
-    streamBox.appendChild(row);
+    streamBox.appendChild(streamRow);
   });
-}
 
-function initMap(){
   const map = L.map("map", {
-    zoomControl: true,
-    attributionControl: false
-  }).setView([24, 12], 2);
+    zoomControl:true,
+    attributionControl:false
+  }).setView([24,12], 2);
 
   L.tileLayer(
     "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-    {
-      attribution: "&copy; OpenStreetMap & Carto",
-      subdomains: "abcd",
-      maxZoom: 19
-    }
+    { subdomains:"abcd", maxZoom:19 }
   ).addTo(map);
 
   countries.forEach(country => {
     const color = getRiskColor(country.risk);
-
     const marker = L.circleMarker([country.lat, country.lng], {
-      radius: 14,
-      color: color,
-      fillColor: color,
-      fillOpacity: 0.95,
-      weight: 3
+      radius:14,
+      color:color,
+      fillColor:color,
+      fillOpacity:0.95,
+      weight:3
     }).addTo(map);
-
-    marker.bindPopup(`
-      <strong>${country.name}</strong><br>
-      Risk: ${country.risk.toUpperCase()}<br>
-      Score: ${country.score}<br>
-      Note: ${country.note}
-    `);
 
     marker.on("click", () => {
       document.getElementById("selectedRegion").textContent = country.name;
@@ -843,10 +454,8 @@ function initMap(){
   });
 }
 
-renderTop();
-renderSignals();
-initMap();
+startZentra();
 </script>
 
 </body>
-          </html>
+  </html>

@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZENTRA Market Live</title>
+
 <script>
 if(localStorage.getItem("zentraCoreAccess")!=="true"){
   window.location="/core.html";
 }
 </script>
+
 <style>
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#eef4ff}
 .wrap{max-width:1200px;margin:auto;padding:20px}
@@ -17,7 +19,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#e
 .nav{display:flex;flex-wrap:wrap;gap:10px}
 .nav a{color:#9fb4cc;text-decoration:none;padding:8px 12px;border:1px solid #1f3a56;border-radius:10px;background:#13263a;font-size:13px}
 .card{background:#0d1b2a;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 .metric{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px}
 .label{font-size:12px;color:#9fb4cc;margin-bottom:8px;text-transform:uppercase}
 .value{font-size:28px;font-weight:700}
@@ -46,6 +48,7 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#e
 <div class="metric"><div class="label">S&amp;P500</div><div class="value" id="sp500">--</div></div>
 <div class="metric"><div class="label">Interest Rate</div><div class="value" id="interest">--</div></div>
 <div class="metric"><div class="label">Shipping</div><div class="value" id="shipping">--</div></div>
+<div class="metric"><div class="label">Data Source</div><div class="value" id="dataSource">--</div></div>
 </div>
 </div>
 
@@ -59,12 +62,19 @@ body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#e
 
 <script type="module">
 import { runBrain } from "./engines/brainEngine.js";
-const brain = runBrain();
-document.getElementById("oil").textContent = brain.markets.oil;
-document.getElementById("gold").textContent = brain.markets.gold;
-document.getElementById("sp500").textContent = brain.markets.sp500;
-document.getElementById("interest").textContent = brain.markets.interestRate;
-document.getElementById("shipping").textContent = brain.markets.shipping;
+
+async function startZentra(){
+  const brain = await runBrain();
+
+  document.getElementById("oil").textContent = brain.markets.oil;
+  document.getElementById("gold").textContent = brain.markets.gold;
+  document.getElementById("sp500").textContent = brain.markets.sp500;
+  document.getElementById("interest").textContent = brain.markets.interestRate;
+  document.getElementById("shipping").textContent = brain.markets.shipping;
+  document.getElementById("dataSource").textContent = brain.source || "unknown";
+}
+
+startZentra();
 </script>
 </body>
 </html>

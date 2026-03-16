@@ -1,164 +1,332 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA RiskLens Dashboard</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --panel:#0d1b2a;
+      --panel2:#13263a;
+      --line:#1f3a56;
+      --text:#eaf2ff;
+      --muted:#9fb4cc;
+      --high:#ff6b6b;
+      --medium:#ffb347;
+      --low:#38d39f;
+      --accent:#4da3ff;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    *{box-sizing:border-box}
 
-<title>ZENTRA RiskLens Control Center</title>
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#06101d 0%, #081523 100%);
+      color:var(--text);
+    }
 
-<style>
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:24px;
+    }
 
-body{
-background:#0b1320;
-color:white;
-font-family:Arial;
-margin:0;
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:16px 18px;
+      margin-bottom:20px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(13,27,42,.92);
+    }
 
-header{
-background:#111a2c;
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+    .brand h1{
+      margin:0;
+      font-size:24px;
+    }
 
-.brand{
-font-size:22px;
-color:#63b3ff;
-font-weight:bold;
-}
+    .brand p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
 
-.menu{
-display:flex;
-gap:20px;
-}
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--muted);
+      font-size:13px;
+    }
 
-.menu a{
-color:white;
-text-decoration:none;
-}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+    }
 
-.dashboard{
-padding:40px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
+    .card{
+      background:rgba(13,27,42,.92);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
 
-.panel{
-background:#101a2d;
-border:1px solid #24395f;
-border-radius:12px;
-padding:20px;
-}
+    .card h2{
+      margin:0 0 14px;
+      font-size:18px;
+    }
 
-.panel h3{
-color:#8fd7ff;
-margin-top:0;
-}
+    .hero{
+      grid-column:span 12;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:14px;
+    }
 
-.market{
-display:flex;
-justify-content:space-between;
-margin-bottom:8px;
-}
+    .hero-box{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      min-height:120px;
+    }
 
-.signal{
-margin-bottom:10px;
-padding:10px;
-background:#16233b;
-border-radius:6px;
-}
+    .label{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+    }
 
-</style>
+    .big{
+      font-size:40px;
+      font-weight:700;
+      line-height:1;
+    }
 
-<script>
+    .mid{
+      font-size:24px;
+      font-weight:700;
+    }
 
-if(!localStorage.getItem("zentraAuth")){
-window.location.href="/zentra-entry.html";
-}
+    .summary{
+      margin-top:12px;
+      color:var(--muted);
+      line-height:1.5;
+    }
 
-</script>
+    .markets{
+      grid-column:span 12;
+    }
 
+    .market-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+    }
+
+    .metric{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .metric .value{
+      font-size:28px;
+      font-weight:700;
+      margin-top:8px;
+    }
+
+    .signals{
+      grid-column:span 8;
+    }
+
+    .signal-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .signal-item{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .signal-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .signal-summary{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .signal-severity{
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      text-transform:uppercase;
+      border:1px solid var(--line);
+    }
+
+    .signal-severity.high{
+      color:var(--high);
+    }
+
+    .signal-severity.medium{
+      color:var(--medium);
+    }
+
+    .signal-severity.low{
+      color:var(--low);
+    }
+
+    .side{
+      grid-column:span 4;
+    }
+
+    .side-stack{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .mini{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .footer-note{
+      margin-top:18px;
+      text-align:right;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width:900px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+      .signals,.side{
+        grid-column:span 12;
+      }
+      .market-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width:560px){
+      .market-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
 
-<header>
+    <div class="topbar">
+      <div class="brand">
+        <h1>ZENTRA RiskLens Dashboard</h1>
+        <p>Global signals, market pressure and core risk visibility.</p>
+      </div>
+      <div class="pill">ZENTRA V1</div>
+    </div>
 
-<div class="brand">ZENTRA</div>
+    <div class="grid">
 
-<div class="menu">
-<a href="/risklens/dashboard.html">RiskLens</a>
-<a href="/finance-demo.html">Finance</a>
-<a href="/trade/index.html">Trade</a>
-<a href="/telescope/index.html">Telescope</a>
-</div>
+      <section class="card hero">
+        <div class="hero-box">
+          <div class="label">Global Risk Score</div>
+          <div class="big" id="globalRiskScore">--</div>
+          <div class="summary" id="riskSummary">Loading...</div>
+        </div>
 
-</header>
+        <div class="hero-box">
+          <div class="label">Risk Level</div>
+          <div class="mid" id="riskLevel">--</div>
+        </div>
 
-<div class="dashboard">
+        <div class="hero-box">
+          <div class="label">Dominant Driver</div>
+          <div class="mid" id="dominantDriver">--</div>
+        </div>
+      </section>
 
-<div class="panel">
+      <section class="card markets">
+        <h2>Market Overview</h2>
+        <div class="market-grid">
+          <div class="metric">
+            <div class="label">Oil</div>
+            <div class="value" id="oilValue">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">Gold</div>
+            <div class="value" id="goldValue">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">S&amp;P 500</div>
+            <div class="value" id="sp500Value">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">Interest Rate</div>
+            <div class="value" id="interestValue">--</div>
+          </div>
+          <div class="metric">
+            <div class="label">Shipping</div>
+            <div class="value" id="shippingValue">--</div>
+          </div>
+        </div>
+      </section>
 
-<h3>Global Risk</h3>
+      <section class="card signals">
+        <h2>Signals</h2>
+        <div class="signal-list" id="signalsList">
+          <div class="signal-item">Loading signals...</div>
+        </div>
+      </section>
 
-<p>Risk Score: 96</p>
-<p>Driver: Energy Shock</p>
+      <aside class="card side">
+        <h2>System Notes</h2>
+        <div class="side-stack">
+          <div class="mini">
+            <div class="label">Mode</div>
+            <div class="mid">Static Data</div>
+          </div>
+          <div class="mini">
+            <div class="label">Engine</div>
+            <div class="mid">Signal Engine V1</div>
+          </div>
+          <div class="mini">
+            <div class="label">Status</div>
+            <div class="mid">Operational</div>
+          </div>
+        </div>
+      </aside>
 
-</div>
+    </div>
 
-<div class="panel">
+    <div class="footer-note">
+      ZENTRA / RiskLens / Economic AI Operating Layer
+    </div>
+  </div>
 
-<h3>Markets</h3>
-
-<div class="market"><span>Oil</span><span>82</span></div>
-<div class="market"><span>Gold</span><span>2310</span></div>
-<div class="market"><span>S&P500</span><span>5180</span></div>
-<div class="market"><span>Interest Rate</span><span>4.8</span></div>
-
-</div>
-
-<div class="panel">
-
-<h3>Active Risk Signals</h3>
-
-<div class="signal">Oil Price Surge — Energy</div>
-<div class="signal">Shipping Congestion — Logistics</div>
-<div class="signal">Cyber Pressure — Banking</div>
-<div class="signal">Port Stress — Trade</div>
-
-</div>
-
-<div class="panel">
-
-<h3>Trade Pressure</h3>
-
-<p>Freight Cost Escalation Belt</p>
-<p>Logistics costs rising across global routes.</p>
-
-</div>
-
-<div class="panel">
-
-<h3>Global Telescope</h3>
-
-<p>Supply Chain Monitoring Active</p>
-<p>Ports under stress detected.</p>
-
-</div>
-
-<div class="panel">
-
-<h3>AI Economic Advisor</h3>
-
-<p>Energy shock risk spreading into logistics and manufacturing sectors.</p>
-
-</div>
-
-</div>
-
+  <script type="module" src="../assets/js/dashboard-v1.js"></script>
 </body>
-  </html>
+</html>

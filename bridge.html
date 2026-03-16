@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA Global Command Bridge</title>
+  <style>
+    :root{
+      --bg:#040914;
+      --bg2:#091423;
+      --panel:#0c1828;
+      --panel2:#13263a;
+      --line:#1f3a56;
+      --text:#eef4ff;
+      --muted:#9fb4cc;
+      --accent:#4da3ff;
+      --high:#ff6b6b;
+      --medium:#ffb347;
+      --low:#38d39f;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(77,163,255,.10), transparent 26%),
+        radial-gradient(circle at top right, rgba(56,211,159,.06), transparent 22%),
+        linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1360px;margin:auto;padding:20px}
+    .topbar{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      padding:16px 18px;background:rgba(12,24,40,.92);border:1px solid var(--line);
+      border-radius:18px;margin-bottom:18px;
+    }
+    .brand h1{margin:0;font-size:30px}
+    .brand p{margin:6px 0 0;color:var(--muted);font-size:14px}
+    .nav{display:flex;flex-wrap:wrap;gap:10px}
+    .nav a{
+      padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+      background:var(--panel2);color:var(--muted);font-size:13px;
+    }
+    .hero{
+      display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px;
+    }
+    .card{
+      background:rgba(12,24,40,.94);border:1px solid var(--line);
+      border-radius:18px;padding:18px;
+    }
+    .eyebrow{
+      display:inline-block;padding:6px 10px;border-radius:999px;
+      background:var(--panel2);border:1px solid var(--line);color:var(--muted);
+      font-size:12px;margin-bottom:12px;
+    }
+    .headline{margin:0 0 12px;font-size:38px;line-height:1.12}
+    .subtext{color:var(--muted);line-height:1.6;margin-bottom:16px}
+    .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{
+      min-height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--line);
+      background:var(--panel2);display:inline-flex;align-items:center;justify-content:center;
+      font-weight:700;
+    }
+    .btn.primary{
+      background:linear-gradient(180deg,#17314a 0%, #11263a 100%);
+      border-color:#2f5f89;
+    }
+    .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .metric{
+      background:var(--panel2);border:1px solid var(--line);
+      border-radius:14px;padding:14px;
+    }
+    .metric .label{color:var(--muted);font-size:12px;margin-bottom:8px}
+    .metric .value{font-size:26px;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .module{
+      grid-column:span 3;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .module h3{margin:0 0 10px;font-size:22px}
+    .module p{margin:0;color:var(--muted);line-height:1.5;font-size:14px}
+    .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .tag{
+      border:1px solid var(--line);background:var(--panel2);border-radius:999px;
+      padding:5px 10px;color:var(--muted);font-size:12px;
+    }
+    .module-bottom{
+      margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .ok{color:var(--low)} .warn{color:var(--medium)} .bad{color:var(--high)}
+    .status{font-size:13px;color:var(--muted)}
+    .footer{text-align:right;color:var(--muted);font-size:13px;margin-top:10px;padding-bottom:8px}
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr}
+      .module{grid-column:span 6}
+    }
+    @media (max-width:680px){
+      .module{grid-column:span 12}
+      .metric-grid{grid-template-columns:1fr}
+      .headline{font-size:30px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <h1>ZENTRA Global Command Bridge</h1>
+      <p>Bridge layer / command routing / premium module access</p>
+    </div>
+    <div class="nav">
+      <a href="/">Landing</a>
+      <a href="/platform.html">Platform</a>
+      <a href="/command-center.html">Command Center</a>
+      <a href="/economic-globe.html">Globe</a>
+      <a href="/risklens/dashboard.html">RiskLens</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="card">
+      <span class="eyebrow">GLOBAL COMMAND BRIDGE</span>
+      <h2 class="headline">ZENTRA’nın çalışan modüllerini tek sıçrama noktasıyla birbirine bağlayan ana operasyon köprüsü.</h2>
+      <div class="subtext">
+        Bu ekran landing ve platform sonrası daha premium bir geçiş katmanıdır. Buradan Command Center,
+        Economic Terminal, Globe, RiskLens, Signals ve Market Live ekranlarına hızlı erişim verilir.
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="/command-center.html">Open Command Center</a>
+        <a class="btn" href="/risklens/economic-terminal.html">Terminal</a>
+        <a class="btn" href="/economic-globe.html">Globe</a>
+        <a class="btn" href="/risklens/dashboard.html">RiskLens</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="label">Global Risk Score</div>
+          <div class="value warn">76</div>
+        </div>
+        <div class="metric">
+          <div class="label">Risk Level</div>
+          <div class="value bad">HIGH</div>
+        </div>
+        <div class="metric">
+          <div class="label">Driver</div>
+          <div class="value">Energy</div>
+        </div>
+        <div class="metric">
+          <div class="label">Bridge Status</div>
+          <div class="value ok">Active</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <article class="card module">
+      <div>
+        <h3>Command Center</h3>
+        <p>Signals, world risk map, market snapshot ve strategic advisory’yi tek ekranda gösteren ana üst katman.</p>
+        <div class="tag-row">
+          <span class="tag">Risk</span>
+          <span class="tag">Map</span>
+          <span class="tag">Signals</span>
+        </div>
+      </div>
+      <div class="module-bottom">
+        <div class="status ok">Status: Built</div>
+        <a class="btn" href="/command-center.html">Open</a>
+      </div>
+    </article>
+
+    <article class="card module">
+      <div>
+        <h3>Economic Terminal</h3>
+        <p>Global risk score, dominant driver, market pressure ve advisory görünümünü veren operasyon ekranı.</p>
+        <div class="tag-row">
+          <span class="tag">Markets</span>
+          <span class="tag">Pressure</span>
+          <span class="tag">Advisory</span>
+        </div>
+      </div>
+      <div class="module-bottom">
+        <div class="status ok">Status: Built</div>
+        <a class="btn" href="/risklens/economic-terminal.html">Open</a>
+      </div>
+    </article>
+
+    <article class="card module">
+      <div>
+        <h3>Economic Globe Pro</h3>
+        <p>Dönen küre ve map mode ile küresel görünürlük veren visual telescope katmanı.</p>
+        <div class="tag-row">
+          <span class="tag">Globe</span>
+          <span class="tag">Map</span>
+          <span class="tag">Visual</span>
+        </div>
+      </div>
+      <div class="module-bottom">
+        <div class="status ok">Status: Built</div>
+        <a class="btn" href="/economic-globe.html">Open</a>
+      </div>
+    </article>
+
+    <article class="card module">
+      <div>
+        <h3>RiskLens</h3>
+        <p>Risk dashboard, signals ve world map üzerinden risk zekâsını ürün yüzüne taşıyan analiz katmanı.</p>
+        <div class="tag-row">
+          <span class="tag">Dashboard</span>
+          <span class="tag">Signals</span>
+          <span class="tag">Map</span>
+        </div>
+      </div>
+      <div class="module-bottom">
+        <div class="status warn">Status: Partial+</div>
+        <a class="btn" href="/risklens/dashboard.html">Open</a>
+      </div>
+    </article>
+  </section>
+
+  <div class="footer">ZENTRA / Bridge Layer / Premium Module Routing</div>
+
+</div>
+
+</body>
+          </html>

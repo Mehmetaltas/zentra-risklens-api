@@ -1,103 +1,485 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Access</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA</title>
 
-<style>
+  <style>
+    :root{
+      --bg:#050b14;
+      --panel:#0d1b2a;
+      --panel2:#13263a;
+      --line:#1f3a56;
+      --text:#eef4ff;
+      --muted:#9fb4cc;
+      --accent:#4da3ff;
+      --high:#ff6b6b;
+      --medium:#ffb347;
+      --low:#38d39f;
+    }
 
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#050c16;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-height:100vh;
-}
+    *{box-sizing:border-box}
 
-.box{
-background:#0d1b2a;
-border:1px solid #1f3a56;
-border-radius:14px;
-padding:40px;
-width:340px;
-text-align:center;
-}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#050b14 0%, #091423 100%);
+      color:var(--text);
+    }
 
-h1{
-margin-top:0;
-}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-input{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:8px;
-border:1px solid #1f3a56;
-background:#13263a;
-color:white;
-}
+    .wrap{
+      max-width:1240px;
+      margin:auto;
+      padding:20px;
+    }
 
-button{
-margin-top:14px;
-padding:12px;
-width:100%;
-border-radius:8px;
-border:none;
-background:#3a7cff;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:16px 18px;
+      background:rgba(13,27,42,.95);
+      border:1px solid var(--line);
+      border-radius:16px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
 
-.error{
-color:#ff6b6b;
-margin-top:10px;
-font-size:14px;
-}
+    .brand h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:.5px;
+    }
 
-</style>
+    .brand p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .nav a{
+      color:var(--muted);
+      font-size:14px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel2);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.6fr 1fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .card{
+      background:rgba(13,27,42,.95);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:12px;
+    }
+
+    .headline{
+      margin:0 0 14px;
+      font-size:42px;
+      line-height:1.12;
+      max-width:760px;
+    }
+
+    .subtext{
+      color:var(--muted);
+      line-height:1.65;
+      font-size:15px;
+      max-width:780px;
+      margin-bottom:18px;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .btn{
+      min-height:46px;
+      padding:0 18px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--text);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+    }
+
+    .btn.primary{
+      background:linear-gradient(180deg,#17314a 0%, #11263a 100%);
+      border-color:#2f5f89;
+    }
+
+    .metric-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .metric{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .metric .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+
+    .metric .value{
+      font-size:26px;
+      font-weight:700;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      font-size:24px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .module{
+      grid-column:span 4;
+      min-height:260px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .module-top h3{
+      margin:0 0 10px;
+      font-size:22px;
+    }
+
+    .module-top p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .tag{
+      border:1px solid var(--line);
+      background:var(--panel2);
+      border-radius:999px;
+      padding:5px 10px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .module-bottom{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .status{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .ok{color:var(--low)}
+    .warn{color:var(--medium)}
+
+    .info-left{
+      grid-column:span 7;
+    }
+
+    .info-right{
+      grid-column:span 5;
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .mini{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .mini .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+
+    .mini .value{
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .list-item{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .list-item strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:15px;
+    }
+
+    .list-item span{
+      color:var(--muted);
+      line-height:1.45;
+      font-size:13px;
+    }
+
+    .footer{
+      color:var(--muted);
+      text-align:right;
+      font-size:13px;
+      margin-top:6px;
+      padding-bottom:10px;
+    }
+
+    @media (max-width:980px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+      .module{
+        grid-column:span 6;
+      }
+      .info-left,.info-right{
+        grid-column:span 12;
+      }
+    }
+
+    @media (max-width:620px){
+      .headline{
+        font-size:30px;
+      }
+      .module{
+        grid-column:span 12;
+      }
+      .mini-grid{
+        grid-template-columns:1fr;
+      }
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="box">
+  <div class="wrap">
 
-<h1>ZENTRA</h1>
-<p>Platform Access Required</p>
+    <div class="topbar">
+      <div class="brand">
+        <h1>ZENTRA</h1>
+        <p>Global Economic AI Operating System</p>
+      </div>
 
-<input id="pass" type="password" placeholder="Enter Access Key">
+      <div class="nav">
+        <a href="/platform.html">Platform</a>
+        <a href="/docs.html">Docs</a>
+        <a href="/whitepaper.html">Whitepaper</a>
+        <a href="/investor.html">Investor</a>
+      </div>
+    </div>
 
-<button onclick="check()">Enter Platform</button>
+    <section class="hero">
+      <div class="card">
+        <span class="eyebrow">GLOBAL ECONOMIC AI OPERATING SYSTEM</span>
+        <h2 class="headline">Küresel risk, sinyal, piyasa ve ekonomik görünürlüğü tek sistemde toplayan ZENTRA’ya hoş geldin.</h2>
+        <div class="subtext">
+          ZENTRA; ekonomik gözlem, sinyal işleme, risk görünürlüğü ve karar desteğini tek panel altında toplayan
+          çok katmanlı bir platformdur. Bu ilk ekran tanıtım katmanıdır. Buradan platforma girilir, ardından
+          core erişim kapısı üzerinden derin sistem modüllerine geçilir.
+        </div>
 
-<div id="error" class="error"></div>
+        <div class="cta-row">
+          <a class="btn primary" href="/platform.html">Enter Platform</a>
+          <a class="btn" href="/docs.html">Open Docs</a>
+          <a class="btn" href="/whitepaper.html">Whitepaper</a>
+          <a class="btn" href="/investor.html">Investor</a>
+        </div>
+      </div>
 
-</div>
+      <div class="card">
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="label">Platform Status</div>
+            <div class="value ok">Active</div>
+          </div>
+          <div class="metric">
+            <div class="label">Deployment</div>
+            <div class="value">GitHub Pages</div>
+          </div>
+          <div class="metric">
+            <div class="label">Current Mode</div>
+            <div class="value">Static V1+</div>
+          </div>
+          <div class="metric">
+            <div class="label">Core Access</div>
+            <div class="value warn">Protected</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<script>
+    <section class="grid">
+      <article class="card module">
+        <div class="module-top">
+          <h3>Economic Terminal</h3>
+          <p>Küresel risk skoru, dominant driver, market monitor ve strategic advisory görünümünü veren ana operasyon katmanı.</p>
+          <div class="tag-row">
+            <span class="tag">Markets</span>
+            <span class="tag">Signals</span>
+            <span class="tag">Risk</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/core.html">Core Access</a>
+        </div>
+      </article>
 
-function check(){
+      <article class="card module">
+        <div class="module-top">
+          <h3>Economic Globe</h3>
+          <p>Küresel görünürlük, ekonomik yüzey ve derin sistem gözlem katmanını sunan görsel ekran.</p>
+          <div class="tag-row">
+            <span class="tag">Globe</span>
+            <span class="tag">Risk</span>
+            <span class="tag">Observation</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/core.html">Core Access</a>
+        </div>
+      </article>
 
-const pass=document.getElementById("pass").value
+      <article class="card module">
+        <div class="module-top">
+          <h3>RiskLens</h3>
+          <p>Risk dashboard, sinyaller ve world map ile ZENTRA’nın risk zekâsı çekirdeğini ürün yüzüne taşır.</p>
+          <div class="tag-row">
+            <span class="tag">Dashboard</span>
+            <span class="tag">Signals</span>
+            <span class="tag">Map</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/core.html">Core Access</a>
+        </div>
+      </article>
+    </section>
 
-if(pass==="ZentraCore"){
+    <section class="grid">
+      <div class="card info-left">
+        <h2 class="section-title">ZENTRA Akış Mimarisi</h2>
+        <div class="mini-grid">
+          <div class="mini">
+            <div class="label">Layer 1</div>
+            <div class="value">Landing / Introduction</div>
+          </div>
+          <div class="mini">
+            <div class="label">Layer 2</div>
+            <div class="value">Platform Access</div>
+          </div>
+          <div class="mini">
+            <div class="label">Layer 3</div>
+            <div class="value">Core Password Gate</div>
+          </div>
+          <div class="mini">
+            <div class="label">Layer 4</div>
+            <div class="value">Deep System Modules</div>
+          </div>
+        </div>
+      </div>
 
-localStorage.setItem("zentraAuth","true")
+      <div class="card info-right">
+        <h2 class="section-title">System Notes</h2>
+        <div class="list">
+          <div class="list-item">
+            <strong>Current State</strong>
+            <span>ZENTRA V1 çalışır platform, belge katmanı ve temel motor yapısıyla yayındadır.</span>
+          </div>
+          <div class="list-item">
+            <strong>Access Logic</strong>
+            <span>Landing ve Platform açık kalır. Derin sistem modüllerine giriş core erişim kapısı üzerinden yapılır.</span>
+          </div>
+          <div class="list-item">
+            <strong>Next Step</strong>
+            <span>Gerçek veri katmanı, canlı ekonomik veri akışı ve AI analiz motorlarının genişletilmesi.</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-window.location="/platform.html"
+    <div class="footer">
+      ZENTRA / Landing Layer / Global Economic AI Operating System
+    </div>
 
-}else{
-
-document.getElementById("error").innerText="Access Denied"
-
-}
-
-}
-
-</script>
+  </div>
 
 </body>
-</html>
+  </html>

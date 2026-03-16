@@ -1,14 +1,35 @@
 {
-  "risk_score": 72,
-  "risk_level": "Elevated",
-  "driver": "Oil shock + logistics stress",
+  "system": {
+    "name": "ZENTRA",
+    "mode": "V1 Static",
+    "status": "operational"
+  },
 
-  "oil": 82,
-  "gold": 2310,
-  "interest_rate": 4.8,
-  "sp500": 5180,
+  "markets": {
+    "oil": 82.4,
+    "gold": 2180.5,
+    "sp500": 5120.3,
+    "interestRate": 4.75,
+    "shipping": 1460
+  },
 
-  "inflation": 5.4,
-  "credit_stress": 61,
-  "volatility": 58
+  "signals": [
+    {
+      "title": "Energy Pressure",
+      "severity": "high",
+      "summary": "Energy costs are rising across key regions."
+    },
+    {
+      "title": "Logistics Stress",
+      "severity": "medium",
+      "summary": "Shipping routes remain under pressure."
+    },
+    {
+      "title": "Market Stress",
+      "severity": "low",
+      "summary": "Market volatility is present but contained."
+    }
+  ],
+
+  "driver": "Energy Pressure"
 }

@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZENTRA Platform</title>
+
+  <style>
+    :root{
+      --bg:#06101c;
+      --panel:#0d1b2a;
+      --panel2:#13263a;
+      --line:#1f3a56;
+      --text:#eef4ff;
+      --muted:#9fb4cc;
+      --accent:#4da3ff;
+      --high:#ff6b6b;
+      --medium:#ffb347;
+      --low:#38d39f;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#050b14 0%, #091423 100%);
+      color:var(--text);
+    }
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .wrap{
+      max-width:1240px;
+      margin:auto;
+      padding:20px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px 18px;
+      background:rgba(13,27,42,.95);
+      border:1px solid var(--line);
+      border-radius:16px;
+      margin-bottom:18px;
+      position:sticky;
+      top:12px;
+      z-index:10;
+      backdrop-filter:blur(10px);
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .burger{
+      width:44px;
+      height:44px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:24px;
+      letter-spacing:.4px;
+    }
+
+    .brand p{
+      margin:6px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .status-pill{
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--muted);
+      padding:10px 14px;
+      border-radius:999px;
+      white-space:nowrap;
+      font-size:13px;
+    }
+
+    .side-menu{
+      position:fixed;
+      top:0;
+      left:-320px;
+      width:300px;
+      height:100vh;
+      background:#08111f;
+      border-right:1px solid var(--line);
+      padding:20px;
+      transition:.25s ease;
+      z-index:30;
+      overflow:auto;
+    }
+
+    .side-menu.open{
+      left:0;
+    }
+
+    .menu-backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      display:none;
+      z-index:20;
+    }
+
+    .menu-backdrop.show{
+      display:block;
+    }
+
+    .menu-title{
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .menu-group{
+      margin-bottom:20px;
+    }
+
+    .menu-group h3{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .menu-link{
+      display:block;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:var(--panel);
+      margin-bottom:10px;
+      color:var(--text);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.6fr 1fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .card{
+      background:rgba(13,27,42,.95);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:12px;
+    }
+
+    .headline{
+      margin:0 0 12px;
+      font-size:34px;
+      line-height:1.15;
+    }
+
+    .subtext{
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:16px;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      min-height:44px;
+      padding:0 16px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--text);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+    }
+
+    .btn.primary{
+      background:linear-gradient(180deg,#17314a 0%, #11263a 100%);
+      border-color:#2f5f89;
+    }
+
+    .metric-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .metric{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .metric .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+
+    .metric .value{
+      font-size:26px;
+      font-weight:700;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .module{
+      grid-column:span 4;
+      min-height:250px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .module-top h2{
+      margin:0 0 10px;
+      font-size:22px;
+    }
+
+    .module-top p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .tag{
+      border:1px solid var(--line);
+      background:var(--panel2);
+      border-radius:999px;
+      padding:5px 10px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .module-bottom{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .status{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .ok{color:var(--low)}
+    .warn{color:var(--medium)}
+    .bad{color:var(--high)}
+
+    .info-left{
+      grid-column:span 7;
+    }
+
+    .info-right{
+      grid-column:span 5;
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .mini{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .mini .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+
+    .mini .value{
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .list-item{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .list-item strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:15px;
+    }
+
+    .list-item span{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .footer{
+      color:var(--muted);
+      text-align:right;
+      font-size:13px;
+      margin-top:6px;
+      padding-bottom:8px;
+    }
+
+    @media (max-width:980px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+      .module{
+        grid-column:span 6;
+      }
+      .info-left,.info-right{
+        grid-column:span 12;
+      }
+    }
+
+    @media (max-width:620px){
+      .module{
+        grid-column:span 12;
+      }
+      .mini-grid{
+        grid-template-columns:1fr;
+      }
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .headline{
+        font-size:28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <aside class="side-menu" id="sideMenu">
+    <div class="menu-title">ZENTRA Navigation</div>
+
+    <div class="menu-group">
+      <h3>Main</h3>
+      <a class="menu-link" href="/">Landing</a>
+      <a class="menu-link" href="/platform.html">Platform</a>
+      <a class="menu-link" href="/investor.html">Investor</a>
+    </div>
+
+    <div class="menu-group">
+      <h3>Core Modules</h3>
+      <a class="menu-link" href="/risklens/economic-terminal.html">Economic Terminal</a>
+      <a class="menu-link" href="/economic-globe.html">Economic Globe Pro</a>
+      <a class="menu-link" href="/risklens/dashboard.html">RiskLens Dashboard</a>
+      <a class="menu-link" href="/risklens/signals.html">Signals Intelligence</a>
+    </div>
+
+    <div class="menu-group">
+      <h3>Deep System</h3>
+      <a class="menu-link" href="/risklens/worldmap.html">World Map</a>
+      <a class="menu-link" href="/intelligence.html">Intelligence</a>
+      <a class="menu-link" href="/trade/">Trade Engine</a>
+      <a class="menu-link" href="/telescope/">Global Telescope</a>
+    </div>
+  </aside>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="top-left">
+        <button class="burger" id="burgerBtn" type="button">☰</button>
+        <div class="brand">
+          <h1>ZENTRA Platform</h1>
+          <p>Control layer / module launcher / deep system access</p>
+        </div>
+      </div>
+      <div class="status-pill">Platform Mode: Active / Static V1</div>
+    </div>
+
+    <section class="hero">
+      <div class="card">
+        <span class="eyebrow">PLATFORM ACCESS LAYER</span>
+        <h2 class="headline">ZENTRA’nın çalışan ana modüllerine ve derin sistem katmanlarına buradan girilir.</h2>
+        <div class="subtext">
+          Bu ekran, landing sonrası ikinci katmandır. Buradan Economic Terminal, Economic Globe Pro,
+          RiskLens ve Signals modüllerine geçilir. Hamburger menü ise derin sistem gezinmesini açar.
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="/risklens/economic-terminal.html">Terminal</a>
+          <a class="btn" href="/economic-globe.html">Globe Pro</a>
+          <a class="btn" href="/risklens/dashboard.html">RiskLens</a>
+          <a class="btn" href="/risklens/signals.html">Signals</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="label">Global Risk Score</div>
+            <div class="value">76</div>
+          </div>
+          <div class="metric">
+            <div class="label">Risk Level</div>
+            <div class="value warn">HIGH</div>
+          </div>
+          <div class="metric">
+            <div class="label">Dominant Driver</div>
+            <div class="value">Energy</div>
+          </div>
+          <div class="metric">
+            <div class="label">System Status</div>
+            <div class="value ok">Operational</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card module">
+        <div class="module-top">
+          <h2>Economic Terminal</h2>
+          <p>Global risk score, markets monitor, signals panel ve strategic advisory görünümünü sunan ana operasyon ekranı.</p>
+          <div class="tag-row">
+            <span class="tag">Markets</span>
+            <span class="tag">Signals</span>
+            <span class="tag">Risk</span>
+            <span class="tag">Advisory</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/risklens/economic-terminal.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card module">
+        <div class="module-top">
+          <h2>Economic Globe Pro</h2>
+          <p>Dönen küre görünümü ve interaktif Leaflet risk haritasını aynı modülde sunan küresel gözlem katmanı.</p>
+          <div class="tag-row">
+            <span class="tag">Globe</span>
+            <span class="tag">Map</span>
+            <span class="tag">Risk Overlay</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/economic-globe.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card module">
+        <div class="module-top">
+          <h2>RiskLens</h2>
+          <p>Risk dashboard ve sinyal katmanları ile ZENTRA risk zekâsının çekirdek ürün yüzünü oluşturur.</p>
+          <div class="tag-row">
+            <span class="tag">Risk</span>
+            <span class="tag">Signals</span>
+            <span class="tag">Dashboard</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status warn">Status: Partial+</div>
+          <a class="btn" href="/risklens/dashboard.html">Open</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <div class="card info-left">
+        <h2>Platform Structure</h2>
+        <div class="mini-grid">
+          <div class="mini">
+            <div class="label">Layer 1</div>
+            <div class="value">Landing / Introduction</div>
+          </div>
+          <div class="mini">
+            <div class="label">Layer 2</div>
+            <div class="value">Platform Control</div>
+          </div>
+          <div class="mini">
+            <div class="label">Layer 3</div>
+            <div class="value">Deep System + Hamburger</div>
+          </div>
+          <div class="mini">
+            <div class="label">Current Mode</div>
+            <div class="value">Stable Static Shell</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card info-right">
+        <h2>System Notes</h2>
+        <div class="list">
+          <div class="list-item">
+            <strong>Current State</strong>
+            <span>ZENTRA V1 şu anda landing, platform ve çalışan modüller arasında net akış kurabilecek noktaya geldi.</span>
+          </div>
+          <div class="list-item">
+            <strong>Navigation Model</strong>
+            <span>Landing tanıtım katmanıdır. Bu sayfa modül girişidir. Hamburger menü ise derin sisteme erişim verir.</span>
+          </div>
+          <div class="list-item">
+            <strong>Next Step</strong>
+            <span>World Map, data layer ve ortak veri modeli ile modülleri tek çekirdekte birleştirmek.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">ZENTRA / Platform Layer / Control Access</div>
+
+  </div>
+
+  <script>
+    const burgerBtn = document.getElementById("burgerBtn");
+    const sideMenu = document.getElementById("sideMenu");
+    const menuBackdrop = document.getElementById("menuBackdrop");
+
+    function openMenu(){
+      sideMenu.classList.add("open");
+      menuBackdrop.classList.add("show");
+    }
+
+    function closeMenu(){
+      sideMenu.classList.remove("open");
+      menuBackdrop.classList.remove("show");
+    }
+
+    burgerBtn.addEventListener("click", openMenu);
+    menuBackdrop.addEventListener("click", closeMenu);
+  </script>
+
+</body>
+  </html>

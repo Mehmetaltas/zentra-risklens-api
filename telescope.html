@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Global Economic Telescope</title>
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<style>
+
+:root{
+--bg:#030914;
+--bg2:#091423;
+--panel:#0c1828;
+--panel2:#13263a;
+--line:#1f3a56;
+--text:#eef4ff;
+--muted:#9fb4cc;
+--accent:#4da3ff;
+--high:#ff6b6b;
+--medium:#ffb347;
+--low:#38d39f;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+color:var(--text);
+background:
+radial-gradient(circle at top left, rgba(77,163,255,.10), transparent 30%),
+linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
+}
+
+.wrap{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:18px;
+padding:16px 18px;
+background:#0c1828;
+border:1px solid var(--line);
+border-radius:18px;
+}
+
+.brand h1{
+margin:0;
+font-size:30px;
+}
+
+.brand p{
+margin:6px 0 0;
+color:var(--muted);
+font-size:14px;
+}
+
+.nav{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav a{
+padding:9px 12px;
+border:1px solid var(--line);
+border-radius:10px;
+background:var(--panel2);
+color:var(--muted);
+font-size:13px;
+text-decoration:none;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(12,1fr);
+gap:16px;
+}
+
+.card{
+background:#0c1828;
+border:1px solid var(--line);
+border-radius:18px;
+padding:16px;
+}
+
+.col-8{grid-column:span 8}
+.col-4{grid-column:span 4}
+.col-12{grid-column:span 12}
+
+.metric-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.metric{
+background:var(--panel2);
+border:1px solid var(--line);
+border-radius:14px;
+padding:14px;
+}
+
+.metric .label{
+color:var(--muted);
+font-size:12px;
+margin-bottom:6px;
+}
+
+.metric .value{
+font-size:26px;
+font-weight:700;
+}
+
+.risk-high{color:var(--high)}
+.risk-medium{color:var(--medium)}
+.risk-low{color:var(--low)}
+
+.section-title{
+margin:0 0 10px;
+font-size:20px;
+}
+
+#map{
+height:600px;
+border-radius:12px;
+overflow:hidden;
+}
+
+.signals{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.signal{
+background:var(--panel2);
+border:1px solid var(--line);
+border-radius:12px;
+padding:12px;
+display:flex;
+justify-content:space-between;
+}
+
+.signal span{
+font-size:12px;
+text-transform:uppercase;
+}
+
+.footer{
+text-align:right;
+color:var(--muted);
+font-size:13px;
+margin-top:10px;
+}
+
+@media(max-width:1000px){
+.metric-grid{grid-template-columns:1fr 1fr}
+.col-8,.col-4{grid-column:span 12}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="topbar">
+<div class="brand">
+<h1>ZENTRA Global Economic Telescope</h1>
+<p>Global risk observation layer</p>
+</div>
+
+<div class="nav">
+<a href="/">Landing</a>
+<a href="/platform.html">Platform</a>
+<a href="/bridge.html">Bridge</a>
+<a href="/command-center.html">Command</a>
+</div>
+</div>
+
+<section class="grid">
+
+<div class="card col-12">
+
+<h2 class="section-title">Global Risk Snapshot</h2>
+
+<div class="metric-grid">
+
+<div class="metric">
+<div class="label">Global Risk Score</div>
+<div class="value" id="riskScore">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Risk Level</div>
+<div class="value" id="riskLevel">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Dominant Driver</div>
+<div class="value" id="driver">--</div>
+</div>
+
+<div class="metric">
+<div class="label">System Status</div>
+<div class="value">Operational</div>
+</div>
+
+</div>
+</div>
+
+<div class="card col-8">
+<h2 class="section-title">Global Risk Map</h2>
+<div id="map"></div>
+</div>
+
+<div class="card col-4">
+<h2 class="section-title">Signals Stream</h2>
+
+<div class="signals" id="signalsBox"></div>
+
+</div>
+
+</section>
+
+<div class="footer">
+ZENTRA / Global Economic Telescope
+</div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+const DATA={
+driver:"Energy Pressure",
+markets:{oil:82.4,interest:4.75},
+signals:[
+{title:"Energy Pressure",severity:"high"},
+{title:"Logistics Stress",severity:"medium"},
+{title:"Market Stress",severity:"low"},
+{title:"Trade Friction",severity:"medium"}
+],
+countries:[
+{name:"United States",lat:37,lng:-95,risk:"medium",score:58},
+{name:"Germany",lat:51,lng:10,risk:"medium",score:55},
+{name:"Turkey",lat:39,lng:35,risk:"high",score:74},
+{name:"China",lat:35,lng:104,risk:"medium",score:61},
+{name:"Brazil",lat:-14,lng:-51,risk:"low",score:39}
+]
+}
+
+function computeRisk(data){
+let score=0
+
+if(data.markets.oil>80)score+=30
+if(data.markets.interest>4.5)score+=20
+
+data.signals.forEach(s=>{
+if(s.severity==="high")score+=15
+if(s.severity==="medium")score+=8
+if(s.severity==="low")score+=3
+})
+
+if(score>100)score=100
+
+let level="LOW"
+if(score>=70)level="HIGH"
+else if(score>=40)level="MEDIUM"
+
+return{score,level}
+}
+
+function getColor(r){
+if(r==="high")return"#ff6b6b"
+if(r==="medium")return"#ffb347"
+return"#38d39f"
+}
+
+function initTop(){
+
+const result=computeRisk(DATA)
+
+document.getElementById("riskScore").textContent=result.score
+document.getElementById("riskLevel").textContent=result.level
+document.getElementById("driver").textContent=DATA.driver
+
+}
+
+function renderSignals(){
+
+const box=document.getElementById("signalsBox")
+box.innerHTML=""
+
+DATA.signals.forEach(s=>{
+
+const div=document.createElement("div")
+div.className="signal"
+
+div.innerHTML=`
+<strong>${s.title}</strong>
+<span class="${s.severity}">${s.severity}</span>
+`
+
+box.appendChild(div)
+
+})
+
+}
+
+function initMap(){
+
+const map=L.map("map").setView([25,10],2)
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
+
+DATA.countries.forEach(c=>{
+
+L.circleMarker([c.lat,c.lng],{
+radius:10,
+color:getColor(c.risk),
+fillColor:getColor(c.risk),
+fillOpacity:0.9
+})
+.addTo(map)
+.bindPopup(`${c.name}<br>Risk:${c.risk}<br>Score:${c.score}`)
+
+})
+
+}
+
+initTop()
+renderSignals()
+initMap()
+
+</script>
+
+</body>
+</html>

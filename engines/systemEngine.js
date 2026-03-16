@@ -11,8 +11,8 @@ import { executionPlan } from "./executionEngine.js";
 import { buildKnowledgeGraph } from "./knowledgeGraphEngine.js";
 import { evolutionState } from "./evolutionEngine.js";
 
-export function runZentra() {
-  const data = loadExtendedData();
+export async function runZentra() {
+  const data = await loadExtendedData();
 
   const signalScore = computeSignals(data);
   const risk = computeRisk(signalScore);
@@ -39,4 +39,4 @@ export function runZentra() {
     knowledgeGraph,
     evolution
   };
-                                  }
+}

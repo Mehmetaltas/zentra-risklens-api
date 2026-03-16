@@ -4,74 +4,234 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZENTRA Global Risk Map</title>
+
 <script>
 if(localStorage.getItem("zentraCoreAccess")!=="true"){
   window.location="/core.html";
 }
 </script>
+
 <style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07111d;color:#eef4ff}
-.wrap{max-width:1200px;margin:auto;padding:20px}
-.topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px}
-.title{font-size:28px;font-weight:700}
-.nav{display:flex;flex-wrap:wrap;gap:10px}
-.nav a{color:#9fb4cc;text-decoration:none;padding:8px 12px;border:1px solid #1f3a56;border-radius:10px;background:#13263a;font-size:13px}
-.card{background:#0d1b2a;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.metric{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px}
-.metric .label{font-size:12px;color:#9fb4cc;margin-bottom:8px;text-transform:uppercase}
-.metric .value{font-size:26px;font-weight:700}
-.map{height:360px;border-radius:12px;border:1px solid #1f3a56;background:radial-gradient(circle at center,#0d1b2a,#040b14);display:flex;align-items:center;justify-content:center;color:#9fb4cc;font-size:18px}
-.advisory{margin-top:10px;line-height:1.5;color:#9fb4cc}
-.footer{text-align:right;color:#9fb4cc;margin-top:10px;font-size:13px}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.grid{grid-template-columns:1fr}}
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#07111d;
+color:#eef4ff;
+}
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:12px;
+margin-bottom:20px;
+}
+
+.title{
+font-size:28px;
+font-weight:700;
+}
+
+.nav{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav a{
+color:#9fb4cc;
+text-decoration:none;
+padding:8px 12px;
+border:1px solid #1f3a56;
+border-radius:10px;
+background:#13263a;
+font-size:13px;
+}
+
+.card{
+background:#0d1b2a;
+border:1px solid #1f3a56;
+border-radius:14px;
+padding:16px;
+margin-bottom:16px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:12px;
+}
+
+.metric{
+background:#13263a;
+border:1px solid #1f3a56;
+padding:12px;
+border-radius:10px;
+}
+
+.metric .label{
+font-size:12px;
+color:#9fb4cc;
+margin-bottom:8px;
+text-transform:uppercase;
+}
+
+.metric .value{
+font-size:26px;
+font-weight:700;
+}
+
+.map{
+height:420px;
+border-radius:14px;
+border:1px solid #1f3a56;
+background:
+radial-gradient(circle at center,#0d1b2a,#040b14);
+display:flex;
+align-items:center;
+justify-content:center;
+color:#9fb4cc;
+font-size:20px;
+}
+
+.advisory{
+margin-top:10px;
+line-height:1.5;
+color:#9fb4cc;
+}
+
+.footer{
+text-align:right;
+color:#9fb4cc;
+margin-top:10px;
+font-size:13px;
+}
+
+@media(max-width:900px){
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:560px){
+.grid{
+grid-template-columns:1fr;
+}
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
 <div class="topbar">
-<div class="title">ZENTRA Global Risk Map</div>
+
+<div class="title">
+ZENTRA Global Risk Map
+</div>
+
 <div class="nav">
 <a href="/platform.html">Platform</a>
 <a href="/zentra-main.html">Main</a>
 <a href="/command-center.html">Command</a>
 <a href="/risklens/economic-terminal.html">Terminal</a>
 <a href="/economic-globe.html">Globe</a>
+<a href="/risklens/dashboard.html">Dashboard</a>
+<a href="/risklens/signals.html">Signals</a>
 </div>
+
 </div>
 
 <div class="card">
+
 <h3>Global Risk Status</h3>
+
 <div class="grid">
-<div class="metric"><div class="label">Global Risk Score</div><div class="value" id="globalRiskScore">--</div></div>
-<div class="metric"><div class="label">Risk Level</div><div class="value" id="riskLevel">--</div></div>
-<div class="metric"><div class="label">Dominant Driver</div><div class="value" id="driver">--</div></div>
-<div class="metric"><div class="label">System Status</div><div class="value">Operational</div></div>
+
+<div class="metric">
+<div class="label">Global Risk Score</div>
+<div class="value" id="globalRiskScore">--</div>
 </div>
+
+<div class="metric">
+<div class="label">Risk Level</div>
+<div class="value" id="riskLevel">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Dominant Driver</div>
+<div class="value" id="driver">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Signals Count</div>
+<div class="value" id="signalCount">--</div>
+</div>
+
+<div class="metric">
+<div class="label">Data Source</div>
+<div class="value" id="dataSource">--</div>
+</div>
+
+</div>
+
 </div>
 
 <div class="card">
+
 <h3>Global Risk Surface</h3>
-<div class="map">GLOBAL RISK MAP SURFACE</div>
+
+<div class="map">
+GLOBAL RISK MAP SURFACE
+</div>
+
 </div>
 
 <div class="card">
+
 <h3>Strategic Advisory</h3>
-<div class="advisory" id="advice">Loading advisory...</div>
+
+<div class="advisory" id="advice">
+Loading advisory...
 </div>
 
-<div class="footer">ZENTRA / Global Risk Map</div>
+</div>
+
+<div class="footer">
+ZENTRA / Global Risk Map / Async Brain
+</div>
+
 </div>
 
 <script type="module">
 import { runBrain } from "../engines/brainEngine.js";
-const brain = runBrain();
-document.getElementById("globalRiskScore").textContent = brain.riskScore;
-document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase();
-document.getElementById("driver").textContent = brain.driver;
+
+async function startZentra(){
+
+const brain = await runBrain()
+
+document.getElementById("globalRiskScore").textContent = brain.riskScore
+document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase()
+document.getElementById("driver").textContent = brain.driver
+document.getElementById("signalCount").textContent = brain.signals.length
+document.getElementById("dataSource").textContent = brain.source || "unknown"
+
 document.getElementById("advice").textContent =
-  (brain.advisory.shortTerm || "") + " / " + (brain.advisory.midTerm || "");
+(brain.advisory.shortTerm || "") + " / " + (brain.advisory.midTerm || "")
+
+}
+
+startZentra()
+
 </script>
+
 </body>
 </html>

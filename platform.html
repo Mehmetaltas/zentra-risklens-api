@@ -1,8 +1,3 @@
-<script>
-if(localStorage.getItem("zentraAuth")!=="true"){
-window.location="/";
-}
-</script>
 <!doctype html>
 <html lang="tr">
 <head>
@@ -56,27 +51,7 @@ window.location="/";
       top:12px;
       z-index:10;
       backdrop-filter:blur(10px);
-    }
-
-    .top-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .burger{
-      width:44px;
-      height:44px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      font-size:20px;
-      font-weight:700;
+      flex-wrap:wrap;
     }
 
     .brand h1{
@@ -91,6 +66,21 @@ window.location="/";
       color:var(--muted);
     }
 
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .nav a{
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:var(--panel2);
+      color:var(--muted);
+      font-size:13px;
+    }
+
     .status-pill{
       border:1px solid var(--line);
       background:var(--panel2);
@@ -99,64 +89,6 @@ window.location="/";
       border-radius:999px;
       white-space:nowrap;
       font-size:13px;
-    }
-
-    .side-menu{
-      position:fixed;
-      top:0;
-      left:-320px;
-      width:300px;
-      height:100vh;
-      background:#08111f;
-      border-right:1px solid var(--line);
-      padding:20px;
-      transition:.25s ease;
-      z-index:30;
-      overflow:auto;
-    }
-
-    .side-menu.open{
-      left:0;
-    }
-
-    .menu-backdrop{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.45);
-      display:none;
-      z-index:20;
-    }
-
-    .menu-backdrop.show{
-      display:block;
-    }
-
-    .menu-title{
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:18px;
-    }
-
-    .menu-group{
-      margin-bottom:20px;
-    }
-
-    .menu-group h3{
-      margin:0 0 10px;
-      color:var(--muted);
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.8px;
-    }
-
-    .menu-link{
-      display:block;
-      padding:12px 14px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      background:var(--panel);
-      margin-bottom:10px;
-      color:var(--text);
     }
 
     .hero{
@@ -302,7 +234,6 @@ window.location="/";
 
     .ok{color:var(--low)}
     .warn{color:var(--medium)}
-    .bad{color:var(--high)}
 
     .info-left{
       grid-column:span 7;
@@ -395,66 +326,45 @@ window.location="/";
       .headline{
         font-size:28px;
       }
+      .metric-grid{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="menu-backdrop" id="menuBackdrop"></div>
-
-  <aside class="side-menu" id="sideMenu">
-    <div class="menu-title">ZENTRA Navigation</div>
-
-    <div class="menu-group">
-      <h3>Main</h3>
-      <a class="menu-link" href="/">Landing</a>
-      <a class="menu-link" href="/platform.html">Platform</a>
-      <a class="menu-link" href="/investor.html">Investor</a>
-    </div>
-
-    <div class="menu-group">
-      <h3>Core Modules</h3>
-      <a class="menu-link" href="/risklens/economic-terminal.html">Economic Terminal</a>
-      <a class="menu-link" href="/economic-globe.html">Economic Globe Pro</a>
-      <a class="menu-link" href="/risklens/dashboard.html">RiskLens Dashboard</a>
-      <a class="menu-link" href="/risklens/signals.html">Signals Intelligence</a>
-    </div>
-
-    <div class="menu-group">
-      <h3>Deep System</h3>
-      <a class="menu-link" href="/risklens/worldmap.html">World Map</a>
-      <a class="menu-link" href="/intelligence.html">Intelligence</a>
-      <a class="menu-link" href="/trade/">Trade Engine</a>
-      <a class="menu-link" href="/telescope/">Global Telescope</a>
-    </div>
-  </aside>
-
   <div class="wrap">
 
     <div class="topbar">
-      <div class="top-left">
-        <button class="burger" id="burgerBtn" type="button">☰</button>
-        <div class="brand">
-          <h1>ZENTRA Platform</h1>
-          <p>Control layer / module launcher / deep system access</p>
-        </div>
+      <div class="brand">
+        <h1>ZENTRA Platform</h1>
+        <p>Open platform layer / module launcher / core access routing</p>
       </div>
-      <div class="status-pill">Platform Mode: Active / Static V1</div>
+
+      <div class="nav">
+        <a href="/">Landing</a>
+        <a href="/docs.html">Docs</a>
+        <a href="/whitepaper.html">Whitepaper</a>
+        <a href="/investor.html">Investor</a>
+      </div>
+
+      <div class="status-pill">Platform Mode: Open / Core Layer Protected</div>
     </div>
 
     <section class="hero">
       <div class="card">
         <span class="eyebrow">PLATFORM ACCESS LAYER</span>
-        <h2 class="headline">ZENTRA’nın çalışan ana modüllerine ve derin sistem katmanlarına buradan girilir.</h2>
+        <h2 class="headline">ZENTRA’nın açık platform katmanı. Derin sistem modüllerine core erişim kapısından girilir.</h2>
         <div class="subtext">
-          Bu ekran, landing sonrası ikinci katmandır. Buradan Economic Terminal, Economic Globe Pro,
-          RiskLens ve Signals modüllerine geçilir. Hamburger menü ise derin sistem gezinmesini açar.
+          Bu ekran açık platform katmanıdır. Buradan belgeler, sistem özeti ve modüller görülür.
+          Core korumalı derin sisteme giriş ise tek kapı üzerinden yapılır.
         </div>
         <div class="cta-row">
-          <a class="btn primary" href="/risklens/economic-terminal.html">Terminal</a>
-          <a class="btn" href="/economic-globe.html">Globe Pro</a>
-          <a class="btn" href="/risklens/dashboard.html">RiskLens</a>
-          <a class="btn" href="/risklens/signals.html">Signals</a>
+          <a class="btn primary" href="/core.html">Enter ZentraCore</a>
+          <a class="btn" href="/docs.html">Open Docs</a>
+          <a class="btn" href="/whitepaper.html">Whitepaper</a>
+          <a class="btn" href="/master-map.html">Master Map</a>
         </div>
       </div>
 
@@ -473,8 +383,8 @@ window.location="/";
             <div class="value">Energy</div>
           </div>
           <div class="metric">
-            <div class="label">System Status</div>
-            <div class="value ok">Operational</div>
+            <div class="label">Core Status</div>
+            <div class="value ok">Protected</div>
           </div>
         </div>
       </div>
@@ -483,50 +393,49 @@ window.location="/";
     <section class="grid">
       <article class="card module">
         <div class="module-top">
+          <h2>Command Center</h2>
+          <p>Signals, world risk map, market snapshot ve strategic advisory’yi tek ekranda toplayan ana merkez.</p>
+          <div class="tag-row">
+            <span class="tag">Risk</span>
+            <span class="tag">Signals</span>
+            <span class="tag">Command</span>
+          </div>
+        </div>
+        <div class="module-bottom">
+          <div class="status ok">Status: Built</div>
+          <a class="btn" href="/core.html">Core Access</a>
+        </div>
+      </article>
+
+      <article class="card module">
+        <div class="module-top">
           <h2>Economic Terminal</h2>
-          <p>Global risk score, markets monitor, signals panel ve strategic advisory görünümünü sunan ana operasyon ekranı.</p>
+          <p>Küresel risk skoru, market baskısı ve advisory görünümünü sunan ana operasyon ekranı.</p>
           <div class="tag-row">
             <span class="tag">Markets</span>
-            <span class="tag">Signals</span>
-            <span class="tag">Risk</span>
+            <span class="tag">Pressure</span>
             <span class="tag">Advisory</span>
           </div>
         </div>
         <div class="module-bottom">
           <div class="status ok">Status: Built</div>
-          <a class="btn" href="/risklens/economic-terminal.html">Open</a>
+          <a class="btn" href="/core.html">Core Access</a>
         </div>
       </article>
 
       <article class="card module">
         <div class="module-top">
-          <h2>Economic Globe Pro</h2>
-          <p>Dönen küre görünümü ve interaktif Leaflet risk haritasını aynı modülde sunan küresel gözlem katmanı.</p>
+          <h2>Economic Globe</h2>
+          <p>Küresel görünürlük ve ekonomik yüzey gözlemini sağlayan görsel sistem katmanı.</p>
           <div class="tag-row">
             <span class="tag">Globe</span>
-            <span class="tag">Map</span>
-            <span class="tag">Risk Overlay</span>
+            <span class="tag">Surface</span>
+            <span class="tag">Observation</span>
           </div>
         </div>
         <div class="module-bottom">
           <div class="status ok">Status: Built</div>
-          <a class="btn" href="/economic-globe.html">Open</a>
-        </div>
-      </article>
-
-      <article class="card module">
-        <div class="module-top">
-          <h2>RiskLens</h2>
-          <p>Risk dashboard ve sinyal katmanları ile ZENTRA risk zekâsının çekirdek ürün yüzünü oluşturur.</p>
-          <div class="tag-row">
-            <span class="tag">Risk</span>
-            <span class="tag">Signals</span>
-            <span class="tag">Dashboard</span>
-          </div>
-        </div>
-        <div class="module-bottom">
-          <div class="status warn">Status: Partial+</div>
-          <a class="btn" href="/risklens/dashboard.html">Open</a>
+          <a class="btn" href="/core.html">Core Access</a>
         </div>
       </article>
     </section>
@@ -537,19 +446,19 @@ window.location="/";
         <div class="mini-grid">
           <div class="mini">
             <div class="label">Layer 1</div>
-            <div class="value">Landing / Introduction</div>
+            <div class="value">Landing</div>
           </div>
           <div class="mini">
             <div class="label">Layer 2</div>
-            <div class="value">Platform Control</div>
+            <div class="value">Platform</div>
           </div>
           <div class="mini">
             <div class="label">Layer 3</div>
-            <div class="value">Deep System + Hamburger</div>
+            <div class="value">Core Password Gate</div>
           </div>
           <div class="mini">
-            <div class="label">Current Mode</div>
-            <div class="value">Stable Static Shell</div>
+            <div class="label">Layer 4</div>
+            <div class="value">Deep System</div>
           </div>
         </div>
       </div>
@@ -558,43 +467,24 @@ window.location="/";
         <h2>System Notes</h2>
         <div class="list">
           <div class="list-item">
-            <strong>Current State</strong>
-            <span>ZENTRA V1 şu anda landing, platform ve çalışan modüller arasında net akış kurabilecek noktaya geldi.</span>
+            <strong>Access Model</strong>
+            <span>Platform açık katmandır. Command Center, Telescope, Globe ve RiskLens modülleri core girişi ile açılır.</span>
           </div>
           <div class="list-item">
-            <strong>Navigation Model</strong>
-            <span>Landing tanıtım katmanıdır. Bu sayfa modül girişidir. Hamburger menü ise derin sisteme erişim verir.</span>
+            <strong>Document Layer</strong>
+            <span>Master Map, Whitepaper, Investor ve Foundation belgeleri açık dokümantasyon katmanında yer alır.</span>
           </div>
           <div class="list-item">
             <strong>Next Step</strong>
-            <span>World Map, data layer ve ortak veri modeli ile modülleri tek çekirdekte birleştirmek.</span>
+            <span>Global data layer, canlı ekonomik veri akışı ve AI analiz derinliği.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="footer">ZENTRA / Platform Layer / Control Access</div>
+    <div class="footer">ZENTRA / Platform Layer / Open Access</div>
 
   </div>
 
-  <script>
-    const burgerBtn = document.getElementById("burgerBtn");
-    const sideMenu = document.getElementById("sideMenu");
-    const menuBackdrop = document.getElementById("menuBackdrop");
-
-    function openMenu(){
-      sideMenu.classList.add("open");
-      menuBackdrop.classList.add("show");
-    }
-
-    function closeMenu(){
-      sideMenu.classList.remove("open");
-      menuBackdrop.classList.remove("show");
-    }
-
-    burgerBtn.addEventListener("click", openMenu);
-    menuBackdrop.addEventListener("click", closeMenu);
-  </script>
-
 </body>
-  </html>
+              </html>

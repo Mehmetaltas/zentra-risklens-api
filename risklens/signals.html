@@ -1,354 +1,258 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ZENTRA RiskLens Signals</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ZENTRA Signals</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#07101d;
-  --panel:#101a2d;
-  --panel2:#16233b;
-  --line:#24395f;
-  --text:#eef5ff;
-  --muted:#a9b9d6;
-  --cyan:#63b3ff;
-  --cyan2:#8fd7ff;
-  --red:#ff5c70;
-  --orange:#ff9d57;
-  --yellow:#ffd166;
-  --green:#45d483;
-}
+
 body{
-  font-family:Arial,sans-serif;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(99,179,255,.10), transparent 24%),
-    radial-gradient(circle at 85% 10%, rgba(255,157,87,.08), transparent 18%),
-    linear-gradient(180deg,#07101d,#0b1324 55%,#07101d);
-  color:var(--text);
-  min-height:100vh;
-  padding:28px 16px 48px;
+margin:0;
+font-family:Arial;
+background:#050b14;
+color:white;
 }
-.wrapper{width:100%;max-width:1280px;margin:0 auto}
-.hero{
-  margin-bottom:20px;
-  background:linear-gradient(180deg,rgba(16,26,45,.96),rgba(12,20,35,.96));
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:24px;
-  box-shadow:0 14px 40px rgba(0,0,0,.25);
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:20px;
 }
-.hero h1{
-  color:var(--cyan2);
-  font-size:34px;
-  margin-bottom:10px;
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
 }
-.hero p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:920px;
+
+.title{
+font-size:28px;
+font-weight:bold;
 }
-.top-grid{
-  display:grid;
-  grid-template-columns:320px 1fr;
-  gap:18px;
-  margin-bottom:18px;
+
+.nav a{
+margin-left:15px;
+color:#9fb4cc;
+text-decoration:none;
 }
-.panel{
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 28px rgba(0,0,0,.18);
+
+.card{
+background:#0d1b2a;
+border:1px solid #1f3a56;
+border-radius:12px;
+padding:16px;
+margin-bottom:16px;
 }
-.panel h2{
-  color:var(--cyan2);
-  font-size:21px;
-  margin-bottom:14px;
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
 }
-.score{
-  font-size:56px;
-  line-height:1;
-  font-weight:bold;
-  color:var(--orange);
-  margin-bottom:10px;
-  text-align:center;
-}
-.driver{
-  text-align:center;
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.6;
-}
-.metric-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:16px;
-}
+
 .metric{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:14px;
-  padding:14px;
-  text-align:center;
+background:#13263a;
+padding:12px;
+border-radius:8px;
 }
-.metric-label{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:7px;
+
+.metric .value{
+font-size:24px;
+font-weight:bold;
 }
-.metric-value{
-  font-size:22px;
-  font-weight:bold;
-  color:var(--cyan2);
+
+.signal{
+background:#13263a;
+padding:12px;
+border-radius:8px;
+margin-bottom:10px;
 }
-.chain-box{
-  min-height:330px;
-  display:grid;
-  align-content:center;
-  gap:14px;
+
+.signal-head{
+display:flex;
+justify-content:space-between;
+margin-bottom:6px;
 }
-.chain-step{
-  padding:14px 16px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  text-align:center;
+
+.high{color:#ff6b6b}
+.medium{color:#ffb347}
+.low{color:#38d39f}
+
+.footer{
+text-align:right;
+color:#9fb4cc;
+margin-top:10px;
 }
-.chain-step strong{
-  display:block;
-  margin-bottom:6px;
-  color:var(--cyan2);
-}
-.arrow{
-  text-align:center;
-  color:var(--muted);
-  font-size:20px;
-}
-.grid-bottom{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-.list{display:grid;gap:12px}
-.item{
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-}
-.item strong{
-  display:block;
-  margin-bottom:6px;
-  font-size:15px;
-}
-.item small{
-  color:var(--muted);
-  line-height:1.6;
-  display:block;
-}
-.meta{
-  margin-top:8px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-.badge{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:bold;
-}
-.badge.red{background:rgba(255,92,112,.12);color:var(--red)}
-.badge.orange{background:rgba(255,157,87,.12);color:var(--orange)}
-.badge.yellow{background:rgba(255,209,102,.12);color:var(--yellow)}
-.badge.green{background:rgba(69,212,131,.12);color:var(--green)}
-@media (max-width:1100px){
-  .top-grid{grid-template-columns:1fr}
-  .grid-bottom{grid-template-columns:1fr}
-}
-@media (max-width:760px){
-  .hero h1{font-size:28px}
-  .metric-grid{grid-template-columns:1fr}
-  .score{font-size:46px}
-}
+
 </style>
 </head>
+
 <body>
 
-<div class="wrapper">
+<div class="wrap">
 
-  <div class="hero">
-    <h1>📡 ZENTRA RiskLens Signals</h1>
-    <p>
-      Signal detection surface showing active stress points, transmission chains,
-      affected sectors and institutional relevance across the economic system.
-    </p>
-  </div>
+<div class="topbar">
 
-  <div class="top-grid">
+<div class="title">
+ZENTRA Signals
+</div>
 
-    <div class="panel">
-      <h2>Signal State</h2>
-      <div class="score">7</div>
-      <div class="driver">Critical signals are clustering around energy, logistics and credit-sensitive sectors.</div>
-
-      <div class="metric-grid">
-        <div class="metric">
-          <div class="metric-label">High Severity</div>
-          <div class="metric-value">3</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Medium Severity</div>
-          <div class="metric-value">2</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Active Sectors</div>
-          <div class="metric-value">5</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <h2>Signal Chain</h2>
-      <div class="chain-box">
-        <div class="chain-step">
-          <strong>Energy Shock</strong>
-          Oil cost transmission enters logistics and production layers.
-        </div>
-        <div class="arrow">↓</div>
-        <div class="chain-step">
-          <strong>Freight Inflation</strong>
-          Route costs and landed prices rise across import-dependent sectors.
-        </div>
-        <div class="arrow">↓</div>
-        <div class="chain-step">
-          <strong>Sector Pressure</strong>
-          Construction, retail and trade-linked portfolios face margin compression.
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="grid-bottom">
-
-    <div class="panel">
-      <h2>Detected Signals</h2>
-      <div class="list">
-
-        <div class="item">
-          <strong>Oil Price Surge</strong>
-          <small>
-            A sharp rise in global oil prices is amplifying cost pressure across
-            logistics corridors, industrial production and energy-dependent sectors.
-          </small>
-          <div class="meta">
-            <span class="badge red">Critical</span>
-            <span class="badge orange">Energy</span>
-            <span class="badge yellow">Confidence: High</span>
-          </div>
-        </div>
-
-        <div class="item">
-          <strong>Freight Cost Escalation Belt</strong>
-          <small>
-            Transport and freight cost inflation is increasing landed prices and
-            compressing margins in import-dependent industries.
-          </small>
-          <div class="meta">
-            <span class="badge red">Critical</span>
-            <span class="badge orange">Logistics</span>
-            <span class="badge yellow">Confidence: High</span>
-          </div>
-        </div>
-
-        <div class="item">
-          <strong>Credit Tightening Drift</strong>
-          <small>
-            Financing conditions remain tighter than normal, reducing flexibility
-            for exposure-sensitive sectors and leveraged balance sheets.
-          </small>
-          <div class="meta">
-            <span class="badge orange">High</span>
-            <span class="badge yellow">Banking</span>
-            <span class="badge yellow">Confidence: Medium</span>
-          </div>
-        </div>
-
-        <div class="item">
-          <strong>Port Stress Accumulation</strong>
-          <small>
-            Throughput constraints and handling delays are reducing execution
-            efficiency on selected trade corridors.
-          </small>
-          <div class="meta">
-            <span class="badge orange">High</span>
-            <span class="badge orange">Trade</span>
-            <span class="badge yellow">Confidence: Medium</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="panel">
-      <h2>Affected Areas</h2>
-      <div class="list">
-
-        <div class="item">
-          <strong>Construction</strong>
-          <small>
-            Material, transport and financing pressure are combining into a severe
-            profitability squeeze.
-          </small>
-          <div class="meta">
-            <span class="badge red">Severe Exposure</span>
-          </div>
-        </div>
-
-        <div class="item">
-          <strong>Retail</strong>
-          <small>
-            Inflation persistence and logistics pass-through continue to weaken
-            volume resilience and price flexibility.
-          </small>
-          <div class="meta">
-            <span class="badge orange">High Exposure</span>
-          </div>
-        </div>
-
-        <div class="item">
-          <strong>Banking & Payment Systems</strong>
-          <small>
-            Cyber and funding-related stress remain manageable but require
-            increased operational monitoring.
-          </small>
-          <div class="meta">
-            <span class="badge yellow">Watch</span>
-          </div>
-        </div>
-
-        <div class="item">
-          <strong>Trade Corridors</strong>
-          <small>
-            Selected routes remain pressured while alternative execution windows
-            are beginning to emerge.
-          </small>
-          <div class="meta">
-            <span class="badge green">Selective Opportunity</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
+<div class="nav">
+<a href="/">Control Panel</a>
+<a href="/risklens/economic-terminal.html">Terminal</a>
+<a href="/economic-globe.html">Globe</a>
+<a href="/risklens/dashboard.html">RiskLens</a>
+</div>
 
 </div>
-<script src="/assets/js/auth-guard.js"></script>
+
+
+<div class="card">
+
+<h3>Signals Overview</h3>
+
+<div class="grid">
+
+<div class="metric">
+Dominant Driver
+<div class="value" id="driver"></div>
+</div>
+
+<div class="metric">
+Signals Count
+<div class="value" id="count"></div>
+</div>
+
+<div class="metric">
+High Severity
+<div class="value" id="highCount"></div>
+</div>
+
+<div class="metric">
+System Status
+<div class="value">Active</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Signals Monitor</h3>
+
+<div id="signals"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Markets Snapshot</h3>
+
+<div class="grid">
+
+<div class="metric">
+Oil
+<div class="value" id="oil"></div>
+</div>
+
+<div class="metric">
+Gold
+<div class="value" id="gold"></div>
+</div>
+
+<div class="metric">
+S&P500
+<div class="value" id="sp500"></div>
+</div>
+
+<div class="metric">
+Interest
+<div class="value" id="interest"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+ZENTRA Signals Intelligence Layer
+
+</div>
+
+</div>
+
+
+<script>
+
+const DATA={
+
+dominantDriver:"Energy Pressure",
+
+markets:{
+oil:82.4,
+gold:2180.5,
+sp500:5120.3,
+interestRate:4.75
+},
+
+signals:[
+{title:"Energy Pressure",severity:"high",summary:"Energy prices rising globally"},
+{title:"Logistics Stress",severity:"medium",summary:"Shipping disruptions increasing"},
+{title:"Market Volatility",severity:"low",summary:"Market fluctuations moderate"},
+{title:"Supply Chain Pressure",severity:"medium",summary:"Delays across logistics networks"}
+]
+
+}
+
+
+function render(){
+
+document.getElementById("driver").innerText=DATA.dominantDriver
+
+document.getElementById("oil").innerText=DATA.markets.oil
+document.getElementById("gold").innerText=DATA.markets.gold
+document.getElementById("sp500").innerText=DATA.markets.sp500
+document.getElementById("interest").innerText=DATA.markets.interestRate
+
+document.getElementById("count").innerText=DATA.signals.length
+
+let high=0
+
+DATA.signals.forEach(s=>{
+if(s.severity==="high")high++
+})
+
+document.getElementById("highCount").innerText=high
+
+const box=document.getElementById("signals")
+
+DATA.signals.forEach(s=>{
+
+const div=document.createElement("div")
+
+div.className="signal"
+
+div.innerHTML=
+"<div class='signal-head'><b>"+s.title+"</b><span class='"+s.severity+"'>"+s.severity+"</span></div>"+
+"<div>"+s.summary+"</div>"
+
+box.appendChild(div)
+
+})
+
+}
+
+render()
+
+</script>
+
 </body>
-  </html>
+</html>

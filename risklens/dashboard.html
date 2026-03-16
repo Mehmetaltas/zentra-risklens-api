@@ -1,332 +1,231 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZENTRA RiskLens Dashboard</title>
-  <style>
-    :root{
-      --bg:#07111f;
-      --panel:#0d1b2a;
-      --panel2:#13263a;
-      --line:#1f3a56;
-      --text:#eaf2ff;
-      --muted:#9fb4cc;
-      --high:#ff6b6b;
-      --medium:#ffb347;
-      --low:#38d39f;
-      --accent:#4da3ff;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA RiskLens</title>
 
-    *{box-sizing:border-box}
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#08111f;
+color:white;
+}
 
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:linear-gradient(180deg,#06101d 0%, #081523 100%);
-      color:var(--text);
-    }
+.wrap{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
 
-    .wrap{
-      max-width:1200px;
-      margin:0 auto;
-      padding:24px;
-    }
+.card{
+background:#0d1b2a;
+border:1px solid #1f3a56;
+border-radius:12px;
+padding:16px;
+margin-bottom:16px;
+}
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      padding:16px 18px;
-      margin-bottom:20px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background:rgba(13,27,42,.92);
-    }
+h1{
+margin:0 0 10px 0;
+}
 
-    .brand h1{
-      margin:0;
-      font-size:24px;
-    }
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+}
 
-    .brand p{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
+.metric{
+background:#13263a;
+padding:12px;
+border-radius:8px;
+}
 
-    .pill{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-      color:var(--muted);
-      font-size:13px;
-    }
+.metric .value{
+font-size:26px;
+font-weight:bold;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:16px;
-    }
+.signal{
+background:#13263a;
+padding:10px;
+border-radius:8px;
+margin-bottom:8px;
+}
 
-    .card{
-      background:rgba(13,27,42,.92);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-    }
+.high{color:#ff6b6b}
+.medium{color:#ffb347}
+.low{color:#38d39f}
 
-    .card h2{
-      margin:0 0 14px;
-      font-size:18px;
-    }
-
-    .hero{
-      grid-column:span 12;
-      display:grid;
-      grid-template-columns:2fr 1fr 1fr;
-      gap:14px;
-    }
-
-    .hero-box{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:16px;
-      min-height:120px;
-    }
-
-    .label{
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:8px;
-    }
-
-    .big{
-      font-size:40px;
-      font-weight:700;
-      line-height:1;
-    }
-
-    .mid{
-      font-size:24px;
-      font-weight:700;
-    }
-
-    .summary{
-      margin-top:12px;
-      color:var(--muted);
-      line-height:1.5;
-    }
-
-    .markets{
-      grid-column:span 12;
-    }
-
-    .market-grid{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:12px;
-    }
-
-    .metric{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .metric .value{
-      font-size:28px;
-      font-weight:700;
-      margin-top:8px;
-    }
-
-    .signals{
-      grid-column:span 8;
-    }
-
-    .signal-list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .signal-item{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .signal-head{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      margin-bottom:8px;
-    }
-
-    .signal-summary{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-    }
-
-    .signal-severity{
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      text-transform:uppercase;
-      border:1px solid var(--line);
-    }
-
-    .signal-severity.high{
-      color:var(--high);
-    }
-
-    .signal-severity.medium{
-      color:var(--medium);
-    }
-
-    .signal-severity.low{
-      color:var(--low);
-    }
-
-    .side{
-      grid-column:span 4;
-    }
-
-    .side-stack{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .mini{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .footer-note{
-      margin-top:18px;
-      text-align:right;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    @media (max-width:900px){
-      .hero{
-        grid-template-columns:1fr;
-      }
-      .signals,.side{
-        grid-column:span 12;
-      }
-      .market-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media (max-width:560px){
-      .market-grid{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <div class="wrap">
 
-    <div class="topbar">
-      <div class="brand">
-        <h1>ZENTRA RiskLens Dashboard</h1>
-        <p>Global signals, market pressure and core risk visibility.</p>
-      </div>
-      <div class="pill">ZENTRA V1</div>
-    </div>
+<div class="wrap">
 
-    <div class="grid">
+<h1>ZENTRA RiskLens Dashboard</h1>
 
-      <section class="card hero">
-        <div class="hero-box">
-          <div class="label">Global Risk Score</div>
-          <div class="big" id="globalRiskScore">--</div>
-          <div class="summary" id="riskSummary">Loading...</div>
-        </div>
+<div class="card">
 
-        <div class="hero-box">
-          <div class="label">Risk Level</div>
-          <div class="mid" id="riskLevel">--</div>
-        </div>
+<div class="grid">
 
-        <div class="hero-box">
-          <div class="label">Dominant Driver</div>
-          <div class="mid" id="dominantDriver">--</div>
-        </div>
-      </section>
+<div class="metric">
+<div>Global Risk Score</div>
+<div class="value" id="riskScore">--</div>
+</div>
 
-      <section class="card markets">
-        <h2>Market Overview</h2>
-        <div class="market-grid">
-          <div class="metric">
-            <div class="label">Oil</div>
-            <div class="value" id="oilValue">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Gold</div>
-            <div class="value" id="goldValue">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">S&amp;P 500</div>
-            <div class="value" id="sp500Value">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Interest Rate</div>
-            <div class="value" id="interestValue">--</div>
-          </div>
-          <div class="metric">
-            <div class="label">Shipping</div>
-            <div class="value" id="shippingValue">--</div>
-          </div>
-        </div>
-      </section>
+<div class="metric">
+<div>Risk Level</div>
+<div class="value" id="riskLevel">--</div>
+</div>
 
-      <section class="card signals">
-        <h2>Signals</h2>
-        <div class="signal-list" id="signalsList">
-          <div class="signal-item">Loading signals...</div>
-        </div>
-      </section>
+<div class="metric">
+<div>Dominant Driver</div>
+<div class="value" id="driver">--</div>
+</div>
 
-      <aside class="card side">
-        <h2>System Notes</h2>
-        <div class="side-stack">
-          <div class="mini">
-            <div class="label">Mode</div>
-            <div class="mid">Static Data</div>
-          </div>
-          <div class="mini">
-            <div class="label">Engine</div>
-            <div class="mid">Signal Engine V1</div>
-          </div>
-          <div class="mini">
-            <div class="label">Status</div>
-            <div class="mid">Operational</div>
-          </div>
-        </div>
-      </aside>
+</div>
 
-    </div>
+<p id="summary">Loading...</p>
 
-    <div class="footer-note">
-      ZENTRA / RiskLens / Economic AI Operating Layer
-    </div>
-  </div>
+</div>
 
-  <script type="module" src="../assets/js/dashboard-v1.js"></script>
+
+<div class="card">
+<h3>Markets</h3>
+
+<div class="grid">
+
+<div class="metric">
+Oil
+<div class="value" id="oil"></div>
+</div>
+
+<div class="metric">
+Gold
+<div class="value" id="gold"></div>
+</div>
+
+<div class="metric">
+S&P500
+<div class="value" id="sp500"></div>
+</div>
+
+<div class="metric">
+Interest
+<div class="value" id="interest"></div>
+</div>
+
+<div class="metric">
+Shipping
+<div class="value" id="shipping"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+<h3>Signals</h3>
+<div id="signals"></div>
+</div>
+
+</div>
+
+<script>
+
+const DATA = {
+
+dominantDriver:"Energy Pressure",
+
+markets:{
+oil:82.4,
+gold:2180.5,
+sp500:5120.3,
+interestRate:4.75,
+shipping:1460
+},
+
+signals:[
+{title:"Energy Pressure",severity:"high",summary:"Energy costs rising globally"},
+{title:"Logistics Stress",severity:"medium",summary:"Shipping routes tightening"},
+{title:"Market Volatility",severity:"low",summary:"Markets fluctuating mildly"}
+]
+
+}
+
+
+function computeSignals(data){
+
+let score=0
+
+if(data.markets.oil>80)score+=30
+if(data.markets.interestRate>4.5)score+=20
+
+data.signals.forEach(s=>{
+if(s.severity==="high")score+=15
+if(s.severity==="medium")score+=8
+if(s.severity==="low")score+=3
+})
+
+if(score>100)score=100
+
+let level="LOW"
+if(score>=70)level="HIGH"
+else if(score>=40)level="MEDIUM"
+
+return{
+score,
+level,
+driver:data.dominantDriver,
+signals:data.signals,
+markets:data.markets
+}
+
+}
+
+
+function render(){
+
+const result=computeSignals(DATA)
+
+document.getElementById("riskScore").innerText=result.score
+document.getElementById("riskLevel").innerText=result.level
+document.getElementById("driver").innerText=result.driver
+
+document.getElementById("oil").innerText=result.markets.oil
+document.getElementById("gold").innerText=result.markets.gold
+document.getElementById("sp500").innerText=result.markets.sp500
+document.getElementById("interest").innerText=result.markets.interestRate
+document.getElementById("shipping").innerText=result.markets.shipping
+
+document.getElementById("summary").innerText="System monitoring global signals."
+
+const box=document.getElementById("signals")
+
+result.signals.forEach(s=>{
+
+const div=document.createElement("div")
+div.className="signal"
+
+div.innerHTML=
+"<b>"+s.title+"</b> "+
+"<span class='"+s.severity+"'>"+s.severity+"</span>"+
+"<div>"+s.summary+"</div>"
+
+box.appendChild(div)
+
+})
+
+}
+
+render()
+
+</script>
+
 </body>
-</html>
+  </html>

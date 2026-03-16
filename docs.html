@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZENTRA Docs Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#050c18;
+  color:#e8f0ff;
+}
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:40px;
+}
+header{
+  text-align:center;
+  margin-bottom:40px;
+}
+header h1{
+  margin:0;
+  font-size:40px;
+}
+header p{
+  color:#9fb4cc;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.card{
+  background:#0f1d30;
+  border:1px solid #2b476a;
+  border-radius:12px;
+  padding:20px;
+}
+.card h2{
+  margin-top:0;
+}
+.card p{
+  color:#9fb4cc;
+}
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  color:white;
+  text-decoration:none;
+  border:1px solid #34537a;
+  padding:10px 14px;
+  border-radius:8px;
+  background:#13263a;
+}
+@media (max-width:700px){
+  .grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+<h1>ZENTRA Docs Center</h1>
+<p>Core documentation hub</p>
+</header>
+
+<div class="grid">
+
+<div class="card">
+<h2>Master Map</h2>
+<p>Core architecture map of ZENTRA.</p>
+<a href="/master-map.html">Open</a>
+</div>
+
+<div class="card">
+<h2>Whitepaper</h2>
+<p>Technical and strategic document of the platform.</p>
+<a href="/whitepaper.html">Open</a>
+</div>
+
+<div class="card">
+<h2>Investor Deck</h2>
+<p>Investor-oriented platform summary.</p>
+<a href="/investor.html">Open</a>
+</div>
+
+<div class="card">
+<h2>Foundation Document</h2>
+<p>Mission, governance and long-term vision layer.</p>
+<a href="/foundation.html">Open</a>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

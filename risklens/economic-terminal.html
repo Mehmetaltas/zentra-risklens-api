@@ -446,5 +446,15 @@
 
     render();
   </script>
+  <script type="module">
+
+import { runBrain } from "../engines/brainEngine.js"
+
+const brain = runBrain()
+
+document.getElementById("riskScore").textContent = brain.riskScore
+document.getElementById("riskLevel").textContent = brain.riskLevel
+
+</script>
 </body>
 </html>

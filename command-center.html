@@ -1,117 +1,93 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Command Center</title>
 <script>
-if(localStorage.getItem("zentraAuth")!=="true"){
-window.location="/";
+if(localStorage.getItem("zentraCoreAccess")!=="true"){
+  window.location="/core.html";
 }
 </script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>ZENTRA Command Center</title>
-
 <style>
-
-body{
-background:#050c18;
-color:#eaf2ff;
-font-family:Arial;
-margin:0;
-padding:40px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-}
-
-.title{
-font-size:32px;
-margin-bottom:10px;
-}
-
-.subtitle{
-color:#9fb4cc;
-margin-bottom:40px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.card{
-background:#0f1d30;
-border:1px solid #243f63;
-border-radius:12px;
-padding:20px;
-}
-
-.label{
-font-size:13px;
-color:#9fb4cc;
-margin-bottom:8px;
-}
-
-.value{
-font-size:28px;
-font-weight:bold;
-}
-
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07111d;color:#eef4ff}
+.wrap{max-width:1200px;margin:auto;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.title{font-size:28px;font-weight:700}
+.nav{display:flex;flex-wrap:wrap;gap:10px}
+.nav a{color:#9fb4cc;text-decoration:none;padding:8px 12px;border:1px solid #1f3a56;border-radius:10px;background:#13263a;font-size:13px}
+.card{background:#0d1b2a;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px}
+.label{font-size:12px;color:#9fb4cc;margin-bottom:8px;text-transform:uppercase}
+.value{font-size:28px;font-weight:700}
+.split{display:grid;grid-template-columns:7fr 5fr;gap:16px}
+.surface{height:360px;border-radius:12px;border:1px solid #1f3a56;background:radial-gradient(circle at center,#0d1b2a,#040b14);display:flex;align-items:center;justify-content:center;color:#9fb4cc;font-size:20px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.box{background:#13263a;border:1px solid #1f3a56;border-radius:12px;padding:14px}
+.footer{text-align:right;color:#9fb4cc;margin-top:10px;font-size:13px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<div class="title">
-ZENTRA Command Center
+<div class="wrap">
+<div class="topbar">
+<div class="title">ZENTRA Command Center</div>
+<div class="nav">
+<a href="/platform.html">Platform</a>
+<a href="/zentra-main.html">Main</a>
+<a href="/telescope.html">Telescope</a>
+<a href="/economic-globe.html">Globe</a>
+<a href="/risklens/dashboard.html">Dashboard</a>
+</div>
 </div>
 
-<div class="subtitle">
-Global risk / signals / markets / strategic command view
-</div>
-
+<div class="card">
+<h3>Global Command Snapshot</h3>
 <div class="grid">
-
-<div class="card">
-<div class="label">Global Risk Score</div>
-<div class="value" id="globalRiskScore">--</div>
+<div class="metric"><div class="label">Global Risk Score</div><div class="value" id="globalRiskScore">--</div></div>
+<div class="metric"><div class="label">Risk Level</div><div class="value" id="riskLevel">--</div></div>
+<div class="metric"><div class="label">Dominant Driver</div><div class="value" id="driver">--</div></div>
+<div class="metric"><div class="label">System Status</div><div class="value">Operational</div></div>
+</div>
 </div>
 
+<div class="split">
 <div class="card">
-<div class="label">Risk Level</div>
-<div class="value" id="riskLevel">--</div>
-</div>
-
-<div class="card">
-<div class="label">Dominant Driver</div>
-<div class="value" id="driver">--</div>
+<h3>Global Risk Surface</h3>
+<div class="surface">GLOBAL COMMAND SURFACE</div>
 </div>
 
 <div class="card">
-<div class="label">System Status</div>
-<div class="value">Operational</div>
+<h3>Strategic Output</h3>
+<div class="stack">
+<div class="box"><div class="label">Oil</div><div class="value" id="oil">--</div></div>
+<div class="box"><div class="label">Gold</div><div class="value" id="gold">--</div></div>
+<div class="box"><div class="label">S&amp;P500</div><div class="value" id="sp500">--</div></div>
+<div class="box"><div class="label">Interest</div><div class="value" id="interest">--</div></div>
+<div class="box"><div class="label">Signals Count</div><div class="value" id="signalCount">--</div></div>
+<div class="box"><div class="label">Advisory</div><div id="globalAdvisory" style="color:#9fb4cc;line-height:1.5">Loading...</div></div>
+</div>
+</div>
 </div>
 
-</div>
-
+<div class="footer">ZENTRA / Command Center</div>
 </div>
 
 <script type="module">
-
-import { runBrain } from "./engines/brainEngine.js"
-
-const brain = runBrain()
-
-console.log("ZENTRA BRAIN", brain)
-
-document.getElementById("globalRiskScore").textContent = brain.riskScore
-document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase()
-document.getElementById("driver").textContent = brain.driver
-
+import { runBrain } from "./engines/brainEngine.js";
+const brain = runBrain();
+document.getElementById("globalRiskScore").textContent = brain.riskScore;
+document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase();
+document.getElementById("driver").textContent = brain.driver;
+document.getElementById("oil").textContent = brain.markets.oil;
+document.getElementById("gold").textContent = brain.markets.gold;
+document.getElementById("sp500").textContent = brain.markets.sp500;
+document.getElementById("interest").textContent = brain.markets.interestRate;
+document.getElementById("signalCount").textContent = brain.signals.length;
+document.getElementById("globalAdvisory").textContent =
+  (brain.advisory.shortTerm || "") + " / " + (brain.advisory.midTerm || "");
 </script>
-
 </body>
-</html>
+  </html>

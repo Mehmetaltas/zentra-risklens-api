@@ -293,6 +293,14 @@ document.getElementById("advice").innerText="Monitor energy prices and logistics
 render()
 
 </script>
+<script type="module">
 
+import { runBrain } from "../engines/brainEngine.js"
+
+const brain = runBrain()
+
+console.log(brain)
+
+</script>
 </body>
 </html>

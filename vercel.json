@@ -1,14 +1,13 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-
-    { "source": "/risklens", "destination": "/risklens/dashboard.html" },
-    { "source": "/risklens/", "destination": "/risklens/dashboard.html" },
-
-    { "source": "/telescope", "destination": "/telescope/index.html" },
-    { "source": "/telescope/", "destination": "/telescope/index.html" },
-
-    { "source": "/trade", "destination": "/trade/index.html" },
-    { "source": "/trade/", "destination": "/trade/index.html" }
+  "functions": {
+    "backend/main.py": {
+      "runtime": "python3.9"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/main.py"
+    }
   ]
 }

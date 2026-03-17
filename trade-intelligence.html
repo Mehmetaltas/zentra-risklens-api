@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Trade Intelligence</title>
+
+<script>
+if (localStorage.getItem("zentraCoreAccess") !== "true") {
+  window.location = "/core.html";
+}
+</script>
+
+<style>
+:root{
+  --bg:#050b14;
+  --panel:#0d1b2a;
+  --panel2:#13263a;
+  --line:#1f3a56;
+  --text:#eef4ff;
+  --muted:#9fb4cc;
+  --high:#ff6b6b;
+  --medium:#ffb347;
+  --low:#38d39f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#050b14 0%, #091423 100%);
+  color:var(--text);
+}
+a{color:inherit;text-decoration:none}
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.title{
+  font-size:30px;
+  font-weight:700;
+}
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.nav a{
+  color:var(--muted);
+  text-decoration:none;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel2);
+  font-size:13px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.metric{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+}
+.metric .label{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.metric .value{
+  font-size:26px;
+  font-weight:700;
+}
+.opportunity-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.opportunity{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+}
+.op-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.op-title{
+  font-size:18px;
+  font-weight:700;
+}
+.badge{
+  font-size:12px;
+  text-transform:uppercase;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+}
+.high{color:var(--high)}
+.medium{color:var(--medium)}
+.low{color:var(--low)}
+.op-text{
+  color:var(--muted);
+  line-height:1.55;
+  font-size:14px;
+  margin-bottom:12px;
+}
+.op-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.btn{
+  min-height:40px;
+  padding:0 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#10243a;
+  color:var(--text);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  cursor:pointer;
+}
+.section-title{
+  margin:0 0 12px 0;
+  font-size:22px;
+}
+.sub{
+  color:var(--muted);
+  line-height:1.55;
+  margin-bottom:12px;
+}
+.debug{
+  display:none;
+  background:#2a1220;
+  border:1px solid #6b223a;
+  color:#ffd7df;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:16px;
+}
+.footer{
+  text-align:right;
+  color:var(--muted);
+  margin-top:10px;
+  font-size:13px;
+}
+@media(max-width:900px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media(max-width:560px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div id="debugBox" class="debug"></div>
+
+  <div class="topbar">
+    <div class="title">ZENTRA Trade Intelligence</div>
+    <div class="nav">
+      <a href="/platform.html">Platform</a>
+      <a href="/zentra-main.html">Main</a>
+      <a href="/command-center.html">Command</a>
+      <a href="/market-live.html">Market Live</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Trade Intelligence Snapshot</h2>
+    <div class="grid">
+      <div class="metric">
+        <div class="label">Data Source</div>
+        <div class="value" id="dataSource">--</div>
+      </div>
+      <div class="metric">
+        <div class="label">Dominant Driver</div>
+        <div class="value" id="driver">--</div>
+      </div>
+      <div class="metric">
+        <div class="label">Oil</div>
+        <div class="value" id="oil">--</div>
+      </div>
+      <div class="metric">
+        <div class="label">Shipping</div>
+        <div class="value" id="shipping">--</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Detected Opportunities</h2>
+    <div class="sub">
+      Bu ekran canlı market ve lojistik baskısından ticaret fırsatı üretir.
+      Sonraki aşamada supplier eşleştirme, teklif alma ve komisyon akışı buraya bağlanır.
+    </div>
+    <div id="opportunityList" class="opportunity-list"></div>
+  </div>
+
+  <div class="footer">
+    ZENTRA / Trade Intelligence / Revenue Layer
+  </div>
+</div>
+
+<script>
+function showDebug(msg){
+  const box = document.getElementById("debugBox");
+  box.style.display = "block";
+  box.textContent = msg;
+}
+
+function createOpportunity(title, severity, text, actionA, actionB){
+  return {
+    title,
+    severity,
+    text,
+    actionA,
+    actionB
+  };
+}
+
+function buildOpportunities(data){
+  const opportunities = [];
+  const oil = Number(data?.markets?.oil || 0);
+  const shipping = Number(data?.markets?.shipping || 0);
+  const driver = data?.dominantDriver || "Unknown";
+
+  if (oil > 80) {
+    opportunities.push(
+      createOpportunity(
+        "Energy Trade Alert",
+        "high",
+        "Oil yüksek seviyede. Enerji yoğun tedarik, alternatif sourcing ve hedge ihtiyacı öne çıkıyor.",
+        "Contact Supplier",
+        "Open Hedge Plan"
+      )
+    );
+  }
+
+  if (shipping > 1400) {
+    opportunities.push(
+      createOpportunity(
+        "Logistics Optimization",
+        "medium",
+        "Shipping baskısı yükselmiş durumda. Rota optimizasyonu, forwarder değişimi ve maliyet kırılımı fırsatı oluştu.",
+        "Review Routes",
+        "Request Logistics Quote"
+      )
+    );
+  }
+
+  if (driver === "Energy Pressure" && oil > 80 && shipping > 1400) {
+    opportunities.push(
+      createOpportunity(
+        "Cross-Border Margin Protection",
+        "high",
+        "Enerji ve lojistik baskısı aynı anda yüksek. Marj koruma, hızlı yeniden fiyatlama ve tedarik zinciri savunması gerekiyor.",
+        "Open Protection Plan",
+        "Start Trade Action"
+      )
+    );
+  }
+
+  if (opportunities.length === 0) {
+    opportunities.push(
+      createOpportunity(
+        "Baseline Trade Visibility",
+        "low",
+        "Şu an baskı düşük. Tedarik, rota ve fiyatlamayı düzenli izlemek yeterli.",
+        "Open Monitoring",
+        "Watch Markets"
+      )
+    );
+  }
+
+  return opportunities;
+}
+
+function renderOpportunities(items){
+  const list = document.getElementById("opportunityList");
+  list.innerHTML = "";
+
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "opportunity";
+    div.innerHTML = `
+      <div class="op-head">
+        <div class="op-title">${item.title}</div>
+        <div class="badge ${item.severity}">${item.severity}</div>
+      </div>
+      <div class="op-text">${item.text}</div>
+      <div class="op-actions">
+        <button class="btn" type="button">${item.actionA}</button>
+        <button class="btn" type="button">${item.actionB}</button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+async function loadTradeIntelligence(){
+  try {
+    const res = await fetch("https://zentra-live-api.vercel.app/api/live", {
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      throw new Error("API status " + res.status);
+    }
+
+    const data = await res.json();
+
+    document.getElementById("dataSource").textContent = "vercel-live-api";
+    document.getElementById("driver").textContent = data?.dominantDriver || "--";
+    document.getElementById("oil").textContent = data?.markets?.oil ?? "--";
+    document.getElementById("shipping").textContent = data?.markets?.shipping ?? "--";
+
+    const opportunities = buildOpportunities(data);
+    renderOpportunities(opportunities);
+
+  } catch (error) {
+    showDebug("TRADE API FAILED → " + error.message);
+
+    const fallbackData = {
+      dominantDriver: "Energy Pressure",
+      markets: {
+        oil: 82.4,
+        shipping: 1460
+      }
+    };
+
+    document.getElementById("dataSource").textContent = "trade-fallback";
+    document.getElementById("driver").textContent = fallbackData.dominantDriver;
+    document.getElementById("oil").textContent = fallbackData.markets.oil;
+    document.getElementById("shipping").textContent = fallbackData.markets.shipping;
+
+    const opportunities = buildOpportunities(fallbackData);
+    renderOpportunities(opportunities);
+  }
+}
+
+loadTradeIntelligence();
+</script>
+
+</body>
+        </html>

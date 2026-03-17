@@ -4,173 +4,373 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA Main</title>
-  <meta name="description" content="ZENTRA Global Economic AI Operating System" />
   <style>
-    :root {
-      --bg: #08101d;
-      --panel: #0f1728;
-      --panel-2: #111c31;
-      --line: #1f2d48;
-      --text: #ecf3ff;
-      --muted: #9db0d1;
-      --blue: #3b82f6;
-      --blue-2: #60a5fa;
-      --green: #22c55e;
-      --amber: #f59e0b;
-      --red: #ef4444;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-      --radius: 18px;
-      --max: 1240px;
+    :root{
+      --bg:#08101d;
+      --panel:#0f1728;
+      --line:#1f2d48;
+      --text:#ecf3ff;
+      --muted:#9db0d1;
+      --blue:#3b82f6;
+      --blue2:#60a5fa;
+      --green:#22c55e;
+      --shadow:0 20px 60px rgba(0,0,0,.28);
+      --radius:18px;
+      --max:1240px;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(59,130,246,0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(96,165,250,0.10), transparent 24%),
-        linear-gradient(180deg, #07101d 0%, #091223 100%);
-      color: var(--text);
+        radial-gradient(circle at top left, rgba(59,130,246,.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(96,165,250,.10), transparent 24%),
+        linear-gradient(180deg,#07101d 0%,#091223 100%);
+      color:var(--text);
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+    .topbar{
+      position:sticky;top:0;z-index:30;
+      backdrop-filter:blur(12px);
+      background:rgba(8,16,29,.78);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .topbar-inner{
+      min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-badge{
+      width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+      background:linear-gradient(135deg,#2563eb,#60a5fa);font-weight:800;box-shadow:var(--shadow)
+    }
+    .brand-text h1{margin:0;font-size:18px;letter-spacing:.08em}
+    .brand-text p{margin:3px 0 0;color:var(--muted);font-size:12px;text-transform:uppercase}
+    .nav{display:flex;gap:10px;flex-wrap:wrap}
+    .nav a{color:var(--muted);font-size:14px;padding:10px 12px;border-radius:10px}
+    .nav a:hover{background:rgba(255,255,255,.05);color:var(--text)}
+    .hero{padding:52px 0 30px}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+    .hero-main,.hero-side,.panel,.card{
+      background:linear-gradient(180deg,rgba(15,23,40,.98),rgba(10,17,30,.98));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .hero-main,.hero-side,.panel,.card{padding:24px}
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;
+      border:1px solid rgba(96,165,250,.28);background:rgba(59,130,246,.08);
+      border-radius:999px;color:#cfe2ff;font-size:12px;text-transform:uppercase;margin-bottom:18px
+    }
+    .hero h2{
+      margin:0 0 14px;
+      font-size:clamp(32px,5vw,56px);
+      line-height:1.02;
+      letter-spacing:-.03em;
+    }
+    .hero p.lead{margin:0;color:var(--muted);font-size:17px;line-height:1.7;max-width:760px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+    .btn{
+      border:0;cursor:pointer;border-radius:12px;padding:14px 18px;font-weight:700;
+      transition:transform .16s ease
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}
+    .btn-secondary{background:#13203a;border:1px solid #243554;color:var(--text)}
+    .hero-metrics{margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .metric{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;padding:16px
+    }
+    .metric-label{color:var(--muted);font-size:12px;text-transform:uppercase;margin-bottom:8px}
+    .metric-value{font-size:24px;font-weight:800}
+    .mini-list{display:grid;gap:12px}
+    .mini-item{
+      padding:14px;border-radius:14px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06)
+    }
+    .mini-item .label{font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+    .mini-item .value{font-size:16px;font-weight:700}
+    .section{padding:14px 0 34px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}
+    .section-head h3{margin:0;font-size:28px}
+    .section-head p{margin:8px 0 0;color:var(--muted);max-width:760px;line-height:1.6}
+    .cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card h4{margin:0 0 10px;font-size:20px}
+    .card p{margin:0;color:var(--muted);line-height:1.65}
+    .card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+    .tag{
+      padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);font-size:12px
+    }
+    .flow-panel{padding:24px}
+    .flow-actions{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+    .flow-output{margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .flow-card{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:16px;padding:18px
+    }
+    .flow-card h5{margin:0 0 10px;font-size:16px}
+    .flow-card .body{color:var(--muted);line-height:1.7;font-size:14px}
+    .flow-status{margin-top:14px;color:var(--muted);font-size:14px}
+    .footer{padding:32px 0 56px;color:var(--muted);font-size:14px}
+    @media (max-width:1100px){
+      .hero-grid,.cards-3,.flow-output,.hero-metrics{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:820px){
+      .topbar-inner,.section-head{align-items:flex-start;flex-direction:column}
+      .hero-grid,.cards-3,.flow-output,.hero-metrics{grid-template-columns:1fr}
+      .hero{padding-top:28px}
+      .hero h2{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">Z</div>
+        <div class="brand-text">
+          <h1>ZENTRA</h1>
+          <p>Global Economic AI Operating System</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Landing</a>
+        <a href="platform.html">Platform</a>
+        <a href="trade-intelligence.html">Trade Intelligence</a>
+        <a href="trade-action.html">Trade Action</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-main">
+          <div class="kicker">ZENTRA / MAIN COMMAND / LIVE CORE</div>
+          <h2>Global Economic Intelligence ile çalışan Trade Operating System</h2>
+          <p class="lead">
+            ZENTRA; ekonomik sinyali, risk görünürlüğünü, maliyet yapısını, ödeme planını,
+            lojistik akışını ve güvenlik kontrollerini tek işletim katmanında birleştirir.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="trade-intelligence.html">Open Trade Intelligence</a>
+            <a class="btn btn-secondary" href="trade-action.html">Open Trade Action</a>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric">
+              <div class="metric-label">System Mode</div>
+              <div class="metric-value">Core Live</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Trade Flow</div>
+              <div class="metric-value">Ready</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Execution</div>
+              <div class="metric-value">Modular</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Security</div>
+              <div class="metric-value">Checked</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="mini-list">
+            <div class="mini-item">
+              <div class="label">Deployment</div>
+              <div class="value">GitHub Pages + Modular Core</div>
+            </div>
+            <div class="mini-item">
+              <div class="label">Trade Status</div>
+              <div class="value">Flow Simulation Working</div>
+            </div>
+            <div class="mini-item">
+              <div class="label">Core Access</div>
+              <div class="value">Open for Controlled Modules</div>
+            </div>
+            <div class="mini-item">
+              <div class="label">Next Layer</div>
+              <div class="value">Live API + Decision Expansion</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Core Architecture</h3>
+            <p>Veri, trade, cost, offer, payment, escrow, logistics, contract, insurance, network ve security katmanları aynı akışta bağlıdır.</p>
+          </div>
+        </div>
+
+        <div class="cards-3">
+          <div class="card">
+            <h4>Economic + Trade Layer</h4>
+            <p>Ürün, fiyat, bölge ve talep verisi temel alınır; trade fırsatı ve kârlılık üretimi aynı çekirdekte hesaplanır.</p>
+            <div class="card-tags">
+              <span class="tag">Market Data</span>
+              <span class="tag">Trade</span>
+              <span class="tag">Offer</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Execution + Protection Layer</h4>
+            <p>Payment, escrow, milestones, logistics, insurance ve contract akışı tek işletim modeli içinde birbirine bağlanır.</p>
+            <div class="card-tags">
+              <span class="tag">Payment</span>
+              <span class="tag">Escrow</span>
+              <span class="tag">Insurance</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Trust + Control Layer</h4>
+            <p>Network eşleştirme, fraud risk görünürlüğü ve compliance kontrolleri ile sürecin güven çerçevesi oluşturulur.</p>
+            <div class="card-tags">
+              <span class="tag">Network</span>
+              <span class="tag">Compliance</span>
+              <span class="tag">Security</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container panel flow-panel">
+        <div class="section-head" style="margin-bottom:0">
+          <div>
+            <h3>ZENTRA Core Flow Runner</h3>
+            <p>Aşağıdaki buton çalışan çekirdek akışı tetikler.</p>
+          </div>
+        </div>
+
+        <div class="flow-actions">
+          <button class="btn btn-primary" id="run-zentra-flow-btn">Run Zentra Flow</button>
+          <button class="btn btn-secondary" id="clear-zentra-flow-btn">Clear Result</button>
+        </div>
+
+        <div class="flow-status" id="zentra-flow-status">Status: Waiting for execution...</div>
+        <div class="flow-output" id="zentra-flow-output"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">ZENTRA / Main Command Layer</div>
+  </footer>
+
+  <script type="module">
+    import { runZentraFlow } from "./core-system/systemOrchestrator.js";
+
+    const runBtn = document.getElementById("run-zentra-flow-btn");
+    const clearBtn = document.getElementById("clear-zentra-flow-btn");
+    const output = document.getElementById("zentra-flow-output");
+    const statusEl = document.getElementById("zentra-flow-status");
+
+    function renderCard(title, body) {
+      return `
+        <div class="flow-card">
+          <h5>${title}</h5>
+          <div class="body">${body}</div>
+        </div>
+      `;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    function safe(v) {
+      return v ?? "-";
     }
 
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
+    function renderFlow(result) {
+      output.innerHTML = `
+        ${renderCard("Status", `Final Status: <b>${safe(result.status)}</b>`)}
+        ${renderCard("Market Data", `
+          Product: <b>${safe(result.data?.product)}</b><br>
+          Base Price: <b>${safe(result.data?.basePrice)}</b><br>
+          Demand: <b>${safe(result.data?.demand)}</b><br>
+          Region: <b>${safe(result.data?.region)}</b>
+        `)}
+        ${renderCard("Trade", `
+          Buy Price: <b>${safe(result.trade?.buyPrice)}</b><br>
+          Sell Price: <b>${safe(result.trade?.sellPrice)}</b><br>
+          Volume: <b>${safe(result.trade?.volume)}</b><br>
+          Profit: <b>${safe(result.trade?.profit)}</b>
+        `)}
+        ${renderCard("Cost", `
+          Logistics: <b>${safe(result.cost?.logistics)}</b><br>
+          Tax: <b>${safe(result.cost?.tax)}</b><br>
+          Total Cost: <b>${safe(result.cost?.totalCost)}</b>
+        `)}
+        ${renderCard("Offer", `
+          Sell Value: <b>${safe(result.offer?.sellValue)}</b><br>
+          Total Cost: <b>${safe(result.offer?.totalCost)}</b><br>
+          Net Profit: <b>${safe(result.offer?.netProfit)}</b>
+        `)}
+        ${renderCard("Payment + Escrow", `
+          Amount: <b>${safe(result.payment?.amount)}</b><br>
+          Currency: <b>${safe(result.payment?.currency)}</b><br>
+          Method: <b>${safe(result.payment?.method)}</b><br>
+          Escrow: <b>${safe(result.escrow?.status)}</b>
+        `)}
+        ${renderCard("Milestones", `
+          ${Array.isArray(result.milestones) ? result.milestones.map(m => `${safe(m.step)} : <b>${safe(m.status)}</b>`).join("<br>") : "-"}
+        `)}
+        ${renderCard("Logistics", `
+          Mode: <b>${safe(result.logistics?.mode)}</b><br>
+          Estimated Days: <b>${safe(result.logistics?.estimatedDays)}</b><br>
+          Cost: <b>${safe(result.logistics?.cost)}</b>
+        `)}
+        ${renderCard("Contract", `
+          Contract ID: <b>${safe(result.contract?.contractId)}</b><br>
+          Status: <b>${safe(result.contract?.status)}</b>
+        `)}
+        ${renderCard("Insurance", `
+          Policy ID: <b>${safe(result.insurance?.policyId)}</b><br>
+          Insured Value: <b>${safe(result.insurance?.insuredValue)}</b><br>
+          Provider: <b>${safe(result.insurance?.provider)}</b>
+        `)}
+        ${renderCard("Network", `
+          Supplier: <b>${safe(result.network?.supplier)}</b><br>
+          Buyer: <b>${safe(result.network?.buyer)}</b><br>
+          Broker: <b>${safe(result.network?.broker)}</b><br>
+          Status: <b>${safe(result.network?.status)}</b>
+        `)}
+        ${renderCard("Security", `
+          Fraud Risk: <b>${safe(result.security?.fraudRisk)}</b><br>
+          Compliance: <b>${safe(result.security?.compliance)}</b><br>
+          Score: <b>${safe(result.security?.score)}</b>
+        `)}
+      `;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      backdrop-filter: blur(12px);
-      background: rgba(8, 16, 29, 0.78);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .topbar-inner {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #2563eb, #60a5fa);
-      color: white;
-      font-weight: 800;
-      box-shadow: var(--shadow);
-    }
-
-    .brand-text h1 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: 0.08em;
-    }
-
-    .brand-text p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .nav a {
-      color: var(--muted);
-      font-size: 14px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      transition: 0.2s ease;
-    }
-
-    .nav a:hover {
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-    }
-
-    .hero {
-      padding: 52px 0 30px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-    }
-
-    .hero-main,
-    .hero-side,
-    .panel,
-    .card {
-      background: linear-gradient(180deg, rgba(15,23,40,0.98), rgba(10,17,30,0.98));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-main {
-      padding: 32px;
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border: 1px solid rgba(96,165,250,0.28);
-      background: rgba(59,130,246,0.08);
-      border-radius: 999px;
-      color: #cfe2ff;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .hero h2 {
-      margin: 0 0 14px;
-      font-size: clamp(32px, 5vw, 56px);
-      line-height: 1.02;
-      letter-spacing: -0.03em
+    runBtn.addEventListener("click", () => {
+      try {
+        statusEl.textContent = "Status: Running flow...";
+        const result = runZentraFlow();
+        renderFlow(result);
+        statusEl.textContent = "Status: Flow completed successfully.";
+      } catch (err) {
+        statusEl.textContent = "Status: Flow error.";
+        output.innerHTML = renderCard("Flow Error", `<span style="color:#fecaca">${err.message}</span>`);
       }
+    });
 
-    .hero p.lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.7;
-      max-width: 760px;
-    }
-    
+    clearBtn.addEventListener("click", () => {
+      output.innerHTML = "";
+      statusEl.textContent = "Status: Waiting for execution...";
+    });
+  </script>
+</body>
+  </html>

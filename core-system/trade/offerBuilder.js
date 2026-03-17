@@ -1,9 +1,9 @@
 export function buildOffer(trade, cost) {
   return {
     product: trade.product,
-    finalPrice: trade.sellPrice,
-    cost: cost.totalCost,
-    netProfit: trade.totalProfit - cost.totalCost,
-    status: "OFFER_READY"
+    volume: trade.volume,
+    totalCost: cost.totalCost,
+    sellValue: trade.sellPrice * trade.volume,
+    netProfit: (trade.sellPrice * trade.volume) - cost.totalCost
   };
 }

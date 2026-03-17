@@ -1,10 +1,10 @@
 {
   "system": {
     "name": "ZENTRA",
-    "mode": "V1 Static",
+    "mode": "V2",
     "status": "operational"
   },
-
+  "updatedAt": "2026-03-17T12:00:00Z",
   "markets": {
     "oil": 82.4,
     "gold": 2180.5,
@@ -12,24 +12,25 @@
     "interestRate": 4.75,
     "shipping": 1460
   },
-
   "signals": [
     {
       "title": "Energy Pressure",
       "severity": "high",
-      "summary": "Energy costs are rising across key regions."
+      "category": "energy",
+      "summary": "Energy costs remain elevated across key routes and import-dependent regions."
     },
     {
       "title": "Logistics Stress",
       "severity": "medium",
-      "summary": "Shipping routes remain under pressure."
+      "category": "logistics",
+      "summary": "Shipping and route costs continue to pressure trade visibility."
     },
     {
       "title": "Market Stress",
       "severity": "low",
-      "summary": "Market volatility is present but contained."
+      "category": "markets",
+      "summary": "Market volatility is present but currently contained."
     }
   ],
-
-  "driver": "Energy Pressure"
+  "dominantDriver": "Energy Pressure"
 }

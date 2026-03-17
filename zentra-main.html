@@ -6,89 +6,222 @@
 <title>ZENTRA Main System</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#050b14;color:#fff}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#eef4ff}
 .wrap{max-width:1200px;margin:auto;padding:20px}
-.card{background:#0b1622;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
-.metric{margin:8px 0}
-.value{font-size:24px;font-weight:bold}
-.debug{background:#2a1220;color:#ffb3c1;padding:10px;border-radius:10px;margin-bottom:10px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.title{font-size:28px;font-weight:700}
+.nav{display:flex;flex-wrap:wrap;gap:10px}
+.nav a{color:#9fb4cc;text-decoration:none;padding:8px 12px;border:1px solid #1f3a56;border-radius:10px;background:#13263a;font-size:13px}
+.card{background:#0d1b2a;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px}
+.metric .label{font-size:12px;color:#9fb4cc;margin-bottom:8px;text-transform:uppercase}
+.metric .value{font-size:26px;font-weight:700}
+.signals{display:flex;flex-direction:column;gap:10px}
+.signal{background:#13263a;border:1px solid #1f3a56;border-radius:12px;padding:12px}
+.signal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.badge{font-size:12px;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid #1f3a56}
+.high{color:#ff6b6b}
+.medium{color:#ffb347}
+.low{color:#38d39f}
+.signal-summary{color:#9fb4cc;line-height:1.5;font-size:14px}
+.debug{background:#2a1220;border:1px solid #6b223a;color:#ffd7df;border-radius:12px;padding:12px;margin-bottom:16px;display:none}
+.footer{text-align:right;color:#9fb4cc;margin-top:10px;font-size:13px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <div class="wrap">
 
-<h1>ZENTRA Main System</h1>
+<div id="debugBox" class="debug"></div>
 
-<div id="debug" class="debug" style="display:none"></div>
-
-<div class="card">
-<div class="metric">Data Source: <span id="dataSource">--</span></div>
-<div class="metric">Risk Score: <span id="score">--</span></div>
-<div class="metric">Risk Level: <span id="level">--</span></div>
-<div class="metric">Driver: <span id="driver">--</span></div>
+<div class="topbar">
+  <div class="title">ZENTRA Main System</div>
+  <div class="nav">
+    <a href="/platform.html">Platform</a>
+    <a href="/core.html">Core</a>
+    <a href="/command-center.html">Command</a>
+    <a href="/risklens/dashboard.html">Dashboard</a>
+  </div>
 </div>
 
 <div class="card">
-<h3>Markets</h3>
-Oil: <span id="oil">--</span><br>
-Gold: <span id="gold">--</span><br>
-SP500: <span id="sp500">--</span><br>
-Interest: <span id="interest">--</span><br>
-Shipping: <span id="shipping">--</span>
+  <h3>Global Snapshot</h3>
+  <div class="grid">
+    <div class="metric">
+      <div class="label">Data Source</div>
+      <div class="value" id="dataSource">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">Risk Score</div>
+      <div class="value" id="score">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">Risk Level</div>
+      <div class="value" id="level">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">Driver</div>
+      <div class="value" id="driver">--</div>
+    </div>
+  </div>
 </div>
 
 <div class="card">
-<h3>Signals</h3>
-<div id="signals"></div>
+  <h3>Markets</h3>
+  <div class="grid">
+    <div class="metric">
+      <div class="label">Oil</div>
+      <div class="value" id="oil">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">Gold</div>
+      <div class="value" id="gold">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">SP500</div>
+      <div class="value" id="sp500">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">Interest</div>
+      <div class="value" id="interest">--</div>
+    </div>
+  </div>
 </div>
 
+<div class="card">
+  <h3>Shipping / Advisory</h3>
+  <div class="grid">
+    <div class="metric">
+      <div class="label">Shipping</div>
+      <div class="value" id="shipping">--</div>
+    </div>
+    <div class="metric">
+      <div class="label">Signals Count</div>
+      <div class="value" id="signalCount">--</div>
+    </div>
+    <div class="metric" style="grid-column:span 2;">
+      <div class="label">Strategic Advisory</div>
+      <div class="value" id="advice" style="font-size:18px">--</div>
+    </div>
+  </div>
 </div>
 
-<script type="module">
-import { runBrain } from "./engines/brainEngine.js";
+<div class="card">
+  <h3>Signals</h3>
+  <div id="signals" class="signals"></div>
+</div>
 
-function showError(msg){
-  const box = document.getElementById("debug");
+<div class="footer">ZENTRA / Direct Live API Mode</div>
+
+</div>
+
+<script>
+if(localStorage.getItem("zentraCoreAccess")!=="true"){
+  window.location="/core.html";
+}
+
+function showDebug(msg){
+  const box = document.getElementById("debugBox");
   box.style.display = "block";
-  box.innerText = msg;
+  box.textContent = msg;
+}
+
+function fallbackData(){
+  return {
+    system:{name:"ZENTRA",mode:"FALLBACK",status:"operational"},
+    markets:{
+      oil:82.4,
+      gold:2180.5,
+      sp500:5120.3,
+      interestRate:4.75,
+      shipping:1460
+    },
+    signals:[
+      {title:"Energy Pressure",severity:"high",summary:"Energy costs are rising across key regions."},
+      {title:"Logistics Stress",severity:"medium",summary:"Shipping routes remain under pressure."},
+      {title:"Market Stress",severity:"low",summary:"Market volatility is present but contained."}
+    ],
+    dominantDriver:"Energy Pressure",
+    source:"direct-fallback"
+  };
+}
+
+function computeRisk(data){
+  let score = 0;
+  if ((data.markets.oil || 0) > 80) score += 30;
+  if ((data.markets.shipping || 0) > 1400) score += 20;
+  if ((data.markets.interestRate || 0) > 4.5) score += 20;
+  if ((data.markets.gold || 0) > 2100) score += 15;
+  if ((data.signals || []).length >= 2) score += 15;
+  if (score > 100) score = 100;
+
+  let level = "LOW";
+  if (score >= 70) level = "HIGH";
+  else if (score >= 40) level = "MEDIUM";
+
+  return { score, level };
+}
+
+function buildAdvice(level){
+  if(level === "HIGH") return "Tighten monitoring / Prepare hedge scenarios";
+  if(level === "MEDIUM") return "Monitor key signals / Adjust exposure gradually";
+  return "System stable / Maintain positioning";
+}
+
+function render(data){
+  const risk = computeRisk(data);
+
+  document.getElementById("dataSource").textContent = data.source || "unknown";
+  document.getElementById("score").textContent = risk.score;
+  document.getElementById("level").textContent = risk.level;
+  document.getElementById("driver").textContent = data.dominantDriver || "--";
+
+  document.getElementById("oil").textContent = data.markets?.oil ?? "--";
+  document.getElementById("gold").textContent = data.markets?.gold ?? "--";
+  document.getElementById("sp500").textContent = data.markets?.sp500 ?? "--";
+  document.getElementById("interest").textContent = data.markets?.interestRate ?? "--";
+  document.getElementById("shipping").textContent = data.markets?.shipping ?? "--";
+  document.getElementById("signalCount").textContent = (data.signals || []).length;
+  document.getElementById("advice").textContent = buildAdvice(risk.level);
+
+  const box = document.getElementById("signals");
+  box.innerHTML = "";
+
+  (data.signals || []).forEach(s => {
+    const div = document.createElement("div");
+    div.className = "signal";
+    div.innerHTML = `
+      <div class="signal-head">
+        <strong>${s.title || "Unknown"}</strong>
+        <span class="badge ${s.severity || "low"}">${s.severity || "low"}</span>
+      </div>
+      <div class="signal-summary">${s.summary || "No summary available."}</div>
+    `;
+    box.appendChild(div);
+  });
 }
 
 async function start(){
-
   try{
-    const brain = await runBrain();
-
-    if(!brain){
-      throw new Error("Brain returned empty");
-    }
-
-    document.getElementById("dataSource").textContent = brain.source || "unknown";
-
-    document.getElementById("score").textContent = brain.riskScore;
-    document.getElementById("level").textContent = brain.riskLevel;
-    document.getElementById("driver").textContent = brain.driver;
-
-    document.getElementById("oil").textContent = brain.markets?.oil;
-    document.getElementById("gold").textContent = brain.markets?.gold;
-    document.getElementById("sp500").textContent = brain.markets?.sp500;
-    document.getElementById("interest").textContent = brain.markets?.interestRate;
-    document.getElementById("shipping").textContent = brain.markets?.shipping;
-
-    const signalsBox = document.getElementById("signals");
-    signalsBox.innerHTML = "";
-
-    (brain.signals || []).forEach(s=>{
-      const div = document.createElement("div");
-      div.innerText = s.title + " (" + s.severity + ")";
-      signalsBox.appendChild(div);
+    const res = await fetch("https://zentra-live-api.vercel.app/api/live", {
+      cache:"no-store"
     });
 
-  }catch(e){
-    console.error(e);
-    showError("ENGINE ERROR → " + e.message);
-  }
+    if(!res.ok){
+      throw new Error("API status " + res.status);
+    }
 
+    const data = await res.json();
+    data.source = "vercel-live-api";
+    render(data);
+
+  }catch(e){
+    showDebug("LIVE API FAILED → " + e.message);
+    render(fallbackData());
+  }
 }
 
 start();

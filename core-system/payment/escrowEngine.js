@@ -1,6 +1,6 @@
 export function createEscrow(payment) {
   return {
-    escrowId: "ESCROW_" + Date.now(),
+    escrowId: "ESCROW-" + Date.now(),
     amount: payment.amount,
     status: "LOCKED"
   };

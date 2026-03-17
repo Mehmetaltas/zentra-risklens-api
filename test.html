@@ -1,31 +1,6 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <title>ZENTRA TEST</title>
-</head>
-<body style="background:#0b1220;color:#fff;font-family:Arial;padding:20px">
-
-<h1>ZENTRA TEST RUNNER</h1>
-<div id="output">Loading...</div>
-
-<script type="module">
-import("./core-system/systemOrchestrator.js")
-  .then(mod => {
-    const result = mod.runZentraFlow();
-
-    console.log("ZENTRA RESULT:", result);
-
-    document.getElementById("output").innerHTML =
-      "<pre>" + JSON.stringify(result, null, 2) + "</pre>";
-  })
-  .catch(err => {
-    console.error("IMPORT FAIL:", err);
-
-    document.getElementById("output").innerHTML =
-      "<b style='color:red'>IMPORT FAIL</b><br>" + err;
-  });
-</script>
-
+<html>
+<body>
+ZENTRA TEST V2
 </body>
 </html>

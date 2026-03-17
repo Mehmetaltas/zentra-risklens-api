@@ -1,6 +1,8 @@
-export function createEscrow(payment) {
+export function initiatePayment(trade) {
   return {
-    amount: payment.amount,
-    status: "LOCKED"
+    amount: trade.sellPrice * trade.volume,
+    currency: "USD",
+    method: "SWIFT",
+    status: "INITIATED"
   };
 }

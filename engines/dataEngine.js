@@ -83,102 +83,11 @@ function normalizeData(liveData, fallback) {
     )
   };
 
-  const signals = Array.isArray(liveData?.signals) && liveData.signals.length
-    ? liveData.signals.map((signal) => ({
-        title: signal?.title || "Unknown Signal",
-        severity: signal?.severity || "low",
-        category: signal?.category || "general",
-        summary: signal?.summary || "No summary available."
-      }))
-    : fallback.signals;
-
-  const driver =
-    liveData?.dominantDriver ||
-    liveData?.driver ||
-    fallback.dominantDriver;
-
-  return {
-    system: {
-      name: liveData?.system?.name || fallback.system.name,
-      mode: liveData?.system?.mode || fallback.system.mode,
-      status: liveData?.system?.status || fallback.system.status
-    },
-
-    markets,
-    signals,
-
-    finance: buildFinance(markets),
-    trade: buildTrade(markets),
-
-    dominantDriver: driver,
-    source: liveData?.source || "live-feed",
-    updatedAt: liveData?.updatedAt || null
-  };
-}
-
-function buildFinance(markets) {
-  let liquidityPressure = "low";
-  let ratePressure = "low";
-  let volatility = "low";
-
-  if (markets.interestRate >= 4.5) {
-    ratePressure = "high";
-  } else if (markets.interestRate >= 3.5) {
-    ratePressure = "medium";
-  }
-
-  if (markets.sp500 < 5200) {
-    volatility = "medium";
-  }
-  if (markets.sp500 < 5000) {
-    volatility = "high";
-  }
-
-  if (markets.gold > 2100) {
-    liquidityPressure = "medium";
-  }
-  if (markets.gold > 2250) {
-    liquidityPressure = "high";
-  }
-
-  return {
-    liquidityPressure,
-    ratePressure,
-    volatility
-  };
-}
-
-function buildTrade(markets) {
-  let routeStress = "low";
-  let customsPressure = "low";
-  let supplyPressure = "low";
-
-  if (markets.shipping >= 1200) {
-    routeStress = "medium";
-    supplyPressure = "medium";
-  }
-
-  if (markets.shipping >= 1700) {
-    routeStress = "high";
-    supplyPressure = "high";
-  }
-
-  if (markets.oil >= 80) {
-    customsPressure = "low";
-  }
-
-  if (markets.oil >= 95) {
-    customsPressure = "medium";
-  }
-
-  return {
-    routeStress,
-    customsPressure,
-    supplyPressure
-  };
-}
-
-function numberOrFallback(value, fallback) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-}
+  const signals =
+    Array.isArray(liveData?.signals) && liveData.signals.length
+      ? liveData.signals.map((signal) => ({
+          title: signal?.title || "Unknown Signal",
+          severity: signal?.severity || "low",
+          category: signal?.category || "general",
+          summary: signal?.summary || "No summary available."
+        }))

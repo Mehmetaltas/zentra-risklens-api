@@ -1,3 +1,5 @@
+import { loadLiveSignals } from "./liveDataEngine.js";
+
 export async function loadExtendedData() {
   const staticFallback = {
     system: {
@@ -48,21 +50,18 @@ export async function loadExtendedData() {
     },
 
     dominantDriver: "Energy Pressure",
-    source: "static-fallback"
+    source: "static-fallback",
+    updatedAt: null
   };
 
   try {
-    const response = await fetch("/global-signals.json", {
-      cache: "no-store"
-    });
+    const liveFeed = await loadLiveSignals();
 
-    if (!response.ok) {
+    if (!liveFeed) {
       return staticFallback;
     }
 
-    const liveData = await response.json();
-
-    return normalizeData(liveData, staticFallback);
+    return normalizeData(liveFeed, staticFallback);
   } catch (error) {
     console.error("ZENTRA Data Engine fallback:", error);
     return staticFallback;
@@ -106,14 +105,14 @@ function normalizeData(liveData, fallback) {
     },
 
     markets,
-
     signals,
 
     finance: buildFinance(markets),
     trade: buildTrade(markets),
 
     dominantDriver: driver,
-    source: "global-signals-json"
+    source: liveData?.source || "live-feed",
+    updatedAt: liveData?.updatedAt || null
   };
 }
 

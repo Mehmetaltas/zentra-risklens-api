@@ -5,14 +5,13 @@ export async function loadLiveSignals() {
     });
 
     if (!response.ok) {
-      console.error("API response not OK");
+      console.error("API response not OK:", response.status);
       return null;
     }
 
     const data = await response.json();
 
     return normalizeLivePayload(data, "vercel-live-api");
-
   } catch (error) {
     console.error("Live feed error:", error);
     return null;
@@ -45,14 +44,5 @@ function normalizeLivePayload(data, source) {
       : [],
 
     dominantDriver: data?.dominantDriver || "Unknown",
-
-    source: source,
-
-    updatedAt: data?.updatedAt || new Date().toISOString()
-  };
-}
-
-function numberOrNull(value) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : null;
-}
+    source,
+    updated

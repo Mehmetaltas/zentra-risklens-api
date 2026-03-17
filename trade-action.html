@@ -192,7 +192,14 @@
         const insurance = createInsurance(trade);
         const network = matchPartners();
         const security = runSecurityCheck();
-
+${card("IDs", `
+  Action ID: <b>${result.ids?.actionId || "-"}</b><br>
+  Trade ID: <b>${result.trade?.tradeId || "-"}</b><br>
+  Offer ID: <b>${result.offer?.offerId || "-"}</b><br>
+  Contract ID: <b>${result.contract?.contractId || "-"}</b><br>
+  Payment ID: <b>${result.payment?.paymentId || "-"}</b><br>
+  Escrow ID: <b>${result.escrow?.escrowId || "-"}</b>
+`)}
         output.innerHTML = `
           ${card("Trade", `
             Product: <b>${trade.product}</b><br>

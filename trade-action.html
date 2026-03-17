@@ -262,6 +262,8 @@ ${card("IDs", `
   const output = document.getElementById("output");
   const clearBtn = document.getElementById("clearBtn");
 
+  statusEl.textContent = "Status: Script loaded.";
+
   function card(title, body) {
     return `
       <div class="mini">
@@ -271,92 +273,53 @@ ${card("IDs", `
     `;
   }
 
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+  form.onsubmit = function (e) {
+    e.preventDefault();
 
-      try {
-        statusEl.textContent = "Status: Running trade action...";
+    try {
+      statusEl.textContent = "Status: Running trade action...";
 
-        const result = runZentraFlow();
+      const result = runZentraFlow();
 
-        output.innerHTML = `
-          ${card("IDs", `
-            Action ID: <b>${result.ids?.actionId || "-"}</b><br>
-            Trade ID: <b>${result.trade?.tradeId || "-"}</b><br>
-            Offer ID: <b>${result.offer?.offerId || "-"}</b><br>
-            Contract ID: <b>${result.contract?.contractId || "-"}</b><br>
-            Payment ID: <b>${result.payment?.paymentId || "-"}</b><br>
-            Escrow ID: <b>${result.escrow?.escrowId || "-"}</b>
-          `)}
+      output.innerHTML = `
+        ${card("IDs", `
+          Action ID: <b>${result.ids?.actionId || "-"}</b><br>
+          Trade ID: <b>${result.trade?.tradeId || "-"}</b><br>
+          Offer ID: <b>${result.offer?.offerId || "-"}</b><br>
+          Contract ID: <b>${result.contract?.contractId || "-"}</b><br>
+          Payment ID: <b>${result.payment?.paymentId || "-"}</b><br>
+          Escrow ID: <b>${result.escrow?.escrowId || "-"}</b>
+        `)}
 
-          ${card("Trade", `
-            Product: <b>${result.trade.product}</b><br>
-            Buy: <b>${result.trade.buyPrice}</b><br>
-            Sell: <b>${result.trade.sellPrice}</b><br>
-            Volume: <b>${result.trade.volume}</b><br>
-            Profit: <b>${result.trade.profit}</b>
-          `)}
+        ${card("Trade", `
+          Product: <b>${result.trade.product}</b><br>
+          Buy: <b>${result.trade.buyPrice}</b><br>
+          Sell: <b>${result.trade.sellPrice}</b><br>
+          Volume: <b>${result.trade.volume}</b><br>
+          Profit: <b>${result.trade.profit}</b>
+        `)}
 
-          ${card("Cost + Offer", `
-            Total Cost: <b>${result.cost.totalCost}</b><br>
-            Sell Value: <b>${result.offer.sellValue}</b><br>
-            Net Profit: <b>${result.offer.netProfit}</b>
-          `)}
+        ${card("Cost + Offer", `
+          Total Cost: <b>${result.cost.totalCost}</b><br>
+          Sell Value: <b>${result.offer.sellValue}</b><br>
+          Net Profit: <b>${result.offer.netProfit}</b>
+        `)}
+      `;
 
-          ${card("Payment + Escrow", `
-            Amount: <b>${result.payment.amount}</b><br>
-            Currency: <b>${result.payment.currency}</b><br>
-            Method: <b>${result.payment.method}</b><br>
-            Escrow: <b>${result.escrow.status}</b>
-          `)}
+      statusEl.textContent = "Status: Trade action completed successfully.";
+      return false;
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = "Status: Trade action error.";
+      output.innerHTML = `<div class="mini" style="color:#fecaca">${err.message}</div>`;
+      return false;
+    }
+  };
 
-          ${card("Milestones", `
-            ${Array.isArray(result.milestones)
-              ? result.milestones.map(m => `${m.step}: <b>${m.status}</b>`).join("<br>")
-              : "-"}
-          `)}
-
-          ${card("Logistics", `
-            Mode: <b>${result.logistics.mode}</b><br>
-            Days: <b>${result.logistics.estimatedDays}</b><br>
-            Cost: <b>${result.logistics.cost}</b>
-          `)}
-
-          ${card("Contract + Insurance", `
-            Contract: <b>${result.contract.contractId}</b><br>
-            Policy: <b>${result.insurance.policyId}</b><br>
-            Insured Value: <b>${result.insurance.insuredValue}</b>
-          `)}
-
-          ${card("Network", `
-            Supplier: <b>${result.network.supplier}</b><br>
-            Buyer: <b>${result.network.buyer}</b><br>
-            Broker: <b>${result.network.broker}</b>
-          `)}
-
-          ${card("Security", `
-            Fraud Risk: <b>${result.security.fraudRisk}</b><br>
-            Compliance: <b>${result.security.compliance}</b><br>
-            Score: <b>${result.security.score}</b>
-          `)}
-        `;
-
-        statusEl.textContent = "Status: Trade action completed successfully.";
-      } catch (err) {
-        console.error(err);
-        statusEl.textContent = "Status: Trade action error.";
-        output.innerHTML = `<div class="mini" style="color:#fecaca">${err.message}</div>`;
-      }
-    });
-  }
-
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      output.innerHTML = "";
-      statusEl.textContent = "Status: Waiting for submission...";
-    });
-  }
+  clearBtn.onclick = function () {
+    output.innerHTML = "";
+    statusEl.textContent = "Status: Waiting for submission...";
+  };
 </script>
 </body>
 </html>

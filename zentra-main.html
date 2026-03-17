@@ -6,8 +6,8 @@
 <title>ZENTRA Main System</title>
 
 <script>
-if(localStorage.getItem("zentraCoreAccess")!=="true"){
-  window.location="/core.html";
+if (localStorage.getItem("zentraCoreAccess") !== "true") {
+  window.location = "/core.html";
 }
 </script>
 
@@ -138,6 +138,10 @@ a{color:inherit;text-decoration:none}
 }
 .swatch{width:16px;height:16px;border-radius:5px}
 .footer{text-align:right;color:var(--muted);font-size:13px;margin-top:10px;padding-bottom:8px}
+.debug{
+  background:#2a1220;border:1px solid #6b223a;color:#ffd7df;
+  border-radius:14px;padding:14px;margin-bottom:16px;display:none;
+}
 @media (max-width:1180px){
   .hero{grid-template-columns:1fr}
   .col-7,.col-6,.col-5,.col-3{grid-column:span 12}
@@ -152,6 +156,8 @@ a{color:inherit;text-decoration:none}
 <body>
 
 <div class="wrap">
+
+  <div id="debugBox" class="debug"></div>
 
   <div class="topbar">
     <div class="brand">
@@ -271,7 +277,7 @@ a{color:inherit;text-decoration:none}
 
   <section class="grid" id="command">
     <div class="card col-12">
-      <h2 class="section-title">Global Command Snapshot</h2>
+      <h2 style="margin:0 0 12px">Global Command Snapshot</h2>
       <div class="metric-grid" style="grid-template-columns:repeat(4,1fr)">
         <div class="metric">
           <div class="label">Global Risk Score</div>
@@ -295,13 +301,13 @@ a{color:inherit;text-decoration:none}
 
   <section class="grid" id="maparea">
     <div class="card col-7">
-      <h2 class="section-title">Global Risk Map</h2>
+      <h2 style="margin:0 0 12px">Global Risk Map</h2>
       <div id="map"></div>
     </div>
 
     <div class="col-5 side-stack">
       <div class="card">
-        <h2 class="section-title">Selected Region</h2>
+        <h2 style="margin:0 0 12px">Selected Region</h2>
         <div class="selected-box">
           <div class="selected-name" id="selectedRegion">No Region Selected</div>
           <div class="selected-meta">Haritadaki bir işaretçiye tıkla</div>
@@ -314,7 +320,7 @@ a{color:inherit;text-decoration:none}
       </div>
 
       <div class="card">
-        <h2 class="section-title">Market Snapshot</h2>
+        <h2 style="margin:0 0 12px">Market Snapshot</h2>
         <div class="metric-grid">
           <div class="metric"><div class="label">Oil</div><div class="value" id="oil">--</div></div>
           <div class="metric"><div class="label">Gold</div><div class="value" id="gold">--</div></div>
@@ -329,19 +335,19 @@ a{color:inherit;text-decoration:none}
 
   <section class="grid">
     <div class="card col-6">
-      <h2 class="section-title">Signals Layer</h2>
+      <h2 style="margin:0 0 12px">Signals Layer</h2>
       <div class="signals" id="signalsBox"></div>
     </div>
 
     <div class="card col-6">
-      <h2 class="section-title">Live Signal Stream</h2>
+      <h2 style="margin:0 0 12px">Live Signal Stream</h2>
       <div class="stream" id="streamBox"></div>
     </div>
   </section>
 
   <section class="grid">
     <div class="card col-6">
-      <h2 class="section-title">Risk Legend</h2>
+      <h2 style="margin:0 0 12px">Risk Legend</h2>
       <div class="legend">
         <div class="legend-item"><span class="swatch" style="background:#38d39f"></span><span>Low Risk</span></div>
         <div class="legend-item"><span class="swatch" style="background:#ffb347"></span><span>Medium Risk</span></div>
@@ -350,7 +356,7 @@ a{color:inherit;text-decoration:none}
     </div>
 
     <div class="card col-6">
-      <h2 class="section-title">Strategic Advisory</h2>
+      <h2 style="margin:0 0 12px">Strategic Advisory</h2>
       <div class="advisory" id="globalAdvisory">Loading advisory...</div>
     </div>
   </section>
@@ -377,85 +383,100 @@ function getRiskColor(risk){
   return "#38d39f";
 }
 
+function showDebug(message){
+  const box = document.getElementById("debugBox");
+  box.style.display = "block";
+  box.textContent = message;
+}
+
 async function startZentra(){
-  const brain = await runBrain();
+  try {
+    const brain = await runBrain();
 
-  document.getElementById("globalRiskScore").textContent = brain.riskScore;
-  document.getElementById("heroRiskScore").textContent = brain.riskScore;
-  document.getElementById("riskLevel").textContent = brain.riskLevel.toUpperCase();
-  document.getElementById("driver").textContent = brain.driver;
-  document.getElementById("dataSource").textContent = brain.source || "unknown";
+    console.log("ZENTRA BRAIN", brain);
+    console.log("SOURCE", brain.source);
 
-  document.getElementById("oil").textContent = brain.markets.oil;
-  document.getElementById("gold").textContent = brain.markets.gold;
-  document.getElementById("sp500").textContent = brain.markets.sp500;
-  document.getElementById("interest").textContent = brain.markets.interestRate;
-  document.getElementById("shipping").textContent = brain.markets.shipping;
-  document.getElementById("signalCount").textContent = brain.signals.length;
-  document.getElementById("globalAdvisory").textContent =
-    (brain.advisory.shortTerm || "") + " / " + (brain.advisory.midTerm || "");
+    document.getElementById("globalRiskScore").textContent = brain.riskScore ?? "--";
+    document.getElementById("heroRiskScore").textContent = brain.riskScore ?? "--";
+    document.getElementById("riskLevel").textContent = brain.riskLevel ? brain.riskLevel.toUpperCase() : "--";
+    document.getElementById("driver").textContent = brain.driver || "--";
+    document.getElementById("dataSource").textContent = brain.source || "unknown";
 
-  const signalsBox = document.getElementById("signalsBox");
-  const streamBox = document.getElementById("streamBox");
-  signalsBox.innerHTML = "";
-  streamBox.innerHTML = "";
+    document.getElementById("oil").textContent = brain.markets?.oil ?? "--";
+    document.getElementById("gold").textContent = brain.markets?.gold ?? "--";
+    document.getElementById("sp500").textContent = brain.markets?.sp500 ?? "--";
+    document.getElementById("interest").textContent = brain.markets?.interestRate ?? "--";
+    document.getElementById("shipping").textContent = brain.markets?.shipping ?? "--";
+    document.getElementById("signalCount").textContent = brain.signals?.length ?? "--";
+    document.getElementById("globalAdvisory").textContent =
+      (brain.advisory?.shortTerm || "") + " / " + (brain.advisory?.midTerm || "");
 
-  brain.signals.forEach(signal => {
-    const signalCard = document.createElement("div");
-    signalCard.className = "signal";
-    signalCard.innerHTML = `
-      <div class="signal-head">
-        <strong>${signal.title}</strong>
-        <span class="sev ${signal.severity}">${signal.severity}</span>
-      </div>
-      <p>${signal.summary || "No summary available."}</p>
-    `;
-    signalsBox.appendChild(signalCard);
+    const signalsBox = document.getElementById("signalsBox");
+    const streamBox = document.getElementById("streamBox");
+    signalsBox.innerHTML = "";
+    streamBox.innerHTML = "";
 
-    const color = getRiskColor(signal.severity);
-    const streamRow = document.createElement("div");
-    streamRow.className = "stream-item";
-    streamRow.innerHTML = `
-      <div class="stream-left">
-        <span class="stream-dot" style="background:${color}"></span>
-        <span>${signal.title}</span>
-      </div>
-      <div class="sev ${signal.severity}">${signal.severity}</div>
-    `;
-    streamBox.appendChild(streamRow);
-  });
+    (brain.signals || []).forEach(signal => {
+      const signalCard = document.createElement("div");
+      signalCard.className = "signal";
+      signalCard.innerHTML = `
+        <div class="signal-head">
+          <strong>${signal.title}</strong>
+          <span class="sev ${signal.severity}">${signal.severity}</span>
+        </div>
+        <p>${signal.summary || "No summary available."}</p>
+      `;
+      signalsBox.appendChild(signalCard);
 
-  const map = L.map("map", {
-    zoomControl:true,
-    attributionControl:false
-  }).setView([24,12], 2);
-
-  L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-    { subdomains:"abcd", maxZoom:19 }
-  ).addTo(map);
-
-  countries.forEach(country => {
-    const color = getRiskColor(country.risk);
-    const marker = L.circleMarker([country.lat, country.lng], {
-      radius:14,
-      color:color,
-      fillColor:color,
-      fillOpacity:0.95,
-      weight:3
-    }).addTo(map);
-
-    marker.on("click", () => {
-      document.getElementById("selectedRegion").textContent = country.name;
-      document.getElementById("selectedRisk").textContent = `${country.risk.toUpperCase()} / Score ${country.score}`;
-      document.getElementById("strategicNote").textContent = country.note;
-      document.getElementById("selectedDot").style.background = color;
+      const color = getRiskColor(signal.severity);
+      const streamRow = document.createElement("div");
+      streamRow.className = "stream-item";
+      streamRow.innerHTML = `
+        <div class="stream-left">
+          <span class="stream-dot" style="background:${color}"></span>
+          <span>${signal.title}</span>
+        </div>
+        <div class="sev ${signal.severity}">${signal.severity}</div>
+      `;
+      streamBox.appendChild(streamRow);
     });
-  });
+
+    const map = L.map("map", {
+      zoomControl:true,
+      attributionControl:false
+    }).setView([24,12], 2);
+
+    L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      { subdomains:"abcd", maxZoom:19 }
+    ).addTo(map);
+
+    countries.forEach(country => {
+      const color = getRiskColor(country.risk);
+      const marker = L.circleMarker([country.lat, country.lng], {
+        radius:14,
+        color:color,
+        fillColor:color,
+        fillOpacity:0.95,
+        weight:3
+      }).addTo(map);
+
+      marker.on("click", () => {
+        document.getElementById("selectedRegion").textContent = country.name;
+        document.getElementById("selectedRisk").textContent = `${country.risk.toUpperCase()} / Score ${country.score}`;
+        document.getElementById("strategicNote").textContent = country.note;
+        document.getElementById("selectedDot").style.background = color;
+      });
+    });
+
+  } catch (error) {
+    console.error("ZENTRA MAIN ERROR", error);
+    showDebug("ZENTRA MAIN ERROR: " + String(error));
+  }
 }
 
 startZentra();
 </script>
 
 </body>
-  </html>
+            </html>

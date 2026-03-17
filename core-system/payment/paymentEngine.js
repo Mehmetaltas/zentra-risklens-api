@@ -2,7 +2,6 @@ export function initiatePayment(trade) {
   return {
     amount: trade.sellPrice * trade.volume,
     currency: "USD",
-    method: "ESCROW",
-    status: "INITIATED"
+    method: "SWIFT"
   };
 }

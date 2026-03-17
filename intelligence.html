@@ -1,222 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Intelligence Surface</title>
+<title>ZENTRA Trade Intelligence</title>
 
 <style>
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
---bg:#050c18;
---panel:#0f1828;
---line:#23385e;
---text:#eef6ff;
---muted:#9bb3d9;
---cyan:#63b3ff;
---green:#45d483;
---orange:#ff9d57;
---red:#ff5c70;
---yellow:#ffd166;
-}
-
 body{
-font-family:Arial;
-background:
-radial-gradient(circle at 20% 20%, rgba(99,179,255,.08), transparent 25%),
-linear-gradient(180deg,#050c18,#071324 60%,#050c18);
-color:var(--text);
+  margin:0;
+  font-family:Arial;
+  background:#08101d;
+  color:#ecf3ff;
 }
-
-.container{
-max-width:1300px;
-margin:auto;
-padding:40px 18px;
+.wrap{max-width:1100px;margin:auto;padding:20px}
+.card{
+  background:#0f1728;
+  border:1px solid #1f2d48;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:16px;
 }
-
-h1{
-color:var(--cyan);
-font-size:40px;
-margin-bottom:10px;
+h1{margin:0 0 10px}
+.btn{
+  padding:10px 14px;
+  background:#1f2d48;
+  border-radius:8px;
+  cursor:pointer;
+  display:inline-block;
 }
-
-p{
-color:var(--muted);
-line-height:1.7;
-}
-
-.section{
-margin-top:26px;
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-}
-
-.section h2{
-color:var(--cyan);
-margin-bottom:14px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-}
-
-.map{
-position:relative;
-height:380px;
-background:url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png") center/contain no-repeat;
-border-radius:16px;
-border:1px solid rgba(255,255,255,.05);
-}
-
-.point{
-position:absolute;
-width:14px;
-height:14px;
-border-radius:50%;
-box-shadow:0 0 16px currentColor;
-}
-
-.red{background:var(--red);color:var(--red)}
-.orange{background:var(--orange);color:var(--orange)}
-.yellow{background:var(--yellow);color:var(--yellow)}
-.green{background:var(--green);color:var(--green)}
-
-.signal{
-padding:14px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.05);
-background:rgba(255,255,255,.02);
-margin-bottom:10px;
-}
-
-.signal strong{
-display:block;
-margin-bottom:4px;
-color:var(--cyan);
-}
-
-.trade{
-padding:14px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,.05);
-background:rgba(255,255,255,.02);
-margin-bottom:10px;
-}
-
-.trade strong{
-color:var(--green);
-}
-
-.tag{
-display:inline-block;
-padding:3px 8px;
-border-radius:999px;
-font-size:11px;
-margin-top:6px;
-}
-
-.tag.red{background:rgba(255,92,112,.15);color:var(--red)}
-.tag.orange{background:rgba(255,157,87,.15);color:var(--orange)}
-.tag.green{background:rgba(69,212,131,.15);color:var(--green)}
-
+.signal{margin-top:10px;padding:10px;background:#111c31;border-radius:8px}
+.high{color:#ef4444}
+.medium{color:#f59e0b}
+.low{color:#22c55e}
 </style>
 </head>
 
 <body>
+<div class="wrap">
 
-<div class="container">
+<h1>ZENTRA Trade Intelligence</h1>
 
-<h1>ZENTRA Intelligence Surface</h1>
-<p>
-Unified intelligence layer combining world observation, signal interpretation and trade opportunity detection.
-</p>
+<div class="card">
+  <div class="btn" onclick="runFlow()">Run Trade Intelligence</div>
+  <p id="status">Status: waiting</p>
+</div>
 
-<div class="section">
-
-<h2>🌍 Global Risk Map</h2>
-
-<div class="map">
-
-<div class="point red" style="top:38%;left:45%"></div>
-<div class="point orange" style="top:44%;left:62%"></div>
-<div class="point yellow" style="top:52%;left:30%"></div>
-<div class="point green" style="top:40%;left:70%"></div>
+<div id="result"></div>
 
 </div>
 
-</div>
+<script type="module">
+import { runZentraFlow } from "./core-system/systemOrchestrator.js";
 
-<div class="grid">
+window.runFlow = async function(){
+  document.getElementById("status").innerText="Running...";
 
-<div class="section">
+  try{
+    const r = runZentraFlow();
 
-<h2>🧠 Active Risk Signals</h2>
+    document.getElementById("status").innerText="Completed";
 
-<div class="signal">
-<strong>Oil Price Surge</strong>
-Energy pressure is expanding cost stress across logistics and industrial sectors.
-<div class="tag red">Critical</div>
-</div>
+    const html = `
+    <div class="card">
+      <h2>Opportunity</h2>
+      Product: ${r.data.product}<br>
+      Region: ${r.data.region}<br>
+      Demand: ${r.data.demand}<br>
+    </div>
 
-<div class="signal">
-<strong>Freight Cost Escalation Belt</strong>
-Rising route costs increase landed price pressure across import-dependent sectors.
-<div class="tag orange">High</div>
-</div>
+    <div class="card">
+      <h2>Profit</h2>
+      Net Profit: ${r.offer.netProfit}
+    </div>
 
-<div class="signal">
-<strong>Cyber Pressure on Banking Systems</strong>
-Increasing attack frequency across financial infrastructure.
-<div class="tag orange">Medium</div>
-</div>
+    <div class="card">
+      <h2>Trade Action</h2>
+      <div class="btn" onclick="alert('Supplier contact simulated')">Contact Supplier</div>
+      <div class="btn" onclick="alert('Logistics quote simulated')">Request Logistics</div>
+      <div class="btn" onclick="alert('Hedge plan simulated')">Open Hedge Plan</div>
+    </div>
 
-<div class="signal">
-<strong>Port Stress Detected</strong>
-Major port congestion detected in key shipping routes.
-<div class="tag orange">High</div>
-</div>
+    <div class="card">
+      <h2>Signals</h2>
+      ${r.data.demand==="HIGH" ? '<div class="signal high">High demand detected</div>' : ''}
+    </div>
+    `;
 
-</div>
+    document.getElementById("result").innerHTML=html;
 
-<div class="section">
-
-<h2>💰 Trade Opportunity Radar</h2>
-
-<div class="trade">
-<strong>Wheat Export Gap</strong><br>
-Origin: Kazakhstan<br>
-Demand: Middle East<br>
-Margin Potential: 14%<br>
-<div class="tag green">Opportunity</div>
-</div>
-
-<div class="trade">
-<strong>Steel Supply Shortage</strong><br>
-Origin: Turkey<br>
-Demand: North Africa<br>
-Margin Potential: 11%<br>
-<div class="tag green">Opportunity</div>
-</div>
-
-<div class="trade">
-<strong>Solar Panel Distribution</strong><br>
-Origin: China<br>
-Demand: EU Region<br>
-Margin Potential: 9%<br>
-<div class="tag green">Opportunity</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
+  }catch(e){
+    document.getElementById("status").innerText="ERROR";
+    console.error(e);
+  }
+}
+</script>
 
 </body>
 </html>

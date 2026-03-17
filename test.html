@@ -11,8 +11,9 @@
   <script type="module">
     import("./core-system/systemOrchestrator.js")
       .then((mod) => {
-        document.getElementById("output").innerHTML = "ORCHESTRATOR OK";
-        console.log(mod.runZentraFlow());
+        const result = mod.runZentraFlow();
+        document.getElementById("output").innerHTML =
+          "<pre>" + JSON.stringify(result, null, 2) + "</pre>";
       })
       .catch((err) => {
         document.getElementById("output").innerHTML =

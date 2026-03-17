@@ -1,24 +1,68 @@
-import { runZentra } from "./systemEngine.js";
+import { loadExtendedData } from "./dataEngine.js"
+import { computeSignals } from "./signalEngine.js"
 
 export async function runBrain() {
-  const result = await runZentra();
+  try {
+    const data = await loadExtendedData()
+
+    if (!data) {
+      console.error("NO DATA FROM ENGINE")
+      return buildFallback()
+    }
+
+    const signalResult = computeSignals(data)
+
+    return {
+      riskScore: signalResult.globalRiskScore,
+      riskLevel: signalResult.riskLevel,
+      driver: signalResult.dominantDriver,
+
+      markets: signalResult.markets,
+      signals: signalResult.signals,
+
+      advisory: buildAdvisory(signalResult.riskLevel),
+
+      source: data.source || "unknown"
+    }
+
+  } catch (error) {
+    console.error("BRAIN ERROR:", error)
+    return buildFallback()
+  }
+}
+
+function buildAdvisory(level) {
+  if (level === "high") {
+    return {
+      shortTerm: "Tighten monitoring",
+      midTerm: "Prepare hedge scenarios"
+    }
+  }
+
+  if (level === "medium") {
+    return {
+      shortTerm: "Monitor key signals",
+      midTerm: "Adjust exposure gradually"
+    }
+  }
 
   return {
-    riskScore: result.risk.score,
-    riskLevel: result.risk.riskLevel,
-    driver: result.data.dominantDriver,
+    shortTerm: "System stable",
+    midTerm: "Maintain positioning"
+  }
+}
 
-    markets: result.data.markets,
-    signals: result.data.signals,
-    advisory: result.advisory,
-
-    finance: result.finance,
-    trade: result.trade,
-    opportunities: result.opportunities,
-    execution: result.execution,
-    knowledgeGraph: result.knowledgeGraph,
-    evolution: result.evolution,
-
-    source: result.data.source || "unknown"
-  };
+function buildFallback() {
+  return {
+    riskScore: "--",
+    riskLevel: "--",
+    driver: "--",
+    markets: {},
+    signals: [],
+    advisory: {
+      shortTerm: "No data",
+      midTerm: "No data"
+    },
+    source: "engine-error"
+  }
 }

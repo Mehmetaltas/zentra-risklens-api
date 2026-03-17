@@ -1,12 +1,16 @@
-<script type="module">
-import("./core-system/systemOrchestrator.js")
-  .then(mod => {
-    console.log("IMPORT OK", mod);
-    document.getElementById("output").innerHTML = "IMPORT OK";
-  })
-  .catch(err => {
-    console.error("IMPORT FAIL", err);
-    document.getElementById("output").innerHTML =
-      "<b style='color:red'>IMPORT FAIL</b><br>" + err;
-  });
-</script>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA TEST</title>
+</head>
+<body style="background:#0b1220;color:#fff;font-family:Arial;padding:20px">
+  <h1>ZENTRA TEST RUNNER</h1>
+  <div id="output">Loading...</div>
+
+  <script type="module">
+    document.getElementById("output").innerHTML = "JS ÇALIŞTI";
+  </script>
+</body>
+</html>

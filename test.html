@@ -1,4 +1,12 @@
 <script type="module">
-console.log("SCRIPT ÇALIŞTI");
-document.getElementById("output").innerHTML = "JS ÇALIŞIYOR";
+import("./core-system/systemOrchestrator.js")
+  .then(mod => {
+    console.log("IMPORT OK", mod);
+    document.getElementById("output").innerHTML = "IMPORT OK";
+  })
+  .catch(err => {
+    console.error("IMPORT FAIL", err);
+    document.getElementById("output").innerHTML =
+      "<b style='color:red'>IMPORT FAIL</b><br>" + err;
+  });
 </script>

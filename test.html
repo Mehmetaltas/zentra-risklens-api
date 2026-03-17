@@ -1,3 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>ZENTRA TEST</title>
+</head>
+<body style="background:#0b1220;color:#fff;font-family:Arial;padding:20px">
+
+<h1>ZENTRA TEST RUNNER</h1>
+<div id="output">Loading...</div>
+
+<script type="module">
+import { runZentraFlow } from "./core-system/systemOrchestrator.js";
+
+try {
+  const result = runZentraFlow();
+
+  console.log("ZENTRA RESULT:", result);
+
+  document.getElementById("output").innerHTML =
+    "<pre>" + JSON.stringify(result, null, 2) + "</pre>";
+
+} catch (e) {
+  console.error("ERROR:", e);
+
+  document.getElementById("output").innerHTML =
+    "<b style='color:red'>HATA:</b><br>" + e.message;
+}
+</script>
+
+</body>
+</html>
 <script type="module">
 import { runZentraFlow } from "./core-system/systemOrchestrator.js";
 

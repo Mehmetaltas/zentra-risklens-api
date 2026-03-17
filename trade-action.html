@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZENTRA Trade Action</title>
+
+<script>
+if (localStorage.getItem("zentraCoreAccess") !== "true") {
+  window.location = "/core.html";
+}
+</script>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#050b14;
+  color:#fff;
+}
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background:#0d1b2a;
+  border:1px solid #1f3a56;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:16px;
+}
+h1{margin-top:0}
+input,textarea,select{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  margin-bottom:12px;
+  background:#13263a;
+  border:1px solid #1f3a56;
+  border-radius:8px;
+  color:#fff;
+}
+button{
+  padding:12px;
+  border:none;
+  background:#1f3a56;
+  color:#fff;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.success{
+  background:#102e1f;
+  border:1px solid #2a7c55;
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<h1>Trade Action</h1>
+
+<div class="card">
+<h3>Action Type</h3>
+<div id="actionType">--</div>
+</div>
+
+<div class="card">
+<h3>Request Details</h3>
+
+<label>Company Name</label>
+<input id="company" placeholder="Your company">
+
+<label>Contact Email</label>
+<input id="email" placeholder="email">
+
+<label>Request Type</label>
+<select id="type">
+<option>Supplier</option>
+<option>Logistics</option>
+<option>Hedge</option>
+<option>Trade Execution</option>
+</select>
+
+<label>Details</label>
+<textarea id="details" rows="4" placeholder="Explain your need..."></textarea>
+
+<button onclick="submitAction()">Submit Request</button>
+
+<div id="result"></div>
+
+</div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const action = params.get("type") || "General";
+
+document.getElementById("actionType").textContent = action;
+
+function submitAction(){
+
+  const company = document.getElementById("company").value;
+  const email = document.getElementById("email").value;
+  const type = document.getElementById("type").value;
+  const details = document.getElementById("details").value;
+
+  if(!company || !email){
+    alert("Fill required fields");
+    return;
+  }
+
+  const payload = {
+    company,
+    email,
+    type,
+    details,
+    action
+  };
+
+  console.log("TRADE REQUEST", payload);
+
+  document.getElementById("result").innerHTML = `
+    <div class="success">
+      Request received.<br>
+      ZENTRA will process and connect you.
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>

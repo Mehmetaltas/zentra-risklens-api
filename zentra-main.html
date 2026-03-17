@@ -1,231 +1,176 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZENTRA Main System</title>
-
-<style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#eef4ff}
-.wrap{max-width:1200px;margin:auto;padding:20px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-.title{font-size:28px;font-weight:700}
-.nav{display:flex;flex-wrap:wrap;gap:10px}
-.nav a{color:#9fb4cc;text-decoration:none;padding:8px 12px;border:1px solid #1f3a56;border-radius:10px;background:#13263a;font-size:13px}
-.card{background:#0d1b2a;border:1px solid #1f3a56;border-radius:14px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.metric{background:#13263a;border:1px solid #1f3a56;padding:12px;border-radius:10px}
-.metric .label{font-size:12px;color:#9fb4cc;margin-bottom:8px;text-transform:uppercase}
-.metric .value{font-size:26px;font-weight:700}
-.signals{display:flex;flex-direction:column;gap:10px}
-.signal{background:#13263a;border:1px solid #1f3a56;border-radius:12px;padding:12px}
-.signal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
-.badge{font-size:12px;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid #1f3a56}
-.high{color:#ff6b6b}
-.medium{color:#ffb347}
-.low{color:#38d39f}
-.signal-summary{color:#9fb4cc;line-height:1.5;font-size:14px}
-.debug{background:#2a1220;border:1px solid #6b223a;color:#ffd7df;border-radius:12px;padding:12px;margin-bottom:16px;display:none}
-.footer{text-align:right;color:#9fb4cc;margin-top:10px;font-size:13px}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-
-<div class="wrap">
-
-<div id="debugBox" class="debug"></div>
-
-<div class="topbar">
-  <div class="title">ZENTRA Main System</div>
-  <div class="nav">
-    <a href="/platform.html">Platform</a>
-    <a href="/core.html">Core</a>
-    <a href="/command-center.html">Command</a>
-    <a href="/risklens/dashboard.html">Dashboard</a>
-  </div>
-</div>
-
-<div class="card">
-  <h3>Global Snapshot</h3>
-  <div class="grid">
-    <div class="metric">
-      <div class="label">Data Source</div>
-      <div class="value" id="dataSource">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">Risk Score</div>
-      <div class="value" id="score">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">Risk Level</div>
-      <div class="value" id="level">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">Driver</div>
-      <div class="value" id="driver">--</div>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <h3>Markets</h3>
-  <div class="grid">
-    <div class="metric">
-      <div class="label">Oil</div>
-      <div class="value" id="oil">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">Gold</div>
-      <div class="value" id="gold">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">SP500</div>
-      <div class="value" id="sp500">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">Interest</div>
-      <div class="value" id="interest">--</div>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <h3>Shipping / Advisory</h3>
-  <div class="grid">
-    <div class="metric">
-      <div class="label">Shipping</div>
-      <div class="value" id="shipping">--</div>
-    </div>
-    <div class="metric">
-      <div class="label">Signals Count</div>
-      <div class="value" id="signalCount">--</div>
-    </div>
-    <div class="metric" style="grid-column:span 2;">
-      <div class="label">Strategic Advisory</div>
-      <div class="value" id="advice" style="font-size:18px">--</div>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <h3>Signals</h3>
-  <div id="signals" class="signals"></div>
-</div>
-
-<div class="footer">ZENTRA / Direct Live API Mode</div>
-
-</div>
-
-<script>
-if(localStorage.getItem("zentraCoreAccess")!=="true"){
-  window.location="/core.html";
-}
-
-function showDebug(msg){
-  const box = document.getElementById("debugBox");
-  box.style.display = "block";
-  box.textContent = msg;
-}
-
-function fallbackData(){
-  return {
-    system:{name:"ZENTRA",mode:"FALLBACK",status:"operational"},
-    markets:{
-      oil:82.4,
-      gold:2180.5,
-      sp500:5120.3,
-      interestRate:4.75,
-      shipping:1460
-    },
-    signals:[
-      {title:"Energy Pressure",severity:"high",summary:"Energy costs are rising across key regions."},
-      {title:"Logistics Stress",severity:"medium",summary:"Shipping routes remain under pressure."},
-      {title:"Market Stress",severity:"low",summary:"Market volatility is present but contained."}
-    ],
-    dominantDriver:"Energy Pressure",
-    source:"direct-fallback"
-  };
-}
-
-function computeRisk(data){
-  let score = 0;
-  if ((data.markets.oil || 0) > 80) score += 30;
-  if ((data.markets.shipping || 0) > 1400) score += 20;
-  if ((data.markets.interestRate || 0) > 4.5) score += 20;
-  if ((data.markets.gold || 0) > 2100) score += 15;
-  if ((data.signals || []).length >= 2) score += 15;
-  if (score > 100) score = 100;
-
-  let level = "LOW";
-  if (score >= 70) level = "HIGH";
-  else if (score >= 40) level = "MEDIUM";
-
-  return { score, level };
-}
-
-function buildAdvice(level){
-  if(level === "HIGH") return "Tighten monitoring / Prepare hedge scenarios";
-  if(level === "MEDIUM") return "Monitor key signals / Adjust exposure gradually";
-  return "System stable / Maintain positioning";
-}
-
-function render(data){
-  const risk = computeRisk(data);
-
-  document.getElementById("dataSource").textContent = data.source || "unknown";
-  document.getElementById("score").textContent = risk.score;
-  document.getElementById("level").textContent = risk.level;
-  document.getElementById("driver").textContent = data.dominantDriver || "--";
-
-  document.getElementById("oil").textContent = data.markets?.oil ?? "--";
-  document.getElementById("gold").textContent = data.markets?.gold ?? "--";
-  document.getElementById("sp500").textContent = data.markets?.sp500 ?? "--";
-  document.getElementById("interest").textContent = data.markets?.interestRate ?? "--";
-  document.getElementById("shipping").textContent = data.markets?.shipping ?? "--";
-  document.getElementById("signalCount").textContent = (data.signals || []).length;
-  document.getElementById("advice").textContent = buildAdvice(risk.level);
-
-  const box = document.getElementById("signals");
-  box.innerHTML = "";
-
-  (data.signals || []).forEach(s => {
-    const div = document.createElement("div");
-    div.className = "signal";
-    div.innerHTML = `
-      <div class="signal-head">
-        <strong>${s.title || "Unknown"}</strong>
-        <span class="badge ${s.severity || "low"}">${s.severity || "low"}</span>
-      </div>
-      <div class="signal-summary">${s.summary || "No summary available."}</div>
-    `;
-    box.appendChild(div);
-  });
-}
-
-async function start(){
-  try{
-    const res = await fetch("https://zentra-live-api.vercel.app/api/live", {
-      cache:"no-store"
-    });
-
-    if(!res.ok){
-      throw new Error("API status " + res.status);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Main</title>
+  <meta name="description" content="ZENTRA Global Economic AI Operating System" />
+  <style>
+    :root {
+      --bg: #08101d;
+      --panel: #0f1728;
+      --panel-2: #111c31;
+      --line: #1f2d48;
+      --text: #ecf3ff;
+      --muted: #9db0d1;
+      --blue: #3b82f6;
+      --blue-2: #60a5fa;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+      --radius: 18px;
+      --max: 1240px;
     }
 
-    const data = await res.json();
-    data.source = "vercel-live-api";
-    render(data);
+    * {
+      box-sizing: border-box;
+    }
 
-  }catch(e){
-    showDebug("LIVE API FAILED → " + e.message);
-    render(fallbackData());
-  }
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-start();
-</script>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(96,165,250,0.10), transparent 24%),
+        linear-gradient(180deg, #07101d 0%, #091223 100%);
+      color: var(--text);
+    }
 
-</body>
-</html>
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+      background: rgba(8, 16, 29, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-text p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 52px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .panel,
+    .card {
+      background: linear-gradient(180deg, rgba(15,23,40,0.98), rgba(10,17,30,0.98));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: 32px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(96,165,250,0.28);
+      background: rgba(59,130,246,0.08);
+      border-radius: 999px;
+      color: #cfe2ff;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero h2 {
+      margin: 0 0 14px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.03em
+      }
+
+    .hero p.lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 760px;
+    }
+    

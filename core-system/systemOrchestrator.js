@@ -2,44 +2,61 @@ import { getGlobalMarketData } from "./data/globalDataEngine.js";
 import { createTrade } from "./trade/tradeEngine.js";
 import { calculateCost } from "./trade/costEngine.js";
 import { buildOffer } from "./trade/offerBuilder.js";
-
 import { initiatePayment } from "./payment/paymentEngine.js";
 import { createEscrow } from "./payment/escrowEngine.js";
 import { createMilestones } from "./payment/milestoneEngine.js";
-
 import { planLogistics } from "./logistics/logisticsEngine.js";
 import { generateContract } from "./contracts/contractEngine.js";
 import { createInsurance } from "./insurance/insuranceEngine.js";
 import { matchPartners } from "./network/networkEngine.js";
 import { runSecurityCheck } from "./security/securityEngine.js";
+import { createIdBundle } from "./idEngine.js";
 
 export function runZentraFlow() {
-  console.log("🚀 ZENTRA FLOW START");
-
+  const ids = createIdBundle();
   const data = getGlobalMarketData();
 
-  const trade = createTrade({
-    product: data.product,
-    buyPrice: data.basePrice,
-    sellPrice: data.basePrice * 1.2,
-    volume: 100
-  });
+  const trade = {
+    ...createTrade({
+      product: data.product,
+      buyPrice: data.basePrice,
+      sellPrice: data.basePrice * 1.2,
+      volume: 100
+    }),
+    tradeId: ids.tradeId
+  };
 
   const cost = calculateCost(trade);
-  const offer = buildOffer(trade, cost);
 
-  const payment = initiatePayment(trade);
-  const escrow = createEscrow(payment);
+  const offer = {
+    ...buildOffer(trade, cost),
+    offerId: ids.offerId
+  };
+
+  const payment = {
+    ...initiatePayment(trade),
+    paymentId: ids.paymentId
+  };
+
+  const escrow = {
+    ...createEscrow(payment),
+    escrowId: ids.escrowId
+  };
+
   const milestones = createMilestones();
-
   const logistics = planLogistics(trade);
-  const contract = generateContract(trade);
-  const insurance = createInsurance(trade);
 
+  const contract = {
+    ...generateContract(trade),
+    contractId: ids.contractId
+  };
+
+  const insurance = createInsurance(trade);
   const network = matchPartners();
   const security = runSecurityCheck();
 
   return {
+    ids,
     data,
     trade,
     cost,
@@ -55,4 +72,3 @@ export function runZentraFlow() {
     status: "ZENTRA_FLOW_COMPLETED"
   };
 }
-

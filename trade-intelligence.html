@@ -241,13 +241,12 @@ function showDebug(msg){
   box.textContent = msg;
 }
 
-function createOpportunity(title, severity, text, actionA, actionB){
+function createOpportunity(title, severity, text, actions){
   return {
     title,
     severity,
     text,
-    actionA,
-    actionB
+    actions
   };
 }
 
@@ -263,8 +262,10 @@ function buildOpportunities(data){
         "Energy Trade Alert",
         "high",
         "Oil yüksek seviyede. Enerji yoğun tedarik, alternatif sourcing ve hedge ihtiyacı öne çıkıyor.",
-        "Contact Supplier",
-        "Open Hedge Plan"
+        [
+          { label: "Contact Supplier", href: "/trade-action.html?type=supplier" },
+          { label: "Open Hedge Plan", href: "/trade-action.html?type=hedge" }
+        ]
       )
     );
   }
@@ -275,8 +276,10 @@ function buildOpportunities(data){
         "Logistics Optimization",
         "medium",
         "Shipping baskısı yükselmiş durumda. Rota optimizasyonu, forwarder değişimi ve maliyet kırılımı fırsatı oluştu.",
-        "Review Routes",
-        "Request Logistics Quote"
+        [
+          { label: "Review Routes", href: "/trade-action.html?type=logistics" },
+          { label: "Request Logistics Quote", href: "/trade-action.html?type=logistics" }
+        ]
       )
     );
   }
@@ -287,8 +290,10 @@ function buildOpportunities(data){
         "Cross-Border Margin Protection",
         "high",
         "Enerji ve lojistik baskısı aynı anda yüksek. Marj koruma, hızlı yeniden fiyatlama ve tedarik zinciri savunması gerekiyor.",
-        "Open Protection Plan",
-        "Start Trade Action"
+        [
+          { label: "Open Protection Plan", href: "/trade-action.html?type=hedge" },
+          { label: "Start Trade Action", href: "/trade-action.html?type=execution" }
+        ]
       )
     );
   }
@@ -299,8 +304,10 @@ function buildOpportunities(data){
         "Baseline Trade Visibility",
         "low",
         "Şu an baskı düşük. Tedarik, rota ve fiyatlamayı düzenli izlemek yeterli.",
-        "Open Monitoring",
-        "Watch Markets"
+        [
+          { label: "Open Monitoring", href: "/trade-action.html?type=monitoring" },
+          { label: "Watch Markets", href: "/market-live.html" }
+        ]
       )
     );
   }
@@ -313,6 +320,10 @@ function renderOpportunities(items){
   list.innerHTML = "";
 
   items.forEach(item => {
+    const actionsHtml = (item.actions || [])
+      .map(action => `<a class="btn" href="${action.href}">${action.label}</a>`)
+      .join("");
+
     const div = document.createElement("div");
     div.className = "opportunity";
     div.innerHTML = `
@@ -322,8 +333,7 @@ function renderOpportunities(items){
       </div>
       <div class="op-text">${item.text}</div>
       <div class="op-actions">
-        <button class="btn" type="button">${item.actionA}</button>
-        <button class="btn" type="button">${item.actionB}</button>
+        ${actionsHtml}
       </div>
     `;
     list.appendChild(div);
@@ -375,4 +385,4 @@ loadTradeIntelligence();
 </script>
 
 </body>
-        </html>
+</html>

@@ -11,9 +11,14 @@ import { createInsurance } from "./insurance/insuranceEngine.js";
 import { matchPartners } from "./network/networkEngine.js";
 import { runSecurityCheck } from "./security/securityEngine.js";
 import { createIdBundle } from "./idEngine.js";
+
+import { runAIDecisionEngine } from "./ai/aiDecisionEngine.js";
+import { runPredictiveTradeEngine } from "./ai/predictiveTradeEngine.js";
 import { runRiskForecastEngine } from "./ai/riskForecastEngine.js";
+
 export function runZentraFlow() {
   const ids = createIdBundle();
+
   const data = getGlobalMarketData();
 
   const trade = {
@@ -55,6 +60,27 @@ export function runZentraFlow() {
   const network = matchPartners();
   const security = runSecurityCheck();
 
+  const aiDecision = runAIDecisionEngine({
+    data,
+    trade,
+    cost,
+    offer,
+    logistics,
+    security
+  });
+
+  const predictiveTrade = runPredictiveTradeEngine({
+    data,
+    trade,
+    offer
+  });
+
+  const riskForecast = runRiskForecastEngine({
+    data,
+    logistics,
+    security
+  });
+
   return {
     ids,
     data,
@@ -69,6 +95,9 @@ export function runZentraFlow() {
     insurance,
     network,
     security,
+    aiDecision,
+    predictiveTrade,
+    riskForecast,
     status: "ZENTRA_FLOW_COMPLETED"
   };
 }

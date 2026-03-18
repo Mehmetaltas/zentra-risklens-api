@@ -1,8 +1,10 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Platform</title><style>
+<title>ZENTRA Platform</title>
+<style>
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
@@ -40,111 +42,142 @@ body{
   border:1px solid #1f2d48;
   border-radius:12px;
   padding:14px;
+  margin-bottom:12px;
 }
 .muted{color:#9db0d1}
+pre{
+  white-space:pre-wrap;
+  word-break:break-word;
+  background:#111c31;
+  border:1px solid #1f2d48;
+  border-radius:12px;
+  padding:16px;
+  color:#dbeafe;
+}
 @media(max-width:800px){
   .grid{grid-template-columns:1fr}
 }
-</style></head><body><div class="wrap">  <div class="card">
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="card">
     <h1>ZENTRA Platform</h1>
-    <p class="muted">Global Economic AI Operating System</p><div style="margin-top:12px">
-  <a href="/zentra-main.html" class="btn">Main System</a>
-  <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
-  <a href="/trade-action.html" class="btn">Trade Action</a>
+    <p class="muted">Global Economic AI Operating System</p>
+
+    <div style="margin-top:12px">
+      <a href="/zentra-main.html" class="btn">Main System</a>
+      <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
+      <a href="/trade-action.html" class="btn">Trade Action</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>System Status</h2>
+      <div id="statusBox">Loading...</div>
+    </div>
+
+    <div class="card">
+      <h2>AI Decision Snapshot</h2>
+      <div id="aiBox">Loading...</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Flow Debug Output</h2>
+    <div id="debugBox">Loading...</div>
+  </div>
+
 </div>
 
-  </div>  <div class="grid"><div class="card">
-  <h2>System Status</h2>
-  <div id="statusBox">Loading...</div>
-</div>
-
-<div class="card">
-  <h2>AI Decision Snapshot</h2>
-  <div id="aiBox">Loading...</div>
-</div>
-
-  </div></div><script type="module">
-
+<script type="module">
 const statusBox = document.getElementById("statusBox");
 const aiBox = document.getElementById("aiBox");
+const debugBox = document.getElementById("debugBox");
 
-// 🔥 İlk kontrol
-statusBox.innerHTML = `<div class="mini">SCRIPT STARTED</div>`;
+function esc(text){
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
 
-import("./core-system/systemOrchestrator.js?v=20")
-.then((mod)=>{
+async function boot(){
+  try{
+    statusBox.innerHTML = `<div class="mini">SCRIPT STARTED</div>`;
 
-  const r = mod.runZentraFlow();
+    const mod = await import("./core-system/systemOrchestrator.js?v=30");
+    const r = mod.runZentraFlow();
 
-  // STATUS
-  statusBox.innerHTML = `
-    <div class="mini">
-      System: <b>ACTIVE</b><br>
-      Risk Score: <b>${r.security.score}</b><br>
-      Profit: <b>${r.trade.profit}</b><br>
-      Logistics: <b>${r.logistics.mode}</b>
-    </div>
-  `;
-
-  const ai = r.aiDecision;
-  const pred = r.predictiveTrade;
-  const risk = r.riskForecast;
-
-  const color =
-    ai.recommendation === "EXECUTE" ? "#22c55e" :
-    ai.recommendation === "REVIEW" ? "#f59e0b" :
-    "#ef4444";
-
-  // AI PANEL
-  aiBox.innerHTML = `
-    <div class="mini">
-      <h3 style="color:${color}">${ai.recommendation}</h3>
-      Score: <b>${ai.aiDecisionScore}</b><br>
-      Confidence: <b>${ai.confidence}</b>
-    </div>
-
-    <div class="mini">
-      <h3>Predictive</h3>
-      Trend: <b>${pred.nextTrend}</b><br>
-      Signal: <b>${pred.predictiveSignal}</b>
-    </div>
-
-    <div class="mini">
-      <h3>Risk</h3>
-      Level: <b>${risk.riskForecastLevel}</b><br>
-      Score: <b>${risk.riskForecastScore}</b>
-    </div>
-  `;
-
-  // 🔥 AUTO EXECUTION
-  if(ai.recommendation === "EXECUTE"){
-    statusBox.innerHTML += `
-      <div class="mini" style="margin-top:10px;border:1px solid #22c55e">
+    statusBox.innerHTML = `
+      <div class="mini">
+        System: <b>ACTIVE</b><br>
+        Risk Score: <b>${r.security.score}</b><br>
+        Profit: <b>${r.trade.profit}</b><br>
+        Logistics: <b>${r.logistics.mode}</b>
+      </div>
+      <div class="mini" style="border:1px solid #22c55e">
         <b style="color:#22c55e">AUTO EXECUTION STARTED</b><br>
         Trade ID: ${r.trade.tradeId}<br>
         Profit: ${r.trade.profit}<br>
         Payment: ${r.payment.amount} ${r.payment.currency}
       </div>
     `;
+
+    if (r.aiDecision && r.predictiveTrade && r.riskForecast) {
+      const ai = r.aiDecision;
+      const pred = r.predictiveTrade;
+      const risk = r.riskForecast;
+
+      const color =
+        ai.recommendation === "EXECUTE" ? "#22c55e" :
+        ai.recommendation === "REVIEW" ? "#f59e0b" :
+        "#ef4444";
+
+      aiBox.innerHTML = `
+        <div class="mini">
+          <h3 style="margin:0 0 8px;color:${color}">${ai.recommendation}</h3>
+          Score: <b>${ai.aiDecisionScore}</b><br>
+          Confidence: <b>${ai.confidence}</b>
+        </div>
+
+        <div class="mini">
+          <h3 style="margin:0 0 8px">Predictive</h3>
+          Trend: <b>${pred.nextTrend}</b><br>
+          Signal: <b>${pred.predictiveSignal}</b><br>
+          Projected Profit: <b>${pred.projectedProfit}</b>
+        </div>
+
+        <div class="mini">
+          <h3 style="margin:0 0 8px">Risk</h3>
+          Level: <b>${risk.riskForecastLevel}</b><br>
+          Score: <b>${risk.riskForecastScore}</b><br>
+          <div class="muted" style="margin-top:8px">${risk.forecastDrivers.join("<br>")}</div>
+        </div>
+      `;
+    } else {
+      aiBox.innerHTML = `<div class="mini">AI OUTPUT NOT FOUND</div>`;
+    }
+
+    debugBox.innerHTML = `<pre>${esc(JSON.stringify(r, null, 2))}</pre>`;
+  } catch(err){
+    console.error(err);
+    statusBox.innerHTML = `
+      <div class="mini" style="border:1px solid #ef4444">
+        <b style="color:#ef4444">IMPORT ERROR</b><br>
+        ${esc(err.message)}
+      </div>
+    `;
+    aiBox.innerHTML = `<div class="mini" style="border:1px solid #ef4444">AI LOAD FAILED</div>`;
+    debugBox.innerHTML = `<pre>${esc(String(err && err.stack ? err.stack : err))}</pre>`;
   }
+}
 
-})
-.catch((err)=>{
-  console.error(err);
+boot();
+</script>
 
-  statusBox.innerHTML = `
-    <div class="mini" style="border:1px solid #ef4444">
-      <b style="color:#ef4444">IMPORT ERROR</b><br>
-      ${err.message}
-    </div>
-  `;
-
-  aiBox.innerHTML = `
-    <div class="mini" style="border:1px solid #ef4444">
-      AI LOAD FAILED
-    </div>
-  `;
-});
-
-</script></body>
+</body>
 </html>

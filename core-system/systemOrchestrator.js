@@ -80,7 +80,8 @@ export function runZentraFlow() {
     logistics,
     security
   });
-
+version: "AI_BUILD_1",
+aiMarker: "AI_ON",
   return {
     ids,
     data,

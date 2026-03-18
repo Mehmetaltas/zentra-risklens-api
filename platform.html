@@ -64,79 +64,87 @@ body{
 </div>
 
   </div></div><script type="module">
-import { runZentraFlow } from "./core-system/systemOrchestrator.js?v=10";
 
 const statusBox = document.getElementById("statusBox");
 const aiBox = document.getElementById("aiBox");
 
-function render(){
-  try{
-    const r = runZentraFlow();
+// 🔥 İlk kontrol
+statusBox.innerHTML = `<div class="mini">SCRIPT STARTED</div>`;
 
-    // STATUS
-    statusBox.innerHTML = `
-      <div class="mini">
-        System: <b>ACTIVE</b><br>
-        Risk Score: <b>${r.security.score}</b><br>
-        Profit: <b>${r.trade.profit}</b><br>
-        Logistics: <b>${r.logistics.mode}</b>
-      </div>
-    `;
+import("./core-system/systemOrchestrator.js?v=20")
+.then((mod)=>{
 
-    const ai = r.aiDecision;
-    const pred = r.predictiveTrade;
-    const risk = r.riskForecast;
+  const r = mod.runZentraFlow();
 
-    const color =
-      ai.recommendation === "EXECUTE" ? "#22c55e" :
-      ai.recommendation === "REVIEW" ? "#f59e0b" :
-      "#ef4444";
-
-    // AI PANEL
-    aiBox.innerHTML = `
-      <div class="mini">
-        <h3 style="color:${color}">${ai.recommendation}</h3>
-        Score: <b>${ai.aiDecisionScore}</b><br>
-        Confidence: <b>${ai.confidence}</b>
-      </div>
-
-      <div class="mini">
-        <h3>Predictive</h3>
-        Trend: <b>${pred.nextTrend}</b><br>
-        Signal: <b>${pred.predictiveSignal}</b>
-      </div>
-
-      <div class="mini">
-        <h3>Risk</h3>
-        Level: <b>${risk.riskForecastLevel}</b><br>
-        Score: <b>${risk.riskForecastScore}</b>
-      </div>
-    `;
-
-    // 🔥 AUTO EXECUTION
-    if(ai.recommendation === "EXECUTE"){
-      autoExecute(r);
-    }
-
-  }catch(e){
-    console.error(e);
-    aiBox.innerHTML = "Error loading AI";
-  }
-}
-
-function autoExecute(result){
-  console.log("AUTO TRADE EXECUTED");
-
-  statusBox.innerHTML += `
-    <div class="mini" style="margin-top:10px;border:1px solid #22c55e">
-      <b style="color:#22c55e">AUTO EXECUTION STARTED</b><br>
-      Trade ID: ${result.trade.tradeId}<br>
-      Profit: ${result.trade.profit}<br>
-      Payment: ${result.payment.amount} ${result.payment.currency}
+  // STATUS
+  statusBox.innerHTML = `
+    <div class="mini">
+      System: <b>ACTIVE</b><br>
+      Risk Score: <b>${r.security.score}</b><br>
+      Profit: <b>${r.trade.profit}</b><br>
+      Logistics: <b>${r.logistics.mode}</b>
     </div>
   `;
-}
 
-render();
+  const ai = r.aiDecision;
+  const pred = r.predictiveTrade;
+  const risk = r.riskForecast;
+
+  const color =
+    ai.recommendation === "EXECUTE" ? "#22c55e" :
+    ai.recommendation === "REVIEW" ? "#f59e0b" :
+    "#ef4444";
+
+  // AI PANEL
+  aiBox.innerHTML = `
+    <div class="mini">
+      <h3 style="color:${color}">${ai.recommendation}</h3>
+      Score: <b>${ai.aiDecisionScore}</b><br>
+      Confidence: <b>${ai.confidence}</b>
+    </div>
+
+    <div class="mini">
+      <h3>Predictive</h3>
+      Trend: <b>${pred.nextTrend}</b><br>
+      Signal: <b>${pred.predictiveSignal}</b>
+    </div>
+
+    <div class="mini">
+      <h3>Risk</h3>
+      Level: <b>${risk.riskForecastLevel}</b><br>
+      Score: <b>${risk.riskForecastScore}</b>
+    </div>
+  `;
+
+  // 🔥 AUTO EXECUTION
+  if(ai.recommendation === "EXECUTE"){
+    statusBox.innerHTML += `
+      <div class="mini" style="margin-top:10px;border:1px solid #22c55e">
+        <b style="color:#22c55e">AUTO EXECUTION STARTED</b><br>
+        Trade ID: ${r.trade.tradeId}<br>
+        Profit: ${r.trade.profit}<br>
+        Payment: ${r.payment.amount} ${r.payment.currency}
+      </div>
+    `;
+  }
+
+})
+.catch((err)=>{
+  console.error(err);
+
+  statusBox.innerHTML = `
+    <div class="mini" style="border:1px solid #ef4444">
+      <b style="color:#ef4444">IMPORT ERROR</b><br>
+      ${err.message}
+    </div>
+  `;
+
+  aiBox.innerHTML = `
+    <div class="mini" style="border:1px solid #ef4444">
+      AI LOAD FAILED
+    </div>
+  `;
+});
+
 </script></body>
 </html>

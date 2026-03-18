@@ -1,63 +1,71 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Platform</title>
-<style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#08101d;
-  color:#ecf3ff;
-}
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:24px;
-}
-.card{
-  background:#0f1728;
-  border:1px solid #1f2d48;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-.btn{
-  display:inline-block;
-  padding:12px 16px;
-  border-radius:10px;
-  background:#3b82f6;
-  color:white;
-  text-decoration:none;
-  margin-right:10px;
-}
-.mini{
-  background:#111c31;
-  border:1px solid #1f2d48;
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:12px;
-}
-.muted{color:#9db0d1}
-pre{
-  white-space:pre-wrap;
-  word-break:break-word;
-  background:#111c31;
-  border:1px solid #1f2d48;
-  border-radius:12px;
-  padding:16px;
-  color:#dbeafe;
-}
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Platform Gate</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#08101d;
+      color:#ecf3ff;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:auto;
+      padding:24px;
+    }
+    .card{
+      background:#0f1728;
+      border:1px solid #1f2d48;
+      border-radius:16px;
+      padding:20px;
+      margin-bottom:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+    }
+    .muted{color:#9db0d1}
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius:10px;
+      background:#3b82f6;
+      color:#fff;
+      text-decoration:none;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn2{
+      background:#13203a;
+      border:1px solid #243554;
+      color:#fff;
+    }
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #263655;
+      background:#0b1527;
+      color:#ecf3ff;
+      box-sizing:border-box;
+      margin-top:10px;
+    }
+    .mini{
+      background:#111c31;
+      border:1px solid #1f2d48;
+      border-radius:12px;
+      padding:14px;
+      margin-top:12px;
+    }
+    @media(max-width:800px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
 
@@ -66,134 +74,80 @@ pre{
   <div class="card">
     <h1>ZENTRA Platform</h1>
     <p class="muted">Global Economic AI Operating System</p>
-
     <div style="margin-top:12px">
-      <a href="/zentra-main.html" class="btn">Main System</a>
-      <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
-      <a href="/trade-action.html" class="btn">Trade Action</a>
+      <a href="/index.html" class="btn btn2">Landing</a>
+      <a href="/whitepaper.html" class="btn btn2">Whitepaper</a>
+      <a href="/investor.html" class="btn btn2">Investor</a>
+      <a href="/docs.html" class="btn btn2">Docs</a>
     </div>
   </div>
 
   <div class="grid">
     <div class="card">
-      <h2>System Status</h2>
-      <div id="statusBox"></div>
+      <h2>Open Layer</h2>
+      <p class="muted">
+        Bu katman tanıtım katmanıdır. Açık kalır. İç sistem modülleri şifre korumalıdır.
+      </p>
+
+      <div class="mini">
+        Landing / Introduction → Açık
+      </div>
+
+      <div class="mini">
+        Docs / Whitepaper / Investor → Açık
+      </div>
+
+      <div class="mini">
+        Main / Trade / RiskLens / Deep Modules → Şifreli
+      </div>
     </div>
 
     <div class="card">
-      <h2>AI Decision Snapshot</h2>
-      <div id="aiBox"></div>
-    </div>
-  </div>
+      <h2>Core Access Gate</h2>
+      <p class="muted">
+        İç sisteme giriş için çekirdek şifre gereklidir.
+      </p>
 
-  <div class="card">
-    <h2>Flow Snapshot</h2>
-    <div id="debugBox"></div>
+      <input id="passwordInput" type="password" placeholder="Enter Core Password" />
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" onclick="unlockCore()">Enter Core</button>
+        <button class="btn btn2" onclick="clearAccess()">Reset Access</button>
+      </div>
+
+      <div id="authStatus" class="mini">
+        Status: Locked
+      </div>
+    </div>
   </div>
 
 </div>
 
 <script>
-const snapshot = {
-  ids: {
-    actionId: "ACT-20260318-0001",
-    tradeId: "TRD-20260318-0001",
-    offerId: "OFF-20260318-0001",
-    contractId: "CNT-20260318-0001",
-    paymentId: "PAY-20260318-0001",
-    escrowId: "ESC-20260318-0001"
-  },
-  trade: {
-    product: "Steel",
-    profit: 20000,
-    tradeId: "TRD-20260318-0001"
-  },
-  payment: {
-    amount: 120000,
-    currency: "USD"
-  },
-  logistics: {
-    mode: "SEA"
-  },
-  security: {
-    score: 98
-  },
-  aiDecision: {
-    aiDecisionScore: 100,
-    recommendation: "EXECUTE",
-    confidence: "HIGH"
-  },
-  predictiveTrade: {
-    nextTrend: "UP",
-    predictiveSignal: "EXPAND",
-    projectedProfit: 22400
-  },
-  riskForecast: {
-    riskForecastLevel: "HIGH",
-    riskForecastScore: 80,
-    forecastDrivers: [
-      "Energy pressure remains elevated",
-      "Shipping costs remain high",
-      "Transit duration may increase exposure",
-      "Fraud risk remains under control"
-    ]
+function unlockCore(){
+  const pass = document.getElementById("passwordInput").value;
+  const status = document.getElementById("authStatus");
+
+  if(pass === "ZentraCore"){
+    localStorage.setItem("zentra_access", "granted");
+    status.innerHTML = "<b style='color:#22c55e'>ACCESS GRANTED</b><br>Redirecting to main system...";
+    setTimeout(() => {
+      window.location.href = "/zentra-main.html";
+    }, 600);
+  } else {
+    status.innerHTML = "<b style='color:#ef4444'>WRONG PASSWORD</b>";
   }
-};
+}
 
-const statusBox = document.getElementById("statusBox");
-const aiBox = document.getElementById("aiBox");
-const debugBox = document.getElementById("debugBox");
+function clearAccess(){
+  localStorage.removeItem("zentra_access");
+  document.getElementById("authStatus").innerHTML = "Status: Locked";
+  document.getElementById("passwordInput").value = "";
+}
 
-const ai = snapshot.aiDecision;
-const pred = snapshot.predictiveTrade;
-const risk = snapshot.riskForecast;
-
-const color =
-  ai.recommendation === "EXECUTE" ? "#22c55e" :
-  ai.recommendation === "REVIEW" ? "#f59e0b" :
-  "#ef4444";
-
-statusBox.innerHTML = `
-  <div class="mini">
-    System: <b>ACTIVE</b><br>
-    Risk Score: <b>${snapshot.security.score}</b><br>
-    Profit: <b>${snapshot.trade.profit}</b><br>
-    Logistics: <b>${snapshot.logistics.mode}</b>
-  </div>
-
-  <div class="mini" style="border:1px solid #22c55e">
-    <b style="color:#22c55e">AUTO EXECUTION STARTED</b><br>
-    Trade ID: ${snapshot.trade.tradeId}<br>
-    Profit: ${snapshot.trade.profit}<br>
-    Payment: ${snapshot.payment.amount} ${snapshot.payment.currency}
-  </div>
-`;
-
-aiBox.innerHTML = `
-  <div class="mini">
-    <h3 style="margin:0 0 8px;color:${color}">${ai.recommendation}</h3>
-    Score: <b>${ai.aiDecisionScore}</b><br>
-    Confidence: <b>${ai.confidence}</b>
-  </div>
-
-  <div class="mini">
-    <h3 style="margin:0 0 8px">Predictive</h3>
-    Trend: <b>${pred.nextTrend}</b><br>
-    Signal: <b>${pred.predictiveSignal}</b><br>
-    Projected Profit: <b>${pred.projectedProfit}</b>
-  </div>
-
-  <div class="mini">
-    <h3 style="margin:0 0 8px">Risk</h3>
-    Level: <b>${risk.riskForecastLevel}</b><br>
-    Score: <b>${risk.riskForecastScore}</b><br>
-    <div class="muted" style="margin-top:8px">${risk.forecastDrivers.join("<br>")}</div>
-  </div>
-`;
-
-debugBox.innerHTML = `
-  <pre>${JSON.stringify(snapshot, null, 2)}</pre>
-`;
+if(localStorage.getItem("zentra_access") === "granted"){
+  document.getElementById("authStatus").innerHTML =
+    "<b style='color:#22c55e'>ACCESS ALREADY ACTIVE</b><br>You can enter the core system.";
+}
 </script>
 
 </body>

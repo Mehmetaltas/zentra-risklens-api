@@ -1,490 +1,123 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZENTRA Platform</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZENTRA Platform</title><style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#08101d;
+  color:#ecf3ff;
+}
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:24px;
+}
+.card{
+  background:#0f1728;
+  border:1px solid #1f2d48;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 16px;
+  border-radius:10px;
+  background:#3b82f6;
+  color:white;
+  text-decoration:none;
+  margin-right:10px;
+}
+.mini{
+  background:#111c31;
+  border:1px solid #1f2d48;
+  border-radius:12px;
+  padding:14px;
+}
+.muted{color:#9db0d1}
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr}
+}
+</style></head><body><div class="wrap">  <div class="card">
+    <h1>ZENTRA Platform</h1>
+    <p class="muted">Global Economic AI Operating System</p><div style="margin-top:12px">
+  <a href="/zentra-main.html" class="btn">Main System</a>
+  <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
+  <a href="/trade-action.html" class="btn">Trade Action</a>
+</div>
 
-  <style>
-    :root{
-      --bg:#06101c;
-      --panel:#0d1b2a;
-      --panel2:#13263a;
-      --line:#1f3a56;
-      --text:#eef4ff;
-      --muted:#9fb4cc;
-      --accent:#4da3ff;
-      --high:#ff6b6b;
-      --medium:#ffb347;
-      --low:#38d39f;
-    }
+  </div>  <div class="grid"><div class="card">
+  <h2>System Status</h2>
+  <div id="statusBox">Loading...</div>
+</div>
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:linear-gradient(180deg,#050b14 0%, #091423 100%);
-      color:var(--text);
-    }
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
+<div class="card">
+  <h2>AI Decision Snapshot</h2>
+  <div id="aiBox">Loading...</div>
+</div>
 
-    .wrap{
-      max-width:1240px;
-      margin:auto;
-      padding:20px;
-    }
+  </div></div><script type="module">
+import { runZentraFlow } from "./core-system/systemOrchestrator.js?v=6";
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:16px 18px;
-      background:rgba(13,27,42,.95);
-      border:1px solid var(--line);
-      border-radius:16px;
-      margin-bottom:18px;
-      position:sticky;
-      top:12px;
-      z-index:10;
-      backdrop-filter:blur(10px);
-      flex-wrap:wrap;
-    }
+const statusBox = document.getElementById("statusBox");
+const aiBox = document.getElementById("aiBox");
 
-    .brand h1{
-      margin:0;
-      font-size:24px;
-      letter-spacing:.4px;
-    }
+function render(){
+  try{
+    const r = runZentraFlow();
 
-    .brand p{
-      margin:6px 0 0;
-      font-size:13px;
-      color:var(--muted);
-    }
+    // STATUS
+    statusBox.innerHTML = `
+      <div class="mini">
+        System: <b>ACTIVE</b><br>
+        Risk Score: <b>${r.security.score}</b><br>
+        Trade Profit: <b>${r.trade.profit}</b><br>
+        Logistics: <b>${r.logistics.mode}</b>
+      </div>
+    `;
 
-    .nav{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
+    // AI
+    const ai = r.aiDecision;
+    const pred = r.predictiveTrade;
+    const risk = r.riskForecast;
 
-    .nav a{
-      padding:8px 12px;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:var(--panel2);
-      color:var(--muted);
-      font-size:13px;
-    }
+    const color =
+      ai.recommendation === "EXECUTE" ? "#22c55e" :
+      ai.recommendation === "REVIEW" ? "#f59e0b" :
+      "#ef4444";
 
-    .status-pill{
-      border:1px solid var(--line);
-      background:var(--panel2);
-      color:var(--muted);
-      padding:10px 14px;
-      border-radius:999px;
-      white-space:nowrap;
-      font-size:13px;
-    }
-
-    .hero{
-      display:grid;
-      grid-template-columns:1.6fr 1fr;
-      gap:16px;
-      margin-bottom:16px;
-    }
-
-    .card{
-      background:rgba(13,27,42,.95);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-    }
-
-    .eyebrow{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:var(--panel2);
-      border:1px solid var(--line);
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:12px;
-    }
-
-    .headline{
-      margin:0 0 12px;
-      font-size:34px;
-      line-height:1.15;
-    }
-
-    .subtext{
-      color:var(--muted);
-      line-height:1.6;
-      margin-bottom:16px;
-    }
-
-    .cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .btn{
-      min-height:44px;
-      padding:0 16px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:var(--panel2);
-      color:var(--text);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:600;
-    }
-
-    .btn.primary{
-      background:linear-gradient(180deg,#17314a 0%, #11263a 100%);
-      border-color:#2f5f89;
-    }
-
-    .metric-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .metric{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .metric .label{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:8px;
-    }
-
-    .metric .value{
-      font-size:26px;
-      font-weight:700;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:16px;
-      margin-bottom:16px;
-    }
-
-    .module{
-      grid-column:span 4;
-      min-height:250px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .module-top h2{
-      margin:0 0 10px;
-      font-size:22px;
-    }
-
-    .module-top p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.5;
-      font-size:14px;
-    }
-
-    .tag-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:14px;
-    }
-
-    .tag{
-      border:1px solid var(--line);
-      background:var(--panel2);
-      border-radius:999px;
-      padding:5px 10px;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .module-bottom{
-      margin-top:18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-
-    .status{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .ok{color:var(--low)}
-    .warn{color:var(--medium)}
-
-    .info-left{
-      grid-column:span 7;
-    }
-
-    .info-right{
-      grid-column:span 5;
-    }
-
-    .mini-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .mini{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .mini .label{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:8px;
-    }
-
-    .mini .value{
-      font-size:20px;
-      font-weight:700;
-    }
-
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .list-item{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px;
-    }
-
-    .list-item strong{
-      display:block;
-      margin-bottom:6px;
-      font-size:15px;
-    }
-
-    .list-item span{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    .footer{
-      color:var(--muted);
-      text-align:right;
-      font-size:13px;
-      margin-top:6px;
-      padding-bottom:8px;
-    }
-
-    @media (max-width:980px){
-      .hero{
-        grid-template-columns:1fr;
-      }
-      .module{
-        grid-column:span 6;
-      }
-      .info-left,.info-right{
-        grid-column:span 12;
-      }
-    }
-
-    @media (max-width:620px){
-      .module{
-        grid-column:span 12;
-      }
-      .mini-grid{
-        grid-template-columns:1fr;
-      }
-      .topbar{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-      .headline{
-        font-size:28px;
-      }
-      .metric-grid{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="wrap">
-
-    <div class="topbar">
-      <div class="brand">
-        <h1>ZENTRA Platform</h1>
-        <p>Open platform layer / module launcher / core access routing</p>
+    aiBox.innerHTML = `
+      <div class="mini">
+        <h3 style="color:${color}">${ai.recommendation}</h3>
+        Score: <b>${ai.aiDecisionScore}</b><br>
+        Confidence: <b>${ai.confidence}</b>
       </div>
 
-      <div class="nav">
-        <a href="/">Landing</a>
-        <a href="/docs.html">Docs</a>
-        <a href="/whitepaper.html">Whitepaper</a>
-        <a href="/investor.html">Investor</a>
+      <div class="mini">
+        <h3>Predictive</h3>
+        Trend: <b>${pred.nextTrend}</b><br>
+        Signal: <b>${pred.predictiveSignal}</b>
       </div>
 
-      <div class="status-pill">Platform Mode: Open / Core Layer Protected</div>
-    </div>
-
-    <section class="hero">
-      <div class="card">
-        <span class="eyebrow">PLATFORM ACCESS LAYER</span>
-        <h2 class="headline">ZENTRA’nın açık platform katmanı. Derin sistem modüllerine core erişim kapısından girilir.</h2>
-        <div class="subtext">
-          Bu ekran açık platform katmanıdır. Buradan belgeler, sistem özeti ve modüller görülür.
-          Core korumalı derin sisteme giriş ise tek kapı üzerinden yapılır.
-        </div>
-        <div class="cta-row">
-          <a class="btn primary" href="/core.html">Enter ZentraCore</a>
-          <a class="btn" href="/docs.html">Open Docs</a>
-          <a class="btn" href="/whitepaper.html">Whitepaper</a>
-          <a class="btn" href="/master-map.html">Master Map</a>
-        </div>
+      <div class="mini">
+        <h3>Risk</h3>
+        Level: <b>${risk.riskForecastLevel}</b><br>
+        Score: <b>${risk.riskForecastScore}</b>
       </div>
+    `;
+  }catch(e){
+    console.error(e);
+    aiBox.innerHTML = "Error loading AI";
+  }
+}
 
-      <div class="card">
-        <div class="metric-grid">
-          <div class="metric">
-            <div class="label">Global Risk Score</div>
-            <div class="value">76</div>
-          </div>
-          <div class="metric">
-            <div class="label">Risk Level</div>
-            <div class="value warn">HIGH</div>
-          </div>
-          <div class="metric">
-            <div class="label">Dominant Driver</div>
-            <div class="value">Energy</div>
-          </div>
-          <div class="metric">
-            <div class="label">Core Status</div>
-            <div class="value ok">Protected</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="grid">
-      <article class="card module">
-        <div class="module-top">
-          <h2>Command Center</h2>
-          <p>Signals, world risk map, market snapshot ve strategic advisory’yi tek ekranda toplayan ana merkez.</p>
-          <div class="tag-row">
-            <span class="tag">Risk</span>
-            <span class="tag">Signals</span>
-            <span class="tag">Command</span>
-          </div>
-        </div>
-        <div class="module-bottom">
-          <div class="status ok">Status: Built</div>
-          <a class="btn" href="/core.html">Core Access</a>
-        </div>
-      </article>
-
-      <article class="card module">
-        <div class="module-top">
-          <h2>Economic Terminal</h2>
-          <p>Küresel risk skoru, market baskısı ve advisory görünümünü sunan ana operasyon ekranı.</p>
-          <div class="tag-row">
-            <span class="tag">Markets</span>
-            <span class="tag">Pressure</span>
-            <span class="tag">Advisory</span>
-          </div>
-        </div>
-        <div class="module-bottom">
-          <div class="status ok">Status: Built</div>
-          <a class="btn" href="/core.html">Core Access</a>
-        </div>
-      </article>
-
-      <article class="card module">
-        <div class="module-top">
-          <h2>Economic Globe</h2>
-          <p>Küresel görünürlük ve ekonomik yüzey gözlemini sağlayan görsel sistem katmanı.</p>
-          <div class="tag-row">
-            <span class="tag">Globe</span>
-            <span class="tag">Surface</span>
-            <span class="tag">Observation</span>
-          </div>
-        </div>
-        <div class="module-bottom">
-          <div class="status ok">Status: Built</div>
-          <a class="btn" href="/core.html">Core Access</a>
-        </div>
-      </article>
-    </section>
-
-    <section class="grid">
-      <div class="card info-left">
-        <h2>Platform Structure</h2>
-        <div class="mini-grid">
-          <div class="mini">
-            <div class="label">Layer 1</div>
-            <div class="value">Landing</div>
-          </div>
-          <div class="mini">
-            <div class="label">Layer 2</div>
-            <div class="value">Platform</div>
-          </div>
-          <div class="mini">
-            <div class="label">Layer 3</div>
-            <div class="value">Core Password Gate</div>
-          </div>
-          <div class="mini">
-            <div class="label">Layer 4</div>
-            <div class="value">Deep System</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card info-right">
-        <h2>System Notes</h2>
-        <div class="list">
-          <div class="list-item">
-            <strong>Access Model</strong>
-            <span>Platform açık katmandır. Command Center, Telescope, Globe ve RiskLens modülleri core girişi ile açılır.</span>
-          </div>
-          <div class="list-item">
-            <strong>Document Layer</strong>
-            <span>Master Map, Whitepaper, Investor ve Foundation belgeleri açık dokümantasyon katmanında yer alır.</span>
-          </div>
-          <div class="list-item">
-            <strong>Next Step</strong>
-            <span>Global data layer, canlı ekonomik veri akışı ve AI analiz derinliği.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="footer">ZENTRA / Platform Layer / Open Access</div>
-
-  </div>
-
-</body>
-              </html>
+render();
+</script></body>
+</html>

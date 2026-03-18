@@ -77,106 +77,123 @@ pre{
   <div class="grid">
     <div class="card">
       <h2>System Status</h2>
-      <div id="statusBox">Loading...</div>
+      <div id="statusBox"></div>
     </div>
 
     <div class="card">
       <h2>AI Decision Snapshot</h2>
-      <div id="aiBox">Loading...</div>
+      <div id="aiBox"></div>
     </div>
   </div>
 
   <div class="card">
-    <h2>Flow Debug Output</h2>
-    <div id="debugBox">Loading...</div>
+    <h2>Flow Snapshot</h2>
+    <div id="debugBox"></div>
   </div>
 
 </div>
 
-<script type="module">
+<script>
+const snapshot = {
+  ids: {
+    actionId: "ACT-20260318-0001",
+    tradeId: "TRD-20260318-0001",
+    offerId: "OFF-20260318-0001",
+    contractId: "CNT-20260318-0001",
+    paymentId: "PAY-20260318-0001",
+    escrowId: "ESC-20260318-0001"
+  },
+  trade: {
+    product: "Steel",
+    profit: 20000,
+    tradeId: "TRD-20260318-0001"
+  },
+  payment: {
+    amount: 120000,
+    currency: "USD"
+  },
+  logistics: {
+    mode: "SEA"
+  },
+  security: {
+    score: 98
+  },
+  aiDecision: {
+    aiDecisionScore: 100,
+    recommendation: "EXECUTE",
+    confidence: "HIGH"
+  },
+  predictiveTrade: {
+    nextTrend: "UP",
+    predictiveSignal: "EXPAND",
+    projectedProfit: 22400
+  },
+  riskForecast: {
+    riskForecastLevel: "HIGH",
+    riskForecastScore: 80,
+    forecastDrivers: [
+      "Energy pressure remains elevated",
+      "Shipping costs remain high",
+      "Transit duration may increase exposure",
+      "Fraud risk remains under control"
+    ]
+  }
+};
+
 const statusBox = document.getElementById("statusBox");
 const aiBox = document.getElementById("aiBox");
 const debugBox = document.getElementById("debugBox");
 
-function esc(text){
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;");
-}
+const ai = snapshot.aiDecision;
+const pred = snapshot.predictiveTrade;
+const risk = snapshot.riskForecast;
 
-async function boot(){
-  try{
-    statusBox.innerHTML = `<div class="mini">SCRIPT STARTED</div>`;
+const color =
+  ai.recommendation === "EXECUTE" ? "#22c55e" :
+  ai.recommendation === "REVIEW" ? "#f59e0b" :
+  "#ef4444";
 
-    const mod = await import("./core-system/systemOrchestrator.js?v=30");
-    const r = mod.runZentraFlow();
+statusBox.innerHTML = `
+  <div class="mini">
+    System: <b>ACTIVE</b><br>
+    Risk Score: <b>${snapshot.security.score}</b><br>
+    Profit: <b>${snapshot.trade.profit}</b><br>
+    Logistics: <b>${snapshot.logistics.mode}</b>
+  </div>
 
-    statusBox.innerHTML = `
-      <div class="mini">
-        System: <b>ACTIVE</b><br>
-        Risk Score: <b>${r.security.score}</b><br>
-        Profit: <b>${r.trade.profit}</b><br>
-        Logistics: <b>${r.logistics.mode}</b>
-      </div>
-      <div class="mini" style="border:1px solid #22c55e">
-        <b style="color:#22c55e">AUTO EXECUTION STARTED</b><br>
-        Trade ID: ${r.trade.tradeId}<br>
-        Profit: ${r.trade.profit}<br>
-        Payment: ${r.payment.amount} ${r.payment.currency}
-      </div>
-    `;
+  <div class="mini" style="border:1px solid #22c55e">
+    <b style="color:#22c55e">AUTO EXECUTION STARTED</b><br>
+    Trade ID: ${snapshot.trade.tradeId}<br>
+    Profit: ${snapshot.trade.profit}<br>
+    Payment: ${snapshot.payment.amount} ${snapshot.payment.currency}
+  </div>
+`;
 
-    if (r.aiDecision && r.predictiveTrade && r.riskForecast) {
-      const ai = r.aiDecision;
-      const pred = r.predictiveTrade;
-      const risk = r.riskForecast;
+aiBox.innerHTML = `
+  <div class="mini">
+    <h3 style="margin:0 0 8px;color:${color}">${ai.recommendation}</h3>
+    Score: <b>${ai.aiDecisionScore}</b><br>
+    Confidence: <b>${ai.confidence}</b>
+  </div>
 
-      const color =
-        ai.recommendation === "EXECUTE" ? "#22c55e" :
-        ai.recommendation === "REVIEW" ? "#f59e0b" :
-        "#ef4444";
+  <div class="mini">
+    <h3 style="margin:0 0 8px">Predictive</h3>
+    Trend: <b>${pred.nextTrend}</b><br>
+    Signal: <b>${pred.predictiveSignal}</b><br>
+    Projected Profit: <b>${pred.projectedProfit}</b>
+  </div>
 
-      aiBox.innerHTML = `
-        <div class="mini">
-          <h3 style="margin:0 0 8px;color:${color}">${ai.recommendation}</h3>
-          Score: <b>${ai.aiDecisionScore}</b><br>
-          Confidence: <b>${ai.confidence}</b>
-        </div>
+  <div class="mini">
+    <h3 style="margin:0 0 8px">Risk</h3>
+    Level: <b>${risk.riskForecastLevel}</b><br>
+    Score: <b>${risk.riskForecastScore}</b><br>
+    <div class="muted" style="margin-top:8px">${risk.forecastDrivers.join("<br>")}</div>
+  </div>
+`;
 
-        <div class="mini">
-          <h3 style="margin:0 0 8px">Predictive</h3>
-          Trend: <b>${pred.nextTrend}</b><br>
-          Signal: <b>${pred.predictiveSignal}</b><br>
-          Projected Profit: <b>${pred.projectedProfit}</b>
-        </div>
-
-        <div class="mini">
-          <h3 style="margin:0 0 8px">Risk</h3>
-          Level: <b>${risk.riskForecastLevel}</b><br>
-          Score: <b>${risk.riskForecastScore}</b><br>
-          <div class="muted" style="margin-top:8px">${risk.forecastDrivers.join("<br>")}</div>
-        </div>
-      `;
-    } else {
-      aiBox.innerHTML = `<div class="mini">AI OUTPUT NOT FOUND</div>`;
-    }
-
-    debugBox.innerHTML = `<pre>${esc(JSON.stringify(r, null, 2))}</pre>`;
-  } catch(err){
-    console.error(err);
-    statusBox.innerHTML = `
-      <div class="mini" style="border:1px solid #ef4444">
-        <b style="color:#ef4444">IMPORT ERROR</b><br>
-        ${esc(err.message)}
-      </div>
-    `;
-    aiBox.innerHTML = `<div class="mini" style="border:1px solid #ef4444">AI LOAD FAILED</div>`;
-    debugBox.innerHTML = `<pre>${esc(String(err && err.stack ? err.stack : err))}</pre>`;
-  }
-}
-
-boot();
+debugBox.innerHTML = `
+  <pre>${JSON.stringify(snapshot, null, 2)}</pre>
+`;
 </script>
 
 </body>

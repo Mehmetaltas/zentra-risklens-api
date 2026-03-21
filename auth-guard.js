@@ -34,3 +34,4 @@
   document.documentElement.style.display = "none";
   checkAuth();
 })();
+<script src="/auth-guard.js"></script>

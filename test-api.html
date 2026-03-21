@@ -65,9 +65,13 @@
       padding:16px;
       overflow:auto;
     }
-    .muted{color:#9db0d1}
+    .muted{
+      color:#9db0d1;
+    }
     @media(max-width:800px){
-      .grid{grid-template-columns:1fr}
+      .grid{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
@@ -75,7 +79,7 @@
   <div class="wrap">
     <div class="card">
       <h1>ZENTRA API TEST</h1>
-      <p class="muted">Register / Login / Trade Create test ekranı</p>
+      <p class="muted">Register / Login / Trade / Offer / Payment / Log test ekranı</p>
     </div>
 
     <div class="card">
@@ -110,9 +114,49 @@
           <input id="sell_price" type="number" value="1200" />
         </div>
 
-        <div class="field full">
+        <div class="field">
           <label>Volume</label>
           <input id="volume" type="number" value="100" />
+        </div>
+
+        <div class="field">
+          <label>Trade ID</label>
+          <input id="trade_id" value="TRD-20260321-1172" />
+        </div>
+
+        <div class="field">
+          <label>Total Cost</label>
+          <input id="total_cost" type="number" value="600" />
+        </div>
+
+        <div class="field">
+          <label>Sell Value</label>
+          <input id="sell_value" type="number" value="120000" />
+        </div>
+
+        <div class="field">
+          <label>Net Profit</label>
+          <input id="net_profit" type="number" value="119400" />
+        </div>
+
+        <div class="field">
+          <label>Payment Amount</label>
+          <input id="amount" type="number" value="120000" />
+        </div>
+
+        <div class="field">
+          <label>Currency</label>
+          <input id="currency" value="USD" />
+        </div>
+
+        <div class="field">
+          <label>Payment Method</label>
+          <input id="method" value="SWIFT" />
+        </div>
+
+        <div class="field full">
+          <label>Log Message</label>
+          <input id="log_message" value="Trade flow moved to offer and payment stage" />
         </div>
       </div>
 
@@ -120,6 +164,9 @@
         <button onclick="registerUser()">Register</button>
         <button onclick="loginUser()">Login</button>
         <button onclick="createTrade()">Trade Create</button>
+        <button onclick="createOffer()">Offer Create</button>
+        <button onclick="createPayment()">Payment Create</button>
+        <button onclick="writeLog()">Log Write</button>
         <button onclick="clearOutput()">Clear</button>
       </div>
     </div>
@@ -176,7 +223,6 @@
         };
 
         const result = await postJson(`${API_BASE}/register`, body);
-
         setStatus(`Register tamamlandı (${result.status})`);
         setOutput(result.data);
       }catch(err){
@@ -195,7 +241,6 @@
         };
 
         const result = await postJson(`${API_BASE}/login`, body);
-
         setStatus(`Login tamamlandı (${result.status})`);
         setOutput(result.data);
       }catch(err){
@@ -216,11 +261,76 @@
         };
 
         const result = await postJson(`${API_BASE}/trade-create`, body);
-
         setStatus(`Trade create tamamlandı (${result.status})`);
         setOutput(result.data);
+
+        if (result.data && result.data.trade && result.data.trade.trade_id) {
+          document.getElementById("trade_id").value = result.data.trade.trade_id;
+        }
       }catch(err){
         setStatus("Trade create hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function createOffer(){
+      try{
+        setStatus("Offer create gönderiliyor...");
+
+        const body = {
+          trade_id: document.getElementById("trade_id").value,
+          product: document.getElementById("product").value,
+          volume: Number(document.getElementById("volume").value),
+          total_cost: Number(document.getElementById("total_cost").value),
+          sell_value: Number(document.getElementById("sell_value").value),
+          net_profit: Number(document.getElementById("net_profit").value)
+        };
+
+        const result = await postJson(`${API_BASE}/offer-create`, body);
+        setStatus(`Offer create tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Offer create hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function createPayment(){
+      try{
+        setStatus("Payment create gönderiliyor...");
+
+        const body = {
+          trade_id: document.getElementById("trade_id").value,
+          amount: Number(document.getElementById("amount").value),
+          currency: document.getElementById("currency").value,
+          method: document.getElementById("method").value
+        };
+
+        const result = await postJson(`${API_BASE}/payment-create`, body);
+        setStatus(`Payment create tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Payment create hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function writeLog(){
+      try{
+        setStatus("Log write gönderiliyor...");
+
+        const body = {
+          action_type: "TRADE_FLOW",
+          ref_id: document.getElementById("trade_id").value,
+          message: document.getElementById("log_message").value,
+          level: "info"
+        };
+
+        const result = await postJson(`${API_BASE}/log-write`, body);
+        setStatus(`Log write tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Log write hata");
         setOutput(err.message);
       }
     }

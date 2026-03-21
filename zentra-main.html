@@ -1,113 +1,140 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Main System</title><style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#08101d;
-  color:#ecf3ff;
-}
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:24px;
-}
-.card{
-  background:#0f1728;
-  border:1px solid #1f2d48;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-}
-h1,h2,h3{margin:0 0 10px}
-.muted{color:#9db0d1}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-.mini{
-  background:#111c31;
-  border:1px solid #1f2d48;
-  border-radius:12px;
-  padding:14px;
-}
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr}
-}
-</style></head><body><div class="wrap">  <div class="card">
-    <h1>ZENTRA Main System</h1>
-    <p class="muted">Core protected unified screen</p>
-  </div>  <div class="grid"><div class="card">
-  <h2>Global Snapshot</h2>
-  <div id="snapshot">Loading...</div>
-</div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Main</title>
+  <style>
+    html{display:none}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#08101d;
+      color:#ecf3ff;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:auto;
+      padding:24px;
+    }
+    .card{
+      background:#0f1728;
+      border:1px solid #1f2d48;
+      border-radius:16px;
+      padding:18px;
+      margin-bottom:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .mini{
+      background:#111c31;
+      border:1px solid #1f2d48;
+      border-radius:12px;
+      padding:14px;
+    }
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius:10px;
+      background:#3b82f6;
+      color:white;
+      text-decoration:none;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+      margin-right:10px;
+      margin-top:10px;
+    }
+    .btn2{
+      background:#13203a;
+      border:1px solid #243554;
+    }
+    .muted{color:#9db0d1}
+    @media(max-width:800px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+  <script>
+    (function () {
+      const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
+      const token = localStorage.getItem("zentra_token");
 
-<div class="card">
-  <h2>AI Decision Panel</h2>
-  <div id="aiPanel">Loading AI...</div>
-</div>
+      async function checkAuth() {
+        if (!token) {
+          window.location.href = "/platform.html";
+          return;
+        }
 
-  </div></div><script type="module">
-import { runZentraFlow } from "./core-system/systemOrchestrator.js?v=5";
+        try {
+          const response = await fetch(`${API_BASE}/me`, {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          });
 
-const snapshot = document.getElementById("snapshot");
-const panel = document.getElementById("aiPanel");
+          const data = await response.json();
 
-function render() {
-  try {
-    const result = runZentraFlow();
+          if (!response.ok || !data || data.status !== "AUTHORIZED") {
+            localStorage.removeItem("zentra_token");
+            window.location.href = "/platform.html";
+            return;
+          }
 
-    // SNAPSHOT
-    snapshot.innerHTML = `
-      <div class="mini">
-        Risk Score: <b>${result.security.score}</b><br>
-        Driver: <b>${result.data.demand}</b><br>
-        Profit: <b>${result.trade.profit}</b>
+          document.documentElement.style.display = "block";
+        } catch (error) {
+          localStorage.removeItem("zentra_token");
+          window.location.href = "/platform.html";
+        }
+      }
+
+      checkAuth();
+    })();
+
+    function logoutZentra(){
+      localStorage.removeItem("zentra_token");
+      window.location.href = "/platform.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>ZENTRA Main</h1>
+      <p class="muted">Protected Core System</p>
+      <a href="/platform.html" class="btn btn2">Platform</a>
+      <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
+      <a href="/trade-action.html" class="btn">Trade Action</a>
+      <button class="btn btn2" onclick="logoutZentra()">Logout</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>System Core</h2>
+        <div class="mini">Status: ACTIVE</div>
+        <div class="mini" style="margin-top:12px">Access: TOKEN VERIFIED</div>
+        <div class="mini" style="margin-top:12px">Layer: Main Core Screen</div>
       </div>
-    `;
 
-    // AI
-    const ai = result.aiDecision;
-    const pred = result.predictiveTrade;
-    const risk = result.riskForecast;
-
-    const color =
-      ai.recommendation === "EXECUTE" ? "#22c55e" :
-      ai.recommendation === "REVIEW" ? "#f59e0b" :
-      "#ef4444";
-
-    panel.innerHTML = `
-      <div class="mini">
-        <h3 style="color:${color}">${ai.recommendation}</h3>
-        Score: <b>${ai.aiDecisionScore}</b><br>
-        Confidence: <b>${ai.confidence}</b>
+      <div class="card">
+        <h2>Core Modules</h2>
+        <div class="mini">Data Engine</div>
+        <div class="mini" style="margin-top:12px">Signal Engine</div>
+        <div class="mini" style="margin-top:12px">Decision Engine</div>
+        <div class="mini" style="margin-top:12px">Execution Engine</div>
       </div>
+    </div>
 
-      <div class="mini">
-        <h3>Predictive</h3>
-        Trend: <b>${pred.nextTrend}</b><br>
-        Signal: <b>${pred.predictiveSignal}</b><br>
-        Profit: <b>${pred.projectedProfit}</b>
-      </div>
-
-      <div class="mini">
-        <h3>Risk</h3>
-        Level: <b>${risk.riskForecastLevel}</b><br>
-        Score: <b>${risk.riskForecastScore}</b><br>
-        <div class="muted" style="margin-top:6px">
-          ${risk.forecastDrivers.join("<br>")}
-        </div>
-      </div>
-    `;
-  } catch (e) {
-    console.error(e);
-    panel.innerHTML = "AI Error";
-  }
-}
-
-render();
-</script></body>
+    <div class="card">
+      <h2>Main Protected Zone</h2>
+      <p class="muted">
+        Bu sayfa token kontrolü ile korunuyor.
+        Token geçersizse kullanıcı otomatik olarak platform sayfasına döner.
+      </p>
+    </div>
+  </div>
+</body>
 </html>

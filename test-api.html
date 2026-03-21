@@ -393,6 +393,30 @@
         setOutput(err.message);
       }
     }
-  </script>
+  <script>
+async function logoutUser(){
+  try{
+    setStatus("Logout gönderiliyor...");
+
+    const response = await fetch(`${API_BASE}/logout`, {
+      method: "POST",
+      headers: {
+        ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
+      }
+    });
+
+    const data = await response.json();
+
+    authToken = "";
+    localStorage.removeItem("zentra_token");
+
+    setStatus(`Logout tamamlandı (${response.status})`);
+    setOutput(data);
+  }catch(err){
+    setStatus("Logout hata");
+    setOutput(err.message);
+  }
+}
+</script>
 </body>
   </html>

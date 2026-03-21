@@ -79,7 +79,7 @@
   <div class="wrap">
     <div class="card">
       <h1>ZENTRA API TEST</h1>
-      <p class="muted">Register / Login / Trade / Offer / Payment / Log test ekranı</p>
+      <p class="muted">Register / Login / Me / Trade / Offer / Payment / Log test ekranı</p>
     </div>
 
     <div class="card">
@@ -163,6 +163,8 @@
       <div style="margin-top:16px">
         <button onclick="registerUser()">Register</button>
         <button onclick="loginUser()">Login</button>
+        <button onclick="checkMe()">Me</button>
+        <button onclick="logoutUser()">Logout</button>
         <button onclick="createTrade()">Trade Create</button>
         <button onclick="createOffer()">Offer Create</button>
         <button onclick="createPayment()">Payment Create</button>
@@ -184,6 +186,7 @@
 
   <script>
     const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
+    let authToken = localStorage.getItem("zentra_token") || "";
 
     function setStatus(text){
       document.getElementById("status").textContent = text;
@@ -203,9 +206,22 @@
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
         },
         body: JSON.stringify(body)
+      });
+
+      const data = await response.json();
+      return { ok: response.ok, status: response.status, data };
+    }
+
+    async function getJson(url){
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
+        }
       });
 
       const data = await response.json();
@@ -241,12 +257,37 @@
         };
 
         const result = await postJson(`${API_BASE}/login`, body);
+
+        if (result.data && result.data.token) {
+          authToken = result.data.token;
+          localStorage.setItem("zentra_token", authToken);
+        }
+
         setStatus(`Login tamamlandı (${result.status})`);
         setOutput(result.data);
       }catch(err){
         setStatus("Login hata");
         setOutput(err.message);
       }
+    }
+
+    async function checkMe(){
+      try{
+        setStatus("Token kontrol ediliyor...");
+        const result = await getJson(`${API_BASE}/me`);
+        setStatus(`Me tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Me hata");
+        setOutput(err.message);
+      }
+    }
+
+    function logoutUser(){
+      authToken = "";
+      localStorage.removeItem("zentra_token");
+      setStatus("Çıkış yapıldı");
+      setOutput({ status: "LOGOUT_OK" });
     }
 
     async function createTrade(){
@@ -336,4 +377,4 @@
     }
   </script>
 </body>
-  </html>
+</html>

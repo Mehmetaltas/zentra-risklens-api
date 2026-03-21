@@ -1,99 +1,139 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZENTRA Trade Intelligence</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA Trade Intelligence</title>
+  <style>
+    html{display:none}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#08101d;
+      color:#ecf3ff;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:auto;
+      padding:24px;
+    }
+    .card{
+      background:#0f1728;
+      border:1px solid #1f2d48;
+      border-radius:16px;
+      padding:18px;
+      margin-bottom:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .mini{
+      background:#111c31;
+      border:1px solid #1f2d48;
+      border-radius:12px;
+      padding:14px;
+    }
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius:10px;
+      background:#3b82f6;
+      color:white;
+      text-decoration:none;
+      border:0;
+      cursor:pointer;
+      font-weight:700;
+      margin-right:10px;
+      margin-top:10px;
+    }
+    .btn2{
+      background:#13203a;
+      border:1px solid #243554;
+    }
+    .muted{color:#9db0d1}
+    @media(max-width:800px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+  <script>
+    (function () {
+      const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
+      const token = localStorage.getItem("zentra_token");
 
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#08101d;
-  color:#ecf3ff;
-}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-.card{
-  background:#0f1728;
-  border:1px solid #1f2d48;
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:16px;
-}
-h1{margin:0 0 10px}
-.btn{
-  padding:10px 14px;
-  background:#1f2d48;
-  border-radius:8px;
-  cursor:pointer;
-  display:inline-block;
-}
-.signal{margin-top:10px;padding:10px;background:#111c31;border-radius:8px}
-.high{color:#ef4444}
-.medium{color:#f59e0b}
-.low{color:#22c55e}
-</style>
+      async function checkAuth() {
+        if (!token) {
+          window.location.href = "/platform.html";
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/me`, {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          });
+
+          const data = await response.json();
+
+          if (!response.ok || !data || data.status !== "AUTHORIZED") {
+            localStorage.removeItem("zentra_token");
+            window.location.href = "/platform.html";
+            return;
+          }
+
+          document.documentElement.style.display = "block";
+        } catch (error) {
+          localStorage.removeItem("zentra_token");
+          window.location.href = "/platform.html";
+        }
+      }
+
+      checkAuth();
+    })();
+
+    function logoutZentra(){
+      localStorage.removeItem("zentra_token");
+      window.location.href = "/platform.html";
+    }
+  </script>
 </head>
-
 <body>
-<div class="wrap">
-
-<h1>ZENTRA Trade Intelligence</h1>
-
-<div class="card">
-  <div class="btn" onclick="runFlow()">Run Trade Intelligence</div>
-  <p id="status">Status: waiting</p>
-</div>
-
-<div id="result"></div>
-
-</div>
-
-<script type="module">
-import { runZentraFlow } from "./core-system/systemOrchestrator.js";
-
-window.runFlow = async function(){
-  document.getElementById("status").innerText="Running...";
-
-  try{
-    const r = runZentraFlow();
-
-    document.getElementById("status").innerText="Completed";
-
-    const html = `
+  <div class="wrap">
     <div class="card">
-      <h2>Opportunity</h2>
-      Product: ${r.data.product}<br>
-      Region: ${r.data.region}<br>
-      Demand: ${r.data.demand}<br>
+      <h1>Trade Intelligence</h1>
+      <p class="muted">Protected Intelligence Layer</p>
+      <a href="/platform.html" class="btn btn2">Platform</a>
+      <a href="/zentra-main.html" class="btn">Main</a>
+      <a href="/trade-action.html" class="btn">Trade Action</a>
+      <button class="btn btn2" onclick="logoutZentra()">Logout</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Signals</h2>
+        <div class="mini">Demand Signal: HIGH</div>
+        <div class="mini" style="margin-top:12px">Region: EU</div>
+        <div class="mini" style="margin-top:12px">Commodity: Steel</div>
+      </div>
+
+      <div class="card">
+        <h2>AI Snapshot</h2>
+        <div class="mini">Recommendation: EXECUTE</div>
+        <div class="mini" style="margin-top:12px">Predictive Trend: UP</div>
+        <div class="mini" style="margin-top:12px">Risk Outlook: HIGH</div>
+      </div>
     </div>
 
     <div class="card">
-      <h2>Profit</h2>
-      Net Profit: ${r.offer.netProfit}
+      <h2>Protected Intelligence Zone</h2>
+      <p class="muted">
+        Bu ekran token doğrulaması olmadan açılmaz.
+        Giriş doğrulanırsa iç veri görünür, aksi durumda platform sayfasına dönülür.
+      </p>
     </div>
-
-    <div class="card">
-      <h2>Trade Action</h2>
-      <div class="btn" onclick="alert('Supplier contact simulated')">Contact Supplier</div>
-      <div class="btn" onclick="alert('Logistics quote simulated')">Request Logistics</div>
-      <div class="btn" onclick="alert('Hedge plan simulated')">Open Hedge Plan</div>
-    </div>
-
-    <div class="card">
-      <h2>Signals</h2>
-      ${r.data.demand==="HIGH" ? '<div class="signal high">High demand detected</div>' : ''}
-    </div>
-    `;
-
-    document.getElementById("result").innerHTML=html;
-
-  }catch(e){
-    document.getElementById("status").innerText="ERROR";
-    console.error(e);
-  }
-}
-</script>
-
+  </div>
 </body>
 </html>

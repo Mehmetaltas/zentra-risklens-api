@@ -79,7 +79,7 @@
   <div class="wrap">
     <div class="card">
       <h1>ZENTRA API TEST</h1>
-      <p class="muted">Register / Login / Me / Trade / Offer / Payment / Log test ekranı</p>
+      <p class="muted">Register / Login / Me / Make Trader / Trade / Offer / Payment / Log test ekranı</p>
     </div>
 
     <div class="card">
@@ -164,6 +164,7 @@
         <button onclick="registerUser()">Register</button>
         <button onclick="loginUser()">Login</button>
         <button onclick="checkMe()">Me</button>
+        <button onclick="makeTrader()">Make Trader</button>
         <button onclick="logoutUser()">Logout</button>
         <button onclick="createTrade()">Trade Create</button>
         <button onclick="createOffer()">Offer Create</button>
@@ -279,6 +280,23 @@
         setOutput(result.data);
       }catch(err){
         setStatus("Me hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function makeTrader(){
+      try{
+        setStatus("Make Trader gönderiliyor...");
+
+        const body = {
+          email: document.getElementById("email").value
+        };
+
+        const result = await postJson(`${API_BASE}/make-trader`, body);
+        setStatus(`Make Trader tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Make Trader hata");
         setOutput(err.message);
       }
     }

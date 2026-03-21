@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZENTRA Platform Gate</title>
+  <title>ZENTRA Platform</title>
   <style>
     body{
       margin:0;
@@ -20,7 +20,7 @@
       background:#0f1728;
       border:1px solid #1f2d48;
       border-radius:16px;
-      padding:20px;
+      padding:18px;
       margin-bottom:16px;
     }
     .grid{
@@ -28,22 +28,33 @@
       grid-template-columns:1.2fr .8fr;
       gap:16px;
     }
-    .muted{color:#9db0d1}
+    .mini{
+      background:#111c31;
+      border:1px solid #1f2d48;
+      border-radius:12px;
+      padding:14px;
+      margin-top:12px;
+    }
+    .muted{
+      color:#9db0d1;
+    }
     .btn{
       display:inline-block;
       padding:12px 16px;
       border-radius:10px;
       background:#3b82f6;
-      color:#fff;
+      color:white;
       text-decoration:none;
       border:0;
       cursor:pointer;
       font-weight:700;
+      margin-right:10px;
+      margin-top:10px;
     }
     .btn2{
       background:#13203a;
       border:1px solid #243554;
-      color:#fff;
+      color:white;
     }
     input{
       width:100%;
@@ -55,12 +66,14 @@
       box-sizing:border-box;
       margin-top:10px;
     }
-    .mini{
+    pre{
+      white-space:pre-wrap;
+      word-break:break-word;
       background:#111c31;
       border:1px solid #1f2d48;
       border-radius:12px;
       padding:14px;
-      margin-top:12px;
+      overflow:auto;
     }
     @media(max-width:800px){
       .grid{grid-template-columns:1fr}
@@ -68,87 +81,169 @@
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="card">
+      <h1>ZENTRA Platform</h1>
+      <p class="muted">Global Economic AI Operating System</p>
 
-<div class="wrap">
+      <div style="margin-top:12px">
+        <a href="/index.html" class="btn btn2">Landing</a>
+        <a href="/whitepaper.html" class="btn btn2">Whitepaper</a>
+        <a href="/investor.html" class="btn btn2">Investor</a>
+        <a href="/docs.html" class="btn btn2">Docs</a>
+      </div>
+    </div>
 
-  <div class="card">
-    <h1>ZENTRA Platform</h1>
-    <p class="muted">Global Economic AI Operating System</p>
-    <div style="margin-top:12px">
-      <a href="/index.html" class="btn btn2">Landing</a>
-      <a href="/whitepaper.html" class="btn btn2">Whitepaper</a>
-      <a href="/investor.html" class="btn btn2">Investor</a>
-      <a href="/docs.html" class="btn btn2">Docs</a>
+    <div class="grid">
+      <div class="card">
+        <h2>Open Layer</h2>
+        <p class="muted">Bu katman açık tanıtım katmanıdır. İç sistem token korumalıdır.</p>
+
+        <div class="mini">Landing / Whitepaper / Investor / Docs → Açık</div>
+        <div class="mini">Main / Trade / Deep Modules → Giriş gerekli</div>
+
+        <div class="mini">
+          <b>System Status</b><br><br>
+          Token Status: <span id="tokenState" class="muted">Checking...</span><br>
+          User Status: <span id="userState" class="muted">Unknown</span>
+        </div>
+
+        <div class="mini">
+          <b>Deep System Access</b><br><br>
+          <a href="/zentra-main.html" class="btn">Main System</a>
+          <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
+          <a href="/trade-action.html" class="btn">Trade Action</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Core Login</h2>
+        <p class="muted">İç sisteme giriş için kullanıcı hesabı gerekir.</p>
+
+        <input id="email" type="email" value="mehmet2@zentra.com" placeholder="Email" />
+        <input id="password" type="password" value="123456" placeholder="Password" />
+
+        <div>
+          <button class="btn" onclick="loginZentra()">Login</button>
+          <button class="btn btn2" onclick="checkMe()">Check Token</button>
+          <button class="btn btn2" onclick="logoutZentra()">Logout</button>
+        </div>
+
+        <div id="authStatus" class="mini">Status: Ready</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>User Snapshot</h2>
+      <pre id="output">Bekleniyor...</pre>
     </div>
   </div>
 
-  <div class="grid">
-    <div class="card">
-      <h2>Open Layer</h2>
-      <p class="muted">
-        Bu katman tanıtım katmanıdır. Açık kalır. İç sistem modülleri şifre korumalıdır.
-      </p>
+  <script>
+    const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
+    let authToken = localStorage.getItem("zentra_token") || "";
 
-      <div class="mini">
-        Landing / Introduction → Açık
-      </div>
+    function setOutput(data){
+      document.getElementById("output").textContent =
+        typeof data === "string" ? data : JSON.stringify(data, null, 2);
+    }
 
-      <div class="mini">
-        Docs / Whitepaper / Investor → Açık
-      </div>
+    function setAuthStatus(text){
+      document.getElementById("authStatus").innerHTML = text;
+    }
 
-      <div class="mini">
-        Main / Trade / RiskLens / Deep Modules → Şifreli
-      </div>
-    </div>
+    function refreshTokenState(){
+      document.getElementById("tokenState").textContent = authToken ? "ACTIVE" : "MISSING";
+    }
 
-    <div class="card">
-      <h2>Core Access Gate</h2>
-      <p class="muted">
-        İç sisteme giriş için çekirdek şifre gereklidir.
-      </p>
+    async function postJson(url, body){
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
+        },
+        body: JSON.stringify(body)
+      });
 
-      <input id="passwordInput" type="password" placeholder="Enter Core Password" />
-      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn" onclick="unlockCore()">Enter Core</button>
-        <button class="btn btn2" onclick="clearAccess()">Reset Access</button>
-      </div>
+      const data = await response.json();
+      return { ok: response.ok, status: response.status, data };
+    }
 
-      <div id="authStatus" class="mini">
-        Status: Locked
-      </div>
-    </div>
-  </div>
+    async function getJson(url){
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
+        }
+      });
 
-</div>
+      const data = await response.json();
+      return { ok: response.ok, status: response.status, data };
+    }
 
-<script>
-function unlockCore(){
-  const pass = document.getElementById("passwordInput").value;
-  const status = document.getElementById("authStatus");
+    async function loginZentra(){
+      try{
+        setAuthStatus("Status: Login gönderiliyor...");
 
-  if(pass === "ZentraCore"){
-    localStorage.setItem("zentra_access", "granted");
-    status.innerHTML = "<b style='color:#22c55e'>ACCESS GRANTED</b><br>Redirecting to main system...";
-    setTimeout(() => {
-      window.location.href = "/zentra-main.html";
-    }, 600);
-  } else {
-    status.innerHTML = "<b style='color:#ef4444'>WRONG PASSWORD</b>";
-  }
-}
+        const body = {
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        };
 
-function clearAccess(){
-  localStorage.removeItem("zentra_access");
-  document.getElementById("authStatus").innerHTML = "Status: Locked";
-  document.getElementById("passwordInput").value = "";
-}
+        const result = await postJson(`${API_BASE}/login`, body);
 
-if(localStorage.getItem("zentra_access") === "granted"){
-  document.getElementById("authStatus").innerHTML =
-    "<b style='color:#22c55e'>ACCESS ALREADY ACTIVE</b><br>You can enter the core system.";
-}
-</script>
+        if (result.data && result.data.token) {
+          authToken = result.data.token;
+          localStorage.setItem("zentra_token", authToken);
+          document.getElementById("userState").textContent = result.data.user?.email || "AUTHORIZED";
+        }
 
+        refreshTokenState();
+        setAuthStatus(`Status: Login tamamlandı (${result.status})`);
+        setOutput(result.data);
+      } catch (err) {
+        setAuthStatus("Status: Login hata.");
+        setOutput(err.message);
+      }
+    }
+
+    async function checkMe(){
+      try{
+        setAuthStatus("Status: Token kontrol ediliyor...");
+        const result = await getJson(`${API_BASE}/me`);
+
+        if (result.ok && result.data?.status === "AUTHORIZED") {
+          document.getElementById("userState").textContent = result.data.user?.email || "AUTHORIZED";
+        } else {
+          document.getElementById("userState").textContent = "UNAUTHORIZED";
+        }
+
+        refreshTokenState();
+        setAuthStatus(`Status: Token kontrol tamamlandı (${result.status})`);
+        setOutput(result.data);
+      } catch (err) {
+        setAuthStatus("Status: Token kontrol hata.");
+        setOutput(err.message);
+      }
+    }
+
+    function logoutZentra(){
+      authToken = "";
+      localStorage.removeItem("zentra_token");
+      refreshTokenState();
+      document.getElementById("userState").textContent = "LOGGED_OUT";
+      setAuthStatus("Status: Logout tamamlandı.");
+      setOutput({ status: "LOGOUT_OK" });
+    }
+
+    refreshTokenState();
+    if (authToken) {
+      checkMe();
+    } else {
+      document.getElementById("userState").textContent = "NO_TOKEN";
+      setOutput("Bekleniyor...");
+    }
+  </script>
 </body>
 </html>

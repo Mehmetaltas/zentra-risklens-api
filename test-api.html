@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZENTRA API TEST</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#08101d;
+      color:#ecf3ff;
+    }
+    .wrap{
+      max-width:1000px;
+      margin:auto;
+      padding:24px;
+    }
+    .card{
+      background:#0f1728;
+      border:1px solid #1f2d48;
+      border-radius:16px;
+      padding:18px;
+      margin-bottom:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .full{
+      grid-column:1 / -1;
+    }
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #263655;
+      background:#0b1527;
+      color:#ecf3ff;
+      box-sizing:border-box;
+    }
+    button{
+      padding:12px 16px;
+      border-radius:10px;
+      border:0;
+      background:#3b82f6;
+      color:white;
+      font-weight:700;
+      cursor:pointer;
+      margin-right:10px;
+      margin-top:10px;
+    }
+    pre{
+      white-space:pre-wrap;
+      word-break:break-word;
+      background:#111c31;
+      border:1px solid #1f2d48;
+      border-radius:12px;
+      padding:16px;
+      overflow:auto;
+    }
+    .muted{color:#9db0d1}
+    @media(max-width:800px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>ZENTRA API TEST</h1>
+      <p class="muted">Register / Login / Trade Create test ekranı</p>
+    </div>
+
+    <div class="card">
+      <div class="grid">
+        <div class="field">
+          <label>Full Name</label>
+          <input id="full_name" value="Mehmet Altaş" />
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="email" value="mehmet@zentra.com" />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="password" value="123456" />
+        </div>
+
+        <div class="field">
+          <label>Product</label>
+          <input id="product" value="Steel" />
+        </div>
+
+        <div class="field">
+          <label>Buy Price</label>
+          <input id="buy_price" type="number" value="1000" />
+        </div>
+
+        <div class="field">
+          <label>Sell Price</label>
+          <input id="sell_price" type="number" value="1200" />
+        </div>
+
+        <div class="field full">
+          <label>Volume</label>
+          <input id="volume" type="number" value="100" />
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <button onclick="registerUser()">Register</button>
+        <button onclick="loginUser()">Login</button>
+        <button onclick="createTrade()">Trade Create</button>
+        <button onclick="clearOutput()">Clear</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Status</h2>
+      <div id="status" class="muted">Hazır</div>
+    </div>
+
+    <div class="card">
+      <h2>Output</h2>
+      <pre id="output">Bekleniyor...</pre>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
+
+    function setStatus(text){
+      document.getElementById("status").textContent = text;
+    }
+
+    function setOutput(data){
+      document.getElementById("output").textContent =
+        typeof data === "string" ? data : JSON.stringify(data, null, 2);
+    }
+
+    function clearOutput(){
+      setStatus("Hazır");
+      setOutput("Bekleniyor...");
+    }
+
+    async function postJson(url, body){
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+
+      const data = await response.json();
+      return { ok: response.ok, status: response.status, data };
+    }
+
+    async function registerUser(){
+      try{
+        setStatus("Register gönderiliyor...");
+
+        const body = {
+          full_name: document.getElementById("full_name").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        };
+
+        const result = await postJson(`${API_BASE}/register`, body);
+
+        setStatus(`Register tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Register hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function loginUser(){
+      try{
+        setStatus("Login gönderiliyor...");
+
+        const body = {
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        };
+
+        const result = await postJson(`${API_BASE}/login`, body);
+
+        setStatus(`Login tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Login hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function createTrade(){
+      try{
+        setStatus("Trade create gönderiliyor...");
+
+        const body = {
+          product: document.getElementById("product").value,
+          buy_price: Number(document.getElementById("buy_price").value),
+          sell_price: Number(document.getElementById("sell_price").value),
+          volume: Number(document.getElementById("volume").value)
+        };
+
+        const result = await postJson(`${API_BASE}/trade-create`, body);
+
+        setStatus(`Trade create tamamlandı (${result.status})`);
+        setOutput(result.data);
+      }catch(err){
+        setStatus("Trade create hata");
+        setOutput(err.message);
+      }
+    }
+  </script>
+</body>
+  </html>

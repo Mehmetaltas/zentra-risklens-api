@@ -23,7 +23,7 @@
       padding: 18px;
       margin-bottom: 16px;
     }
-    h1, h2 {
+    h1, h2, h3 {
       margin-top: 0;
     }
     .muted {
@@ -201,6 +201,12 @@
       return document.getElementById("password").value;
     }
 
+    function clearAuth() {
+      authToken = "";
+      localStorage.removeItem("zentra_token");
+      localStorage.removeItem("zentra_user");
+    }
+
     function refreshSessionInfo() {
       const token = localStorage.getItem("zentra_token") || "";
       const userRaw = localStorage.getItem("zentra_user");
@@ -225,6 +231,53 @@
         } else {
           userEl.textContent = token ? "LOGGED_IN" : "NO_TOKEN";
         }
+      }
+    }
+
+    async function syncSessionState() {
+      const token = localStorage.getItem("zentra_token") || "";
+      if (!token) {
+        refreshSessionInfo();
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/me`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          clearAuth();
+
+          if (
+            data &&
+            (
+              data.status === "SESSION_EXPIRED" ||
+              data.status === "SESSION_INACTIVE" ||
+              data.status === "SESSION_NOT_FOUND" ||
+              data.status === "INVALID_TOKEN"
+            )
+          ) {
+            setStatus("Oturum süresi doldu.");
+            setOutput(data);
+          }
+
+          refreshSessionInfo();
+          return;
+        }
+
+        if (data.user) {
+          localStorage.setItem("zentra_user", JSON.stringify(data.user));
+        }
+
+        refreshSessionInfo();
+      } catch (err) {
+        refreshSessionInfo();
       }
     }
 
@@ -276,6 +329,19 @@
 
         if (response.ok && data.user) {
           localStorage.setItem("zentra_user", JSON.stringify(data.user));
+        } else if (!response.ok) {
+          if (
+            data &&
+            (
+              data.status === "SESSION_EXPIRED" ||
+              data.status === "SESSION_INACTIVE" ||
+              data.status === "SESSION_NOT_FOUND" ||
+              data.status === "INVALID_TOKEN" ||
+              data.status === "NO_TOKEN"
+            )
+          ) {
+            clearAuth();
+          }
         }
 
         refreshSessionInfo();
@@ -298,20 +364,22 @@
 
         const data = await response.json();
 
-        authToken = "";
-        localStorage.removeItem("zentra_token");
-        localStorage.removeItem("zentra_user");
-
+        clearAuth();
         setStatus(`Logout tamamlandı (${response.status})`);
         setOutput(data);
         refreshSessionInfo();
       } catch (err) {
+        clearAuth();
         setStatus("Logout hata");
         setOutput(err.message);
+        refreshSessionInfo();
       }
     }
 
-    window.addEventListener("DOMContentLoaded", refreshSessionInfo);
+    window.addEventListener("DOMContentLoaded", () => {
+      refreshSessionInfo();
+      syncSessionState();
+    });
   </script>
 </body>
 </html>

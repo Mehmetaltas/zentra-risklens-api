@@ -5,21 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA Platform</title>
   <style>
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#08101d;color:#ecf3ff}
-    .wrap{max-width:1100px;margin:auto;padding:24px}
-    .card{background:#0f1728;border:1px solid #1f2d48;border-radius:16px;padding:18px;margin-bottom:16px}
-    h1,h2,h3{margin-top:0}
-    .muted{color:#9db0d1;line-height:1.6}
-    .nav,.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    a.btn,button.btn{display:inline-block;text-decoration:none;padding:10px 14px;border-radius:10px;border:0;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer}
-    a.btn.secondary,button.btn.secondary{background:#1f2d48}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-    .panel{background:#111c31;border:1px solid #1f2d48;border-radius:14px;padding:16px}
-    .row{margin-bottom:12px}
-    .row label{display:block;margin-bottom:6px;font-weight:700}
-    .row input{width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #2a3b5e;background:#0b1322;color:#ecf3ff}
-    .status-box{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-weight:700}
-    pre{background:#0b1322;border:1px solid #1f2d48;border-radius:12px;padding:14px;overflow:auto;color:#cfe2ff;white-space:pre-wrap;word-break:break-word}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #08101d;
+      color: #ecf3ff;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px;
+    }
+    .card {
+      background: #0f1728;
+      border: 1px solid #1f2d48;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+    .muted {
+      color: #9db0d1;
+      line-height: 1.6;
+    }
+    .nav,
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    a.btn,
+    button.btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 0;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    a.btn.secondary,
+    button.btn.secondary {
+      background: #1f2d48;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .panel {
+      background: #111c31;
+      border: 1px solid #1f2d48;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .row {
+      margin-bottom: 12px;
+    }
+    .row label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .row input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2a3b5e;
+      background: #0b1322;
+      color: #ecf3ff;
+    }
+    .status-box {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+    pre {
+      background: #0b1322;
+      border: 1px solid #1f2d48;
+      border-radius: 12px;
+      padding: 14px;
+      overflow: auto;
+      color: #cfe2ff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
   </style>
 </head>
 <body>
@@ -27,6 +105,7 @@
     <div class="card">
       <h1>ZENTRA Platform</h1>
       <div class="muted">Global Economic AI Operating System</div>
+
       <div class="nav">
         <a class="btn secondary" href="/index.html">Landing</a>
         <a class="btn secondary" href="/whitepaper.html">Whitepaper</a>
@@ -42,6 +121,7 @@
         Landing / Whitepaper / Investor / Docs → Açık<br />
         Main / Trade / Deep Modules → Giriş gerekli
       </div>
+
       <div class="status-box">
         <div><strong>Token Status:</strong> <span id="tokenStatus">MISSING</span></div>
         <div><strong>User Status:</strong> <span id="userStatus">NO_TOKEN</span></div>
@@ -71,7 +151,7 @@
 
           <div class="row">
             <label for="password">Password</label>
-            <input id="password" type="password" placeholder="Şifre" />
+            <input id="password" type="password" placeholder="Şifreyi yaz" />
           </div>
 
           <div class="actions">
@@ -106,7 +186,8 @@
     function setOutput(data) {
       const el = document.getElementById("output");
       if (!el) return;
-      el.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
+      el.textContent =
+        typeof data === "string" ? data : JSON.stringify(data, null, 2);
     }
 
     function getEmail() {
@@ -130,15 +211,25 @@
       const userRaw = localStorage.getItem("zentra_user");
       let user = null;
 
-      try { user = userRaw ? JSON.parse(userRaw) : null; } catch (e) { user = null; }
+      try {
+        user = userRaw ? JSON.parse(userRaw) : null;
+      } catch (e) {
+        user = null;
+      }
 
       const tokenEl = document.getElementById("tokenStatus");
       const userEl = document.getElementById("userStatus");
 
-      if (tokenEl) tokenEl.textContent = token ? "ACTIVE" : "MISSING";
+      if (tokenEl) {
+        tokenEl.textContent = token ? "ACTIVE" : "MISSING";
+      }
+
       if (userEl) {
-        if (user && (user.email || user.full_name)) userEl.textContent = user.email || user.full_name;
-        else userEl.textContent = token ? "LOGGED_IN" : "NO_TOKEN";
+        if (user && (user.email || user.full_name)) {
+          userEl.textContent = user.email || user.full_name;
+        } else {
+          userEl.textContent = token ? "LOGGED_IN" : "NO_TOKEN";
+        }
       }
     }
 
@@ -152,29 +243,51 @@
       try {
         const response = await fetch(`${API_BASE}/me`, {
           method: "GET",
-          headers: { "Authorization": `Bearer ${token}` }
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
         });
 
-        const data = await response.json();
+        const raw = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          data = { raw };
+        }
 
         if (!response.ok) {
           clearAuth();
-          if (data && (
-            data.status === "SESSION_EXPIRED" ||
-            data.status === "SESSION_INACTIVE" ||
-            data.status === "SESSION_NOT_FOUND" ||
-            data.status === "INVALID_TOKEN"
-          )) {
+
+          if (
+            data &&
+            (
+              data.status === "SESSION_EXPIRED" ||
+              data.status === "SESSION_INACTIVE" ||
+              data.status === "SESSION_NOT_FOUND" ||
+              data.status === "INVALID_TOKEN"
+            )
+          ) {
             setStatus("Oturum süresi doldu.");
             setOutput(data);
           }
+
           refreshSessionInfo();
           return;
         }
 
-        if (data.user) localStorage.setItem("zentra_user", JSON.stringify(data.user));
+        if (data.user) {
+          localStorage.setItem("zentra_user", JSON.stringify(data.user));
+        }
+
         refreshSessionInfo();
       } catch (err) {
+        setStatus("Session sync hata");
+        setOutput({
+          message: err.message,
+          stack: err.stack || null
+        });
         refreshSessionInfo();
       }
     }
@@ -186,17 +299,29 @@
 
         if (!email || !password) {
           setStatus("Login hata");
-          setOutput({ status: "VALIDATION_ERROR", message: "email and password are required" });
+          setOutput({
+            status: "VALIDATION_ERROR",
+            message: "email and password are required"
+          });
           return;
         }
 
         const response = await fetch(`${API_BASE}/login`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({ email, password })
         });
 
-        const data = await response.json();
+        const raw = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          data = { raw };
+        }
 
         if (response.ok && data.token) {
           authToken = data.token;
@@ -209,7 +334,10 @@
         refreshSessionInfo();
       } catch (err) {
         setStatus("Login hata");
-        setOutput(err.message);
+        setOutput({
+          message: err.message,
+          stack: err.stack || null
+        });
       }
     }
 
@@ -219,10 +347,19 @@
 
         const response = await fetch(`${API_BASE}/me`, {
           method: "GET",
-          headers: { "Authorization": `Bearer ${token}` }
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
         });
 
-        const data = await response.json();
+        const raw = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          data = { raw };
+        }
 
         setStatus(`Check token tamamlandı (${response.status})`);
         setOutput(data);
@@ -230,13 +367,16 @@
         if (response.ok && data.user) {
           localStorage.setItem("zentra_user", JSON.stringify(data.user));
         } else if (!response.ok) {
-          if (data && (
-            data.status === "SESSION_EXPIRED" ||
-            data.status === "SESSION_INACTIVE" ||
-            data.status === "SESSION_NOT_FOUND" ||
-            data.status === "INVALID_TOKEN" ||
-            data.status === "NO_TOKEN"
-          )) {
+          if (
+            data &&
+            (
+              data.status === "SESSION_EXPIRED" ||
+              data.status === "SESSION_INACTIVE" ||
+              data.status === "SESSION_NOT_FOUND" ||
+              data.status === "INVALID_TOKEN" ||
+              data.status === "NO_TOKEN"
+            )
+          ) {
             clearAuth();
           }
         }
@@ -244,7 +384,10 @@
         refreshSessionInfo();
       } catch (err) {
         setStatus("Check token hata");
-        setOutput(err.message);
+        setOutput({
+          message: err.message,
+          stack: err.stack || null
+        });
       }
     }
 
@@ -254,10 +397,20 @@
 
         const response = await fetch(`${API_BASE}/logout`, {
           method: "POST",
-          headers: { "Authorization": `Bearer ${token}` }
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
         });
 
-        const data = await response.json();
+        const raw = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          data = { raw };
+        }
+
         clearAuth();
         setStatus(`Logout tamamlandı (${response.status})`);
         setOutput(data);
@@ -265,7 +418,10 @@
       } catch (err) {
         clearAuth();
         setStatus("Logout hata");
-        setOutput(err.message);
+        setOutput({
+          message: err.message,
+          stack: err.stack || null
+        });
         refreshSessionInfo();
       }
     }

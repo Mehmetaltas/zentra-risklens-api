@@ -23,16 +23,11 @@
     scripts.forEach((oldScript) => {
       const newScript = document.createElement("script");
 
-      if (oldScript.src) {
-        newScript.src = oldScript.src;
-      } else {
-        newScript.textContent = oldScript.textContent;
-      }
+      if (oldScript.src) newScript.src = oldScript.src;
+      else newScript.textContent = oldScript.textContent;
 
       Array.from(oldScript.attributes).forEach((attr) => {
-        if (attr.name !== "src") {
-          newScript.setAttribute(attr.name, attr.value);
-        }
+        if (attr.name !== "src") newScript.setAttribute(attr.name, attr.value);
       });
 
       document.body.appendChild(newScript);
@@ -56,9 +51,7 @@
     try {
       const response = await fetch(`${API_BASE}/ui?action=${action}`, {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       const data = await response.json();

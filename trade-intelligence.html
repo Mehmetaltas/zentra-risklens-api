@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA Trade Intelligence</title>
   <script src="/auth-guard.js"></script>
+  <script src="/secure-page-loader.js"></script>
   <style>
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#08101d;color:#ecf3ff}
     .wrap{max-width:1100px;margin:auto;padding:24px}
@@ -12,13 +13,9 @@
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
     .title{font-size:28px;font-weight:700;margin:0}
     .muted{color:#9db0d1}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-    .panel{background:#111c31;border:1px solid #1f2d48;border-radius:14px;padding:16px}
-    .panel h3{margin:0 0 10px 0}
     .actions{display:flex;gap:10px;flex-wrap:wrap}
     a.btn,button.btn{display:inline-block;text-decoration:none;padding:11px 14px;border-radius:10px;border:0;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer}
     a.btn.secondary,button.btn.secondary{background:#1f2d48}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#16243d;border:1px solid #29406a;font-size:12px;margin-right:8px;margin-top:8px}
   </style>
 </head>
 <body>
@@ -27,60 +24,17 @@
       <div class="topbar">
         <div>
           <h1 class="title">Trade Intelligence</h1>
-          <div class="muted">Analyst ve admin için lens / risk / signal görünümü</div>
+          <div class="muted">Korumalı shell ekranı</div>
         </div>
         <div class="actions">
           <a class="btn secondary" href="/zentra-main.html">Main</a>
-          <a class="btn secondary" href="/platform.html">Platform</a>
           <button class="btn" onclick="logoutZentra()">Logout</button>
         </div>
       </div>
-      <div>
-        <span class="pill">Role: analyst, admin</span>
-        <span class="pill">Layer: Telescope</span>
-        <span class="pill">Mode: Intelligence</span>
-      </div>
     </div>
 
-    <div class="card">
-      <h2>Lens Overview</h2>
-      <div class="grid">
-        <div class="panel">
-          <h3>Macro Lens</h3>
-          <p class="muted">Makro ekonomik görünüm, trend ve sinyal değerlendirmesi.</p>
-        </div>
-        <div class="panel">
-          <h3>Risk Lens</h3>
-          <p class="muted">Risk yoğunluğu, potansiyel kırılganlık ve uyarı kümeleri.</p>
-        </div>
-        <div class="panel">
-          <h3>Opportunity Lens</h3>
-          <p class="muted">Fırsat alanları, skorlar ve önceliklendirme mantığı.</p>
-        </div>
-        <div class="panel">
-          <h3>Trade Signal Lens</h3>
-          <p class="muted">Trade’e dönüşebilir sinyallerin özet görünümü.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Analyst Actions</h2>
-      <div class="actions">
-        <button class="btn">Risk Snapshot</button>
-        <button class="btn">Signal Review</button>
-        <button class="btn">Decision Summary</button>
-        <button class="btn secondary">Export Report</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Admin Only</h2>
-      <div data-role-show="admin">
-        <div class="actions">
-          <a class="btn" href="/admin.html">Open Admin Panel</a>
-        </div>
-      </div>
+    <div id="app" class="card">
+      <div class="muted">Yükleniyor...</div>
     </div>
   </div>
 </body>

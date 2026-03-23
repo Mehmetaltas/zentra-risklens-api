@@ -4,217 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA Trade Action</title>
+  <script src="/auth-guard.js"></script>
   <style>
-    html{display:none}
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:#08101d;
-      color:#ecf3ff;
-    }
-    .wrap{
-      max-width:1100px;
-      margin:auto;
-      padding:24px;
-    }
-    .card{
-      background:#0f1728;
-      border:1px solid #1f2d48;
-      border-radius:16px;
-      padding:18px;
-      margin-bottom:16px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-    }
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .full{
-      grid-column:1 / -1;
-    }
-    .mini{
-      background:#111c31;
-      border:1px solid #1f2d48;
-      border-radius:12px;
-      padding:14px;
-    }
-    .btn{
-      display:inline-block;
-      padding:12px 16px;
-      border-radius:10px;
-      background:#3b82f6;
-      color:white;
-      text-decoration:none;
-      border:0;
-      cursor:pointer;
-      font-weight:700;
-      margin-right:10px;
-      margin-top:10px;
-    }
-    .btn2{
-      background:#13203a;
-      border:1px solid #243554;
-    }
-    input{
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      border:1px solid #263655;
-      background:#0b1527;
-      color:#ecf3ff;
-      box-sizing:border-box;
-    }
-    pre{
-      white-space:pre-wrap;
-      word-break:break-word;
-      background:#111c31;
-      border:1px solid #1f2d48;
-      border-radius:12px;
-      padding:14px;
-      overflow:auto;
-    }
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#08101d;color:#ecf3ff}
+    .wrap{max-width:1100px;margin:auto;padding:24px}
+    .card{background:#0f1728;border:1px solid #1f2d48;border-radius:16px;padding:18px;margin-bottom:16px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .title{font-size:28px;font-weight:700;margin:0}
     .muted{color:#9db0d1}
-    @media(max-width:800px){
-      .grid{grid-template-columns:1fr}
-    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .panel{background:#111c31;border:1px solid #1f2d48;border-radius:14px;padding:16px}
+    .panel h3{margin:0 0 10px 0}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    a.btn,button.btn{display:inline-block;text-decoration:none;padding:11px 14px;border-radius:10px;border:0;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer}
+    a.btn.secondary,button.btn.secondary{background:#1f2d48}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#16243d;border:1px solid #29406a;font-size:12px;margin-right:8px;margin-top:8px}
   </style>
-  <script>
-    (function () {
-      const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
-      const token = localStorage.getItem("zentra_token");
-
-      async function checkAuth() {
-        if (!token) {
-          window.location.href = "/platform.html";
-          return;
-        }
-
-        try {
-          const response = await fetch(`${API_BASE}/me`, {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${token}`
-            }
-          });
-
-          const data = await response.json();
-
-          if (!response.ok || !data || data.status !== "AUTHORIZED") {
-            localStorage.removeItem("zentra_token");
-            window.location.href = "/platform.html";
-            return;
-          }
-
-          document.documentElement.style.display = "block";
-        } catch (error) {
-          localStorage.removeItem("zentra_token");
-          window.location.href = "/platform.html";
-        }
-      }
-
-      checkAuth();
-    })();
-
-    function logoutZentra(){
-      localStorage.removeItem("zentra_token");
-      window.location.href = "/platform.html";
-    }
-  </script>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>Trade Action</h1>
-      <p class="muted">Protected Execution Layer</p>
-      <a href="/platform.html" class="btn btn2">Platform</a>
-      <a href="/zentra-main.html" class="btn">Main</a>
-      <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
-      <button class="btn btn2" onclick="logoutZentra()">Logout</button>
+      <div class="topbar">
+        <div>
+          <h1 class="title">Trade Action</h1>
+          <div class="muted">Trader ve admin için işlem/operasyon katmanı</div>
+        </div>
+        <div class="actions">
+          <a class="btn secondary" href="/zentra-main.html">Main</a>
+          <a class="btn secondary" href="/platform.html">Platform</a>
+          <button class="btn" onclick="logoutZentra()">Logout</button>
+        </div>
+      </div>
+      <div>
+        <span class="pill">Role: trader, admin</span>
+        <span class="pill">Layer: Execution</span>
+        <span class="pill">Mode: Action</span>
+      </div>
     </div>
 
     <div class="card">
+      <h2>Trade Flow</h2>
       <div class="grid">
-        <div class="field">
-          <label>Product</label>
-          <input id="product" value="Steel" />
+        <div class="panel">
+          <h3>Trade</h3>
+          <p class="muted">Yeni trade oluşturma ve izleme alanı.</p>
+          <button class="btn">Trade Create</button>
         </div>
-
-        <div class="field">
-          <label>Buy Price</label>
-          <input id="buy_price" type="number" value="1000" />
+        <div class="panel">
+          <h3>Offer</h3>
+          <p class="muted">Offer oluşturma ve teklif akışı.</p>
+          <button class="btn">Offer Create</button>
         </div>
-
-        <div class="field">
-          <label>Sell Price</label>
-          <input id="sell_price" type="number" value="1200" />
+        <div class="panel">
+          <h3>Payment</h3>
+          <p class="muted">Payment oluşturma ve ödeme başlatma.</p>
+          <button class="btn">Payment Create</button>
         </div>
-
-        <div class="field">
-          <label>Volume</label>
-          <input id="volume" type="number" value="100" />
-        </div>
-
-        <div class="field full">
-          <button class="btn" onclick="createTrade()">Create Trade</button>
+        <div class="panel">
+          <h3>Logs</h3>
+          <p class="muted">Trade flow log ve operasyon kaydı.</p>
+          <button class="btn">Log Write</button>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>Status</h2>
-      <div id="status" class="muted">Ready</div>
+      <h2>Role Based Example</h2>
+      <p class="muted">Aşağıdaki buton viewer/analyst için zaten bu sayfa açılmadığı için görünmez; trader ve admin kullanır.</p>
+      <div class="actions">
+        <button class="btn">Open Execution Flow</button>
+        <button class="btn secondary">View Status</button>
+      </div>
     </div>
 
     <div class="card">
-      <h2>Output</h2>
-      <pre id="output">Waiting...</pre>
+      <h2>Admin Only</h2>
+      <div data-role-show="admin">
+        <div class="actions">
+          <a class="btn" href="/admin.html">Admin Panel</a>
+        </div>
+      </div>
     </div>
   </div>
-
-  <script>
-    const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
-    const token = localStorage.getItem("zentra_token") || "";
-
-    function setStatus(text){
-      document.getElementById("status").textContent = text;
-    }
-
-    function setOutput(data){
-      document.getElementById("output").textContent =
-        typeof data === "string" ? data : JSON.stringify(data, null, 2);
-    }
-
-    async function createTrade(){
-      try{
-        setStatus("Trade create gönderiliyor...");
-
-        const response = await fetch(`${API_BASE}/trade-create`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            product: document.getElementById("product").value,
-            buy_price: Number(document.getElementById("buy_price").value),
-            sell_price: Number(document.getElementById("sell_price").value),
-            volume: Number(document.getElementById("volume").value)
-          })
-        });
-
-        const data = await response.json();
-        setStatus(`Trade create tamamlandı (${response.status})`);
-        setOutput(data);
-      }catch(err){
-        setStatus("Trade create hata");
-        setOutput(err.message);
-      }
-    }
-  </script>
 </body>
-</html>
+          </html>

@@ -3,39 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZENTRA Trade Action</title>
+  <title>ZENTRA Trade Progress Test</title>
   <script src="/auth-guard.js"></script>
-  <script src="/secure-page-loader.js"></script>
   <style>
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#08101d;color:#ecf3ff}
-    .wrap{max-width:1100px;margin:auto;padding:24px}
-    .card{background:#0f1728;border:1px solid #1f2d48;border-radius:16px;padding:18px;margin-bottom:16px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .title{font-size:28px;font-weight:700;margin:0}
-    .muted{color:#9db0d1}
-    .actions{display:flex;gap:10px;flex-wrap:wrap}
-    a.btn,button.btn{display:inline-block;text-decoration:none;padding:11px 14px;border-radius:10px;border:0;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer}
-    a.btn.secondary,button.btn.secondary{background:#1f2d48}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #08101d;
+      color: #ecf3ff;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px;
+    }
+    .card {
+      background: #0f1728;
+      border: 1px solid #1f2d48;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+    .muted {
+      color: #9db0d1;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .panel {
+      background: #111c31;
+      border: 1px solid #1f2d48;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .row {
+      margin-bottom: 12px;
+    }
+    .row label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .row input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2a3b5e;
+      background: #0b1322;
+      color: #ecf3ff;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    button,
+    a.btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 0;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.secondary,
+    a.btn.secondary {
+      background: #1f2d48;
+    }
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #16243d;
+      border: 1px solid #29406a;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-top: 8px;
+    }
+    pre {
+      background: #0b1322;
+      border: 1px solid #1f2d48;
+      border-radius: 12px;
+      padding: 14px;
+      overflow: auto;
+      color: #cfe2ff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <div class="topbar">
-        <div>
-          <h1 class="title">Trade Action</h1>
-          <div class="muted">Korumalı shell ekranı</div>
+      <h1>ZENTRA Trade Progress Test</h1>
+      <div class="muted">Escrow / milestone / in_progress / completed zinciri test ekranı</div>
+
+      <div>
+        <span class="pill">Role: trader, admin</span>
+        <span class="pill">Flow: completed chain</span>
+      </div>
+
+      <div class="actions">
+        <a class="btn secondary" href="/trade-action.html">Trade Action</a>
+        <a class="btn secondary" href="/zentra-main.html">Main</a>
+        <button onclick="logoutZentra()">Logout</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>Trade Input</h2>
+
+        <div class="row">
+          <label for="tradeId">Trade ID</label>
+          <input id="tradeId" type="text" placeholder="TRD-20260321-1172" />
         </div>
+
         <div class="actions">
-          <a class="btn secondary" href="/zentra-main.html">Main</a>
-          <button class="btn" onclick="logoutZentra()">Logout</button>
+          <button class="secondary" onclick="getTrade()">Trade Get</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Progress Actions</h2>
+        <div class="muted">
+          Sıra:
+          payment_initiated → escrow_locked → in_progress → completed
+        </div>
+
+        <div class="actions">
+          <button onclick="tradeProgress('lock_escrow')">Lock Escrow</button>
+          <button onclick="tradeProgress('start_progress')">Start Progress</button>
+          <button onclick="tradeProgress('complete_trade')">Complete Trade</button>
         </div>
       </div>
     </div>
 
-    <div id="app" class="card">
-      <div class="muted">Yükleniyor...</div>
+    <div class="card">
+      <h2>Status</h2>
+      <div id="status" class="muted">Ready</div>
+    </div>
+
+    <div class="card">
+      <h2>Output</h2>
+      <pre id="output">Bekleniyor...</pre>
     </div>
   </div>
+
+  <script>
+    const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
+
+    function setStatus(message) {
+      const el = document.getElementById("status");
+      if (el) el.textContent = message;
+    }
+
+    function setOutput(data) {
+      const el = document.getElementById("output");
+      if (!el) return;
+      el.textContent =
+        typeof data === "string" ? data : JSON.stringify(data, null, 2);
+    }
+
+    function getTradeId() {
+      return document.getElementById("tradeId").value.trim();
+    }
+
+    async function getTrade() {
+      try {
+        const token = localStorage.getItem("zentra_token") || "";
+        const tradeId = getTradeId();
+
+        if (!tradeId) {
+          setStatus("Trade ID gerekli");
+          setOutput({ status: "VALIDATION_ERROR", message: "trade_id is required" });
+          return;
+        }
+
+        const response = await fetch(
+          `${API_BASE}/trade-get?trade_id=${encodeURIComponent(tradeId)}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        const data = await response.json();
+        setStatus(`Trade get tamamlandı (${response.status})`);
+        setOutput(data);
+      } catch (err) {
+        setStatus("Trade get hata");
+        setOutput(err.message);
+      }
+    }
+
+    async function tradeProgress(action) {
+      try {
+        const token = localStorage.getItem("zentra_token") || "";
+        const tradeId = getTradeId();
+
+        if (!tradeId) {
+          setStatus("Trade ID gerekli");
+          setOutput({ status: "VALIDATION_ERROR", message: "trade_id is required" });
+          return;
+        }
+
+        const response = await fetch(`${API_BASE}/trade-progress`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            trade_id: tradeId,
+            action
+          })
+        });
+
+        const data = await response.json();
+        setStatus(`${action} tamamlandı (${response.status})`);
+        setOutput(data);
+      } catch (err) {
+        setStatus(`${action} hata`);
+        setOutput(err.message);
+      }
+    }
+  </script>
 </body>
 </html>

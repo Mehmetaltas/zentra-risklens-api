@@ -5,78 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA Platform</title>
   <style>
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:#08101d;
-      color:#ecf3ff;
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #08101d;
+      color: #ecf3ff;
     }
-    .wrap{
-      max-width:1100px;
-      margin:auto;
-      padding:24px;
+    .wrap {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px;
     }
-    .card{
-      background:#0f1728;
-      border:1px solid #1f2d48;
-      border-radius:16px;
-      padding:18px;
-      margin-bottom:16px;
+    .card {
+      background: #0f1728;
+      border: 1px solid #1f2d48;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
     }
-    .grid{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:16px;
+    h1, h2, h3 {
+      margin-top: 0;
     }
-    .mini{
-      background:#111c31;
-      border:1px solid #1f2d48;
-      border-radius:12px;
-      padding:14px;
-      margin-top:12px;
+    .muted {
+      color: #9db0d1;
+      line-height: 1.6;
     }
-    .muted{
-      color:#9db0d1;
+    .nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0 18px 0;
     }
-    .btn{
-      display:inline-block;
-      padding:12px 16px;
-      border-radius:10px;
-      background:#3b82f6;
-      color:white;
-      text-decoration:none;
-      border:0;
-      cursor:pointer;
-      font-weight:700;
-      margin-right:10px;
-      margin-top:10px;
+    .nav a,
+    .btn,
+    button {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 0;
+      background: #3b82f6;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
     }
-    .btn2{
-      background:#13203a;
-      border:1px solid #243554;
-      color:white;
+    .nav a.secondary,
+    .btn.secondary,
+    button.secondary {
+      background: #1f2d48;
     }
-    input{
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      border:1px solid #263655;
-      background:#0b1527;
-      color:#ecf3ff;
-      box-sizing:border-box;
-      margin-top:10px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
     }
-    pre{
-      white-space:pre-wrap;
-      word-break:break-word;
-      background:#111c31;
-      border:1px solid #1f2d48;
-      border-radius:12px;
-      padding:14px;
-      overflow:auto;
+    .panel {
+      background: #111c31;
+      border: 1px solid #1f2d48;
+      border-radius: 14px;
+      padding: 16px;
     }
-    @media(max-width:800px){
-      .grid{grid-template-columns:1fr}
+    .panel h3 {
+      margin: 0 0 8px 0;
+    }
+    .row {
+      margin-bottom: 10px;
+    }
+    .row label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .row input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2a3b5e;
+      background: #0b1322;
+      color: #ecf3ff;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    pre {
+      background: #0b1322;
+      border: 1px solid #1f2d48;
+      border-radius: 12px;
+      padding: 14px;
+      overflow: auto;
+      color: #cfe2ff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .status-box {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -84,52 +114,74 @@
   <div class="wrap">
     <div class="card">
       <h1>ZENTRA Platform</h1>
-      <p class="muted">Global Economic AI Operating System</p>
+      <div class="muted">Global Economic AI Operating System</div>
 
-      <div style="margin-top:12px">
-        <a href="/index.html" class="btn btn2">Landing</a>
-        <a href="/whitepaper.html" class="btn btn2">Whitepaper</a>
-        <a href="/investor.html" class="btn btn2">Investor</a>
-        <a href="/docs.html" class="btn btn2">Docs</a>
+      <div class="nav">
+        <a class="secondary" href="/index.html">Landing</a>
+        <a class="secondary" href="/whitepaper.html">Whitepaper</a>
+        <a class="secondary" href="/investor.html">Investor</a>
+        <a class="secondary" href="/docs.html">Docs</a>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="card">
-        <h2>Open Layer</h2>
-        <p class="muted">Bu katman açık tanıtım katmanıdır. İç sistem token korumalıdır.</p>
-
-        <div class="mini">Landing / Whitepaper / Investor / Docs → Açık</div>
-        <div class="mini">Main / Trade / Deep Modules → Giriş gerekli</div>
-
-        <div class="mini">
-          <b>System Status</b><br><br>
-          Token Status: <span id="tokenState" class="muted">Checking...</span><br>
-          User Status: <span id="userState" class="muted">Unknown</span>
-        </div>
-
-        <div class="mini">
-          <b>Deep System Access</b><br><br>
-          <a href="/zentra-main.html" class="btn">Main System</a>
-          <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
-          <a href="/trade-action.html" class="btn">Trade Action</a>
-        </div>
+    <div class="card">
+      <h2>Open Layer</h2>
+      <div class="muted">
+        Bu katman açık tanıtım katmanıdır. İç sistem token korumalıdır.<br />
+        Landing / Whitepaper / Investor / Docs → Açık<br />
+        Main / Trade / Deep Modules → Giriş gerekli
       </div>
 
-      <div class="card">
-        <h2>Core Login</h2>
-        <p class="muted">İç sisteme giriş için kullanıcı hesabı gerekir.</p>
+      <div class="status-box">
+        <div><strong>Token Status:</strong> <span id="tokenStatus">MISSING</span></div>
+        <div><strong>User Status:</strong> <span id="userStatus">NO_TOKEN</span></div>
+      </div>
+    </div>
 
-        <input id="email" type="email" value="mehmet2@zentra.com" placeholder="Email" />
-        <input id="password" type="password" value="123456" placeholder="Password" />
+    <div class="card">
+      <h2>Deep System Access</h2>
+      <div class="actions">
+        <a class="btn secondary" href="/zentra-main.html">Main System</a>
+        <a class="btn secondary" href="/trade-intelligence.html">Trade Intelligence</a>
+        <a class="btn secondary" href="/trade-action.html">Trade Action</a>
+        <a class="btn secondary" href="/admin.html">Admin</a>
+      </div>
+    </div>
 
-        <div>
-          <button class="btn" onclick="loginZentra()">Login</button>
-          <button class="btn btn2" onclick="checkMe()">Check Token</button>
-          <button class="btn btn2" onclick="logoutZentra()">Logout</button>
+    <div class="card">
+      <h2>Core Login</h2>
+      <div class="muted">İç sisteme giriş için kullanıcı hesabı gerekir.</div>
+
+      <div class="grid" style="margin-top:14px;">
+        <div class="panel">
+          <div class="row">
+            <label for="email">Email</label>
+            <input id="email" type="email" value="mehmet2@zentra.com" />
+          </div>
+
+          <div class="row">
+            <label for="password">Password</label>
+            <input id="password" type="password" value="123456" />
+          </div>
+
+          <div class="actions">
+            <button onclick="login()">Login</button>
+            <button onclick="checkToken()">Check Token</button>
+            <button onclick="logout()" class="secondary">Logout</button>
+          </div>
+
+          <div class="actions">
+            <button onclick="makeRole('viewer')" class="secondary">Make Viewer</button>
+            <button onclick="makeRole('analyst')" class="secondary">Make Analyst</button>
+            <button onclick="makeRole('trader')" class="secondary">Make Trader</button>
+            <button onclick="makeRole('admin')" class="secondary">Make Admin</button>
+          </div>
         </div>
 
-        <div id="authStatus" class="mini">Status: Ready</div>
+        <div class="panel">
+          <h3>Status</h3>
+          <div id="status" class="muted">Ready</div>
+        </div>
       </div>
     </div>
 
@@ -143,107 +195,162 @@
     const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
     let authToken = localStorage.getItem("zentra_token") || "";
 
-    function setOutput(data){
-      document.getElementById("output").textContent =
+    function setStatus(message) {
+      const el = document.getElementById("status");
+      if (el) el.textContent = message;
+    }
+
+    function setOutput(data) {
+      const el = document.getElementById("output");
+      if (!el) return;
+      el.textContent =
         typeof data === "string" ? data : JSON.stringify(data, null, 2);
     }
 
-    function setAuthStatus(text){
-      document.getElementById("authStatus").innerHTML = text;
+    function getEmail() {
+      return document.getElementById("email").value.trim();
     }
 
-    function refreshTokenState(){
-      document.getElementById("tokenState").textContent = authToken ? "ACTIVE" : "MISSING";
+    function getPassword() {
+      return document.getElementById("password").value;
     }
 
-    async function postJson(url, body){
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
-        },
-        body: JSON.stringify(body)
-      });
+    function refreshSessionInfo() {
+      const token = localStorage.getItem("zentra_token") || "";
+      const userRaw = localStorage.getItem("zentra_user");
+      let user = null;
 
-      const data = await response.json();
-      return { ok: response.ok, status: response.status, data };
-    }
-
-    async function getJson(url){
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          ...(authToken ? { "Authorization": `Bearer ${authToken}` } : {})
-        }
-      });
-
-      const data = await response.json();
-      return { ok: response.ok, status: response.status, data };
-    }
-
-    async function loginZentra(){
-      try{
-        setAuthStatus("Status: Login gönderiliyor...");
-
-        const body = {
-          email: document.getElementById("email").value,
-          password: document.getElementById("password").value
-        };
-
-        const result = await postJson(`${API_BASE}/login`, body);
-
-        if (result.data && result.data.token) {
-          authToken = result.data.token;
-          localStorage.setItem("zentra_token", authToken);
-          document.getElementById("userState").textContent = result.data.user?.email || "AUTHORIZED";
-        }
-
-        refreshTokenState();
-        setAuthStatus(`Status: Login tamamlandı (${result.status})`);
-        setOutput(result.data);
-      } catch (err) {
-        setAuthStatus("Status: Login hata.");
-        setOutput(err.message);
+      try {
+        user = userRaw ? JSON.parse(userRaw) : null;
+      } catch (e) {
+        user = null;
       }
-    }
 
-    async function checkMe(){
-      try{
-        setAuthStatus("Status: Token kontrol ediliyor...");
-        const result = await getJson(`${API_BASE}/me`);
+      const tokenEl = document.getElementById("tokenStatus");
+      const userEl = document.getElementById("userStatus");
 
-        if (result.ok && result.data?.status === "AUTHORIZED") {
-          document.getElementById("userState").textContent = result.data.user?.email || "AUTHORIZED";
+      if (tokenEl) {
+        tokenEl.textContent = token ? "ACTIVE" : "MISSING";
+      }
+
+      if (userEl) {
+        if (user && (user.email || user.full_name)) {
+          userEl.textContent = user.email || user.full_name;
         } else {
-          document.getElementById("userState").textContent = "UNAUTHORIZED";
+          userEl.textContent = token ? "LOGGED_IN" : "NO_TOKEN";
+        }
+      }
+    }
+
+    async function login() {
+      try {
+        const email = getEmail();
+        const password = getPassword();
+
+        const response = await fetch(`${API_BASE}/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.token) {
+          authToken = data.token;
+          localStorage.setItem("zentra_token", data.token);
+          localStorage.setItem("zentra_user", JSON.stringify(data.user || {}));
         }
 
-        refreshTokenState();
-        setAuthStatus(`Status: Token kontrol tamamlandı (${result.status})`);
-        setOutput(result.data);
+        setStatus(`Login tamamlandı (${response.status})`);
+        setOutput(data);
+        refreshSessionInfo();
       } catch (err) {
-        setAuthStatus("Status: Token kontrol hata.");
+        setStatus("Login hata");
         setOutput(err.message);
       }
     }
 
-    function logoutZentra(){
-      authToken = "";
-      localStorage.removeItem("zentra_token");
-      refreshTokenState();
-      document.getElementById("userState").textContent = "LOGGED_OUT";
-      setAuthStatus("Status: Logout tamamlandı.");
-      setOutput({ status: "LOGOUT_OK" });
+    async function checkToken() {
+      try {
+        const token = localStorage.getItem("zentra_token") || authToken || "";
+
+        const response = await fetch(`${API_BASE}/me`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+
+        setStatus(`Check token tamamlandı (${response.status})`);
+        setOutput(data);
+
+        if (response.ok && data.user) {
+          localStorage.setItem("zentra_user", JSON.stringify(data.user));
+        }
+
+        refreshSessionInfo();
+      } catch (err) {
+        setStatus("Check token hata");
+        setOutput(err.message);
+      }
     }
 
-    refreshTokenState();
-    if (authToken) {
-      checkMe();
-    } else {
-      document.getElementById("userState").textContent = "NO_TOKEN";
-      setOutput("Bekleniyor...");
+    async function logout() {
+      try {
+        const token = localStorage.getItem("zentra_token") || authToken || "";
+
+        const response = await fetch(`${API_BASE}/logout`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+
+        authToken = "";
+        localStorage.removeItem("zentra_token");
+        localStorage.removeItem("zentra_user");
+
+        setStatus(`Logout tamamlandı (${response.status})`);
+        setOutput(data);
+        refreshSessionInfo();
+      } catch (err) {
+        setStatus("Logout hata");
+        setOutput(err.message);
+      }
     }
+
+    async function makeRole(role) {
+      try {
+        const token = localStorage.getItem("zentra_token") || authToken || "";
+        const email = getEmail();
+
+        const response = await fetch(`${API_BASE}/make-role`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ email, role })
+        });
+
+        const data = await response.json();
+
+        setStatus(`Make ${role} tamamlandı (${response.status})`);
+        setOutput(data);
+        refreshSessionInfo();
+      } catch (err) {
+        setStatus(`Make ${role} hata`);
+        setOutput(err.message);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", refreshSessionInfo);
   </script>
 </body>
-</html>
+  </html>

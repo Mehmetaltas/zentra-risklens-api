@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZENTRA Main</title>
+  <script src="/auth-guard.js"></script>
   <style>
-    html{display:none}
     body{
       margin:0;
       font-family:Arial,Helvetica,sans-serif;
@@ -24,116 +24,148 @@
       padding:18px;
       margin-bottom:16px;
     }
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
     }
-    .mini{
+    .title{
+      font-size:28px;
+      font-weight:700;
+      margin:0;
+    }
+    .muted{
+      color:#9db0d1;
+    }
+    .menu{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      margin-top:16px;
+    }
+    .menu-card{
       background:#111c31;
       border:1px solid #1f2d48;
-      border-radius:12px;
-      padding:14px;
+      border-radius:14px;
+      padding:16px;
     }
-    .btn{
+    .menu-card h3{
+      margin:0 0 10px 0;
+      font-size:18px;
+    }
+    .menu-card p{
+      margin:0 0 14px 0;
+      color:#9db0d1;
+      line-height:1.5;
+    }
+    a.btn, button.btn{
       display:inline-block;
-      padding:12px 16px;
-      border-radius:10px;
-      background:#3b82f6;
-      color:white;
       text-decoration:none;
+      padding:11px 14px;
+      border-radius:10px;
       border:0;
-      cursor:pointer;
+      background:#3b82f6;
+      color:#fff;
       font-weight:700;
-      margin-right:10px;
-      margin-top:10px;
+      cursor:pointer;
     }
-    .btn2{
-      background:#13203a;
-      border:1px solid #243554;
+    button.btn.secondary, a.btn.secondary{
+      background:#1f2d48;
     }
-    .muted{color:#9db0d1}
-    @media(max-width:800px){
-      .grid{grid-template-columns:1fr}
+    .role-box{
+      padding:12px 14px;
+      border-radius:12px;
+      background:#111c31;
+      border:1px solid #1f2d48;
+      margin-top:12px;
+    }
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#16243d;
+      border:1px solid #29406a;
+      font-size:12px;
+      margin-right:8px;
+      margin-top:8px;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
     }
   </style>
-  <script>
-    (function () {
-      const API_BASE = "https://zentra-v2-rrgj.vercel.app/api";
-      const token = localStorage.getItem("zentra_token");
-
-      async function checkAuth() {
-        if (!token) {
-          window.location.href = "/platform.html";
-          return;
-        }
-
-        try {
-          const response = await fetch(`${API_BASE}/me`, {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${token}`
-            }
-          });
-
-          const data = await response.json();
-
-          if (!response.ok || !data || data.status !== "AUTHORIZED") {
-            localStorage.removeItem("zentra_token");
-            window.location.href = "/platform.html";
-            return;
-          }
-
-          document.documentElement.style.display = "block";
-        } catch (error) {
-          localStorage.removeItem("zentra_token");
-          window.location.href = "/platform.html";
-        }
-      }
-
-      checkAuth();
-    })();
-
-    function logoutZentra(){
-      localStorage.removeItem("zentra_token");
-      window.location.href = "/platform.html";
-    }
-  </script>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>ZENTRA Main</h1>
-      <p class="muted">Protected Core System</p>
-      <a href="/platform.html" class="btn btn2">Platform</a>
-      <a href="/trade-intelligence.html" class="btn">Trade Intelligence</a>
-      <a href="/trade-action.html" class="btn">Trade Action</a>
-      <button class="btn btn2" onclick="logoutZentra()">Logout</button>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>System Core</h2>
-        <div class="mini">Status: ACTIVE</div>
-        <div class="mini" style="margin-top:12px">Access: TOKEN VERIFIED</div>
-        <div class="mini" style="margin-top:12px">Layer: Main Core Screen</div>
+      <div class="topbar">
+        <div>
+          <h1 class="title">ZENTRA Main</h1>
+          <div class="muted">Korumalı ana sistem ekranı</div>
+        </div>
+        <div class="actions">
+          <a class="btn secondary" href="/platform.html">Platform</a>
+          <button class="btn" onclick="logoutZentra()">Logout</button>
+        </div>
       </div>
 
-      <div class="card">
-        <h2>Core Modules</h2>
-        <div class="mini">Data Engine</div>
-        <div class="mini" style="margin-top:12px">Signal Engine</div>
-        <div class="mini" style="margin-top:12px">Decision Engine</div>
-        <div class="mini" style="margin-top:12px">Execution Engine</div>
+      <div class="role-box">
+        <strong>Rol Bazlı Erişim:</strong><br>
+        <span class="pill">viewer = izleme</span>
+        <span class="pill">analyst = analiz</span>
+        <span class="pill">trader = işlem</span>
+        <span class="pill">admin = tam yönetim</span>
       </div>
     </div>
 
     <div class="card">
-      <h2>Main Protected Zone</h2>
-      <p class="muted">
-        Bu sayfa token kontrolü ile korunuyor.
-        Token geçersizse kullanıcı otomatik olarak platform sayfasına döner.
-      </p>
+      <h2>Ana Modüller</h2>
+      <p class="muted">Butonlar görünür olabilir; erişim ve yetki kontrolü role göre çalışır.</p>
+
+      <div class="menu">
+        <div class="menu-card">
+          <h3>ZENTRA Main Dashboard</h3>
+          <p>Genel sistem görünümü. Viewer, analyst, trader ve admin erişebilir.</p>
+          <a class="btn" href="/zentra-main.html">Main Dashboard</a>
+        </div>
+
+        <div class="menu-card">
+          <h3>Trade Intelligence</h3>
+          <p>Lens, risk, signal ve karar görünümü. Yalnız analyst ve admin görür.</p>
+
+          <div data-role-show="analyst,admin">
+            <a class="btn" href="/trade-intelligence.html">Trade Intelligence</a>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <h3>Trade Action</h3>
+          <p>Trade, offer ve payment tarafı. Trader ve admin erişimi içindir.</p>
+          <a class="btn" href="/trade-action.html">Trade Action</a>
+        </div>
+
+        <div class="menu-card">
+          <h3>Admin Panel</h3>
+          <p>Kullanıcı, rol, log ve merkezi yönetim ekranı. Sadece admin görür.</p>
+
+          <div data-role-show="admin">
+            <a class="btn" href="/admin.html">Admin Panel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Örnek Role Bazlı UI</h2>
+      <p class="muted">Aşağıdaki buton, viewer ve analyst için pasif olur. Trader ve admin kullanabilir.</p>
+
+      <button class="btn" data-role-disable="viewer,analyst">
+        Trade Create
+      </button>
     </div>
   </div>
 </body>
